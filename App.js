@@ -24,13 +24,8 @@ export default class FetchExample extends React.Component {
 
         });
 
-      })
-      .catch((error) =>{
-        console.error(error);
       });
   }
-
-
 
   render(){
 
