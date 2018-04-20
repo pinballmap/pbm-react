@@ -1,8 +1,31 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, YellowBox, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { StackNavigator } from 'react-navigation';
 
-class Pbm extends Component {
+class Pbm extends React.Component {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+  render() {
+    const { navigate } = this.props.navigation;
+
+    return (
+      <View>
+        <Text>PBM React Native App</Text>
+        <Button
+          onPress={() => navigate('Map')}
+          title="Look at the map"
+        />
+      </View>
+    );
+  }
+}
+
+class Map extends Component {
+  static navigationOptions = {
+    title: 'THE MAP',
+  };
 
   constructor(props){
     super(props);
@@ -112,4 +135,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pbm;
+const SimpleApp = StackNavigator({
+  Home: { screen: Pbm },
+  Map: { screen: Map },
+});
+
+export default SimpleApp;
