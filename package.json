@@ -25,7 +25,9 @@
   "dependencies": {
     "eslint-plugin-react-native": "^3.2.1",
     "expo": "^26.0.0",
+    "npm": "^5.8.0",
     "react": "16.3.0-alpha.1",
-    "react-native": "0.54.0"
+    "react-native": "0.54.0",
+    "react-native-maps": "^0.21.0"
   }
 }
