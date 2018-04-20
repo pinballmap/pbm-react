@@ -135,7 +135,7 @@ class LocationList extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ zip: '97203', isLoading: true}
+    this.state ={ zip: '', isLoading: true}
 
     YellowBox.ignoreWarnings([
       'Warning: componentWillMount is deprecated',
