@@ -7,6 +7,7 @@ class Pbm extends React.Component {
   static navigationOptions = {
     title: 'Welcome',
   };
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -35,7 +36,7 @@ class Map extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ zip: '', isLoading: true}
+    this.state ={ lat: '', lon: '', zip: '', isLoading: true}
 
     YellowBox.ignoreWarnings([
       'Warning: componentWillMount is deprecated',
@@ -46,27 +47,35 @@ class Map extends Component {
     ]);
   }
 
-  componentDidMount(){
-    return fetch('https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5')
-      .then((response) => response.json())
-      .then((responseJson) => {
+  componentDidUpdate(){
+    if (this.refs.map) {
+      setTimeout(() => this.refs.map.fitToElements(true), 1000);
+    }
+  }
 
+  componentWillMount(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
         this.setState({
-          isLoading: false,
-          markers: responseJson.locations.map(l => (
-            <MapView.Marker
-              coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
-              title={l.name}
-            />
-          ))
-        }, function(){});
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+          error: null,
+        });
 
-        this.refs.map.fitToElements(true);
-      });
+        return this.reloadMap();
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   reloadMap(event) {
-    return fetch('https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5')
+    var url = this.state.zip != '' ?
+      'https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
+      'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
+    ;
+
+    return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -79,8 +88,6 @@ class Map extends Component {
             />
           ))
         }, function(){});
-
-        this.refs.map.fitToElements(true);
       });
   }
 
@@ -101,7 +108,7 @@ class Map extends Component {
             <View>
               <TextInput
                 onChangeText={zip => this.setState({zip})}
-                style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
                 value={this.state.zip}
               />
             </View>
@@ -135,7 +142,7 @@ class LocationList extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ zip: '', isLoading: true}
+    this.state ={ lat: '', lon: '', zip: '', isLoading: true}
 
     YellowBox.ignoreWarnings([
       'Warning: componentWillMount is deprecated',
@@ -146,12 +153,29 @@ class LocationList extends Component {
     ]);
   }
 
-  componentDidMount(){
-    return this.reloadSections();
+  componentWillMount(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+          error: null,
+        });
+
+        return this.reloadSections();
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   reloadSections(event) {
-    return fetch('https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5')
+    var url = this.state.zip != '' ?
+      'https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
+      'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
+    ;
+console.log(url);
+    return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
         var locations = {};
@@ -198,7 +222,7 @@ class LocationList extends Component {
             <View>
               <TextInput
                 onChangeText={zip => this.setState({zip})}
-                style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
                 value={this.state.zip}
               />
             </View>
