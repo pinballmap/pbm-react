@@ -16,7 +16,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest ; eslint *.js **/*.js",
+    "test": "jest --coverage ; eslint *.js **/*.js",
     "lint": "eslint *.js **/*.js"
   },
   "jest": {
