@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, StyleSheet, YellowBox, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, SectionList, StyleSheet, YellowBox, Text, TextInput, View } from 'react-native';
 
 class LocationList extends Component {
 
@@ -36,7 +36,7 @@ class LocationList extends Component {
 
   reloadSections(event) {
     var url = this.state.zip != '' ?
-      'https://pinballmap.com/api/v1/locations/closest_by_zip.json?zip=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
+      'https://pinballmap.com/api/v1/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
       'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 

@@ -1,4 +1,5 @@
 {
-  "name": "pbm-react",
-  "displayName": "pbm-react"
+  "expo": {
+    "sdkVersion": "26.0.0"
+  }
 }
