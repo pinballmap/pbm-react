@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, YellowBox, Text, TextInput, View } from 'react-native';
+import { Button, YellowBox, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 class SignupLogin extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
   constructor(props){
     super(props);
 
@@ -47,7 +54,7 @@ class SignupLogin extends Component {
             title="Current User? Log In"
             accessibilityLabel="Log In"
           />
-          <Text>I'LL DO THIS LATER</Text>
+          <Text>{"I'LL DO THIS LATER"}</Text>
         </View>
       </View>
     );
