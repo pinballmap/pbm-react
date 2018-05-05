@@ -34,7 +34,7 @@ class LocationList extends Component {
     );
   }
 
-  reloadSections(event) {
+  reloadSections() {
     var url = this.state.zip != '' ?
       'https://pinballmap.com/api/v1/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
       'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
@@ -57,7 +57,7 @@ class LocationList extends Component {
           locationDict[firstCharacter].push(location.name);
         }
 
-        locations = Object.keys(locationDict).map((key, index) => (
+        locations = Object.keys(locationDict).map((key) => (
           {title: key, data: locationDict[key]}
         ));
 
@@ -115,13 +115,6 @@ class LocationList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    flex: 1
-  },
-  map: {
-    flex: 1
-  },
   sectionHeader: {
     paddingTop: 2,
     paddingLeft: 10,

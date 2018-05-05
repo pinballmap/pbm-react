@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import PropTypes from 'prop-types';
 
 import LocationList from './LocationList.js';
 import Login from './Login.js';
@@ -8,7 +9,13 @@ import Map from './Map.js';
 import Signup from './Signup.js';
 import SignupLogin from './SignupLogin.js';
 
-class Pbm extends React.Component {
+class Pbm extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
   static navigationOptions = {
     title: 'Welcome',
   };

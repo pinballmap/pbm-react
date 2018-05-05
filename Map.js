@@ -23,8 +23,8 @@ class Map extends Component {
   }
 
   componentDidUpdate(){
-    if (this.refs.map) {
-      setTimeout(() => this.refs.map.fitToElements(true), 1000);
+    if (this.mapRef) {
+      setTimeout(() => this.mapRef.fitToElements(true), 1000);
     }
   }
 
@@ -44,7 +44,7 @@ class Map extends Component {
     );
   }
 
-  reloadMap(event) {
+  reloadMap() {
     var url = this.state.zip != '' ?
       'https://pinballmap.com/api/v1/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
       'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
@@ -60,6 +60,7 @@ class Map extends Component {
             <MapView.Marker
               coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
               title={l.name}
+              key={l.id}
             />
           ))
         }, function(){});
@@ -99,7 +100,7 @@ class Map extends Component {
         </View>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 75, bottom: 0, right: 0}}>
           <MapView
-              ref="map"
+              ref={this.mapRef}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
           >
@@ -112,26 +113,8 @@ class Map extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    flex: 1
-  },
   map: {
     flex: 1
-  },
-  sectionHeader: {
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 2,
-    fontSize: 14,
-    fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
   },
 });
 
