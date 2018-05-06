@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, YellowBox, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import "../config/globals.js"
 
 class Map extends Component {
   static navigationOptions = {
@@ -46,8 +47,8 @@ class Map extends Component {
 
   reloadMap() {
     var url = this.state.zip != '' ?
-      'https://pinballmap.com/api/v1/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
-      'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
+      global.api_url + '/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
+      global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
     return fetch(url)

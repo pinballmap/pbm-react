@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, YellowBox, Text, View } from 'react-native';
+import "../config/globals.js"
 
 class SignupLogin extends Component {
   constructor(props){
@@ -17,7 +18,7 @@ class SignupLogin extends Component {
   }
 
   componentWillMount(){
-    return fetch('https://pinballmap.com/api/v1/regions/location_and_machine_counts.json')
+    return fetch(global.api_url + '/regions/location_and_machine_counts.json')
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
