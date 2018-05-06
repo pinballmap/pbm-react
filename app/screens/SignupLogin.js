@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import { Button, YellowBox, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
 
 class SignupLogin extends Component {
-  static propTypes = {
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-  }
-
   constructor(props){
     super(props);
 
-    this.mapRef = null;
     this.state ={ num_locations: 0, num_lmxes: 0 }
 
     YellowBox.ignoreWarnings([
@@ -36,20 +28,18 @@ class SignupLogin extends Component {
   }
 
   render(){
-    const { navigate } = this.props.navigation;
-
     return(
       <View style={{flex: 1}}>
         <View style={{paddingTop:20}}>
           <Text>Pinball Map is a user-updated map with {this.state.num_locations} locations and {this.state.num_lmxes} machines. You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
           <Button
-            onPress={() => navigate('Signup')}
+            onPress={() => this.props.navigation.navigate('Signup')}
             style={{width:30, paddingTop: 15}}
             title="New User? Sign Up"
             accessibilityLabel="Sign Up"
           />
           <Button
-            onPress={() => navigate('Login')}
+            onPress={() => this.props.navigation.navigate('Login')}
             style={{width:30, paddingTop: 15}}
             title="Current User? Log In"
             accessibilityLabel="Log In"
