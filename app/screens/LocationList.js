@@ -1,3 +1,4 @@
+import "../config/globals.js"
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, SectionList, StyleSheet, YellowBox, Text, TextInput, View } from 'react-native';
 
@@ -7,7 +8,7 @@ class LocationList extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: '', lon: '', zip: '', isLoading: true}
+    this.state ={ lat: '', lon: '', address: '', isLoading: true}
 
     YellowBox.ignoreWarnings([
       'Warning: componentWillMount is deprecated',
@@ -35,9 +36,9 @@ class LocationList extends Component {
   }
 
   reloadSections() {
-    var url = this.state.zip != '' ?
-      'https://pinballmap.com/api/v1/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
-      'https://pinballmap.com/api/v1/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
+    var url = this.state.address != '' ?
+      global.api_url + '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
+      global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
     return fetch(url)
@@ -86,9 +87,9 @@ class LocationList extends Component {
           <View style={{flexDirection: 'row'}}>
             <View>
               <TextInput
-                onChangeText={zip => this.setState({zip})}
+                onChangeText={address => this.setState({address})}
                 style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
-                value={this.state.zip}
+                value={this.state.address}
               />
             </View>
             <View>
