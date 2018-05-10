@@ -32,17 +32,17 @@ class SignupLogin extends Component {
   render(){
     return(
       <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
-        <View style={{flex: 1,backgroundColor:'rgba(255,255,255,.8)'}}>
+        <View style={s.mask}>
         <View style={s.logoWrapper}>
   +        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
   +      </View>
-          <View style={{margin:20,borderRadius:10,borderWidth:4,borderColor:'rgba(0,0,0,.4)'}}>
-            <View style={{padding:10,borderRadius:10,backgroundColor:'rgba(255,255,255,.6)'}}>
+          <View style={s.outerBorder}>
+            <View style={s.textBg}>
               <Text style={{fontSize:18,textAlign:"center"}}>
                 <Text>Pinball Map is a user-updated map listing</Text>
-                <Text style={{fontWeight:"bold"}}> {this.state.num_locations} </Text> 
+                <Text style={s.bold}> {this.state.num_locations} </Text> 
                 <Text>locations and</Text>
-                <Text style={{fontWeight:"bold"}}> {this.state.num_lmxes} </Text>
+                <Text style={s.bold}> {this.state.num_lmxes} </Text>
                 <Text>machines.</Text>
                 {"\n"}{"\n"}
                 <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
@@ -81,10 +81,28 @@ class SignupLogin extends Component {
 }
 
 const s = StyleSheet.create({
+  mask: {
+    flex: 1,
+    backgroundColor:'rgba(255,255,255,.8)',
+  },
   backgroundImage: {
     flex: 1,
     width: null,
     height: null,
+  },
+  bold: {
+    fontWeight:"bold",
+  },
+  outerBorder: {
+    margin:20,
+    borderRadius:10,
+    borderWidth:4,
+    borderColor:'rgba(0,0,0,.4)',
+  },
+  textBg: {
+    padding:10,
+    borderRadius:10,
+    backgroundColor:'rgba(255,255,255,.6)',
   },
   logoWrapper: {
     padding: 5,
