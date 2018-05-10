@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, YellowBox, Text, View } from 'react-native';
+import { Image, StyleSheet, YellowBox, Text, View, ImageBackground } from 'react-native';
+import { Button } from 'react-native-elements'
 import "../config/globals.js"
 
 class SignupLogin extends Component {
@@ -30,26 +31,71 @@ class SignupLogin extends Component {
 
   render(){
     return(
-      <View style={{flex: 1}}>
-        <View style={{paddingTop:20}}>
-          <Text>Pinball Map is a user-updated map with {this.state.num_locations} locations and {this.state.num_lmxes} machines. You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
-          <Button
-            onPress={() => this.props.navigation.navigate('Signup')}
-            style={{width:30, paddingTop: 15}}
-            title="New User? Sign Up"
-            accessibilityLabel="Sign Up"
-          />
-          <Button
-            onPress={() => this.props.navigation.navigate('Login')}
-            style={{width:30, paddingTop: 15}}
-            title="Current User? Log In"
-            accessibilityLabel="Log In"
-          />
-          <Text>{"I'LL DO THIS LATER"}</Text>
+      <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+        <View style={{flex: 1,backgroundColor:'rgba(255,255,255,.8)'}}>
+        <View style={s.logoWrapper}>
+  +        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+  +      </View>
+          <View style={{margin:20,borderRadius:10,borderWidth:4,borderColor:'rgba(0,0,0,.4)'}}>
+            <View style={{padding:10,borderRadius:10,backgroundColor:'rgba(255,255,255,.6)'}}>
+              <Text style={{fontSize:18,textAlign:"center"}}>
+                <Text>Pinball Map is a user-updated map listing</Text>
+                <Text style={{fontWeight:"bold"}}> {this.state.num_locations} </Text> 
+                <Text>locations and</Text>
+                <Text style={{fontWeight:"bold"}}> {this.state.num_lmxes} </Text>
+                <Text>machines.</Text>
+                {"\n"}{"\n"}
+                <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
+              </Text>
+            </View>
+          </View>
+          <View style={{padding:15}}>
+            <Button
+              onPress={() => this.props.navigation.navigate('Login')}
+              raised
+              fontSize="18"
+              backgroundColor="#D3ECFF"
+              color="black"
+              rounded
+              title="Current User? Log In"
+              accessibilityLabel="Log In"
+            />
+            <Button
+              onPress={() => this.props.navigation.navigate('Signup')}
+              raised
+              fontSize="18"
+              backgroundColor="#fdd4d7"
+              color="black"
+              style={{paddingTop: 15,paddingBottom: 25}}
+              rounded
+              title="New User? Sign Up"
+              accessibilityLabel="Sign Up"
+            />
+            
+            <Text style={{fontSize:14,textAlign:"center"}}>{"I'LL DO THIS LATER"}</Text>
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
+
+const s = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
+  logoWrapper: {
+    padding: 5,
+    backgroundColor: '#D3ECFF',
+    height: 60,
+    opacity: .9,
+  },
+  logo: {
+    width: '100%',
+    resizeMode: 'contain',
+  }
+});
 
 export default SignupLogin;
