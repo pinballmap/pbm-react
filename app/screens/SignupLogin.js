@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, YellowBox, Text, View, ImageBackground } from 'react-native';
+import { Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
 import "../config/globals.js"
 
@@ -8,14 +8,6 @@ class SignupLogin extends Component {
     super(props);
 
     this.state ={ num_locations: 0, num_lmxes: 0 }
-
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillUpdate is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-      'Warning: Failed prop type',
-      'Warning: Each child in an array',
-    ]);
   }
 
   componentWillMount(){

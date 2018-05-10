@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, YellowBox, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import "../config/globals.js"
 
@@ -13,14 +13,6 @@ class Map extends Component {
 
     this.mapRef = null;
     this.state ={ lat: '', lon: '', zip: '', isLoading: true}
-
-    YellowBox.ignoreWarnings([
-      'Warning: componentWillMount is deprecated',
-      'Warning: componentWillUpdate is deprecated',
-      'Warning: componentWillReceiveProps is deprecated',
-      'Warning: Failed prop type',
-      'Warning: Each child in an array',
-    ]);
   }
 
   componentDidUpdate(){
