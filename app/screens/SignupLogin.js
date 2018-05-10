@@ -53,7 +53,7 @@ class SignupLogin extends Component {
             <Button
               onPress={() => this.props.navigation.navigate('Login')}
               raised
-              fontSize="18"
+              fontSize={18}
               backgroundColor="#D3ECFF"
               color="black"
               rounded
@@ -63,7 +63,7 @@ class SignupLogin extends Component {
             <Button
               onPress={() => this.props.navigation.navigate('Signup')}
               raised
-              fontSize="18"
+              fontSize={18}
               backgroundColor="#fdd4d7"
               color="black"
               style={{paddingTop: 15,paddingBottom: 25}}
