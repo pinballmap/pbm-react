@@ -8,6 +8,10 @@ class MainMenu extends Component {
       <View>
         <Text>PBM React Native App</Text>
         <Button
+          onPress={() => this.props.navigation.navigate('EnableLocationServices')}
+          title="Enable Location Services"
+        />
+        <Button
           onPress={() => this.props.navigation.navigate('Map')}
           title="Look at the map"
         />

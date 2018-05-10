@@ -1,6 +1,7 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
+import EnableLocationServices from '../screens/EnableLocationServices.js';
 import LocationList from '../screens/LocationList.js';
 import Login from '../screens/Login.js';
 import Map from '../screens/Map.js';
@@ -13,6 +14,12 @@ export const PbmStack = StackNavigator({
     screen: MainMenu,
     navigationOptions: {
       title: 'Main Menu',
+    },
+  },
+  EnableLocationServices: {
+    screen: EnableLocationServices,
+    navigationOptions: {
+      title: 'Enable Location Services',
     },
   },
   Map: {
