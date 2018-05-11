@@ -4,10 +4,13 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import EnableLocationServices from '../screens/EnableLocationServices.js';
 import LocationList from '../screens/LocationList.js';
 import Login from '../screens/Login.js';
-import Map from '../screens/Map.js';
 import MainMenu from '../screens/MainMenu.js';
+import Map from '../screens/Map.js';
+import RecentActivity from '../screens/RecentActivity.js';
+import RecentMachines from '../screens/RecentMachines.js';
 import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
+import UserProfile from '../screens/UserProfile.js';
 
 export const PbmTab =
 TabNavigator({
@@ -53,6 +56,27 @@ export const PbmStack = StackNavigator({
         screen: Map,
         navigationOptions: {
           title: 'Search',
+          headerLeft: null
+        },
+      },
+      RecentMachines: {
+        screen: RecentMachines,
+        navigationOptions: {
+          title: 'Recent',
+          headerLeft: null
+        },
+      },
+      RecentActivity: {
+        screen: RecentActivity,
+        navigationOptions: {
+          title: 'Activity',
+          headerLeft: null
+        },
+      },
+      UserProfile: {
+        screen: UserProfile,
+        navigationOptions: {
+          title: 'Profile',
           headerLeft: null
         },
       },
