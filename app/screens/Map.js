@@ -4,10 +4,6 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import "../config/globals.js"
 
 class Map extends Component {
-  static navigationOptions = {
-    title: 'THE MAP',
-  };
-
   constructor(props){
     super(props);
 

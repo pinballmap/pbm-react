@@ -25,9 +25,9 @@ class SignupLogin extends Component {
     return(
       <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
         <View style={s.mask}>
-        <View style={s.logoWrapper}>
-  +        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
-  +      </View>
+          <View style={s.logoWrapper}>
+            <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+          </View>
           <View style={s.outerBorder}>
             <View style={s.textBg}>
               <Text style={{fontSize:18,textAlign:"center"}}>
@@ -63,8 +63,7 @@ class SignupLogin extends Component {
               title="New User? Sign Up"
               accessibilityLabel="Sign Up"
             />
-            
-            <Text style={{fontSize:14,textAlign:"center"}}>{"I'LL DO THIS LATER"}</Text>
+            <Text style={{fontSize:14,textAlign:"center"}} onPress={() => this.props.navigation.navigate('EnableLocationServices')}>{"I'LL DO THIS LATER"}</Text>
           </View>
         </View>
       </ImageBackground>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import EnableLocationServices from '../screens/EnableLocationServices.js';
 import LocationList from '../screens/LocationList.js';
@@ -9,11 +9,36 @@ import MainMenu from '../screens/MainMenu.js';
 import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
 
+export const PbmTab =
+TabNavigator({
+  LocationList: {
+    screen: LocationList,
+  },
+  SignupLogin: {
+    screen: SignupLogin,
+  },
+  Signup: {
+    screen: Signup,
+  }
+}, {
+  tabBarPosition: 'bottom',
+   swipeEnabled: true,
+     tabBarOptions: {
+     activeTintColor: '#f2f2f2',
+     activeBackgroundColor: '#2EC4B6',
+     inactiveTintColor: '#666',
+     labelStyle: {
+       fontSize: 22,
+       padding: 12
+     }
+   }
+});
+
 export const PbmStack = StackNavigator({
-  MainMenu: {
-    screen: MainMenu,
+  SignupLogin: {
+    screen: SignupLogin,
     navigationOptions: {
-      title: 'Main Menu',
+      title: 'Signup / Login',
     },
   },
   EnableLocationServices: {
@@ -23,21 +48,32 @@ export const PbmStack = StackNavigator({
     },
   },
   Map: {
-    screen: Map,
-    navigationOptions: {
-      title: 'Map',
-    },
+    screen: TabNavigator({
+      Map: {
+        screen: Map,
+        navigationOptions: {
+          title: 'Search',
+          headerLeft: null
+        },
+      },
+    }, {
+      tabBarPosition: 'bottom',
+       swipeEnabled: true,
+         tabBarOptions: {
+         activeTintColor: '#f2f2f2',
+         activeBackgroundColor: '#2EC4B6',
+         inactiveTintColor: '#666',
+         labelStyle: {
+           fontSize: 22,
+           padding: 12
+         }
+       }
+    })
   },
   LocationList: {
     screen: LocationList,
     navigationOptions: {
       title: 'Location List',
-    },
-  },
-  SignupLogin: {
-    screen: SignupLogin,
-    navigationOptions: {
-      title: 'Signup / Login',
     },
   },
   Signup: {

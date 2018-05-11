@@ -10,7 +10,7 @@
     "react-native": "^0.54.0",
     "react-native-elements": "^0.19.1",
     "react-native-maps": "^0.21.0",
-    "react-navigation": "^1.5.11"
+    "react-navigation": "^1.5.12"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

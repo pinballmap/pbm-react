@@ -18,7 +18,7 @@ class EnableLocationServices extends Component {
           onPress={ () => this.enableGeolocation() }
           title="Enable Location"
         />
-        <Text>I'LL DO THIS LATER</Text>
+        <Text onPress={() => this.props.navigation.navigate('Map')}>I'LL DO THIS LATER</Text>
       </View>
     );
   }
