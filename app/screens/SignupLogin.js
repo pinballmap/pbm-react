@@ -3,21 +3,27 @@ import { Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
 import "../config/globals.js"
 
+const fetchData = () => {
+  return fetch(global.api_url + '/regions/location_and_machine_counts.json')
+    .then((response) => response.json())
+}
+
 class SignupLogin extends Component {
+  static defaultProps = { fetchData }
+
   constructor(props){
     super(props);
 
     this.state ={ num_locations: 0, num_lmxes: 0 }
   }
 
-  componentWillMount(){
-    return fetch(global.api_url + '/regions/location_and_machine_counts.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
+  componentDidMount(){
+    this.props.fetchData()
+      .then((data) => {
         this.setState({
-          num_locations: responseJson.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
-          num_lmxes: responseJson.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-        }, function(){});
+          num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
+          num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+        });
       });
   }
 
