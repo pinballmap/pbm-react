@@ -68,8 +68,15 @@ class Map extends Component {
     return(
       <View style={{flex: 1}}>
         <View style={{paddingTop:20}}>
-          <Text>PINBALL MAP</Text>
           <View style={{flexDirection: 'row'}}>
+            <View>
+              <Button
+                onPress={ () => this.props.navigation.navigate('ListLocations') }
+                style={{width:30, paddingTop: 15}}
+                title="List"
+                accessibilityLabel="List"
+              />
+            </View>
             <View>
               <TextInput
                 onChangeText={zip => this.setState({zip})}
@@ -83,6 +90,14 @@ class Map extends Component {
                 style={{width:30, paddingTop: 15}}
                 title="Submit"
                 accessibilityLabel="Submit"
+              />
+            </View>
+            <View>
+              <Button
+                onPress={ () => this.props.navigation.navigate('FilterMap')}
+                style={{width:30, paddingTop: 15}}
+                title="Filter"
+                accessibilityLabel="Filter"
               />
             </View>
           </View>
