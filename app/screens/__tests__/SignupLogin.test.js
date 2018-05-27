@@ -1,7 +1,8 @@
+import "../../config/globals.js"
 import React from 'react';
 import SignupLogin from '../SignupLogin';
 import renderer from 'react-test-renderer';
-import "../../config/globals.js"
+import { shallow } from 'enzyme';
 
 describe('testing signup/login screen', () => {
   beforeEach(() => {
@@ -15,12 +16,21 @@ describe('testing signup/login screen', () => {
     expect(rendered).toBeTruthy();
   });
 
-  it('displays num_locations and num_lmxes from PBM API', () => {
-    fetch.mockResponseOnce(JSON.stringify({ num_locations: 11, num_lmxes: 22 }))
+  it('displays num_locations and num_lmxes from PBM API', (done) => {
+    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
+    let promise;
+    const fetchData = () => {
+      promise = Promise.resolve().then(mockedCallback);
+      return promise;
+    };
 
-    renderer.create(<SignupLogin />).toJSON();
+    const wrapper = shallow(<SignupLogin fetchData={fetchData}/>);
 
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual(global.api_url + '/regions/location_and_machine_counts.json');
+    promise.then((data) => {
+      wrapper.setState(data)
+      expect(wrapper.state().num_locations).toEqual(11);
+      expect(wrapper.state().num_lmxes).toEqual(22);
+      done();
+    })
   });
 })
