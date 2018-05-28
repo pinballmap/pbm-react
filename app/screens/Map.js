@@ -71,7 +71,7 @@ class Map extends Component {
           <View style={{flexDirection: 'row'}}>
             <View>
               <Button
-                onPress={ () => this.props.navigation.navigate('ListLocations') }
+                onPress={ () => this.props.navigation.navigate('LocationList') }
                 style={{width:30, paddingTop: 15}}
                 title="List"
                 accessibilityLabel="List"
