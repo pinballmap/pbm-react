@@ -33,4 +33,52 @@ describe('testing signup/login screen', () => {
       done();
     })
   });
+
+  it('navigates to enable location services if you dont login or sign up', () => {
+    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
+    let promise;
+    const fetchData = () => {
+      promise = Promise.resolve().then(mockedCallback);
+      return promise;
+    };
+
+    const navigation = { navigate: jest.fn() };
+    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
+    const rendered = wrapper.dive();
+
+    rendered.find('Text').last().props().onPress();
+    expect(rendered).toMatchSnapshot();
+  });
+
+  it('navigates to login if you press login', () => {
+    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
+    let promise;
+    const fetchData = () => {
+      promise = Promise.resolve().then(mockedCallback);
+      return promise;
+    };
+
+    const navigation = { navigate: jest.fn() };
+    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
+    const rendered = wrapper.dive();
+
+    rendered.find('Button').at(0).props().onPress();
+    expect(rendered).toMatchSnapshot();
+  });
+
+  it('navigates to signup if you press signup', () => {
+    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
+    let promise;
+    const fetchData = () => {
+      promise = Promise.resolve().then(mockedCallback);
+      return promise;
+    };
+
+    const navigation = { navigate: jest.fn() };
+    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
+    const rendered = wrapper.dive();
+
+    rendered.find('Button').at(1).props().onPress();
+    expect(rendered).toMatchSnapshot();
+  });
 })
