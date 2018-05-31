@@ -33,27 +33,32 @@ class Map extends Component {
     );
   }
 
-  reloadMap() {
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+
+  async reloadMap() {
     var url = this.state.zip != '' ?
       global.api_url + '/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
       global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    this.setStateAsync({
+      isLoading: false,
+      markers: responseJson.locations.map(l => (
+        <MapView.Marker
+          coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
+          title={l.name}
+          key={l.id}
+        />
+      ))
+    }, function(){});
 
-        this.setState({
-          isLoading: false,
-          markers: responseJson.locations.map(l => (
-            <MapView.Marker
-              coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
-              title={l.name}
-              key={l.id}
-            />
-          ))
-        }, function(){});
-      });
+    return this.state;
   }
 
   render(){

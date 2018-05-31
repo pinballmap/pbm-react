@@ -70,9 +70,7 @@ describe('testing Map screen', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  //TODO: MAP THIS WORK
-  /*
-  it('creates map markers when locations are returned', () => {
+  it('creates map markers when locations are returned', async () => {
     fetch.mockResponseOnce(JSON.stringify({ locations: [
       {
         "name": "Slim's Cocktail Bar & Restaurant",
@@ -88,9 +86,9 @@ describe('testing Map screen', () => {
 
     const navigation = { navigate: jest.fn() };
     const wrapper = shallow(<Map navigation={navigation} />).setState({ isLoading: false })
-
     const inst = wrapper.instance();
-    inst.reloadMap().resolves.toEqual(2);
+
+    const state = await inst.reloadMap();
+    expect(state.markers.length).toEqual(2);
   });
-  */
 });
