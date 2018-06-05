@@ -16,13 +16,13 @@ import UserProfile from '../screens/UserProfile.js';
 export const PbmTab =
 TabNavigator({
   LocationList: {
-    screen: LocationList,
+    screen: LocationList
   },
   SignupLogin: {
-    screen: SignupLogin,
+    screen: SignupLogin
   },
   Signup: {
-    screen: Signup,
+    screen: Signup
   }
 }, {
   tabBarPosition: 'bottom',
@@ -42,13 +42,13 @@ export const PbmStack = StackNavigator({
   SignupLogin: {
     screen: SignupLogin,
     navigationOptions: {
-      title: 'Signup / Login',
+      headerLeft: null
     },
   },
   EnableLocationServices: {
     screen: EnableLocationServices,
     navigationOptions: {
-      title: 'Enable Location Services',
+      headerLeft: null
     },
   },
   Map: {
@@ -56,7 +56,6 @@ export const PbmStack = StackNavigator({
       Map: {
         screen: Map,
         navigationOptions: {
-          title: 'Search',
           headerLeft: null
         },
       },
@@ -104,19 +103,16 @@ export const PbmStack = StackNavigator({
   Signup: {
     screen: Signup,
     navigationOptions: {
-      title: 'Signup',
+      headerLeft: null
     },
   },
   Login: {
     screen: Login,
     navigationOptions: {
-      title: 'Login',
+      headerLeft: null
     },
   },
   FilterMap: {
     screen: FilterMap,
-    navigationOptions: {
-      title: 'Filter Map',
-    },
   },
 });
