@@ -8,8 +8,41 @@ class Map extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: '', lon: '', zip: '', isLoading: true}
+    this.state ={ lat: '', lon: '', address: '', isLoading: true}
   }
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerLeft:
+        <Button
+          onPress={ () => navigation.navigate('LocationList') }
+          style={{width:30, paddingTop: 15}}
+          title="List"
+          accessibilityLabel="List"
+        />,
+      title:
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            onChangeText={address => params.updateAddress({address})}
+            style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
+          />
+          <Button
+            onPress={ params.reloadMap }
+            style={{width:30, paddingTop: 15}}
+            title="Submit"
+            accessibilityLabel="Submit"
+          />
+        </View>,
+      headerRight:
+        <Button
+          onPress={ () => navigation.navigate('FilterMap')}
+          style={{width:30, paddingTop: 15}}
+          title="Filter"
+          accessibilityLabel="Filter"
+        />
+    };
+  };
 
   componentDidUpdate(){
     if (this.mapRef) {
@@ -18,6 +51,11 @@ class Map extends Component {
   }
 
   componentWillMount(){
+    this.props.navigation.setParams({
+      reloadMap: this.reloadMap.bind(this),
+      updateAddress: this.updateAddress.bind(this),
+    });
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -39,9 +77,13 @@ class Map extends Component {
     });
   }
 
+  updateAddress(address) {
+    this.setState(address);
+  }
+
   async reloadMap() {
-    var url = this.state.zip != '' ?
-      global.api_url + '/locations/closest_by_address.json?address=' + this.state.zip + ';send_all_within_distance=1;max_distance=5' :
+    var url = this.state.address != '' ?
+      global.api_url + '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
       global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
@@ -72,42 +114,7 @@ class Map extends Component {
 
     return(
       <View style={{flex: 1}}>
-        <View style={{paddingTop:20}}>
-          <View style={{flexDirection: 'row'}}>
-            <View>
-              <Button
-                onPress={ () => this.props.navigation.navigate('LocationList') }
-                style={{width:30, paddingTop: 15}}
-                title="List"
-                accessibilityLabel="List"
-              />
-            </View>
-            <View>
-              <TextInput
-                onChangeText={zip => this.setState({zip})}
-                style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
-                value={this.state.zip}
-              />
-            </View>
-            <View>
-              <Button
-                onPress={ () => this.reloadMap() }
-                style={{width:30, paddingTop: 15}}
-                title="Submit"
-                accessibilityLabel="Submit"
-              />
-            </View>
-            <View>
-              <Button
-                onPress={ () => this.props.navigation.navigate('FilterMap')}
-                style={{width:30, paddingTop: 15}}
-                title="Filter"
-                accessibilityLabel="Filter"
-              />
-            </View>
-          </View>
-        </View>
-        <View style ={{flex:1, position: 'absolute',left: 0, top: 75, bottom: 0, right: 0}}>
+        <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
           <MapView
               ref={this.mapRef}
               provider={ PROVIDER_GOOGLE }
