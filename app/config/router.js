@@ -55,9 +55,6 @@ export const PbmStack = StackNavigator({
     screen: TabNavigator({
       Map: {
         screen: Map,
-        navigationOptions: {
-          headerLeft: null
-        },
       },
       RecentMachines: {
         screen: RecentMachines,
