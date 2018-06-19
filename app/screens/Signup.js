@@ -18,6 +18,7 @@ class Signup extends Component {
       errors: false,
       user: {},
       successfulSubmission: false,
+      apiErrorMsg: '',
     };
   }
 
@@ -39,7 +40,6 @@ class Signup extends Component {
         emailError: 'Email is invalid',
         errors: true,
       })
-  
     }
 
     if (!this.state.password) {
@@ -58,8 +58,7 @@ class Signup extends Component {
       this.setState({ 
         confirm_passwordError: "DOESN'T MATCH PASSWORD",
         errors: true,
-      })
-      
+      })    
     }
   }
 
@@ -70,6 +69,7 @@ class Signup extends Component {
       emailError: '',
       passwordError: '',
       confirm_passwordError: '',
+      apiErrorMsg: '',
       errors: false,
     })
 
@@ -85,6 +85,12 @@ class Signup extends Component {
 
       postData('/users/signup.json', body)
       .then(data => {
+        // Something goes wrong with the API request
+        if (data.message) {
+          this.setState({ apiErrorMsg: data.message})
+          this.setState({ errors: true })
+        }
+      
         if (data.errors) {
           this.setState({ errors: true })
           const errors = data.errors.split(",")
@@ -99,10 +105,6 @@ class Signup extends Component {
 
           if (errors.indexOf('Email is invalid') > -1) {
             this.setState({ emailError: 'Email is invalid' })
-          }
-
-          if (errors.indexOf('Password is too short (minimum is 6 characters)') > -1) {
-            this.setState({ passwordError: 'Password is too short (minimum is 6 characters)' })
           }
         }
 
@@ -129,7 +131,11 @@ class Signup extends Component {
           </View>
         </Modal>
         </View>
-        {this.state.errors && <Text style={{color: 'red', fontWeight: 'bold'}}>There were errors trying to process your submission</Text>}
+        {this.state.errors && 
+          <Text style={{color: 'red', fontWeight: 'bold'}}>
+            {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+          </Text>
+        }
         <Input 
           label='Username' 
           onChangeText={(username) => this.setState({username})}

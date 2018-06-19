@@ -9,5 +9,11 @@ export const postData = (uri, body) => {
       },
       body: JSON.stringify(body)
     })
-    .then(response => response.json())
+    .then(response => {
+      if (response.status === '200')
+        return response.json()
+      
+      throw new Error('API response was not ok.')
+    })
+    .catch(err => err)
 }

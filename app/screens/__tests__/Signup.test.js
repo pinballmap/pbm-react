@@ -12,7 +12,7 @@ it('renders without crashing', () => {
   expect(rendered).toBeTruthy();
 });
 
-it('clicking submit with no fields filled out will set error states properly', () => {
+it('sets error states properly when clicking submit with no fields filled', () => {
   const wrapper = shallow(<Signup />)
 
   wrapper.find('Button').simulate('press')
@@ -22,7 +22,7 @@ it('clicking submit with no fields filled out will set error states properly', (
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit where passwords do not match sets error states properly', () => {
+it('sets state properly when clicking submit and passwords do not match', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
     password: 'password', 
@@ -34,7 +34,7 @@ it('clicking submit where passwords do not match sets error states properly', ()
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit when the password is too short sets error states properly', () => {
+it('sets state properly when clicking submit and the password is too short', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
     password: 'short', 
@@ -45,7 +45,7 @@ it('clicking submit when the password is too short sets error states properly', 
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit with an empty email properly sets error states', () => {
+it('sets state properly when clicking submit with an empty email', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
     email: '', 
@@ -56,7 +56,7 @@ it('clicking submit with an empty email properly sets error states', () => {
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit with an invalid email properly sets error states', () => {
+it('sets state properly when clicking submit with an invalid email', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
     email: 'bad', 
@@ -67,7 +67,7 @@ it('clicking submit with an invalid email properly sets error states', () => {
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit where passwords do not match sets error states properly', () => {
+it('sets state properly when clicking submit and passwords do not match', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
     username: 'PINBALL_CHICK',
@@ -81,7 +81,7 @@ it('clicking submit where passwords do not match sets error states properly', ()
 })
 
 
-it('clicking submit with valid data successfully creates a new user', async () => {
+it('creates a new user when clicking submit with valid data', async () => {
   const data = {
     username: 'PINBALL_CHICK',
     email: 'test@gmail.com',
@@ -100,7 +100,7 @@ it('clicking submit with valid data successfully creates a new user', async () =
   expect(wrapper.state().user).toBe('ME!')
 })
 
-it('a generic error from the API is handled properly', async () => {
+it('gracefully handles a generic error from the API', async () => {
   const data = {
     username: 'PINBALL_CHICK',
     email: 'test@gmail.com',
@@ -117,7 +117,7 @@ it('a generic error from the API is handled properly', async () => {
   expect(wrapper.state().errors).toBe(true)
 })
 
-it('clicking submit and the API reports invalid username is handled properly', async () => {
+it('handles clicking submit and the API reports invalid username', async () => {
   const data = {
     username: 'PINBALL_CHICK',
     email: 'test@gmail.com',
@@ -136,7 +136,7 @@ it('clicking submit and the API reports invalid username is handled properly', a
   expect(wrapper.state().usernameError).toBe(usernameError)
 })
 
-it('clicking submit and the API reports a duplicate username is handled properly', async () => {
+it('handles clicking submit and the API reports a duplicate username', async () => {
   const data = {
     username: 'PINBALL_CHICK',
     email: 'test@gmail.com',
@@ -155,7 +155,7 @@ it('clicking submit and the API reports a duplicate username is handled properly
   expect(wrapper.state().usernameError).toBe(usernameError)
 })
 
-it('clicking submit and the API reports an invalid email is handled properly', async () => {
+it('handles clicking submit and the API reports an invalid email', async () => {
   const data = {
     username: 'PINBALL_CHICK',
     email: 'test@gmail.com',
@@ -173,6 +173,27 @@ it('clicking submit and the API reports an invalid email is handled properly', a
   expect(wrapper.state().errors).toBe(true)
   expect(wrapper.state().emailError).toBe(emailError)
 })
+
+it('gracefully handles a status code from the API != 200', async () => {
+  const data = {
+    username: 'PINBALL_CHICK',
+    email: 'test@gmail.com',
+    password: 'password', 
+    confirm_password: 'password',
+  }
+
+  const apiErrorMsg = 'API failed!'
+  postData.mockImplementationOnce(() => Promise.resolve({message: apiErrorMsg}))
+  
+  const wrapper = shallow(<Signup />);
+  wrapper.setState(data)
+  
+  await wrapper.find('Button').simulate('press')
+  expect(wrapper.state().errors).toBe(true)
+  expect(wrapper.state().apiErrorMsg).toBe(apiErrorMsg)
+})
+
+
 
 
 
