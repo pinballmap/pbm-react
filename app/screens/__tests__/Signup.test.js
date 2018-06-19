@@ -45,6 +45,28 @@ it('sets state properly when clicking submit and the password is too short', () 
   expect(wrapper.state().errors).toBe(true)
 })
 
+it('sets state properly when username is too long', () => {
+  const wrapper = shallow(<Signup />)
+  wrapper.setState({ 
+    username: 'looooooooooooooooooooooooooong', 
+  })
+  
+  wrapper.find('Button').simulate('press')
+  expect(wrapper.state().usernameError).toBe("Username is too long (maximum is 15 characters")
+  expect(wrapper.state().errors).toBe(true)
+})
+
+it('sets state properly when username has invalid characters', () => {
+  const wrapper = shallow(<Signup />)
+  wrapper.setState({ 
+    username: '&&*', 
+  })
+  
+  wrapper.find('Button').simulate('press')
+  expect(wrapper.state().usernameError).toBe("Username must be alphanumeric")
+  expect(wrapper.state().errors).toBe(true)
+})
+
 it('sets state properly when clicking submit with an empty email', () => {
   const wrapper = shallow(<Signup />)
   wrapper.setState({ 
