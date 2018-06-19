@@ -51,19 +51,28 @@ class SignupLogin extends Component {
             <Button
               onPress={() => this.props.navigation.navigate('Login')}
               raised
-              fontSize={18}
-              backgroundColor="#D3ECFF"
-              color="black"
-              rounded
+              buttonStyle={{
+                backgroundColor:"#D3ECFF",
+                borderRadius: 50,
+              }}
+              titleStyle={{
+                color:"black",
+                fontSize:18
+              }}
               title="Current User? Log In"
               accessibilityLabel="Log In"
             />
             <Button
               onPress={() => this.props.navigation.navigate('Signup')}
               raised
-              fontSize={18}
-              backgroundColor="#fdd4d7"
-              color="black"
+              buttonStyle={{
+                backgroundColor:"#fdd4d7",
+                borderRadius: 50,
+              }}
+              titleStyle={{
+                color:"black", 
+                fontSize:18
+              }}
               style={{paddingTop: 15,paddingBottom: 25}}
               rounded
               title="New User? Sign Up"
