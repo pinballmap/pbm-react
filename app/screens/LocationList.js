@@ -2,13 +2,18 @@ import "../config/globals.js"
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, SectionList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
+import { LocationCard } from '../components'
 
 class LocationList extends Component {
   constructor(props){
     super(props);
 
-    this.mapRef = null;
-    this.state ={ lat: null, lon: null, address: '', isLoading: true}
+    this.state ={ 
+      lat: null, 
+      lon: null, 
+      address: '', 
+      isLoading: true
+    };
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -42,6 +47,7 @@ class LocationList extends Component {
 
     const response = await fetch(url)
     const responseJson = await response.json();
+    console.log(responseJson)
      
     let locations = {};
     let locationDict = {};
@@ -70,7 +76,7 @@ class LocationList extends Component {
   }
 
   render(){
-    if(this.state.isLoading){
+    if (this.state.isLoading) {
       return(
         <View style={{flex: 1, padding: 20}}>
           <ActivityIndicator/>
@@ -80,31 +86,29 @@ class LocationList extends Component {
 
     return(
       <View style={{flex: 1}}>
-        <View style={{paddingTop:20}}>
-          <Text>PINBALL MAP</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View>
-              <TextInput
-                onChangeText={address => this.setState({address})}
-                style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
-                value={this.state.address}
-              />
-            </View>
-            <View>
-              <Button
-                onPress={ () => this.reloadSections() }
-                style={{width:30, paddingTop: 15}}
-                title="Submit"
-                accessibilityLabel="Submit"
-              />
-            </View>
+        <View style={{flexDirection: 'row'}}>
+          <View>
+            <TextInput
+              onChangeText={address => this.setState({address})}
+              style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
+              value={this.state.address}
+            />
+          </View>
+          <View>
+            <Button
+              onPress={ () => this.reloadSections() }
+              style={{width:30, paddingTop: 15}}
+              title="Submit"
+              accessibilityLabel="Submit"
+            />
           </View>
         </View>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 75, bottom: 0, right: 0}}>
           <SectionList
             sections={this.state.locations}
-            renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+            // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+            renderItem={({item}) => <LocationCard  location={item}/> }
+            //renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
             keyExtractor={(item, index) => index}
           />
         </View>
