@@ -8,11 +8,10 @@ class LocationList extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: '', lon: '', address: '', isLoading: true}
+    this.state ={ lat: null, lon: null, address: '', isLoading: true}
   }
 
   static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
     return {
       headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
       title: 'LocationList',
@@ -23,12 +22,12 @@ class LocationList extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
+          lat: Number(position.coords.latitude),
+          lon: Number(position.coords.longitude),
           error: null,
         });
 
-        return this.reloadSections();
+        this.reloadSections();
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },

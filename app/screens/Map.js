@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import "../config/globals.js"
-//https://github.com/kenny-hibino/react-places-autocomplete
 
 class Map extends Component {
   constructor(props){
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: '', lon: '', address: '', isLoading: true}
+    this.state ={ lat: null, lon: null, address: '', isLoading: true}
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -60,8 +59,8 @@ class Map extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
+          lat: Number(position.coords.latitude),
+          lon: Number(position.coords.longitude),
           error: null,
         });
 
@@ -89,7 +88,12 @@ class Map extends Component {
       isLoading: false,
       markers: responseJson.locations.map(l => (
         <MapView.Marker
-          coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
+          coordinate={{
+            latitude: Number(l.lat), 
+            longitude: Number(l.lon), 
+            latitudeDelta: 1.00, 
+            longitudeDelta: 1.00,
+          }}
           title={l.name}
           key={l.id}
         />
@@ -111,7 +115,12 @@ class Map extends Component {
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
           <MapView
               ref={this.mapRef}
-              region={{latitude: this.state.lat, longitude: this.state.lon}}
+              region={{
+                latitude: this.state.lat, 
+                longitude: this.state.lon,
+                latitudeDelta: 1.00, 
+                longitudeDelta: 1.00
+              }}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
           >
