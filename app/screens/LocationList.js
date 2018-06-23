@@ -1,9 +1,9 @@
 import "../config/globals.js"
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, SectionList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
 
 class LocationList extends Component {
-
   constructor(props){
     super(props);
 
@@ -11,7 +11,15 @@ class LocationList extends Component {
     this.state ={ lat: '', lon: '', address: '', isLoading: true}
   }
 
-  componentWillMount(){
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
+      title: 'LocationList',
+    };
+  };
+  
+  componentDidMount(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -27,40 +35,39 @@ class LocationList extends Component {
     );
   }
 
-  reloadSections() {
+  async reloadSections() {
     var url = this.state.address != '' ?
       global.api_url + '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
       global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        var locations = {};
-        var locationDict = {};
+    const response = await fetch(url)
+    const responseJson = await response.json();
+     
+    let locations = {};
+    let locationDict = {};
 
-        for (var i in responseJson.locations) {
-          var location = responseJson.locations[i];
-          var firstCharacter = location.name.charAt(0).toUpperCase();
+    for (var i in responseJson.locations) {
+      var location = responseJson.locations[i];
+      var firstCharacter = location.name.charAt(0).toUpperCase();
 
-          if (!(firstCharacter in locationDict)) {
-            locationDict[firstCharacter] = []
-          }
+      if (!(firstCharacter in locationDict)) {
+        locationDict[firstCharacter] = []
+      }
 
-          locationDict[firstCharacter].push(location.name);
-        }
+      locationDict[firstCharacter].push(location.name);
+    }
 
-        locations = Object.keys(locationDict).map((key) => (
-          {title: key, data: locationDict[key]}
-        ));
+    locations = Object.keys(locationDict).map((key) => (
+      {title: key, data: locationDict[key]}
+    ));
 
-        locations.sort((a, b) => a.title > b.title);
+    locations.sort((a, b) => a.title > b.title);
 
-        this.setState({
-          isLoading: false,
-          locations: locations,
-        }, function(){});
-      });
+    this.setState({
+      isLoading: false,
+      locations: locations,
+    })
   }
 
   render(){
