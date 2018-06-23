@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import "../config/globals.js"
+//https://github.com/kenny-hibino/react-places-autocomplete
 
 class Map extends Component {
   constructor(props){
@@ -28,7 +29,7 @@ class Map extends Component {
             style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
           />
           <Button
-            onPress={ params.reloadMap }
+            onPress={() =>  params.reloadMap() }
             style={{width:30, paddingTop: 15}}
             title="Submit"
             accessibilityLabel="Submit"
@@ -50,7 +51,7 @@ class Map extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.navigation.setParams({
       reloadMap: this.reloadMap.bind(this),
       updateAddress: this.updateAddress.bind(this),
@@ -64,17 +65,11 @@ class Map extends Component {
           error: null,
         });
 
-        return this.reloadMap();
+        this.reloadMap();
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-  }
-
-  setStateAsync(state) {
-    return new Promise((resolve) => {
-      this.setState(state, resolve)
-    });
   }
 
   updateAddress(address) {
@@ -89,7 +84,8 @@ class Map extends Component {
 
     const response = await fetch(url);
     const responseJson = await response.json();
-    this.setStateAsync({
+
+    this.setState({
       isLoading: false,
       markers: responseJson.locations.map(l => (
         <MapView.Marker
@@ -98,9 +94,7 @@ class Map extends Component {
           key={l.id}
         />
       ))
-    }, function(){});
-
-    return this.state;
+    })
   }
 
   render(){
@@ -117,6 +111,7 @@ class Map extends Component {
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
           <MapView
               ref={this.mapRef}
+              region={{latitude: this.state.lat, longitude: this.state.lon}}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
           >
