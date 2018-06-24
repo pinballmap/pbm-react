@@ -1,6 +1,6 @@
 import "../config/globals.js"
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, SectionList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, StyleSheet, TextInput, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components'
 
@@ -31,7 +31,7 @@ class LocationList extends Component {
           lon: Number(position.coords.longitude),
           error: null,
         });
-
+  
         this.reloadSections();
       },
       (error) => this.setState({ error: error.message }),
@@ -47,31 +47,10 @@ class LocationList extends Component {
 
     const response = await fetch(url)
     const responseJson = await response.json();
-    console.log(responseJson)
-     
-    let locations = {};
-    let locationDict = {};
-
-    for (var i in responseJson.locations) {
-      var location = responseJson.locations[i];
-      var firstCharacter = location.name.charAt(0).toUpperCase();
-
-      if (!(firstCharacter in locationDict)) {
-        locationDict[firstCharacter] = []
-      }
-
-      locationDict[firstCharacter].push(location.name);
-    }
-
-    locations = Object.keys(locationDict).map((key) => (
-      {title: key, data: locationDict[key]}
-    ));
-
-    locations.sort((a, b) => a.title > b.title);
-
+    
     this.setState({
       isLoading: false,
-      locations: locations,
+      locations: responseJson.locations,
     })
   }
 
@@ -104,12 +83,18 @@ class LocationList extends Component {
           </View>
         </View>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 75, bottom: 0, right: 0}}>
-          <SectionList
-            sections={this.state.locations}
-            // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-            renderItem={({item}) => <LocationCard  location={item}/> }
-            //renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item, index) => index}
+          <FlatList
+            data={this.state.locations}
+            renderItem={({item}) => 
+              <LocationCard  
+                name={item.name}
+                distance={item.distance}
+                street={item.street}
+                state={item.state}
+                zip={item.zip}
+                machines={item.machine_names} />
+            }
+            keyExtractor={(item, index) => `list-item-${index}`}
           />
         </View>
       </View>
