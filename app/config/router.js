@@ -1,11 +1,9 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
-import EnableLocationServices from '../screens/EnableLocationServices.js';
 import FilterMap from '../screens/FilterMap.js';
 import LocationList from '../screens/LocationList.js';
 import Login from '../screens/Login.js';
-import MainMenu from '../screens/MainMenu.js';
 import Map from '../screens/Map.js';
 import RecentActivity from '../screens/RecentActivity.js';
 import RecentMachines from '../screens/RecentMachines.js';
@@ -41,12 +39,6 @@ TabNavigator({
 export const PbmStack = StackNavigator({
   SignupLogin: {
     screen: SignupLogin,
-    navigationOptions: {
-      headerLeft: null
-    },
-  },
-  EnableLocationServices: {
-    screen: EnableLocationServices,
     navigationOptions: {
       headerLeft: null
     },
