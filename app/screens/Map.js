@@ -8,7 +8,7 @@ class Map extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: '', lon: '', address: '', isLoading: true}
+    this.state ={ lat: null, lon: null, address: '', isLoading: true}
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -28,7 +28,7 @@ class Map extends Component {
             style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
           />
           <Button
-            onPress={ params.reloadMap }
+            onPress={() =>  params.reloadMap() }
             style={{width:30, paddingTop: 15}}
             title="Submit"
             accessibilityLabel="Submit"
@@ -50,7 +50,7 @@ class Map extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.navigation.setParams({
       reloadMap: this.reloadMap.bind(this),
       updateAddress: this.updateAddress.bind(this),
@@ -59,22 +59,16 @@ class Map extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
+          lat: Number(position.coords.latitude),
+          lon: Number(position.coords.longitude),
           error: null,
         });
 
-        return this.reloadMap();
+        this.reloadMap();
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-  }
-
-  setStateAsync(state) {
-    return new Promise((resolve) => {
-      this.setState(state, resolve)
-    });
   }
 
   updateAddress(address) {
@@ -89,18 +83,22 @@ class Map extends Component {
 
     const response = await fetch(url);
     const responseJson = await response.json();
-    this.setStateAsync({
+
+    this.setState({
       isLoading: false,
       markers: responseJson.locations.map(l => (
         <MapView.Marker
-          coordinate={{latitude: l.lat, longitude: l.lon, latitudeDelta: 1.00, longitudeDelta: 1.00}}
+          coordinate={{
+            latitude: Number(l.lat), 
+            longitude: Number(l.lon), 
+            latitudeDelta: 1.00, 
+            longitudeDelta: 1.00,
+          }}
           title={l.name}
           key={l.id}
         />
       ))
-    }, function(){});
-
-    return this.state;
+    })
   }
 
   render(){
@@ -117,6 +115,12 @@ class Map extends Component {
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
           <MapView
               ref={this.mapRef}
+              region={{
+                latitude: this.state.lat, 
+                longitude: this.state.lon,
+                latitudeDelta: 1.00, 
+                longitudeDelta: 1.00
+              }}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
           >

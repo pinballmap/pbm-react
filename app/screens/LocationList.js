@@ -1,70 +1,61 @@
 import "../config/globals.js"
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, SectionList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, StyleSheet, TextInput, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
+import { LocationCard } from '../components'
 
 class LocationList extends Component {
-
   constructor(props){
     super(props);
 
-    this.mapRef = null;
-    this.state ={ lat: '', lon: '', address: '', isLoading: true}
+    this.state ={ 
+      lat: null, 
+      lon: null, 
+      address: '', 
+      isLoading: true
+    };
   }
 
-  componentWillMount(){
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
+      title: 'LocationList',
+    };
+  };
+  
+  componentDidMount(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
+          lat: Number(position.coords.latitude),
+          lon: Number(position.coords.longitude),
           error: null,
         });
-
-        return this.reloadSections();
+  
+        this.reloadSections();
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
-  reloadSections() {
+  async reloadSections() {
     var url = this.state.address != '' ?
       global.api_url + '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
       global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
     ;
 
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        var locations = {};
-        var locationDict = {};
-
-        for (var i in responseJson.locations) {
-          var location = responseJson.locations[i];
-          var firstCharacter = location.name.charAt(0).toUpperCase();
-
-          if (!(firstCharacter in locationDict)) {
-            locationDict[firstCharacter] = []
-          }
-
-          locationDict[firstCharacter].push(location.name);
-        }
-
-        locations = Object.keys(locationDict).map((key) => (
-          {title: key, data: locationDict[key]}
-        ));
-
-        locations.sort((a, b) => a.title > b.title);
-
-        this.setState({
-          isLoading: false,
-          locations: locations,
-        }, function(){});
-      });
+    const response = await fetch(url)
+    const responseJson = await response.json();
+    
+    this.setState({
+      isLoading: false,
+      locations: responseJson.locations,
+    })
   }
 
   render(){
-    if(this.state.isLoading){
+    if (this.state.isLoading) {
       return(
         <View style={{flex: 1, padding: 20}}>
           <ActivityIndicator/>
@@ -74,32 +65,36 @@ class LocationList extends Component {
 
     return(
       <View style={{flex: 1}}>
-        <View style={{paddingTop:20}}>
-          <Text>PINBALL MAP</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View>
-              <TextInput
-                onChangeText={address => this.setState({address})}
-                style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
-                value={this.state.address}
-              />
-            </View>
-            <View>
-              <Button
-                onPress={ () => this.reloadSections() }
-                style={{width:30, paddingTop: 15}}
-                title="Submit"
-                accessibilityLabel="Submit"
-              />
-            </View>
+        <View style={{flexDirection: 'row'}}>
+          <View>
+            <TextInput
+              onChangeText={address => this.setState({address})}
+              style={{width:200, height: 40, borderColor: 'gray', borderWidth: 1}}
+              value={this.state.address}
+            />
+          </View>
+          <View>
+            <Button
+              onPress={ () => this.reloadSections() }
+              style={{width:30, paddingTop: 15}}
+              title="Submit"
+              accessibilityLabel="Submit"
+            />
           </View>
         </View>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 75, bottom: 0, right: 0}}>
-          <SectionList
-            sections={this.state.locations}
-            renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item, index) => index}
+          <FlatList
+            data={this.state.locations}
+            renderItem={({item}) => 
+              <LocationCard  
+                name={item.name}
+                distance={item.distance}
+                street={item.street}
+                state={item.state}
+                zip={item.zip}
+                machines={item.machine_names} />
+            }
+            keyExtractor={(item, index) => `list-item-${index}`}
           />
         </View>
       </View>

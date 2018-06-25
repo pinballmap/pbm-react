@@ -17,7 +17,7 @@ class SignupLogin extends Component {
     this.state ={ num_locations: 0, num_lmxes: 0 }
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.props.fetchData()
       .then((data) => {
         this.setState({
@@ -25,12 +25,36 @@ class SignupLogin extends Component {
           num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
         });
       });
+
+    //Determine if location services need to be enabled
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        () => {},
+        (error) => {
+          if (error.message === 'Permission to access location not granted. User must now enable it manually in settings') { 
+            this.setState({ error: error.message })
+          }
+        },
+      )
+    }
   }
 
   render(){
+    if (this.state.error) {
+      return (
+        <View>
+          <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
+          <Button
+            //Clear error state to allow user to proceed either way
+            onPress={ () => this.setState({ error: ''}) }
+            title="OK"
+          />
+        </View>
+      )
+    }
     return(
-      <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
-        <View style={s.mask}>
+        <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+          <View style={s.mask}>
           <View style={s.logoWrapper}>
             <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
           </View>
@@ -78,7 +102,6 @@ class SignupLogin extends Component {
               title="New User? Sign Up"
               accessibilityLabel="Sign Up"
             />
-            <Text style={{fontSize:14,textAlign:"center"}} onPress={() => this.props.navigation.navigate('EnableLocationServices')}>{"I'LL DO THIS LATER"}</Text>
           </View>
         </View>
       </ImageBackground>
