@@ -17,3 +17,25 @@ export const postData = (uri, body) => {
     })
     .catch(err => err)
 }
+
+export const getData = uri => {
+  return fetch(global.api_url + uri)
+    .then((response) => {
+      return response.json()})
+    .catch(err => console.log(err))
+}
+
+export const getCurrentLocation = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => resolve(position),
+      (error) => {
+        if (error.message === 'Permission to access location not granted. User must now enable it manually in settings') { 
+          reject('Location services are not enabled')
+        } else {
+          reject(error.message)
+        }
+      } 
+    )
+  })
+}

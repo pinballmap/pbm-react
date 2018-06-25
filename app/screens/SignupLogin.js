@@ -1,45 +1,41 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
+import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
 
-const fetchData = () => {
-  return fetch(global.api_url + '/regions/location_and_machine_counts.json')
-    .then((response) => response.json())
-}
-
 class SignupLogin extends Component {
-  static defaultProps = { fetchData }
-
   constructor(props){
     super(props);
 
-    this.state ={ num_locations: 0, num_lmxes: 0 }
+    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true }
   }
 
-  async componentDidMount(){
-    this.props.fetchData()
+  componentDidMount(){
+    getData('/regions/location_and_machine_counts.json')
       .then((data) => {
         this.setState({
           num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
           num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
         });
-      });
+      })
 
     //Determine if location services need to be enabled
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => {},
-        (error) => {
-          if (error.message === 'Permission to access location not granted. User must now enable it manually in settings') { 
-            this.setState({ error: error.message })
-          }
-        },
-      )
-    }
+    getCurrentLocation()
+    .then(() => this.setState({ fetchingLocEnabledStatus: false }))
+    .catch(err => {
+      if (err === 'Location services are not enabled') {
+        this.setState({error: err})
+      }
+      this.setState({ fetchingLocEnabledStatus: false })
+    })
   }
 
   render(){
+    if (this.state.fetchingLocEnabledStatus) {
+      return <ActivityIndicator />
+    }
+    
     if (this.state.error) {
       return (
         <View>
