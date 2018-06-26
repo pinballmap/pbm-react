@@ -8,24 +8,26 @@ class SignupLogin extends Component {
   constructor(props){
     super(props);
 
-    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true }
+    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true, error: '', }
   }
 
   componentDidMount(){
     getData('/regions/location_and_machine_counts.json')
       .then((data) => {
         this.setState({
-          num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
-          num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+          // num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
+          // num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+          num_lmxes: data.num_lmxes,
+          num_locations: data.num_locations,
         });
       })
 
     //Determine if location services need to be enabled
     getCurrentLocation()
-    .then(() => this.setState({ fetchingLocEnabledStatus: false }))
-    .catch(err => {
-      if (err === 'Location services are not enabled') {
-        this.setState({error: err})
+    .then(() => this.setState({fetchingLocEnabledStatus: false }))
+    .catch(error => {
+      if (error === 'Location services are not enabled') {
+        this.setState({ error, fetchingLocEnabledStatus: false })
       }
       this.setState({ fetchingLocEnabledStatus: false })
     })

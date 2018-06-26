@@ -1,84 +1,132 @@
-import "../../config/globals.js"
 import React from 'react';
-import SignupLogin from '../SignupLogin';
-import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
+
+import SignupLogin from '../SignupLogin';
+
+import { getData, getCurrentLocation } from '../../config/request';
+jest.mock('../../config/request');
 
 describe('testing signup/login screen', () => {
-  beforeEach(() => {
-    fetch.resetMocks()
-  })
-
-  it('renders without crashing', () => {
-    fetch.mockResponseOnce(JSON.stringify({ num_locations: 11, num_lmxes: 22 }))
-
-    const rendered = renderer.create(<SignupLogin />).toJSON();
-    expect(rendered).toBeTruthy();
+  it('renders activity monitor when determining if location services is enabled', () => {
+    const wrapper = shallow(<SignupLogin />)
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('displays num_locations and num_lmxes from PBM API', (done) => {
-    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
-    let promise;
-    const fetchData = () => {
-      promise = Promise.resolve().then(mockedCallback);
-      return promise;
-    };
+  it('resolves fetching location enabled status after attempting to get current location', async () => {
+    const wrapper = shallow(<SignupLogin />);
+    expect(wrapper.state().fetchingLocEnabledStatus).toBe(true)
+ 
+    getCurrentLocation.mockImplementationOnce(() => Promise.resolve());
+    await wrapper.instance().componentDidMount();
+    expect(wrapper.state().fetchingLocEnabledStatus).toBe(false);
+  });
+  
+  it('renders notice if location services are not enabled', async () => {
+    const wrapper = shallow(<SignupLogin />)
+    getCurrentLocation.mockImplementationOnce(() => Promise.reject('Location services are not enabled'));
 
-    const wrapper = shallow(<SignupLogin fetchData={fetchData}/>);
-
-    promise.then((data) => {
-      wrapper.setState(data)
-      expect(wrapper.state().num_locations).toEqual(11);
-      expect(wrapper.state().num_lmxes).toEqual(22);
-      done();
+    await wrapper.instance().componentDidMount();
+    
+    process.nextTick(() => {
+      wrapper.update()
+      expect(toJson(wrapper)).toMatchSnapshot();
     })
   });
 
-  it('navigates to enable location services if you dont login or sign up', () => {
-    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
-    let promise;
-    const fetchData = () => {
-      promise = Promise.resolve().then(mockedCallback);
-      return promise;
-    };
+  it('navigates to loginsignup after acknowledgement of location services', async () => {
+    const wrapper = shallow(<SignupLogin navigation={{navigate: jest.fn()}}/>)
+    getCurrentLocation.mockImplementationOnce(() => Promise.reject('Location services are not enabled'));
 
-    const navigation = { navigate: jest.fn() };
-    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
-    const rendered = wrapper.dive();
+    await wrapper.instance().componentDidMount();
 
-    rendered.find('Text').last().props().onPress();
-    expect(rendered).toMatchSnapshot();
+    process.nextTick(() => {
+      wrapper.update();
+      expect(wrapper.find('Button').at(0).props().title).toEqual('OK');
+      wrapper.find('Button').at(0).props().onPress();
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+    })
   });
 
-  it('navigates to login if you press login', () => {
-    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
-    let promise;
-    const fetchData = () => {
-      promise = Promise.resolve().then(mockedCallback);
-      return promise;
-    };
+  it('renders login signup page if location services are enabled', async () => {
+    const wrapper = shallow(<SignupLogin />)
+    getCurrentLocation.mockImplementationOnce(() => Promise.resolve());
 
-    const navigation = { navigate: jest.fn() };
-    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
-    const rendered = wrapper.dive();
-
-    rendered.find('Button').at(0).props().onPress();
-    expect(rendered).toMatchSnapshot();
+    await wrapper.instance().componentDidMount();
+    
+    process.nextTick(() => {
+      wrapper.update()
+      expect(toJson(wrapper)).toMatchSnapshot();
+    })
   });
 
-  it('navigates to signup if you press signup', () => {
-    const mockedCallback = () => Promise.resolve({ num_locations: 11, num_lmxes: 22 });
-    let promise;
-    const fetchData = () => {
-      promise = Promise.resolve().then(mockedCallback);
-      return promise;
-    };
+  it('retrieves num_locations and num_lmxes from PBM API', async () => {
+    const wrapper = shallow(<SignupLogin />);
+    expect(wrapper.state().fetchingLocEnabledStatus).toBe(true)
+    getData.mockImplementationOnce(() => Promise.resolve({ num_locations: 11, num_lmxes: 22 }));
+   
+    await wrapper.instance().componentDidMount();
+    
+    expect(wrapper.state().num_locations).toEqual(11);
+    expect(wrapper.state().num_lmxes).toEqual(22);
+  });
 
-    const navigation = { navigate: jest.fn() };
-    const wrapper = shallow(<SignupLogin fetchData={fetchData} navigation={navigation} />);
-    const rendered = wrapper.dive();
+  it('sets error state properly if location enablement is not on', async () => {
+    const wrapper = shallow(<SignupLogin />);
+    expect(wrapper.state().fetchingLocEnabledStatus).toBe(true)
+    
+    getData.mockImplementationOnce(() => Promise.resolve({ num_locations: 11, num_lmxes: 22 }));
+    getCurrentLocation.mockImplementationOnce(() => Promise.reject('Location services are not enabled'))
 
-    rendered.find('Button').at(1).props().onPress();
-    expect(rendered).toMatchSnapshot();
+    await wrapper.instance().componentDidMount();
+    process.nextTick(() => {
+      wrapper.update()
+      expect(wrapper.state().error).toEqual('Location services are not enabled');
+      expect(wrapper.state().fetchingLocEnabledStatus).toBe(false);
+    })
+  });
+
+  it('does not set error state if location enablement is on', async () => {
+    const wrapper = shallow(<SignupLogin />);
+    expect(wrapper.state().fetchingLocEnabledStatus).toBe(true)
+    
+    getData.mockImplementationOnce(() => Promise.resolve({ num_locations: 11, num_lmxes: 22 }));
+    getCurrentLocation.mockImplementationOnce(() => Promise.resolve())
+
+    await wrapper.instance().componentDidMount();
+    process.nextTick(() => {
+      wrapper.update()
+      expect(wrapper.state().error).toEqual('');
+      expect(wrapper.state().fetchingLocEnabledStatus).toBe(false);
+    })
+  });
+
+  it('triggers navigation function to login if you press login', async () => {
+    const wrapper = shallow(<SignupLogin navigation={{navigate: jest.fn()}}/>)
+    getCurrentLocation.mockImplementationOnce(() => Promise.resolve());
+
+    await wrapper.instance().componentDidMount();
+    
+    process.nextTick(() => {
+      wrapper.update()
+      expect(wrapper.find('Button').at(0).props().title).toEqual('Current User? Log In')
+      wrapper.find('Button').at(0).props().onPress();
+      expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
+    })
+  });
+
+  it('triggers navigation function to signup if you press signup', async () => {
+    const wrapper = shallow(<SignupLogin navigation={{navigate: jest.fn()}}/>)
+    getCurrentLocation.mockImplementationOnce(() => Promise.resolve());
+
+    await wrapper.instance().componentDidMount();
+    
+    process.nextTick(() => {
+      wrapper.update()
+      expect(wrapper.find('Button').at(1).props().title).toEqual('New User? Sign Up')
+      wrapper.find('Button').at(1).props().onPress();
+      expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
+    })
   });
 })
