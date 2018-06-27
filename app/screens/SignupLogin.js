@@ -1,36 +1,58 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
+import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
 
-const fetchData = () => {
-  return fetch(global.api_url + '/regions/location_and_machine_counts.json')
-    .then((response) => response.json())
-}
-
 class SignupLogin extends Component {
-  static defaultProps = { fetchData }
-
   constructor(props){
     super(props);
 
-    this.state ={ num_locations: 0, num_lmxes: 0 }
+    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true, error: '', }
   }
 
   componentDidMount(){
-    this.props.fetchData()
+    getData('/regions/location_and_machine_counts.json')
       .then((data) => {
         this.setState({
-          num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
-          num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+          // num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
+          // num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+          num_lmxes: data.num_lmxes,
+          num_locations: data.num_locations,
         });
-      });
+      })
+
+    //Determine if location services need to be enabled
+    getCurrentLocation()
+    .then(() => this.setState({fetchingLocEnabledStatus: false }))
+    .catch(error => {
+      if (error === 'Location services are not enabled') {
+        this.setState({ error, fetchingLocEnabledStatus: false })
+      }
+      this.setState({ fetchingLocEnabledStatus: false })
+    })
   }
 
   render(){
+    if (this.state.fetchingLocEnabledStatus) {
+      return <ActivityIndicator />
+    }
+    
+    if (this.state.error) {
+      return (
+        <View>
+          <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
+          <Button
+            //Clear error state to allow user to proceed either way
+            onPress={ () => this.setState({ error: ''}) }
+            title="OK"
+          />
+        </View>
+      )
+    }
     return(
-      <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
-        <View style={s.mask}>
+        <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+          <View style={s.mask}>
           <View style={s.logoWrapper}>
             <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
           </View>
@@ -51,25 +73,33 @@ class SignupLogin extends Component {
             <Button
               onPress={() => this.props.navigation.navigate('Login')}
               raised
-              fontSize={18}
-              backgroundColor="#D3ECFF"
-              color="black"
-              rounded
+              buttonStyle={{
+                backgroundColor:"#D3ECFF",
+                borderRadius: 50,
+              }}
+              titleStyle={{
+                color:"black",
+                fontSize:18
+              }}
               title="Current User? Log In"
               accessibilityLabel="Log In"
             />
             <Button
               onPress={() => this.props.navigation.navigate('Signup')}
               raised
-              fontSize={18}
-              backgroundColor="#fdd4d7"
-              color="black"
+              buttonStyle={{
+                backgroundColor:"#fdd4d7",
+                borderRadius: 50,
+              }}
+              titleStyle={{
+                color:"black", 
+                fontSize:18
+              }}
               style={{paddingTop: 15,paddingBottom: 25}}
               rounded
               title="New User? Sign Up"
               accessibilityLabel="Sign Up"
             />
-            <Text style={{fontSize:14,textAlign:"center"}} onPress={() => this.props.navigation.navigate('EnableLocationServices')}>{"I'LL DO THIS LATER"}</Text>
           </View>
         </View>
       </ImageBackground>
