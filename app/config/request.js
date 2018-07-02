@@ -10,7 +10,7 @@ export const postData = (uri, body) => {
       body: JSON.stringify(body)
     })
     .then(response => {
-      if (response.status === 200)
+      if (response.status === 200) 
         return response.json()
       
       throw new Error('API response was not ok.')
@@ -21,8 +21,12 @@ export const postData = (uri, body) => {
 export const getData = uri => {
   return fetch(global.api_url + uri)
     .then((response) => {
-      return response.json()})
-    .catch(err => console.log(err))
+      if(response.status === 200)
+        return response.json()
+    
+      throw new Error('API response was not ok')
+    })
+    .catch(err => err)
 }
 
 export const getCurrentLocation = () => {

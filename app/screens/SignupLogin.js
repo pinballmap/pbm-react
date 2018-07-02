@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { ActivityIndicator, AsyncStorage, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
 import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
@@ -8,28 +8,55 @@ class SignupLogin extends Component {
   constructor(props){
     super(props);
 
-    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true, error: '', }
+    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true, locationError: '', apiError: ''}
   }
 
   componentDidMount(){
     getData('/regions/location_and_machine_counts.json')
-      .then((data) => {
-        this.setState({
-          // num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
-          // num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-          num_lmxes: data.num_lmxes,
-          num_locations: data.num_locations,
-        });
+      .then(data => {
+        if (data && data.num_lmxes && data.num_locations) {
+          this.setState({
+            // num_locations: data.num_locations.toLocaleString(navigator.language, { minimumFractionDigits: 0 }),
+            // num_lmxes: data.num_lmxes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+            num_lmxes: data.num_lmxes,
+            num_locations: data.num_locations,
+          });
+        } else {
+          this.setState({
+            apiError: data
+          })
+        }
       })
+      .catch(apiError => this.setState({ apiError }))
 
     //Determine if location services need to be enabled
     getCurrentLocation()
     .then(() => this.setState({fetchingLocEnabledStatus: false }))
-    .catch(error => {
-      if (error === 'Location services are not enabled') {
-        this.setState({ error, fetchingLocEnabledStatus: false })
+    .catch(locationError => {
+      if (locationError === 'Location services are not enabled') {
+        this.setState({ locationError, fetchingLocEnabledStatus: false })
       }
       this.setState({ fetchingLocEnabledStatus: false })
+    })
+
+    getData('/location_types.json')
+    .then(async data => {
+      try {
+        await AsyncStorage.setItem('locationTypes', JSON.stringify(data.location_types))
+      }
+      catch(error) {
+        console.log(error)
+      }
+    })
+
+    getData('/machines.json?no_details=1')
+    .then(async data => {
+      try {
+        await AsyncStorage.setItem('machines', JSON.stringify(data.machines))
+      }
+      catch(error) {
+        console.log(error)
+      }
     })
   }
 
@@ -38,18 +65,19 @@ class SignupLogin extends Component {
       return <ActivityIndicator />
     }
     
-    if (this.state.error) {
+    if (this.state.locationError) {
       return (
         <View>
           <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
           <Button
             //Clear error state to allow user to proceed either way
-            onPress={ () => this.setState({ error: ''}) }
+            onPress={ () => this.setState({ locationError: ''}) }
             title="OK"
           />
         </View>
       )
     }
+    
     return(
         <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
           <View style={s.mask}>
@@ -58,15 +86,18 @@ class SignupLogin extends Component {
           </View>
           <View style={s.outerBorder}>
             <View style={s.textBg}>
-              <Text style={{fontSize:18,textAlign:"center"}}>
-                <Text>Pinball Map is a user-updated map listing</Text>
-                <Text style={s.bold}> {this.state.num_locations} </Text> 
-                <Text>locations and</Text>
-                <Text style={s.bold}> {this.state.num_lmxes} </Text>
-                <Text>machines.</Text>
-                {"\n"}{"\n"}
-                <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
-              </Text>
+              {this.state.apiError ? 
+                <Text>Oops. Something went wrong!</Text> :
+                <Text style={{fontSize:18,textAlign:"center"}}>
+                  <Text>Pinball Map is a user-updated map listing</Text>
+                  <Text style={s.bold}> {this.state.num_locations} </Text> 
+                  <Text>locations and</Text>
+                  <Text style={s.bold}> {this.state.num_lmxes} </Text>
+                  <Text>machines.</Text>
+                  {"\n"}{"\n"}
+                  <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
+                </Text>
+              }
             </View>
           </View>
           <View style={{padding:15}}>
@@ -100,6 +131,11 @@ class SignupLogin extends Component {
               title="New User? Sign Up"
               accessibilityLabel="Sign Up"
             />
+            <Text 
+              onPress={() => this.props.navigation.navigate('Map')} 
+              style={{fontSize:14,textAlign:"center"}}
+              >{"I'LL DO THIS LATER"}
+            </Text>
           </View>
         </View>
       </ImageBackground>
