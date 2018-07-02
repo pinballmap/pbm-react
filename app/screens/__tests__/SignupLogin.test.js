@@ -82,7 +82,7 @@ describe('testing signup/login screen', () => {
     await wrapper.instance().componentDidMount();
     process.nextTick(() => {
       wrapper.update()
-      expect(wrapper.state().error).toEqual('Location services are not enabled');
+      expect(wrapper.state().locationError).toEqual('Location services are not enabled');
       expect(wrapper.state().fetchingLocEnabledStatus).toBe(false);
     })
   });
@@ -97,7 +97,7 @@ describe('testing signup/login screen', () => {
     await wrapper.instance().componentDidMount();
     process.nextTick(() => {
       wrapper.update()
-      expect(wrapper.state().error).toEqual('');
+      expect(wrapper.state().locationError).toEqual('');
       expect(wrapper.state().fetchingLocEnabledStatus).toBe(false);
     })
   });
@@ -129,4 +129,17 @@ describe('testing signup/login screen', () => {
       expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
     })
   });
+
+  it('gracefully handles a status code from the API != 200', async () => {
+    const wrapper = shallow(<SignupLogin />)
+    const errorMsg = 'API response was not ok'
+    getData.mockImplementationOnce(() => Promise.reject(errorMsg))
+    
+    await wrapper.instance().componentDidMount();
+    process.nextTick(() => {
+      wrapper.update()
+      expect(wrapper.state().apiError).toBe(errorMsg)
+    })   
+  })
+  
 })
