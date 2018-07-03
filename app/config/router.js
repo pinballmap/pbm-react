@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import FilterMap from '../screens/FilterMap.js';
 import LocationList from '../screens/LocationList.js';
+import LocationDetails from '../screens/LocationDetails.js';
 import Login from '../screens/Login.js';
 import Map from '../screens/Map.js';
 import RecentActivity from '../screens/RecentActivity.js';
@@ -88,6 +89,9 @@ export const PbmStack = StackNavigator({
     navigationOptions: {
       title: 'Location List',
     },
+  },
+  LocationDetails: {
+    screen: LocationDetails,
   },
   Signup: {
     screen: Signup,
