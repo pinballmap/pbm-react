@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, View } from 'react-native';
+import { AsyncStorage, Text, View } from 'react-native';
 import { Button, Input } from 'react-native-elements'
 import { postData } from '../config/request'
 
@@ -17,7 +17,6 @@ class Signup extends Component {
       confirm_passwordError: '',
       errors: false,
       user: {},
-      successfulSubmission: false,
       apiErrorMsg: '',
     };
   }
@@ -118,11 +117,10 @@ class Signup extends Component {
           }
         }
 
-        if (data.user) {
-          this.setState({ 
-            user: data.user, 
-            successfulSubmission: true 
-          })
+        if (data.user) {      
+          //Object coming back has authentication_token, email, id, username
+          AsyncStorage.setItem('authToken', JSON.stringify(data.user.authentication_token))
+          this.props.navigation.navigate('Map')
         }
       })
     }
@@ -131,16 +129,6 @@ class Signup extends Component {
   render() {
     return (
       <View>
-        <View style={{ marginTop:50 }}>
-        <Modal 
-          visible={this.state.successfulSubmission}
-          transparent={false}
-        >
-          <View style={{ marginTop: 20 }}>
-            <Text>Welcome {this.state.user.email}!</Text>
-          </View>
-        </Modal>
-        </View>
         {this.state.errors && 
           <Text style={{color: 'red', fontWeight: 'bold'}}>
             {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}

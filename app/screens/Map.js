@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
 class Map extends Component {
@@ -69,6 +70,12 @@ class Map extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+
+    retrieveItem('authToken').then((authToken) => {
+      this.setState({ authToken })
+      }).catch((error) => {
+      console.log('Promise is rejected with error: ' + error);
+      }); 
   }
 
   updateAddress(address) {
