@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
-import { ButtonGroup } from 'react-native-elements'
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { ButtonGroup, ListItem } from 'react-native-elements'
+import { retrieveItem } from '../config/utils';
 
 import { getData } from '../config/request'
 
@@ -23,14 +25,14 @@ class LocationDetails extends Component {
 
     componentDidMount() {
         getData(`/locations/${this.state.id}.json`)
-            .then(data => {
-                console.log(data)
-                this.setState({
-                    locationDetailsLoading: false,
-                    location: data,
-                })
-
+        .then(data => {
+            console.log(data)
+            this.setState({
+                locationDetailsLoading: false,
+                location: data,
             })
+        })
+        
         getData(`/locations/${this.state.id}/machine_details.json`)
         .then(data => {
             console.log(data)
@@ -38,9 +40,12 @@ class LocationDetails extends Component {
                 machineDetailsLoading: false,
                 machines: data.machines,
             })
-      
-            
         })
+        
+        
+        retrieveItem('locationTypes').then((locationTypes) => {
+            this.setState({ locationTypes })
+            }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
     }
 
     render() {
@@ -52,24 +57,72 @@ class LocationDetails extends Component {
             )
         }
 
+        const machines = this.state.machines
+        const location = this.state.location
+
         return (
             <View style={{ flex: 1 }}>
-                <ButtonGroup
-                    onPress={this.updateIndex}
-                    selectedIndex={this.state.buttonIndex}
-                    buttons={['Machines', 'Info']}
-                    selectedBackgroundColor='pink'
-                    containerStyle={{height: 30}}
-                />
-                {this.state.buttonIndex === 0 ? 
-                    this.state.machines.map(machine => <Text key={machine.id}>{machine.name}</Text>) :
-                    <Text>{this.state.location.city}</Text> 
-                }
+                <MapView
+                    region={{
+                        latitude: Number(location.lat),
+                        longitude: Number(location.lon),
+                        latitudeDelta: 0.03,
+                        longitudeDelta: 0.03
+                    }}
+                    style={styles.map}
+                    provider={PROVIDER_GOOGLE}
+                >
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: Number(location.lat),
+                            longitude: Number(location.lon),
+                            latitudeDelta: 0.03,
+                            longitudeDelta: 0.03,
+                        }}
+                    />
+                </MapView>
+                <View style={{ flex: 3 }}>
+                    <ButtonGroup
+                        onPress={this.updateIndex}
+                        selectedIndex={this.state.buttonIndex}
+                        buttons={['Machines', 'Info']}
+                        containerStyle={{ height: 30 }}
+                    />
+                    {this.state.buttonIndex === 0 ?
+                        <View>
+                        {
+                            machines.map(machine => (
+                                <ListItem   
+                                    key={machine.id}
+                                    title={machine.name}
+                                />
+                            ))
+                        }
+                        </View> :
+                        <View>
+                            <Text>{location.street}</Text>
+                            <Text>{location.city}</Text>
+                            <Text>{location.phone}</Text>
+                            {location.website && <Text 
+                                style={{color: 'blue'}}
+                                onPress={() => Linking.openURL(location.website)}
+                            >Website</Text>}
+                            {location.location_type_id && <Text>{this.state.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
+                        </View>
+                       
+                    }
+                </View>
             </View>
         )
 
 
     }
 }
+
+const styles = StyleSheet.create({
+    map: {
+        flex: 1,
+    },
+});
 
 export default LocationDetails;
