@@ -118,11 +118,11 @@ class Signup extends Component {
         }
 
         if (data.user) {      
-          //Object coming back has authentication_token, email, id, username
-          AsyncStorage.setItem('authToken', JSON.stringify(data.user.authentication_token))
+          AsyncStorage.setItem('auth', JSON.stringify(data.user))
           this.props.navigation.navigate('Map')
         }
       })
+      .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
     }
   }
 
@@ -136,7 +136,7 @@ class Signup extends Component {
         }
         <Input 
           label='Username' 
-          onChangeText={(username) => this.setState({username})}
+          onChangeText={(username) => this.setState({useraame})}
           value={this.state.username}
           errorStyle={{ color : 'red' }}
           errorMessage={this.state.usernameError}

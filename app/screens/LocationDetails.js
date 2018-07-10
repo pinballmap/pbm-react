@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { ButtonGroup, ListItem } from 'react-native-elements'
+import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { retrieveItem } from '../config/utils';
 
 import { getData } from '../config/request'
@@ -26,7 +26,6 @@ class LocationDetails extends Component {
     componentDidMount() {
         getData(`/locations/${this.state.id}.json`)
         .then(data => {
-            console.log(data)
             this.setState({
                 locationDetailsLoading: false,
                 location: data,
@@ -35,7 +34,6 @@ class LocationDetails extends Component {
         
         getData(`/locations/${this.state.id}/machine_details.json`)
         .then(data => {
-            console.log(data)
             this.setState({
                 machineDetailsLoading: false,
                 machines: data.machines,
@@ -45,7 +43,11 @@ class LocationDetails extends Component {
         
         retrieveItem('locationTypes').then((locationTypes) => {
             this.setState({ locationTypes })
-            }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
+        }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
+
+        retrieveItem('auth').then((auth) => {
+            this.setState({ auth })
+        }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
     }
 
     render() {
@@ -90,6 +92,12 @@ class LocationDetails extends Component {
                     />
                     {this.state.buttonIndex === 0 ?
                         <View>
+                        {this.state.auth && 
+                            <Button
+                                onPress={() => console.log(this.state.auth.authentication_token, this.state.auth.email)}
+                                title={'Add Machine'}
+                            />
+                        }
                         {
                             machines.map(machine => (
                                 <ListItem   

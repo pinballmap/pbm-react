@@ -1,16 +1,9 @@
 import React from 'react';
 import Signup from '../Signup';
-
-import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
 import { postData } from '../../config/request';
 jest.mock('../../config/request');
-
-it('renders without crashing', () => {
-  const rendered = renderer.create(<Signup />).toJSON();
-  expect(rendered).toBeTruthy();
-});
 
 it('sets error states properly when clicking submit with no fields filled', () => {
   const wrapper = shallow(<Signup />)
@@ -113,13 +106,11 @@ it('creates a new user when clicking submit with valid data', async () => {
 
   postData.mockImplementationOnce(() => Promise.resolve({user: 'ME!'}))
   
-  const wrapper = shallow(<Signup />);
+  const wrapper = shallow(<Signup navigation={{navigate: jest.fn()}}/>);
   wrapper.setState(data)
   
   await wrapper.find('Button').simulate('press')
- 
-  expect(wrapper.state().successfulSubmission).toBe(true)
-  expect(wrapper.state().user).toBe('ME!')
+  expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
 })
 
 it('gracefully handles a generic error from the API', async () => {
@@ -196,6 +187,25 @@ it('handles clicking submit and the API reports an invalid email', async () => {
   expect(wrapper.state().emailError).toBe(emailError)
 })
 
+// it('gracefully handles a status code from the API != 200', async () => {
+//   const data = {
+//     username: 'PINBALL_CHICK',
+//     email: 'test@gmail.com',
+//     password: 'password', 
+//     confirm_password: 'password',
+//   }
+
+//   const apiErrorMsg = 'API failed!'
+//   postData.mockImplementationOnce(() => Promise.resolve({message: apiErrorMsg}))
+  
+//   const wrapper = shallow(<Signup />);
+//   wrapper.setState(data)
+  
+//   await wrapper.find('Button').simulate('press')
+//   expect(wrapper.state().errors).toBe(true)
+//   expect(wrapper.state().apiErrorMsg).toBe(apiErrorMsg)
+// })
+
 it('gracefully handles a status code from the API != 200', async () => {
   const data = {
     username: 'PINBALL_CHICK',
@@ -203,16 +213,19 @@ it('gracefully handles a status code from the API != 200', async () => {
     password: 'password', 
     confirm_password: 'password',
   }
-
-  const apiErrorMsg = 'API failed!'
-  postData.mockImplementationOnce(() => Promise.resolve({message: apiErrorMsg}))
   
-  const wrapper = shallow(<Signup />);
+  const errorMsg = 'API response was not ok'
+  postData.mockImplementationOnce(() => Promise.reject(errorMsg))
+
+  const wrapper = shallow(<Signup />)
   wrapper.setState(data)
   
   await wrapper.find('Button').simulate('press')
-  expect(wrapper.state().errors).toBe(true)
-  expect(wrapper.state().apiErrorMsg).toBe(apiErrorMsg)
+  process.nextTick(() => {
+    wrapper.update()
+    expect(wrapper.state().apiErrorMsg).toBe(errorMsg)
+    expect(wrapper.state().errors).toBe(true)
+  })   
 })
 
 
