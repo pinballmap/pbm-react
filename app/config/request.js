@@ -20,7 +20,7 @@ export const postData = (uri, body) => {
 
 export const getData = uri => {
   return fetch(global.api_url + uri)
-    .then((response) => {
+    .then(response => {
       if(response.status === 200)
         return response.json()
     
