@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { retrieveItem } from '../config/utils';
@@ -18,6 +19,13 @@ class LocationDetails extends Component {
             machines: []
         }
     }
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+          headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title={navigation.getParam('context', 'Map')} />,
+          title: 'Location Details',
+        };
+      };
 
     updateIndex = (buttonIndex) => {
         this.setState({ buttonIndex })
