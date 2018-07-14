@@ -136,28 +136,28 @@ class Signup extends Component {
         }
         <Input 
           label='Username' 
-          onChangeText={(username) => this.setState({useraame})}
+          onChangeText={username => this.setState({username})}
           value={this.state.username}
           errorStyle={{ color : 'red' }}
           errorMessage={this.state.usernameError}
         />
         <Input 
           label="Email Address" 
-          onChangeText={(email) => this.setState({email})}
+          onChangeText={email => this.setState({email})}
           value={this.state.value}
           errorStyle={{ color : 'red' }}
           errorMessage={this.state.emailError}
         />
         <Input 
           label="Password" 
-          onChangeText={(password) => this.setState({password})}
+          onChangeText={password => this.setState({password})}
           value={this.state.password}
           errorStyle={{ color : 'red' }}
           errorMessage={this.state.passwordError}
         />
         <Input 
           label="Confirm Password" 
-          onChangeText={(confirm_password) => this.setState({confirm_password})}
+          onChangeText={confirm_password => this.setState({confirm_password})}
           value={this.state.confirm_password}
           errorStyle={{ color : 'red' }}
           errorMessage={this.state.confirm_passwordError}

@@ -187,25 +187,6 @@ it('handles clicking submit and the API reports an invalid email', async () => {
   expect(wrapper.state().emailError).toBe(emailError)
 })
 
-// it('gracefully handles a status code from the API != 200', async () => {
-//   const data = {
-//     username: 'PINBALL_CHICK',
-//     email: 'test@gmail.com',
-//     password: 'password', 
-//     confirm_password: 'password',
-//   }
-
-//   const apiErrorMsg = 'API failed!'
-//   postData.mockImplementationOnce(() => Promise.resolve({message: apiErrorMsg}))
-  
-//   const wrapper = shallow(<Signup />);
-//   wrapper.setState(data)
-  
-//   await wrapper.find('Button').simulate('press')
-//   expect(wrapper.state().errors).toBe(true)
-//   expect(wrapper.state().apiErrorMsg).toBe(apiErrorMsg)
-// })
-
 it('gracefully handles a status code from the API != 200', async () => {
   const data = {
     username: 'PINBALL_CHICK',
