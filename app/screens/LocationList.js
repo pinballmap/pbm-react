@@ -1,6 +1,7 @@
 import "../config/globals.js"
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, FlatList, TextInput, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components';
 import { retrieveItem } from '../config/utils';
@@ -15,7 +16,9 @@ class LocationList extends Component {
       lat: null,
       lon: null,
       address: '',
-      isLoading: true
+      isLoading: true,
+      buttonIndex: 0,
+      locations: [],
     };
   }
 
@@ -26,6 +29,26 @@ class LocationList extends Component {
     };
   };
 
+
+  updateIndex = (buttonIndex) => {
+    this.setState({ buttonIndex })
+    switch(buttonIndex) {
+      case 0:
+        return this.setState({
+          locations: this.state.locations.sort((a, b) => a.distance > b.distance)
+        })
+      case 1:
+        return this.setState({
+          locations: this.state.locations.sort((a, b) => a.name > b.name)
+        })
+      case 2:
+        return this.setState({
+          locations: this.state.locations.sort((a, b) => a.updatedAt > b.updatedAt)
+        })
+    }
+  }
+
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -35,7 +58,17 @@ class LocationList extends Component {
           error: null,
         });
 
-        this.reloadSections();
+        const url = this.state.address != '' ?
+        '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
+        '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5';
+  
+        getData(url)
+          .then(data => {
+            this.setState({
+              isLoading: false,
+              locations: data.locations,
+            })
+          })
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -46,20 +79,6 @@ class LocationList extends Component {
       }).catch((error) => {
       console.log('Promise is rejected with error: ' + error);
       }); 
-  }
-
-  reloadSections() {
-    var url = this.state.address != '' ?
-      '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
-      '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5';
-
-    getData(url)
-      .then(data => {
-        this.setState({
-          isLoading: false,
-          locations: data.locations,
-        })
-      })
   }
 
   render() {
@@ -73,26 +92,17 @@ class LocationList extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View>
-            <TextInput
-              onChangeText={address => this.setState({ address })}
-              style={{ width: 200, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              value={this.state.address}
-            />
-          </View>
-          <View>
-            <Button
-              onPress={() => this.reloadSections()}
-              style={{ width: 30, paddingTop: 15 }}
-              title="Submit"
-              accessibilityLabel="Submit"
-            />
-          </View>
-        </View>
+        <Text>SORT BY:</Text>
+        <ButtonGroup
+            onPress={this.updateIndex}
+            selectedIndex={this.state.buttonIndex}
+            buttons={['Distance', 'Alphabetically', 'Last Updated']}
+            containerStyle={{ height: 30 }}
+        />
         <View style={{ flex: 1, position: 'absolute', left: 0, top: 75, bottom: 0, right: 0 }}>
           <FlatList
             data={this.state.locations}
+            extraData={this.state}
             renderItem={({ item }) =>
               <LocationCard
                 name={item.name}
