@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { LocationCard } from '../components';
 import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
@@ -103,7 +104,21 @@ class Map extends Component {
           }}
           title={l.name}
           key={l.id}
-        />
+        >
+          <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
+            <LocationCard
+                name={l.name}
+                distance={l.distance}
+                street={l.street}
+                state={l.state}
+                zip={l.zip}
+                machines={l.machine_names} 
+                // type={item.location_type_id ? this.state.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                type={""}
+                //navigation={this.props.navigation}
+                id={l.id} />
+          </MapView.Callout>
+        </MapView.Marker>
       ))
     })
   }
