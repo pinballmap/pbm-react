@@ -1,7 +1,10 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import { PbmStack } from './config/router';
 import { YellowBox } from 'react-native';
+
+import store from './store';
 
 class App extends Component {
   constructor(props){
@@ -17,7 +20,11 @@ class App extends Component {
   }
 
   render() {
-    return <PbmStack />;
+    return (
+      <Provider store={store}>
+        <PbmStack />
+      </Provider>
+    )
   }
 }
 

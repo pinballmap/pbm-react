@@ -1,0 +1,2 @@
+export const UPDATE_QUERY = 'UPDATE_QUERY'
+export const SET_LOCATION_ID = 'SET_LOCATION_ID'
