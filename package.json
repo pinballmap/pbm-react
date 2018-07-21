@@ -8,9 +8,11 @@
     "expo": "^26.0.0",
     "npm": "^5.10.0",
     "react-native": "^0.54.0",
+    "react-native-autocomplete-input": "^3.5.0",
     "react-native-elements": "^1.0.0-beta5",
     "react-native-maps": "^0.21.0",
-    "react-navigation": "^1.5.12"
+    "react-navigation": "^1.5.12",
+    "redux-devtools-extension": "^2.13.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -37,7 +39,8 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest --watch --coverage ; eslint *.js **/*.js",
-    "lint": "eslint *.js **/*.js"
+    "lint": "eslint *.js **/*.js",
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
   "jest": {
     "preset": "react-native",

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -11,7 +12,7 @@ class LocationDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: this.props.navigation.state.params['id'],
+            id: this.props.navigation.state.params['id'] ? this.props.navigation.state.params['id'] : this.props.query.locationId,
             locationDetailsLoading: true,
             machineDetailsLoading: true,
             buttonIndex: 0,
@@ -107,7 +108,7 @@ class LocationDetails extends Component {
                             />
                         }
                         {
-                            machines.map(machine => (
+                             machines.map(machine => (
                                 <ListItem   
                                     key={machine.id}
                                     title={machine.name}
@@ -141,4 +142,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LocationDetails;
+const mapStateToProps = ({ query }) => ({ query })
+export default connect(mapStateToProps)(LocationDetails);

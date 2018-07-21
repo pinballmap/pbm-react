@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { LocationCard } from '../components';
+import { LocationCard, SearchBar } from '../components';
+import { setLocationId } from '../actions/query_actions'
 import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
@@ -10,11 +12,15 @@ class Map extends Component {
     super(props);
 
     this.mapRef = null;
-    this.state ={ lat: null, lon: null, address: '', isLoading: true}
+    this.state ={ 
+      lat: null, 
+      lon: null, 
+      address: '', 
+      isLoading: true,
+    }
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
+  static navigationOptions = ({ navigation }) => {  
     return {
       headerLeft:
         <Button
@@ -23,19 +29,8 @@ class Map extends Component {
           title="List"
           accessibilityLabel="List"
         />,
-      title:
-        <View style={{flexDirection: 'row'}}>
-          <TextInput
-            onChangeText={address => params.updateAddress({address})}
-            style={{width:100, height: 40, borderColor: 'gray', borderWidth: 1}}
-          />
-          <Button
-            onPress={() =>  params.reloadMap() }
-            style={{width:30, paddingTop: 15}}
-            title="Submit"
-            accessibilityLabel="Submit"
-          />
-        </View>,
+      headerTitle:
+          <SearchBar />,
       headerRight:
         <Button
           onPress={ () => navigation.navigate('FilterMap')}
@@ -83,44 +78,52 @@ class Map extends Component {
     this.setState(address);
   }
 
-  async reloadMap() {
-    var url = this.state.address != '' ?
-      global.api_url + '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
-      global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
-    ;
+  async reloadMap(location) {
+    if (location) {
+      this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
+    }  
+    else {
+      const url = global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
 
-    const response = await fetch(url);
-    const responseJson = await response.json();
+      const response = await fetch(url);
+      const responseJson = await response.json();
 
-    this.setState({
-      isLoading: false,
-      markers: responseJson.locations.map(l => (
-        <MapView.Marker
-          coordinate={{
-            latitude: Number(l.lat), 
-            longitude: Number(l.lon), 
-            latitudeDelta: 1.00, 
-            longitudeDelta: 1.00,
-          }}
-          title={l.name}
-          key={l.id}
-        >
-          <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
-            <LocationCard
-                name={l.name}
-                distance={l.distance}
-                street={l.street}
-                state={l.state}
-                zip={l.zip}
-                machines={l.machine_names} 
-                // type={item.location_type_id ? this.state.locationTypes.find(location => location.id === item.location_type_id).name : ""}
-                type={""}
-                //navigation={this.props.navigation}
-                id={l.id} />
-          </MapView.Callout>
-        </MapView.Marker>
-      ))
-    })
+      this.setState({
+        isLoading: false,
+        markers: responseJson.locations.map(l => (
+          <MapView.Marker
+            coordinate={{
+              latitude: Number(l.lat), 
+              longitude: Number(l.lon), 
+              latitudeDelta: 1.00, 
+              longitudeDelta: 1.00,
+            }}
+            title={l.name}
+            key={l.id}
+          >
+            <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
+              <LocationCard
+                  name={l.name}
+                  distance={l.distance}
+                  street={l.street}
+                  state={l.state}
+                  zip={l.zip}
+                  machines={l.machine_names} 
+                  // type={item.location_type_id ? this.state.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                  type={""}
+                  //navigation={this.props.navigation}
+                  id={l.id} />
+            </MapView.Callout>
+          </MapView.Marker>
+        ))
+      })
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.query.locationId !== this.props.query.locationId) {
+      this.reloadMap(true)
+    }
   }
 
   render(){
@@ -160,4 +163,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+const mapStateToProps = ({ query }) => ({ query })
+export default connect(mapStateToProps, { setLocationId })(Map);
