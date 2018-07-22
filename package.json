@@ -5,6 +5,7 @@
   "dependencies": {
     "enzyme-to-json": "^3.3.4",
     "eslint-plugin-react-native": "^3.2.1",
+    "exp": "^55.0.5",
     "expo": "^26.0.0",
     "npm": "^5.10.0",
     "react-native": "^0.54.0",
@@ -12,7 +13,8 @@
     "react-native-elements": "^1.0.0-beta5",
     "react-native-maps": "^0.21.0",
     "react-navigation": "^1.5.12",
-    "redux-devtools-extension": "^2.13.5"
+    "redux-devtools-extension": "^2.13.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
