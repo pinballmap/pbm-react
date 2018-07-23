@@ -48,11 +48,6 @@ class LocationDetails extends Component {
                 machines: data.machines,
             })
         })
-        
-        
-        retrieveItem('locationTypes').then((locationTypes) => {
-            this.setState({ locationTypes })
-        }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
 
         retrieveItem('auth').then((auth) => {
             this.setState({ auth })
@@ -124,7 +119,7 @@ class LocationDetails extends Component {
                                 style={{color: 'blue'}}
                                 onPress={() => Linking.openURL(location.website)}
                             >Website</Text>}
-                            {location.location_type_id && <Text>{this.state.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
+                            {location.location_type_id && <Text>{this.props.location_types.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
                         </View>
                        
                     }
@@ -142,5 +137,5 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = ({ query }) => ({ query })
+const mapStateToProps = ({ location_types, query }) => ({ location_types, query })
 export default connect(mapStateToProps)(LocationDetails);

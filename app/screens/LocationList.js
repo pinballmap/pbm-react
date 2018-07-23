@@ -1,10 +1,9 @@
-import "../config/globals.js"
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components';
-import { retrieveItem } from '../config/utils';
 
 import { getData } from '../config/request'
 
@@ -73,16 +72,10 @@ class LocationList extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-
-    retrieveItem('locationTypes').then((locationTypes) => {
-      this.setState({ locationTypes })
-      }).catch((error) => {
-      console.log('Promise is rejected with error: ' + error);
-      }); 
   }
 
   render() {
-    if (this.state.isLoading || !this.state.locationTypes) {
+    if (this.state.isLoading) {
       return (
         <View style={{ flex: 1, padding: 20 }}>
           <ActivityIndicator />
@@ -111,7 +104,7 @@ class LocationList extends Component {
                 state={item.state}
                 zip={item.zip}
                 machines={item.machine_names} 
-                type={item.location_type_id ? this.state.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                type={item.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === item.location_type_id).name : ""}
                 navigation={this.props.navigation}
                 id={item.id}
                 context={'Location List'} />
@@ -124,4 +117,5 @@ class LocationList extends Component {
   }
 }
 
-export default LocationList;
+const mapStateToProps = ({ location_types }) => ({ location_types })
+export default connect(mapStateToProps)(LocationList);
