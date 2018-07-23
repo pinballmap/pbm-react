@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
-import { setLocationId } from '../actions/query_actions'
+import { setLocationId } from '../actions/query_actions';
+import { fetchLocations } from '../actions/location_actions';
 import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
@@ -83,8 +84,9 @@ class Map extends Component {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
     else {
-      const url = global.api_url + '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
-
+      const other = '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
+      const url = global.api_url + other
+      this.props.getLocations(other)
       const response = await fetch(url);
       const responseJson = await response.json();
 
@@ -109,8 +111,7 @@ class Map extends Component {
                   state={l.state}
                   zip={l.zip}
                   machines={l.machine_names} 
-                  // type={item.location_type_id ? this.state.locationTypes.find(location => location.id === item.location_type_id).name : ""}
-                  type={""}
+                  type={l.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === l.location_type_id).name : ""}
                   //navigation={this.props.navigation}
                   id={l.id} />
             </MapView.Callout>
@@ -163,5 +164,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ query }) => ({ query })
-export default connect(mapStateToProps, { setLocationId })(Map);
+const mapStateToProps = ({ location_types, query }) => ({ location_types, query })
+const mapDispatchToProps = (dispatch) => ({
+    getLocations: (url) => dispatch(fetchLocations(url)),
+    setLocationId,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
