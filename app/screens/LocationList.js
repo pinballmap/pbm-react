@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components';
-
-import { getData } from '../config/request'
 
 class LocationList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      lat: null,
-      lon: null,
-      address: '',
-      isLoading: true,
       buttonIndex: 0,
-      locations: [],
+      locations: this.props.locations.locations,
     };
   }
 
@@ -27,7 +21,6 @@ class LocationList extends Component {
       title: 'LocationList',
     };
   };
-
 
   updateIndex = (buttonIndex) => {
     this.setState({ buttonIndex })
@@ -47,42 +40,8 @@ class LocationList extends Component {
     }
   }
 
-
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          lat: Number(position.coords.latitude),
-          lon: Number(position.coords.longitude),
-          error: null,
-        });
-
-        const url = this.state.address != '' ?
-        '/locations/closest_by_address.json?address=' + this.state.address + ';send_all_within_distance=1;max_distance=5' :
-        '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5';
-  
-        getData(url)
-          .then(data => {
-            this.setState({
-              isLoading: false,
-              locations: data.locations,
-            })
-          })
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-  }
-
   render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={{ flex: 1, padding: 20 }}>
-          <ActivityIndicator />
-        </View>
-      )
-    }
-
+    const { location_types: { locationTypes }} = this.props
     return (
       <View style={{ flex: 1 }}>
         <Text>SORT BY:</Text>
@@ -104,7 +63,7 @@ class LocationList extends Component {
                 state={item.state}
                 zip={item.zip}
                 machines={item.machine_names} 
-                type={item.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                type={item.location_type_id ? locationTypes.find(location => location.id === item.location_type_id).name : ""}
                 navigation={this.props.navigation}
                 id={item.id}
                 context={'Location List'} />
@@ -117,5 +76,5 @@ class LocationList extends Component {
   }
 }
 
-const mapStateToProps = ({ location_types }) => ({ location_types })
+const mapStateToProps = ({ locations, location_types }) => ({ locations, location_types })
 export default connect(mapStateToProps)(LocationList);
