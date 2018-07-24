@@ -16,6 +16,8 @@ class Map extends Component {
     this.state ={ 
       lat: null, 
       lon: null, 
+      latitudeDelta: 1.000,
+      longitudeDelta: 1.000,
       address: '', 
       isLoading: true,
       locations: this.props.locations.locations,
@@ -42,6 +44,30 @@ class Map extends Component {
         />
     };
   };
+
+  async reloadMap(location) {
+    if (location) {
+      this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
+    }  
+    else {    
+      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5')
+
+      this.setState({
+        isLoading: false,
+      })
+    }
+  }
+
+  onRegionChange = (region) => {
+    this.setState({ 
+      lat: region.latitude, 
+      lon: region.longitude, 
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta,
+    })
+
+    this.reloadMap()
+  }
 
   componentDidUpdate(){
     if (this.mapRef) {
@@ -80,19 +106,6 @@ class Map extends Component {
     this.setState(address);
   }
 
-  async reloadMap(location) {
-    if (location) {
-      this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
-    }  
-    else {    
-      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5')
-
-      this.setState({
-        isLoading: false,
-      })
-    }
-  }
-
   componentWillReceiveProps(props) {
     if (props.query.locationId !== this.props.query.locationId) {
       this.reloadMap(true)
@@ -121,19 +134,20 @@ class Map extends Component {
               region={{
                 latitude: this.state.lat, 
                 longitude: this.state.lon,
-                latitudeDelta: 1.00, 
-                longitudeDelta: 1.00
+                latitudeDelta: this.state.latitudeDelta, 
+                longitudeDelta: this.state.longitudeDelta,
               }}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
+              onRegionChange={this.onRegionChange}
           >
           {this.state.locations.map(l => (
             <MapView.Marker
               coordinate={{
                 latitude: Number(l.lat), 
                 longitude: Number(l.lon), 
-                latitudeDelta: 1.00, 
-                longitudeDelta: 1.00,
+                latitudeDelta: this.state.latitudeDelta, 
+                longitudeDelta: this.state.longitudeDelta,
               }}
               title={l.name}
               key={l.id}
