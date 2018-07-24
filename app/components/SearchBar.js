@@ -17,6 +17,7 @@ class SearchBar extends Component {
         if (query === '')
             return this.setState({ foundItems: []})
         
+        //regex query to replace any apostrophes with proper character 
         const foundItems = await getData(`/locations/autocomplete?name=${query}`)
         this.setState({ foundItems })
     }
