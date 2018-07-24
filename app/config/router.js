@@ -1,5 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Ionicons, FontAwesome, EvilIcons, MaterialIcons } from '@expo/vector-icons';
 
 import FilterMap from '../screens/FilterMap.js';
 import LocationList from '../screens/LocationList.js';
@@ -46,42 +47,37 @@ export const PbmStack = StackNavigator({
   },
   Map: {
     screen: TabNavigator({
-      Map: {
-        screen: Map,
-      },
-      RecentMachines: {
-        screen: RecentMachines,
-        navigationOptions: {
-          title: 'Recent',
-          headerLeft: null
-        },
-      },
-      RecentActivity: {
-        screen: RecentActivity,
-        navigationOptions: {
-          title: 'Activity',
-          headerLeft: null
-        },
-      },
-      UserProfile: {
-        screen: UserProfile,
-        navigationOptions: {
-          title: 'Profile',
-          headerLeft: null
-        },
-      },
-    }, {
+      Map: { screen: Map },
+      RecentMachines: { screen: RecentMachines },
+      Activity: { screen: RecentActivity },
+      Profile: { screen: UserProfile },
+    },
+    {
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: () => {
+          const { routeName } = navigation.state
+          let iconName;
+          switch(routeName) {
+            case 'Map':
+              return <MaterialIcons name='menu' size={25} />
+            case 'RecentMachines':
+              return <Ionicons name='newspaper-o' size={25} />
+            case 'Activity':
+              return <FontAwesome name='newspaper-o' size={25} />
+            case 'Profile':
+              return <EvilIcons name='user' size={25} />
+          }
+        }
+      })
+    },
+    {
       tabBarPosition: 'bottom',
-       swipeEnabled: true,
-         tabBarOptions: {
-         activeTintColor: '#f2f2f2',
-         activeBackgroundColor: '#2EC4B6',
-         inactiveTintColor: '#666',
-         labelStyle: {
-           fontSize: 22,
-           padding: 12
-         }
-       }
+      swipeEnabled: true,
+      tabBarOptions: {
+        activeTintColor: '#f2f2f2',
+        activeBackgroundColor: '#2EC4B6',
+        inactiveTintColor: '#666',
+      }
     })
   },
   LocationList: {
