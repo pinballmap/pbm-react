@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
 import { setLocationId } from '../actions/query_actions';
@@ -18,6 +18,7 @@ class Map extends Component {
       lon: null, 
       address: '', 
       isLoading: true,
+      locations: this.props.locations.locations,
     }
   }
 
@@ -83,40 +84,11 @@ class Map extends Component {
     if (location) {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
-    else {
-      const other = '/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5'
-      const url = global.api_url + other
-      this.props.getLocations(other)
-      const response = await fetch(url);
-      const responseJson = await response.json();
+    else {    
+      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5')
 
       this.setState({
         isLoading: false,
-        markers: responseJson.locations.map(l => (
-          <MapView.Marker
-            coordinate={{
-              latitude: Number(l.lat), 
-              longitude: Number(l.lon), 
-              latitudeDelta: 1.00, 
-              longitudeDelta: 1.00,
-            }}
-            title={l.name}
-            key={l.id}
-          >
-            <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
-              <LocationCard
-                  name={l.name}
-                  distance={l.distance}
-                  street={l.street}
-                  state={l.state}
-                  zip={l.zip}
-                  machines={l.machine_names} 
-                  type={l.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === l.location_type_id).name : ""}
-                  //navigation={this.props.navigation}
-                  id={l.id} />
-            </MapView.Callout>
-          </MapView.Marker>
-        ))
       })
     }
   }
@@ -125,6 +97,11 @@ class Map extends Component {
     if (props.query.locationId !== this.props.query.locationId) {
       this.reloadMap(true)
     }
+
+    if (props.locations.locations !== this.props.locations.locations) {
+      this.setState({ locations: props.locations.locations })
+    }
+
   }
 
   render(){
@@ -150,7 +127,31 @@ class Map extends Component {
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
           >
-            {this.state.markers}
+          {this.state.locations.map(l => (
+            <MapView.Marker
+              coordinate={{
+                latitude: Number(l.lat), 
+                longitude: Number(l.lon), 
+                latitudeDelta: 1.00, 
+                longitudeDelta: 1.00,
+              }}
+              title={l.name}
+              key={l.id}
+            >
+              <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
+                <LocationCard
+                    name={l.name}
+                    distance={l.distance}
+                    street={l.street}
+                    state={l.state}
+                    zip={l.zip}
+                    machines={l.machine_names} 
+                    type={l.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === l.location_type_id).name : ""}
+                    //navigation={this.props.navigation}
+                    id={l.id} />
+              </MapView.Callout>
+            </MapView.Marker>
+          ))}
           </MapView>
         </View>
       </View>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ location_types, query }) => ({ location_types, query })
+const mapStateToProps = ({ locations, location_types, query }) => ({ locations, location_types, query })
 const mapDispatchToProps = (dispatch) => ({
     getLocations: (url) => dispatch(fetchLocations(url)),
     setLocationId,
