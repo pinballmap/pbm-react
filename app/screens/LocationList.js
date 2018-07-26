@@ -11,7 +11,7 @@ class LocationList extends Component {
 
     this.state = {
       buttonIndex: 0,
-      locations: this.props.locations.locations,
+      locations: this.props.locations.mapLocations,
     };
   }
 
@@ -41,7 +41,6 @@ class LocationList extends Component {
   }
 
   render() {
-    const { location_types: { locationTypes }} = this.props
     return (
       <View style={{ flex: 1 }}>
         <Text>SORT BY:</Text>
@@ -63,7 +62,7 @@ class LocationList extends Component {
                 state={item.state}
                 zip={item.zip}
                 machines={item.machine_names} 
-                type={item.location_type_id ? locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
                 navigation={this.props.navigation}
                 id={item.id}
                 context={'Location List'} />
@@ -76,5 +75,5 @@ class LocationList extends Component {
   }
 }
 
-const mapStateToProps = ({ locations, location_types }) => ({ locations, location_types })
+const mapStateToProps = ({ locations }) => ({ locations })
 export default connect(mapStateToProps)(LocationList);

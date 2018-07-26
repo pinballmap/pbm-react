@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Ionicons, FontAwesome, EvilIcons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, EvilIcons, MaterialIcons } from '@expo/vector-icons';
 
 import FilterMap from '../screens/FilterMap.js';
 import LocationList from '../screens/LocationList.js';
@@ -61,7 +61,7 @@ export const PbmStack = StackNavigator({
             case 'Map':
               return <MaterialIcons name='menu' size={25} />
             case 'RecentMachines':
-              return <Ionicons name='newspaper-o' size={25} />
+              return <MaterialIcons name='menu' size={25} />
             case 'Activity':
               return <FontAwesome name='newspaper-o' size={25} />
             case 'Profile':

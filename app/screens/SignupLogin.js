@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { ActivityIndicator, AsyncStorage, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
-import { fetchLocationTypes } from '../actions/location_types_actions'
+import { fetchLocationTypes } from '../actions/locations_actions'
+import { fetchMachines } from '../actions/machines_actions'
 import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
 
@@ -15,6 +16,8 @@ class SignupLogin extends Component {
 
   componentDidMount(){
     this.props.getLocationTypes('/location_types.json')
+    this.props.getMachines('/machines.json?no_details=1')
+
     getData('/regions/location_and_machine_counts.json')
       .then(data => {
         if (data && data.num_lmxes && data.num_locations) {
@@ -38,16 +41,6 @@ class SignupLogin extends Component {
         this.setState({ locationError, fetchingLocEnabledStatus: false })
       }
       this.setState({ fetchingLocEnabledStatus: false })
-    })
-
-    getData('/machines.json?no_details=1')
-    .then(async data => {
-      try {
-        await AsyncStorage.setItem('machines', JSON.stringify(data.machines))
-      }
-      catch(error) {
-        console.log(error)
-      }
     })
   }
 
@@ -174,6 +167,7 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => ({
   getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
+  getMachines: (url) =>  dispatch(fetchMachines(url)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
