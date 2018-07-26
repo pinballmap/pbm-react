@@ -4,7 +4,7 @@ import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
 import { setLocationId } from '../actions/query_actions';
-import { fetchLocations } from '../actions/location_actions';
+import { fetchLocations } from '../actions/locations_actions';
 import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
@@ -20,7 +20,7 @@ class Map extends Component {
       longitudeDelta: 1.000,
       address: '', 
       isLoading: true,
-      locations: this.props.locations.locations,
+      locations: this.props.locations.mapLocations,
     }
   }
 
@@ -111,8 +111,8 @@ class Map extends Component {
       this.reloadMap(true)
     }
 
-    if (props.locations.locations !== this.props.locations.locations) {
-      this.setState({ locations: props.locations.locations })
+    if (props.locations.mapLocations !== this.props.locations.mapLocations) {
+      this.setState({ locations: props.locations.mapLocations })
     }
 
   }
@@ -160,7 +160,7 @@ class Map extends Component {
                     state={l.state}
                     zip={l.zip}
                     machines={l.machine_names} 
-                    type={l.location_type_id ? this.props.location_types.locationTypes.find(location => location.id === l.location_type_id).name : ""}
+                    type={l.location_type_id ? this.props.locations.locationTypes.find(location => location.id === l.location_type_id).name : ""}
                     //navigation={this.props.navigation}
                     id={l.id} />
               </MapView.Callout>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ locations, location_types, query }) => ({ locations, location_types, query })
+const mapStateToProps = ({ locations, query }) => ({ locations, query })
 const mapDispatchToProps = (dispatch) => ({
     getLocations: (url) => dispatch(fetchLocations(url)),
     setLocationId,

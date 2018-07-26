@@ -1,31 +1,16 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, AsyncStorage, Text, View } from 'react-native';
-import { retrieveItem } from '../config/utils'
+import { connect } from 'react-redux';
+import { Text, View } from 'react-native';
 
 class RecentMachines extends Component {
   constructor(props) {
     super(props) 
     this.state = {
-      machines: []
+      machines: this.props.machines.machines
     }
   }
 
-  componentDidMount() {
-    retrieveItem('machines').then((machines) => {
-      this.setState({ machines })
-      }).catch((error) => {
-      console.log('Promise is rejected with error: ' + error);
-      }); 
-  }
   render(){
-    if (!this.state.machines) {
-      return (
-        <View style={{ flex: 1, padding: 20 }}>
-          <ActivityIndicator />
-        </View>
-      )
-    }
-
     return(
       <View>
         <Text>MACHINES</Text>
@@ -34,4 +19,5 @@ class RecentMachines extends Component {
   }
 }
 
-export default RecentMachines;
+const mapStateToProps = ({ machines }) => ({ machines })
+export default connect(mapStateToProps)(RecentMachines);
