@@ -4,6 +4,7 @@ import { ActivityIndicator, AsyncStorage, Image, StyleSheet, Text, View, ImageBa
 import { Button } from 'react-native-elements'
 import { fetchLocationTypes } from '../actions/locations_actions'
 import { fetchMachines } from '../actions/machines_actions'
+import { fetchCurrentLocation } from '../actions/user_actions'
 import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
 
@@ -11,12 +12,19 @@ class SignupLogin extends Component {
   constructor(props){
     super(props);
 
-    this.state ={ num_locations: 0, num_lmxes: 0, fetchingLocEnabledStatus: true, locationError: '', apiError: ''}
+    this.state ={ 
+      num_locations: 0, 
+      num_lmxes: 0, 
+      fetchingLocEnabledStatus: true, 
+      locationError: '', 
+      apiError: ''
+    }
   }
 
   componentDidMount(){
     this.props.getLocationTypes('/location_types.json')
     this.props.getMachines('/machines.json?no_details=1')
+    this.props.getCurrentLocation()
 
     getData('/regions/location_and_machine_counts.json')
       .then(data => {
@@ -32,24 +40,14 @@ class SignupLogin extends Component {
         }
       })
       .catch(apiError => this.setState({ apiError }))
-
-    //Determine if location services need to be enabled
-    getCurrentLocation()
-    .then(() => this.setState({fetchingLocEnabledStatus: false }))
-    .catch(locationError => {
-      if (locationError === 'Location services are not enabled') {
-        this.setState({ locationError, fetchingLocEnabledStatus: false })
-      }
-      this.setState({ fetchingLocEnabledStatus: false })
-    })
   }
 
   render(){
-    if (this.state.fetchingLocEnabledStatus) {
+    if (this.props.user.isFetchingLocationTrackingEnabled) {
       return <ActivityIndicator />
     }
     
-    if (this.state.locationError) {
+    if (!this.props.user.locationTrackingServicesEnabled) {
       return (
         <View>
           <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
@@ -163,11 +161,12 @@ const s = StyleSheet.create({
   }
 });
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({ user }) => ({ user })
 
 const mapDispatchToProps = (dispatch) => ({
   getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
   getMachines: (url) =>  dispatch(fetchMachines(url)),
+  getCurrentLocation: () => dispatch(fetchCurrentLocation()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)

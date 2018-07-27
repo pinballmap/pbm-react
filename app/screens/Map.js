@@ -5,7 +5,6 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
 import { setLocationId } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
-import { retrieveItem } from '../config/utils';
 import "../config/globals.js"
 
 class Map extends Component {
@@ -13,11 +12,15 @@ class Map extends Component {
     super(props);
 
     this.mapRef = null;
+    this.prevRegion = null,
+
     this.state ={ 
-      lat: null, 
-      lon: null, 
-      latitudeDelta: 1.000,
-      longitudeDelta: 1.000,
+      region: {
+        latitude: this.props.user.lat, 
+        longitude: this.props.user.lon, 
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1,
+      },
       address: '', 
       isLoading: true,
       locations: this.props.locations.mapLocations,
@@ -49,8 +52,8 @@ class Map extends Component {
     if (location) {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
-    else {    
-      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.lat + ';lon=' + this.state.lon + ';send_all_within_distance=1;max_distance=5')
+    else {  
+      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5')
 
       this.setState({
         isLoading: false,
@@ -59,14 +62,16 @@ class Map extends Component {
   }
 
   onRegionChange = (region) => {
-    this.setState({ 
-      lat: region.latitude, 
-      lon: region.longitude, 
-      latitudeDelta: region.latitudeDelta,
-      longitudeDelta: region.longitudeDelta,
-    })
+    //Only reload map if the location hasn't moved in 0.5sec
+    const compareRegion = (region) => {
+      if (region === this.prevRegion) {
+        this.setState({ region })
+        this.reloadMap()
+      }
+    }
 
-    this.reloadMap()
+    setTimeout(compareRegion, 500, region)
+    this.prevRegion = region
   }
 
   componentDidUpdate(){
@@ -76,30 +81,7 @@ class Map extends Component {
   }
 
   componentDidMount(){
-    this.props.navigation.setParams({
-      reloadMap: this.reloadMap.bind(this),
-      updateAddress: this.updateAddress.bind(this),
-    });
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          lat: Number(position.coords.latitude),
-          lon: Number(position.coords.longitude),
-          error: null,
-        });
-
-        this.reloadMap();
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-
-    retrieveItem('authToken').then((authToken) => {
-      this.setState({ authToken })
-      }).catch((error) => {
-      console.log('Promise is rejected with error: ' + error);
-      }); 
+    this.reloadMap()
   }
 
   updateAddress(address) {
@@ -131,12 +113,7 @@ class Map extends Component {
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
           <MapView
               ref={this.mapRef}
-              region={{
-                latitude: this.state.lat, 
-                longitude: this.state.lon,
-                latitudeDelta: this.state.latitudeDelta, 
-                longitudeDelta: this.state.longitudeDelta,
-              }}
+              region={this.state.region}
               provider={ PROVIDER_GOOGLE }
               style={styles.map}
               onRegionChange={this.onRegionChange}
@@ -146,8 +123,8 @@ class Map extends Component {
               coordinate={{
                 latitude: Number(l.lat), 
                 longitude: Number(l.lon), 
-                latitudeDelta: this.state.latitudeDelta, 
-                longitudeDelta: this.state.longitudeDelta,
+                latitudeDelta: this.state.region.latitudeDelta, 
+                longitudeDelta: this.state.region.longitudeDelta,
               }}
               title={l.name}
               key={l.id}
@@ -161,7 +138,7 @@ class Map extends Component {
                     zip={l.zip}
                     machines={l.machine_names} 
                     type={l.location_type_id ? this.props.locations.locationTypes.find(location => location.id === l.location_type_id).name : ""}
-                    //navigation={this.props.navigation}
+
                     id={l.id} />
               </MapView.Callout>
             </MapView.Marker>
@@ -179,7 +156,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ locations, query }) => ({ locations, query })
+const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
     getLocations: (url) => dispatch(fetchLocations(url)),
     setLocationId,
