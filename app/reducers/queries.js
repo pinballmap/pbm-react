@@ -3,12 +3,12 @@ import {
     SET_LOCATION_ID,
 } from '../actions/types'
 
-const INITIAL_STATE = {
+export const initialState = {
     currQueryString: '',
     locationId: ''
 }
 
-export default (state = INITIAL_STATE, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_QUERY: 
             return {
