@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import query from './query_reducer'
+import query from './queries'
 import locations from './locations'
 import machines from './machines'
 import user from './user'
