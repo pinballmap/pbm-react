@@ -4,12 +4,12 @@ import {
     FETCHING_MACHINES_FAILURE,
 } from '../actions/types'
 
-const INITIAL_STATE = {
+export const initialState = {
     isFetchingMachines: false,
     machines: [],
 }
 
-export default (state = INITIAL_STATE, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case FETCHING_MACHINES: 
             return {

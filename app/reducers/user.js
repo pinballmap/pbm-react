@@ -4,14 +4,14 @@ import {
     FETCHING_LOCATION_TRACKING_FAILURE,
 } from '../actions/types'
 
-const INITIAL_STATE = {
+export const initialState = {
     isFetchingLocationTrackingEnabled: false,
     lat: null,
     lon: null,
     locationTrackingServicesEnabled: false
 }
 
-export default (state = INITIAL_STATE, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case FETCHING_LOCATION_TRACKING_ENABLED: 
             return {
