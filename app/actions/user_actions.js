@@ -16,7 +16,6 @@ export const fetchCurrentLocation = () => dispatch => {
   
   
 export const getLocationTrackingEnabledSuccess = (data) => {
-    console.log(data.coords)
     return {
         type: FETCHING_LOCATION_TRACKING_SUCCESS,
         lat: data.coords.latitude,
