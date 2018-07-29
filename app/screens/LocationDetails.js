@@ -119,7 +119,7 @@ class LocationDetails extends Component {
                                 style={{color: 'blue'}}
                                 onPress={() => Linking.openURL(location.website)}
                             >Website</Text>}
-                            {location.location_type_id && <Text>{this.props.location_types.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
+                            {location.location_type_id && <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
                         </View>
                        
                     }
@@ -137,5 +137,5 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = ({ location_types, query }) => ({ location_types, query })
+const mapStateToProps = ({ locations, query }) => ({ locations, query })
 export default connect(mapStateToProps)(LocationDetails);

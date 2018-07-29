@@ -8,16 +8,15 @@ import { fetchCurrentLocation } from '../actions/user_actions'
 import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
 
-class SignupLogin extends Component {
+export class SignupLogin extends Component {
   constructor(props){
     super(props);
 
     this.state ={ 
       num_locations: 0, 
       num_lmxes: 0, 
-      fetchingLocEnabledStatus: true, 
-      locationError: '', 
-      apiError: ''
+      apiError: '',
+      showTurnOnLocationServices: true,
     }
   }
 
@@ -47,13 +46,13 @@ class SignupLogin extends Component {
       return <ActivityIndicator />
     }
     
-    if (!this.props.user.locationTrackingServicesEnabled) {
+    if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
       return (
         <View>
           <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
           <Button
             //Clear error state to allow user to proceed either way
-            onPress={ () => this.setState({ locationError: ''}) }
+            onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
             title="OK"
           />
         </View>
