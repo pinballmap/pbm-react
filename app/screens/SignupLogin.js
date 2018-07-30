@@ -42,7 +42,7 @@ export class SignupLogin extends Component {
   }
 
   render(){
-    if (this.props.user.isFetchingLocationTrackingEnabled) {
+    if (this.props.user.isFetchingLocationTrackingEnabled || (this.state.num_lmxes === 0 && !this.state.apiError)) {
       return <ActivityIndicator />
     }
     
