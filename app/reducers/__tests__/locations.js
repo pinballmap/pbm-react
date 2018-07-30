@@ -85,6 +85,16 @@ describe('locations reducer', () => {
         expect(result.isFetchingLocations).toBeTruthy()
     })
 
+    it('should properly update state when refetching locations', () => {
+        let state = getInitialState()
+        const action = {
+            type: types.REFETCHING_LOCATIONS,
+        }
+
+        const result = locationsReducer(state, action)
+        expect(result.isRefetchingLocations).toBeTruthy()
+    })
+
     it('should properly update state when successfully receivng locations', () => {
         let state = getInitialState()
 

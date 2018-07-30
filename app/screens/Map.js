@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
 import { setLocationId } from '../actions/query_actions';
@@ -22,8 +22,8 @@ class Map extends Component {
         longitudeDelta: 0.1,
       },
       address: '', 
-      isLoading: true,
       locations: this.props.locations.mapLocations,
+      isRefetchingLocations: this.props.locations.isRefetchingLocations,
     }
   }
 
@@ -48,16 +48,12 @@ class Map extends Component {
     };
   };
 
-  async reloadMap(location) {
+  reloadMap(location) {
     if (location) {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
     else {  
-      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5')
-
-      this.setState({
-        isLoading: false,
-      })
+      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5', true)
     }
   }
 
@@ -65,7 +61,10 @@ class Map extends Component {
     //Only reload map if the location hasn't moved in 0.5sec
     const compareRegion = (region) => {
       if (region === this.prevRegion) {
-        this.setState({ region })
+        this.setState({ 
+          region, 
+          locations: [], 
+        })
         this.reloadMap()
       }
     }
@@ -81,7 +80,7 @@ class Map extends Component {
   }
 
   componentDidMount(){
-    this.reloadMap()
+    this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5')
   }
 
   updateAddress(address) {
@@ -97,10 +96,14 @@ class Map extends Component {
       this.setState({ locations: props.locations.mapLocations })
     }
 
+    if (props.locations.isRefetchingLocations !== this.props.locations.isRefetchingLocations) {
+      this.setState({ isRefetchingLocations: props.locations.isRefetchingLocations })
+    }
+
   }
 
   render(){
-    if(this.state.isLoading){
+    if (this.props.locations.isFetchingLocations) {
       return(
         <View style={{flex: 1, padding: 20}}>
           <ActivityIndicator/>
@@ -138,11 +141,12 @@ class Map extends Component {
                     zip={l.zip}
                     machines={l.machine_names} 
                     type={l.location_type_id ? this.props.locations.locationTypes.find(location => location.id === l.location_type_id).name : ""}
-
                     id={l.id} />
               </MapView.Callout>
             </MapView.Marker>
           ))}
+          {/* TODO: Figure out why this only works as a ternary statement rather than just && */}
+          {this.state.isRefetchingLocations ? <Text>Loading...</Text> : <Text></Text>}
           </MapView>
         </View>
       </View>
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
-    getLocations: (url) => dispatch(fetchLocations(url)),
+    getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     setLocationId,
 })
 
