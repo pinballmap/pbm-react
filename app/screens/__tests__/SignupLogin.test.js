@@ -25,6 +25,21 @@ describe('testing signup/login screen', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
+  it('renders activity monitor while waiting for num_lmxes response from API', () => {
+    const user = {
+      isFetchingLocationTrackingEnabled: false
+    }
+    
+    const wrapper = shallow(
+      <SignupLogin 
+        user={user} 
+        getLocationTypes={() => {}} 
+        getMachines={() => {}} 
+        getCurrentLocation={() => {}} 
+      />)
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
   it('renders notice if location tracking enablement is not on', () => {
     const user = {
       isFetchingLocationTrackingEnabled: false,
@@ -38,6 +53,8 @@ describe('testing signup/login screen', () => {
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
       />)
+    
+    wrapper.setState({ num_lmxes: 25 })
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
@@ -54,6 +71,8 @@ describe('testing signup/login screen', () => {
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
       />)
+    
+    wrapper.setState({ num_lmxes: 25 })
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
@@ -71,6 +90,7 @@ describe('testing signup/login screen', () => {
         getCurrentLocation={() => {}} 
       />)
 
+      wrapper.setState({ num_lmxes: 25 })
       expect(wrapper.find('Button').at(0).props().title).toEqual('OK');
       expect(wrapper.state().showTurnOnLocationServices).toBeTruthy()
       wrapper.find('Button').at(0).props().onPress();
@@ -112,6 +132,7 @@ describe('testing signup/login screen', () => {
         navigation={{navigate: jest.fn()}}
       />)
 
+      wrapper.setState({ num_lmxes: 25 })
       expect(wrapper.find('Button').at(0).props().title).toEqual('Current User? Log In')
       wrapper.find('Button').at(0).props().onPress();
       expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
@@ -131,7 +152,8 @@ describe('testing signup/login screen', () => {
         getCurrentLocation={() => {}} 
         navigation={{navigate: jest.fn()}}
       />)
-
+      
+      wrapper.setState({ num_lmxes: 25 })
       expect(wrapper.find('Button').at(1).props().title).toEqual('New User? Sign Up')
       wrapper.find('Button').at(0).props().onPress();
       expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalled();
