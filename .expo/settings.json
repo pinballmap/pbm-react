@@ -1,5 +1,5 @@
 {
-  "hostType": "localhost",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
   "minify": false,
