@@ -5,6 +5,7 @@ import {
     FETCHING_LOCATIONS,
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
+    REFETCHING_LOCATIONS
 } from './types'
 
 import { getData } from '../config/request'
@@ -31,8 +32,11 @@ export const getLocationTypeFailure = () => {
     }
 }
 
-export const fetchLocations = (url) => dispatch => {
-    dispatch({type: FETCHING_LOCATIONS})
+export const fetchLocations = (url, isRefetch) => dispatch => {
+    if (isRefetch)
+        dispatch({type: REFETCHING_LOCATIONS})
+    else 
+        dispatch({type: FETCHING_LOCATIONS})
 
     return getData(url)
     .then(data => dispatch(getLocationsSuccess(data)))

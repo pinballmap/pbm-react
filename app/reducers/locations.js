@@ -5,12 +5,14 @@ import {
     FETCHING_LOCATIONS,
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
+    REFETCHING_LOCATIONS,
 } from '../actions/types'
 
 export const initialState = {
     isFetchingLocationTypes: false,
     locationTypes: [],
     isFetchingLocations: false,
+    isRefetchingLocations: false,
     mapLocations: []
 }
 
@@ -42,13 +44,20 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isFetchingLocations: false,
+                isRefetchingLocations: false,
                 mapLocations: action.locations,
             }
         case FETCHING_LOCATIONS_FAILURE:
             return {
                 ...state,
                 isFetchingLocations: false,
+                isRefetchingLocations: false,
                 mapLocations: [],
+            }
+        case REFETCHING_LOCATIONS:
+            return {
+                ...state,
+                isRefetchingLocations: true,
             }
         default:
             return state

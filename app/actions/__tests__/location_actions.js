@@ -112,4 +112,17 @@ describe('testing location actions', () => {
                 done()
             }) 
     })
+
+    it('dispatched the expected action when requesting a refetch of locations', () => {
+        const action = { type: types.REFETCHING_LOCATIONS }
+
+        const dispatch = jest.fn()
+        const url = '/testurl'
+
+        locationActions.fetchLocations(url, true)(dispatch)
+            .then(() => {
+                expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
+                done()
+            })
+    })
 })
