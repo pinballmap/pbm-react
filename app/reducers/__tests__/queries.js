@@ -5,7 +5,9 @@ import queryReducer, { initialState } from '../queries.js'
 const getInitialState = () => {
     return ({
         currQueryString: '',
-        locationId: ''
+        locationId: '',
+        curLat: null,
+        curLon: null,
     })
 }   
 
@@ -46,5 +48,18 @@ describe('queries reducer', () => {
         const result = queryReducer(state, action)
         expect(result.currQueryString).toBeFalsy()
         expect(result.locationId).toEqual(action.payload)
+    })
+
+    it('should properly update state when the coordinates change', () => {
+        let state = getInitialState()
+        const action = {
+            type: types.UPDATE_COORDINATES,
+            lat: 123, 
+            lon: 456,
+        }
+
+        const result = queryReducer(state, action)
+        expect(result.curLat).toEqual(action.lat)
+        expect(result.curLon).toEqual(action.lon)
     })
 })
