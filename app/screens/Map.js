@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
-import { setLocationId } from '../actions/query_actions';
+import { setLocationId, updateCurrCoordindates } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
 import "../config/globals.js"
 
@@ -65,10 +65,11 @@ class Map extends Component {
           region, 
           locations: [], 
         })
+        this.props.updateCoordinates(region.latitude, region.longitude)
         this.reloadMap()
       }
     }
-
+  
     setTimeout(compareRegion, 500, region)
     this.prevRegion = region
   }
@@ -83,10 +84,6 @@ class Map extends Component {
     this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5')
   }
 
-  updateAddress(address) {
-    this.setState(address);
-  }
-
   componentWillReceiveProps(props) {
     if (props.query.locationId !== this.props.query.locationId) {
       this.reloadMap(true)
@@ -94,6 +91,18 @@ class Map extends Component {
 
     if (props.locations.mapLocations !== this.props.locations.mapLocations) {
       this.setState({ locations: props.locations.mapLocations })
+    }
+
+    if (props.query.curLat !== this.props.query.curLat || props.query.curLon !== this.props.query.curLon ) {
+      this.setState({
+        region: {
+          latitude: props.query.curLat,
+          longitude: props.query.curLon,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+
+        }
+      })
     }
 
     if (props.locations.isRefetchingLocations !== this.props.locations.isRefetchingLocations) {
@@ -163,6 +172,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
+    updateCoordinates: (lat, lon) => dispatch(updateCurrCoordindates(lat, lon)),
     setLocationId,
 })
 
