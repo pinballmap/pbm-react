@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text, View } from 'react-native';
-import { Button, Input } from 'react-native-elements'
+import { AsyncStorage, Text, View, Image, ImageBackground, StyleSheet } from 'react-native';
+import { Button, Input, Icon } from 'react-native-elements'
 import { postData } from '../config/request'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 class Signup extends Component {
   constructor(props) {
@@ -128,47 +129,143 @@ class Signup extends Component {
 
   render() {
     return (
-      <View>
-        {this.state.errors && 
-          <Text style={{color: 'red', fontWeight: 'bold'}}>
-            {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-          </Text>
-        }
-        <Input 
-          label='Username' 
-          onChangeText={username => this.setState({username})}
-          value={this.state.username}
-          errorStyle={{ color : 'red' }}
-          errorMessage={this.state.usernameError}
-        />
-        <Input 
-          label="Email Address" 
-          onChangeText={email => this.setState({email})}
-          value={this.state.value}
-          errorStyle={{ color : 'red' }}
-          errorMessage={this.state.emailError}
-        />
-        <Input 
-          label="Password" 
-          onChangeText={password => this.setState({password})}
-          value={this.state.password}
-          errorStyle={{ color : 'red' }}
-          errorMessage={this.state.passwordError}
-        />
-        <Input 
-          label="Confirm Password" 
-          onChangeText={confirm_password => this.setState({confirm_password})}
-          value={this.state.confirm_password}
-          errorStyle={{ color : 'red' }}
-          errorMessage={this.state.confirm_passwordError}
-        />
-        <Button
-          onPress={() => this.submit()}
-          title="Join"
-        />
-      </View>
+      <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
+        <View style={s.mask}>
+          <View style={s.padding_5}>
+            {this.state.errors && 
+              <Text style={s.errorText}>
+                {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+              </Text>
+            }
+            <Text style={s.bold}>Sign Up</Text>
+            <Input 
+              placeholder='Username'
+              leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+              onChangeText={username => this.setState({username})}
+              value={this.state.username}
+              errorStyle={{ color : 'red' }}
+              errorMessage={this.state.usernameError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              spellCheck = {false}
+            />
+            <Input 
+              placeholder="Email Address" 
+              leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
+              onChangeText={email => this.setState({email})}
+              value={this.state.value}
+              errorStyle={{ color : 'red' }}
+              errorMessage={this.state.emailError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              spellCheck = {false}
+            />
+            <Input 
+              placeholder="Password"
+              leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+              onChangeText={password => this.setState({password})}
+              value={this.state.password}
+              errorStyle={{ color : 'red' }}
+              errorMessage={this.state.passwordError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              secureTextEntry = {true}
+              spellCheck = {false}
+            />
+            <Input 
+              placeholder="Confirm Password"
+              leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+              onChangeText={confirm_password => this.setState({confirm_password})}
+              value={this.state.confirm_password}
+              errorStyle={{ color : 'red' }}
+              errorMessage={this.state.confirm_passwordError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              secureTextEntry = {true}
+              spellCheck = {false}
+            />
+            <Button
+              onPress={() => this.submit()}
+              raised
+              buttonStyle={s.buttonStyle}
+              titleStyle={{
+                color:"black", 
+                fontSize:18
+              }}
+              style={{paddingTop: 15,paddingBottom: 25}}
+              rounded
+              title="Sign Up"
+              accessibilityLabel="Sign Up"
+            />
+            <Text 
+              onPress={() => this.props.navigation.navigate('Map')} 
+              style={s.textLink}
+              >{"SKIP THIS FOR NOW"}
+            </Text>
+            <Text
+              onPress={() => this.props.navigation.navigate('Login')}
+              style={s.textLink}
+              >{"ALREADY A USER? LOG IN!"}
+            </Text>
+          </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
+
+const s = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'stretch',
+  },
+  mask: {
+    flex: 1,
+    backgroundColor:'rgba(255,255,255,.8)',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  errorText: {
+    color: 'red', 
+    fontWeight: 'bold',
+  },
+  bold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  padding_5: {
+    padding: 5,
+  },
+  inputBox: {
+    width: '100%',
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: '#000000',
+    backgroundColor: "#ffffff",
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  inputText: {
+    color: '#000000',
+  },
+  textLink: {
+    fontSize: 14,
+    textAlign: "center",
+    paddingBottom: 10,
+  },
+  iconStyle: {
+    fontSize: 24,
+    color: '#cccccc',
+  },
+  buttonStyle: {
+    backgroundColor:"#fdd4d7",
+    borderRadius: 50,
+    width: '100%'
+  }
+});
 
 export default Signup;
