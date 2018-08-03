@@ -60,8 +60,8 @@ export class SignupLogin extends Component {
     }
     
     return(
-        <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
-          <View style={s.mask}>
+      <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+        <View style={s.mask}>
           <View style={s.logoWrapper}>
             <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
           </View>
@@ -121,7 +121,6 @@ const s = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    resizeMode: 'stretch',
   },
   bold: {
     fontWeight:"bold",
@@ -139,9 +138,6 @@ const s = StyleSheet.create({
   },
   logoWrapper: {
     padding: 5,
-    //backgroundColor: '#D3ECFF',
-    //height: 65,
-    //opacity: .9,
   },
   logo: {
     width: '100%',
