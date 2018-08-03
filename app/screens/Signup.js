@@ -196,6 +196,7 @@ class Signup extends Component {
               rounded
               title="Sign Up"
               accessibilityLabel="Sign Up"
+              disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
             />
             <Text 
               onPress={() => this.props.navigation.navigate('Map')} 
