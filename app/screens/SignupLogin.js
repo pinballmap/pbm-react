@@ -60,8 +60,8 @@ export class SignupLogin extends Component {
     }
     
     return(
-        <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
-          <View style={s.mask}>
+      <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+        <View style={s.mask}>
           <View style={s.logoWrapper}>
             <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
           </View>
@@ -85,28 +85,16 @@ export class SignupLogin extends Component {
             <Button
               onPress={() => this.props.navigation.navigate('Login')}
               raised
-              buttonStyle={{
-                backgroundColor:"#D3ECFF",
-                borderRadius: 50,
-              }}
-              titleStyle={{
-                color:"black",
-                fontSize:18
-              }}
+              buttonStyle={s.buttonBlue}
+              titleStyle={s.titleStyle}
               title="Current User? Log In"
               accessibilityLabel="Log In"
             />
             <Button
               onPress={() => this.props.navigation.navigate('Signup')}
               raised
-              buttonStyle={{
-                backgroundColor:"#fdd4d7",
-                borderRadius: 50,
-              }}
-              titleStyle={{
-                color:"black", 
-                fontSize:18
-              }}
+              buttonStyle={s.buttonPink}
+              titleStyle={s.titleStyle}
               style={{paddingTop: 15,paddingBottom: 25}}
               rounded
               title="New User? Sign Up"
@@ -115,7 +103,7 @@ export class SignupLogin extends Component {
             <Text 
               onPress={() => this.props.navigation.navigate('Map')} 
               style={{fontSize:14,textAlign:"center"}}
-              >{"I'LL DO THIS LATER"}
+              >{"SKIP THIS FOR NOW"}
             </Text>
           </View>
         </View>
@@ -150,13 +138,22 @@ const s = StyleSheet.create({
   },
   logoWrapper: {
     padding: 5,
-    backgroundColor: '#D3ECFF',
-    height: 60,
-    opacity: .9,
   },
   logo: {
     width: '100%',
     resizeMode: 'contain',
+  },
+  buttonPink: {
+    backgroundColor:"#fdd4d7",
+    borderRadius: 50,
+  },
+  buttonBlue: {
+    backgroundColor:"#D3ECFF",
+    borderRadius: 50,
+  },
+  titleStyle: {
+    color:"black",
+    fontSize:18
   }
 });
 
