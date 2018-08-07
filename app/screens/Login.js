@@ -101,6 +101,16 @@ class Login extends Component {
               style={s.textLink}
               >{"NOT A USER? SIGN UP!"}
             </Text>
+            <Text
+              //onPress={() => this.props.navigation.navigate('Password')}
+              style={s.textLink}
+              >{"I forgot my password"}
+            </Text>
+            <Text
+              //onPress={() => this.props.navigation.navigate('Confirm  ')}
+              style={s.textLink}
+              >{"Resend my confirmation email"}
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -149,7 +159,7 @@ const s = StyleSheet.create({
   textLink: {
     fontSize: 14,
     textAlign: "center",
-    paddingBottom: 10,
+    paddingBottom: 15,
   },
   iconStyle: {
     fontSize: 24,
