@@ -28,9 +28,16 @@ class LocationDetails extends Component {
         };
       };
 
-    updateIndex = (buttonIndex) => {
+    updateIndex = buttonIndex => {
         this.setState({ buttonIndex })
     }
+
+    getTitle = machine => (
+        <Text>
+            <Text style={s.textStyle}>{machine.name}</Text>
+            <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        </Text>
+    )
 
     componentDidMount() {
         getData(`/locations/${this.state.id}.json`)
@@ -108,7 +115,7 @@ class LocationDetails extends Component {
                              machines.map(machine => (
                                 <ListItem   
                                     key={machine.id}
-                                    title={machine.name}
+                                    title={this.getTitle(machine)}
                                 />
                             ))
                         }
