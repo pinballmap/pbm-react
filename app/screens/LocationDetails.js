@@ -75,7 +75,7 @@ class LocationDetails extends Component {
                         latitudeDelta: 0.03,
                         longitudeDelta: 0.03
                     }}
-                    style={styles.map}
+                    style={s.map}
                     provider={PROVIDER_GOOGLE}
                 >
                     <MapView.Marker
@@ -93,6 +93,8 @@ class LocationDetails extends Component {
                         selectedIndex={this.state.buttonIndex}
                         buttons={['Machines', 'Info']}
                         containerStyle={{ height: 30 }}
+                        selectedButtonStyle={s.buttonStyle}
+                        selectedTextStyle={s.textStyle}
                     />
                     {this.state.buttonIndex === 0 ?
                         <View>
@@ -111,7 +113,7 @@ class LocationDetails extends Component {
                             ))
                         }
                         </View> :
-                        <View>
+                        <View style={s.locationMeta}>
                             <Text>{location.street}</Text>
                             <Text>{location.city}</Text>
                             <Text>{location.phone}</Text>
@@ -131,10 +133,20 @@ class LocationDetails extends Component {
     }
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
     map: {
         flex: 1,
     },
+    buttonStyle: {
+        backgroundColor: '#D3ECFF',
+    },
+    textStyle: {
+        color: '#000000',
+        fontWeight: 'bold',
+    },
+    locationMeta: {
+       marginLeft: 10 
+    }
 });
 
 const mapStateToProps = ({ locations, query }) => ({ locations, query })

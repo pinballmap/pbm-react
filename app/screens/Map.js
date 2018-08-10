@@ -37,7 +37,8 @@ class Map extends Component {
           accessibilityLabel="List"
         />,
       headerTitle:
-          <SearchBar />,
+        <SearchBar
+        />,
       headerRight:
         <Button
           onPress={ () => navigation.navigate('FilterMap')}
@@ -127,7 +128,7 @@ class Map extends Component {
               ref={this.mapRef}
               region={this.state.region}
               provider={ PROVIDER_GOOGLE }
-              style={styles.map}
+              style={s.map}
               onRegionChange={this.onRegionChange}
           >
           {this.state.locations.map(l => (
@@ -155,7 +156,7 @@ class Map extends Component {
             </MapView.Marker>
           ))}
           {/* TODO: Figure out why this only works as a ternary statement rather than just && */}
-          {this.state.isRefetchingLocations ? <Text>Loading...</Text> : <Text></Text>}
+          {this.state.isRefetchingLocations ? <Text style={{textAlign:'center'}}>Loading...</Text> : <Text></Text>}
           </MapView>
         </View>
       </View>
@@ -163,7 +164,7 @@ class Map extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   map: {
     flex: 1
   },
