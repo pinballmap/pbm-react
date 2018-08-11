@@ -22,6 +22,8 @@ class Signup extends Component {
     };
   }
 
+  static navigationOptions = { header: null };
+
   validateFields = () => {
     if (!this.state.username) {
       this.setState({ 

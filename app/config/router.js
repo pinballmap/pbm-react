@@ -13,37 +13,9 @@ import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
 import UserProfile from '../screens/UserProfile.js';
 
-export const PbmTab =
-TabNavigator({
-  LocationList: {
-    screen: LocationList
-  },
-  SignupLogin: {
-    screen: SignupLogin
-  },
-  Signup: {
-    screen: Signup
-  }
-}, {
-  tabBarPosition: 'bottom',
-   swipeEnabled: true,
-     tabBarOptions: {
-     activeTintColor: '#f2f2f2',
-     activeBackgroundColor: '#2EC4B6',
-     inactiveTintColor: '#666',
-     labelStyle: {
-       fontSize: 22,
-       padding: 12
-     }
-   }
-});
-
 export const PbmStack = StackNavigator({
   SignupLogin: {
     screen: SignupLogin,
-    navigationOptions: {
-      headerLeft: null
-    },
   },
   Map: {
     screen: TabNavigator({
@@ -91,15 +63,9 @@ export const PbmStack = StackNavigator({
   },
   Signup: {
     screen: Signup,
-    navigationOptions: {
-      headerLeft: null
-    },
   },
   Login: {
     screen: Login,
-    navigationOptions: {
-      headerLeft: null
-    },
   },
   FilterMap: {
     screen: FilterMap,
