@@ -18,8 +18,6 @@ class Login extends Component {
 
   }
 
-  static navigationOptions = { header: null };
-
   submit = () => {
     this.setState({
       errors: false,
@@ -109,7 +107,7 @@ class Login extends Component {
               >{"I forgot my password"}
             </Text>
             <Text
-              //onPress={() => this.props.navigation.navigate('Confirm  ')}
+              //onPress={() => this.props.navigation.navigate('Confirm')}
               style={s.textLink}
               >{"Resend my confirmation email"}
             </Text>
