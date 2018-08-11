@@ -142,7 +142,7 @@ class Map extends Component {
               title={l.name}
               key={l.id}
             >
-              <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, type: ""})}>
+              <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                 <LocationCard
                     name={l.name}
                     distance={l.distance}

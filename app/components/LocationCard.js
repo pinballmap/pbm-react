@@ -18,7 +18,7 @@ class LocationCard extends Component {
               <Text>{this.props.distance.toFixed(2)} mi</Text>
               <Text>{machineList}</Text>
             </View>
-            <Ionicons name="ios-arrow-dropright" size={24} onPress={() => this.props.navigation.navigate('LocationDetails', {id: this.props.id, type: this.props.type, context: this.props.context})}/>
+            <Ionicons name="ios-arrow-dropright" size={24} onPress={() => this.props.navigation.navigate('LocationDetails', {id: this.props.id, locationName: this.props.name})}/>
           </View>
         </Card>
     );

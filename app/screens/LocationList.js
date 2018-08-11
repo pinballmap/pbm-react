@@ -64,8 +64,7 @@ class LocationList extends Component {
                 machines={item.machine_names} 
                 type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
                 navigation={this.props.navigation}
-                id={item.id}
-                context={'Location List'} />
+                id={item.id}/>
             }
             keyExtractor={(item, index) => `list-item-${index}`}
           />
