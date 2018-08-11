@@ -20,6 +20,8 @@ export class SignupLogin extends Component {
     }
   }
 
+  static navigationOptions = { header: null };
+
   componentDidMount(){
     this.props.getLocationTypes('/location_types.json')
     this.props.getMachines('/machines.json?no_details=1')
