@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 class LocationCard extends Component {
   render(){
-    const machineList = this.props.machines.join('\n')
-    machineList.slice(0, -2)
+    const numMachines = this.props.machines.length
+    const machineList = numMachines <= 5 ? this.props.machines.join(', ') : `${this.props.machines.slice(0, 5).join(', ')}. Plus ${numMachines - 5} more!`
 
     return(
         <Card style={{flex: 1}}>
@@ -14,7 +14,7 @@ class LocationCard extends Component {
             <View>
               <Text style={s.locationName}>{this.props.name}</Text>
               <Text numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
-              <Text>{this.props.type}</Text> 
+              {this.props.type && <Text>{this.props.type}</Text>}
               <Text>{this.props.distance.toFixed(2)} mi</Text>
               <Text>{machineList}</Text>
             </View>
