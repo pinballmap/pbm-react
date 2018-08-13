@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   static navigationOptions = { header: null };
-
+  
   submit = () => {
     this.setState({
       errors: false,

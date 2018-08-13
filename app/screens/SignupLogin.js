@@ -118,6 +118,8 @@ const s = StyleSheet.create({
   mask: {
     flex: 1,
     backgroundColor:'rgba(255,255,255,.8)',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   backgroundImage: {
     flex: 1,
