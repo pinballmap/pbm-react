@@ -21,17 +21,21 @@ class LocationList extends Component {
       title: 'LocationList',
     };
   };
-
+  
   updateIndex = (buttonIndex) => {
     this.setState({ buttonIndex })
     switch(buttonIndex) {
       case 0:
         return this.setState({
-          locations: this.state.locations.sort((a, b) => a.distance > b.distance)
+          locations: this.state.locations.sort((a, b) => a.distance - b.distance)
         })
       case 1:
         return this.setState({
-          locations: this.state.locations.sort((a, b) => a.name > b.name)
+          locations: this.state.locations.sort((a, b) => {
+            locA = a.name.toUpperCase()  
+            locB = b.name.toUpperCase()
+            return locA < locB ? -1 : locA === locB ? 0 : 1
+          })
         })
       case 2:
         return this.setState({
