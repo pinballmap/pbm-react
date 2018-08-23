@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { FontAwesome, EvilIcons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons,MaterialCommunityIcons } from '@expo/vector-icons';
 
 import FilterMap from '../screens/FilterMap.js';
 import LocationList from '../screens/LocationList.js';
@@ -8,7 +8,7 @@ import LocationDetails from '../screens/LocationDetails.js';
 import Login from '../screens/Login.js';
 import Map from '../screens/Map.js';
 import RecentActivity from '../screens/RecentActivity.js';
-import RecentMachines from '../screens/RecentMachines.js';
+import Saved from '../screens/Saved.js';
 import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
 import UserProfile from '../screens/UserProfile.js';
@@ -20,7 +20,7 @@ export const PbmStack = StackNavigator({
   Map: {
     screen: TabNavigator({
       Map: { screen: Map },
-      RecentMachines: { screen: RecentMachines },
+      Saved: { screen: Saved },
       Activity: { screen: RecentActivity },
       Profile: { screen: UserProfile },
     },
@@ -31,13 +31,13 @@ export const PbmStack = StackNavigator({
           let iconName;
           switch(routeName) {
             case 'Map':
-              return <MaterialIcons name='menu' size={25} />
-            case 'RecentMachines':
-              return <MaterialIcons name='menu' size={25} />
+              return <MaterialIcons name='search' size={25} />
+            case 'Saved':
+              return <MaterialCommunityIcons name='star-outline' size={25} />
             case 'Activity':
               return <FontAwesome name='newspaper-o' size={25} />
             case 'Profile':
-              return <EvilIcons name='user' size={25} />
+              return <MaterialIcons name='face' size={25} />
           }
         }
       })
