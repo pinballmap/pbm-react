@@ -33,6 +33,7 @@ export const getLocationTypeFailure = () => {
 }
 
 export const fetchLocations = (url, isRefetch) => dispatch => {
+    console.log(url)
     if (isRefetch)
         dispatch({type: REFETCHING_LOCATIONS})
     else 
@@ -45,6 +46,7 @@ export const fetchLocations = (url, isRefetch) => dispatch => {
   
   
 export const getLocationsSuccess = (data) => {
+    console.log(data.locations)
     return {
         type: FETCHING_LOCATIONS_SUCCESS,
         locations: data.locations,

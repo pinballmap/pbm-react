@@ -1,13 +1,17 @@
-import "../config/globals.js"
 import React, { Component } from 'react';
-import { Button, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { Button, Picker, Text, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
+import { setSelectedMachine } from '../actions/query_actions';
 
 class FilterMap extends Component {
   constructor(props){
     super(props);
 
-    this.state ={ isLoading: true }
+    this.state ={ 
+      isLoading: true,
+      selectedMachine: this.props.query.machineId
+    }
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -15,65 +19,42 @@ class FilterMap extends Component {
     return {
       headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
       title: 'Filter',
-      headerRight: <Button title="Save" onPress={() => params.saveFilters()} />
+      //headerRight: <Button title="Save" onPress={() => params.saveFilters()} />
     };
   };
 
-  componentDidMount() {
-    this.props.navigation.setParams({ saveFilters: this._saveFilters });
-  }
-
-  _saveFilters = () => {
-    console.log('user updated')
+  componentWillReceiveProps (props){
+    if (props.query.machineId !== this.props.query.machineId) {
+      this.setState({ selectedMachine: props.query.machineId })
+    } 
   }
 
   render(){
+    
+    const machines = [{name: 'All', id: null}].concat(this.props.machines.machines.sort((a, b) => {
+      machineA = a.name.toUpperCase()  
+      machineB = b.name.toUpperCase()
+      return machineA < machineB ? -1 : machineA === machineB ? 0 : 1
+    }))
+
     return(
       <View style={{flex: 1}}>
-        <View>
-            <View>
-              <Text>Machine</Text>
-            </View>
-            <View>
-              <Text>Machine Dropdown</Text>
-            </View>
-            <View>
-              <Text>Machine Inputbox</Text>
-            </View>
-        </View>
-        <View>
-            <View>
-              <Text>Location Type</Text>
-            </View>
-            <View>
-              <Text>Location Type Dropdown</Text>
-            </View>
-            <View>
-              <Text>Location Type Inputbox</Text>
-            </View>
-        </View>
-        <View>
-            <View>
-              <Text># Of Machines</Text>
-            </View>
-            <View>
-              <Text># Of Machines Radio</Text>
-            </View>
-        </View>
-        <View>
-            <View>
-              <Text>Operator</Text>
-            </View>
-            <View>
-              <Text>Operator Dropdown</Text>
-            </View>
-            <View>
-              <Text>Operator Inputbox</Text>
-            </View>
-        </View>
+        <Text>Machine</Text>
+        <Picker
+          selectedValue={this.state.selectedMachine}
+          onValueChange={(itemValue, itemIdx) => this.props.setSelectedMachine(itemValue)}>
+          {machines.map(m => (
+            <Picker.Item label={m.name} value={m.id} key={m.id} />
+          ))}
+        </Picker>
       </View>
     );
   }
 }
 
-export default FilterMap;
+const mapStateToProps = ({ machines, query }) => ({ machines, query })
+const mapDispatchToProps = (dispatch) => ({
+  setSelectedMachine: machine => dispatch(setSelectedMachine(machine)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(FilterMap);
+

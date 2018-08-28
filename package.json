@@ -8,6 +8,7 @@
     "exp": "^55.0.5",
     "expo": "^26.0.0",
     "npm": "^5.10.0",
+    "react-geocode": "^0.1.2",
     "react-native": "^0.54.0",
     "react-native-autocomplete-input": "^3.5.0",
     "react-native-elements": "^1.0.0-beta5",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-preset-react-native": "^4.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
