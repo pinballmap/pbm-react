@@ -2,6 +2,7 @@ import {
     UPDATE_QUERY,
     SET_LOCATION_ID,
     UPDATE_COORDINATES,
+    SET_SELECTED_MACHINE
 } from '../actions/types'
 
 export const initialState = {
@@ -9,6 +10,7 @@ export const initialState = {
     locationId: '', 
     curLat: null,
     curLon: null,
+    machineId: null,
 }
 
 export default (state = initialState, action) => {
@@ -29,6 +31,11 @@ export default (state = initialState, action) => {
                 ...state,
                 curLat: action.lat,
                 curLon: action.lon,
+            }
+        case SET_SELECTED_MACHINE: 
+            return {
+                ...state, 
+                machineId: action.machineId
             }
         default:
             return state

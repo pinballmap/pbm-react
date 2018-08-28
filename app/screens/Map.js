@@ -46,7 +46,7 @@ class Map extends Component {
           title="Filter"
           accessibilityLabel="Filter"
         />
-    };
+      };
   };
 
   reloadMap(location) {
@@ -54,7 +54,8 @@ class Map extends Component {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
     else {  
-      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5', true)
+      const machine = this.props.query.machineId ? `by_machine_id=${this.props.query.machineId};` : `send_all_within_distance=1;`
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}max_distance=5`, true)
     }
   }
 
@@ -78,6 +79,8 @@ class Map extends Component {
   componentDidUpdate(){
     if (this.mapRef) {
       setTimeout(() => this.mapRef.fitToElements(true), 1000);
+
+      
     }
   }
 
@@ -110,6 +113,10 @@ class Map extends Component {
       this.setState({ isRefetchingLocations: props.locations.isRefetchingLocations })
     }
 
+    if (props.query.machineId !== this.props.query.machineId) {
+      this.reloadMap()
+    }
+
   }
 
   render(){
@@ -121,6 +128,7 @@ class Map extends Component {
       )
     }
 
+    console.log(this.state)
     return(
       <View style={{flex: 1}}>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
@@ -131,7 +139,7 @@ class Map extends Component {
               style={s.map}
               onRegionChange={this.onRegionChange}
           >
-          {this.state.locations.map(l => (
+          {this.state.locations && this.state.locations.map(l => (
             <MapView.Marker
               coordinate={{
                 latitude: Number(l.lat), 
