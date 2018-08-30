@@ -23,10 +23,8 @@ class FilterMap extends Component {
     };
   };
 
-  componentWillReceiveProps (props){
-    if (props.query.machineId !== this.props.query.machineId) {
-      this.setState({ selectedMachine: props.query.machineId })
-    } 
+  componentWillUnmount() {
+    this.props.setSelectedMachine(this.state.selectedMachine)
   }
 
   render(){
@@ -36,13 +34,13 @@ class FilterMap extends Component {
       machineB = b.name.toUpperCase()
       return machineA < machineB ? -1 : machineA === machineB ? 0 : 1
     }))
-
+  
     return(
       <View style={{flex: 1}}>
         <Text>Machine</Text>
         <Picker
           selectedValue={this.state.selectedMachine}
-          onValueChange={(itemValue, itemIdx) => this.props.setSelectedMachine(itemValue)}>
+          onValueChange={(itemValue, itemIdx) => this.setState({ selectedMachine: itemValue })}>
           {machines.map(m => (
             <Picker.Item label={m.name} value={m.id} key={m.id} />
           ))}
