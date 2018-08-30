@@ -54,8 +54,7 @@ class Map extends Component {
       this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
     }  
     else {  
-      const machine = this.props.query.machineId ? `by_machine_id=${this.props.query.machineId};` : `send_all_within_distance=1;`
-      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}max_distance=5`, true)
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};max_distance=5;send_all_within_distance=1`, true)
     }
   }
 
@@ -114,7 +113,8 @@ class Map extends Component {
     }
 
     if (props.query.machineId !== this.props.query.machineId) {
-      this.reloadMap()
+      const machine = props.query.machineId ? `by_machine_id=${props.query.machineId};` : ''
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}max_distance=5;send_all_within_distance=1`, true)
     }
 
   }
@@ -128,7 +128,6 @@ class Map extends Component {
       )
     }
 
-    console.log(this.state)
     return(
       <View style={{flex: 1}}>
         <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>

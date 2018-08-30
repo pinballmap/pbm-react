@@ -62,7 +62,6 @@ class SearchBar extends Component {
                 onPress={() => Geocode.fromAddress(this.props.query.currQueryString).then(
                     response => {
                       const { lat, lng } = response.results[0].geometry.location;
-                      console.log(lat, lng);
                       this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lng + ';send_all_within_distance=1;max_distance=5', true)
                       this.props.updateCoordinates(lat, lng)
                     },
