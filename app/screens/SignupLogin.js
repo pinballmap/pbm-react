@@ -4,6 +4,7 @@ import { ActivityIndicator, AsyncStorage, Image, StyleSheet, Text, View, ImageBa
 import { Button } from 'react-native-elements'
 import { fetchLocationTypes } from '../actions/locations_actions'
 import { fetchMachines } from '../actions/machines_actions'
+import { fetchOperators } from '../actions/operators_actions'
 import { fetchCurrentLocation } from '../actions/user_actions'
 import { getData, getCurrentLocation } from '../config/request'
 import "../config/globals.js"
@@ -25,6 +26,7 @@ export class SignupLogin extends Component {
   componentDidMount(){
     this.props.getLocationTypes('/location_types.json')
     this.props.getMachines('/machines.json?no_details=1')
+    this.props.getOperators('/operators.json')
     this.props.getCurrentLocation()
 
     getData('/regions/location_and_machine_counts.json')
@@ -167,6 +169,7 @@ const mapDispatchToProps = (dispatch) => ({
   getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
   getMachines: (url) =>  dispatch(fetchMachines(url)),
   getCurrentLocation: () => dispatch(fetchCurrentLocation()),
+  getOperators: (url) => dispatch(fetchOperators(url)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)

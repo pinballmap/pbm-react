@@ -72,7 +72,7 @@ class LocationDetails extends Component {
 
         const machines = this.state.machines
         const location = this.state.location
-
+   
         return (
             <View style={{ flex: 1 }}>
                 <MapView
@@ -129,8 +129,8 @@ class LocationDetails extends Component {
                                 onPress={() => Linking.openURL(location.website)}
                             >Website</Text>}
                             {location.location_type_id && <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
+                            {location.operator_id && <Text>{`Operator: ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>}
                         </View>
-                       
                     }
                 </View>
             </View>
@@ -156,5 +156,5 @@ const s = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({ locations, query }) => ({ locations, query })
+const mapStateToProps = ({ locations, operators, query }) => ({ locations, operators, query })
 export default connect(mapStateToProps)(LocationDetails);

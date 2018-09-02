@@ -1,4 +1,3 @@
-import * as queryActions from '../../actions/query_actions'
 import * as types from '../../actions/types'
 import queryReducer, { initialState } from '../queries.js'
 
