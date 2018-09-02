@@ -8,6 +8,7 @@ import {
 export const initialState = {
     currQueryString: '',
     locationId: '', 
+    locationName: '',
     curLat: null,
     curLon: null,
     machineId: null,
@@ -24,7 +25,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 currQueryString: '', 
-                locationId: action.payload
+                locationId: action.id,
+                locationName: action.name,
             }
         case UPDATE_COORDINATES: 
             return {

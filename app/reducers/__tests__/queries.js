@@ -6,6 +6,7 @@ const getInitialState = () => {
     return ({
         currQueryString: '',
         locationId: '',
+        locationName: '',
         curLat: null,
         curLon: null,
     })
@@ -42,12 +43,14 @@ describe('queries reducer', () => {
         let state = getInitialState()
         const action = {
             type: types.SET_LOCATION_ID,
-            payload: 31,
+            id: 31,
+            name: 'Cool place to play',
         }
 
         const result = queryReducer(state, action)
         expect(result.currQueryString).toBeFalsy()
-        expect(result.locationId).toEqual(action.payload)
+        expect(result.locationId).toEqual(action.id)
+        expect(result.locationName).toEqual(action.name)
     })
 
     it('should properly update state when the coordinates change', () => {
