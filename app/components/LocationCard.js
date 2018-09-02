@@ -3,10 +3,11 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 
+const NUM_MACHINES_TO_SHOW = 5
+
 class LocationCard extends Component {
   render(){
     const numMachines = this.props.machines.length
-    const machineList = numMachines <= 5 ? this.props.machines.join('\n') : `${this.props.machines.slice(0, 5).join('\n')} \nPlus ${numMachines - 5} more!`
 
     return(
         <Card style={{flex: 1}}>
@@ -19,7 +20,20 @@ class LocationCard extends Component {
                 <Text numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
                 {this.props.type && <Text>Location Type: {this.props.type}</Text>}
                 <Text style={s.margin}>Distance: {this.props.distance.toFixed(2)} mi</Text>
-                <Text style={[s.margin, s.bold]}>{machineList}</Text>
+                <Text>
+                    {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
+                      const idx = m.lastIndexOf('(')
+                      const title = m.slice(0, idx)
+                      const info = m.slice(idx)
+                      return (
+                        <Text>
+                          <Text style={{fontWeight: 'bold'}}>{title}</Text>
+                          <Text>{`${info}\n`}</Text>
+                        </Text>
+                      )})
+                    }
+                    {numMachines > NUM_MACHINES_TO_SHOW && <Text>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text>}
+                </Text>
               </View>
               <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
             </View>
