@@ -47,14 +47,14 @@ class LocationList extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text>SORT BY:</Text>
+        <Text style={s.sort}>SORT BY:</Text>
         <ButtonGroup
             onPress={this.updateIndex}
             selectedIndex={this.state.buttonIndex}
             buttons={['Distance', 'Alphabetically', 'Last Updated']}
             containerStyle={{ height: 30 }}
         />
-        <View style={{ flex: 1, position: 'absolute', left: 0, top: 75, bottom: 0, right: 0 }}>
+        <View style={{ flex: 1, position: 'absolute', left: 0, top: 65, bottom: 0, right: 0 }}>
           <FlatList
             data={this.state.locations}
             extraData={this.state}
@@ -79,7 +79,10 @@ class LocationList extends Component {
 }
 
 const s = StyleSheet.create({
-
+  sort: {
+    textAlign: 'center',
+    marginTop: 5,
+  }
 });
 
 const mapStateToProps = ({ locations }) => ({ locations })
