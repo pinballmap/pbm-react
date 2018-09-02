@@ -49,13 +49,8 @@ class Map extends Component {
       };
   };
 
-  reloadMap(location) {
-    if (location) {
-      this.props.navigation.navigate('LocationDetails', {id: this.props.query.locationId.toString(), type: ""})
-    }  
-    else {  
-      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};max_distance=5;send_all_within_distance=1`, true)
-    }
+  reloadMap() { 
+    this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};max_distance=5;send_all_within_distance=1`, true)  
   }
 
   onRegionChange = (region) => {
@@ -89,7 +84,7 @@ class Map extends Component {
 
   componentWillReceiveProps(props) {
     if (props.query.locationId !== this.props.query.locationId) {
-      this.reloadMap(true)
+      this.props.navigation.navigate('LocationDetails', {id: props.query.locationId.toString(), locationName: props.query.locationName})
     }
 
     if (props.locations.mapLocations !== this.props.locations.mapLocations) {

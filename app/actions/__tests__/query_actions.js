@@ -12,14 +12,16 @@ describe('testing query actions', () => {
         expect(queryActions.updateQuery(query)).toEqual(expectedAction)
     })
 
-    it('dispatched the expected action when the location id is updated', () => {
+    it('dispatched the expected action when the location is updated', () => {
         const id = 678
+        const name = 'new fun place'
         const expectedAction = { 
             type: types.SET_LOCATION_ID,
-            payload: id
+            id,
+            name,
         }
 
-        expect(queryActions.setLocationId(id)).toEqual(expectedAction)
+        expect(queryActions.setLocationId(id, name)).toEqual(expectedAction)
     })
 
     it('dispatched the expected action when current coordinates are updated', () => {

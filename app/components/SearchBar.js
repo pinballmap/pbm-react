@@ -45,7 +45,7 @@ class SearchBar extends Component {
                 style={{width: 150}}
                 onChangeText={query => this.props.updateQuery(query)}
                 renderItem={item => (
-                <TouchableOpacity onPress={() => this.props.setLocationId(item.id)}>
+                <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
                     <Text>{item.label}</Text>
                 </TouchableOpacity>
                 )}
@@ -84,6 +84,6 @@ const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon) => dispatch(updateCurrCoordindates(lat, lon)),
     updateQuery: query => dispatch(updateQuery(query)), 
-    setLocationId: id => dispatch(setLocationId(id)),
+    setLocationId: (id, name) => dispatch(setLocationId(id, name)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
