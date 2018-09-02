@@ -9,6 +9,8 @@ const getInitialState = () => {
         locationName: '',
         curLat: null,
         curLon: null,
+        latDelta: null,
+        lonDelta: null,
     })
 }   
 
@@ -59,10 +61,14 @@ describe('queries reducer', () => {
             type: types.UPDATE_COORDINATES,
             lat: 123, 
             lon: 456,
+            latDelta: 0.1,
+            lonDelta: 0.22
         }
 
         const result = queryReducer(state, action)
         expect(result.curLat).toEqual(action.lat)
         expect(result.curLon).toEqual(action.lon)
+        expect(result.latDelta).toEqual(action.latDelta)
+        expect(result.lonDelta).toEqual(action.lonDelta)
     })
 })

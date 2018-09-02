@@ -27,13 +27,17 @@ describe('testing query actions', () => {
     it('dispatched the expected action when current coordinates are updated', () => {
         const lat = 123
         const lon = 456
+        const latDelta = 0.1
+        const lonDelta = 0.22
 
         const expectedAction = { 
             type: types.UPDATE_COORDINATES,
             lat,
             lon,
+            latDelta,
+            lonDelta,
         }
 
-        expect(queryActions.updateCurrCoordindates(lat, lon)).toEqual(expectedAction)
+        expect(queryActions.updateCurrCoordindates(lat, lon, latDelta, lonDelta)).toEqual(expectedAction)
     })
 })

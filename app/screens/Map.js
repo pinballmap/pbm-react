@@ -61,7 +61,7 @@ class Map extends Component {
           region, 
           locations: [], 
         })
-        this.props.updateCoordinates(region.latitude, region.longitude)
+        this.props.updateCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         this.reloadMap()
       }
     }
@@ -72,9 +72,7 @@ class Map extends Component {
 
   componentDidUpdate(){
     if (this.mapRef) {
-      setTimeout(() => this.mapRef.fitToElements(true), 1000);
-
-      
+      setTimeout(() => this.mapRef.fitToElements(true), 1000);  
     }
   }
 
@@ -96,8 +94,8 @@ class Map extends Component {
         region: {
           latitude: props.query.curLat,
           longitude: props.query.curLon,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitudeDelta: props.query.latDelta,
+          longitudeDelta: props.query.lonDelta,
 
         }
       })
@@ -175,7 +173,7 @@ const s = StyleSheet.create({
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
-    updateCoordinates: (lat, lon) => dispatch(updateCurrCoordindates(lat, lon)),
+    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
     setLocationId,
 })
 

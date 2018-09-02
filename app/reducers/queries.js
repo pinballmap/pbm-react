@@ -11,6 +11,8 @@ export const initialState = {
     locationName: '',
     curLat: null,
     curLon: null,
+    latDelta: null,
+    lonDelta: null,
     machineId: null,
 }
 
@@ -33,6 +35,8 @@ export default (state = initialState, action) => {
                 ...state,
                 curLat: action.lat,
                 curLon: action.lon,
+                latDelta: action.latDelta,
+                lonDelta: action.lonDelta,
             }
         case SET_SELECTED_MACHINE: 
             return {
