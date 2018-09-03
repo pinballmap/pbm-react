@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { LocationCard, SearchBar } from '../components';
 import { setLocationId, updateCurrCoordindates } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
-import "../config/globals.js"
+import { Ionicons } from '@expo/vector-icons';
 
 class Map extends Component {
   constructor(props){
@@ -142,21 +142,15 @@ class Map extends Component {
               title={l.name}
               key={l.id}
             >
-              <MapView.Callout  onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
-                <LocationCard
-                    name={l.name}
-                    distance={l.distance}
-                    street={l.street}
-                    state={l.state}
-                    zip={l.zip}
-                    machines={l.machine_names} 
-                    type={l.location_type_id ? this.props.locations.locationTypes.find(location => location.id === l.location_type_id).name : ""}
-                    id={l.id} />
+              <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
+                <View style={s.calloutStyle}>
+                  <Text>{l.name}</Text>
+                  <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                </View>
               </MapView.Callout>
             </MapView.Marker>
           ))}
-          {/* TODO: Figure out why this only works as a ternary statement rather than just && */}
-          {this.state.isRefetchingLocations ? <Text style={{textAlign:'center'}}>Loading...</Text> : <Text></Text>}
+          {this.state.isRefetchingLocations && <Text style={{textAlign:'center'}}>Loading...</Text>}
           </MapView>
         </View>
       </View>
@@ -167,6 +161,17 @@ class Map extends Component {
 const s = StyleSheet.create({
   map: {
     flex: 1
+  },
+  calloutStyle: {
+    display: 'flex', 
+    flexDirection: 'row',
+    alignItems: 'center', 
+    alignContent: 'space-around',
+  },
+  iconStyle: {
+    marginLeft: 15,
+    fontSize: 22,
+    color: '#cccccc',
   },
 });
 
