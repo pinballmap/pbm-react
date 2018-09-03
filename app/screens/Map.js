@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { LocationCard, SearchBar } from '../components';
+import { SearchBar } from '../components';
 import { setLocationId, updateCurrCoordindates } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,7 +23,6 @@ class Map extends Component {
       },
       address: '', 
       locations: this.props.locations.mapLocations,
-      isRefetchingLocations: this.props.locations.isRefetchingLocations,
     }
   }
 
@@ -101,10 +100,6 @@ class Map extends Component {
       })
     }
 
-    if (props.locations.isRefetchingLocations !== this.props.locations.isRefetchingLocations) {
-      this.setState({ isRefetchingLocations: props.locations.isRefetchingLocations })
-    }
-
     if (props.query.machineId !== this.props.query.machineId) {
       const machine = props.query.machineId ? `by_machine_id=${props.query.machineId};` : ''
       this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}max_distance=5;send_all_within_distance=1`, true)
@@ -150,7 +145,7 @@ class Map extends Component {
               </MapView.Callout>
             </MapView.Marker>
           ))}
-          {this.state.isRefetchingLocations && <Text style={{textAlign:'center'}}>Loading...</Text>}
+          {this.props.locations.isRefetchingLocations ? <Text style={{textAlign:'center'}}>Loading...</Text> : <Text></Text>}
           </MapView>
         </View>
       </View>
