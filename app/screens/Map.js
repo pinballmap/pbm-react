@@ -100,9 +100,11 @@ class Map extends Component {
       })
     }
 
-    if (props.query.machineId !== this.props.query.machineId) {
+    if (props.query.machineId !== this.props.query.machineId || props.query.locationType !== this.props.query.locationType || props.query.numMachines !== this.props.query.numMachines) {
       const machine = props.query.machineId ? `by_machine_id=${props.query.machineId};` : ''
-      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}max_distance=5;send_all_within_distance=1`, true)
+      const locationType = props.query.locationType ? `by_type_id=${props.query.locationType};` : ''
+      const numMachines = props.query.numMachines ? `by_at_least_n_machines_type=${props.query.numMachines};` : ''
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${locationType}${numMachines}max_distance=5;send_all_within_distance=1`, true)
     }
 
   }
