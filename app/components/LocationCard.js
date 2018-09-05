@@ -18,9 +18,9 @@ class LocationCard extends Component {
                   <Text style={s.locationName}>{this.props.name}</Text>
                 </View>
                 <Text numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
-                {this.props.type && <Text>Location Type: {this.props.type}</Text>}
+                {this.props.type && <Text style={[s.italic,s.margin]}>{this.props.type}</Text>}
                 <Text style={s.margin}>Distance: {this.props.distance.toFixed(2)} mi</Text>
-                <Text>
+                <Text style={s.margin}>
                     {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                       const idx = m.lastIndexOf('(')
                       const title = m.slice(0, idx)
@@ -61,10 +61,13 @@ const s = StyleSheet.create({
     fontSize: 16,
   },
   margin: {
-    marginTop: 10,
+    marginTop: 5,
   },
   bold: {
     fontWeight: 'bold',
+  },
+  italic: {
+    fontStyle: 'italic'
   },
   iconStyle: {
     fontSize: 32,
