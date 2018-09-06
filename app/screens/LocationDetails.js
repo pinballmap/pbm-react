@@ -34,8 +34,8 @@ class LocationDetails extends Component {
 
     getTitle = machine => (
         <Text>
-            <Text style={s.textStyle}>{machine.name}</Text>
-            <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+            <Text style={s.machineName}>{machine.name}</Text>
+            <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
 
@@ -121,15 +121,29 @@ class LocationDetails extends Component {
                         }
                         </View> :
                         <View style={s.locationMeta}>
-                            <Text>{location.street}</Text>
-                            <Text>{location.city}</Text>
-                            <Text>{location.phone}</Text>
-                            {location.website && <Text 
-                                style={{color: 'blue'}}
+                            <Text style={[s.street,s.font18]}>{location.street}</Text>
+                            <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
+                            
+                            {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
+                                onPress={() => Linking.openURL(location.phone)}>
+                                {location.phone}</Text>}
+
+                            {location.website && <Text style={[s.website,s.font18,s.marginB8]}
                                 onPress={() => Linking.openURL(location.website)}
-                            >Website</Text>}
-                            {location.location_type_id && <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>}
-                            {location.operator_id && <Text>{`Operator: ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>}
+                                >Website</Text>}
+                            
+                            {location.location_type_id && <Text style={[s.type,s.italic,s.font18,s.marginB8]}>
+                                {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
+                                </Text>}
+
+                            {location.operator_id && <Text style={[s.operator,s.italic,s.marginB8]}>Operated by: 
+                                {location.operator_id && <Text style={[s.operator,s.font18,s.notItalic]}>
+                                {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
+                                </Text>}</Text>}
+
+                            {location.description && <Text style={[s.description,s.italic]}>
+                                Location Description: <Text style={[s.description,s.notItalic]}>{location.description}</Text></Text>}                                   
+
                         </View>
                     }
                 </View>
@@ -151,8 +165,45 @@ const s = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
     },
+    machineName: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 18
+    },
+    machineMeta: {
+        fontSize: 16
+    },
     locationMeta: {
        marginLeft: 10 
+    },
+    font18: {
+        fontSize: 18
+    },
+    marginB8: {
+        marginBottom: 8
+    },
+    street: {
+        fontWeight: 'bold'
+    },
+    phone: {
+        textDecorationLine: 'underline'
+    },
+    website: {
+        textDecorationLine: 'underline'
+    },
+    italic: {
+        fontStyle: 'italic'
+    },
+    notItalic: {
+        fontStyle: 'normal'
+    },
+    operator: {
+        fontSize: 16,
+        color: '#666666'
+    },
+    description: {
+        fontSize: 16,
+        color: '#666666'
     }
 });
 
