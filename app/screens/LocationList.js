@@ -46,7 +46,7 @@ export class LocationList extends Component {
 
   render() {
     return (
-      <View >
+      <View style={{ flex: 1 }}>
         <Text style={s.sort}>SORT BY:</Text>
         <ButtonGroup
             onPress={this.updateIndex}
@@ -84,10 +84,6 @@ const s = StyleSheet.create({
     marginTop: 5,
   }
 });
-
-LocationList.defaultProps = {
-  locations: [], 
-}
 
 const mapStateToProps = ({ locations }) => ({ locations })
 export default connect(mapStateToProps)(LocationList);
