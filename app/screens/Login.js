@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Text, Image, ImageBackground, View, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
-import { MaterialIcons } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { getData } from '../config/request';
 
 class Login extends Component {

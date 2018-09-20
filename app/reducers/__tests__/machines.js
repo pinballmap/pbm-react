@@ -1,4 +1,3 @@
-import * as machinesActions from '../../actions/machines_actions'
 import * as types from '../../actions/types'
 import machinesReducer, { initialState } from '../machines.js'
 
@@ -54,11 +53,11 @@ describe('machines reducer', () => {
         }
 
         const result = machinesReducer(state, action)
-        expect(result.isFetchingMachine).toBeFalsy()
+        expect(result.isFetchingMachines).toBeFalsy()
         expect(result.machines).toEqual(machines)
     })
 
-    it('should properly update state when successfully receivng machines', () => {
+    it('should properly update state when failing to receive machines', () => {
         let state = getInitialState()
 
         state.isFetchingMachines = true
@@ -70,7 +69,7 @@ describe('machines reducer', () => {
         }
 
         const result = machinesReducer(state, action)
-        expect(result.isFetchingMachine).toBeFalsy()
+        expect(result.isFetchingMachines).toBeFalsy()
         expect(result.machines).toEqual(machines)
     })
 })

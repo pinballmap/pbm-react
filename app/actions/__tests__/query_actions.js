@@ -40,4 +40,38 @@ describe('testing query actions', () => {
 
         expect(queryActions.updateCurrCoordindates(lat, lon, latDelta, lonDelta)).toEqual(expectedAction)
     })
+
+    it('dispatched the expected action when a machine is selected', () => {
+        const machineId = 456
+
+        const expectedAction = { 
+            type: types.SET_SELECTED_MACHINE,
+            machineId,
+        }
+
+        expect(queryActions.setSelectedMachine(machineId)).toEqual(expectedAction)
+    })
+
+    it('dispatched the expected action when a location type is selected', () => {
+        const locationType = 1
+
+        const expectedAction = { 
+            type: types.SET_SELECTED_LOCATION_TYPE,
+            locationType,
+        }
+
+        expect(queryActions.setSelectedLocationType(locationType)).toEqual(expectedAction)
+    })
+
+    it('dispatched the expected action when number of machines is selected', () => {
+        const num = 3
+
+        const expectedAction = { 
+            type: types.SET_SELECTED_NUM_MACHINES,
+            num,
+        }
+
+        expect(queryActions.setSelectedNumMachines(num)).toEqual(expectedAction)
+    })
+    
 })

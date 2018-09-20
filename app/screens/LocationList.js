@@ -5,7 +5,7 @@ import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components';
 
-class LocationList extends Component {
+export class LocationList extends Component {
   constructor(props) {
     super(props);
 
@@ -46,7 +46,7 @@ class LocationList extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View >
         <Text style={s.sort}>SORT BY:</Text>
         <ButtonGroup
             onPress={this.updateIndex}
@@ -84,6 +84,10 @@ const s = StyleSheet.create({
     marginTop: 5,
   }
 });
+
+LocationList.defaultProps = {
+  locations: [], 
+}
 
 const mapStateToProps = ({ locations }) => ({ locations })
 export default connect(mapStateToProps)(LocationList);

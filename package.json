@@ -28,7 +28,7 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-watch": "^3.1.4",
     "jest": "^22.4.3",
-    "jest-expo": "26.0.0",
+    "jest-expo": "^25.1.0",
     "jest-fetch-mock": "^1.5.0",
     "react": "^16.3.0-alpha.1",
     "react-addons-test-utils": "^15.6.2",
@@ -47,7 +47,7 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFiles": [
       "./setupJest.js"
     ]

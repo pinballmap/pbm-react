@@ -1,6 +1,9 @@
 import React from 'react';
 import Login from '../Login';
-import { shallow } from 'enzyme';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 import { getData } from '../../config/request';
 jest.mock('../../config/request');

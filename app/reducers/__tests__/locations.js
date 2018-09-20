@@ -1,4 +1,3 @@
-import * as locationsActions from '../../actions/locations_actions'
 import * as types from '../../actions/types'
 import locationsReducer, { initialState } from '../locations.js'
 
