@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { AsyncStorage, Text, View, Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements'
 import { postData } from '../config/request'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 class Signup extends Component {
   constructor(props) {

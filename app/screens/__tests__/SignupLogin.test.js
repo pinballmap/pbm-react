@@ -21,6 +21,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
       />)
     expect(toJson(wrapper)).toMatchSnapshot();
   });
@@ -36,6 +37,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
       />)
     expect(toJson(wrapper)).toMatchSnapshot();
   });
@@ -52,6 +54,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
       />)
     
     wrapper.setState({ num_lmxes: 25 })
@@ -70,6 +73,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
       />)
     
     wrapper.setState({ num_lmxes: 25 })
@@ -88,6 +92,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
       />)
 
       wrapper.setState({ num_lmxes: 25 })
@@ -107,8 +112,9 @@ describe('testing signup/login screen', () => {
     const getLocationTypes = jest.fn()
     const getMachines = jest.fn()
     const getCurrentLocation = jest.fn()
+    const getOperators = jest.fn()
 
-    const wrapper = shallow(<SignupLogin user={user} getLocationTypes={getLocationTypes} getMachines={getMachines} getCurrentLocation={getCurrentLocation}/>);
+    const wrapper = shallow(<SignupLogin user={user} getLocationTypes={getLocationTypes} getMachines={getMachines} getCurrentLocation={getCurrentLocation} getOperators={getOperators}/>);
     getData.mockImplementationOnce(() => Promise.resolve({ num_locations: 11, num_lmxes: 22 }));
    
     await wrapper.instance().componentDidMount();
@@ -129,6 +135,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
         navigation={{navigate: jest.fn()}}
       />)
 
@@ -150,6 +157,7 @@ describe('testing signup/login screen', () => {
         getLocationTypes={() => {}} 
         getMachines={() => {}} 
         getCurrentLocation={() => {}} 
+        getOperators={() => {}}
         navigation={{navigate: jest.fn()}}
       />)
       

@@ -70,4 +70,37 @@ describe('queries reducer', () => {
         expect(result.latDelta).toEqual(action.latDelta)
         expect(result.lonDelta).toEqual(action.lonDelta)
     })
+
+    it('should properly update state when the selected machine changes', () => {
+        let state = getInitialState()
+        const action = {
+            type: types.SET_SELECTED_MACHINE,
+            machineId: 456,
+        }
+
+        const result = queryReducer(state, action)
+        expect(result.machineId).toEqual(action.machineId)
+    })
+
+    it('should properly update state when the selected location type changes', () => {
+        let state = getInitialState()
+        const action = {
+            type: types.SET_SELECTED_LOCATION_TYPE,
+            locationType: 1,
+        }
+
+        const result = queryReducer(state, action)
+        expect(result.locationType).toEqual(action.locationType)
+    })
+
+    it('should properly update state when the selected number of machines changes', () => {
+        let state = getInitialState()
+        const action = {
+            type: types.SET_SELECTED_NUM_MACHINES,
+            num: 4,
+        }
+
+        const result = queryReducer(state, action)
+        expect(result.numMachines).toEqual(action.num)
+    })
 })
