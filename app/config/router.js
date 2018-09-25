@@ -12,6 +12,7 @@ import Saved from '../screens/Saved.js';
 import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
 import UserProfile from '../screens/UserProfile.js';
+import MachineDetails from '../screens/MachineDetails.js';
 
 export const PbmStack = StackNavigator({
   SignupLogin: {
@@ -70,4 +71,7 @@ export const PbmStack = StackNavigator({
   FilterMap: {
     screen: FilterMap,
   },
+  MachineDetails: {
+    screen: MachineDetails,
+  }
 });
