@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Button, ButtonGroup, ListItem } from 'react-native-elements'
+import { Button, ButtonGroup, ListItem } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import { retrieveItem } from '../config/utils';
 
 import { getData } from '../config/request'
@@ -14,10 +15,8 @@ class LocationDetails extends Component {
         this.state = {
             id: this.props.navigation.state.params['id'] ? this.props.navigation.state.params['id'] : this.props.query.locationId,
             locationDetailsLoading: true,
-            machineDetailsLoading: true,
             buttonIndex: 0,
             location: {},
-            machines: []
         }
     }
 
@@ -35,10 +34,10 @@ class LocationDetails extends Component {
     getTitle = machine => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+            {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
     )
-
+            
     componentDidMount() {
         getData(`/locations/${this.state.id}.json`)
         .then(data => {
@@ -48,21 +47,14 @@ class LocationDetails extends Component {
             })
         })
         
-        getData(`/locations/${this.state.id}/machine_details.json`)
-        .then(data => {
-            this.setState({
-                machineDetailsLoading: false,
-                machines: data.machines,
-            })
-        })
-
         retrieveItem('auth').then((auth) => {
+            console.log(auth)
             this.setState({ auth })
         }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
     }
 
     render() {
-        if (this.state.locationDetailsLoading || this.state.machineDetailsLoading) {
+        if (this.state.locationDetailsLoading) {
             return (
                 <View style={{ flex: 1, padding: 20 }}>
                     <ActivityIndicator />
@@ -70,7 +62,6 @@ class LocationDetails extends Component {
             )
         }
 
-        const machines = this.state.machines
         const location = this.state.location
    
         return (
@@ -104,22 +95,33 @@ class LocationDetails extends Component {
                         selectedTextStyle={s.textStyle}
                     />
                     {this.state.buttonIndex === 0 ?
-                        <View>
-                        {this.state.auth && 
-                            <Button
-                                onPress={() => console.log(this.state.auth.authentication_token, this.state.auth.email)}
-                                title={'Add Machine'}
-                            />
-                        }
-                        {
-                             machines.map(machine => (
-                                <ListItem   
-                                    key={machine.id}
-                                    title={this.getTitle(machine)}
+                        <ScrollView>
+                            {this.state.auth && 
+                                <Button
+                                    onPress={() => console.log(this.state.auth.authentication_token, this.state.auth.email)}
+                                    title={'Add Machine'}
                                 />
-                            ))
-                        }
-                        </View> :
+                            }
+                            {location.location_machine_xrefs.map(machine => {
+                                const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
+    
+                                if (m) 
+                                    return (
+                                        <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
+                                            <ListItem   
+                                                title={this.getTitle(m)}
+                                                subtitle={
+                                                    <View >
+                                                        {machine.condition && <Text>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
+                                                        {machine.condition_date && <Text>{`Updated: ${machine.condition_date} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
+                                                    </View>
+                                                }
+                                                rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                            />
+                                        </TouchableOpacity>
+                                    )
+                            })}
+                        </ScrollView> :
                         <View style={s.locationMeta}>
                             <Text style={[s.street,s.font18]}>{location.street}</Text>
                             <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
@@ -149,8 +151,6 @@ class LocationDetails extends Component {
                 </View>
             </View>
         )
-
-
     }
 }
 
@@ -204,8 +204,12 @@ const s = StyleSheet.create({
     description: {
         fontSize: 16,
         color: '#666666'
-    }
+    },
+    iconStyle: {
+        fontSize: 32,
+        color: '#cccccc',
+    },
 });
 
-const mapStateToProps = ({ locations, operators, query }) => ({ locations, operators, query })
+const mapStateToProps = ({ locations, operators, machines, query }) => ({ locations, operators, machines, query })
 export default connect(mapStateToProps)(LocationDetails);
