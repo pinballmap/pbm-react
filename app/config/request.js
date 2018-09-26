@@ -18,6 +18,24 @@ export const postData = (uri, body) => {
     .catch(err => err)
 }
 
+export const putData = (uri, body) => {
+  return fetch(global.api_url + uri, {
+    method: 'put', 
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+  .then(response => {
+    if (response.status === 200) 
+      return response.json()
+    
+    throw new Error('API response was not ok.')
+  })
+  .catch(err => err)
+}
+
 export const getData = uri => {
   return fetch(global.api_url + uri)
     .then(response => {
