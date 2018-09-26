@@ -139,7 +139,7 @@ class LocationDetails extends Component {
                                 </Text>}
 
                             {location.operator_id && <Text style={[s.operator,s.italic,s.marginB8]}>Operated by: 
-                                {location.operator_id && <Text style={[s.operator,s.font18,s.notItalic]}>
+                                {location.operator_id && <Text style={[s.operator,s.notItalic]}>
                                 {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
                                 </Text>}</Text>}
 
@@ -192,7 +192,8 @@ const s = StyleSheet.create({
         textDecorationLine: 'underline'
     },
     italic: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        color: '#444444'
     },
     notItalic: {
         fontStyle: 'normal'
