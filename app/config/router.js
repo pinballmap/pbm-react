@@ -13,6 +13,7 @@ import Signup from '../screens/Signup.js';
 import SignupLogin from '../screens/SignupLogin.js';
 import UserProfile from '../screens/UserProfile.js';
 import MachineDetails from '../screens/MachineDetails.js';
+import AddMachine from '../screens/AddMachine.js';
 
 export const PbmStack = StackNavigator({
   SignupLogin: {
@@ -73,5 +74,8 @@ export const PbmStack = StackNavigator({
   },
   MachineDetails: {
     screen: MachineDetails,
+  },
+  AddMachine: {
+    screen: AddMachine,
   }
 });

@@ -6,6 +6,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { retrieveItem } from '../config/utils';
+import { putData } from '../config/request'
 
 import { getData } from '../config/request'
 
@@ -96,11 +97,26 @@ class LocationDetails extends Component {
                     />
                     {this.state.buttonIndex === 0 ?
                         <ScrollView>
+                            {location.date_last_updated && <Text>Last Update: {location.date_last_updated}{location.last_updated_by_user_id  && ` by ${location.last_updated_by_username}`}</Text>}
                             {this.state.auth && 
-                                <Button
-                                    onPress={() => console.log(this.state.auth.authentication_token, this.state.auth.email)}
-                                    title={'Add Machine'}
-                                />
+                                <View>
+                                    <Button
+                                        onPress={() => this.props.navigation.navigate('AddMachine')}
+                                        title={'Add Machine'}
+                                    />
+                                    <Button
+                                        onPress={() =>  {
+                                            const body = {
+                                                user_email: this.state.auth.email,
+                                                user_token: this.state.auth.authentication_token,
+                                            }
+                                            putData(`/locations/${location.id}/confirm.json`, body)
+                                                .then(data => console.log(data))
+                                                .catch(err => console.log(err))
+                                        }}
+                                        title={'Confirm machine list is up to date'}
+                                    />
+                                </View>
                             }
                             {location.location_machine_xrefs.map(machine => {
                                 const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
