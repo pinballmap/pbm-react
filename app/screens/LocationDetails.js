@@ -97,12 +97,21 @@ class LocationDetails extends Component {
                     />
                     {this.state.buttonIndex === 0 ?
                         <ScrollView>
-                            {location.date_last_updated && <Text>Last Update: {location.date_last_updated}{location.last_updated_by_user_id  && ` by ${location.last_updated_by_username}`}</Text>}
+                            {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {location.date_last_updated}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{`${location.last_updated_by_username}`}</Text></Text>}
                             {this.state.auth && 
                                 <View>
                                     <Button
                                         onPress={() => this.props.navigation.navigate('AddMachine')}
                                         title={'Add Machine'}
+                                        accessibilityLabel="Add Machine"
+                                        raised
+                                        rounded
+                                        buttonStyle={s.addButton}
+                                        titleStyle={{
+                                            color:"black", 
+                                            fontSize:18
+                                        }}
+                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
                                     />
                                     <Button
                                         onPress={() =>  {
@@ -115,6 +124,15 @@ class LocationDetails extends Component {
                                                 .catch(err => console.log(err))
                                         }}
                                         title={'Confirm machine list is up to date'}
+                                        accessibilityLabel="Confirm machine list is up to date"
+                                        raised
+                                        rounded
+                                        buttonStyle={s.confirmButton}
+                                        titleStyle={{
+                                            color:"#888888",
+                                            fontSize:18
+                                        }}
+                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
                                     />
                                 </View>
                             }
@@ -124,15 +142,21 @@ class LocationDetails extends Component {
                                 if (m) 
                                     return (
                                         <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
-                                            <ListItem   
+                                            <ListItem
                                                 title={this.getTitle(m)}
                                                 subtitle={
-                                                    <View >
-                                                        {machine.condition && <Text>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
-                                                        {machine.condition_date && <Text>{`Updated: ${machine.condition_date} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
+                                                    <View style={s.condition}>
+                                                        {machine.condition && <Text style={s.conditionText}>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
+                                                        {machine.condition_date && <Text>{`Last Updated: ${machine.condition_date} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
                                                     </View>
                                                 }
                                                 rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                            />
+                                            <View
+                                                style={{
+                                                    borderBottomColor: '#D3ECFF',
+                                                    borderBottomWidth: 1,
+                                                }}
                                             />
                                         </TouchableOpacity>
                                     )
@@ -190,7 +214,7 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-       marginLeft: 10 
+        marginLeft: 10 
     },
     font18: {
         fontSize: 18
@@ -226,6 +250,26 @@ const s = StyleSheet.create({
         fontSize: 32,
         color: '#cccccc',
     },
+    addButton: {
+        backgroundColor:"#D3ECFF",
+        borderRadius: 50,
+        width: '100%'
+    },
+    confirmButton: {
+        backgroundColor:"#dddddd",
+        borderRadius: 50,
+        width: '100%'
+    },
+    condition: {
+        marginTop: 10
+    },
+    conditionText: {
+        color: '#888888',
+        fontSize: 14,
+    },
+    lastUpdated: {
+        textAlign: 'center',
+    }
 });
 
 const mapStateToProps = ({ locations, operators, machines, query }) => ({ locations, operators, machines, query })
