@@ -5,6 +5,7 @@ import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { retrieveItem } from '../config/utils';
 import { putData } from '../config/request'
 
@@ -102,6 +103,7 @@ class LocationDetails extends Component {
                                 <View>
                                     <Button
                                         onPress={() => this.props.navigation.navigate('AddMachine')}
+                                        icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={'Add Machine'}
                                         accessibilityLabel="Add Machine"
                                         raised
@@ -126,13 +128,12 @@ class LocationDetails extends Component {
                                         title={'Confirm machine list is up to date'}
                                         accessibilityLabel="Confirm machine list is up to date"
                                         raised
-                                        rounded
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
                                             color:"#888888",
                                             fontSize:18
                                         }}
-                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
+                                        style={{paddingTop: 5, paddingBottom: 5}}
                                     />
                                 </View>
                             }
@@ -257,7 +258,6 @@ const s = StyleSheet.create({
     },
     confirmButton: {
         backgroundColor:"#dddddd",
-        borderRadius: 50,
         width: '100%'
     },
     condition: {
@@ -269,6 +269,10 @@ const s = StyleSheet.create({
     },
     lastUpdated: {
         textAlign: 'center',
+    },
+    plusButton: {
+        color: "#F53240",
+        fontSize: 24
     }
 });
 
