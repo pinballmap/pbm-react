@@ -6,7 +6,8 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { retrieveItem } from '../config/utils';
-import { putData } from '../config/request'
+import { fetchLocation } from '../actions/location_actions';
+import { confirmLocationIsUpToDate } from '../actions/location_actions';
 
 import { getData } from '../config/request'
 
@@ -15,9 +16,7 @@ class LocationDetails extends Component {
         super(props)
         this.state = {
             id: this.props.navigation.state.params['id'] ? this.props.navigation.state.params['id'] : this.props.query.locationId,
-            locationDetailsLoading: true,
             buttonIndex: 0,
-            location: {},
         }
     }
 
@@ -38,24 +37,21 @@ class LocationDetails extends Component {
             {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
     )
+
+    componentWillReceiveProps(props) {
+
+    }
             
     componentDidMount() {
-        getData(`/locations/${this.state.id}.json`)
-        .then(data => {
-            this.setState({
-                locationDetailsLoading: false,
-                location: data,
-            })
-        })
-        
+        this.props.fetchLocation(this.state.id)
+
         retrieveItem('auth').then((auth) => {
-            console.log(auth)
             this.setState({ auth })
         }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
     }
 
     render() {
-        if (this.state.locationDetailsLoading) {
+        if (this.props.location.isFetchingLocation || !this.props.location.location.id) {
             return (
                 <View style={{ flex: 1, padding: 20 }}>
                     <ActivityIndicator />
@@ -63,7 +59,7 @@ class LocationDetails extends Component {
             )
         }
 
-        const location = this.state.location
+        const location = this.props.location.location
    
         return (
             <View style={{ flex: 1 }}>
@@ -110,9 +106,7 @@ class LocationDetails extends Component {
                                                 user_email: this.state.auth.email,
                                                 user_token: this.state.auth.authentication_token,
                                             }
-                                            putData(`/locations/${location.id}/confirm.json`, body)
-                                                .then(data => console.log(data))
-                                                .catch(err => console.log(err))
+                                            this.props.confirmLocationIsUpToDate(body, location.id)
                                         }}
                                         title={'Confirm machine list is up to date'}
                                     />
@@ -227,5 +221,9 @@ const s = StyleSheet.create({
     },
 });
 
-const mapStateToProps = ({ locations, operators, machines, query }) => ({ locations, operators, machines, query })
-export default connect(mapStateToProps)(LocationDetails);
+const mapStateToProps = ({ location, locations, operators, machines, query }) => ({ location, locations, operators, machines, query })
+const mapDispatchToProps = (dispatch) => ({
+    fetchLocation: url => dispatch(fetchLocation(url)),
+    confirmLocationIsUpToDate: (body, id) => dispatch(confirmLocationIsUpToDate(body, id)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails);
