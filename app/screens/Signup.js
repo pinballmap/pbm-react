@@ -223,7 +223,6 @@ const s = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    resizeMode: 'stretch',
   },
   mask: {
     flex: 1,
