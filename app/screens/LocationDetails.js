@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
+
 import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -8,6 +9,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { retrieveItem } from '../config/utils';
 import { fetchLocation } from '../actions/location_actions';
 import { confirmLocationIsUpToDate } from '../actions/location_actions';
+
+const moment = require('moment');
 
 import { getData } from '../config/request'
 
@@ -93,7 +96,7 @@ class LocationDetails extends Component {
                     />
                     {this.state.buttonIndex === 0 ?
                         <ScrollView>
-                            {location.date_last_updated && <Text>Last Update: {location.date_last_updated}{location.last_updated_by_user_id  && ` by ${location.last_updated_by_username}`}</Text>}
+                            {location.date_last_updated && <Text>Last Update: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by ${location.last_updated_by_username}`}</Text>}
                             {this.state.auth && 
                                 <View>
                                     <Button
@@ -123,7 +126,7 @@ class LocationDetails extends Component {
                                                 subtitle={
                                                     <View >
                                                         {machine.condition && <Text>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
-                                                        {machine.condition_date && <Text>{`Updated: ${machine.condition_date} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
+                                                        {machine.condition_date && <Text>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
                                                     </View>
                                                 }
                                                 rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
