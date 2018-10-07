@@ -4,6 +4,7 @@ import { FlatList, Text, View, StyleSheet } from 'react-native';
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation';
 import { LocationCard } from '../components';
+import { getDistance } from '../utils/utilityFunctions'
 
 export class LocationList extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export class LocationList extends Component {
     switch(buttonIndex) {
       case 0:
         return this.setState({
-          locations: this.state.locations.sort((a, b) => a.distance - b.distance)
+          locations: this.state.locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon))
         })
       case 1:
         return this.setState({
@@ -61,7 +62,7 @@ export class LocationList extends Component {
             renderItem={({ item }) =>
               <LocationCard
                 name={item.name}
-                distance={item.distance}
+                distance={getDistance(this.props.user.lat, this.props.user.lon, item.lat, item.lon)}
                 street={item.street}
                 state={item.state}
                 zip={item.zip}
@@ -85,5 +86,5 @@ const s = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ locations }) => ({ locations })
+const mapStateToProps = ({ locations, user }) => ({ locations, user })
 export default connect(mapStateToProps)(LocationList);

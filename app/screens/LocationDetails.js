@@ -10,10 +10,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { retrieveItem } from '../config/utils';
 import { fetchLocation } from '../actions/location_actions';
 import { confirmLocationIsUpToDate } from '../actions/location_actions';
+import { getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment');
-
-import { getData } from '../config/request'
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -41,10 +40,6 @@ class LocationDetails extends Component {
             {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
     )
-
-    componentWillReceiveProps(props) {
-
-    }
             
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
@@ -163,7 +158,7 @@ class LocationDetails extends Component {
                         <View style={s.locationMeta}>
                             <Text style={[s.street,s.font18]}>{location.street}</Text>
                             <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
-                            
+                            {this.props.user.lat && this.props.user.lon && <Text>Distance: {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)}</Text>}
                             {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
                                 onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                 {location.phone}</Text>}
@@ -273,7 +268,7 @@ const s = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({ location, locations, operators, machines, query }) => ({ location, locations, operators, machines, query })
+const mapStateToProps = ({ location, locations, operators, machines, query, user }) => ({ location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id) => dispatch(confirmLocationIsUpToDate(body, id)),
