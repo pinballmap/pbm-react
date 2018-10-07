@@ -6,6 +6,7 @@ import { HeaderBackButton } from 'react-navigation';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { retrieveItem } from '../config/utils';
 import { fetchLocation } from '../actions/location_actions';
 import { confirmLocationIsUpToDate } from '../actions/location_actions';
@@ -101,7 +102,17 @@ class LocationDetails extends Component {
                                 <View>
                                     <Button
                                         onPress={() => this.props.navigation.navigate('AddMachine')}
+                                        icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={'Add Machine'}
+                                        accessibilityLabel="Add Machine"
+                                        raised
+                                        rounded
+                                        buttonStyle={s.addButton}
+                                        titleStyle={{
+                                            color:"black", 
+                                            fontSize:18
+                                        }}
+                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
                                     />
                                     <Button
                                         onPress={() =>  {
@@ -112,6 +123,14 @@ class LocationDetails extends Component {
                                             this.props.confirmLocationIsUpToDate(body, location.id)
                                         }}
                                         title={'Confirm machine list is up to date'}
+                                        accessibilityLabel="Confirm machine list is up to date"
+                                        raised
+                                        buttonStyle={s.confirmButton}
+                                        titleStyle={{
+                                            color:"#888888",
+                                            fontSize:18
+                                        }}
+                                        style={{paddingTop: 5, paddingBottom: 5}}
                                     />
                                 </View>
                             }
@@ -121,7 +140,7 @@ class LocationDetails extends Component {
                                 if (m) 
                                     return (
                                         <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
-                                            <ListItem   
+                                            <ListItem
                                                 title={this.getTitle(m)}
                                                 subtitle={
                                                     <View >
@@ -130,6 +149,12 @@ class LocationDetails extends Component {
                                                     </View>
                                                 }
                                                 rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                            />
+                                            <View
+                                                style={{
+                                                    borderBottomColor: '#D3ECFF',
+                                                    borderBottomWidth: 1,
+                                                }}
                                             />
                                         </TouchableOpacity>
                                     )
@@ -152,7 +177,7 @@ class LocationDetails extends Component {
                                 </Text>}
 
                             {location.operator_id && <Text style={[s.operator,s.italic,s.marginB8]}>Operated by: 
-                                {location.operator_id && <Text style={[s.operator,s.font18,s.notItalic]}>
+                                {location.operator_id && <Text style={[s.operator,s.notItalic]}>
                                 {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
                                 </Text>}</Text>}
 
@@ -187,7 +212,7 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-       marginLeft: 10 
+        marginLeft: 10 
     },
     font18: {
         fontSize: 18
@@ -205,7 +230,8 @@ const s = StyleSheet.create({
         textDecorationLine: 'underline'
     },
     italic: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        color: '#444444'
     },
     notItalic: {
         fontStyle: 'normal'
@@ -222,6 +248,29 @@ const s = StyleSheet.create({
         fontSize: 32,
         color: '#cccccc',
     },
+    addButton: {
+        backgroundColor:"#D3ECFF",
+        borderRadius: 50,
+        width: '100%'
+    },
+    confirmButton: {
+        backgroundColor:"#dddddd",
+        width: '100%'
+    },
+    condition: {
+        marginTop: 10
+    },
+    conditionText: {
+        color: '#888888',
+        fontSize: 14,
+    },
+    lastUpdated: {
+        textAlign: 'center',
+    },
+    plusButton: {
+        color: "#F53240",
+        fontSize: 24
+    }
 });
 
 const mapStateToProps = ({ location, locations, operators, machines, query }) => ({ location, locations, operators, machines, query })
