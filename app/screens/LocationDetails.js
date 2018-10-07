@@ -143,7 +143,7 @@ class LocationDetails extends Component {
                             <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
                             
                             {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
-                                onPress={() => Linking.openURL(location.phone)}>
+                                onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                 {location.phone}</Text>}
 
                             {location.website && <Text style={[s.website,s.font18,s.marginB8]}
