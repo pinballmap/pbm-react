@@ -8,7 +8,7 @@ import {
     REFETCHING_LOCATIONS
 } from './types'
 
-import { getData } from '../config/request'
+import { getData, putData } from '../config/request'
 
 export const fetchLocationTypes = (url) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TYPES})
@@ -55,4 +55,11 @@ export const getLocationsFailure = () => {
     return {
         type: FETCHING_LOCATIONS_FAILURE
     }
+}
+
+export const confirmLocationIsUpToDate = (body, id) => {
+    return putData(`/locations/${id}/confirm.json`, body)
+    .then(msg => getData(`/locations/${this.id}.json`))
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
 }
