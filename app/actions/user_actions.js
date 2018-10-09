@@ -2,6 +2,9 @@ import {
     FETCHING_LOCATION_TRACKING_ENABLED,
     FETCHING_LOCATION_TRACKING_SUCCESS,
     FETCHING_LOCATION_TRACKING_FAILURE,
+    LOGGED_IN,
+    LOGGED_OUT,
+    LOGIN_LATER,
 } from './types'
 
 import { getCurrentLocation } from '../config/request'
@@ -25,6 +28,25 @@ export const getLocationTrackingEnabledSuccess = (data) => {
   
 export const getLocationTrackingEnabledFailure = () => {
     return {
-        type: FETCHING_LOCATION_TRACKING_FAILURE
+        type: FETCHING_LOCATION_TRACKING_FAILURE,
+    }
+}
+
+export const setLoggedIn = (status) => {
+    if (status) 
+        return {
+            type: LOGGED_IN,
+            status
+        }
+    else 
+        return {
+            type: LOGGED_OUT,
+            status,
+        }
+}
+
+export const loginLater = () => {
+    return {
+        type: LOGIN_LATER,
     }
 }

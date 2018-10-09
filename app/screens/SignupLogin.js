@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { ActivityIndicator, AsyncStorage, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements'
-import { fetchLocationTypes } from '../actions/locations_actions'
-import { fetchMachines } from '../actions/machines_actions'
-import { fetchOperators } from '../actions/operators_actions'
-import { fetchCurrentLocation } from '../actions/user_actions'
-import { getData, getCurrentLocation } from '../config/request'
+import { loginLater } from '../actions/user_actions'
+import { getData } from '../config/request'
 import "../config/globals.js"
 
 export class SignupLogin extends Component {
@@ -24,11 +21,6 @@ export class SignupLogin extends Component {
   static navigationOptions = { header: null };
 
   componentDidMount(){
-    this.props.getLocationTypes('/location_types.json')
-    this.props.getMachines('/machines.json?no_details=1')
-    this.props.getOperators('/operators.json')
-    this.props.getCurrentLocation()
-
     getData('/regions/location_and_machine_counts.json')
       .then(data => {
         if (data && data.num_lmxes && data.num_locations) {
@@ -105,7 +97,9 @@ export class SignupLogin extends Component {
               accessibilityLabel="Sign Up"
             />
             <Text 
-              onPress={() => this.props.navigation.navigate('Map')} 
+              onPress={() => {
+                this.props.loginLater()
+                this.props.navigation.navigate('Map')}} 
               style={{fontSize:14,textAlign:"center"}}
               >{"SKIP THIS FOR NOW"}
             </Text>
@@ -166,10 +160,7 @@ const s = StyleSheet.create({
 const mapStateToProps = ({ user }) => ({ user })
 
 const mapDispatchToProps = (dispatch) => ({
-  getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
-  getMachines: (url) =>  dispatch(fetchMachines(url)),
-  getCurrentLocation: () => dispatch(fetchCurrentLocation()),
-  getOperators: (url) => dispatch(fetchOperators(url)),
+  loginLater: () => dispatch(loginLater())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)

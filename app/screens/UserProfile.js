@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { AsyncStorage, Modal, Text,  View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { Button } from 'react-native-elements';
@@ -35,24 +36,30 @@ class UserProfile extends Component {
                 title={"Logout?"}
                 onPress={() => {
                   AsyncStorage.removeItem('auth')
-                  this.setModalVisible(!this.state.modalVisible)
+                  this.setModalVisible(false)
+                  this.props.navigation.navigate('SignupLogin')
                 }} 
               />
               <Button
                 title={"Cancel"}
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                onPress={() => this.setModalVisible(false)}
               />
             </View>
           </View>
         </Modal>
 
-        <Button
-          title={"Logout"} 
-          onPress={() => this.setModalVisible(true)}
-        />
+        {this.props.user.loggedIn && 
+          <Button
+            title={"Logout"} 
+            onPress={() => this.setModalVisible(true)}
+          />
+        }
       </View>
     );
   }
 }
 
-export default UserProfile;
+const mapStateToProps = ({ user }) => ({ user })
+
+export default connect(mapStateToProps)(UserProfile);
+

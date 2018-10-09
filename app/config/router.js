@@ -16,9 +16,6 @@ import MachineDetails from '../screens/MachineDetails.js';
 import AddMachine from '../screens/AddMachine.js';
 
 export const PbmStack = StackNavigator({
-  SignupLogin: {
-    screen: SignupLogin,
-  },
   Map: {
     screen: TabNavigator({
       Map: { screen: Map },
@@ -53,6 +50,9 @@ export const PbmStack = StackNavigator({
         inactiveTintColor: '#666',
       }
     })
+  },
+  SignupLogin: {
+    screen: SignupLogin,
   },
   LocationList: {
     screen: LocationList,
