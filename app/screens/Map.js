@@ -5,6 +5,12 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { SearchBar } from '../components';
 import { setLocationId, updateCurrCoordindates } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
+import { setLoggedIn, fetchCurrentLocation, loginLater  } from '../actions/user_actions'
+import { fetchLocationTypes } from '../actions/locations_actions'
+import { fetchMachines } from '../actions/machines_actions'
+import { fetchOperators } from '../actions/operators_actions'
+import { getCurrentLocation } from '../config/request'
+import { retrieveItem } from '../config/utils';
 import { Ionicons } from '@expo/vector-icons';
 
 class Map extends Component {
@@ -21,6 +27,7 @@ class Map extends Component {
         latitudeDelta: 0.1,
         longitudeDelta: 0.1,
       },
+      authCheck: false, 
       address: '', 
       locations: this.props.locations.mapLocations,
     }
@@ -76,10 +83,36 @@ class Map extends Component {
   }
 
   componentDidMount(){
-    this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.state.region.latitude + ';lon=' + this.state.region.longitude + ';send_all_within_distance=1;max_distance=5')
+    retrieveItem('auth').then((auth) => {
+      if (!auth && !this.props.user.loginLater)
+        this.props.navigation.navigate('SignupLogin')
+      else if (auth) {
+        this.setState({ auth, authCheck: true })
+        this.props.setLoggedIn(true)
+      } 
+      else {
+        this.setState({ authCheck: true })
+      }
+    }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
+
+    this.props.getCurrentLocation()
+    this.props.getLocationTypes('/location_types.json')
+    this.props.getMachines('/machines.json?no_details=1')
+    this.props.getOperators('/operators.json')
   }
 
   componentWillReceiveProps(props) {
+    if (!this.props.user.lat && props.user.lat) {
+      this.setState({
+        region: {
+          ...this.state.region,
+          latitude: props.user.lat, 
+          longitude: props.user.lon, 
+        }
+      })
+      this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.user.lat + ';lon=' + props.user.lon + ';send_all_within_distance=1;max_distance=5')
+    }
+
     if (props.query.locationId !== this.props.query.locationId) {
       this.props.navigation.navigate('LocationDetails', {id: props.query.locationId.toString(), locationName: props.query.locationName})
     }
@@ -110,7 +143,15 @@ class Map extends Component {
   }
 
   render(){
-    if (this.props.locations.isFetchingLocations) {
+    if (!this.state.authCheck) {
+      return (
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    } 
+
+    if (this.props.locations.isFetchingLocations || !this.state.region.latitude) {
       return(
         <View style={{flex: 1, padding: 20}}>
           <ActivityIndicator/>
@@ -174,9 +215,14 @@ const s = StyleSheet.create({
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
+    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
+    getMachines: (url) =>  dispatch(fetchMachines(url)),
+    getCurrentLocation: () => dispatch(fetchCurrentLocation()),
+    getOperators: (url) => dispatch(fetchOperators(url)),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
     setLocationId,
+    setLoggedIn: status => dispatch(setLoggedIn(status)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
