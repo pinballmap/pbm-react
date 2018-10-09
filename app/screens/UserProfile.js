@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AsyncStorage, Modal, Text,  View } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { Button } from 'react-native-elements';
+import { setLoggedIn } from '../actions/user_actions'
 
 class UserProfile extends Component {
   state = {
@@ -37,6 +38,7 @@ class UserProfile extends Component {
                 onPress={() => {
                   AsyncStorage.removeItem('auth')
                   this.setModalVisible(false)
+                  this.props.setLoggedIn(false)
                   this.props.navigation.navigate('SignupLogin')
                 }} 
               />
@@ -60,6 +62,9 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user })
+const mapDispatchToProps = (dispatch) => ({
+  setLoggedIn: status => dispatch(setLoggedIn(status)),
+})
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
 
