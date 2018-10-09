@@ -33,16 +33,34 @@ class UserProfile extends Component {
             <View>
 
               <Button
-                title={"Logout?"}
+                title={"Really Logout?"}
                 onPress={() => {
                   AsyncStorage.removeItem('auth')
                   this.setModalVisible(false)
                   this.props.navigation.navigate('SignupLogin')
-                }} 
+                }}
+                accessibilityLabel="Logout"
+                raised
+                rounded
+                buttonStyle={s.logoutButton}
+                titleStyle={{
+                    color:"white", 
+                    fontSize:18
+                }}
+                style={{padding:10}}
               />
               <Button
-                title={"Cancel"}
+                title={"Nevermind. Stay Logged In"}
                 onPress={() => this.setModalVisible(false)}
+                accessibilityLabel="Logout"
+                raised
+                rounded
+                buttonStyle={s.cancelButton}
+                titleStyle={{
+                    color:"black", 
+                    fontSize:18
+                }}
+                style={{padding:10}}
               />
             </View>
           </View>
@@ -71,6 +89,11 @@ class UserProfile extends Component {
 const s = StyleSheet.create({
   logoutButton: {
     backgroundColor:"#F53240",
+    borderRadius: 50,
+    width: '100%'
+  },
+  cancelButton: {
+    backgroundColor:"#D3ECFF",
     borderRadius: 50,
     width: '100%'
   },
