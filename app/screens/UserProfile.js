@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Modal, Text,  View } from 'react-native';
+import { AsyncStorage, Modal, Text, View, StyleSheet } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { Button } from 'react-native-elements';
 
@@ -36,7 +36,7 @@ class UserProfile extends Component {
                 onPress={() => {
                   AsyncStorage.removeItem('auth')
                   this.setModalVisible(!this.state.modalVisible)
-                }} 
+                }}
               />
               <Button
                 title={"Cancel"}
@@ -49,10 +49,27 @@ class UserProfile extends Component {
         <Button
           title={"Logout"} 
           onPress={() => this.setModalVisible(true)}
+          accessibilityLabel="Logout"
+          raised
+          rounded
+          buttonStyle={s.logoutButton}
+          titleStyle={{
+              color:"white", 
+              fontSize:18
+          }}
+          style={{padding:10}}
         />
       </View>
     );
   }
 }
+
+const s = StyleSheet.create({
+  logoutButton: {
+    backgroundColor:"#F53240",
+    borderRadius: 50,
+    width: '100%'
+  },
+});
 
 export default UserProfile;
