@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AsyncStorage, Modal, Text,  View } from 'react-native';
+import { AsyncStorage, Modal, Text, View, StyleSheet } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import { setLoggedIn } from '../actions/user_actions'
@@ -34,17 +34,35 @@ class UserProfile extends Component {
             <View>
 
               <Button
-                title={"Logout?"}
+                title={"Really Logout?"}
                 onPress={() => {
                   AsyncStorage.removeItem('auth')
                   this.setModalVisible(false)
                   this.props.setLoggedIn(false)
                   this.props.navigation.navigate('SignupLogin')
-                }} 
+                }}
+                accessibilityLabel="Logout"
+                raised
+                rounded
+                buttonStyle={s.logoutButton}
+                titleStyle={{
+                    color:"white", 
+                    fontSize:18
+                }}
+                style={{padding:10}}
               />
               <Button
-                title={"Cancel"}
+                title={"Nevermind. Stay Logged In"}
                 onPress={() => this.setModalVisible(false)}
+                accessibilityLabel="Logout"
+                raised
+                rounded
+                buttonStyle={s.cancelButton}
+                titleStyle={{
+                    color:"black", 
+                    fontSize:18
+                }}
+                style={{padding:10}}
               />
             </View>
           </View>
@@ -54,12 +72,34 @@ class UserProfile extends Component {
           <Button
             title={"Logout"} 
             onPress={() => this.setModalVisible(true)}
+            accessibilityLabel="Logout"
+            raised
+            rounded
+            buttonStyle={s.logoutButton}
+            titleStyle={{
+                color:"white", 
+                fontSize:18
+            }}
+            style={{padding:10}}
           />
         }
       </View>
     );
   }
 }
+
+const s = StyleSheet.create({
+  logoutButton: {
+    backgroundColor:"#F53240",
+    borderRadius: 50,
+    width: '100%'
+  },
+  cancelButton: {
+    backgroundColor:"#D3ECFF",
+    borderRadius: 50,
+    width: '100%'
+  },
+});
 
 const mapStateToProps = ({ user }) => ({ user })
 const mapDispatchToProps = (dispatch) => ({
