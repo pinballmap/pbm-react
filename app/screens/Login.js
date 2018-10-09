@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { AsyncStorage, Text, Image, ImageBackground, View, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { setLoggedIn, loginLater } from '../actions/user_actions'
 import { getData } from '../config/request';
 
 class Login extends Component {
@@ -39,6 +41,7 @@ class Login extends Component {
       }
       if (data.user) {      
         AsyncStorage.setItem('auth', JSON.stringify(data.user))
+        this.props.setLoggedIn(true)
         this.props.navigation.navigate('Map')
       }
     })
@@ -94,7 +97,10 @@ class Login extends Component {
               disabled={!this.state.login || !this.state.password}
             />
             <Text 
-              onPress={() => this.props.navigation.navigate('Map')} 
+              onPress={() => {
+                this.props.loginLater()
+                this.props.navigation.navigate('Map')
+              }} 
               style={s.textLink}
               >{"SKIP THIS FOR NOW"}
             </Text>
@@ -173,4 +179,10 @@ const s = StyleSheet.create({
   }
 });
 
-export default Login;
+const mapStateToProps = ({ }) => ({ })
+const mapDispatchToProps = (dispatch) => ({
+    setLoggedIn: status => dispatch(setLoggedIn(status)),
+    loginLater: () => dispatch(loginLater()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
