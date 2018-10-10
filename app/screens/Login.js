@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AsyncStorage, Text, Image, ImageBackground, View, StyleSheet } from 'react-native';
+import { Text, Image, ImageBackground, View, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { setLoggedIn, loginLater } from '../actions/user_actions'
+import { login, loginLater } from '../actions/user_actions'
 import { getData } from '../config/request';
 
 class Login extends Component {
@@ -40,8 +40,7 @@ class Login extends Component {
           this.setState({ passwordError: 'Incorrect password' })
       }
       if (data.user) {      
-        AsyncStorage.setItem('auth', JSON.stringify(data.user))
-        this.props.setLoggedIn(true)
+        this.props.login(data.user)
         this.props.navigation.navigate('Map')
       }
     })
@@ -181,7 +180,7 @@ const s = StyleSheet.create({
 
 const mapStateToProps = ({ }) => ({ })
 const mapDispatchToProps = (dispatch) => ({
-    setLoggedIn: status => dispatch(setLoggedIn(status)),
+    login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),
 })
 

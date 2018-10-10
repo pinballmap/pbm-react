@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AsyncStorage, Text, View, Image, ImageBackground, StyleSheet } from 'react-native';
+import { Text, View, Image, ImageBackground, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements'
-import { setLoggedIn, loginLater } from '../actions/user_actions'
+import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -124,8 +124,7 @@ class Signup extends Component {
         }
 
         if (data.user) {      
-          AsyncStorage.setItem('auth', JSON.stringify(data.user))
-          this.props.setLoggedIn(true)
+          this.props.login(data.user)
           this.props.navigation.navigate('Map')
         }
       })
@@ -279,7 +278,7 @@ const s = StyleSheet.create({
 
 const mapStateToProps = ({ }) => ({ })
 const mapDispatchToProps = (dispatch) => ({
-    setLoggedIn: status => dispatch(setLoggedIn(status)),
+    login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),
 })
 

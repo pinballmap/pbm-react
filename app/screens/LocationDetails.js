@@ -7,7 +7,6 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button, ButtonGroup, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { retrieveItem } from '../config/utils';
 import { fetchLocation } from '../actions/location_actions';
 import { confirmLocationIsUpToDate } from '../actions/location_actions';
 import { getDistance } from '../utils/utilityFunctions'
@@ -43,10 +42,6 @@ class LocationDetails extends Component {
             
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
-
-        retrieveItem('auth').then((auth) => {
-            this.setState({ auth })
-        }).catch((error) => console.log('Promise is rejected with error: ' + error)); 
     }
 
     render() {
@@ -93,7 +88,7 @@ class LocationDetails extends Component {
                     {this.state.buttonIndex === 0 ?
                         <ScrollView>
                             {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
-                            {this.state.auth && 
+                            {this.props.user.email && this.props.user.authentication_token &&  
                                 <View>
                                     <Button
                                         onPress={() => this.props.navigation.navigate('AddMachine')}
@@ -112,8 +107,8 @@ class LocationDetails extends Component {
                                     <Button
                                         onPress={() =>  {
                                             const body = {
-                                                user_email: this.state.auth.email,
-                                                user_token: this.state.auth.authentication_token,
+                                                user_email: this.props.user.email,
+                                                user_token: this.props.user.authentication_token,
                                             }
                                             this.props.confirmLocationIsUpToDate(body, location.id)
                                         }}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AsyncStorage, Modal, Text, View, StyleSheet } from 'react-native';
+import { Modal, Text, View, StyleSheet } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { Button } from 'react-native-elements';
-import { setLoggedIn } from '../actions/user_actions'
+import { logout } from '../actions/user_actions'
 
 class UserProfile extends Component {
   state = {
@@ -32,13 +32,11 @@ class UserProfile extends Component {
         >
           <View style={{marginTop: 100}}>
             <View>
-
               <Button
                 title={"Really Logout?"}
                 onPress={() => {
-                  AsyncStorage.removeItem('auth')
                   this.setModalVisible(false)
-                  this.props.setLoggedIn(false)
+                  this.props.logout()
                   this.props.navigation.navigate('SignupLogin')
                 }}
                 accessibilityLabel="Logout"
@@ -103,7 +101,7 @@ const s = StyleSheet.create({
 
 const mapStateToProps = ({ user }) => ({ user })
 const mapDispatchToProps = (dispatch) => ({
-  setLoggedIn: status => dispatch(setLoggedIn(status)),
+  logout: () => dispatch(logout()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

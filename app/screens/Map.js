@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { SearchBar } from '../components';
 import { setLocationId, updateCurrCoordindates } from '../actions/query_actions';
 import { fetchLocations } from '../actions/locations_actions';
-import { setLoggedIn, fetchCurrentLocation, loginLater  } from '../actions/user_actions'
+import { fetchCurrentLocation, login } from '../actions/user_actions'
 import { fetchLocationTypes } from '../actions/locations_actions'
 import { fetchMachines } from '../actions/machines_actions'
 import { fetchOperators } from '../actions/operators_actions'
@@ -84,11 +84,12 @@ class Map extends Component {
 
   componentDidMount(){
     retrieveItem('auth').then((auth) => {
-      if (!auth && !this.props.user.loginLater)
+      if (!auth && !this.props.user.loginLater) {
         this.props.navigation.navigate('SignupLogin')
+      }
       else if (auth) {
-        this.setState({ auth, authCheck: true })
-        this.props.setLoggedIn(true)
+        this.setState({ authCheck: true })
+        this.props.login(auth)
       } 
       else {
         this.setState({ authCheck: true })
@@ -222,7 +223,7 @@ const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
     setLocationId,
-    setLoggedIn: status => dispatch(setLoggedIn(status)),
+    login: credentials => dispatch(login(credentials)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
