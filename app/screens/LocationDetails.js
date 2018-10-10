@@ -88,42 +88,45 @@ class LocationDetails extends Component {
                     {this.state.buttonIndex === 0 ?
                         <ScrollView>
                             {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
-                            {this.props.user.email && this.props.user.authentication_token &&  
-                                <View>
-                                    <Button
-                                        onPress={() => this.props.navigation.navigate('AddMachine')}
-                                        icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                        title={'Add Machine'}
-                                        accessibilityLabel="Add Machine"
-                                        raised
-                                        rounded
-                                        buttonStyle={s.addButton}
-                                        titleStyle={{
-                                            color:"black", 
-                                            fontSize:18
-                                        }}
-                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
-                                    />
-                                    <Button
-                                        onPress={() =>  {
+                            <View>
+                                <Button
+                                    onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('SignupLogin') }
+                                    icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                    title={'Add Machine'}
+                                    accessibilityLabel="Add Machine"
+                                    raised
+                                    rounded
+                                    buttonStyle={s.addButton}
+                                    titleStyle={{
+                                        color:"black", 
+                                        fontSize:18
+                                    }}
+                                    style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
+                                />
+                                <Button
+                                    onPress={() =>  {
+                                        if (this.props.user.loggedIn) {
                                             const body = {
                                                 user_email: this.props.user.email,
                                                 user_token: this.props.user.authentication_token,
                                             }
-                                            this.props.confirmLocationIsUpToDate(body, location.id)
-                                        }}
-                                        title={'Confirm machine list is up to date'}
-                                        accessibilityLabel="Confirm machine list is up to date"
-                                        raised
-                                        buttonStyle={s.confirmButton}
-                                        titleStyle={{
-                                            color:"#888888",
-                                            fontSize:18
-                                        }}
-                                        style={{paddingTop: 5, paddingBottom: 5}}
-                                    />
-                                </View>
-                            }
+                                            return this.props.confirmLocationIsUpToDate(body, location.id)
+                                        } 
+                                        else {
+                                            return this.props.navigation.navigate('SignupLogin')
+                                        }
+                                    }}
+                                    title={'Confirm machine list is up to date'}
+                                    accessibilityLabel="Confirm machine list is up to date"
+                                    raised
+                                    buttonStyle={s.confirmButton}
+                                    titleStyle={{
+                                        color:"#888888",
+                                        fontSize:18
+                                    }}
+                                    style={{paddingTop: 5, paddingBottom: 5}}
+                                />
+                            </View>
                             {location.location_machine_xrefs.map(machine => {
                                 const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
     
