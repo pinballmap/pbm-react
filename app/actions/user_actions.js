@@ -2,8 +2,8 @@ import {
     FETCHING_LOCATION_TRACKING_ENABLED,
     FETCHING_LOCATION_TRACKING_SUCCESS,
     FETCHING_LOCATION_TRACKING_FAILURE,
-    LOGGED_IN,
-    LOGGED_OUT,
+    LOG_IN,
+    LOG_OUT,
     LOGIN_LATER,
 } from './types'
 
@@ -32,17 +32,17 @@ export const getLocationTrackingEnabledFailure = () => {
     }
 }
 
-export const setLoggedIn = (status) => {
-    if (status) 
-        return {
-            type: LOGGED_IN,
-            status
-        }
-    else 
-        return {
-            type: LOGGED_OUT,
-            status,
-        }
+export const login = (credentials) => {
+    return {
+        type: LOG_IN,
+        credentials,
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOG_OUT
+    }
 }
 
 export const loginLater = () => {

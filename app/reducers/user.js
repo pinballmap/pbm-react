@@ -1,9 +1,10 @@
+import { AsyncStorage } from 'react-native';
 import {
     FETCHING_LOCATION_TRACKING_ENABLED,
     FETCHING_LOCATION_TRACKING_SUCCESS,
     FETCHING_LOCATION_TRACKING_FAILURE,
-    LOGGED_IN,
-    LOGGED_OUT,
+    LOG_IN,
+    LOG_OUT,
     LOGIN_LATER,
 } from '../actions/types'
 
@@ -14,6 +15,10 @@ export const initialState = {
     locationTrackingServicesEnabled: false, 
     loggedIn: false,
     loginLater: false,
+    authentication_token: null,
+    email: null,
+    id: null,
+    username: null,
 }
 
 export default (state = initialState, action) => {
@@ -39,12 +44,34 @@ export default (state = initialState, action) => {
                 lon: null,
                 locationTrackingServicesEnabled: false,
             }
-        case LOGGED_IN:
-        case LOGGED_OUT:
+        case LOG_IN: {
+            if (!action.credentials)
+                return state
+                
+            AsyncStorage.setItem('auth', JSON.stringify(action.credentials))
+            
             return {
                 ...state,
-                loggedIn: action.status,
+                loggedIn: true,
+                authentication_token: action.credentials.authentication_token,
+                email: action.credentials.email,
+                id: action.credentials.id,
+                username: action.credentials.username,
             }
+        }
+        case LOG_OUT: {
+            AsyncStorage.removeItem('auth')
+            
+            return {
+                ...state,
+                loggedIn: false,
+                loginLater: false,
+                authentication_token: null,
+                email: null,
+                id: null,
+                username: null,
+            }
+        }
         case LOGIN_LATER:
             return {
                 ...state,
