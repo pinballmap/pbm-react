@@ -24,7 +24,7 @@ class UserProfile extends Component {
   render(){
     return(
       <View>
-        <Text>UserProfile Screen</Text>
+        <Text style={s.pageTitle}>User Profile</Text>
         <Modal
           animationType="slide"
           transparent={false}
@@ -80,19 +80,22 @@ class UserProfile extends Component {
             }}
             style={{padding:10}}
           /> :
-          <Button
-          title={"Login"} 
-          onPress={() => this.props.navigation.navigate("SignupLogin")}
-          accessibilityLabel="Login"
-          raised
-          rounded
-          buttonStyle={s.logoutButton}
-          titleStyle={{
-              color:"white", 
-              fontSize:18
-          }}
-          style={{padding:10}}
-        />
+          <View>
+            <Text style={s.hiya}>
+              Hi, you're not logged in, so you don't have a profile!
+            </Text>
+            
+            <Button
+            title={"Login"} 
+            onPress={() => this.props.navigation.navigate("SignupLogin")}
+            accessibilityLabel="Login"
+            raised
+            rounded
+            buttonStyle={s.cancelButton}
+            titleStyle={s.titleStyle}
+            style={{padding:10}}
+            />
+        </View>
         }
       </View>
     );
@@ -110,6 +113,24 @@ const s = StyleSheet.create({
     borderRadius: 50,
     width: '100%'
   },
+  pageTitle: {
+    fontSize: 14,
+    textAlign: "center",
+    fontWeight: "bold",
+    paddingBottom: 15,
+    paddingTop: 10
+  },
+  hiya: {
+    fontStyle: 'italic',
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 10,
+    color: '#444444'
+  },
+  titleStyle: {
+    color:"black",
+    fontSize:18
+  }
 });
 
 const mapStateToProps = ({ user }) => ({ user })
