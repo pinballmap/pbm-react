@@ -66,7 +66,7 @@ class UserProfile extends Component {
           </View>
         </Modal>
 
-        {this.props.user.loggedIn && 
+        {this.props.user.loggedIn ?
           <Button
             title={"Logout"} 
             onPress={() => this.setModalVisible(true)}
@@ -79,7 +79,20 @@ class UserProfile extends Component {
                 fontSize:18
             }}
             style={{padding:10}}
-          />
+          /> :
+          <Button
+          title={"Login"} 
+          onPress={() => this.props.navigation.navigate("SignupLogin")}
+          accessibilityLabel="Login"
+          raised
+          rounded
+          buttonStyle={s.logoutButton}
+          titleStyle={{
+              color:"white", 
+              fontSize:18
+          }}
+          style={{padding:10}}
+        />
         }
       </View>
     );
