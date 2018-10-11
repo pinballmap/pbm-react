@@ -56,138 +56,141 @@ class LocationDetails extends Component {
         const location = this.props.location.location
    
         return (
-            <View style={{ flex: 1 }}>
-                <MapView
-                    region={{
-                        latitude: Number(location.lat),
-                        longitude: Number(location.lon),
-                        latitudeDelta: 0.03,
-                        longitudeDelta: 0.03
-                    }}
-                    style={s.map}
-                    provider={PROVIDER_GOOGLE}
-                >
-                    <MapView.Marker
-                        coordinate={{
+            <ScrollView style={{ flex: 1 }}>
+                <View style={{ flex: 1, position: 'relative' }}>
+                    <MapView
+                        region={{
                             latitude: Number(location.lat),
                             longitude: Number(location.lon),
                             latitudeDelta: 0.03,
-                            longitudeDelta: 0.03,
+                            longitudeDelta: 0.03
                         }}
-                    />
-                </MapView>
-                <View style={{ flex: 3 }}>
-                    <ButtonGroup
-                        onPress={this.updateIndex}
-                        selectedIndex={this.state.buttonIndex}
-                        buttons={['Machines', 'Info']}
-                        containerStyle={{ height: 30 }}
-                        selectedButtonStyle={s.buttonStyle}
-                        selectedTextStyle={s.textStyle}
-                    />
-                    {this.state.buttonIndex === 0 ?
-                        <ScrollView>
-                            {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                        style={s.map}
+                        provider={PROVIDER_GOOGLE}
+                    >
+                        <MapView.Marker
+                            coordinate={{
+                                latitude: Number(location.lat),
+                                longitude: Number(location.lon),
+                                latitudeDelta: 0.03,
+                                longitudeDelta: 0.03,
+                            }}
+                        />
+                    </MapView>
+                    <View style={{ flex: 3 }}>
+                        <ButtonGroup
+                            onPress={this.updateIndex}
+                            selectedIndex={this.state.buttonIndex}
+                            buttons={['Machines', 'Info']}
+                            containerStyle={{ height: 30 }}
+                            selectedButtonStyle={s.buttonStyle}
+                            selectedTextStyle={s.textStyle}
+                        />
+                        {this.state.buttonIndex === 0 ?
                             <View>
-                                <Button
-                                    onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('SignupLogin') }
-                                    icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                    title={'Add Machine'}
-                                    accessibilityLabel="Add Machine"
-                                    raised
-                                    rounded
-                                    buttonStyle={s.addButton}
-                                    titleStyle={{
-                                        color:"black", 
-                                        fontSize:18
-                                    }}
-                                    style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
-                                />
-                                <Button
-                                    onPress={() =>  {
-                                        if (this.props.user.loggedIn) {
-                                            const body = {
-                                                user_email: this.props.user.email,
-                                                user_token: this.props.user.authentication_token,
-                                            }
-                                            return this.props.confirmLocationIsUpToDate(body, location.id)
-                                        } 
-                                        else {
-                                            return this.props.navigation.navigate('SignupLogin')
-                                        }
-                                    }}
-                                    title={'Confirm machine list is up to date'}
-                                    accessibilityLabel="Confirm machine list is up to date"
-                                    raised
-                                    buttonStyle={s.confirmButton}
-                                    titleStyle={{
-                                        color:"#888888",
-                                        fontSize:18
-                                    }}
-                                    style={{paddingTop: 5, paddingBottom: 5}}
-                                />
-                            </View>
-                            {location.location_machine_xrefs.map(machine => {
-                                const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
-    
-                                if (m) 
-                                    return (
-                                        <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
-                                            <ListItem
-                                                title={this.getTitle(m)}
-                                                subtitle={
-                                                    <View style={s.condition}>
-                                                        {machine.condition && <Text style={s.conditionText}>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
-                                                        {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
-                                                    </View>
+                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                <View>
+                                    <Button
+                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('SignupLogin') }
+                                        icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                        title={'Add Machine'}
+                                        accessibilityLabel="Add Machine"
+                                        raised
+                                        rounded
+                                        buttonStyle={s.addButton}
+                                        titleStyle={{
+                                            color:"black", 
+                                            fontSize:18
+                                        }}
+                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
+                                    />
+                                    <Button
+                                        onPress={() =>  {
+                                            if (this.props.user.loggedIn) {
+                                                const body = {
+                                                    user_email: this.props.user.email,
+                                                    user_token: this.props.user.authentication_token,
                                                 }
-                                                rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
-                                            />
-                                            <View
-                                                style={{
-                                                    borderBottomColor: '#D3ECFF',
-                                                    borderBottomWidth: 1,
-                                                }}
-                                            />
-                                        </TouchableOpacity>
-                                    )
-                            })}
-                        </ScrollView> :
-                        <View style={s.locationMeta}>
-                            <Text style={[s.street,s.font18]}>{location.street}</Text>
-                            <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
-                            {this.props.user.lat && this.props.user.lon && <Text>Distance: {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)}</Text>}
-                            {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
-                                onPress={() => Linking.openURL(`tel:${location.phone}`)}>
-                                {location.phone}</Text>}
+                                                return this.props.confirmLocationIsUpToDate(body, location.id)
+                                            } 
+                                            else {
+                                                return this.props.navigation.navigate('SignupLogin')
+                                            }
+                                        }}
+                                        title={'Confirm machine list is up to date'}
+                                        accessibilityLabel="Confirm machine list is up to date"
+                                        raised
+                                        buttonStyle={s.confirmButton}
+                                        titleStyle={{
+                                            color:"#888888",
+                                            fontSize:18
+                                        }}
+                                        style={{paddingTop: 5, paddingBottom: 5}}
+                                    />
+                                </View>
+                                {location.location_machine_xrefs.map(machine => {
+                                    const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
+        
+                                    if (m) 
+                                        return (
+                                            <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
+                                                <ListItem
+                                                    title={this.getTitle(m)}
+                                                    subtitle={
+                                                        <View style={s.condition}>
+                                                            {machine.condition && <Text style={s.conditionText}>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
+                                                            {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
+                                                        </View>
+                                                    }
+                                                    rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                                />
+                                                <View
+                                                    style={{
+                                                        borderBottomColor: '#D3ECFF',
+                                                        borderBottomWidth: 1,
+                                                    }}
+                                                />
+                                            </TouchableOpacity>
+                                        )
+                                })}
+                            </View> :
+                            <View style={s.locationMeta}>
+                                <Text style={[s.street,s.font18]}>{location.street}</Text>
+                                <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
+                                {this.props.user.lat && this.props.user.lon && <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>}
+                                
+                                {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
+                                    onPress={() => Linking.openURL(`tel:${location.phone}`)}>
+                                    {location.phone}</Text>}
 
-                            {location.website && <Text style={[s.website,s.font18,s.marginB8]}
-                                onPress={() => Linking.openURL(location.website)}
-                                >Website</Text>}
-                            
-                            {location.location_type_id && <Text style={[s.type,s.italic,s.font18,s.marginB8]}>
-                                {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                </Text>}
+                                {location.website && <Text style={[s.website,s.font18,s.marginB8]}
+                                    onPress={() => Linking.openURL(location.website)}
+                                    >Website</Text>}
+                                
+                                {location.location_type_id && <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
+                                    {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
+                                    </Text></Text>}
 
-                            {location.operator_id && <Text style={[s.operator,s.italic,s.marginB8]}>Operated by: 
-                                {location.operator_id && <Text style={[s.operator,s.notItalic]}>
-                                {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
-                                </Text>}</Text>}
+                                {location.operator_id && <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
+                                    <Text style={s.notItalic}>
+                                    {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
+                                    </Text></Text>}
 
-                            {location.description && <Text style={[s.description,s.italic]}>
-                                Location Description: <Text style={[s.description,s.notItalic]}>{location.description}</Text></Text>}                                   
+                                {location.description && <Text style={[s.meta,s.italic]}>
+                                    Location Description: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
 
-                        </View>
-                    }
+                            </View>
+                        }
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 }
 
 const s = StyleSheet.create({
     map: {
-        flex: 1,
+        height: 100
     },
     buttonStyle: {
         backgroundColor: '#D3ECFF',
@@ -205,7 +208,8 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-        marginLeft: 10 
+        marginLeft: 10,
+        marginRight: 10
     },
     font18: {
         fontSize: 18
@@ -229,11 +233,7 @@ const s = StyleSheet.create({
     notItalic: {
         fontStyle: 'normal'
     },
-    operator: {
-        fontSize: 16,
-        color: '#666666'
-    },
-    description: {
+    meta: {
         fontSize: 16,
         color: '#666666'
     },
