@@ -153,10 +153,11 @@ class LocationDetails extends Component {
                                     )
                             })}
                         </ScrollView> :
-                        <View style={s.locationMeta}>
+                        <ScrollView style={s.locationMeta}>
                             <Text style={[s.street,s.font18]}>{location.street}</Text>
                             <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
-                            {this.props.user.lat && this.props.user.lon && <Text>Distance: {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)}</Text>}
+                            {this.props.user.lat && this.props.user.lon && <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>}
+                            
                             {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
                                 onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                 {location.phone}</Text>}
@@ -165,19 +166,19 @@ class LocationDetails extends Component {
                                 onPress={() => Linking.openURL(location.website)}
                                 >Website</Text>}
                             
-                            {location.location_type_id && <Text style={[s.type,s.italic,s.font18,s.marginB8]}>
+                            {location.location_type_id && <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
                                 {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                </Text>}
+                                </Text></Text>}
 
-                            {location.operator_id && <Text style={[s.operator,s.italic,s.marginB8]}>Operated by: 
-                                {location.operator_id && <Text style={[s.operator,s.notItalic]}>
+                            {location.operator_id && <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
+                                <Text style={s.notItalic}>
                                 {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
-                                </Text>}</Text>}
+                                </Text></Text>}
 
-                            {location.description && <Text style={[s.description,s.italic]}>
-                                Location Description: <Text style={[s.description,s.notItalic]}>{location.description}</Text></Text>}                                   
+                            {location.description && <Text style={[s.meta,s.italic]}>
+                                Location Description: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
 
-                        </View>
+                        </ScrollView>
                     }
                 </View>
             </View>
@@ -205,7 +206,8 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-        marginLeft: 10 
+        marginLeft: 10,
+        marginRight: 10
     },
     font18: {
         fontSize: 18
@@ -229,11 +231,7 @@ const s = StyleSheet.create({
     notItalic: {
         fontStyle: 'normal'
     },
-    operator: {
-        fontSize: 16,
-        color: '#666666'
-    },
-    description: {
+    meta: {
         fontSize: 16,
         color: '#666666'
     },
