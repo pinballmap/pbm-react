@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Picker, Text, View } from 'react-native'
+import { Picker, Text, View } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { setSelectedMachine, setSelectedLocationType, setSelectedNumMachines } from '../actions/query_actions'
@@ -13,17 +14,14 @@ class FilterMap extends Component {
             isLoading: true,
             selectedMachine: this.props.query.machineId,
             selectedLocationType: this.props.query.locationType,
-            selectedNumMachines: 0,
             selectedNumMachines: this.getIdx(this.props.query.numMachines),
         }
     }
 
   static navigationOptions = ({ navigation }) => {
-      const { params = {} } = navigation.state
       return {
           headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter',
-      //headerRight: <Button title="Save" onPress={() => params.saveFilters()} />
       }
   };
 
@@ -97,7 +95,7 @@ class FilterMap extends Component {
               <Text>Location Type</Text>
               <Picker
                   selectedValue={this.state.selectedLocationType}
-                  onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
+                  onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
                   {locationTypes.map(m => (
                       <Picker.Item label={m.name} value={m.id} key={m.id} />
                   ))}
@@ -105,6 +103,15 @@ class FilterMap extends Component {
           </View>
       )
   }
+}
+
+FilterMap.propTypes = {
+    query: PropTypes.object,
+    setSelectedMachine: PropTypes.func,
+    setSelectedLocationType: PropTypes.func,
+    setSelectedNumMachines: PropTypes.func,
+    machines: PropTypes.object, 
+    locations: PropTypes.object,
 }
 
 const mapStateToProps = ({ locations, machines, query }) => ({ locations, machines, query })

@@ -51,11 +51,10 @@ describe('testing machine actions', () => {
     })
 
     it('dispatched the expected actions when requesting operators fails', (done) => {
-        const message = 'API response was not ok'
         const firstAction = { type: types.FETCHING_OPERATORS }
 
         const secondAction = {
-            type: types.FETCHING_OPERATORS_FAILURE,  
+            type: types.FETCHING_OPERATORS_FAILURE,
         }
 
         getData.mockImplementationOnce(() => Promise.reject({  }))
