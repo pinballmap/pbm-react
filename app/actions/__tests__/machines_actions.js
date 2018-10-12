@@ -1,7 +1,7 @@
 import * as machinesActions from '../machines_actions'
 import * as types from '../types'
-import { getData } from '../../config/request';
-jest.mock('../../config/request');
+import { getData } from '../../config/request'
+jest.mock('../../config/request')
 
 afterEach(() => getData.mockClear())
 
@@ -21,7 +21,7 @@ describe('testing machine actions', () => {
             machines,
         }
 
-        getData.mockImplementationOnce(() => Promise.resolve({ machines }));
+        getData.mockImplementationOnce(() => Promise.resolve({ machines }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
@@ -45,7 +45,7 @@ describe('testing machine actions', () => {
             type: types.FETCHING_MACHINES_FAILURE,  
         }
 
-        getData.mockImplementationOnce(() => Promise.reject({  }));
+        getData.mockImplementationOnce(() => Promise.reject({  }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
