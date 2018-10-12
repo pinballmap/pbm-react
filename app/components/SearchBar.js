@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
@@ -78,15 +77,6 @@ class SearchBar extends Component {
             </View>
         )
     }
-}
-
-SearchBar.propTypes = {
-    query: PropTypes.object,
-    user: PropTypes.object,
-    getLocations: PropTypes.func,
-    updateCoordinates: PropTypes.func,
-    updateQuery: PropTypes.func,
-    setLocationId: PropTypes.func,
 }
 
 const mapStateToProps = ({ query, user }) => ({ query, user})

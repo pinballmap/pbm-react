@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'

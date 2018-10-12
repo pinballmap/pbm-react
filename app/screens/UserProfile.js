@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Modal, Text, View, StyleSheet } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
@@ -82,7 +81,10 @@ class UserProfile extends Component {
                       style={{padding:10}}
                   /> :
                   <View>
-                      <Text style={s.hiya}>{`Hi, you're not logged in, so you don't have a profile!`}</Text>
+                      <Text style={s.hiya}>
+                        Hi, you're not logged in, so you don't have a profile!
+                      </Text>
+            
                       <Button
                           title={"Login"} 
                           onPress={() => this.props.navigation.navigate("SignupLogin")}
@@ -130,12 +132,6 @@ const s = StyleSheet.create({
         fontSize:18
     }
 })
-
-UserProfile.propTypes = {
-    user: PropTypes.object,
-    logout: PropTypes.func,
-    navigation: PropTypes.object,
-}
 
 const mapStateToProps = ({ user }) => ({ user })
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
@@ -64,6 +63,9 @@ const s = StyleSheet.create({
     margin: {
         marginTop: 5,
     },
+    bold: {
+        fontWeight: 'bold',
+    },
     italic: {
         fontStyle: 'italic'
     },
@@ -72,17 +74,5 @@ const s = StyleSheet.create({
         color: '#cccccc',
     },
 })
-
-LocationCard.propTypes = {
-    machines: PropTypes.array,
-    type: PropTypes.string,
-    zip: PropTypes.string,
-    state: PropTypes.string,
-    distance: PropTypes.number,
-    name: PropTypes.string,
-    id: PropTypes.number,
-    street: PropTypes.string,
-    navigation: PropTypes.object,
-}
 
 export default LocationCard

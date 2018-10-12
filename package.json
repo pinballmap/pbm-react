@@ -43,7 +43,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest --watch --coverage",
+    "test": "jest --watch --coverage ; eslint *.js **/*.js",
     "lint": "eslint \"**/*.js\"",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
