@@ -178,7 +178,7 @@ const s = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ }) => ({ })
+const mapStateToProps = () => ({ })
 const mapDispatchToProps = (dispatch) => ({
     login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),

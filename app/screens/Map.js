@@ -222,7 +222,6 @@ const mapDispatchToProps = (dispatch) => ({
     getOperators: (url) => dispatch(fetchOperators(url)),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
-    setLocationId,
     login: credentials => dispatch(login(credentials)),
 })
 
