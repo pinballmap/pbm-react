@@ -95,7 +95,7 @@ class FilterMap extends Component {
               <Text>Location Type</Text>
               <Picker
                   selectedValue={this.state.selectedLocationType}
-                  onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                  onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
                   {locationTypes.map(m => (
                       <Picker.Item label={m.name} value={m.id} key={m.id} />
                   ))}
