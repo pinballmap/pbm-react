@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, ImageBackground, View, StyleSheet } from 'react-native'
-import { Button, Input } from 'react-native-elements'
+import { Text, Image, ImageBackground, View, StyleSheet } from 'react-native'
+import { Button, Input, Icon } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { login, loginLater } from '../actions/user_actions'
 import { getData } from '../config/request'
@@ -178,12 +177,6 @@ const s = StyleSheet.create({
         width: '100%'
     }
 })
-
-Login.propTypes = {
-    login: PropTypes.func,
-    loginLater: PropTypes.func,
-    navigation: PropTypes.object,
-}
 
 const mapStateToProps = () => ({ })
 const mapDispatchToProps = (dispatch) => ({

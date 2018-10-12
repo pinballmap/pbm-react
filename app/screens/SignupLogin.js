@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native'
 import { Button } from 'react-native-elements'
@@ -157,12 +156,6 @@ const s = StyleSheet.create({
         fontSize:18
     }
 })
-
-SignupLogin.propTypes = {
-    user: PropTypes.object,
-    loginLater: PropTypes.func,
-    navigation: PropTypes.object,
-}
 
 const mapStateToProps = ({ user }) => ({ user })
 
