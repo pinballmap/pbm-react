@@ -82,7 +82,7 @@ class UserProfile extends Component {
                   /> :
                   <View>
                       <Text style={s.hiya}>
-              Hi, you're not logged in, so you don't have a profile!
+                        Hi, you're not logged in, so you don't have a profile!
                       </Text>
             
                       <Button

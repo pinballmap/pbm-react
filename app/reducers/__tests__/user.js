@@ -1,4 +1,3 @@
-import * as userActions from '../../actions/user_actions'
 import * as types from '../../actions/types'
 import userReducer, { initialState } from '../user.js'
 

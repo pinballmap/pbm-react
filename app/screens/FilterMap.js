@@ -107,6 +107,15 @@ class FilterMap extends Component {
   }
 }
 
+FilterMap.propTypes = {
+    query: PropTypes.object,
+    setSelectedMachine: PropTypes.func,
+    setSelectedLocationType: PropTypes.func,
+    setSelectedNumMachines: PropTypes.func,
+    machines: PropTypes.object, 
+    locations: PropTypes.object,
+}
+
 const mapStateToProps = ({ locations, machines, query }) => ({ locations, machines, query })
 const mapDispatchToProps = (dispatch) => ({
     setSelectedMachine: machine => dispatch(setSelectedMachine(machine)),
