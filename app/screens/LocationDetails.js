@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-
 import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
@@ -266,6 +266,18 @@ const s = StyleSheet.create({
         fontSize: 24
     }
 })
+
+LocationDetails.propTypes = {
+    confirmLocationIsUpToDate: PropTypes.func,
+    fetchLocation: PropTypes.func,
+    location: PropTypes.object,
+    locations: PropTypes.object,
+    operators: PropTypes.object,
+    machines: PropTypes.object,
+    query: PropTypes.object,
+    user: PropTypes.object,
+    navigation: PropTypes.object,
+}
 
 const mapStateToProps = ({ location, locations, operators, machines, query, user }) => ({ location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({

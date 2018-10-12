@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { SearchBar } from '../components'
-import { setLocationId, updateCurrCoordindates } from '../actions/query_actions'
+import { updateCurrCoordindates } from '../actions/query_actions'
 import { fetchLocations } from '../actions/locations_actions'
 import { fetchCurrentLocation, login } from '../actions/user_actions'
 import { fetchLocationTypes } from '../actions/locations_actions'
 import { fetchMachines } from '../actions/machines_actions'
 import { fetchOperators } from '../actions/operators_actions'
-import { getCurrentLocation } from '../config/request'
 import { retrieveItem } from '../config/utils'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -213,6 +213,20 @@ const s = StyleSheet.create({
         color: '#cccccc',
     },
 })
+
+Map.propTypes = {
+    locations: PropTypes.object,
+    query: PropTypes.object,
+    user: PropTypes.object,
+    getLocationTypes: PropTypes.func,
+    getMachines: PropTypes.func,
+    getCurrentLocation: PropTypes.func,
+    getOperators: PropTypes.func,
+    getLocations: PropTypes.func,
+    updateCoordinates: PropTypes.func,
+    login: PropTypes.func,
+    navigation: PropTypes.object,
+}
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({

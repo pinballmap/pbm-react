@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Picker, Text, View } from 'react-native'
+import { Picker, Text, View } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { setSelectedMachine, setSelectedLocationType, setSelectedNumMachines } from '../actions/query_actions'
@@ -14,17 +14,14 @@ class FilterMap extends Component {
             isLoading: true,
             selectedMachine: this.props.query.machineId,
             selectedLocationType: this.props.query.locationType,
-            selectedNumMachines: 0,
             selectedNumMachines: this.getIdx(this.props.query.numMachines),
         }
     }
 
   static navigationOptions = ({ navigation }) => {
-      const { params = {} } = navigation.state
       return {
           headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter',
-      //headerRight: <Button title="Save" onPress={() => params.saveFilters()} />
       }
   };
 

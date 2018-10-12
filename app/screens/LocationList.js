@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { FlatList, Text, View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
@@ -28,13 +29,13 @@ export class LocationList extends Component {
       switch(buttonIndex) {
       case 0:
           return this.setState({
-              locations: this.state.locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon))
+              locations: this.state.locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, b.lat, b.lon))
           })
       case 1:
           return this.setState({
               locations: this.state.locations.sort((a, b) => {
-                  locA = a.name.toUpperCase()  
-                  locB = b.name.toUpperCase()
+                  const locA = a.name.toUpperCase()  
+                  const locB = b.name.toUpperCase()
                   return locA < locB ? -1 : locA === locB ? 0 : 1
               })
           })
@@ -94,6 +95,12 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
     },
 })
+
+LocationList.propTypes = {
+    locations: PropTypes.object, 
+    user: PropTypes.object, 
+    navigation: PropTypes.object,
+}
 
 const mapStateToProps = ({ locations, user }) => ({ locations, user })
 export default connect(mapStateToProps)(LocationList)
