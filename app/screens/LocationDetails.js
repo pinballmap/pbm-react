@@ -138,7 +138,7 @@ class LocationDetails extends Component {
                                                     title={this.getTitle(m)}
                                                     subtitle={
                                                         <View style={s.condition}>
-                                                            {machine.condition && <Text style={s.conditionText}>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
+                                                            {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}"</Text>}
                                                             {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
                                                         </View>
                                                     }
@@ -256,6 +256,7 @@ const s = StyleSheet.create({
     conditionText: {
         color: '#888888',
         fontSize: 14,
+        fontStyle: 'italic'
     },
     lastUpdated: {
         textAlign: 'center',
