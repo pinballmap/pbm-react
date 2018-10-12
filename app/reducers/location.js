@@ -27,24 +27,24 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case FETCHING_LOCATION: 
-            return {
-                ...state,
-                isFetchingLocation: true,
-            }
-        case FETCHING_LOCATION_SUCCESS: 
-            return {
-                ...state,
-                isFetchingLocation: false,
-                location: action.location
-            }
-        case FETCHING_LOCATION_FAILURE:
-            return {
-                ...state,
-                isFetchingLocations: false,
-                location: {}
-            }
-        default:
-            return state
+    case FETCHING_LOCATION: 
+        return {
+            ...state,
+            isFetchingLocation: true,
+        }
+    case FETCHING_LOCATION_SUCCESS: 
+        return {
+            ...state,
+            isFetchingLocation: false,
+            location: action.location
+        }
+    case FETCHING_LOCATION_FAILURE:
+        return {
+            ...state,
+            isFetchingLocations: false,
+            location: {}
+        }
+    default:
+        return state
     }
 }

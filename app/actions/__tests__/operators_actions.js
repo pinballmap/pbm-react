@@ -1,7 +1,7 @@
 import * as operatorsActions from '../operators_actions'
 import * as types from '../types'
-import { getData } from '../../config/request';
-jest.mock('../../config/request');
+import { getData } from '../../config/request'
+jest.mock('../../config/request')
 
 afterEach(() => getData.mockClear())
 
@@ -34,7 +34,7 @@ describe('testing machine actions', () => {
             operators,
         }
 
-        getData.mockImplementationOnce(() => Promise.resolve({ operators }));
+        getData.mockImplementationOnce(() => Promise.resolve({ operators }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
@@ -51,14 +51,13 @@ describe('testing machine actions', () => {
     })
 
     it('dispatched the expected actions when requesting operators fails', (done) => {
-        const message = 'API response was not ok'
         const firstAction = { type: types.FETCHING_OPERATORS }
 
         const secondAction = {
-            type: types.FETCHING_OPERATORS_FAILURE,  
+            type: types.FETCHING_OPERATORS_FAILURE,
         }
 
-        getData.mockImplementationOnce(() => Promise.reject({  }));
+        getData.mockImplementationOnce(() => Promise.reject({  }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
