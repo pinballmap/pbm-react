@@ -10,8 +10,8 @@ export const fetchOperators = (url) => dispatch => {
     dispatch({type: FETCHING_OPERATORS})
 
     return getData(url)
-    .then(data => dispatch(getOperatorsSuccess(data)))
-    .catch(err => dispatch(getOperatorsFailure(err)))
+        .then(data => dispatch(getOperatorsSuccess(data)))
+        .catch(err => dispatch(getOperatorsFailure(err)))
 }
   
   
