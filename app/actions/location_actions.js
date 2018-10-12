@@ -10,8 +10,8 @@ export const fetchLocation = id => dispatch => {
     dispatch({type: FETCHING_LOCATION})
  
     return getData(`/locations/${id}.json`)
-    .then(data => dispatch(getLocationSuccess(data)))
-    .catch(err => dispatch(getLocationFailure(err)))
+        .then(data => dispatch(getLocationSuccess(data)))
+        .catch(err => dispatch(getLocationFailure(err)))
 }
   
   
@@ -30,6 +30,6 @@ export const getLocationFailure = () => {
 
 export const confirmLocationIsUpToDate = (body, id) => dispatch => {
     return putData(`/locations/${id}/confirm.json`, body)
-    .then(() => dispatch(fetchLocation(id)))
-    .catch(err => console.log(err))
+        .then(() => dispatch(fetchLocation(id)))
+        .catch(err => console.log(err))
 }

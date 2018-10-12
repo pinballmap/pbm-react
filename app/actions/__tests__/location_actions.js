@@ -1,7 +1,7 @@
 import * as locationActions from '../locations_actions'
 import * as types from '../types'
-import { getData } from '../../config/request';
-jest.mock('../../config/request');
+import { getData } from '../../config/request'
+jest.mock('../../config/request')
 
 afterEach(() => getData.mockClear())
 
@@ -18,7 +18,7 @@ describe('testing location actions', () => {
             locationTypes: location_types,
         }
 
-        getData.mockImplementationOnce(() => Promise.resolve({ location_types }));
+        getData.mockImplementationOnce(() => Promise.resolve({ location_types }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
@@ -42,7 +42,7 @@ describe('testing location actions', () => {
             type: types.FETCHING_LOCATION_TYPES_FAILURE,  
         }
 
-        getData.mockImplementationOnce(() => Promise.reject({  }));
+        getData.mockImplementationOnce(() => Promise.reject({  }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
@@ -73,7 +73,7 @@ describe('testing location actions', () => {
             locations,
         }
 
-        getData.mockImplementationOnce(() => Promise.resolve({ locations }));
+        getData.mockImplementationOnce(() => Promise.resolve({ locations }))
 
         const dispatch = jest.fn()
         const url = '/testurl'
@@ -97,7 +97,7 @@ describe('testing location actions', () => {
             type: types.FETCHING_LOCATIONS_FAILURE,  
         }
 
-        getData.mockImplementationOnce(() => Promise.reject({  }));
+        getData.mockImplementationOnce(() => Promise.reject({  }))
 
         const dispatch = jest.fn()
         const url = '/testurl'

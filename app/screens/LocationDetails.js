@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'; 
+import React, { Component } from 'react'
+import { connect } from 'react-redux' 
 
-import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { HeaderBackButton } from 'react-navigation';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Button, ButtonGroup, ListItem } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { fetchLocation } from '../actions/location_actions';
-import { confirmLocationIsUpToDate } from '../actions/location_actions';
+import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { HeaderBackButton } from 'react-navigation'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { Button, ButtonGroup, ListItem } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { fetchLocation } from '../actions/location_actions'
+import { confirmLocationIsUpToDate } from '../actions/location_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
-const moment = require('moment');
+const moment = require('moment')
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -24,10 +24,10 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-          headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
-          title: <Text>{navigation.getParam('locationName')}</Text>,
-        };
-      };
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+            title: <Text>{navigation.getParam('locationName')}</Text>,
+        }
+    };
 
     updateIndex = buttonIndex => {
         this.setState({ buttonIndex })
@@ -165,15 +165,15 @@ class LocationDetails extends Component {
 
                                 {location.website && <Text style={[s.website,s.font18,s.marginB8]}
                                     onPress={() => Linking.openURL(location.website)}
-                                    >Website</Text>}
+                                >Website</Text>}
                                 
                                 {location.location_type_id && <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
                                     {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                    </Text></Text>}
+                                </Text></Text>}
 
                                 {location.operator_id && <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
                                     <Text style={s.notItalic}>
-                                    {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
+                                        {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
                                     </Text></Text>}
 
                                 {location.description && <Text style={[s.meta,s.italic]}>
@@ -264,11 +264,11 @@ const s = StyleSheet.create({
         color: "#F53240",
         fontSize: 24
     }
-});
+})
 
 const mapStateToProps = ({ location, locations, operators, machines, query, user }) => ({ location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id) => dispatch(confirmLocationIsUpToDate(body, id)),
 })
-export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)

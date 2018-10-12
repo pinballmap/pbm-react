@@ -11,24 +11,24 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case FETCHING_MACHINES: 
-            return {
-                ...state,
-                isFetchingMachines: true,
-            }
-        case FETCHING_MACHINES_SUCCESS:
-            return {
-                ...state,
-                isFetchingMachines: false,
-                machines: action.machines,
-            }
-        case FETCHING_MACHINES_FAILURE:
-            return {
-                ...state,
-                isFetchingMachines: false,
-                machines: [],
-            }
-        default:
-            return state
+    case FETCHING_MACHINES: 
+        return {
+            ...state,
+            isFetchingMachines: true,
+        }
+    case FETCHING_MACHINES_SUCCESS:
+        return {
+            ...state,
+            isFetchingMachines: false,
+            machines: action.machines,
+        }
+    case FETCHING_MACHINES_FAILURE:
+        return {
+            ...state,
+            isFetchingMachines: false,
+            machines: [],
+        }
+    default:
+        return state
     }
 }

@@ -1,7 +1,7 @@
 import * as userActions from '../user_actions'
 import * as types from '../types'
-import { getCurrentLocation  } from '../../config/request';
-jest.mock('../../config/request');
+import { getCurrentLocation  } from '../../config/request'
+jest.mock('../../config/request')
 
 afterEach(() => getCurrentLocation.mockClear())
 
@@ -19,7 +19,7 @@ describe('testing user actions', () => {
             lon: coords.longitude
         }
 
-        getCurrentLocation.mockImplementationOnce(() => Promise.resolve({ coords }));
+        getCurrentLocation.mockImplementationOnce(() => Promise.resolve({ coords }))
         const dispatch = jest.fn()
 
         userActions.fetchCurrentLocation()(dispatch)
@@ -38,7 +38,7 @@ describe('testing user actions', () => {
             type: types.FETCHING_LOCATION_TRACKING_FAILURE,  
         }
 
-        getCurrentLocation.mockImplementationOnce(() => Promise.reject({  }));
+        getCurrentLocation.mockImplementationOnce(() => Promise.reject({  }))
         const dispatch = jest.fn()
 
         userActions.fetchCurrentLocation()(dispatch)
