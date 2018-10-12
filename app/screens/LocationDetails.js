@@ -88,12 +88,12 @@ class LocationDetails extends Component {
                         />
                         {this.state.buttonIndex === 0 ?
                             <View>
-                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` } <Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <Button
                                         onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('SignupLogin') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                        title={'Add Machine'}
+                                        title={(this.props.user.loggedIn) ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                         raised
                                         rounded
@@ -138,7 +138,7 @@ class LocationDetails extends Component {
                                                     title={this.getTitle(m)}
                                                     subtitle={
                                                         <View style={s.condition}>
-                                                            {machine.condition && <Text style={s.conditionText}>{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}</Text>}
+                                                            {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}"</Text>}
                                                             {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
                                                         </View>
                                                     }
@@ -177,7 +177,7 @@ class LocationDetails extends Component {
                                     </Text></Text>}
 
                                 {location.description && <Text style={[s.meta,s.italic]}>
-                                    Location Description: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
+                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
 
                             </View>
                         }
@@ -256,6 +256,7 @@ const s = StyleSheet.create({
     conditionText: {
         color: '#888888',
         fontSize: 14,
+        fontStyle: 'italic'
     },
     lastUpdated: {
         textAlign: 'center',
