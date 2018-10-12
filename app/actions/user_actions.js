@@ -13,8 +13,8 @@ export const fetchCurrentLocation = () => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
 
     return getCurrentLocation()
-    .then(data => dispatch(getLocationTrackingEnabledSuccess(data)))
-    .catch(err => dispatch(getLocationTrackingEnabledFailure(err)))
+        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)))
+        .catch(err => dispatch(getLocationTrackingEnabledFailure(err)))
 }
   
   

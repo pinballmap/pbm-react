@@ -10,8 +10,8 @@ export const fetchMachines = (url) => dispatch => {
     dispatch({type: FETCHING_MACHINES})
 
     return getData(url)
-    .then(data => dispatch(getMachinesSuccess(data)))
-    .catch(err => dispatch(getMachinesFailure(err)))
+        .then(data => dispatch(getMachinesSuccess(data)))
+        .catch(err => dispatch(getMachinesFailure(err)))
 }
   
   
