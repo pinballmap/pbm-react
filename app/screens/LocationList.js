@@ -54,6 +54,8 @@ export class LocationList extends Component {
                   selectedIndex={this.state.buttonIndex}
                   buttons={['Distance', 'Alphabetically', 'Last Updated']}
                   containerStyle={{ height: 30 }}
+                  selectedButtonStyle={s.buttonStyle}
+                  selectedTextStyle={s.textStyle}
               />
               <View style={{ flex: 1, position: 'absolute', left: 0, top: 65, bottom: 0, right: 0 }}>
                   <FlatList
@@ -83,7 +85,14 @@ const s = StyleSheet.create({
     sort: {
         textAlign: 'center',
         marginTop: 5,
-    }
+    },
+    buttonStyle: {
+      backgroundColor: '#D3ECFF',
+    },
+    textStyle: {
+        color: '#000000',
+        fontWeight: 'bold',
+    },
 })
 
 const mapStateToProps = ({ locations, user }) => ({ locations, user })
