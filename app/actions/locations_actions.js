@@ -14,8 +14,8 @@ export const fetchLocationTypes = (url) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TYPES})
 
     return getData(url)
-    .then(data => dispatch(getLocationTypeSuccess(data)))
-    .catch(err => dispatch(getLocationTypeFailure(err)))
+        .then(data => dispatch(getLocationTypeSuccess(data)))
+        .catch(err => dispatch(getLocationTypeFailure(err)))
 }
   
   
@@ -26,11 +26,7 @@ export const getLocationTypeSuccess = (data) => {
     }
 }
   
-export const getLocationTypeFailure = () => {
-    return {
-        type: FETCHING_LOCATION_TYPES_FAILURE
-    }
-}
+export const getLocationTypeFailure = () => ({ type: FETCHING_LOCATION_TYPES_FAILURE })
 
 export const fetchLocations = (url, isRefetch) => dispatch => {
     if (isRefetch)
@@ -39,8 +35,8 @@ export const fetchLocations = (url, isRefetch) => dispatch => {
         dispatch({type: FETCHING_LOCATIONS})
 
     return getData(url)
-    .then(data => dispatch(getLocationsSuccess(data)))
-    .catch(err => dispatch(getLocationsFailure(err)))
+        .then(data => dispatch(getLocationsSuccess(data)))
+        .catch(err => dispatch(getLocationsFailure(err)))
 }
   
   
@@ -51,15 +47,11 @@ export const getLocationsSuccess = (data) => {
     }
 }
   
-export const getLocationsFailure = () => {
-    return {
-        type: FETCHING_LOCATIONS_FAILURE
-    }
-}
+export const getLocationsFailure = () => ({ type: FETCHING_LOCATIONS_FAILURE })
 
 export const confirmLocationIsUpToDate = (body, id) => {
     return putData(`/locations/${id}/confirm.json`, body)
-    .then(msg => getData(`/locations/${this.id}.json`))
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+        .then(() => getData(`/locations/${this.id}.json`))
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
 }
