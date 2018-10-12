@@ -23,9 +23,5 @@ class SavedLocations extends Component {
   }
 }
 
-SavedLocations.propTypes = {
-    machines: PropTypes.object,
-}
-
 const mapStateToProps = ({ machines }) => ({ machines })
 export default connect(mapStateToProps)(SavedLocations)
