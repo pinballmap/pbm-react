@@ -123,9 +123,9 @@ class LocationDetails extends Component {
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
                                             color:"#888888",
-                                            fontSize:18
+                                            fontSize:16
                                         }}
-                                        style={{paddingTop: 5, paddingBottom: 5}}
+                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 5}}
                                     />
                                 </View>
                                 {location.location_machine_xrefs.map(machine => {
