@@ -177,7 +177,7 @@ class LocationDetails extends Component {
                                     </Text></Text>}
 
                                 {location.description && <Text style={[s.meta,s.italic]}>
-                                    Location Description: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
+                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
 
                             </View>
                         }
