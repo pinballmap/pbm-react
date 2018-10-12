@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Text, View } from 'react-native'
-import { StackNavigator } from 'react-navigation'
 
 class MainMenu extends Component {
     render() {
@@ -34,6 +34,10 @@ class MainMenu extends Component {
             </View>
         )
     }
+}
+
+MainMenu.propTypes = {
+    navigation: PropTypes.object,
 }
 
 export default MainMenu

@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
-import { HeaderBackButton } from 'react-navigation';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Text, View } from 'react-native'
+import { HeaderBackButton } from 'react-navigation'
 
 class FAQ extends Component {
   
   static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
-      title: 'FAQ',
-    };
+      return {
+          headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} title="Map" />,
+          title: 'FAQ',
+      }
   };
 
   render(){
-    return(
-      <View>
-        <Text>placeholder</Text>
-      </View>);
+      return(
+          <View>
+              <Text>placeholder</Text>
+          </View>)
   }
 }
 
 const mapStateToProps = ({ machines }) => ({ machines })
-export default connect(mapStateToProps)(FAQ);
+export default connect(mapStateToProps)(FAQ)
