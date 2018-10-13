@@ -204,18 +204,18 @@ class Signup extends Component {
                           accessibilityLabel="Sign Up"
                           disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
                       />
+                      <Text
+                          onPress={() => this.props.navigation.navigate('Login')}
+                          style={s.textLink}
+                      >{"Already a user? LOG IN!"}
+                      </Text>
                       <Text 
                           onPress={() => {
                               this.props.loginLater()
                               this.props.navigation.navigate('Map')
                           }} 
                           style={s.textLink}
-                      >{"SKIP THIS FOR NOW"}
-                      </Text>
-                      <Text
-                          onPress={() => this.props.navigation.navigate('Login')}
-                          style={s.textLink}
-                      >{"ALREADY A USER? LOG IN!"}
+                      >{"skip signing up for now"}
                       </Text>
                   </View>
               </View>
