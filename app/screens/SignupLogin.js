@@ -102,7 +102,7 @@ export class SignupLogin extends Component {
                               this.props.loginLater()
                               this.props.navigation.navigate('Map')}} 
                           style={{fontSize:14,textAlign:"center"}}
-                      >{"SKIP THIS FOR NOW"}
+                      >{"skip this for now"}
                       </Text>
                   </View>
               </View>
