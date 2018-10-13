@@ -35,6 +35,7 @@ class Map extends Component {
 
   static navigationOptions = ({ navigation }) => {  
       return {
+          drawerLabel: 'Map',
           headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
@@ -159,7 +160,7 @@ class Map extends Component {
               </View>
           )
       }
-
+      console.log(this.props.navigation)
       return(
           <View style={{flex: 1}}>
               <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>

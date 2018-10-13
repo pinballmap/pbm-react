@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Text, View } from 'react-native'
 
-class FAQ extends Component {
+class Contact extends Component {
   
-  static navigationOptions = { drawerLabel: 'FAQ' }
+  static navigationOptions = { drawerLabel: 'Contact' }
      
   render(){
       return(
@@ -14,13 +14,13 @@ class FAQ extends Component {
                   style={{width:30, paddingTop: 15}}
                   title="Back to Map"
               />
-              <Text>FAQ</Text>
+              <Text>Contact</Text>
           </View>)
   }
 }
 
-FAQ.propTypes = {
+Contact.propTypes = {
     navigation: PropTypes.object,
 }
 
-export default FAQ
+export default Contact
