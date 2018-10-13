@@ -41,9 +41,7 @@ class Map extends Component {
             style={{width:30, paddingTop: 15}}
             title="List"
             accessibilityLabel="List"
-            titleStyle={{
-                color:"#888888", 
-            }}
+            color="#888888"
         />,
           headerTitle:
         <SearchBar
@@ -54,9 +52,7 @@ class Map extends Component {
             style={{width:30, paddingTop: 15}}
             title="Filter"
             accessibilityLabel="Filter"
-            titleStyle={{
-                color:"#888888", 
-            }}
+            color="#888888"
         />
       }
   };
