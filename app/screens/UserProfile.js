@@ -95,6 +95,12 @@ class UserProfile extends Component {
                       />
                   </View>
               }
+              <Text
+                  onPress={() => this.props.navigation.navigate('Podcast')}
+                  style={s.textLink}
+              >{"Temp Podcast link"}
+              </Text>
+                    
           </View>
       )
   }
@@ -128,7 +134,12 @@ const s = StyleSheet.create({
     titleStyle: {
         color:"black",
         fontSize:18
-    }
+    },
+    textLink: {
+      fontSize: 14,
+      textAlign: "center",
+      paddingBottom: 15,
+  },
 })
 
 UserProfile.propTypes = {
