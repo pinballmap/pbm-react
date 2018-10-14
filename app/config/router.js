@@ -69,36 +69,29 @@ const TabNav = TabNavigator({
 
   
 export const MapStack = StackNavigator({
-    Map: {
-        screen: TabNav
-    },
-    SignupLogin: {
-        screen: SignupLogin,
-    },
+    Map: { screen: TabNav },
+    SignupLogin: { screen: SignupLogin, },
     LocationList: {
         screen: LocationList,
         navigationOptions: {
             title: 'Location List',
         },
     },
-    LocationDetails: {
-        screen: LocationDetails,
-    },
-    Signup: {
-        screen: Signup,
-    },
-    Login: {
-        screen: Login,
-    },
-    FilterMap: {
-        screen: FilterMap,
-    },
-    MachineDetails: {
-        screen: MachineDetails,
-    },
-    AddMachine: {
-        screen: AddMachine,
-    },
+    LocationDetails: { screen: LocationDetails, },
+    Signup: { screen: Signup, },
+    Login: { screen: Login, },
+    FilterMap: { screen: FilterMap, },
+    MachineDetails: { screen: MachineDetails },
+    AddMachine: { screen: AddMachine, },
+    SuggestLocation: { screen: SuggestLocation },
+    Events: { screen: Events },
+    Contact: { screen: Contact },
+    Store: { screen: Store },
+    FAQ: { screen: FAQ },
+    Blog: { screen: Blog },
+    About: { screen: About },
+    Donate: { screen: Donate },
+    Podcast: { screen: Podcast },
 })
 
 export const PbmStack = DrawerNavigator({
