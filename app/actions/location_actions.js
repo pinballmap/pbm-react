@@ -2,6 +2,8 @@ import {
     FETCHING_LOCATION,
     FETCHING_LOCATION_SUCCESS,
     FETCHING_LOCATION_FAILURE,
+    LOCATION_DETAILS_CONFIRMED,
+    CLOSE_CONFIRM_MODAL,
 } from './types'
 
 import { getData, putData } from '../config/request'
@@ -28,8 +30,22 @@ export const getLocationFailure = () => {
     }
 }
 
-export const confirmLocationIsUpToDate = (body, id) => dispatch => {
+export const confirmLocationIsUpToDate = (body, id, username) => dispatch => {
     return putData(`/locations/${id}/confirm.json`, body)
-        .then(() => dispatch(fetchLocation(id)))
+        .then(data => dispatch(locationDetailsConfirmed(data.msg, username)))
         .catch(err => console.log(err))
+}
+
+const locationDetailsConfirmed = (msg, username) => {
+    return {
+        type: LOCATION_DETAILS_CONFIRMED,
+        msg,
+        username,
+    }
+}
+
+export const closeConfirmModal = () => {
+    return {
+        type: CLOSE_CONFIRM_MODAL,
+    }
 }
