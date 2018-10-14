@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Text, View, StyleSheet, Image, ScrollView, Linking } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 
@@ -7,8 +6,8 @@ class Podcast extends Component {
   
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
-          title: 'Podcast',
+        headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
+        title: 'Podcast',
       }
   };
 
@@ -63,5 +62,8 @@ const s = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({ machines }) => ({ machines })
-export default connect(mapStateToProps)(Podcast)
+Podcast.propTypes = {
+  navigation: PropTypes.object,
+}
+
+export default Podcast
