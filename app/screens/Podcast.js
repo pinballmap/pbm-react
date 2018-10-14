@@ -21,7 +21,7 @@ class Podcast extends Component {
             <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
           </View>
           <View style={s.child}>
-            <Text style={s.text}>Please enjoy Mappin’ Around w/ Scott and Ryan, a podcast about Pinball Map! We release a new episode once a month.</Text>
+            <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We release a new episode once a month. Check it out!</Text>
             <Text style={s.link}
               onPress={() => Linking.openURL('http://pod.pinballmap.com')}
             >pod.pinballmap.com</Text>
@@ -55,12 +55,17 @@ const s = StyleSheet.create({
   text: {
     fontSize: 16
   },
+  bold: {
+    fontWeight: 'bold',
+  },
   link: {
     textDecorationLine: 'underline',
     fontSize: 16,
     textAlign: 'center',
-    paddingTop: 15,
-    paddingBottom: 15
+    marginTop: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#D3ECFF"
   }
 })
 
