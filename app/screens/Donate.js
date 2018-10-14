@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Button, Text, View } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 
-class FAQ extends Component {
+class Donate extends Component {
   
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'FAQ', 
+            drawerLabel: 'Donate', 
             headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
-            title: 'FAQ',
+            title: 'Donate',
         }
     }
      
@@ -21,13 +21,13 @@ class FAQ extends Component {
                     style={{width:30, paddingTop: 15}}
                     title="Back to Map"
                 />
-                <Text>FAQ</Text>
+                <Text>Donate</Text>
             </View>)
     }
 }
 
-FAQ.propTypes = {
+Donate.propTypes = {
     navigation: PropTypes.object,
 }
 
-export default FAQ
+export default Donate

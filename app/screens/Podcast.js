@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image, ScrollView, Linking } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import PropTypes from 'prop-types'
 
 class Podcast extends Component {
-  
+     
   static navigationOptions = ({ navigation }) => {
       return {
-        headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
-        title: 'Podcast',
+          drawerLabel: 'Podcast', 
+          headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
+          title: 'Podcast',
       }
-  };
+  }
 
   render(){
     return(
