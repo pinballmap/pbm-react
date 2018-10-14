@@ -14,7 +14,6 @@ import SignupLogin from '../screens/SignupLogin.js'
 import UserProfile from '../screens/UserProfile.js'
 import MachineDetails from '../screens/MachineDetails.js'
 import AddMachine from '../screens/AddMachine.js'
-
 import Podcast from '../screens/Podcast.js'
 import FAQ from '../screens/FAQ.js'
 import Donate from '../screens/Donate.js'
