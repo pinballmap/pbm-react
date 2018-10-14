@@ -96,18 +96,10 @@ class Login extends Component {
                           accessibilityLabel="Log In"
                           disabled={!this.state.login || !this.state.password}
                       />
-                      <Text 
-                          onPress={() => {
-                              this.props.loginLater()
-                              this.props.navigation.navigate('Map')
-                          }} 
-                          style={s.textLink}
-                      >{"SKIP THIS FOR NOW"}
-                      </Text>
                       <Text
                           onPress={() => this.props.navigation.navigate('Signup')}
                           style={s.textLink}
-                      >{"NOT A USER? SIGN UP!"}
+                      >{"Not a user? SIGN UP!"}
                       </Text>
                       <Text
                           //onPress={() => this.props.navigation.navigate('Password')}
@@ -118,6 +110,14 @@ class Login extends Component {
                           //onPress={() => this.props.navigation.navigate('Confirm  ')}
                           style={s.textLink}
                       >{"Resend my confirmation email"}
+                      </Text>
+                      <Text 
+                          onPress={() => {
+                              this.props.loginLater()
+                              this.props.navigation.navigate('Map')
+                          }} 
+                          style={s.textLink}
+                      >{"skip logging in for now"}
                       </Text>
                   </View>
               </View>

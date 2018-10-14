@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Text, TouchableOpacity, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Autocomplete from 'react-native-autocomplete-input'
 import { getData } from '../config/request'
 import { updateQuery, setLocationId, updateCurrCoordindates } from '../actions/query_actions'
@@ -43,7 +44,7 @@ class SearchBar extends Component {
                     data={this.state.foundItems} 
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
-                    style={{width: 150}}
+                    style={{width: 150,height:35,padding:5}}
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
@@ -53,7 +54,8 @@ class SearchBar extends Component {
                 />
                 <FontAwesome 
                     name='location-arrow' 
-                    size={20} 
+                    size={20}
+                    style={{marginLeft:-20,marginTop:8}}
                     onPress={() => {
                         this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
                         this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
