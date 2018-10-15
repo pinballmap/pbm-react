@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { fetchLocation } from '../actions/location_actions'
-import { confirmLocationIsUpToDate } from '../actions/location_actions'
+import { closeConfirmModal, confirmLocationIsUpToDate } from '../actions/location_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
@@ -39,6 +39,15 @@ class LocationDetails extends Component {
             {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
     )
+
+    handleConfirmPress = id => {
+        const { email, username, authentication_token } = this.props.user
+        const body = {
+            user_email: email,
+            user_token: authentication_token,
+        }
+        this.props.confirmLocationIsUpToDate(body, id, username)
+    }
             
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
@@ -54,9 +63,32 @@ class LocationDetails extends Component {
         }
 
         const location = this.props.location.location
-   
+
         return (
             <ScrollView style={{ flex: 1 }}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.props.location.confirmModalVisible}
+                >
+                    <View style={{marginTop: 100}}>
+                        <Text>{this.props.location.confirmationMessage}</Text>
+                        <View> 
+                            <Button
+                                title={'OK'}
+                                onPress={this.props.closeConfirmModal}
+                                accessibilityLabel="Logout"
+                                raised
+                                rounded
+                                titleStyle={{
+                                    color:"white", 
+                                    fontSize:18
+                                }}
+                                style={{padding:10}}
+                            />
+                        </View>
+                    </View>
+                </Modal>
                 <View style={{ flex: 1, position: 'relative' }}>
                     <MapView
                         region={{
@@ -105,18 +137,7 @@ class LocationDetails extends Component {
                                         style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
                                     />
                                     <Button
-                                        onPress={() =>  {
-                                            if (this.props.user.loggedIn) {
-                                                const body = {
-                                                    user_email: this.props.user.email,
-                                                    user_token: this.props.user.authentication_token,
-                                                }
-                                                return this.props.confirmLocationIsUpToDate(body, location.id)
-                                            } 
-                                            else {
-                                                return this.props.navigation.navigate('SignupLogin')
-                                            }
-                                        }}
+                                        onPress={() => this.handleConfirmPress(location.id)}
                                         title={'Confirm machine list is up to date'}
                                         accessibilityLabel="Confirm machine list is up to date"
                                         raised
@@ -276,12 +297,14 @@ LocationDetails.propTypes = {
     machines: PropTypes.object,
     query: PropTypes.object,
     user: PropTypes.object,
+    closeConfirmModal: PropTypes.func,
     navigation: PropTypes.object,
 }
 
 const mapStateToProps = ({ location, locations, operators, machines, query, user }) => ({ location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
-    confirmLocationIsUpToDate: (body, id) => dispatch(confirmLocationIsUpToDate(body, id)),
+    confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
+    closeConfirmModal: () => dispatch(closeConfirmModal()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)

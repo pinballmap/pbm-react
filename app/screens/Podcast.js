@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image, ScrollView, Linking } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
 import PropTypes from 'prop-types'
+import { StyleSheet, ScrollView, Image, Linking, Text, View } from 'react-native'
+import { HeaderBackButton } from 'react-navigation'
 
 class Podcast extends Component {
      
@@ -21,7 +21,7 @@ class Podcast extends Component {
             <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
           </View>
           <View style={s.child}>
-            <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We release a new episode once a month. Check it out!</Text>
+            <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode once a month. Check it out!</Text>
             <Text style={s.link}
               onPress={() => Linking.openURL('http://pod.pinballmap.com')}
             >pod.pinballmap.com</Text>
