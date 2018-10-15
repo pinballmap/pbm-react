@@ -2,11 +2,17 @@ import {
     FETCHING_LOCATION,
     FETCHING_LOCATION_SUCCESS,
     FETCHING_LOCATION_FAILURE,
+    LOCATION_DETAILS_CONFIRMED,
+    CLOSE_CONFIRM_MODAL,
 } from '../actions/types'
+
+const moment = require('moment')
 
 export const initialState = {
     isFetchingLocation: false,
     location: {},
+    confirmModalVisible: false,
+    confirmationMessage: '',
     // city: '',
     // date_last_updated: '',
     // description: '',
@@ -43,6 +49,23 @@ export default (state = initialState, action) => {
             ...state,
             isFetchingLocations: false,
             location: {}
+        }
+    case LOCATION_DETAILS_CONFIRMED: 
+        return {
+            ...state,
+            location: {
+                ...state.location,
+                last_updated_by_username: action.username,   
+                date_last_updated: moment().format('YYYY-MM-DD'),
+            },
+            confirmModalVisible: true,
+            confirmationMessage: action.msg,
+        }
+    case CLOSE_CONFIRM_MODAL: 
+        return {
+            ...state,
+            confirmModalVisible: false,
+            confirmationMessage: '',
         }
     default:
         return state
