@@ -22,7 +22,7 @@ class Podcast extends Component {
           </View>
           <View style={s.child}>
             <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode once a month. Check it out!</Text>
-            <Text style={s.link}
+            <Text style={s.textLink}
               onPress={() => Linking.openURL('http://pod.pinballmap.com')}
             >pod.pinballmap.com</Text>
           </View>  
@@ -58,14 +58,15 @@ const s = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
   },
-  link: {
+  textLink: {
     textDecorationLine: 'underline',
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: "#D3ECFF"
+    backgroundColor: "#D3ECFF",
+    fontWeight: 'bold'
   }
 })
 
