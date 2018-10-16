@@ -16,12 +16,10 @@ import MachineDetails from '../screens/MachineDetails.js'
 import AddMachine from '../screens/AddMachine.js'
 import Podcast from '../screens/Podcast.js'
 import FAQ from '../screens/FAQ.js'
-import Donate from '../screens/Donate.js'
 import About from '../screens/About.js'
 import Contact from '../screens/Contact.js'
 import SuggestLocation from '../screens/SuggestLocation'
 import Events from '../screens/Events'
-import Store from '../screens/Store'
 import Blog from '../screens/Blog'
 
 const TabNav = TabNavigator({
@@ -85,11 +83,9 @@ export const MapStack = StackNavigator({
     SuggestLocation: { screen: SuggestLocation },
     Events: { screen: Events },
     Contact: { screen: Contact },
-    Store: { screen: Store },
     FAQ: { screen: FAQ },
     Blog: { screen: Blog },
     About: { screen: About },
-    Donate: { screen: Donate },
     Podcast: { screen: Podcast },
 })
 
@@ -98,12 +94,10 @@ export const PbmStack = DrawerNavigator({
     SuggestLocation: { screen: SuggestLocation },
     Events: { screen: Events },
     Contact: { screen: Contact },
-    Store: { screen: Store },
+    About: { screen: About },
+    Podcast: { screen: Podcast },
     FAQ: { screen: FAQ },
     Blog: { screen: Blog },
-    About: { screen: About },
-    Donate: { screen: Donate },
-    Podcast: { screen: Podcast },
 },
 {
     drawerPosition: 'left',

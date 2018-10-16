@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Text, View, StyleSheet, ScrollView, Image } from 'react-native'
+import { Button, Text, View, StyleSheet, ScrollView, Image, Linking } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
 
