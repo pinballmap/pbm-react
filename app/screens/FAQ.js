@@ -16,18 +16,17 @@ class FAQ extends Component {
     render(){
       return(
         <ScrollView style={{flex:1}}>
-        <View style={s.container}>
-          <View style={s.child}>
-            <Text style={s.bold}>How do I add a new location?</Text>
-            <Text style={s.text}>Click the menu icon in the lower left, and choose "Add Location". Then fill out the form! We moderate the submissions, so it will a few days for the location you submitted to be added to the map. The more accurate and thorough your submission, the quicker it will get added! Make sure to include at least one machine with your submission.</Text>
-            <Text style={s.bold}>This machine is no longer at this location.</Text>
-            <Text style={s.text}>This is a user-powered map, and YOU can remove the machine from the location. Click on the machine name, and then look for a "remove" button.</Text>
-            <Text style={s.bold}>This location closed/no longer has machines.</Text>
-            <Text style={s.text}>Simply remove all the machines from it. Empty locations are periodically removed.</Text>
-            <Text style={s.bold}>Have a question that we didn't cover here? Ask us!</Text>
-            
-          </View>  
-        </View>
+          <View style={s.container}>
+            <View style={s.child}>
+              <Text style={s.bold}>How do I add a new location?</Text>
+              <Text style={s.text}>Click the menu icon in the lower left, and choose "Add Location". Then fill out the form! We moderate the submissions, so it will a few days for the location you submitted to be added to the map. The more accurate and thorough your submission, the quicker it will get added! Make sure to include at least one machine with your submission.</Text>
+              <Text style={s.bold}>This machine is no longer at this location.</Text>
+              <Text style={s.text}>This is a user-powered map, and YOU can remove the machine from the location. Click on the machine name, and then look for a "remove" button.</Text>
+              <Text style={s.bold}>This location closed/no longer has machines.</Text>
+              <Text style={s.text}>Simply remove all the machines from it. Empty locations are periodically removed.</Text>
+              <Text style={s.bold}>Have a question that we didn't cover here? <Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
+            </View>  
+          </View>
         </ScrollView>
       )
     }
@@ -52,6 +51,9 @@ const s = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 10
+  },
+  textLink: {
+    textDecorationLine: 'underline'
   },
 })
 
