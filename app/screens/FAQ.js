@@ -53,7 +53,8 @@ const s = StyleSheet.create({
     marginBottom: 10
   },
   textLink: {
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    color: "#F53240",
   },
 })
 
