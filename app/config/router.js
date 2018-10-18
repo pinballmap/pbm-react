@@ -31,19 +31,19 @@ const TabNav = TabNavigator({
 },
 {
     navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => {
+        tabBarIcon: ({focused, tintColor}) => {
             const { routeName } = navigation.state
             switch(routeName) {
             case 'Map':
-                return <MaterialIcons name='search' size={25} />
+                return <MaterialIcons name='search' size={25} color={tintColor} />
             case 'Saved':
-                return <MaterialCommunityIcons name='star-outline' size={25} />
+                return <MaterialCommunityIcons name='star-outline' size={25} color={tintColor} />
             case 'Activity':
-                return <FontAwesome name='newspaper-o' size={25} />
+                return <FontAwesome name='newspaper-o' size={25} color={tintColor} />
             case 'Profile':
-                return <MaterialIcons name='face' size={25} />
+                return <MaterialIcons name='face' size={25} color={tintColor} />
             case 'Menu':
-                return <FontAwesome name='bars' size={25} />
+                return <FontAwesome name='bars' size={25} color={tintColor} />
             }
         },
         tabBarOnPress: (e) => {
@@ -54,14 +54,13 @@ const TabNav = TabNavigator({
             }
         }
     }), 
-}, {
+    tabBarOptions: {
+        activeTintColor: '#000000',
+        activeBackgroundColor: '#D3ECFF',
+        inactiveTintColor: '#555555',
+    },
     tabBarPosition: 'bottom',
     swipeEnabled: true,
-    tabBarOptions: {
-        activeTintColor: '#f2f2f2',
-        activeBackgroundColor: '#2EC4B6',
-        inactiveTintColor: '#666',
-    },
 })
 
   
