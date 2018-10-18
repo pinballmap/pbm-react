@@ -24,7 +24,7 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#00487e" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
         }
     };
@@ -143,7 +143,7 @@ class LocationDetails extends Component {
                                         raised
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
-                                            color:"#888888",
+                                            color:"#00487e",
                                             fontSize:16
                                         }}
                                         style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 5}}
@@ -275,7 +275,7 @@ const s = StyleSheet.create({
         marginTop: 10
     },
     conditionText: {
-        color: '#888888',
+        color: '#00487e',
         fontSize: 14,
         fontStyle: 'italic'
     },

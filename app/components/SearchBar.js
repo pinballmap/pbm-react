@@ -51,11 +51,11 @@ class SearchBar extends Component {
                             <Text>{item.label}</Text>
                         </TouchableOpacity>
                     )}
-                />
+                />f
                 <FontAwesome 
                     name='location-arrow' 
                     size={20}
-                    style={{marginLeft:-20,marginTop:8}}
+                    style={{marginLeft:-20,marginTop:8,color:"#00487e"}}
                     onPress={() => {
                         this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
                         this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)

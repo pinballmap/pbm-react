@@ -19,7 +19,7 @@ export class LocationList extends Component {
 
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
+          headerLeft: <HeaderBackButton tintColor="#00487e" onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'LocationList',
       }
   };
