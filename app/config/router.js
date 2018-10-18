@@ -23,19 +23,17 @@ import Events from '../screens/Events'
 import Blog from '../screens/Blog'
 
 const TabNav = TabNavigator({
-    Drawer: { screen: Map },
     Map: { screen: Map },
     Saved: { screen: Saved },
     Activity: { screen: RecentActivity },
     Profile: { screen: UserProfile },
+    Menu: { screen: Map },
 },
 {
     navigationOptions: ({ navigation }) => ({
         tabBarIcon: () => {
             const { routeName } = navigation.state
             switch(routeName) {
-            case 'Drawer':
-                return <FontAwesome name='bars' size={25} />
             case 'Map':
                 return <MaterialIcons name='search' size={25} />
             case 'Saved':
@@ -44,10 +42,12 @@ const TabNav = TabNavigator({
                 return <FontAwesome name='newspaper-o' size={25} />
             case 'Profile':
                 return <MaterialIcons name='face' size={25} />
+            case 'Menu':
+                return <FontAwesome name='bars' size={25} />
             }
         },
         tabBarOnPress: (e) => {
-            if (navigation.state.key === "Drawer")
+            if (navigation.state.key === "Menu")
                 navigation.navigate('DrawerToggle')
             else {
                 e.jumpToIndex(e.scene.index)
@@ -100,6 +100,6 @@ export const PbmStack = DrawerNavigator({
     Blog: { screen: Blog },
 },
 {
-    drawerPosition: 'left',
+    drawerPosition: 'right',
     drawerWidth: 200,
 })
