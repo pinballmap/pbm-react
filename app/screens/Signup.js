@@ -264,7 +264,9 @@ const s = StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: "center",
-        paddingBottom: 10,
+        marginBottom: 15,
+        fontWeight: "bold",
+        color: '#333333',
     },
     iconStyle: {
         fontSize: 24,
