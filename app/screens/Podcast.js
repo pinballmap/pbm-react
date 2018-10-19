@@ -8,7 +8,7 @@ class Podcast extends Component {
   static navigationOptions = ({ navigation }) => {
       return {
           drawerLabel: 'Podcast', 
-          headerLeft: <HeaderBackButton tintColor="#00487e" onPress={() => navigation.goBack(null)} />,
+          headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
           title: 'Podcast',
       }
   }
