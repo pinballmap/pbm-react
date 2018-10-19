@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native'
 import { Button} from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -14,6 +14,8 @@ import Geocode from "react-geocode"
 
 const apiKey = process.env['API_KEY']
 Geocode.setApiKey(apiKey)
+
+let deviceWidth = Dimensions.get('window').width
 
 // Enable or disable logs. Its optional.
 //Geocode.enableDebug();
@@ -77,7 +79,7 @@ class SearchBar extends Component {
                     style={{width:30, paddingTop: 15}}
                     title=""
                     accessibilityLabel=""
-                    icon={<MaterialIcons name='search' size={30} style={s.submitButton} />}
+                    icon={<MaterialIcons name='search' size={25} />}
                     buttonStyle={s.addButton}
                 />
             </View>
@@ -96,7 +98,7 @@ const s = StyleSheet.create({
         paddingLeft: 5
     },
     searchBox: {
-        width: 190,
+        width: deviceWidth - 140,
         height: 30,
         padding: 5
     },
