@@ -99,6 +99,10 @@ export const PbmStack = DrawerNavigator({
     Blog: { screen: Blog },
 },
 {
+    contentOptions: {
+        activeTintColor: '#000000',
+        activeBackgroundColor: '#D3ECFF',
+    },
     drawerPosition: 'right',
     drawerWidth: 200,
 })
