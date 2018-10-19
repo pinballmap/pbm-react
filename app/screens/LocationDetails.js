@@ -146,7 +146,7 @@ class LocationDetails extends Component {
                                             color:"#260204",
                                             fontSize:16
                                         }}
-                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 5}}
+                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 10}}
                                     />
                                 </View>
                                 {location.location_machine_xrefs.map(machine => {
