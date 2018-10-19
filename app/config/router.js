@@ -57,7 +57,7 @@ const TabNav = TabNavigator({
     tabBarOptions: {
         activeTintColor: '#000000',
         activeBackgroundColor: '#D3ECFF',
-        inactiveTintColor: '#555555',
+        inactiveTintColor: '#260204',
     },
     tabBarPosition: 'bottom',
     swipeEnabled: true,
@@ -100,7 +100,7 @@ export const PbmStack = DrawerNavigator({
 },
 {
     contentOptions: {
-        activeTintColor: '#000000',
+        activeTintColor: '#260204',
         activeBackgroundColor: '#D3ECFF',
     },
     drawerPosition: 'right',
