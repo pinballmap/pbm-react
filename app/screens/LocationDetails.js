@@ -24,7 +24,7 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
         }
     };
@@ -72,16 +72,17 @@ class LocationDetails extends Component {
                     visible={this.props.location.confirmModalVisible}
                 >
                     <View style={{marginTop: 100}}>
-                        <Text>{this.props.location.confirmationMessage}</Text>
+                        <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
                         <View> 
                             <Button
-                                title={'OK'}
+                                title={"You're Welcome"}
                                 onPress={this.props.closeConfirmModal}
-                                accessibilityLabel="Logout"
+                                accessibilityLabel="You're Welcome"
                                 raised
                                 rounded
+                                buttonStyle={s.addButton}
                                 titleStyle={{
-                                    color:"white", 
+                                    color:"black", 
                                     fontSize:18
                                 }}
                                 style={{padding:10}}
@@ -143,10 +144,10 @@ class LocationDetails extends Component {
                                         raised
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
-                                            color:"#888888",
+                                            color:"#260204",
                                             fontSize:16
                                         }}
-                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 5}}
+                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 10}}
                                     />
                                 </View>
                                 {location.location_machine_xrefs.map(machine => {
@@ -285,6 +286,10 @@ const s = StyleSheet.create({
     plusButton: {
         color: "#F53240",
         fontSize: 24
+    },
+    confirmText: {
+        textAlign: 'center',
+        fontSize: 16
     }
 })
 
