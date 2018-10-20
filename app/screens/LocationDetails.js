@@ -72,16 +72,17 @@ class LocationDetails extends Component {
                     visible={this.props.location.confirmModalVisible}
                 >
                     <View style={{marginTop: 100}}>
-                        <Text>{this.props.location.confirmationMessage}</Text>
+                        <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
                         <View> 
                             <Button
-                                title={'OK'}
+                                title={"You're Welcome"}
                                 onPress={this.props.closeConfirmModal}
-                                accessibilityLabel="Logout"
+                                accessibilityLabel="You're Welcome"
                                 raised
                                 rounded
+                                buttonStyle={s.addButton}
                                 titleStyle={{
-                                    color:"white", 
+                                    color:"black", 
                                     fontSize:18
                                 }}
                                 style={{padding:10}}
@@ -285,6 +286,10 @@ const s = StyleSheet.create({
     plusButton: {
         color: "#F53240",
         fontSize: 24
+    },
+    confirmText: {
+        textAlign: 'center',
+        fontSize: 16
     }
 })
 
