@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native'
+import { Button} from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Autocomplete from 'react-native-autocomplete-input'
@@ -13,6 +14,8 @@ import Geocode from "react-geocode"
 
 const apiKey = process.env['API_KEY']
 Geocode.setApiKey(apiKey)
+
+let deviceWidth = Dimensions.get('window').width
 
 // Enable or disable logs. Its optional.
 //Geocode.enableDebug();
@@ -44,18 +47,18 @@ class SearchBar extends Component {
                     data={this.state.foundItems} 
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
-                    style={{width: 150,height:35,padding:5}}
+                    style={s.searchBox}
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
-                            <Text>{item.label}</Text>
+                            <Text style={s.autoComplete}>{item.label}</Text>
                         </TouchableOpacity>
                     )}
                 />
                 <FontAwesome 
                     name='location-arrow' 
                     size={20}
-                    style={{marginLeft:-20,marginTop:8}}
+                    style={s.location}
                     onPress={() => {
                         this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
                         this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
@@ -74,13 +77,37 @@ class SearchBar extends Component {
                     )
                     }
                     style={{width:30, paddingTop: 15}}
-                    title="Submit"
-                    accessibilityLabel="Submit"
+                    title=""
+                    accessibilityLabel=""
+                    icon={<MaterialIcons name='search' size={25} />}
+                    buttonStyle={s.addButton}
                 />
             </View>
         )
     }
 }
+
+const s = StyleSheet.create({
+    autoComplete: {
+        color: "#260204",
+        padding: 5
+    },
+    addButton: {
+        backgroundColor: "transparent",
+        marginTop: -12,
+        paddingLeft: 5
+    },
+    searchBox: {
+        width: deviceWidth - 140,
+        height: 30,
+        padding: 5
+    },
+    location: {
+        marginLeft: -20,
+        marginTop: 5,
+        color: "#260204"
+    }
+})
 
 SearchBar.propTypes = {
     query: PropTypes.object,

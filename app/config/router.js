@@ -1,6 +1,7 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { StyleSheet, Text } from 'react-native'
 
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
@@ -23,45 +24,60 @@ import Events from '../screens/Events'
 import Blog from '../screens/Blog'
 
 const TabNav = TabNavigator({
-    Drawer: { screen: Map },
     Map: { screen: Map },
     Saved: { screen: Saved },
     Activity: { screen: RecentActivity },
     Profile: { screen: UserProfile },
+    Menu: { screen: Map },
 },
 {
     navigationOptions: ({ navigation }) => ({
-        tabBarIcon: () => {
+        tabBarIcon: ({focused, tintColor}) => {
             const { routeName } = navigation.state
             switch(routeName) {
-            case 'Drawer':
-                return <FontAwesome name='bars' size={25} />
             case 'Map':
-                return <MaterialIcons name='search' size={25} />
+                return <MaterialIcons name='search' size={(focused) ? 32 : 30} color={tintColor} />
             case 'Saved':
-                return <MaterialCommunityIcons name='star-outline' size={25} />
+                return <MaterialCommunityIcons name='star-outline' size={(focused) ? 32 : 30} color={tintColor} />
             case 'Activity':
-                return <FontAwesome name='newspaper-o' size={25} />
+                return <FontAwesome name='newspaper-o' size={(focused) ? 32 : 30} color={tintColor} />
             case 'Profile':
-                return <MaterialIcons name='face' size={25} />
+                return <MaterialIcons name='face' size={(focused) ? 32 : 30} color={tintColor} />
+            case 'Menu':
+                return <FontAwesome name='bars' size={40} color={tintColor} />
             }
         },
+        tabBarLabel: ({ focused, tintColor }) => {
+            const { routeName } = navigation.state;
+            let label;
+            switch(routeName) {
+              case 'Map':
+                return label = focused ? <Text style={s.activeTabText}>Map</Text> : <Text style={s.inactiveTabText}>Map</Text>
+              case 'Saved':
+                return label = focused ? <Text style={s.activeTabText}>Saved</Text> : <Text style={s.inactiveTabText}>Saved</Text>
+              case 'Activity':
+                return label = focused ? <Text style={s.activeTabText}>Activity</Text> : <Text style={s.inactiveTabText}>Activity</Text>
+              case 'Profile':
+                return label = focused ? <Text style={s.activeTabText}>Profile</Text> : <Text style={s.inactiveTabText}>Profile</Text>
+              case 'Menu':
+                return label = null
+            }
+            return label
+          },
         tabBarOnPress: (e) => {
-            if (navigation.state.key === "Drawer")
+            if (navigation.state.key === "Menu")
                 navigation.navigate('DrawerToggle')
             else {
                 e.jumpToIndex(e.scene.index)
             }
         }
     }), 
-}, {
+    tabBarOptions: {
+        activeTintColor: '#000000',
+        inactiveTintColor: '#6c5d5e',
+    },
     tabBarPosition: 'bottom',
     swipeEnabled: true,
-    tabBarOptions: {
-        activeTintColor: '#f2f2f2',
-        activeBackgroundColor: '#2EC4B6',
-        inactiveTintColor: '#666',
-    },
 })
 
   
@@ -100,6 +116,21 @@ export const PbmStack = DrawerNavigator({
     Blog: { screen: Blog },
 },
 {
-    drawerPosition: 'left',
+    contentOptions: {
+        activeTintColor: '#260204',
+        activeBackgroundColor: '#D3ECFF',
+    },
+    drawerPosition: 'right',
     drawerWidth: 200,
+})
+
+const s = StyleSheet.create({ 
+    activeTabText: {
+        fontWeight: "bold",
+        fontSize: 11
+    },
+    inactiveTabText: {
+        fontWeight: "normal",
+        fontSize: 11
+    }
 })

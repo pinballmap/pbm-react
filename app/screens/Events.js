@@ -8,7 +8,7 @@ class Events extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Events', 
-            headerLeft: <HeaderBackButton tintColor="#888888" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
             title: 'Events',
         }
     }
