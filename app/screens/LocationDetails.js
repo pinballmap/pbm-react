@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
@@ -80,13 +80,16 @@ class LocationDetails extends Component {
                                 accessibilityLabel="You're Welcome"
                                 raised
                                 rounded
-                                buttonStyle={s.addButton}
+                                buttonStyle={s.buttonPink}
                                 titleStyle={{
                                     color:"black", 
                                     fontSize:18
                                 }}
                                 style={{padding:10}}
                             />
+                        </View>
+                        <View style={s.logoWrapper}>
+                            <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
                         </View>
                     </View>
                 </Modal>
@@ -268,6 +271,11 @@ const s = StyleSheet.create({
         borderRadius: 50,
         width: '100%'
     },
+    buttonPink: {
+        backgroundColor:"#fdd4d7",
+        borderRadius: 50,
+        width: '100%'
+    },
     confirmButton: {
         backgroundColor:"#dddddd",
         width: '100%'
@@ -289,8 +297,19 @@ const s = StyleSheet.create({
     },
     confirmText: {
         textAlign: 'center',
-        fontSize: 16
-    }
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    logo: {
+        resizeMode: 'contain',
+        borderColor: "#fdd4d7",
+        borderWidth: 5
+    },
+    logoWrapper: {
+        paddingTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
 
 LocationDetails.propTypes = {
