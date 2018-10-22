@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, ScrollView, Image, Linking } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
+
+let deviceWidth = Dimensions.get('window').width
 
 class About extends Component {
     state ={ 
@@ -74,7 +76,8 @@ const s = StyleSheet.create({
         flex: 2
     },
     logo: {
-        flex:1, height: 60, width: 300    
+        flex:1,  
+        width: deviceWidth - 20,  
     },
     child: {
         margin: "auto",
