@@ -85,7 +85,7 @@ class LocationDetails extends Component {
                                     color:"black", 
                                     fontSize:18
                                 }}
-                                style={{padding:10}}
+                                style={{paddingLeft:20,paddingRight:20,paddingTop:20,paddingBottom:10}}
                             />
                         </View>
                         <View style={s.logoWrapper}>
@@ -274,7 +274,7 @@ const s = StyleSheet.create({
     buttonPink: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
     },
     confirmButton: {
         backgroundColor:"#dddddd",
