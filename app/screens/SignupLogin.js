@@ -109,8 +109,6 @@ export class SignupLogin extends Component {
                           raised
                           buttonStyle={s.buttonPink}
                           titleStyle={s.titleStyle}
-                          style={{marginTop: 15,marginBottom: 25}}
-                          rounded
                           title="New User? Sign Up"
                           accessibilityLabel="Sign Up"
                       />
@@ -164,6 +162,8 @@ const s = StyleSheet.create({
     buttonPink: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
+        marginTop: 15,
+        marginBottom: 25
     },
     buttonBlue: {
         backgroundColor:"#D3ECFF",
