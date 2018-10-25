@@ -76,7 +76,7 @@ class SearchBar extends Component {
                         }
                     )
                     }
-                    style={{width:30, paddingTop: 15}}
+                    style={{width:30}}
                     title=""
                     accessibilityLabel=""
                     icon={<MaterialIcons name='search' size={25} />}
@@ -94,7 +94,6 @@ const s = StyleSheet.create({
     },
     addButton: {
         backgroundColor: "transparent",
-        marginTop: -12,
         paddingLeft: 5
     },
     searchBox: {
