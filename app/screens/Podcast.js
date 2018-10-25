@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, ScrollView, Image, Linking, Text, View } from 'react-native'
+import { StyleSheet, ScrollView, Image, Linking, Text, View, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+
+let deviceWidth = Dimensions.get('window').width
 
 class Podcast extends Component {
      
@@ -44,9 +46,9 @@ const s = StyleSheet.create({
         flex: 2
     },
     logo: {
-        width: 300,
-        height: 300,
-        justifyContent: 'center',    
+        width: deviceWidth - 20,
+        height: deviceWidth - 20,
+        justifyContent: 'center',
     },
     child: {
         margin: "auto",

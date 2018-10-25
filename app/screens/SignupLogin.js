@@ -45,14 +45,31 @@ export class SignupLogin extends Component {
     
       if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
           return (
-              <View>
-                  <Text>To show you pinball machines near you, you’ll need to enable location services for this app</Text>
-                  <Button
-                      //Clear error state to allow user to proceed either way
-                      onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
-                      title="OK"
-                  />
-              </View>
+            <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+            <View style={s.mask}>
+                <View style={s.logoWrapper}>
+                    <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                </View>
+                <View style={s.outerBorder}>
+                    <View style={s.textBg}>
+                        <Text style={{fontSize:18,textAlign:"center"}}>
+                            To show you pinball machines near you, you’ll need to enable location services for this app.
+                        </Text>
+                    </View>               
+                </View>
+                <View style={{padding:15}}>
+                    <Button
+                        //Clear error state to allow user to proceed either way
+                        onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
+                        raised
+                        buttonStyle={s.buttonBlue}
+                        titleStyle={s.titleStyle}
+                        title="Enable Location Services"
+                        accessibilityLabel="Enable Location Services"
+                    />                    
+                </View>
+            </View>
+        </ImageBackground>
           )
       }
     
@@ -92,8 +109,6 @@ export class SignupLogin extends Component {
                           raised
                           buttonStyle={s.buttonPink}
                           titleStyle={s.titleStyle}
-                          style={{paddingTop: 15,paddingBottom: 25}}
-                          rounded
                           title="New User? Sign Up"
                           accessibilityLabel="Sign Up"
                       />
@@ -147,6 +162,8 @@ const s = StyleSheet.create({
     buttonPink: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
+        marginTop: 15,
+        marginBottom: 25
     },
     buttonBlue: {
         backgroundColor:"#D3ECFF",
