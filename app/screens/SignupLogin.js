@@ -45,7 +45,7 @@ export class SignupLogin extends Component {
     
       if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
           return (
-            <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+            <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
             <View style={s.mask}>
                 <View style={s.logoWrapper}>
                     <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
@@ -74,7 +74,7 @@ export class SignupLogin extends Component {
       }
     
       return(
-          <ImageBackground source={require('../assets/images/app_logo-350.jpg')} style={s.backgroundImage}>
+          <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
               <View style={s.mask}>
                   <View style={s.logoWrapper}>
                       <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
@@ -153,7 +153,10 @@ const s = StyleSheet.create({
         backgroundColor:'rgba(255,255,255,.6)',
     },
     logoWrapper: {
-        padding: 5,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 15
     },
     logo: {
         width: '100%',
