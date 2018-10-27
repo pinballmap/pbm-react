@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Picker, Text, View } from 'react-native'
+import { Picker, Text, View, StyleSheet, ScrollView } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { setSelectedMachine, setSelectedLocationType, setSelectedNumMachines } from '../actions/query_actions'
@@ -21,7 +21,7 @@ class FilterMap extends Component {
   static navigationOptions = ({ navigation }) => {
       return {
           headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
-          title: 'Filter',
+          title: 'Filter Results',
       }
   };
 
@@ -77,33 +77,83 @@ class FilterMap extends Component {
       }))
   
       return(
-          <View style={{flex: 1}}>
-              <Text>Machine</Text>
-              <Picker
-                  selectedValue={this.state.selectedMachine}
-                  onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
-                  {machines.map(m => (
-                      <Picker.Item label={m.name} value={m.id} key={m.id} />
-                  ))}
-              </Picker>
-              <ButtonGroup
-                  onPress={this.updateNumMachinesSelected}
-                  selectedIndex={this.state.selectedNumMachines}
-                  buttons={['All', '2+', '3+', '4+', '5+']}
-                  containerStyle={{ height: 30 }}
-              />
-              <Text>Location Type</Text>
-              <Picker
-                  selectedValue={this.state.selectedLocationType}
-                  onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
-                  {locationTypes.map(m => (
-                      <Picker.Item label={m.name} value={m.id} key={m.id} />
-                  ))}
-              </Picker>
-          </View>
+            <ScrollView style={{flex: 1}}>
+                <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
+                <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
+                <Picker style={[s.border,s.whitebg]}
+                    selectedValue={this.state.selectedMachine}
+                    onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
+                    {machines.map(m => (
+                        <Picker.Item label={m.name} value={m.id} key={m.id} />
+                    ))}
+                </Picker>
+                <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
+                <ButtonGroup style={s.border}
+                    onPress={this.updateNumMachinesSelected}
+                    selectedIndex={this.state.selectedNumMachines}
+                    buttons={['All', '2+', '3+', '4+', '5+']}
+                    containerStyle={{ height: 30 }}
+                    selectedButtonStyle={s.buttonStyle}
+                    selectedTextStyle={s.textStyle}
+                />
+                <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
+                <Picker style={[s.border,s.whitebg]}
+                    selectedValue={this.state.selectedLocationType}
+                    onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
+                    {locationTypes.map(m => (
+                        <Picker.Item label={m.name} value={m.id} key={m.id} />
+                    ))}
+                </Picker>
+            </ScrollView>
       )
   }
 }
+
+const s = StyleSheet.create({
+    pageTitle: {
+        backgroundColor: "#FFFFFF",
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 2,
+        borderBottomColor: "#F53240"
+    },
+    pageTitleText: {
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    border: {
+        borderWidth: 2,
+        borderColor: "#D3ECFF",
+    },
+    sectionTitle: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#260204"
+    },
+    padding10: {
+        padding: 10
+    },
+    paddingBottom5: {
+        paddingBottom: 5,
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingLeft: 10
+    },
+    whitebg: {
+        backgroundColor: "#FFFFFF",
+        marginLeft: 10,
+        marginRight: 10
+    },
+    buttonStyle: {
+        backgroundColor: '#D3ECFF',
+    },
+    textStyle: {
+        color: '#000000',
+        fontWeight: 'bold',
+    },
+})
 
 FilterMap.propTypes = {
     query: PropTypes.object,
