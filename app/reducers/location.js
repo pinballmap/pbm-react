@@ -5,7 +5,8 @@ import {
     LOCATION_DETAILS_CONFIRMED,
     CLOSE_CONFIRM_MODAL,
     SET_SELECTED_LMX,
-    MACHINE_CONDITION_UPDATED
+    MACHINE_CONDITION_UPDATED,
+    MACHINE_SCORE_ADDED
 } from '../actions/types'
 
 const moment = require('moment')
@@ -84,7 +85,35 @@ export default (state = initialState, action) => {
             curLmx: action.machine,
             location: {
                 ...state.location,
-                location_machine_xrefs
+                location_machine_xrefs,
+            }
+        }
+    }
+    case MACHINE_SCORE_ADDED: {
+        console.log(action.score)
+        const machine_score_xrefs = state.curLmx.machine_score_xrefs.concat([action.score])
+
+        const location_machine_xrefs = state.location.location_machine_xrefs.map(lmx => {
+            if (lmx.id === action.score.location_machine_xref_id) {
+                const machine_score_xrefs = lmx.machine_score_xrefs.concat([action.score])
+                return {
+                    ...lmx,
+                    machine_score_xrefs,
+                }
+            }
+            else 
+                return lmx
+        })
+
+        return {
+            ...state,
+            curLmx: {
+                ...state.curLmx,
+                machine_score_xrefs,
+            },
+            location: {
+                ...state.location,
+                location_machine_xrefs,
             }
         }
     }

@@ -20,3 +20,6 @@ function toRad(Value)
 {
     return Value * Math.PI / 180
 }
+
+export const formatNumWithCommas = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+
