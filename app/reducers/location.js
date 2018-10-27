@@ -4,6 +4,8 @@ import {
     FETCHING_LOCATION_FAILURE,
     LOCATION_DETAILS_CONFIRMED,
     CLOSE_CONFIRM_MODAL,
+    SET_SELECTED_LMX,
+    MACHINE_CONDITION_UPDATED
 } from '../actions/types'
 
 const moment = require('moment')
@@ -13,6 +15,7 @@ export const initialState = {
     location: {},
     confirmModalVisible: false,
     confirmationMessage: '',
+    curLmx: null,
     // city: '',
     // date_last_updated: '',
     // description: '',
@@ -67,6 +70,24 @@ export default (state = initialState, action) => {
             confirmModalVisible: false,
             confirmationMessage: '',
         }
+    case SET_SELECTED_LMX: 
+        return {
+            ...state,
+            curLmx: action.lmx,
+        }
+    case MACHINE_CONDITION_UPDATED: {
+        const location_machine_xrefs = state.location.location_machine_xrefs
+            .map(m => m.id === action.machine.id ? action.machine : m)
+
+        return {
+            ...state,
+            curLmx: action.machine,
+            location: {
+                ...state.location,
+                location_machine_xrefs
+            }
+        }
+    }
     default:
         return state
     }

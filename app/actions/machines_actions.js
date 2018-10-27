@@ -27,3 +27,4 @@ export const getMachinesFailure = () => {
         type: FETCHING_MACHINES_FAILURE
     }
 }
+
