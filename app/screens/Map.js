@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { Button } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { SearchBar } from '../components'
 import { updateCurrCoordindates } from '../actions/query_actions'
@@ -39,10 +40,11 @@ class Map extends Component {
           headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            style={{width:30, paddingTop: 15}}
+            style={{width:50}}
             title="List"
             accessibilityLabel="List"
-            color="#260204"
+            titleStyle={s.titleStyle}
+            clear={true}
         />,
           headerTitle:
         <SearchBar
@@ -50,10 +52,11 @@ class Map extends Component {
           headerRight:
         <Button
             onPress={ () => navigation.navigate('FilterMap')}
-            style={{width:30, paddingTop: 15}}
+            style={{width:60}}
             title="Filter"
             accessibilityLabel="Filter"
-            color="#260204"
+            titleStyle={s.titleStyle}
+            clear={true}
         />
       }
   };
@@ -215,6 +218,11 @@ const s = StyleSheet.create({
         fontSize: 22,
         color: '#cccccc',
     },
+    titleStyle: {
+        color:"black",
+        fontSize:16,
+        fontWeight:"bold"
+    }
 })
 
 Map.propTypes = {
