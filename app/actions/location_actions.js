@@ -5,10 +5,11 @@ import {
     LOCATION_DETAILS_CONFIRMED,
     CLOSE_CONFIRM_MODAL,
     SET_SELECTED_LMX,
-    MACHINE_CONDITION_UPDATED
+    MACHINE_CONDITION_UPDATED,
+    MACHINE_SCORE_ADDED,
 } from './types'
 
-import { getData, putData } from '../config/request'
+import { getData, postData, putData } from '../config/request'
 
 export const fetchLocation = id => dispatch => {
     dispatch({type: FETCHING_LOCATION})
@@ -69,7 +70,7 @@ export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
         condition,
     }
 
-    return putData(`/location_machine_xrefs/${lmx}.json `, body)
+    return putData(`/location_machine_xrefs/${lmx}.json`, body)
         .then(data => dispatch(machineConditionUpdated(data)))
         .catch(err => console.log(err))
 }
@@ -78,5 +79,26 @@ export const machineConditionUpdated = (data) => {
     return {
         type: MACHINE_CONDITION_UPDATED,
         machine: data.location_machine,
+    }
+}
+
+export const addMachineScore = (score, lmx) => (dispatch, getState) => {
+    const { email, authentication_token } = getState().user
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        score,
+        location_machine_xref_id: lmx
+    }
+
+    return postData(`/machine_score_xrefs.json`, body)
+        .then(data => dispatch(machineScoreAdded(data)))
+        .catch(err => console.log(err))
+}
+
+export const machineScoreAdded = (data) => {
+    return {
+        type: MACHINE_SCORE_ADDED,
+        score: data.machine_score_xref,
     }
 }
