@@ -5,7 +5,8 @@ import {
     FETCHING_LOCATIONS,
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
-    REFETCHING_LOCATIONS
+    REFETCHING_LOCATIONS,
+    SET_SELECTED_LMX
 } from './types'
 
 import { getData, putData } from '../config/request'
@@ -52,6 +53,5 @@ export const getLocationsFailure = () => ({ type: FETCHING_LOCATIONS_FAILURE })
 export const confirmLocationIsUpToDate = (body, id) => {
     return putData(`/locations/${id}/confirm.json`, body)
         .then(() => getData(`/locations/${this.id}.json`))
-        .then(data => console.log(data))
         .catch(err => console.log(err))
 }

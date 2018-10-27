@@ -23,6 +23,7 @@ class UserProfile extends Component {
   }
   
   render(){
+      const { user } = this.props
       return(
           <View>
               <Text style={s.pageTitle}>User Profile</Text>
@@ -67,20 +68,24 @@ class UserProfile extends Component {
                   </View>
               </Modal>
 
-              {this.props.user.loggedIn ?
-                  <Button
-                      title={"Logout"} 
-                      onPress={() => this.setModalVisible(true)}
-                      accessibilityLabel="Logout"
-                      raised
-                      rounded
-                      buttonStyle={s.logoutButton}
-                      titleStyle={{
-                          color:"white", 
-                          fontSize:18
-                      }}
-                      style={{padding:10}}
-                  /> :
+              {user.loggedIn ?
+                  <View>
+                      <Text>{user.username}</Text>
+                      {/* Need to make API call for rest of the data to /api/v1/users/{user.id}/profile_info.json */}
+                      <Button
+                          title={"Logout"} 
+                          onPress={() => this.setModalVisible(true)}
+                          accessibilityLabel="Logout"
+                          raised
+                          rounded
+                          buttonStyle={s.logoutButton}
+                          titleStyle={{
+                              color:"white", 
+                              fontSize:18
+                          }}
+                          style={{padding:10}}
+                      /> 
+                  </View> :
                   <View>
                       <Text style={s.hiya}>{`Hi, you're not logged in, so you don't have a profile!`}</Text>
                       <Button

@@ -8,7 +8,7 @@ import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { fetchLocation } from '../actions/location_actions'
-import { closeConfirmModal, confirmLocationIsUpToDate } from '../actions/location_actions'
+import { closeConfirmModal, confirmLocationIsUpToDate, setCurrentMachine } from '../actions/location_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
@@ -155,7 +155,12 @@ class LocationDetails extends Component {
         
                                     if (m) 
                                         return (
-                                            <TouchableOpacity  key={machine.machine_id} onPress={() => this.props.navigation.navigate('MachineDetails')}>
+                                            <TouchableOpacity  
+                                                key={machine.machine_id} 
+                                                onPress={() => {
+                                                    this.props.navigation.navigate('MachineDetails', {machineName: m.name, locationName: location.name})
+                                                    this.props.setCurrentMachine(machine.id)
+                                                }}>
                                                 <ListItem
                                                     title={this.getTitle(m)}
                                                     subtitle={
@@ -303,6 +308,7 @@ LocationDetails.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     closeConfirmModal: PropTypes.func,
+    setCurrentMachine: PropTypes.func,
     navigation: PropTypes.object,
 }
 
@@ -311,5 +317,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
     closeConfirmModal: () => dispatch(closeConfirmModal()),
+    setCurrentMachine: id => dispatch(setCurrentMachine(id)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)

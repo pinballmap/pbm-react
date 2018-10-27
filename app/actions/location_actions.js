@@ -4,6 +4,8 @@ import {
     FETCHING_LOCATION_FAILURE,
     LOCATION_DETAILS_CONFIRMED,
     CLOSE_CONFIRM_MODAL,
+    SET_SELECTED_LMX,
+    MACHINE_CONDITION_UPDATED
 } from './types'
 
 import { getData, putData } from '../config/request'
@@ -47,5 +49,34 @@ const locationDetailsConfirmed = (msg, username) => {
 export const closeConfirmModal = () => {
     return {
         type: CLOSE_CONFIRM_MODAL,
+    }
+}
+
+export const setCurrentMachine = id => (dispatch, getState) => {
+    const { location } = getState().location
+    const location_machine_xrefs = location.location_machine_xrefs ? location.location_machine_xrefs : []
+    const lmx = location_machine_xrefs.find(machine => machine.id === id)
+
+    // TODO: Error handling for if no lmx comes back
+    return dispatch({ type: SET_SELECTED_LMX, lmx })
+}
+
+export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
+    const { email, authentication_token } = getState().user
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        condition,
+    }
+
+    return putData(`/location_machine_xrefs/${lmx}.json `, body)
+        .then(data => dispatch(machineConditionUpdated(data)))
+        .catch(err => console.log(err))
+}
+
+export const machineConditionUpdated = (data) => {
+    return {
+        type: MACHINE_CONDITION_UPDATED,
+        machine: data.location_machine,
     }
 }
