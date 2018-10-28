@@ -76,9 +76,16 @@ export default (state = initialState, action) => {
             ...state,
             curLmx: action.lmx,
         }
-    case MACHINE_CONDITION_UPDATED: {
-        const location_machine_xrefs = state.location.location_machine_xrefs
-            .map(m => m.id === action.machine.id ? action.machine : m)
+    case MACHINE_CONDITION_UPDATED: {       
+        const location_machine_xrefs = state.location.location_machine_xrefs.map(m => {
+            if (m.id === action.machine.id)
+            {
+                const obj = action.machine
+                obj['machine_score_xrefs'] = m.machine_score_xrefs
+                return obj
+            }
+            return m
+        })
 
         return {
             ...state,
@@ -90,7 +97,6 @@ export default (state = initialState, action) => {
         }
     }
     case MACHINE_SCORE_ADDED: {
-        console.log(action.score)
         const machine_score_xrefs = state.curLmx.machine_score_xrefs.concat([action.score])
 
         const location_machine_xrefs = state.location.location_machine_xrefs.map(lmx => {
