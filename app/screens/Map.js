@@ -104,7 +104,7 @@ class Map extends Component {
 
       this.props.getCurrentLocation()
       this.props.getLocationTypes('/location_types.json')
-      this.props.getMachines('/machines.json?no_details=1')
+      this.props.getMachines('/machines.json')
       this.props.getOperators('/operators.json')
   }
 

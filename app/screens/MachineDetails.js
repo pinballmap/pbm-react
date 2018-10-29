@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Modal, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
@@ -52,6 +52,7 @@ class MachineDetails extends Component {
     render() {
         const { curLmx } = this.props.location   
         const { loggedIn } = this.props.user
+        const { ipdb_link } = this.props.machineDetails
 
         if (!curLmx) {
             return (
@@ -62,6 +63,9 @@ class MachineDetails extends Component {
         }
 
         const topScores = curLmx.machine_score_xrefs.sort((a, b) => b.score - a.score).slice(0, 3)
+        const pintipsUrl = curLmx.machine_group_id ? 
+            `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
+            `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
 
         return (
             <View>
@@ -131,6 +135,14 @@ class MachineDetails extends Component {
                 <View>
                     <Text>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
                     <Button
+                        title={'View playing tips on pintips.net'}
+                        onPress={() => Linking.openURL(pintipsUrl)}
+                    />
+                    <Button
+                        title={'View on IPDB'}
+                        onPress={() => Linking.openURL(ipdb_link)}
+                    />
+                    <Button
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
@@ -178,10 +190,14 @@ MachineDetails.propTypes = {
     addMachineScore: PropTypes.func,
     navigation: PropTypes.object,
     user: PropTypes.object,
+    machineDetails: PropTypes.object,
     removeMachineFromLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, user }) => ({ location, user })
+const mapStateToProps = ({ location, user, machines }) => {
+    const machineDetails = machines.machines.find(m => m.id === location.curLmx.machine_id)
+    return ({ location, user, machineDetails })
+}
 const mapDispatchToProps = (dispatch) => ({
     addMachineCondition: (condition, lmx) => dispatch(addMachineCondition(condition, lmx)),
     addMachineScore: (score, lmx) => dispatch(addMachineScore(score, lmx)),
