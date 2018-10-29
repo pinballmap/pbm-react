@@ -6,6 +6,8 @@ import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
+import RemoveMachine from '../components/RemoveMachine'
+import RemoveMachineModal from '../components/RemoveMachineModal'
 
 const moment = require('moment')
 
@@ -22,6 +24,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
+            headerRight: <RemoveMachine />
         }
     }
 
@@ -51,8 +54,6 @@ class MachineDetails extends Component {
 
     render() {
         const { curLmx } = this.props.location   
-        const { loggedIn } = this.props.user
-        const { ipdb_link } = this.props.machineDetails
 
         if (!curLmx) {
             return (
@@ -62,6 +63,8 @@ class MachineDetails extends Component {
             )   
         }
 
+        const { loggedIn } = this.props.user
+        const { ipdb_link } = this.props.machineDetails
         const topScores = curLmx.machine_score_xrefs.sort((a, b) => b.score - a.score).slice(0, 3)
         const pintipsUrl = curLmx.machine_group_id ? 
             `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
@@ -116,22 +119,7 @@ class MachineDetails extends Component {
                         />
                     </View>
                 </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showRemoveMachineModal}
-                >
-                    <View style={{marginTop: 100}}>
-                        <Button 
-                            title={'Remove machine from location?'}
-                            onPress={() => this.removeLmx(curLmx.id)}
-                        />
-                        <Button 
-                            title={'Cancel'}
-                            onPress={() => this.setState({ showRemoveMachineModal: false })}
-                        />
-                    </View>
-                </Modal>
+                {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                 <View>
                     <Text>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
                     <Button
@@ -195,7 +183,7 @@ MachineDetails.propTypes = {
 }
 
 const mapStateToProps = ({ location, user, machines }) => {
-    const machineDetails = machines.machines.find(m => m.id === location.curLmx.machine_id)
+    const machineDetails = location.curLmx ? machines.machines.find(m => m.id === location.curLmx.machine_id) : {}
     return ({ location, user, machineDetails })
 }
 const mapDispatchToProps = (dispatch) => ({
