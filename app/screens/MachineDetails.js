@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Modal, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
+import RemoveMachine from '../components/RemoveMachine'
+import RemoveMachineModal from '../components/RemoveMachineModal'
 
 const moment = require('moment')
 
@@ -22,6 +24,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
+            headerRight: <RemoveMachine />
         }
     }
 
@@ -51,7 +54,6 @@ class MachineDetails extends Component {
 
     render() {
         const { curLmx } = this.props.location   
-        const { loggedIn } = this.props.user
 
         if (!curLmx) {
             return (
@@ -61,7 +63,12 @@ class MachineDetails extends Component {
             )   
         }
 
+        const { loggedIn } = this.props.user
+        const { ipdb_link } = this.props.machineDetails
         const topScores = curLmx.machine_score_xrefs.sort((a, b) => b.score - a.score).slice(0, 3)
+        const pintipsUrl = curLmx.machine_group_id ? 
+            `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
+            `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
 
         return (
             <View>
@@ -112,24 +119,17 @@ class MachineDetails extends Component {
                         />
                     </View>
                 </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showRemoveMachineModal}
-                >
-                    <View style={{marginTop: 100}}>
-                        <Button 
-                            title={'Remove machine from location?'}
-                            onPress={() => this.removeLmx(curLmx.id)}
-                        />
-                        <Button 
-                            title={'Cancel'}
-                            onPress={() => this.setState({ showRemoveMachineModal: false })}
-                        />
-                    </View>
-                </Modal>
+                {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                 <View>
                     <Text>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
+                    <Button
+                        title={'View playing tips on pintips.net'}
+                        onPress={() => Linking.openURL(pintipsUrl)}
+                    />
+                    <Button
+                        title={'View on IPDB'}
+                        onPress={() => Linking.openURL(ipdb_link)}
+                    />
                     <Button
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
@@ -178,10 +178,14 @@ MachineDetails.propTypes = {
     addMachineScore: PropTypes.func,
     navigation: PropTypes.object,
     user: PropTypes.object,
+    machineDetails: PropTypes.object,
     removeMachineFromLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, user }) => ({ location, user })
+const mapStateToProps = ({ location, user, machines }) => {
+    const machineDetails = location.curLmx ? machines.machines.find(m => m.id === location.curLmx.machine_id) : {}
+    return ({ location, user, machineDetails })
+}
 const mapDispatchToProps = (dispatch) => ({
     addMachineCondition: (condition, lmx) => dispatch(addMachineCondition(condition, lmx)),
     addMachineScore: (score, lmx) => dispatch(addMachineScore(score, lmx)),
