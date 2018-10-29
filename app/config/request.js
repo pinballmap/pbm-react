@@ -47,6 +47,24 @@ export const getData = uri => {
         .catch(err => err)
 }
 
+export const deleteData = (uri, body)  => {
+    return fetch(global.api_url + uri, {
+        method: 'delete', 
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response => {
+            if(response.status === 200)
+                return response.json()
+    
+            throw new Error('API response was not ok')
+        })
+        .catch(err => err)
+}
+
 export const getCurrentLocation = () => {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(

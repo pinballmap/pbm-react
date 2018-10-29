@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Modal, Text, TextInput, View } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { addMachineCondition, addMachineScore } from '../actions/location_actions'
+import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 
 const moment = require('moment')
@@ -15,6 +15,7 @@ class MachineDetails extends Component {
         conditionText: '', 
         showAddScoreModal: false,
         score: '0',
+        showRemoveMachineModal: false,
     }
     
     static navigationOptions = ({ navigation }) => {
@@ -39,11 +40,27 @@ class MachineDetails extends Component {
     }
 
     removeLmx = (lmx) => {
-        console.log(lmx)
+        this.props.removeMachineFromLocation(lmx)
+        this.setState({ showRemoveMachineModal: false })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.location.curLmx && !this.props.location.curLmx)
+            this.props.navigation.goBack()
     }
 
     render() {
-        const { curLmx } = this.props.location
+        const { curLmx } = this.props.location   
+        const { loggedIn } = this.props.user
+
+        if (!curLmx) {
+            return (
+                <View style={{ flex: 1, padding: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            )   
+        }
+
         const topScores = curLmx.machine_score_xrefs.sort((a, b) => b.score - a.score).slice(0, 3)
 
         return (
@@ -95,11 +112,29 @@ class MachineDetails extends Component {
                         />
                     </View>
                 </Modal>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.showRemoveMachineModal}
+                >
+                    <View style={{marginTop: 100}}>
+                        <Button 
+                            title={'Remove machine from location?'}
+                            onPress={() => this.removeLmx(curLmx.id)}
+                        />
+                        <Button 
+                            title={'Cancel'}
+                            onPress={() => this.setState({ showRemoveMachineModal: false })}
+                        />
+                    </View>
+                </Modal>
                 <View>
                     <Text>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
                     <Button
-                        title={'ADD A NEW CONDITION'}
-                        onPress={() => this.setState({ showAddConditionModal: true })}
+                        title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
+                        onPress={loggedIn ? 
+                            () => this.setState({ showAddConditionModal: true }) :
+                            () => this.props.navigation.navigate('SignupLogin')}
                     />
                     {curLmx.condition ? 
                         <Text>{curLmx.condition}</Text> :
@@ -107,8 +142,11 @@ class MachineDetails extends Component {
                     }
                     {curLmx.condition_date && <Text>{`Updated on ${curLmx.condition_date} ${curLmx.user_id ? `by ${curLmx.user_id}` : ''}`}</Text>}
                     <Button 
-                        title={'ADD YOUR SCORE'}
-                        onPress={() => this.setState({ showAddScoreModal: true })}
+                        title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
+                        onPress={loggedIn ? 
+                            () => this.setState({ showAddScoreModal: true }) :
+                            () => this.props.navigation.navigate('SignupLogin')
+                        }
                     />
                     {topScores.map(scoreObj => {
                         const {id, score, created_at, username} = scoreObj
@@ -122,11 +160,11 @@ class MachineDetails extends Component {
                     })}
                     {topScores.length === 0 && <Text>No Scores Yet!</Text>}
                     <Button 
-                        title={'REMOVE MACHINE'}
-                        onPress={() => {
-                            this.removeLmx(curLmx.id)
-                            this.props.navigation.goBack()
-                        }}
+                        title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
+                        onPress={loggedIn ? 
+                            () => this.setState({ showRemoveMachineModal: true }) :
+                            () => this.props.navigation.navigate('SignupLogin')
+                        }
                     />
                 </View>
             </View>
@@ -139,11 +177,14 @@ MachineDetails.propTypes = {
     addMachineCondition: PropTypes.func,
     addMachineScore: PropTypes.func,
     navigation: PropTypes.object,
+    user: PropTypes.object,
+    removeMachineFromLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location }) => ({ location })
+const mapStateToProps = ({ location, user }) => ({ location, user })
 const mapDispatchToProps = (dispatch) => ({
     addMachineCondition: (condition, lmx) => dispatch(addMachineCondition(condition, lmx)),
     addMachineScore: (score, lmx) => dispatch(addMachineScore(score, lmx)),
+    removeMachineFromLocation: (lmx) => dispatch(removeMachineFromLocation(lmx))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(MachineDetails)

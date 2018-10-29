@@ -7,9 +7,10 @@ import {
     SET_SELECTED_LMX,
     MACHINE_CONDITION_UPDATED,
     MACHINE_SCORE_ADDED,
+    LOCATION_MACHINE_REMOVED,
 } from './types'
 
-import { getData, postData, putData } from '../config/request'
+import { getData, postData, putData, deleteData } from '../config/request'
 
 export const fetchLocation = id => dispatch => {
     dispatch({type: FETCHING_LOCATION})
@@ -100,5 +101,24 @@ export const machineScoreAdded = (data) => {
     return {
         type: MACHINE_SCORE_ADDED,
         score: data.machine_score_xref,
+    }
+}
+
+export const removeMachineFromLocation = lmx => (dispatch, getState) => {
+    const { email, authentication_token } = getState().user
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+    }
+
+    return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
+        .then(() => dispatch(locationMachineRemoved(lmx)))
+        .catch(err => console.log(err))
+}
+
+export const locationMachineRemoved = (lmx) => {
+    return {
+        type: LOCATION_MACHINE_REMOVED,
+        lmx,
     }
 }
