@@ -6,7 +6,8 @@ import {
     CLOSE_CONFIRM_MODAL,
     SET_SELECTED_LMX,
     MACHINE_CONDITION_UPDATED,
-    MACHINE_SCORE_ADDED
+    MACHINE_SCORE_ADDED,
+    LOCATION_MACHINE_REMOVED,
 } from '../actions/types'
 
 const moment = require('moment')
@@ -117,6 +118,18 @@ export default (state = initialState, action) => {
                 ...state.curLmx,
                 machine_score_xrefs,
             },
+            location: {
+                ...state.location,
+                location_machine_xrefs,
+            }
+        }
+    }
+    case LOCATION_MACHINE_REMOVED: {
+        const location_machine_xrefs = state.location.location_machine_xrefs.filter(m => m.id !== action.lmx)
+
+        return {
+            ...state,
+            curLmx: null,
             location: {
                 ...state.location,
                 location_machine_xrefs,
