@@ -5,8 +5,6 @@ import { Modal, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { removeMachineFromLocation } from '../actions/location_actions'
 
-
-
 class RemoveMachineModal extends Component {
     removeLmx = (lmx) => {
         this.props.removeMachineFromLocation(lmx)
