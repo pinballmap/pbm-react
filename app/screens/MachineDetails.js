@@ -6,8 +6,7 @@ import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
-import RemoveMachine from '../components/RemoveMachine'
-import RemoveMachineModal from '../components/RemoveMachineModal'
+import { RemoveMachine, RemoveMachineModal }  from '../components'
 
 const moment = require('moment')
 
