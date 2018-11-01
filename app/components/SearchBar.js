@@ -55,15 +55,6 @@ class SearchBar extends Component {
                         </TouchableOpacity>
                     )}
                 />
-                <FontAwesome 
-                    name='location-arrow' 
-                    size={20}
-                    style={s.location}
-                    onPress={() => {
-                        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
-                        this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
-                    }}
-                />
                 <Button
                     onPress={() => Geocode.fromAddress(this.props.query.currQueryString).then(
                         response => {
@@ -76,11 +67,20 @@ class SearchBar extends Component {
                         }
                     )
                     }
-                    style={{width:30}}
+                    containerStyle={{width:30,marginLeft:-30,marginTop:5}}
                     title=""
                     accessibilityLabel=""
                     icon={<MaterialIcons name='search' size={25} />}
                     buttonStyle={s.addButton}
+                />
+                <FontAwesome 
+                    name='location-arrow' 
+                    size={20}
+                    style={s.location}
+                    onPress={() => {
+                        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
+                        this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
+                    }}
                 />
             </View>
         )
@@ -102,7 +102,7 @@ const s = StyleSheet.create({
         padding: 5
     },
     location: {
-        marginLeft: -20,
+        marginLeft: 5,
         marginTop: 5,
         color: "#260204"
     }

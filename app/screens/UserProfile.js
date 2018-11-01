@@ -49,7 +49,7 @@ class UserProfile extends Component {
                                   color:"white", 
                                   fontSize:18
                               }}
-                              style={{padding:10}}
+                              containerStyle={{borderRadius:50,padding:10}}
                           />
                           <Button
                               title={"Nevermind. Stay Logged In"}
@@ -62,7 +62,7 @@ class UserProfile extends Component {
                                   color:"black", 
                                   fontSize:18
                               }}
-                              style={{padding:10}}
+                              containerStyle={{borderRadius:50,padding:10}}
                           />
                       </View>
                   </View>
@@ -83,7 +83,7 @@ class UserProfile extends Component {
                               color:"white", 
                               fontSize:18
                           }}
-                          style={{padding:10}}
+                          containerStyle={{borderRadius:50,padding:10}}
                       /> 
                   </View> :
                   <View>
@@ -96,7 +96,7 @@ class UserProfile extends Component {
                           rounded
                           buttonStyle={s.cancelButton}
                           titleStyle={s.titleStyle}
-                          style={{padding:10}}
+                          containerStyle={{borderRadius:50,marginTop:15,padding: 10}}
                       />
                   </View>
               }
