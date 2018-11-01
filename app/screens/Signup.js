@@ -198,7 +198,7 @@ class Signup extends Component {
                               color:"black", 
                               fontSize:18
                           }}
-                          style={{paddingTop: 15,paddingBottom: 25}}
+                          style={{paddingTop: 15,paddingBottom: 25,borderRadius:50}}
                           rounded
                           title="Sign Up"
                           accessibilityLabel="Sign Up"

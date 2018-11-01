@@ -90,8 +90,7 @@ class Login extends Component {
                               color:"black", 
                               fontSize:18
                           }}
-                          style={{paddingTop: 15,paddingBottom: 25}}
-                          rounded
+                          containerStyle={{paddingTop: 15,paddingBottom: 25,borderRadius:50}}
                           title="Log In"
                           accessibilityLabel="Log In"
                           disabled={!this.state.login || !this.state.password}
