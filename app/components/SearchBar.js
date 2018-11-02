@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native'
-import { Button} from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Autocomplete from 'react-native-autocomplete-input'
@@ -48,6 +48,7 @@ class SearchBar extends Component {
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
                     style={s.searchBox}
+                    containerStyle={{borderWidth: 0}}
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
@@ -72,6 +73,7 @@ class SearchBar extends Component {
                     accessibilityLabel=""
                     icon={<MaterialIcons name='search' size={25} />}
                     buttonStyle={s.addButton}
+                    clear
                 />
                 <FontAwesome 
                     name='location-arrow' 

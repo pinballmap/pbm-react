@@ -49,12 +49,12 @@ class UserProfile extends Component {
                                   color:"white", 
                                   fontSize:18
                               }}
-                              containerStyle={{borderRadius:50,padding:10}}
+                              containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                           />
                           <Button
                               title={"Nevermind. Stay Logged In"}
                               onPress={() => this.setModalVisible(false)}
-                              accessibilityLabel="Logout"
+                              accessibilityLabel="Stay Loggin In"
                               raised
                               rounded
                               buttonStyle={s.cancelButton}
@@ -62,7 +62,7 @@ class UserProfile extends Component {
                                   color:"black", 
                                   fontSize:18
                               }}
-                              containerStyle={{borderRadius:50,padding:10}}
+                              containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
                           />
                       </View>
                   </View>
@@ -77,13 +77,12 @@ class UserProfile extends Component {
                           onPress={() => this.setModalVisible(true)}
                           accessibilityLabel="Logout"
                           raised
-                          rounded
                           buttonStyle={s.logoutButton}
                           titleStyle={{
                               color:"white", 
                               fontSize:18
                           }}
-                          containerStyle={{borderRadius:50,padding:10}}
+                          containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
                       /> 
                   </View> :
                   <View>
@@ -93,10 +92,9 @@ class UserProfile extends Component {
                           onPress={() => this.props.navigation.navigate("SignupLogin")}
                           accessibilityLabel="Login"
                           raised
-                          rounded
                           buttonStyle={s.cancelButton}
                           titleStyle={s.titleStyle}
-                          containerStyle={{borderRadius:50,marginTop:15,padding: 10}}
+                          containerStyle={{borderRadius:50,marginTop:15,marginLeft:15,marginRight:15}}
                       />
                   </View>
               }
@@ -115,7 +113,7 @@ const s = StyleSheet.create({
     cancelButton: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
     },
     pageTitle: {
         fontSize: 14,
