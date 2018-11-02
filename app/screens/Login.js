@@ -12,11 +12,11 @@ class Login extends Component {
         super(props)
         this.state={
             errors: false,
-            login: '',
-            loginError: '',
-            password: '',
-            passwordError: '',
-            apiErrorMsg: '',
+            login: null,
+            loginError: null,
+            password: null,
+            passwordError: null,
+            apiErrorMsg: null,
         }
 
     }
@@ -26,8 +26,8 @@ class Login extends Component {
     submit = () => {
         this.setState({
             errors: false,
-            loginError: '',
-            passwordError: '',
+            loginError: null,
+            passwordError: null,
         })
         getData(`/users/auth_details.json?login=${this.state.login}&password=${this.state.password}`)
             .then(data => {

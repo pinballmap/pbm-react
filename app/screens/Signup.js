@@ -12,17 +12,17 @@ class Signup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            email: '',
-            password: '',
-            confirm_password: '',
-            usernameError: '',
-            emailError: '',
-            passwordError: '',
-            confirm_passwordError: '',
+            username: null,
+            email: null,
+            password: null,
+            confirm_password: null,
+            usernameError: null,
+            emailError: null,
+            passwordError: null,
+            confirm_passwordError: null,
             errors: false,
             user: {},
-            apiErrorMsg: '',
+            apiErrorMsg: null,
         }
     }
 
@@ -81,11 +81,11 @@ class Signup extends Component {
     submit = () => {
         // Reset error states upon a submission / resubmission
         this.setState({
-            usernameError: '',
-            emailError: '',
-            passwordError: '',
-            confirm_passwordError: '',
-            apiErrorMsg: '',
+            usernameError: null,
+            emailError: null,
+            passwordError: null,
+            confirm_passwordError: null,
+            apiErrorMsg: null,
             errors: false,
         })
 
@@ -198,7 +198,7 @@ class Signup extends Component {
                                 color:"black", 
                                 fontSize:18
                             }}
-                            style={{paddingTop: 15,paddingBottom: 25,borderRadius:50}}
+                            containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
                             rounded
                             title="Sign Up"
                             accessibilityLabel="Sign Up"
@@ -276,7 +276,7 @@ const s = StyleSheet.create({
     buttonStyle: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
     }
 })
 
