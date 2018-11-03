@@ -5,6 +5,8 @@ import {
     SET_SELECTED_MACHINE,
     SET_SELECTED_LOCATION_TYPE,
     SET_SELECTED_NUM_MACHINES,
+    SET_MACHINE_ID_TO_ADD,
+    CLEAR_MACHINE_ID_TO_ADD,
 } from '../actions/types'
 
 export const initialState = {
@@ -18,6 +20,7 @@ export const initialState = {
     machineId: null,
     locationType: '',
     numMachines: '',
+    machineIdToAdd: null,
 }
 
 export default (state = initialState, action) => {
@@ -56,6 +59,16 @@ export default (state = initialState, action) => {
         return {
             ...state,
             numMachines: action.num,
+        }
+    case SET_MACHINE_ID_TO_ADD: 
+        return {
+            ...state,
+            machineIdToAdd: action.num,
+        }
+    case CLEAR_MACHINE_ID_TO_ADD :
+        return {
+            ...state,
+            machineIdToAdd: null,
         }
     default:
         return state

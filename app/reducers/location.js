@@ -8,6 +8,9 @@ import {
     MACHINE_CONDITION_UPDATED,
     MACHINE_SCORE_ADDED,
     LOCATION_MACHINE_REMOVED,
+    ADDING_MACHINE_TO_LOCATION,
+    MACHINE_ADDED_TO_LOCATION,
+    MACHINE_ADDED_TO_LOCATION_FAILURE,
 } from '../actions/types'
 
 const moment = require('moment')
@@ -18,6 +21,7 @@ export const initialState = {
     confirmModalVisible: false,
     confirmationMessage: '',
     curLmx: null,
+    addingMachineToLocation: false,
     // city: '',
     // date_last_updated: '',
     // description: '',
@@ -136,6 +140,21 @@ export default (state = initialState, action) => {
             }
         }
     }
+    case ADDING_MACHINE_TO_LOCATION: 
+        return {
+            ...state,
+            addingMachineToLocation: true,
+        }
+    case MACHINE_ADDED_TO_LOCATION:
+        return {
+            ...state,
+            addingMachineToLocation: false,
+        }
+    case MACHINE_ADDED_TO_LOCATION_FAILURE:
+        return {
+            ...state,
+            addingMachineToLocation: false,
+        }
     default:
         return state
     }

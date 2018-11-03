@@ -6,7 +6,6 @@ import {
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
     REFETCHING_LOCATIONS,
-    SET_SELECTED_LMX
 } from './types'
 
 import { getData, putData } from '../config/request'

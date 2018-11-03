@@ -14,7 +14,6 @@ import Signup from '../screens/Signup.js'
 import SignupLogin from '../screens/SignupLogin.js'
 import UserProfile from '../screens/UserProfile.js'
 import MachineDetails from '../screens/MachineDetails.js'
-import AddMachine from '../screens/AddMachine.js'
 import Podcast from '../screens/Podcast.js'
 import FAQ from '../screens/FAQ.js'
 import About from '../screens/About.js'
@@ -96,7 +95,6 @@ export const MapStack = StackNavigator({
     Login: { screen: Login, },
     FilterMap: { screen: FilterMap, },
     MachineDetails: { screen: MachineDetails },
-    AddMachine: { screen: AddMachine, },
     SuggestLocation: { screen: SuggestLocation },
     Events: { screen: Events },
     Contact: { screen: Contact },
