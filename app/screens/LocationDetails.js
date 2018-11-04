@@ -70,6 +70,7 @@ class LocationDetails extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.props.location.confirmModalVisible}
+                    onRequestClose={()=>{}}
                 >
                     <View style={{marginTop: 100}}>
                         <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
@@ -127,7 +128,7 @@ class LocationDetails extends Component {
                                 {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <Button
-                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('SignupLogin') }
+                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('Login') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={(this.props.user.loggedIn) ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
@@ -138,7 +139,7 @@ class LocationDetails extends Component {
                                             color:"black", 
                                             fontSize:18
                                         }}
-                                        style={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5}}
+                                        containerStyle={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5,borderRadius:50}}
                                     />
                                     <Button
                                         onPress={() => this.handleConfirmPress(location.id)}
@@ -150,7 +151,7 @@ class LocationDetails extends Component {
                                             color:"#260204",
                                             fontSize:16
                                         }}
-                                        style={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 10}}
+                                        containerStyle={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 10}}
                                     />
                                 </View>
                                 {location.location_machine_xrefs.map(machine => {
