@@ -34,7 +34,7 @@ class LocationDetails extends Component {
     }
 
     getTitle = machine => (
-        <Text>
+        <Text style={{marginTop:5,marginBottom:0}}>
             <Text style={s.machineName}>{machine.name}</Text>
             {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
@@ -160,7 +160,7 @@ class LocationDetails extends Component {
         
                                     if (m) 
                                         return (
-                                            <TouchableOpacity  
+                                            <TouchableOpacity
                                                 key={machine.machine_id} 
                                                 onPress={() => {
                                                     this.props.navigation.navigate('MachineDetails', {machineName: m.name, locationName: location.name})
@@ -234,7 +234,7 @@ const s = StyleSheet.create({
     machineName: {
         color: '#000000',
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
     },
     machineMeta: {
         fontSize: 16
