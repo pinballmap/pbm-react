@@ -31,6 +31,7 @@ class UserProfile extends Component {
                   animationType="slide"
                   transparent={false}
                   visible={this.state.modalVisible}
+                  onRequestClose={()=>{}}
               >
                   <View style={{marginTop: 100}}>
                       <View>

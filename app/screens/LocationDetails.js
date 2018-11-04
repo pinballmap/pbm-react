@@ -70,6 +70,7 @@ class LocationDetails extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.props.location.confirmModalVisible}
+                    onRequestClose={()=>{}}
                 >
                     <View style={{marginTop: 100}}>
                         <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
