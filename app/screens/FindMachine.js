@@ -39,6 +39,13 @@ class FindMachine extends Component {
         this.props.machineIdToAdd(machine.id)
     }
 
+    getDisplayText = machine => (
+        <Text>
+            <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
+            <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        </Text>
+    )
+
     componentDidMount() {
         this.props.navigation.setParams({
             id: this.props.location.location.id,
@@ -51,6 +58,7 @@ class FindMachine extends Component {
 
     render() {
         const { machineIdToAdd } = this.props.query
+
         return (
             <ScrollView>
                 <SearchBar 
@@ -65,8 +73,8 @@ class FindMachine extends Component {
                         onPress={() => this.setSelected(machine)}
                     >
                         <ListItem 
-                            title={machine.name}    
-                            containerStyle={machine.id === machineIdToAdd ? {backgroundColor: 'yellow'} : {}}           
+                            title={this.getDisplayText(machine)}    
+                            containerStyle={machine.id === machineIdToAdd ? {backgroundColor: '#D3ECFF'} : {}}           
                         />
                     </TouchableOpacity>
                 ))}
