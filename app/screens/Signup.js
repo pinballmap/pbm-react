@@ -199,6 +199,7 @@ class Signup extends Component {
                                 fontSize:18
                             }}
                             containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
+                            style={{borderRadius: 50}}
                             rounded
                             title="Sign Up"
                             accessibilityLabel="Sign Up"
@@ -277,6 +278,7 @@ const s = StyleSheet.create({
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
+        elevation: 0
     }
 })
 

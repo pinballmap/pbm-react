@@ -91,6 +91,7 @@ class Login extends Component {
                                 fontSize:18
                             }}
                             containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
+                            style={{borderRadius: 50}}
                             title="Log In"
                             accessibilityLabel="Log In"
                             disabled={!this.state.login || !this.state.password}
@@ -175,7 +176,8 @@ const s = StyleSheet.create({
     buttonStyle: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        elevation: 0
     }
 })
 
