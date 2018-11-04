@@ -36,15 +36,15 @@ const TabNav = TabNavigator({
             const { routeName } = navigation.state
             switch(routeName) {
             case 'Map':
-                return <MaterialIcons name='search' size={(focused) ? 32 : 30} color={tintColor} />
+                return <MaterialIcons name='search' size={(focused) ? 30 : 28} color={tintColor} />
             case 'Saved':
                 return <MaterialCommunityIcons name='star-outline' size={(focused) ? 32 : 30} color={tintColor} />
             case 'Activity':
-                return <FontAwesome name='newspaper-o' size={(focused) ? 32 : 30} color={tintColor} />
+                return <FontAwesome name='newspaper-o' size={(focused) ? 26 : 24} color={tintColor} />
             case 'Profile':
-                return <MaterialIcons name='face' size={(focused) ? 32 : 30} color={tintColor} />
+                return <MaterialIcons name='face' size={(focused) ? 28 : 26} color={tintColor} />
             case 'Menu':
-                return <FontAwesome name='bars' size={40} color={tintColor} />
+                return <MaterialIcons name='menu' size={50} color={tintColor} />
             }
         },
         tabBarLabel: ({ focused, tintColor }) => {
@@ -75,6 +75,13 @@ const TabNav = TabNavigator({
     tabBarOptions: {
         activeTintColor: '#000000',
         inactiveTintColor: '#6c5d5e',
+        showIcon: true,
+        style: {
+            backgroundColor: '#ffffff',
+        },
+        indicatorStyle: { 
+            backgroundColor: 'transparent'
+        }
     },
     tabBarPosition: 'bottom',
     swipeEnabled: true,
