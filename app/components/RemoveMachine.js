@@ -15,9 +15,9 @@ class RemoveMachine extends Component {
                 {this.props.user.loggedIn && 
                     <FontAwesome 
                         name='trash' 
-                        size={20}
+                        size={30}
                         color={'red'}
-                        style={{ marginRight: 25 }}
+                        style={{ marginRight: 20 }}
                         onPress={() => this.setState({showModal: true})}
                     />
                 }
