@@ -67,12 +67,12 @@ class MachineDetails extends Component {
 
         const { loggedIn } = this.props.user
         const { ipdb_link } = this.props.machineDetails
-        const topScores = curLmx.machine_score_xrefs.sort((a, b) => b.score - a.score).slice(0, 3)
         const pintipsUrl = curLmx.machine_group_id ? 
             `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
             `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
+        const scores = curLmx.machine_score_xrefs.length > 0 ? curLmx.machine_score_xrefs.reverse() : undefined
 
         return (
             <View>
@@ -187,20 +187,22 @@ class MachineDetails extends Component {
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
-                    {topScores.map(scoreObj => {
-                        const {id, score, created_at, username} = scoreObj
+                    {scores ? 
+                        scores.map(scoreObj => {
+                            const {id, score, created_at, username} = scoreObj
         
-                        return (
-                            <ListItem
-                                containerStyle={{paddingLeft:20}}
-                                key={id}
-                                title={formatNumWithCommas(score)}
-                                subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
-                                titleStyle={{ fontSize: 16, fontWeight: 'bold' }}
-                                subtitleStyle={{ paddingTop:3 }}
-                            />)
-                    })}
-                    {topScores.length === 0 && <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>}
+                            return (
+                                <ListItem
+                                    containerStyle={{paddingLeft:20}}
+                                    key={id}
+                                    title={formatNumWithCommas(score)}
+                                    subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
+                                    titleStyle={{ fontSize: 16, fontWeight: 'bold' }}
+                                    subtitleStyle={{ paddingTop:3 }}
+                                />)
+                        }) : 
+                        <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>
+                    }
                     <Button
                         title={'View playing tips on pintips.net'}
                         onPress={() => Linking.openURL(pintipsUrl)}
