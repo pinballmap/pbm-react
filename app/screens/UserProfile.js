@@ -44,12 +44,12 @@ class UserProfile extends Component {
                               }}
                               accessibilityLabel="Logout"
                               raised
-                              rounded
                               buttonStyle={s.logoutButton}
                               titleStyle={{
                                   color:"white", 
                                   fontSize:18
                               }}
+                              style={{borderRadius: 50}}
                               containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                           />
                           <Button
@@ -57,12 +57,12 @@ class UserProfile extends Component {
                               onPress={() => this.setModalVisible(false)}
                               accessibilityLabel="Stay Loggin In"
                               raised
-                              rounded
                               buttonStyle={s.cancelButton}
                               titleStyle={{
                                   color:"black", 
                                   fontSize:18
                               }}
+                              style={{borderRadius: 50}}
                               containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
                           />
                       </View>
@@ -83,6 +83,7 @@ class UserProfile extends Component {
                               color:"white", 
                               fontSize:18
                           }}
+                          style={{borderRadius: 50}}
                           containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
                       /> 
                   </View> :
@@ -95,6 +96,7 @@ class UserProfile extends Component {
                           raised
                           buttonStyle={s.cancelButton}
                           titleStyle={s.titleStyle}
+                          style={{borderRadius: 50}}
                           containerStyle={{borderRadius:50,marginTop:15,marginLeft:15,marginRight:15}}
                       />
                   </View>
@@ -109,12 +111,14 @@ const s = StyleSheet.create({
     logoutButton: {
         backgroundColor:"#F53240",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        elevation: 0
     },
     cancelButton: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
         width: '100%',
+        elevation: 0
     },
     pageTitle: {
         fontSize: 14,

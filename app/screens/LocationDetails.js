@@ -34,7 +34,7 @@ class LocationDetails extends Component {
     }
 
     getTitle = machine => (
-        <Text>
+        <Text style={{marginTop:5,marginBottom:0}}>
             <Text style={s.machineName}>{machine.name}</Text>
             {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
         </Text>
@@ -80,13 +80,13 @@ class LocationDetails extends Component {
                                 onPress={this.props.closeConfirmModal}
                                 accessibilityLabel="You're Welcome"
                                 raised
-                                rounded
                                 buttonStyle={s.buttonPink}
                                 titleStyle={{
                                     color:"black", 
                                     fontSize:18
                                 }}
-                                style={{paddingLeft:20,paddingRight:20,paddingTop:20,paddingBottom:10}}
+                                style={{borderRadius: 50}}
+                                containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
                             />
                         </View>
                         <View style={s.logoWrapper}>
@@ -133,13 +133,13 @@ class LocationDetails extends Component {
                                         title={(this.props.user.loggedIn) ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                         raised
-                                        rounded
                                         buttonStyle={s.addButton}
                                         titleStyle={{
                                             color:"black", 
                                             fontSize:18
                                         }}
-                                        containerStyle={{paddingLeft: 10,paddingRight: 10,paddingTop: 5, paddingBottom: 5,borderRadius:50}}
+                                        style={{borderRadius: 50}}
+                                        containerStyle={{marginTop:5,marginBottom:5,marginRight:10,marginLeft:10,borderRadius:50}}
                                     />
                                     <Button
                                         onPress={() => this.handleConfirmPress(location.id)}
@@ -151,7 +151,8 @@ class LocationDetails extends Component {
                                             color:"#260204",
                                             fontSize:16
                                         }}
-                                        containerStyle={{paddingLeft: 25,paddingRight: 25,paddingTop: 5, paddingBottom: 10}}
+                                        style={{borderRadius: 5}}
+                                        containerStyle={{marginTop:5,marginBottom:10,marginRight:25,marginLeft:25}}
                                     />
                                 </View>
                                 {location.location_machine_xrefs.map(machine => {
@@ -159,7 +160,7 @@ class LocationDetails extends Component {
         
                                     if (m) 
                                         return (
-                                            <TouchableOpacity  
+                                            <TouchableOpacity
                                                 key={machine.machine_id} 
                                                 onPress={() => {
                                                     this.props.navigation.navigate('MachineDetails', {machineName: m.name, locationName: location.name})
@@ -233,7 +234,7 @@ const s = StyleSheet.create({
     machineName: {
         color: '#000000',
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
     },
     machineMeta: {
         fontSize: 16
@@ -275,16 +276,19 @@ const s = StyleSheet.create({
     addButton: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        elevation: 0
     },
     buttonPink: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
+        elevation: 0
     },
     confirmButton: {
         backgroundColor:"#dddddd",
-        width: '100%'
+        width: '100%',
+        elevation: 0
     },
     condition: {
         marginTop: 10
@@ -303,8 +307,10 @@ const s = StyleSheet.create({
     },
     confirmText: {
         textAlign: 'center',
-        fontSize: 16,
-        fontWeight: "bold"
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginRight: 10
     },
     logo: {
         resizeMode: 'contain',

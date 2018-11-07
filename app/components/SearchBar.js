@@ -48,6 +48,8 @@ class SearchBar extends Component {
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
                     style={s.searchBox}
+                    underlineColorAndroid='transparent'
+                    selectionColor='#000000'
                     containerStyle={{borderWidth: 0}}
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
