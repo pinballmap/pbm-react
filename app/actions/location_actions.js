@@ -8,6 +8,10 @@ import {
     MACHINE_CONDITION_UPDATED,
     MACHINE_SCORE_ADDED,
     LOCATION_MACHINE_REMOVED,
+    ADDING_MACHINE_TO_LOCATION,
+    MACHINE_ADDED_TO_LOCATION,
+    MACHINE_ADDED_TO_LOCATION_FAILURE,
+    DISPLAY_API_ERROR,
 } from './types'
 
 import { getData, postData, putData, deleteData } from '../config/request'
@@ -122,3 +126,26 @@ export const locationMachineRemoved = (lmx) => {
         lmx,
     }
 }
+
+export const addMachineToLocation = machine_id => (dispatch, getState) => {
+    dispatch({type: ADDING_MACHINE_TO_LOCATION})
+    
+    const { email, authentication_token } = getState().user
+    const { id: location_id } = getState().location.location
+
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        location_id,
+        machine_id,
+    }
+    return postData(`/location_machine_xrefs.json`, body)
+        .then(() => {
+            dispatch({type: MACHINE_ADDED_TO_LOCATION})
+        }, err => dispatch(addMachineToLocationFailure(err)))
+}
+
+export const addMachineToLocationFailure = (err) => dispatch => {
+    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
+} 
