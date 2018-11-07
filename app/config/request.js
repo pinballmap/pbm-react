@@ -10,12 +10,12 @@ export const postData = (uri, body) => {
         body: JSON.stringify(body)
     })
         .then(response => {
-            if (response.status === 200 || response.status === 201) 
+            if (response.ok) 
                 return response.json()
       
             throw new Error('API response was not ok.')
         })
-        .catch(err => err)
+        .catch(err => Promise.reject(err))
 }
 
 export const putData = (uri, body) => {
@@ -28,12 +28,12 @@ export const putData = (uri, body) => {
         body: JSON.stringify(body)
     })
         .then(response => {
-            if (response.status === 200) 
+            if (response.ok) 
                 return response.json()
     
             throw new Error('API response was not ok.')
         })
-        .catch(err => err)
+        .catch(err => Promise.reject(err))
 }
 
 export const getData = uri => {
