@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
@@ -84,7 +84,7 @@ class MachineDetails extends Component {
                             onChangeText={conditionText => this.setState({ conditionText })}
                             value={this.state.conditionText}
                             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                            placeholder={'Enter machine condition... '}
+                            placeholder={'Enter machine condition...'}
                         />
                         <Button
                             title={'Add Condition'}
@@ -120,15 +120,27 @@ class MachineDetails extends Component {
                     </View>
                 </Modal>
                 {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
-                <View>
-                    <Text>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
+                <View style={{marginLeft:15,marginRight:15}}>
+                    <Text style={{textAlign:'center'}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
                     <Button
                         title={'View playing tips on pintips.net'}
                         onPress={() => Linking.openURL(pintipsUrl)}
+                        buttonStyle={s.externalLink}
+                        titleStyle={{
+                            color:"black", 
+                            fontSize:18
+                        }}
+                        containerStyle={{marginTop:15,marginBottom:15}}
                     />
                     <Button
                         title={'View on IPDB'}
                         onPress={() => Linking.openURL(ipdb_link)}
+                        buttonStyle={s.externalLink}
+                        titleStyle={{
+                            color:"black", 
+                            fontSize:18
+                        }}
+                        containerStyle={{marginTop:15,marginBottom:15}}
                     />
                     <Button
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
@@ -171,6 +183,15 @@ class MachineDetails extends Component {
         )
     }
 }
+
+const s = StyleSheet.create({
+    externalLink: {
+        backgroundColor:'rgba(255,255,255,.0)',
+        borderWidth: 1,
+        borderColor: '#888888',
+        borderRadius: 5
+    }
+})
 
 MachineDetails.propTypes = {
     location: PropTypes.object,
