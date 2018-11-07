@@ -40,7 +40,7 @@ class Map extends Component {
           headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            style={{width:50}}
+            containerStyle={{width:50}}
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
@@ -52,7 +52,7 @@ class Map extends Component {
           headerRight:
         <Button
             onPress={ () => navigation.navigate('FilterMap')}
-            style={{width:60}}
+            containerStyle={{width:60}}
             title="Filter"
             accessibilityLabel="Filter"
             titleStyle={s.titleStyle}

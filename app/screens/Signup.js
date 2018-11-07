@@ -12,216 +12,218 @@ class Signup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            email: '',
-            password: '',
-            confirm_password: '',
-            usernameError: '',
-            emailError: '',
-            passwordError: '',
-            confirm_passwordError: '',
+            username: null,
+            email: null,
+            password: null,
+            confirm_password: null,
+            usernameError: null,
+            emailError: null,
+            passwordError: null,
+            confirm_passwordError: null,
             errors: false,
             user: {},
-            apiErrorMsg: '',
+            apiErrorMsg: null,
         }
     }
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
 
-  validateFields = () => {
-      if (!this.state.username) {
-          this.setState({ 
-              usernameError: 'EMPTY USERNAME',
-              errors: true,
-          })
-      } else if (this.state.username.length > 15) {
-          this.setState({
-              usernameError: 'Username is too long (maximum is 15 characters',
-              errors: true,
-          })
-      } else if (!(/^[a-zA-Z0-9_\.]*$/).test(this.state.username)) {
-          this.setState({
-              usernameError: 'Username must be alphanumeric',
-              errors: true,
-          })
-      }
+    validateFields = () => {
+        if (!this.state.username) {
+            this.setState({ 
+                usernameError: 'EMPTY USERNAME',
+                errors: true,
+            })
+        } else if (this.state.username.length > 15) {
+            this.setState({
+                usernameError: 'Username is too long (maximum is 15 characters',
+                errors: true,
+            })
+        } else if (!(/^[a-zA-Z0-9_\.]*$/).test(this.state.username)) {
+            this.setState({
+                usernameError: 'Username must be alphanumeric',
+                errors: true,
+            })
+        }
 
-      if (!this.state.email) {
-          this.setState({ 
-              emailError: 'EMPTY EMAIL', 
-              errors: true, 
-          })
-      } else if (!this.state.email.includes('@')) {
-          this.setState({ 
-              emailError: 'Email is invalid',
-              errors: true,
-          })
-      }
+        if (!this.state.email) {
+            this.setState({ 
+                emailError: 'EMPTY EMAIL', 
+                errors: true, 
+            })
+        } else if (!this.state.email.includes('@')) {
+            this.setState({ 
+                emailError: 'Email is invalid',
+                errors: true,
+            })
+        }
 
-      if (!this.state.password) {
-          this.setState({ 
-              passwordError: 'EMPTY PASSWORD',
-              errors: true,
-          })
-      } else if (this.state.password.length < 6) {
-          this.setState({ 
-              passwordError: 'Password is too short (minimum is 6 characters)',
-              errors: true,
-          })
-      }
+        if (!this.state.password) {
+            this.setState({ 
+                passwordError: 'EMPTY PASSWORD',
+                errors: true,
+            })
+        } else if (this.state.password.length < 6) {
+            this.setState({ 
+                passwordError: 'Password is too short (minimum is 6 characters)',
+                errors: true,
+            })
+        }
 
-      if (this.state.password !== this.state.confirm_password) {
-          this.setState({ 
-              confirm_passwordError: "DOESN'T MATCH PASSWORD",
-              errors: true,
-          })    
-      }
-  }
+        if (this.state.password !== this.state.confirm_password) {
+            this.setState({ 
+                confirm_passwordError: "DOESN'T MATCH PASSWORD",
+                errors: true,
+            })    
+        }
+    }
 
-  submit = () => {
-      // Reset error states upon a submission / resubmission
-      this.setState({
-          usernameError: '',
-          emailError: '',
-          passwordError: '',
-          confirm_passwordError: '',
-          apiErrorMsg: '',
-          errors: false,
-      })
+    submit = () => {
+        // Reset error states upon a submission / resubmission
+        this.setState({
+            usernameError: null,
+            emailError: null,
+            passwordError: null,
+            confirm_passwordError: null,
+            apiErrorMsg: null,
+            errors: false,
+        })
 
-      this.validateFields()
+        this.validateFields()
 
-      if(!this.state.errors) {
-          const body = {
-              username: this.state.username,
-              email: this.state.email,
-              password: this.state.password,
-              confirm_password: this.state.confirm_password
-          }
+        if(!this.state.errors) {
+            const body = {
+                username: this.state.username,
+                email: this.state.email,
+                password: this.state.password,
+                confirm_password: this.state.confirm_password
+            }
 
-          postData('/users/signup.json', body)
-              .then(data => {
-                  // Something goes wrong with the API request
-                  if (data.message) {
-                      this.setState({ apiErrorMsg: data.message})
-                      this.setState({ errors: true })
-                  }
-      
-                  if (data.errors) {
-                      this.setState({ errors: true })
-                      const errors = data.errors.split(",")
+            postData('/users/signup.json', body)
+                .then(data => {
+                    // Something goes wrong with the API request
+                    if (data.message) {
+                        this.setState({ apiErrorMsg: data.message})
+                        this.setState({ errors: true })
+                    }
+        
+                    if (data.errors) {
+                        this.setState({ errors: true })
+                        const errors = data.errors.split(",")
 
-                      if (errors.indexOf('Username is invalid') > -1) {
-                          this.setState({ usernameError: 'Username is invalid' })
-                      }
+                        if (errors.indexOf('Username is invalid') > -1) {
+                            this.setState({ usernameError: 'Username is invalid' })
+                        }
 
-                      if (errors.indexOf('Username has already been taken') > -1) {
-                          this.setState({ usernameError: 'Username has already been taken'})
-                      }
+                        if (errors.indexOf('Username has already been taken') > -1) {
+                            this.setState({ usernameError: 'Username has already been taken'})
+                        }
 
-                      if (errors.indexOf('Email is invalid') > -1) {
-                          this.setState({ emailError: 'Email is invalid' })
-                      }
-                  }
+                        if (errors.indexOf('Email is invalid') > -1) {
+                            this.setState({ emailError: 'Email is invalid' })
+                        }
+                    }
 
-                  if (data.user) {      
-                      this.props.login(data.user)
-                      this.props.navigation.navigate('Map')
-                  }
-              })
-              .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
-      }
-  }
+                    if (data.user) {      
+                        this.props.login(data.user)
+                        this.props.navigation.navigate('Map')
+                    }
+                })
+                .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
+        }
+    }
 
-  render() {
-      return (
-          <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
-              <View style={s.mask}>
-                  <View style={s.padding_5}>
-                      {this.state.errors && 
-              <Text style={s.errorText}>
-                  {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-              </Text>
-                      }
-                      <Text style={s.bold}>Sign Up</Text>
-                      <Input 
-                          placeholder='Username'
-                          leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                          onChangeText={username => this.setState({username})}
-                          value={this.state.username}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.usernameError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          spellCheck = {false}
-                      />
-                      <Input 
-                          placeholder="Email Address" 
-                          leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
-                          onChangeText={email => this.setState({email})}
-                          value={this.state.value}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.emailError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          spellCheck = {false}
-                      />
-                      <Input 
-                          placeholder="Password"
-                          leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                          onChangeText={password => this.setState({password})}
-                          value={this.state.password}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.passwordError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          secureTextEntry = {true}
-                          spellCheck = {false}
-                      />
-                      <Input 
-                          placeholder="Confirm Password"
-                          leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                          onChangeText={confirm_password => this.setState({confirm_password})}
-                          value={this.state.confirm_password}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.confirm_passwordError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          secureTextEntry = {true}
-                          spellCheck = {false}
-                      />
-                      <Button
-                          onPress={() => this.submit()}
-                          raised
-                          buttonStyle={s.buttonStyle}
-                          titleStyle={{
-                              color:"black", 
-                              fontSize:18
-                          }}
-                          style={{paddingTop: 15,paddingBottom: 25}}
-                          rounded
-                          title="Sign Up"
-                          accessibilityLabel="Sign Up"
-                          disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
-                      />
-                      <Text
-                          onPress={() => this.props.navigation.navigate('Login')}
-                          style={s.textLink}
-                      >{"Already a user? LOG IN!"}
-                      </Text>
-                      <Text 
-                          onPress={() => {
-                              this.props.loginLater()
-                              this.props.navigation.navigate('Map')
-                          }} 
-                          style={s.textLink}
-                      >{"skip signing up for now"}
-                      </Text>
-                  </View>
-              </View>
-          </ImageBackground>
-      )
-  }
+    render() {
+        return (
+            <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
+                <View style={s.mask}>
+                    <View style={s.padding_5}>
+                        {this.state.errors && 
+                <Text style={s.errorText}>
+                    {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                </Text>
+                        }
+                        <Text style={s.bold}>Sign Up</Text>
+                        <Input 
+                            placeholder='Username'
+                            leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                            onChangeText={username => this.setState({username})}
+                            value={this.state.username}
+                            errorStyle={{ color : 'red' }}
+                            errorMessage={this.state.usernameError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            spellCheck = {false}
+                        />
+                        <Input 
+                            placeholder="Email Address" 
+                            leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
+                            onChangeText={email => this.setState({email})}
+                            value={this.state.value}
+                            errorStyle={{ color : 'red' }}
+                            errorMessage={this.state.emailError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            spellCheck = {false}
+                        />
+                        <Input 
+                            placeholder="Password"
+                            leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                            onChangeText={password => this.setState({password})}
+                            value={this.state.password}
+                            errorStyle={{ color : 'red' }}
+                            errorMessage={this.state.passwordError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            secureTextEntry = {true}
+                            spellCheck = {false}
+                        />
+                        <Input 
+                            placeholder="Confirm Password"
+                            leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                            onChangeText={confirm_password => this.setState({confirm_password})}
+                            value={this.state.confirm_password}
+                            errorStyle={{ color : 'red' }}
+                            errorMessage={this.state.confirm_passwordError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            secureTextEntry = {true}
+                            spellCheck = {false}
+                        />
+                        <Button
+                            onPress={() => this.submit()}
+                            raised
+                            buttonStyle={s.buttonStyle}
+                            titleStyle={{
+                                color:"black", 
+                                fontSize:18
+                            }}
+                            containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
+                            style={{borderRadius: 50}}
+                            rounded
+                            title="Sign Up"
+                            accessibilityLabel="Sign Up"
+                            disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
+                            disabledStyle={{borderRadius:50}}
+                        />
+                        <Text
+                            onPress={() => this.props.navigation.navigate('Login')}
+                            style={s.textLink}
+                        >{"Already a user? LOG IN!"}
+                        </Text>
+                        <Text 
+                            onPress={() => {
+                                this.props.loginLater()
+                                this.props.navigation.navigate('Map')
+                            }} 
+                            style={s.textLink}
+                        >{"skip signing up for now"}
+                        </Text>
+                    </View>
+                </View>
+            </ImageBackground>
+        )
+    }
 }
 
 const s = StyleSheet.create({
@@ -275,7 +277,8 @@ const s = StyleSheet.create({
     buttonStyle: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        elevation: 0
     }
 })
 

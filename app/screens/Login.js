@@ -12,118 +12,117 @@ class Login extends Component {
         super(props)
         this.state={
             errors: false,
-            login: '',
-            loginError: '',
-            password: '',
-            passwordError: '',
-            apiErrorMsg: '',
+            login: null,
+            loginError: null,
+            password: null,
+            passwordError: null,
+            apiErrorMsg: null,
         }
 
     }
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
   
-  submit = () => {
-      this.setState({
-          errors: false,
-          loginError: '',
-          passwordError: '',
-      })
-      getData(`/users/auth_details.json?login=${this.state.login}&password=${this.state.password}`)
-          .then(data => {
-              if (data.errors) {
-                  this.setState({ errors: true })
+    submit = () => {
+        this.setState({
+            errors: false,
+            loginError: null,
+            passwordError: null,
+        })
+        getData(`/users/auth_details.json?login=${this.state.login}&password=${this.state.password}`)
+            .then(data => {
+                if (data.errors) {
+                    this.setState({ errors: true })
 
-                  if(data.errors === 'Unknown user') 
-                      this.setState({ loginError: 'Unknown user' })
+                    if(data.errors === 'Unknown user') 
+                        this.setState({ loginError: 'Unknown user' })
 
-                  if(data.errors === 'Incorrect password') 
-                      this.setState({ passwordError: 'Incorrect password' })
-              }
-              if (data.user) {      
-                  this.props.login(data.user)
-                  this.props.navigation.navigate('Map')
-              }
-          })
-          .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
-  }
+                    if(data.errors === 'Incorrect password') 
+                        this.setState({ passwordError: 'Incorrect password' })
+                }
+                if (data.user) {      
+                    this.props.login(data.user)
+                    this.props.navigation.navigate('Map')
+                }
+            })
+            .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
+    }
 
-  render() {
-      return (
-          <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>
-              <View style={s.mask}>
-                  <View style={s.padding_5}>
-                      {this.state.errors && 
-              <Text style={s.errorText}>
-                  {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-              </Text>
-                      }
-                      <Text style={s.bold}>Log In</Text>
-                      <Input
-                          placeholder='Username or Email'
-                          leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                          onChangeText={login => this.setState({login})}
-                          value={this.state.login}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.loginError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          spellCheck = {false}
-                      />
-                      <Input 
-                          placeholder='Password'
-                          leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                          onChangeText={password => this.setState({password})}
-                          value={this.state.password}
-                          errorStyle={{ color : 'red' }}
-                          errorMessage={this.state.passwordError}
-                          inputContainerStyle={s.inputBox}
-                          inputStyle={s.inputText}
-                          secureTextEntry = {true}
-                          spellCheck = {false}
-                      />
-                      <Button
-                          onPress={() => this.submit()}
-                          raised
-                          buttonStyle={s.buttonStyle}
-                          titleStyle={{
-                              color:"black", 
-                              fontSize:18
-                          }}
-                          style={{paddingTop: 15,paddingBottom: 25}}
-                          rounded
-                          title="Log In"
-                          accessibilityLabel="Log In"
-                          disabled={!this.state.login || !this.state.password}
-                      />
-                      <Text
-                          onPress={() => this.props.navigation.navigate('Signup')}
-                          style={s.textLink}
-                      >{"Not a user? SIGN UP!"}
-                      </Text>
-                      <Text
-                          //onPress={() => this.props.navigation.navigate('Password')}
-                          style={s.textLink}
-                      >{"I forgot my password"}
-                      </Text>
-                      <Text
-                          //onPress={() => this.props.navigation.navigate('Confirm  ')}
-                          style={s.textLink}
-                      >{"Resend my confirmation email"}
-                      </Text>
-                      <Text 
-                          onPress={() => {
-                              this.props.loginLater()
-                              this.props.navigation.navigate('Map')
-                          }} 
-                          style={s.textLink}
-                      >{"skip logging in for now"}
-                      </Text>
-                  </View>
-              </View>
-          </ImageBackground>
-      )
-  }
+    render() {
+        return (
+            <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>
+                <View style={s.mask}>
+                    <View style={s.padding_5}>
+                        {this.state.errors && 
+                            <Text style={s.errorText}>
+                                {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                            </Text>
+                        }
+                        <Text style={s.bold}>Log In</Text>
+                        <Input
+                            placeholder='Username or Email'
+                            leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                            onChangeText={login => this.setState({login})}
+                            value={this.state.login}
+                            errorStyle={{ color: 'red' }}
+                            errorMessage={this.state.loginError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            spellCheck={false}
+                        />
+                        <Input 
+                            placeholder='Password'
+                            leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                            onChangeText={password => this.setState({password})}
+                            value={this.state.password}
+                            errorStyle={{ color: 'red' }}
+                            errorMessage={this.state.passwordError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            secureTextEntry={true}
+                            spellCheck={false}
+                        />
+                        <Button
+                            onPress={() => this.submit()}
+                            raised
+                            buttonStyle={s.buttonStyle}
+                            titleStyle={{
+                                color:"black", 
+                                fontSize:18
+                            }}
+                            containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
+                            style={{borderRadius: 50}}
+                            title="Log In"
+                            accessibilityLabel="Log In"
+                            disabled={!this.state.login || !this.state.password}
+                            disabledStyle={{borderRadius:50}}
+                        />
+                        <Text
+                            onPress={() => this.props.navigation.navigate('Signup')}
+                            style={s.textLink}
+                        >{"Not a user? SIGN UP!"}
+                        </Text>
+                        <Text
+                            style={s.textLink}
+                        >{"I forgot my password"}
+                        </Text>
+                        <Text
+                            style={s.textLink}
+                        >{"Resend my confirmation email"}
+                        </Text>
+                        <Text 
+                            onPress={() => {
+                                this.props.loginLater()
+                                this.props.navigation.navigate('Map')
+                            }} 
+                            style={s.textLink}
+                        >{"skip logging in for now"}
+                        </Text>
+                    </View>
+                </View>
+            </ImageBackground>
+        )
+    }
 }
 
 const s = StyleSheet.create({
@@ -177,7 +176,8 @@ const s = StyleSheet.create({
     buttonStyle: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        elevation: 0
     }
 })
 
