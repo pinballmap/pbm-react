@@ -5,6 +5,7 @@ import locations from './locations'
 import machines from './machines'
 import user from './user'
 import operators from './operators'
+import error from './error'
 
 export default combineReducers({
     query,
@@ -13,4 +14,5 @@ export default combineReducers({
     machines,
     user,
     operators,
+    error
 })

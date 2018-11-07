@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import RemoveMachineModal from './RemoveMachineModal'
+import { RemoveMachineModal } from './'
 
 class RemoveMachine extends Component {
     state = { showModal: false }
@@ -15,9 +15,9 @@ class RemoveMachine extends Component {
                 {this.props.user.loggedIn && 
                     <FontAwesome 
                         name='trash' 
-                        size={20}
+                        size={30}
                         color={'red'}
-                        style={{ marginRight: 25 }}
+                        style={{ marginRight: 20 }}
                         onPress={() => this.setState({showModal: true})}
                     />
                 }
