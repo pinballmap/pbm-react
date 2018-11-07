@@ -14,7 +14,6 @@ import Signup from '../screens/Signup.js'
 import SignupLogin from '../screens/SignupLogin.js'
 import UserProfile from '../screens/UserProfile.js'
 import MachineDetails from '../screens/MachineDetails.js'
-import AddMachine from '../screens/AddMachine.js'
 import Podcast from '../screens/Podcast.js'
 import FAQ from '../screens/FAQ.js'
 import About from '../screens/About.js'
@@ -22,6 +21,7 @@ import Contact from '../screens/Contact.js'
 import SuggestLocation from '../screens/SuggestLocation'
 import Events from '../screens/Events'
 import Blog from '../screens/Blog'
+import FindMachine from '../screens/FindMachine'
 
 const TabNav = TabNavigator({
     Map: { screen: Map },
@@ -48,22 +48,22 @@ const TabNav = TabNavigator({
             }
         },
         tabBarLabel: ({ focused, tintColor }) => {
-            const { routeName } = navigation.state;
-            let label;
+            const { routeName } = navigation.state
+            let label
             switch(routeName) {
-              case 'Map':
+            case 'Map':
                 return label = focused ? <Text style={s.activeTabText}>Map</Text> : <Text style={s.inactiveTabText}>Map</Text>
-              case 'Saved':
+            case 'Saved':
                 return label = focused ? <Text style={s.activeTabText}>Saved</Text> : <Text style={s.inactiveTabText}>Saved</Text>
-              case 'Activity':
+            case 'Activity':
                 return label = focused ? <Text style={s.activeTabText}>Activity</Text> : <Text style={s.inactiveTabText}>Activity</Text>
-              case 'Profile':
+            case 'Profile':
                 return label = focused ? <Text style={s.activeTabText}>Profile</Text> : <Text style={s.inactiveTabText}>Profile</Text>
-              case 'Menu':
+            case 'Menu':
                 return label = null
             }
             return label
-          },
+        },
         tabBarOnPress: (e) => {
             if (navigation.state.key === "Menu")
                 navigation.navigate('DrawerToggle')
@@ -102,7 +102,6 @@ export const MapStack = StackNavigator({
     Login: { screen: Login, },
     FilterMap: { screen: FilterMap, },
     MachineDetails: { screen: MachineDetails },
-    AddMachine: { screen: AddMachine, },
     SuggestLocation: { screen: SuggestLocation },
     Events: { screen: Events },
     Contact: { screen: Contact },
@@ -110,6 +109,7 @@ export const MapStack = StackNavigator({
     Blog: { screen: Blog },
     About: { screen: About },
     Podcast: { screen: Podcast },
+    FindMachine: { screen: FindMachine },
 })
 
 export const PbmStack = DrawerNavigator({

@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { fetchLocation } from '../actions/location_actions'
 import { closeConfirmModal, confirmLocationIsUpToDate, setCurrentMachine } from '../actions/location_actions'
+import { clearError } from '../actions/error_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
@@ -48,13 +49,18 @@ class LocationDetails extends Component {
         }
         this.props.confirmLocationIsUpToDate(body, id, username)
     }
+
+    UNSAFE_componentWillReceiveProps(props) {
+        if (this.props.location.addingMachineToLocation && !props.location.addingMachineToLocation)
+            this.props.fetchLocation(this.state.id)
+    }
             
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
     }
 
     render() {
-        if (this.props.location.isFetchingLocation || !this.props.location.location.id) {
+        if (this.props.location.isFetchingLocation || !this.props.location.location.id || this.props.location.addingMachineToLocation) {
             return (
                 <View style={{ flex: 1, padding: 20 }}>
                     <ActivityIndicator />
@@ -63,9 +69,22 @@ class LocationDetails extends Component {
         }
 
         const location = this.props.location.location
+        const { errorText } = this.props.error
+        const errorModalVisible = errorText && errorText.length > 0 ? true : false
 
         return (
             <ScrollView style={{ flex: 1 }}>
+                <Modal 
+                    visible={errorModalVisible}
+                >
+                    <View style={{marginTop: 100}}>
+                        <Text>{errorText}</Text>
+                        <Button 
+                            title={"OK"}
+                            onPress={this.props.clearError}
+                        />
+                    </View>
+                </Modal>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -128,9 +147,9 @@ class LocationDetails extends Component {
                                 {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <Button
-                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('AddMachine') : this.props.navigation.navigate('Login') }
+                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                        title={(this.props.user.loggedIn) ? 'Add Machine' : 'Login to Add Machine'}
+                                        title={this.props.user.loggedIn ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                         raised
                                         buttonStyle={s.addButton}
@@ -171,7 +190,7 @@ class LocationDetails extends Component {
                                                     subtitle={
                                                         <View style={s.condition}>
                                                             {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}"</Text>}
-                                                            {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by: ${machine.last_updated_by_username}`}`}</Text>}
+                                                            {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
                                                         </View>
                                                     }
                                                     rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -336,13 +355,16 @@ LocationDetails.propTypes = {
     closeConfirmModal: PropTypes.func,
     setCurrentMachine: PropTypes.func,
     navigation: PropTypes.object,
+    clearError: PropTypes.func,
+    error: PropTypes.object,
 }
 
-const mapStateToProps = ({ location, locations, operators, machines, query, user }) => ({ location, locations, operators, machines, query, user})
+const mapStateToProps = ({ error, location, locations, operators, machines, query, user }) => ({ error, location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
     closeConfirmModal: () => dispatch(closeConfirmModal()),
     setCurrentMachine: id => dispatch(setCurrentMachine(id)),
+    clearError: () => dispatch(clearError()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
