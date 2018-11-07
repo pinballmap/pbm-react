@@ -33,7 +33,10 @@ class MachineDetails extends Component {
     
     addCondition = (lmx) => {
         this.props.addMachineCondition(this.state.conditionText, lmx)
-        this.setState({ showAddConditionModal: false })
+        this.setState({ 
+            showAddConditionModal: false, 
+            conditionText: '',
+        })
     }
 
     addScore = (lmx) => {
@@ -69,7 +72,7 @@ class MachineDetails extends Component {
             `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
             `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
 
-        const mostRecentComment = curLmx.machine_conditions[0] ? curLmx.machine_conditions[0] : undefined
+        const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
 
         return (
             <View>
@@ -158,11 +161,19 @@ class MachineDetails extends Component {
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
-                        {mostRecentComment ? 
-                            <Text style={[{marginLeft:20,marginRight:20},s.conditionText]}>{`"${mostRecentComment.comment}"`}</Text> :
+                        {mostRecentComments ? 
+                            mostRecentComments.map(commentObj => {
+                                const { comment, created_at, username } = commentObj
+                                return <ListItem
+                                    key={commentObj.id}
+                                    titleStyle={[{marginLeft:20,marginRight:20},s.conditionText]}
+                                    title={`"${comment}"`}
+                                    subtitle={`Updated on ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
+                                    subtitleStyle={{marginTop:5,marginLeft:25,marginRight:20}}
+                                /> 
+                            }) :
                             <Text style={s.noneYet}>No machine condition added yet</Text>
                         }
-                        {mostRecentComment && <Text style={{marginTop:5,marginLeft:25,marginRight:20}}>{`Updated on ${moment(mostRecentComment.created_at).format('MMM-DD-YYYY')} ${mostRecentComment.username ? `by ${mostRecentComment.username}` : ''}`}</Text>}
                     </View>
                     <Button 
                         title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
