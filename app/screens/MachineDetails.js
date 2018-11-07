@@ -69,6 +69,8 @@ class MachineDetails extends Component {
             `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
             `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
 
+        const mostRecentComment = curLmx.machine_conditions[0] ? curLmx.machine_conditions[0] : undefined
+
         return (
             <View>
                 <Modal
@@ -156,11 +158,11 @@ class MachineDetails extends Component {
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
-                        {curLmx.condition ? 
-                            <Text style={[{marginLeft:20,marginRight:20},s.conditionText]}>"{curLmx.condition}"</Text> :
+                        {mostRecentComment ? 
+                            <Text style={[{marginLeft:20,marginRight:20},s.conditionText]}>{`"${mostRecentComment.comment}"`}</Text> :
                             <Text style={s.noneYet}>No machine condition added yet</Text>
                         }
-                        {curLmx.condition_date && <Text style={{marginTop:5,marginLeft:25,marginRight:20}}>{`Updated on ${moment(curLmx.condition_date).format('MMM-DD-YYYY')} ${curLmx.user_id ? `by ${curLmx.user_id}` : ''}`}</Text>}
+                        {mostRecentComment && <Text style={{marginTop:5,marginLeft:25,marginRight:20}}>{`Updated on ${moment(mostRecentComment.created_at).format('MMM-DD-YYYY')} ${mostRecentComment.username ? `by ${mostRecentComment.username}` : ''}`}</Text>}
                     </View>
                     <Button 
                         title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
