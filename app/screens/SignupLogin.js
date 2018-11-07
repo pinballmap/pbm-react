@@ -66,6 +66,8 @@ export class SignupLogin extends Component {
                         titleStyle={s.titleStyle}
                         title="Enable Location Services"
                         accessibilityLabel="Enable Location Services"
+                        containerStyle={{borderRadius:50}}
+                        style={{borderRadius: 50}}
                     />                    
                 </View>
             </View>
@@ -103,6 +105,8 @@ export class SignupLogin extends Component {
                           titleStyle={s.titleStyle}
                           title="Current User? Log In"
                           accessibilityLabel="Log In"
+                          containerStyle={{borderRadius:50}}
+                          style={{borderRadius: 50}}
                       />
                       <Button
                           onPress={() => this.props.navigation.navigate('Signup')}
@@ -111,6 +115,8 @@ export class SignupLogin extends Component {
                           titleStyle={s.titleStyle}
                           title="New User? Sign Up"
                           accessibilityLabel="Sign Up"
+                          containerStyle={{borderRadius:50,marginTop:15,marginBottom:25}}
+                          style={{borderRadius: 50}}
                       />
                       <Text 
                           onPress={() => {
@@ -165,12 +171,12 @@ const s = StyleSheet.create({
     buttonPink: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
-        marginTop: 15,
-        marginBottom: 25
+        elevation: 0
     },
     buttonBlue: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
+        elevation: 0
     },
     titleStyle: {
         color:"black",

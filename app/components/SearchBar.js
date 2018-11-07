@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native'
-import { Button} from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Autocomplete from 'react-native-autocomplete-input'
@@ -48,21 +48,15 @@ class SearchBar extends Component {
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
                     style={s.searchBox}
+                    underlineColorAndroid='transparent'
+                    selectionColor='#000000'
+                    containerStyle={{borderWidth: 0}}
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
                             <Text style={s.autoComplete}>{item.label}</Text>
                         </TouchableOpacity>
                     )}
-                />
-                <FontAwesome 
-                    name='location-arrow' 
-                    size={20}
-                    style={s.location}
-                    onPress={() => {
-                        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
-                        this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
-                    }}
                 />
                 <Button
                     onPress={() => Geocode.fromAddress(this.props.query.currQueryString).then(
@@ -76,11 +70,21 @@ class SearchBar extends Component {
                         }
                     )
                     }
-                    style={{width:30}}
+                    containerStyle={{width:30,marginLeft:-30,marginTop:5}}
                     title=""
                     accessibilityLabel=""
                     icon={<MaterialIcons name='search' size={25} />}
                     buttonStyle={s.addButton}
+                    clear
+                />
+                <FontAwesome 
+                    name='location-arrow' 
+                    size={20}
+                    style={s.location}
+                    onPress={() => {
+                        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
+                        this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
+                    }}
                 />
             </View>
         )
@@ -102,7 +106,7 @@ const s = StyleSheet.create({
         padding: 5
     },
     location: {
-        marginLeft: -20,
+        marginLeft: 5,
         marginTop: 5,
         color: "#260204"
     }
