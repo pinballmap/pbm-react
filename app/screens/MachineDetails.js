@@ -168,8 +168,8 @@ class MachineDetails extends Component {
                                     key={commentObj.id}
                                     titleStyle={[{marginLeft:20,marginRight:20},s.conditionText]}
                                     title={`"${comment}"`}
-                                    subtitle={`Updated on ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
-                                    subtitleStyle={{marginTop:5,marginLeft:25,marginRight:20}}
+                                    subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
+                                    subtitleStyle={{marginTop:5,marginLeft:20,marginRight:20}}
                                 /> 
                             }) :
                             <Text style={s.noneYet}>No machine condition added yet</Text>
@@ -193,7 +193,7 @@ class MachineDetails extends Component {
         
                             return (
                                 <ListItem
-                                    containerStyle={{paddingLeft:20}}
+                                    containerStyle={{paddingLeft:30}}
                                     key={id}
                                     title={formatNumWithCommas(score)}
                                     subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
