@@ -15,7 +15,7 @@ class MachineDetails extends Component {
         showAddConditionModal: false,
         conditionText: '', 
         showAddScoreModal: false,
-        score: '0',
+        score: '',
         showRemoveMachineModal: false,
     }
     
@@ -87,7 +87,7 @@ class MachineDetails extends Component {
                             numberOfLines={4}
                             onChangeText={conditionText => this.setState({ conditionText })}
                             value={this.state.conditionText}
-                            style={[{padding:5,height: 200},s.textInput]}
+                            style={[{padding:5,height: 100},s.textInput]}
                             placeholder={'Enter machine condition...'}
                         />
                         <Button
@@ -123,7 +123,7 @@ class MachineDetails extends Component {
                             onChangeText={score => this.setState({ score })}
                             value={this.state.score}
                             returnKeyType="done"
-                            placeholder={'0...'}
+                            placeholder={'123...'}
                         />
                         <Button 
                             title={'Add Score'}
@@ -286,11 +286,12 @@ const s = StyleSheet.create({
         color:'#555555'
     },
     textInput: {
-        backgroundColor: '#ffffff', 
+        backgroundColor: '#f6f6f6', 
         borderColor: '#888888', 
-        borderWidth: 1,
-        marginLeft:15,
-        marginRight:15
+        borderWidth: 2,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 5
     }
 })
 
