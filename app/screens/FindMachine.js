@@ -24,10 +24,10 @@ class FindMachine extends Component {
         }
     }
 
-    handleSearch = text => { 
-        const formattedQuery = text.toLowerCase()
+    handleSearch = query => { 
+        const formattedQuery = query.toLowerCase()
         const machines = this.state.allMachines.filter(m => m.name.toLowerCase().includes(formattedQuery))
-        this.setState({ query: formattedQuery, machines })
+        this.setState({ query, machines })
     }
 
     setSelected = machine => {
@@ -100,9 +100,10 @@ class FindMachine extends Component {
                         placeholder='Filter machines...'
                         platform='default'
                         searchIcon={<MaterialIcons name='search' size={25} color="#888888" />}
-                        clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" />}
+                        clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
                         onChangeText={this.handleSearch}
                         inputStyle={{color:'#260204'}}
+                        value={this.state.query}
                     />
                     {sortedMachines.map(machine => (
                         <TouchableOpacity
