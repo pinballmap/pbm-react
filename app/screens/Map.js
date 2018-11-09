@@ -219,9 +219,8 @@ const s = StyleSheet.create({
         color: '#cccccc',
     },
     titleStyle: {
-        color:"black",
+        color:"#260204",
         fontSize:16,
-        fontWeight:"bold"
     }
 })
 
