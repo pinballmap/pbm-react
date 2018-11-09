@@ -316,7 +316,8 @@ const s = StyleSheet.create({
         color: '#888888',
         fontSize: 14,
         fontStyle: 'italic',
-        marginLeft: 5
+        marginLeft: 5,
+        paddingBottom: 5
     },
     lastUpdated: {
         textAlign: 'center',
