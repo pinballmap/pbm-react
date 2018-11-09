@@ -315,7 +315,8 @@ const s = StyleSheet.create({
     conditionText: {
         color: '#888888',
         fontSize: 14,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        marginLeft: 5
     },
     lastUpdated: {
         textAlign: 'center',

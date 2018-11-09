@@ -166,10 +166,10 @@ class MachineDetails extends Component {
                                 const { comment, created_at, username } = commentObj
                                 return <ListItem
                                     key={commentObj.id}
-                                    titleStyle={[{marginLeft:20,marginRight:20},s.conditionText]}
+                                    titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
                                     title={`"${comment}"`}
                                     subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
-                                    subtitleStyle={{marginTop:5,marginLeft:20,marginRight:20}}
+                                    subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15}}
                                 /> 
                             }) :
                             <Text style={s.noneYet}>No machine condition added yet</Text>

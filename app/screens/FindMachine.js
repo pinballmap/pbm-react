@@ -100,7 +100,7 @@ class FindMachine extends Component {
                         placeholder='Filter machines...'
                         platform='default'
                         searchIcon={<MaterialIcons name='search' size={25} color="#888888" />}
-                        clearIcon={false}
+                        clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" />}
                         onChangeText={this.handleSearch}
                         inputStyle={{color:'#260204'}}
                     />
