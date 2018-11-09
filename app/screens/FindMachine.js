@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { ListItem, SearchBar, Button } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineToLocation } from '../actions/location_actions'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 class FindMachine extends Component {
     state = {
@@ -52,7 +53,7 @@ class FindMachine extends Component {
     }
 
     getDisplayText = machine => (
-        <Text>
+        <Text style={{fontSize: 16}}>
             <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
@@ -70,24 +71,38 @@ class FindMachine extends Component {
                 <Modal
                     visible={this.state.showModal}
                 >
-                    <View style={{marginTop: 100}}>
-                        <Text>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>
+                    <View style={{paddingTop: 100}}>
+                        <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>
                         <Button 
                             title={'Add'}
                             onPress={this.addMachine}
+                            raised
+                            buttonStyle={s.blueButton}
+                            titleStyle={s.titleStyle}
+                            style={{borderRadius: 50}}
+                            containerStyle={[{borderRadius:50},s.margin15]}
                         />
                         <Button
                             title={'Cancel'}
                             onPress={this.cancelAddMachine}
+                            raised
+                            buttonStyle={s.redButton}
+                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            style={{borderRadius: 50}}
+                            containerStyle={[{borderRadius:50},s.margin15]}                           
                         />
                     </View>
                 </Modal>
                 <ScrollView>
-                    <SearchBar 
+                    <SearchBar
+                        round
+                        lightTheme
+                        placeholder='Filter machines...'
                         platform='default'
-                        searchIcon={false}
-                        clearIcon={false}
+                        searchIcon={<MaterialIcons name='search' size={25} color="#888888" />}
+                        clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" />}
                         onChangeText={this.handleSearch}
+                        inputStyle={{color:'#260204'}}
                     />
                     {sortedMachines.map(machine => (
                         <TouchableOpacity
@@ -103,6 +118,38 @@ class FindMachine extends Component {
             </View>)
     }
 }
+
+const s = StyleSheet.create({
+    blueButton: {
+        backgroundColor:"#D3ECFF",
+        borderRadius: 50,
+        width: '100%',
+        elevation: 0
+    },
+    redButton: {
+        backgroundColor:"#F53240",
+        borderRadius: 50,
+        width: '100%',
+        elevation: 0
+    },
+    titleStyle: {
+        color:"black",
+        fontSize:18
+    },
+    margin15: {
+        marginLeft:15,
+        marginRight:15,
+        marginTop:15,
+        marginBottom:15
+    },
+    textInput: {
+        backgroundColor: '#ffffff', 
+        borderColor: '#888888', 
+        borderWidth: 1,
+        marginLeft:15,
+        marginRight:15
+    }
+})
 
 FindMachine.propTypes = {
     machines: PropTypes.object,
