@@ -260,7 +260,8 @@ const s = StyleSheet.create({
     },
     locationMeta: {
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 5
     },
     font18: {
         fontSize: 18
