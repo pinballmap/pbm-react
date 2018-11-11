@@ -43,20 +43,24 @@ const s = StyleSheet.create({
     },
     child: {
         margin: "auto",
-        padding: 10,
     },
     text: {
         fontSize: 16,
-        marginBottom: 10
+        marginBottom: 15,
+        marginLeft: 15,
+        marginRight: 15,
     },
     bold: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginBottom: 10
+        marginBottom: 10,
+        padding: 10,
+        color: "#f5fbff",
+        backgroundColor: "#260204"
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: "#F53240",
+        color: "#D3ECFF",
     },
 })
 
