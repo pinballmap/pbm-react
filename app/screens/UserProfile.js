@@ -132,7 +132,8 @@ const s = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         paddingBottom: 10,
-        color: '#444444'
+        color: '#444444',
+        textAlign: 'center'
     },
     titleStyle: {
         color:"black",
