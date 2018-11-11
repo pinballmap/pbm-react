@@ -127,18 +127,21 @@ export const locationMachineRemoved = (lmx) => {
     }
 }
 
-export const addMachineToLocation = machine_id => (dispatch, getState) => {
+export const addMachineToLocation = (machine_id, condition) => (dispatch, getState) => {
     dispatch({type: ADDING_MACHINE_TO_LOCATION})
     
     const { email, authentication_token } = getState().user
     const { id: location_id } = getState().location.location
-
     const body = {
         user_email: email,
         user_token: authentication_token,
         location_id,
         machine_id,
     }
+
+    if (condition)
+        body.condition = condition
+        
     return postData(`/location_machine_xrefs.json`, body)
         .then(() => {
             dispatch({type: MACHINE_ADDED_TO_LOCATION})
