@@ -97,27 +97,34 @@ class Login extends Component {
                             disabled={!this.state.login || !this.state.password}
                             disabledStyle={{borderRadius:50}}
                         />
-                        <Text
+                        <Button
                             onPress={() => this.props.navigation.navigate('Signup')}
-                            style={s.textLink}
-                        >{"Not a user? SIGN UP!"}
-                        </Text>
-                        <Text
-                            style={s.textLink}
-                        >{"I forgot my password"}
-                        </Text>
-                        <Text
-                            style={s.textLink}
-                        >{"Resend my confirmation email"}
-                        </Text>
-                        <Text 
+                            titleStyle={s.textLink}
+                            containerStyle={{marginBottom: 20}}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            title="Not a user? SIGN UP!"
+                        />              
+                        <Button
+                            title="I forgot my password"
+                            titleStyle={s.textLink}
+                            containerStyle={{marginBottom: 20}}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                        />
+                        <Button
+                            title="Resend my confirmation email"
+                            titleStyle={s.textLink}
+                            containerStyle={{marginBottom: 20}}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                        />                       
+                        <Button 
                             onPress={() => {
                                 this.props.loginLater()
                                 this.props.navigation.navigate('Map')
                             }} 
-                            style={s.textLink}
-                        >{"skip logging in for now"}
-                        </Text>
+                            titleStyle={s.textLink}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            title="skip logging in for now"
+                        />
                     </View>
                 </View>
             </ImageBackground>
@@ -165,7 +172,6 @@ const s = StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: "center",
-        marginBottom: 20,
         fontWeight: "bold",
         color: '#333333',
     },

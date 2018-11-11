@@ -206,19 +206,22 @@ class Signup extends Component {
                             disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
                             disabledStyle={{borderRadius:50}}
                         />
-                        <Text
+                        <Button
                             onPress={() => this.props.navigation.navigate('Login')}
-                            style={s.textLink}
-                        >{"Already a user? LOG IN!"}
-                        </Text>
-                        <Text 
+                            titleStyle={s.textLink}
+                            containerStyle={{marginBottom: 15}}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            title="Already a user? LOG IN!"
+                        />
+                        <Button
                             onPress={() => {
                                 this.props.loginLater()
                                 this.props.navigation.navigate('Map')
                             }} 
-                            style={s.textLink}
-                        >{"skip signing up for now"}
-                        </Text>
+                            titleStyle={s.textLink}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            title="skip signing up for now"
+                        />
                     </View>
                 </View>
             </ImageBackground>
@@ -266,7 +269,6 @@ const s = StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: "center",
-        marginBottom: 15,
         fontWeight: "bold",
         color: '#333333',
     },
