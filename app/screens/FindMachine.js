@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { ListItem, SearchBar, Button } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineToLocation } from '../actions/location_actions'
@@ -15,6 +15,7 @@ class FindMachine extends Component {
         showModal: false,
         machineId: null, 
         machineName: '', 
+        condition: '',
     }
     
     static navigationOptions = ({ navigation }) => {
@@ -39,7 +40,7 @@ class FindMachine extends Component {
     }
 
     addMachine = () => {
-        this.props.addMachineToLocation(this.state.machineId)
+        this.props.addMachineToLocation(this.state.machineId, this.state.condition)
         this.setState({ showModal: false })
         this.props.navigation.goBack()
     }
@@ -49,6 +50,7 @@ class FindMachine extends Component {
             showModal: false,
             machineId: null,
             machineName: '',
+            condition: '',
         })
     }
 
@@ -73,6 +75,14 @@ class FindMachine extends Component {
                 >
                     <View style={{paddingTop: 100}}>
                         <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>
+                        <TextInput
+                            multiline={true}
+                            placeholder={'Machine condition...'}
+                            numberOfLines={4}
+                            style={s.textInput}
+                            value={this.state.condition}
+                            onChangeText={condition => this.setState({ condition })}
+                        /> 
                         <Button 
                             title={'Add'}
                             onPress={this.addMachine}
@@ -147,8 +157,10 @@ const s = StyleSheet.create({
         backgroundColor: '#ffffff', 
         borderColor: '#888888', 
         borderWidth: 1,
+        height: 150,
         marginLeft:15,
-        marginRight:15
+        marginRight:15, 
+        marginTop: 20,
     }
 })
 
@@ -161,6 +173,6 @@ FindMachine.propTypes = {
 
 const mapStateToProps = ({ location, machines }) => ({ location, machines })
 const mapDispatchToProps = (dispatch) => ({
-    addMachineToLocation: (lmx) => dispatch(addMachineToLocation(lmx)),
+    addMachineToLocation: (lmx, condition) => dispatch(addMachineToLocation(lmx, condition)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)
