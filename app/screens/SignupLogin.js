@@ -19,117 +19,119 @@ export class SignupLogin extends Component {
         }
     }
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
 
-  componentDidMount(){
-      getData('/regions/location_and_machine_counts.json')
-          .then(data => {
-              if (data && data.num_lmxes && data.num_locations) {
-                  this.setState({
-                      num_lmxes: data.num_lmxes,
-                      num_locations: data.num_locations,
-                  })
-              } else {
-                  this.setState({
-                      apiError: data
-                  })
-              }
-          })
-          .catch(apiError => this.setState({ apiError }))
-  }
+    componentDidMount(){
+        getData('/regions/location_and_machine_counts.json')
+            .then(data => {
+                if (data && data.num_lmxes && data.num_locations) {
+                    this.setState({
+                        num_lmxes: data.num_lmxes,
+                        num_locations: data.num_locations,
+                    })
+                } else {
+                    this.setState({
+                        apiError: data
+                    })
+                }
+            })
+            .catch(apiError => this.setState({ apiError }))
+    }
 
-  render(){
-      if (this.props.user.isFetchingLocationTrackingEnabled || (this.state.num_lmxes === 0 && !this.state.apiError)) {
-          return <ActivityIndicator />
-      }
-    
-      if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
-          return (
+    render(){
+        if (this.props.user.isFetchingLocationTrackingEnabled || (this.state.num_lmxes === 0 && !this.state.apiError)) {
+            return <ActivityIndicator />
+        }
+        
+        if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
+            return (
+                <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
+                <View style={s.mask}>
+                    <View style={s.logoWrapper}>
+                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                    </View>
+                    <View style={s.outerBorder}>
+                        <View style={s.textBg}>
+                            <Text style={{fontSize:18,textAlign:"center"}}>
+                                To show you pinball machines near you, you’ll need to enable location services for this app.
+                            </Text>
+                        </View>               
+                    </View>
+                    <View style={{padding:15}}>
+                        <Button
+                            //Clear error state to allow user to proceed either way
+                            onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
+                            raised
+                            buttonStyle={s.buttonBlue}
+                            titleStyle={s.titleStyle}
+                            title="Enable Location Services"
+                            accessibilityLabel="Enable Location Services"
+                            containerStyle={{borderRadius:50}}
+                            style={{borderRadius: 50}}
+                        />                    
+                    </View>
+                </View>
+            </ImageBackground>
+            )
+        }
+        
+        return(
             <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-            <View style={s.mask}>
-                <View style={s.logoWrapper}>
-                    <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                <View style={s.mask}>
+                    <View style={s.logoWrapper}>
+                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                    </View>
+                    <View style={s.outerBorder}>
+                        <View style={s.textBg}>
+                            {this.state.apiError ? 
+                                <Text>Oops. Something went wrong!</Text> :
+                                <Text style={{fontSize:18,textAlign:"center"}}>
+                                    <Text>Pinball Map is a user-updated map listing</Text>
+                                    <Text style={s.bold}> {this.state.num_locations} </Text> 
+                                    <Text>locations and</Text>
+                                    <Text style={s.bold}> {this.state.num_lmxes} </Text>
+                                    <Text>machines.</Text>
+                                    {"\n"}{"\n"}
+                                    <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
+                                </Text>
+                            }
+                        </View>
+                    </View>
+                    <View style={{padding:15}}>
+                        <Button
+                            onPress={() => this.props.navigation.navigate('Login')}
+                            raised
+                            buttonStyle={s.buttonBlue}
+                            titleStyle={s.titleStyle}
+                            title="Current User? Log In"
+                            accessibilityLabel="Log In"
+                            containerStyle={{borderRadius:50}}
+                            style={{borderRadius: 50}}
+                        />
+                        <Button
+                            onPress={() => this.props.navigation.navigate('Signup')}
+                            raised
+                            buttonStyle={s.buttonPink}
+                            titleStyle={s.titleStyle}
+                            title="New User? Sign Up"
+                            accessibilityLabel="Sign Up"
+                            containerStyle={{borderRadius:50,marginTop:15,marginBottom:25}}
+                            style={{borderRadius: 50}}
+                        />
+                        <Button                            
+                            onPress={() => {
+                                this.props.loginLater()
+                                this.props.navigation.navigate('Map')}} 
+                            title="skip this for now"
+                            accessibilityLabel="skip this for now"                         
+                            titleStyle={{color:'black',fontSize:14,textAlign:"center"}}
+                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                        />
+                    </View>
                 </View>
-                <View style={s.outerBorder}>
-                    <View style={s.textBg}>
-                        <Text style={{fontSize:18,textAlign:"center"}}>
-                            To show you pinball machines near you, you’ll need to enable location services for this app.
-                        </Text>
-                    </View>               
-                </View>
-                <View style={{padding:15}}>
-                    <Button
-                        //Clear error state to allow user to proceed either way
-                        onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
-                        raised
-                        buttonStyle={s.buttonBlue}
-                        titleStyle={s.titleStyle}
-                        title="Enable Location Services"
-                        accessibilityLabel="Enable Location Services"
-                        containerStyle={{borderRadius:50}}
-                        style={{borderRadius: 50}}
-                    />                    
-                </View>
-            </View>
-        </ImageBackground>
-          )
-      }
-    
-      return(
-          <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-              <View style={s.mask}>
-                  <View style={s.logoWrapper}>
-                      <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
-                  </View>
-                  <View style={s.outerBorder}>
-                      <View style={s.textBg}>
-                          {this.state.apiError ? 
-                              <Text>Oops. Something went wrong!</Text> :
-                              <Text style={{fontSize:18,textAlign:"center"}}>
-                                  <Text>Pinball Map is a user-updated map listing</Text>
-                                  <Text style={s.bold}> {this.state.num_locations} </Text> 
-                                  <Text>locations and</Text>
-                                  <Text style={s.bold}> {this.state.num_lmxes} </Text>
-                                  <Text>machines.</Text>
-                                  {"\n"}{"\n"}
-                                  <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
-                              </Text>
-                          }
-                      </View>
-                  </View>
-                  <View style={{padding:15}}>
-                      <Button
-                          onPress={() => this.props.navigation.navigate('Login')}
-                          raised
-                          buttonStyle={s.buttonBlue}
-                          titleStyle={s.titleStyle}
-                          title="Current User? Log In"
-                          accessibilityLabel="Log In"
-                          containerStyle={{borderRadius:50}}
-                          style={{borderRadius: 50}}
-                      />
-                      <Button
-                          onPress={() => this.props.navigation.navigate('Signup')}
-                          raised
-                          buttonStyle={s.buttonPink}
-                          titleStyle={s.titleStyle}
-                          title="New User? Sign Up"
-                          accessibilityLabel="Sign Up"
-                          containerStyle={{borderRadius:50,marginTop:15,marginBottom:25}}
-                          style={{borderRadius: 50}}
-                      />
-                      <Text 
-                          onPress={() => {
-                              this.props.loginLater()
-                              this.props.navigation.navigate('Map')}} 
-                          style={{fontSize:14,textAlign:"center"}}
-                      >{"skip this for now"}
-                      </Text>
-                  </View>
-              </View>
-          </ImageBackground>
-      )
-  }
+            </ImageBackground>
+        )
+    }
 }
 
 const s = StyleSheet.create({
