@@ -29,7 +29,7 @@ class MachineDetails extends Component {
 
     cancelAddCondition = () => this.setState({ showAddConditionModal: false, conditionText: '' })
 
-    cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '0' })
+    cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '' })
     
     addCondition = (lmx) => {
         this.props.addMachineCondition(this.state.conditionText, lmx)
@@ -81,7 +81,7 @@ class MachineDetails extends Component {
                     transparent={false}
                     visible={this.state.showAddConditionModal}
                 >
-                    <ScrollView style={{paddingTop: 100}}>
+                    <ScrollView style={{paddingTop: 80}}>
                         <TextInput
                             multiline={true}
                             numberOfLines={4}
@@ -98,14 +98,14 @@ class MachineDetails extends Component {
                             buttonStyle={s.blueButton}
                             titleStyle={s.titleStyle}
                             style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
+                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
                         />
                         <Button
                             title={'Cancel'}
                             onPress={this.cancelAddCondition}
                             raised
                             buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={[{borderRadius:50},s.margin15]}
                         />
@@ -132,14 +132,14 @@ class MachineDetails extends Component {
                             buttonStyle={s.blueButton}
                             titleStyle={s.titleStyle}
                             style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
+                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
                         />
                         <Button 
                             title={'Cancel'}
                             onPress={this.cancelAddScore}
                             raised
                             buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={[{borderRadius:50},s.margin15]}
                         />
@@ -231,7 +231,7 @@ class MachineDetails extends Component {
                         }
                         raised
                         buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#ffffff'}}
+                        titleStyle={{fontSize:18,color:'#f53240'}}
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
@@ -255,7 +255,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     redButton: {
-        backgroundColor:"#F53240",
+        backgroundColor: "#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0
