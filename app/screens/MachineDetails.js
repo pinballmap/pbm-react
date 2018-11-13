@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { RemoveMachine, RemoveMachineModal }  from '../components'
+import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
+
+let deviceWidth = Dimensions.get('window').width
 
 class MachineDetails extends Component {
     state = {
@@ -23,6 +26,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
+            headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />
         }
     }
@@ -153,7 +157,7 @@ class MachineDetails extends Component {
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')}
+                            () => this.props.navigation.navigate('Login')}
                         raised
                         buttonStyle={s.blueButton}
                         titleStyle={s.titleStyle}
@@ -179,7 +183,7 @@ class MachineDetails extends Component {
                         title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddScoreModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')
+                            () => this.props.navigation.navigate('Login')
                         }
                         raised
                         buttonStyle={s.blueButton}
@@ -209,8 +213,10 @@ class MachineDetails extends Component {
                         buttonStyle={s.externalLink}
                         titleStyle={{
                             color:"black", 
-                            fontSize:18
+                            fontSize:16
                         }}
+                        iconRight
+                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                         containerStyle={s.margin15}
                     />
                     <Button
@@ -219,15 +225,17 @@ class MachineDetails extends Component {
                         buttonStyle={s.externalLink}
                         titleStyle={{
                             color:"black", 
-                            fontSize:18
+                            fontSize:16
                         }}
+                        iconRight
+                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                         containerStyle={s.margin15}
                     />
                     <Button 
                         title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
                         onPress={loggedIn ? 
                             () => this.setState({ showRemoveMachineModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')
+                            () => this.props.navigation.navigate('Login')
                         }
                         raised
                         buttonStyle={s.redButton}
@@ -247,6 +255,9 @@ const s = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#888888',
         borderRadius: 5
+    },
+    externalIcon: {
+        fontSize: 24
     },
     blueButton: {
         backgroundColor:"#D3ECFF",
@@ -292,7 +303,7 @@ const s = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         borderRadius: 5
-    }
+    },
 })
 
 MachineDetails.propTypes = {
