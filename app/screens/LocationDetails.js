@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
@@ -13,6 +13,8 @@ import { clearError } from '../actions/error_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
+
+let deviceWidth = Dimensions.get('window').width
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
+            headerTitleStyle: {width:deviceWidth - 100}
         }
     };
 
