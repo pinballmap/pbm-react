@@ -25,11 +25,6 @@ class Login extends Component {
 
     static navigationOptions = { header: null };
     
-    handleUnhandledTouches(){
-        Keyboard.dismiss
-        return false;
-      }
-      
     submit = () => {
         this.setState({
             errors: false,
