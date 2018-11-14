@@ -16,7 +16,7 @@ class RemoveMachineModal extends Component {
     
         return(
             <Modal>
-                <View style={{marginTop: 100}}>
+                <View style={{marginTop: 50}}>
                     {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
                     <Button 
                         title={'Yes, Remove It'}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView, Dimensions } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
@@ -10,6 +10,8 @@ import { RemoveMachine, RemoveMachineModal }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
+
+var DismissKeyboard = require('dismissKeyboard');
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -85,69 +87,75 @@ class MachineDetails extends Component {
                     transparent={false}
                     visible={this.state.showAddConditionModal}
                 >
-                    <ScrollView style={{paddingTop: 80}}>
-                        <TextInput
-                            multiline={true}
-                            numberOfLines={4}
-                            onChangeText={conditionText => this.setState({ conditionText })}
-                            value={this.state.conditionText}
-                            style={[{padding:5,height: 100},s.textInput]}
-                            placeholder={'Enter machine condition...'}
-                        />
-                        <Button
-                            title={'Add Condition'}
-                            disabled={this.state.conditionText.length === 0}
-                            onPress={() => this.addCondition(curLmx.id)}
-                            raised
-                            buttonStyle={s.blueButton}
-                            titleStyle={s.titleStyle}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
-                        />
-                        <Button
-                            title={'Cancel'}
-                            onPress={this.cancelAddCondition}
-                            raised
-                            buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#f53240'}}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
-                        />
-                    </ScrollView>
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <View style={{paddingTop: 50}}>
+                            {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${this.props.machineName} at ${location.name}?`}</Text>}
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={4}
+                                onChangeText={conditionText => this.setState({ conditionText })}
+                                value={this.state.conditionText}
+                                style={[{padding:5,height: 100},s.textInput]}
+                                placeholder={'Enter machine condition...'}
+                            />
+                            <Button
+                                title={'Add Condition'}
+                                disabled={this.state.conditionText.length === 0}
+                                onPress={() => this.addCondition(curLmx.id)}
+                                raised
+                                buttonStyle={s.blueButton}
+                                titleStyle={s.titleStyle}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
+                            />
+                            <Button
+                                title={'Cancel'}
+                                onPress={this.cancelAddCondition}
+                                raised
+                                buttonStyle={s.redButton}
+                                titleStyle={{fontSize:18,color:'#f53240'}}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </Modal>
                 <Modal
                     animationType="slide"
                     transparent={false}
                     visible={this.state.showAddScoreModal}
                 >
-                    <View style={{paddingTop: 100}}>
-                        <TextInput 
-                            style={[{height: 40,textAlign:'center'},s.textInput]}
-                            keyboardType='numeric'
-                            onChangeText={score => this.setState({ score })}
-                            value={this.state.score}
-                            returnKeyType="done"
-                            placeholder={'123...'}
-                        />
-                        <Button 
-                            title={'Add Score'}
-                            onPress={() => this.addScore(curLmx.id)}
-                            raised
-                            buttonStyle={s.blueButton}
-                            titleStyle={s.titleStyle}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
-                        />
-                        <Button 
-                            title={'Cancel'}
-                            onPress={this.cancelAddScore}
-                            raised
-                            buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#f53240'}}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
-                        />
-                    </View>
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <View style={{paddingTop: 100}}>
+                            <TextInput 
+                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                keyboardType='numeric'
+                                onChangeText={score => this.setState({ score })}
+                                value={this.state.score}
+                                returnKeyType="done"
+                                placeholder={'123...'}
+                            />
+                            <Button 
+                                title={'Add Score'}
+                                disabled={this.state.score.length === 0}
+                                onPress={() => this.addScore(curLmx.id)}
+                                raised
+                                buttonStyle={s.blueButton}
+                                titleStyle={s.titleStyle}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
+                            />
+                            <Button 
+                                title={'Cancel'}
+                                onPress={this.cancelAddScore}
+                                raised
+                                buttonStyle={s.redButton}
+                                titleStyle={{fontSize:18,color:'#f53240'}}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </Modal>
                 {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                 <ScrollView>
