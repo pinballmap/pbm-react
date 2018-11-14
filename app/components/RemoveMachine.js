@@ -17,7 +17,7 @@ class RemoveMachine extends Component {
                         name='trash' 
                         size={30}
                         color={'red'}
-                        style={{ marginRight: 20 }}
+                        style={{ marginRight: 10 }}
                         onPress={() => this.setState({showModal: true})}
                     />
                 }

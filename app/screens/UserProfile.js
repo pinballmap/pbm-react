@@ -40,7 +40,7 @@ class UserProfile extends Component {
                               onPress={() => {
                                   this.setModalVisible(false)
                                   this.props.logout()
-                                  this.props.navigation.navigate('SignupLogin')
+                                  this.props.navigation.navigate('Login')
                               }}
                               accessibilityLabel="Logout"
                               raised

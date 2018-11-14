@@ -32,7 +32,7 @@ class RemoveMachineModal extends Component {
                         onPress={() => this.props.closeModal()}
                         raised
                         buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#ffffff'}}
+                        titleStyle={{fontSize:18,color:'#f53240'}}
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
@@ -51,7 +51,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     redButton: {
-        backgroundColor:"#F53240",
+        backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0

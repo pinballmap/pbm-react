@@ -111,16 +111,15 @@ class FilterMap extends Component {
 
 const s = StyleSheet.create({
     pageTitle: {
-        backgroundColor: "#FFFFFF",
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomWidth: 2,
-        borderBottomColor: "#F53240"
+        backgroundColor: "#260204"
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: "bold",
+        color: "#f5fbff"
     },
     border: {
         borderWidth: 2,

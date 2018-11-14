@@ -73,16 +73,8 @@ class FindMachine extends Component {
                 <Modal
                     visible={this.state.showModal}
                 >
-                    <View style={{paddingTop: 100}}>
-                        <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>
-                        <TextInput
-                            multiline={true}
-                            placeholder={'Machine condition...'}
-                            numberOfLines={4}
-                            style={s.textInput}
-                            value={this.state.condition}
-                            onChangeText={condition => this.setState({ condition })}
-                        /> 
+                    <ScrollView style={{paddingTop: 100}}>
+                        <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
                         <Button 
                             title={'Add'}
                             onPress={this.addMachine}
@@ -97,11 +89,19 @@ class FindMachine extends Component {
                             onPress={this.cancelAddMachine}
                             raised
                             buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={[{borderRadius:50},s.margin15]}                           
                         />
-                    </View>
+                        <TextInput
+                            multiline={true}
+                            placeholder={'You can also include a machine comment...'}
+                            numberOfLines={4}
+                            style={[{padding:5,height: 100},s.textInput]}
+                            value={this.state.condition}
+                            onChangeText={condition => this.setState({ condition })}
+                        />
+                    </ScrollView>
                 </Modal>
                 <ScrollView>
                     <SearchBar
@@ -138,7 +138,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     redButton: {
-        backgroundColor:"#F53240",
+        backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0
@@ -154,13 +154,14 @@ const s = StyleSheet.create({
         marginBottom:15
     },
     textInput: {
-        backgroundColor: '#ffffff', 
+        backgroundColor: '#f6f6f6', 
         borderColor: '#888888', 
         borderWidth: 1,
-        height: 150,
-        marginLeft:15,
-        marginRight:15, 
+        height: 80,
+        marginLeft:25,
+        marginRight:25, 
         marginTop: 20,
+        borderRadius: 5
     }
 })
 
