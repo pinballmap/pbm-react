@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView } from 'react-native'
+import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { RemoveMachine, RemoveMachineModal }  from '../components'
+import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
+
+let deviceWidth = Dimensions.get('window').width
 
 class MachineDetails extends Component {
     state = {
@@ -23,13 +26,14 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
+            headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />
         }
     }
 
     cancelAddCondition = () => this.setState({ showAddConditionModal: false, conditionText: '' })
 
-    cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '0' })
+    cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '' })
     
     addCondition = (lmx) => {
         this.props.addMachineCondition(this.state.conditionText, lmx)
@@ -81,7 +85,7 @@ class MachineDetails extends Component {
                     transparent={false}
                     visible={this.state.showAddConditionModal}
                 >
-                    <ScrollView style={{paddingTop: 100}}>
+                    <ScrollView style={{paddingTop: 80}}>
                         <TextInput
                             multiline={true}
                             numberOfLines={4}
@@ -98,14 +102,14 @@ class MachineDetails extends Component {
                             buttonStyle={s.blueButton}
                             titleStyle={s.titleStyle}
                             style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
+                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
                         />
                         <Button
                             title={'Cancel'}
                             onPress={this.cancelAddCondition}
                             raised
                             buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={[{borderRadius:50},s.margin15]}
                         />
@@ -132,14 +136,14 @@ class MachineDetails extends Component {
                             buttonStyle={s.blueButton}
                             titleStyle={s.titleStyle}
                             style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
+                            containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
                         />
                         <Button 
                             title={'Cancel'}
                             onPress={this.cancelAddScore}
                             raised
                             buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#ffffff'}}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={[{borderRadius:50},s.margin15]}
                         />
@@ -153,7 +157,7 @@ class MachineDetails extends Component {
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')}
+                            () => this.props.navigation.navigate('Login')}
                         raised
                         buttonStyle={s.blueButton}
                         titleStyle={s.titleStyle}
@@ -179,7 +183,7 @@ class MachineDetails extends Component {
                         title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddScoreModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')
+                            () => this.props.navigation.navigate('Login')
                         }
                         raised
                         buttonStyle={s.blueButton}
@@ -209,8 +213,10 @@ class MachineDetails extends Component {
                         buttonStyle={s.externalLink}
                         titleStyle={{
                             color:"black", 
-                            fontSize:18
+                            fontSize:16
                         }}
+                        iconRight
+                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                         containerStyle={s.margin15}
                     />
                     <Button
@@ -219,19 +225,21 @@ class MachineDetails extends Component {
                         buttonStyle={s.externalLink}
                         titleStyle={{
                             color:"black", 
-                            fontSize:18
+                            fontSize:16
                         }}
+                        iconRight
+                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                         containerStyle={s.margin15}
                     />
                     <Button 
                         title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
                         onPress={loggedIn ? 
                             () => this.setState({ showRemoveMachineModal: true }) :
-                            () => this.props.navigation.navigate('SignupLogin')
+                            () => this.props.navigation.navigate('Login')
                         }
                         raised
                         buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#ffffff'}}
+                        titleStyle={{fontSize:18,color:'#f53240'}}
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
@@ -248,6 +256,9 @@ const s = StyleSheet.create({
         borderColor: '#888888',
         borderRadius: 5
     },
+    externalIcon: {
+        fontSize: 24
+    },
     blueButton: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
@@ -255,7 +266,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     redButton: {
-        backgroundColor:"#F53240",
+        backgroundColor: "#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0
@@ -292,7 +303,7 @@ const s = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         borderRadius: 5
-    }
+    },
 })
 
 MachineDetails.propTypes = {
