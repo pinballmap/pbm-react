@@ -11,7 +11,7 @@ import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
 
-var DismissKeyboard = require('dismissKeyboard');
+var DismissKeyboard = require('dismissKeyboard')
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -61,7 +61,7 @@ class MachineDetails extends Component {
     }
 
     render() {
-        const { curLmx } = this.props.location   
+        const { curLmx, location } = this.props.location   
 
         if (!curLmx) {
             return (
@@ -79,6 +79,7 @@ class MachineDetails extends Component {
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.length > 0 ? curLmx.machine_score_xrefs.reverse() : undefined
+        const { name: machineName } = this.props.machineDetails
 
         return (
             <View>
@@ -89,7 +90,7 @@ class MachineDetails extends Component {
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
-                            {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${this.props.machineName} at ${location.name}?`}</Text>}
+                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}?`}</Text>
                             <TextInput
                                 multiline={true}
                                 numberOfLines={4}
@@ -127,6 +128,7 @@ class MachineDetails extends Component {
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 100}}>
+                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}?`}</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
                                 keyboardType='numeric'
