@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ListItem, SearchBar, Button } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineToLocation } from '../actions/location_actions'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+
+var DismissKeyboard = require('dismissKeyboard');
 
 class FindMachine extends Component {
     state = {
@@ -73,35 +75,37 @@ class FindMachine extends Component {
                 <Modal
                     visible={this.state.showModal}
                 >
-                    <ScrollView style={{paddingTop: 100}}>
-                        <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
-                        <Button 
-                            title={'Add'}
-                            onPress={this.addMachine}
-                            raised
-                            buttonStyle={s.blueButton}
-                            titleStyle={s.titleStyle}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}
-                        />
-                        <Button
-                            title={'Cancel'}
-                            onPress={this.cancelAddMachine}
-                            raised
-                            buttonStyle={s.redButton}
-                            titleStyle={{fontSize:18,color:'#f53240'}}
-                            style={{borderRadius: 50}}
-                            containerStyle={[{borderRadius:50},s.margin15]}                           
-                        />
-                        <TextInput
-                            multiline={true}
-                            placeholder={'You can also include a machine comment...'}
-                            numberOfLines={4}
-                            style={[{padding:5,height: 100},s.textInput]}
-                            value={this.state.condition}
-                            onChangeText={condition => this.setState({ condition })}
-                        />
-                    </ScrollView>
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <View style={{paddingTop: 50}}>
+                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
+                            <Button 
+                                title={'Add'}
+                                onPress={this.addMachine}
+                                raised
+                                buttonStyle={s.blueButton}
+                                titleStyle={s.titleStyle}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}
+                            />
+                            <Button
+                                title={'Cancel'}
+                                onPress={this.cancelAddMachine}
+                                raised
+                                buttonStyle={s.redButton}
+                                titleStyle={{fontSize:18,color:'#f53240'}}
+                                style={{borderRadius: 50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}                           
+                            />
+                            <TextInput
+                                multiline={true}
+                                placeholder={'You can also include a machine comment...'}
+                                numberOfLines={4}
+                                style={[{padding:5,height: 100},s.textInput]}
+                                value={this.state.condition}
+                                onChangeText={condition => this.setState({ condition })}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </Modal>
                 <ScrollView>
                     <SearchBar
@@ -158,8 +162,8 @@ const s = StyleSheet.create({
         borderColor: '#888888', 
         borderWidth: 1,
         height: 80,
-        marginLeft:25,
-        marginRight:25, 
+        marginLeft:20,
+        marginRight:20, 
         marginTop: 20,
         borderRadius: 5
     }
