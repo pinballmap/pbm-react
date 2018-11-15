@@ -69,10 +69,7 @@ class UserProfile extends Component {
                               accessibilityLabel="Logout"
                               raised
                               buttonStyle={s.logoutButton}
-                              titleStyle={{
-                                  color:"white", 
-                                  fontSize:18
-                              }}
+                              titleStyle={{fontSize:18,color:'#f53240'}}
                               style={{borderRadius: 50}}
                               containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                           />
@@ -132,10 +129,7 @@ class UserProfile extends Component {
                           accessibilityLabel="Logout"
                           raised
                           buttonStyle={s.logoutButton}
-                          titleStyle={{
-                              color:"white", 
-                              fontSize:18
-                          }}
+                          titleStyle={{fontSize:18,color:'#f53240'}}
                           style={{borderRadius: 50}}
                           containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
                       /> 
@@ -162,7 +156,7 @@ class UserProfile extends Component {
 
 const s = StyleSheet.create({
     logoutButton: {
-        backgroundColor:"#F53240",
+        backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0

@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, View, ImageBackground, StyleSheet } from 'react-native'
+import { Text, View, ImageBackground, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+
+var DismissKeyboard = require('dismissKeyboard');
 
 class Signup extends Component {
     constructor(props) {
@@ -137,92 +139,94 @@ class Signup extends Component {
         return (
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                 <View style={s.mask}>
-                    <View style={s.padding_5}>
-                        {this.state.errors && 
-                <Text style={s.errorText}>
-                    {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-                </Text>
-                        }
-                        <Text style={s.bold}>Sign Up</Text>
-                        <Input 
-                            placeholder='Username'
-                            leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                            onChangeText={username => this.setState({username})}
-                            value={this.state.username}
-                            errorStyle={{ color : 'red' }}
-                            errorMessage={this.state.usernameError}
-                            inputContainerStyle={s.inputBox}
-                            inputStyle={s.inputText}
-                            spellCheck = {false}
-                        />
-                        <Input 
-                            placeholder="Email Address" 
-                            leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
-                            onChangeText={email => this.setState({email})}
-                            value={this.state.value}
-                            errorStyle={{ color : 'red' }}
-                            errorMessage={this.state.emailError}
-                            inputContainerStyle={s.inputBox}
-                            inputStyle={s.inputText}
-                            spellCheck = {false}
-                        />
-                        <Input 
-                            placeholder="Password"
-                            leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                            onChangeText={password => this.setState({password})}
-                            value={this.state.password}
-                            errorStyle={{ color : 'red' }}
-                            errorMessage={this.state.passwordError}
-                            inputContainerStyle={s.inputBox}
-                            inputStyle={s.inputText}
-                            secureTextEntry = {true}
-                            spellCheck = {false}
-                        />
-                        <Input 
-                            placeholder="Confirm Password"
-                            leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                            onChangeText={confirm_password => this.setState({confirm_password})}
-                            value={this.state.confirm_password}
-                            errorStyle={{ color : 'red' }}
-                            errorMessage={this.state.confirm_passwordError}
-                            inputContainerStyle={s.inputBox}
-                            inputStyle={s.inputText}
-                            secureTextEntry = {true}
-                            spellCheck = {false}
-                        />
-                        <Button
-                            onPress={() => this.submit()}
-                            raised
-                            buttonStyle={s.buttonStyle}
-                            titleStyle={{
-                                color:"black", 
-                                fontSize:18
-                            }}
-                            containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
-                            style={{borderRadius: 50}}
-                            rounded
-                            title="Sign Up"
-                            accessibilityLabel="Sign Up"
-                            disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
-                            disabledStyle={{borderRadius:50}}
-                        />
-                        <Button
-                            onPress={() => this.props.navigation.navigate('Login')}
-                            titleStyle={s.textLink}
-                            containerStyle={{marginBottom: 15}}
-                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                            title="Already a user? LOG IN!"
-                        />
-                        <Button
-                            onPress={() => {
-                                this.props.loginLater()
-                                this.props.navigation.navigate('Map')
-                            }} 
-                            titleStyle={s.textLink}
-                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                            title="skip signing up for now"
-                        />
-                    </View>
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <View>
+                            {this.state.errors && 
+                            <Text style={s.errorText}>
+                                {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                            </Text>
+                                }
+                            <Text style={s.bold}>Sign Up</Text>
+                            <Input 
+                                placeholder='Username'
+                                leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                                onChangeText={username => this.setState({username})}
+                                value={this.state.username}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={this.state.usernameError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                spellCheck = {false}
+                            />
+                            <Input 
+                                placeholder="Email Address" 
+                                leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
+                                onChangeText={email => this.setState({email})}
+                                value={this.state.value}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={this.state.emailError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                spellCheck = {false}
+                            />
+                            <Input 
+                                placeholder="Password"
+                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                onChangeText={password => this.setState({password})}
+                                value={this.state.password}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={this.state.passwordError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                secureTextEntry = {true}
+                                spellCheck = {false}
+                            />
+                            <Input 
+                                placeholder="Confirm Password"
+                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                onChangeText={confirm_password => this.setState({confirm_password})}
+                                value={this.state.confirm_password}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={this.state.confirm_passwordError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                secureTextEntry = {true}
+                                spellCheck = {false}
+                            />
+                            <Button
+                                onPress={() => this.submit()}
+                                raised
+                                buttonStyle={s.buttonStyle}
+                                titleStyle={{
+                                    color:"black", 
+                                    fontSize:18
+                                }}
+                                containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
+                                style={{borderRadius: 50}}
+                                rounded
+                                title="Sign Up"
+                                accessibilityLabel="Sign Up"
+                                disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
+                                disabledStyle={{borderRadius:50}}
+                            />
+                            <Button
+                                onPress={() => this.props.navigation.navigate('Login')}
+                                titleStyle={s.textLink}
+                                containerStyle={{marginBottom: 15}}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="Already a user? LOG IN!"
+                            />
+                            <Button
+                                onPress={() => {
+                                    this.props.loginLater()
+                                    this.props.navigation.navigate('Map')
+                                }} 
+                                titleStyle={s.textLink}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="skip signing up for now"
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
             </ImageBackground>
         )
