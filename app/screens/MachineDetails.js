@@ -90,7 +90,7 @@ class MachineDetails extends Component {
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
-                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}?`}</Text>
+                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                             <TextInput
                                 multiline={true}
                                 numberOfLines={4}
@@ -107,7 +107,7 @@ class MachineDetails extends Component {
                                 buttonStyle={s.blueButton}
                                 titleStyle={s.titleStyle}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
+                                containerStyle={[{borderRadius:50,paddingTop:10},s.margin10]}
                             />
                             <Button
                                 title={'Cancel'}
@@ -116,7 +116,7 @@ class MachineDetails extends Component {
                                 buttonStyle={s.redButton}
                                 titleStyle={{fontSize:18,color:'#f53240'}}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
+                                containerStyle={[{borderRadius:50},s.margin10]}
                             />
                         </View>
                     </TouchableWithoutFeedback>
@@ -127,8 +127,8 @@ class MachineDetails extends Component {
                     visible={this.state.showAddScoreModal}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{paddingTop: 100}}>
-                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}?`}</Text>
+                        <View style={{paddingTop: 50}}>
+                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
                                 keyboardType='numeric'
@@ -145,7 +145,7 @@ class MachineDetails extends Component {
                                 buttonStyle={s.blueButton}
                                 titleStyle={s.titleStyle}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50,paddingTop:15},s.margin15]}
+                                containerStyle={[{borderRadius:50,paddingTop:10},s.margin10]}
                             />
                             <Button 
                                 title={'Cancel'}
@@ -154,7 +154,7 @@ class MachineDetails extends Component {
                                 buttonStyle={s.redButton}
                                 titleStyle={{fontSize:18,color:'#f53240'}}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
+                                containerStyle={[{borderRadius:50},s.margin10]}
                             />
                         </View>
                     </TouchableWithoutFeedback>
@@ -289,6 +289,12 @@ const s = StyleSheet.create({
         marginLeft:15,
         marginRight:15,
         marginTop:15,
+        marginBottom:15
+    },
+    margin10: {
+        marginLeft:15,
+        marginRight:15,
+        marginTop:10,
         marginBottom:15
     },
     italic: {
