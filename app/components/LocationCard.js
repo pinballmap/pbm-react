@@ -21,20 +21,20 @@ class LocationCard extends Component {
                             <Text numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
                             {this.props.type && <Text style={[s.italic,s.margin]}>{this.props.type}</Text>}
                             <Text style={s.margin}>Distance: {this.props.distance.toFixed(2)} mi</Text>
-                            <Text style={s.margin}>
+                            <View style={s.margin}>
                                 {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = m.lastIndexOf('(')
                                     const title = m.slice(0, idx)
                                     const info = m.slice(idx)
                                     return (
-                                        <Text key={m}>
+                                        <Text key={m} style={{marginBottom:-10}}>
                                             <Text style={{fontWeight: 'bold'}}>{title}</Text>
                                             <Text>{`${info}\n`}</Text>
                                         </Text>
                                     )})
                                 }
-                                {numMachines > NUM_MACHINES_TO_SHOW && <Text>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text>}
-                            </Text>
+                                {numMachines > NUM_MACHINES_TO_SHOW && <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text>}
+                            </View>
                         </View>
                         <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
                     </View>
@@ -50,6 +50,7 @@ const s = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         alignContent: 'space-around',
+        marginBottom: -10
     },
     locationNameContainer: {
         width: '105%',
@@ -65,7 +66,7 @@ const s = StyleSheet.create({
         marginTop: 5,
     },
     italic: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
     },
     iconStyle: {
         fontSize: 32,
