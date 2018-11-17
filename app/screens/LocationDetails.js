@@ -94,7 +94,7 @@ class LocationDetails extends Component {
                                         onPress={this.props.closeFavoriteLocationModal}
                                         accessibilityLabel="Great!"
                                         raised
-                                        buttonStyle={s.buttonPink}
+                                        buttonStyle={s.blueButton}
                                         titleStyle={{
                                             color:"black", 
                                             fontSize:18
@@ -135,7 +135,7 @@ class LocationDetails extends Component {
                                 onPress={this.props.closeConfirmModal}
                                 accessibilityLabel="You're Welcome"
                                 raised
-                                buttonStyle={s.buttonPink}
+                                buttonStyle={s.blueButton}
                                 titleStyle={{
                                     color:"black", 
                                     fontSize:18
@@ -227,7 +227,7 @@ class LocationDetails extends Component {
                                                     title={this.getTitle(m)}
                                                     subtitle={
                                                         <View style={s.condition}>
-                                                            {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 200 ? machine.condition : `${machine.condition.substr(0, 200)}...`}"</Text>}
+                                                            {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"</Text>}
                                                             {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
                                                         </View>
                                                     }
@@ -338,8 +338,8 @@ const s = StyleSheet.create({
         width: '100%',
         elevation: 0
     },
-    buttonPink: {
-        backgroundColor:"#fdd4d7",
+    blueButton: {
+        backgroundColor:"#D3ECFF",
         borderRadius: 50,
         width: '100%',
         elevation: 0

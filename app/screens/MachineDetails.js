@@ -303,7 +303,7 @@ const s = StyleSheet.create({
     conditionText: {
         color: '#555555',
         fontStyle: 'italic',
-        fontSize: 16
+        fontSize: 14
     },
     noneYet: {
         textAlign:'center',
