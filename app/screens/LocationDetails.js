@@ -102,6 +102,18 @@ class LocationDetails extends Component {
                                         style={{borderRadius: 50}}
                                         containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
                                     />
+                                    <Button 
+                                        title={'View My Saved Locations'}
+                                        onPress={() => this.props.navigation.navigate('Saved')}
+                                        buttonStyle={s.savedLink}
+                                        titleStyle={{
+                                            color:"black", 
+                                            fontSize:16
+                                        }}
+                                        iconLeft
+                                        icon={<FontAwesome style={s.saveLocation} name="heart-o" style={s.savedIcon} />}
+                                        containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
+                                    />
                                 </View>
                                 <View style={s.logoWrapper}>
                                     <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
@@ -391,7 +403,16 @@ const s = StyleSheet.create({
         fontSize: 24,
         color: 'red',
         padding: 10
-    }
+    },
+    savedIcon: {
+        fontSize: 24
+    },
+    savedLink: {
+        backgroundColor:'rgba(38,2,4,.1)',
+        borderWidth: 1,
+        borderColor: '#888888',
+        borderRadius: 5,
+    },
 })
 
 LocationDetails.propTypes = {
