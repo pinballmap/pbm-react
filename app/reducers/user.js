@@ -6,6 +6,12 @@ import {
     LOG_IN,
     LOG_OUT,
     LOGIN_LATER,
+    FETCHING_FAVORITE_LOCATIONS_SUCCESS,
+    ADDING_FAVORITE_LOCATION,
+    REMOVING_FAVORITE_LOCATION,
+    FAVORITE_LOCATION_ADDED,
+    FAVORITE_LOCATION_REMOVED,
+    ACKNOWLEDGE_FAVORITE_UPDATE,
 } from '../actions/types'
 
 export const initialState = {
@@ -19,6 +25,11 @@ export const initialState = {
     email: null,
     id: null,
     username: null,
+    faveLocations: [],
+    addingFavoriteLocation: false,
+    removingFavoriteLocation: false,
+    favoriteModalVisible: false,
+    favoriteModalText: '',
 }
 
 export default (state = initialState, action) => {
@@ -76,6 +87,42 @@ export default (state = initialState, action) => {
         return {
             ...state,
             loginLater: true,
+        }
+    case FETCHING_FAVORITE_LOCATIONS_SUCCESS:
+        return {
+            ...state,
+            faveLocations: action.faveLocations,
+        }
+    case ADDING_FAVORITE_LOCATION: 
+        return {
+            ...state,
+            addingFavoriteLocation: true,
+            favoriteModalVisible: true,
+        }
+    case REMOVING_FAVORITE_LOCATION:
+        return {
+            ...state,
+            removingFavoriteLocation: true,
+            favoriteModalVisible: true, 
+        }
+    case FAVORITE_LOCATION_ADDED:
+        return {
+            ...state,
+            addingFavoriteLocation: false,
+            favoriteModalText: 'Successfully added location to your saved list',
+        }
+    case FAVORITE_LOCATION_REMOVED: 
+        return {
+            ...state,
+            removingFavoriteLocation: false,
+            favoriteModalText: 'Successfully removed location from your saved list',
+            faveLocations: state.faveLocations.filter(location => location.location_id !== action.id)
+        }
+    case ACKNOWLEDGE_FAVORITE_UPDATE: 
+        return {
+            ...state,
+            favoriteModalVisible: false, 
+            favoriteModalText: '',
         }
     default:
         return state
