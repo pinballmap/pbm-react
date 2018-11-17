@@ -386,10 +386,11 @@ const s = StyleSheet.create({
     saveLocation: {
         position: 'absolute',
         zIndex: 10, 
-        top: 5,
-        right: 10,
+        top: 0,
+        right: 5,
         fontSize: 24,
         color: 'red',
+        padding: 10
     }
 })
 
