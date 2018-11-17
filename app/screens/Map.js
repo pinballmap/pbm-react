@@ -7,7 +7,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { SearchBar } from '../components'
 import { updateCurrCoordindates } from '../actions/query_actions'
 import { fetchLocations } from '../actions/locations_actions'
-import { fetchCurrentLocation, login } from '../actions/user_actions'
+import { fetchCurrentLocation, login, getFavoriteLocations } from '../actions/user_actions'
 import { fetchLocationTypes } from '../actions/locations_actions'
 import { fetchMachines } from '../actions/machines_actions'
 import { fetchOperators } from '../actions/operators_actions'
@@ -119,6 +119,10 @@ class Map extends Component {
           })
           this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.user.lat + ';lon=' + props.user.lon + ';send_all_within_distance=1;max_distance=5')
       }
+      
+      if (!this.props.user.id && props.user.id) {
+          this.props.getFavoriteLocations(props.user.id)
+      }
 
       if (props.query.locationId !== this.props.query.locationId) {
           this.props.navigation.navigate('LocationDetails', {id: props.query.locationId.toString(), locationName: props.query.locationName})
@@ -165,7 +169,7 @@ class Map extends Component {
               </View>
           )
       }
-      console.log(this.props.navigation)
+
       return(
           <View style={{flex: 1}}>
               <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
@@ -247,6 +251,7 @@ const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
     login: credentials => dispatch(login(credentials)),
+    getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
