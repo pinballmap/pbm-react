@@ -5,10 +5,11 @@ import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, Toucha
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { fetchLocation } from '../actions/location_actions'
 import { closeConfirmModal, confirmLocationIsUpToDate, setCurrentMachine } from '../actions/location_actions'
+import { addFavoriteLocation, removeFavoriteLocation, closeFavoriteLocationModal } from '../actions/user_actions'
 import { clearError } from '../actions/error_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
@@ -74,9 +75,41 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
-
+        const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation } = this.props.user
+        const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
+   
         return (
             <ScrollView style={{ flex: 1 }}>
+                <Modal 
+                    visible={favoriteModalVisible}
+                >
+                    <View style={{marginTop: 100}}>
+                        {addingFavoriteLocation || removingFavoriteLocation ?
+                            <ActivityIndicator /> : 
+                            <View>
+                                <Text style={s.confirmText}>{favoriteModalText}</Text> 
+                                <View> 
+                                    <Button
+                                        title={"Great!"}
+                                        onPress={this.props.closeFavoriteLocationModal}
+                                        accessibilityLabel="Great!"
+                                        raised
+                                        buttonStyle={s.buttonPink}
+                                        titleStyle={{
+                                            color:"black", 
+                                            fontSize:18
+                                        }}
+                                        style={{borderRadius: 50}}
+                                        containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
+                                    />
+                                </View>
+                                <View style={s.logoWrapper}>
+                                    <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                                </View>
+                            </View>
+                        }
+                    </View>
+                </Modal>
                 <Modal 
                     visible={errorModalVisible}
                 >
@@ -117,6 +150,8 @@ class LocationDetails extends Component {
                     </View>
                 </Modal>
                 <View style={{ flex: 1, position: 'relative' }}>
+                    {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
+                    {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
                     <MapView
                         region={{
                             latitude: Number(location.lat),
@@ -150,9 +185,9 @@ class LocationDetails extends Component {
                                 {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <Button
-                                        onPress={() => this.props.user.loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
+                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                        title={this.props.user.loggedIn ? 'Add Machine' : 'Login to Add Machine'}
+                                        title={loggedIn ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                         raised
                                         buttonStyle={s.addButton}
@@ -244,6 +279,7 @@ class LocationDetails extends Component {
 
 const s = StyleSheet.create({
     map: {
+        zIndex: -1,
         height: 100
     },
     buttonStyle: {
@@ -347,6 +383,14 @@ const s = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    saveLocation: {
+        position: 'absolute',
+        zIndex: 10, 
+        top: 5,
+        right: 10,
+        fontSize: 24,
+        color: 'red',
+    }
 })
 
 LocationDetails.propTypes = {
@@ -363,14 +407,18 @@ LocationDetails.propTypes = {
     navigation: PropTypes.object,
     clearError: PropTypes.func,
     error: PropTypes.object,
+    closeFavoriteLocationModal: PropTypes.func,
 }
 
-const mapStateToProps = ({ error, location, locations, operators, machines, query, user }) => ({ error, location, locations, operators, machines, query, user})
+const mapStateToProps = ({ application, error, location, locations, operators, machines, query, user }) => ({ application, error, location, locations, operators, machines, query, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
     closeConfirmModal: () => dispatch(closeConfirmModal()),
     setCurrentMachine: id => dispatch(setCurrentMachine(id)),
     clearError: () => dispatch(clearError()),
+    removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
+    addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
+    closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)

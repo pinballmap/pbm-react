@@ -5,9 +5,15 @@ import {
     LOG_IN,
     LOG_OUT,
     LOGIN_LATER,
+    FETCHING_FAVORITE_LOCATIONS_SUCCESS,
+    ADDING_FAVORITE_LOCATION,
+    REMOVING_FAVORITE_LOCATION, 
+    FAVORITE_LOCATION_ADDED,
+    FAVORITE_LOCATION_REMOVED,
+    ACKNOWLEDGE_FAVORITE_UPDATE,
 } from './types'
 
-import { getCurrentLocation } from '../config/request'
+import { getCurrentLocation, getData, postData } from '../config/request'
 
 export const fetchCurrentLocation = () => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
@@ -50,3 +56,67 @@ export const loginLater = () => {
         type: LOGIN_LATER,
     }
 }
+
+export const getFavoriteLocations = id => dispatch => {
+    return getData(`/users/${id}/list_fave_locations.json`)
+        .then(data => dispatch(getFavoriteLocationsSuccess(data)))
+        .catch(err => console.log(err))
+}
+
+export const getFavoriteLocationsSuccess = data => {
+    return {
+        type: FETCHING_FAVORITE_LOCATIONS_SUCCESS,
+        faveLocations: data.user_fave_locations,
+    }
+}
+
+export const addFavoriteLocation = location_id => (dispatch, getState) => {
+    dispatch({ type: ADDING_FAVORITE_LOCATION})
+
+    const { email, authentication_token, id } = getState().user
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        location_id,
+    }
+
+    return postData(`/users/${id}/add_fave_location.json`, body)
+        .then(() => dispatch(favoriteLocationAdded()))
+        .then(() => dispatch(getFavoriteLocations(id)))
+        .catch(err => console.log(err))
+}
+
+export const favoriteLocationAdded = () => {
+    return {
+        type: FAVORITE_LOCATION_ADDED,
+    }
+}
+
+export const removeFavoriteLocation = location_id => (dispatch, getState) => {
+    dispatch({type: REMOVING_FAVORITE_LOCATION})
+
+    const { email, authentication_token, id } = getState().user
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        location_id,
+    }
+
+    return postData(`/users/${id}/remove_fave_location.json`, body)
+        .then(() => dispatch(favoriteLocationRemoved(location_id)))
+        .catch(err => console.log(err))
+}
+
+export const favoriteLocationRemoved = (id) => {
+    return {
+        type: FAVORITE_LOCATION_REMOVED,
+        id,
+    }
+}
+
+export const closeFavoriteLocationModal = () => {
+    return {
+        type: ACKNOWLEDGE_FAVORITE_UPDATE,
+    }
+}
+
