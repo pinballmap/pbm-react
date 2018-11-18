@@ -104,7 +104,7 @@ class LocationDetails extends Component {
                                     />
                                     <Button 
                                         title={'View My Saved Locations'}
-                                        onPress={() => this.props.navigation.navigate('Saved')}
+                                        onPress={() => {this.props.navigation.navigate('Saved')}}
                                         buttonStyle={s.savedLink}
                                         titleStyle={{
                                             color:"black", 

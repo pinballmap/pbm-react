@@ -68,8 +68,8 @@ class UserProfile extends Component {
                                 }}
                                 accessibilityLabel="Logout"
                                 raised
-                                buttonStyle={s.logoutButton}
-                                titleStyle={{fontSize:18,color:'#f53240'}}
+                                buttonStyle={s.blueButton}
+                                titleStyle={{fontSize:18,color:"black"}}
                                 style={{borderRadius: 50}}
                                 containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                             />
@@ -78,9 +78,9 @@ class UserProfile extends Component {
                                 onPress={() => this.setModalVisible(false)}
                                 accessibilityLabel="Stay Loggin In"
                                 raised
-                                buttonStyle={s.cancelButton}
+                                buttonStyle={s.pinkButton}
                                 titleStyle={{
-                                    color:"black", 
+                                    color:'#f53240', 
                                     fontSize:18
                                 }}
                                 style={{borderRadius: 50}}
@@ -91,7 +91,7 @@ class UserProfile extends Component {
                 </Modal>
 
                 {user.loggedIn ?
-                    <ScrollView>
+                    <ScrollView style={{backgroundColor:'#ffffff'}}>
                         <Text style={s.username}>{user.username}</Text>
                         <Text style={s.member}>{`Member since: ${moment(profileInfo.created_at).format('MMM-DD-YYYY')}`}</Text>
                         <Text style={s.stat}>{`Machines Added: ${profileInfo.num_machines_added}`}</Text>
@@ -112,21 +112,21 @@ class UserProfile extends Component {
                             containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
-                        <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
+                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:15}}>
                             {profileInfo.profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
                                     key={location[0]}
-                                    titleStyle={{marginLeft:15,marginRight:15}}
+                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
                                     title={location[1]}
                                 /> 
                             })}
                         </View>
                         <Text style={s.bold}>High Scores:</Text>
-                        <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
+                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:15}}>
                             {profileInfo.profile_list_of_high_scores.map((score, idx) => {
                                 return <ListItem
                                     key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                                    titleStyle={{marginLeft:15,marginRight:15}}
+                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
                                     title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                 /> 
                             })}
@@ -136,7 +136,7 @@ class UserProfile extends Component {
                             onPress={() => this.setModalVisible(true)}
                             accessibilityLabel="Logout"
                             raised
-                            buttonStyle={s.logoutButton}
+                            buttonStyle={s.pinkButton}
                             titleStyle={{fontSize:18,color:'#f53240'}}
                             style={{borderRadius: 50}}
                             containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginTop:10,marginBottom:20}}
@@ -150,7 +150,7 @@ class UserProfile extends Component {
                             onPress={() => this.props.navigation.navigate("SignupLogin")}
                             accessibilityLabel="Login"
                             raised
-                            buttonStyle={s.cancelButton}
+                            buttonStyle={s.blueButton}
                             titleStyle={s.titleStyle}
                             style={{borderRadius: 50}}
                             containerStyle={{borderRadius:50,marginTop:15,marginLeft:15,marginRight:15}}
@@ -164,13 +164,13 @@ class UserProfile extends Component {
 }
 
 const s = StyleSheet.create({
-    logoutButton: {
+    pinkButton: {
         backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
-    cancelButton: {
+    blueButton: {
         backgroundColor:"#D3ECFF",
         borderRadius: 50,
         width: '100%',
@@ -197,8 +197,11 @@ const s = StyleSheet.create({
     },
     bold: {
         fontWeight: 'bold',
-        fontSize: 18,
-        padding: 10,
+        fontSize: 16,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
         color: "#260204",
         backgroundColor: "#D3ECFF"
     },
@@ -228,7 +231,7 @@ const s = StyleSheet.create({
     },
     stat: {
         marginTop: 5,
-        marginLeft: 15,
+        marginLeft: 30,
         fontSize: 16
     },
     member: {
