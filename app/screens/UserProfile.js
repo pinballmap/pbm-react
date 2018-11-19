@@ -97,8 +97,8 @@ class UserProfile extends Component {
                         <Text style={s.stat}>{`Machines Added: ${profileInfo.num_machines_added}`}</Text>
                         <Text style={s.stat}>{`Machines Removed: ${profileInfo.num_machines_removed}`}</Text>
                         <Text style={s.stat}>{`Machines Comments: ${profileInfo.num_lmx_comments_left}`}</Text>
-                        <Text style={s.stat}>{`Locations submitted: ${profileInfo.num_locations_suggested}`}</Text>
-                        <Text style={s.stat}>{`Locations edited: ${profileInfo.num_locations_edited}`}</Text>
+                        <Text style={s.stat}>{`Locations Submitted: ${profileInfo.num_locations_suggested}`}</Text>
+                        <Text style={s.stat}>{`Locations Edited: ${profileInfo.num_locations_edited}`}</Text>
                         <Button 
                             title={'Saved Locations'}
                             onPress={() => this.props.navigation.navigate('Saved')}
