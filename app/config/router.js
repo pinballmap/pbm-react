@@ -38,7 +38,7 @@ const TabNav = TabNavigator({
             case 'Map':
                 return <MaterialIcons name='search' size={(focused) ? 30 : 28} color={tintColor} />
             case 'Saved':
-                return <MaterialCommunityIcons name='star-outline' size={(focused) ? 32 : 30} color={tintColor} />
+                return <FontAwesome name='heart-o' size={(focused) ? 26 : 24} color={tintColor} />
             case 'Activity':
                 return <FontAwesome name='newspaper-o' size={(focused) ? 26 : 24} color={tintColor} />
             case 'Profile':

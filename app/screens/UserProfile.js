@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Modal, Text, View, StyleSheet, ScrollView } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
 import { getData } from '../config/request'
@@ -108,7 +108,7 @@ class UserProfile extends Component {
                                 fontSize:16
                             }}
                             iconLeft
-                            icon={<MaterialCommunityIcons name='star-outline' style={s.savedIcon} />}
+                            icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
                             containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
