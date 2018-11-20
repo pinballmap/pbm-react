@@ -89,7 +89,7 @@ const s = StyleSheet.create({
         marginTop: 5,
     },
     buttonStyle: {
-      backgroundColor: '#D3ECFF',
+        backgroundColor: '#D3ECFF',
     },
     textStyle: {
         color: '#000000',
