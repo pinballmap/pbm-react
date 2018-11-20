@@ -104,14 +104,17 @@ class LocationDetails extends Component {
                                     />
                                     <Button 
                                         title={'View My Saved Locations'}
-                                        onPress={() => {this.props.navigation.navigate('Saved')}}
+                                        onPress={() => {
+                                            this.props.closeFavoriteLocationModal()
+                                            this.props.navigation.navigate('Saved')
+                                        }}
                                         buttonStyle={s.savedLink}
                                         titleStyle={{
                                             color:"black", 
                                             fontSize:16
                                         }}
                                         iconLeft
-                                        icon={<FontAwesome style={s.saveLocation} name="heart-o" style={s.savedIcon} />}
+                                        icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
                                         containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
                                     />
                                 </View>
@@ -239,7 +242,7 @@ class LocationDetails extends Component {
                                                     title={this.getTitle(m)}
                                                     subtitle={
                                                         <View style={s.condition}>
-                                                            {machine.condition && <Text style={s.conditionText}>"{machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"</Text>}
+                                                            {machine.condition && <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text>}
                                                             {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
                                                         </View>
                                                     }
@@ -430,6 +433,8 @@ LocationDetails.propTypes = {
     clearError: PropTypes.func,
     error: PropTypes.object,
     closeFavoriteLocationModal: PropTypes.func,
+    removeFavoriteLocation: PropTypes.func,
+    addFavoriteLocation: PropTypes.func,
 }
 
 const mapStateToProps = ({ application, error, location, locations, operators, machines, query, user }) => ({ application, error, location, locations, operators, machines, query, user})
