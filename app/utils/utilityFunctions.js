@@ -23,3 +23,11 @@ function toRad(Value)
 
 export const formatNumWithCommas = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 
+export const alphaSort = array => {
+    return array.sort((a, b) => {
+        const locA = a.name.startsWith('The ') ? a.name.slice(4).toUpperCase() : a.name.toUpperCase()  
+        const locB = b.name.startsWith('The ') ? b.name.slice(4).toUpperCase() : b.name.toUpperCase()
+        return locA < locB ? -1 : locA === locB ? 0 : 1
+    })
+}
+

@@ -11,7 +11,7 @@ import { fetchLocation } from '../actions/location_actions'
 import { closeConfirmModal, confirmLocationIsUpToDate, setCurrentMachine } from '../actions/location_actions'
 import { addFavoriteLocation, removeFavoriteLocation, closeFavoriteLocationModal } from '../actions/user_actions'
 import { clearError } from '../actions/error_actions'
-import { getDistance } from '../utils/utilityFunctions'
+import { alphaSort, getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
 
@@ -77,7 +77,11 @@ class LocationDetails extends Component {
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
-   
+        const sortedMachines = alphaSort(location.location_machine_xrefs.map(machine => {
+            const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
+            return {...machineDetails, ...machine}
+        }))
+
         return (
             <ScrollView style={{ flex: 1 }}>
                 <Modal 
@@ -227,36 +231,31 @@ class LocationDetails extends Component {
                                         containerStyle={{marginTop:5,marginBottom:10,marginRight:25,marginLeft:25}}
                                     />
                                 </View>
-                                {location.location_machine_xrefs.map(machine => {
-                                    const m = this.props.machines.machines.find(m => m.id === machine.machine_id)
-        
-                                    if (m) 
-                                        return (
-                                            <TouchableOpacity
-                                                key={machine.machine_id} 
-                                                onPress={() => {
-                                                    this.props.navigation.navigate('MachineDetails', {machineName: m.name, locationName: location.name})
-                                                    this.props.setCurrentMachine(machine.id)
-                                                }}>
-                                                <ListItem
-                                                    title={this.getTitle(m)}
-                                                    subtitle={
-                                                        <View style={s.condition}>
-                                                            {machine.condition && <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text>}
-                                                            {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
-                                                        </View>
-                                                    }
-                                                    rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
-                                                />
-                                                <View
-                                                    style={{
-                                                        borderBottomColor: '#D3ECFF',
-                                                        borderBottomWidth: 1,
-                                                    }}
-                                                />
-                                            </TouchableOpacity>
-                                        )
-                                })}
+                                {sortedMachines.map(machine => (
+                                    <TouchableOpacity
+                                        key={machine.id} 
+                                        onPress={() => {
+                                            this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
+                                            this.props.setCurrentMachine(machine.id)
+                                        }}>
+                                        <ListItem
+                                            title={this.getTitle(machine)}
+                                            subtitle={
+                                                <View style={s.condition}>
+                                                    {machine.condition && <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text>}
+                                                    {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
+                                                </View>
+                                            }
+                                            rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                        />
+                                        <View
+                                            style={{
+                                                borderBottomColor: '#D3ECFF',
+                                                borderBottomWidth: 1,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                ))}
                             </View> :
                             <View style={s.locationMeta}>
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
