@@ -47,7 +47,6 @@ class UserProfile extends Component {
 
         const { user } = this.props
         const profileInfo = this.state.profile_info
-        console.log(this.state)
 
         return(
             <View>
@@ -118,6 +117,7 @@ class UserProfile extends Component {
                                     key={location[0]}
                                     titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
                                     title={location[1]}
+                                    onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
                                 /> 
                             })}
                         </View>
