@@ -19,7 +19,7 @@ class UserProfile extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: 'Profile',
         }
     };
@@ -94,11 +94,11 @@ class UserProfile extends Component {
                     <ScrollView style={{backgroundColor:'#ffffff'}}>
                         <Text style={s.username}>{user.username}</Text>
                         <Text style={s.member}>{`Member since: ${moment(profileInfo.created_at).format('MMM-DD-YYYY')}`}</Text>
-                        <Text style={s.stat}>{`Machines Added: ${profileInfo.num_machines_added}`}</Text>
-                        <Text style={s.stat}>{`Machines Removed: ${profileInfo.num_machines_removed}`}</Text>
-                        <Text style={s.stat}>{`Machines Comments: ${profileInfo.num_lmx_comments_left}`}</Text>
-                        <Text style={s.stat}>{`Locations Submitted: ${profileInfo.num_locations_suggested}`}</Text>
-                        <Text style={s.stat}>{`Locations Edited: ${profileInfo.num_locations_edited}`}</Text>
+                        <Text style={s.stat}>Machines Added: <Text style={s.statNum}>{` ${profileInfo.num_machines_added} `}</Text></Text>
+                        <Text style={s.stat}>Machines Removed: <Text style={s.statNum}>{` ${profileInfo.num_machines_removed} `}</Text></Text>
+                        <Text style={s.stat}>Machines Comments: <Text style={s.statNum}>{` ${profileInfo.num_lmx_comments_left} `}</Text></Text>
+                        <Text style={s.stat}>Locations Submitted: <Text style={s.statNum}>{` ${profileInfo.num_locations_suggested} `}</Text></Text>
+                        <Text style={s.stat}>Locations Edited: <Text style={s.statNum}>{` ${profileInfo.num_locations_edited} `}</Text></Text>
                         <Button 
                             title={'Saved Locations'}
                             onPress={() => this.props.navigation.navigate('Saved')}
@@ -232,7 +232,13 @@ const s = StyleSheet.create({
     stat: {
         marginTop: 5,
         marginLeft: 30,
-        fontSize: 16
+        fontSize: 16,
+        color: "#444444"
+    },
+    statNum: {
+        fontWeight: "bold",
+        color: "#000000",
+        backgroundColor: "#D3ECFF",
     },
     member: {
         textAlign:"center",
