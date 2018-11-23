@@ -23,11 +23,12 @@ class LocationCard extends Component {
                             <Text style={s.margin}>Distance: {this.props.distance.toFixed(2)} mi</Text>
                             <View style={s.margin}>
                                 {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
-                                    const idx = m.lastIndexOf('(')
-                                    const title = m.slice(0, idx)
-                                    const info = m.slice(idx)
+                                    const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
+                                    const title = typeof m === 'string' ? m.slice(0, idx) : m.name
+                                    const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
+                                    const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                     return (
-                                        <Text key={m} style={{marginBottom:-10}}>
+                                        <Text key={key} style={{marginBottom:-10}}>
                                             <Text style={{fontWeight: 'bold'}}>{title}</Text>
                                             <Text>{`${info}\n`}</Text>
                                         </Text>

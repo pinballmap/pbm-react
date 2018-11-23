@@ -7,6 +7,8 @@ import { HeaderBackButton } from 'react-navigation'
 import { LocationCard } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 
+const moment = require('moment')
+
 export class LocationList extends Component {
     constructor(props) {
         super(props)
@@ -41,7 +43,7 @@ export class LocationList extends Component {
             })
         case 2:
             return this.setState({
-                locations: this.state.locations.sort((a, b) => a.updatedAt > b.updatedAt)
+                locations: this.state.locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
             })
         }
     }
