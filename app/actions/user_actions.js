@@ -11,6 +11,7 @@ import {
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
     ACKNOWLEDGE_FAVORITE_UPDATE,
+    SELECT_FAVORITE_LOCATION_FILTER_BY,
 } from './types'
 
 import { getCurrentLocation, getData, postData } from '../config/request'
@@ -117,6 +118,13 @@ export const favoriteLocationRemoved = (id) => {
 export const closeFavoriteLocationModal = () => {
     return {
         type: ACKNOWLEDGE_FAVORITE_UPDATE,
+    }
+}
+
+export const selectFavoriteLocationFilterBy = idx => {
+    return {
+        type: SELECT_FAVORITE_LOCATION_FILTER_BY,
+        idx,
     }
 }
 

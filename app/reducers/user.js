@@ -12,6 +12,7 @@ import {
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
     ACKNOWLEDGE_FAVORITE_UPDATE,
+    SELECT_FAVORITE_LOCATION_FILTER_BY
 } from '../actions/types'
 
 export const initialState = {
@@ -30,6 +31,7 @@ export const initialState = {
     removingFavoriteLocation: false,
     favoriteModalVisible: false,
     favoriteModalText: '',
+    selectedFavoriteLocationFilter: 0,
 }
 
 export default (state = initialState, action) => {
@@ -123,6 +125,11 @@ export default (state = initialState, action) => {
             ...state,
             favoriteModalVisible: false, 
             favoriteModalText: '',
+        }
+    case SELECT_FAVORITE_LOCATION_FILTER_BY:
+        return {
+            ...state,
+            selectedFavoriteLocationFilter: action.idx,
         }
     default:
         return state
