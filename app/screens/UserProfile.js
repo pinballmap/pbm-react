@@ -111,11 +111,11 @@ class UserProfile extends Component {
                             containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
-                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:15}}>
+                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:0,marginBottom:8,marginTop:8}}>
                             {profileInfo.profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
                                     key={location[0]}
-                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
+                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-8,marginTop:-8}}
                                     title={location[1]}
                                     onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
                                 /> 
