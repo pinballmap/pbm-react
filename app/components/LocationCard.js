@@ -14,13 +14,13 @@ class LocationCard extends Component {
             <Card>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('LocationDetails', {id: this.props.id, locationName: this.props.name})}>
                     <View style={s.flexi}>
-                        <View style={{width: '95%'}}>
+                        <View style={{width: '95%',zIndex: 10}}>
                             <View style={s.locationNameContainer}>
                                 <Text style={s.locationName}>{this.props.name}</Text>
                             </View>
-                            <Text numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
-                            {this.props.type && <Text style={[s.italic,s.margin]}>{this.props.type}</Text>}
-                            <Text style={s.margin}>Distance: {this.props.distance.toFixed(2)} mi</Text>
+                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
+                            {this.props.type && <Text style={[s.gray,s.italic,s.marginS]}>({this.props.type})</Text>}
+                            <Text style={[s.gray,s.marginS]}>{this.props.distance.toFixed(2)} miles away</Text>
                             <View style={s.margin}>
                                 {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
@@ -29,7 +29,7 @@ class LocationCard extends Component {
                                     const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                     return (
                                         <Text key={key} style={{marginBottom:-10}}>
-                                            <Text style={{fontWeight: 'bold'}}>{title}</Text>
+                                            <Text style={{fontWeight: 'bold',fontSize: 15}}>{title}</Text>
                                             <Text>{`${info}\n`}</Text>
                                         </Text>
                                     )})
@@ -37,7 +37,7 @@ class LocationCard extends Component {
                                 {numMachines > NUM_MACHINES_TO_SHOW && <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text>}
                             </View>
                         </View>
-                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
                     </View>
                 </TouchableOpacity>
             </Card>
@@ -56,22 +56,35 @@ const s = StyleSheet.create({
     locationNameContainer: {
         width: '105%',
         backgroundColor: "#D3ECFF",
-        marginBottom: 10,
+        marginBottom: 5,
         padding: 5,
     },
     locationName: {
         fontWeight: 'bold',
         fontSize: 16,
+        color: "#260204"
     },
     margin: {
         marginTop: 5,
+        marginLeft: 5
+    },
+    marginS: {
+        marginTop: 3,
+        marginLeft: 5
+    },
+    gray: {
+        color: "#444444",
     },
     italic: {
         fontStyle: 'italic',
     },
     iconStyle: {
         fontSize: 32,
-        color: '#cccccc',
+        color: '#eeeeee',
+        marginRight: -5,
+        position: "absolute",
+        right: 0,
+        zIndex: 5
     },
 })
 
