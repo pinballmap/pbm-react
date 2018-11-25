@@ -5,6 +5,7 @@ import { ActivityIndicator, Modal, Text, View, StyleSheet, ScrollView } from 're
 import { FontAwesome } from '@expo/vector-icons'
 import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
+import { NotLoggedIn } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions/user_actions'
 
@@ -142,22 +143,12 @@ class UserProfile extends Component {
                             containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginTop:10,marginBottom:20}}
                         /> 
                     </ScrollView> :
-                    <View>
-                        <Text style={s.pageTitle}>User Profile</Text>
-                        <Text style={s.hiya}>{`Hi, you're not logged in, so you don't have a profile!`}</Text>
-                        <Button
-                            title={"Login"} 
-                            onPress={() => this.props.navigation.navigate("SignupLogin")}
-                            accessibilityLabel="Login"
-                            raised
-                            buttonStyle={s.blueButton}
-                            titleStyle={s.titleStyle}
-                            style={{borderRadius: 50}}
-                            containerStyle={{borderRadius:50,marginTop:15,marginLeft:15,marginRight:15}}
-                        />
-                    </View>
-                }
-                        
+                    <NotLoggedIn 
+                        text={`Hi, you're not logged in, so you don't have a profile!`}
+                        title={'User Profile'}
+                        onPress={() => this.props.navigation.navigate('Signup')}
+                    />
+                }                      
             </View>
         )
     }
@@ -175,25 +166,6 @@ const s = StyleSheet.create({
         borderRadius: 50,
         width: '100%',
         elevation: 0
-    },
-    pageTitle: {
-        fontSize: 14,
-        textAlign: "center",
-        fontWeight: "bold",
-        paddingBottom: 15,
-        paddingTop: 10
-    },
-    hiya: {
-        fontStyle: 'italic',
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingBottom: 10,
-        color: '#444444',
-        textAlign: 'center'
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
     },
     bold: {
         fontWeight: 'bold',
