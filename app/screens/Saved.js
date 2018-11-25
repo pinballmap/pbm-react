@@ -100,8 +100,8 @@ export class LocationList extends Component {
                                   />
                               </View>
                           </View> : 
-                          <View>
-                              <Text>{`You have no saved locations. To save your favorite locations, lookup a location then click the heart icon.`}</Text>
+                          <View style={{margin:15}}>
+                              <Text style={{fontSize:15}}>{`You have no saved locations. To save your favorite locations, lookup a location then click the heart icon.`}</Text>
                           </View> 
                       }
                   </View>:
