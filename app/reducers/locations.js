@@ -6,14 +6,19 @@ import {
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
     REFETCHING_LOCATIONS,
+    SELECT_LOCATION_LIST_FILTER_BY,
+    LOCATION_DETAILS_CONFIRMED,
 } from '../actions/types'
+
+const moment = require('moment')
 
 export const initialState = {
     isFetchingLocationTypes: false,
     locationTypes: [],
     isFetchingLocations: false,
     isRefetchingLocations: false,
-    mapLocations: []
+    mapLocations: [], 
+    selectedLocationListFilter: 0,
 }
 
 export default (state = initialState, action) => {
@@ -59,6 +64,28 @@ export default (state = initialState, action) => {
             ...state,
             isRefetchingLocations: true,
         }
+    case SELECT_LOCATION_LIST_FILTER_BY: 
+        return {
+            ...state, 
+            selectedLocationListFilter: action.idx,
+        }
+    case LOCATION_DETAILS_CONFIRMED:  
+    {
+        const mapLocations = state.mapLocations.map(loc => {
+            if (loc.id === action.id) {
+                return {
+                    ...loc, 
+                    updated_at: moment.utc().format()
+                }
+            } 
+            else   
+                return loc
+        })
+        return {
+            ...state, 
+            mapLocations,
+        }
+    }
     default:
         return state
     }

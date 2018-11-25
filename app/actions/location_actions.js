@@ -40,15 +40,16 @@ export const getLocationFailure = () => {
 
 export const confirmLocationIsUpToDate = (body, id, username) => dispatch => {
     return putData(`/locations/${id}/confirm.json`, body)
-        .then(data => dispatch(locationDetailsConfirmed(data.msg, username)))
+        .then(data => dispatch(locationDetailsConfirmed(data.msg, username, id)))
         .catch(err => console.log(err))
 }
 
-const locationDetailsConfirmed = (msg, username) => {
+const locationDetailsConfirmed = (msg, username, id) => {
     return {
         type: LOCATION_DETAILS_CONFIRMED,
         msg,
         username,
+        id,
     }
 }
 
