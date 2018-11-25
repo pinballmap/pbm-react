@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { FlatList, Text, View, StyleSheet } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
+import { Button, ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { LocationCard } from '../components'
+import { LocationCard, NotLoggedIn } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
 
@@ -60,41 +60,57 @@ export class LocationList extends Component {
   }
 
   componentDidMount() {
-      this.sortLocations(this.state.locations, this.props.user.selectFavoriteLocationFilter)
+      this.sortLocations(this.state.locations, this.props.user.selectedFavoriteLocationFilter)
   }
 
   render() {     
       return (
           <View style={{ flex: 1 }}>
-              <Text style={s.sort}>SORT BY:</Text>
-              <ButtonGroup
-                  onPress={this.updateIndex}
-                  selectedIndex={this.props.user.selectedFavoriteLocationFilter}
-                  buttons={['Distance', 'Alphabetically', 'Last Added']}
-                  containerStyle={{ height: 30 }}
-                  selectedButtonStyle={s.buttonStyle}
-                  selectedTextStyle={s.textStyle}
-              />
-              <View style={{ flex: 1, position: 'absolute', left: 0, top: 65, bottom: 0, right: 0 }}>
-                  <FlatList
-                      data={this.state.locations}
-                      extraData={this.state}
-                      renderItem={({ item }) => 
-                          <LocationCard
-                              name={item.location.name}
-                              distance={getDistance(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon)}
-                              street={item.location.street}
-                              state={item.location.state}
-                              zip={item.location.zip}
-                              machines={item.location.machines} 
-                              type={item.location.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location.location_type_id).name : ""}
-                              navigation={this.props.navigation}
-                              id={item.id}
-                          />
+              {this.props.user.loggedIn ? 
+                  <View style={{ flex: 1 }}>
+                      {this.state.locations.length > 0 ? 
+                          <View style={{ flex: 1}}>
+                              <Text style={s.sort}>SORT BY:</Text>
+                              <ButtonGroup
+                                  onPress={this.updateIndex}
+                                  selectedIndex={this.props.user.selectedFavoriteLocationFilter}
+                                  buttons={['Distance', 'Alphabetically', 'Last Added']}
+                                  containerStyle={{ height: 30 }}
+                                  selectedButtonStyle={s.buttonStyle}
+                                  selectedTextStyle={s.textStyle}
+                              />
+                              <View style={{ flex: 1, position: 'absolute', left: 0, top: 65, bottom: 0, right: 0 }}>
+                                  <FlatList
+                                      data={this.state.locations}
+                                      extraData={this.state}
+                                      renderItem={({ item }) => 
+                                          <LocationCard
+                                              name={item.location.name}
+                                              distance={getDistance(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon)}
+                                              street={item.location.street}
+                                              state={item.location.state}
+                                              zip={item.location.zip}
+                                              machines={item.location.machines} 
+                                              type={item.location.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location.location_type_id).name : ""}
+                                              navigation={this.props.navigation}
+                                              id={item.location.id}
+                                          />
+                                      }
+                                      keyExtractor={(item, index) => `list-item-${index}`}
+                                  />
+                              </View>
+                          </View> : 
+                          <View>
+                              <Text>{`You have no saved locations. To save your favorite locations, lookup a location then click the heart icon.`}</Text>
+                          </View> 
                       }
-                      keyExtractor={(item, index) => `list-item-${index}`}
+                  </View>:
+                  <NotLoggedIn 
+                      text={`Please login to start saving your favorite locations.`}
+                      title={'Saved Locations'}
+                      onPress={() => this.props.navigation.navigate('Login')}
                   />
-              </View>
+              }
           </View>
       )
   }

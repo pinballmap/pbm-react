@@ -12,7 +12,6 @@ class SaveAddMachine extends Component {
     }
 
     addMachine = () => {
-        //this.props.addMachineToLocation()
         this.setState({ showModal: false })
     }
 
