@@ -1,6 +1,6 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import { StyleSheet, Text } from 'react-native'
 
 import FilterMap from '../screens/FilterMap.js'

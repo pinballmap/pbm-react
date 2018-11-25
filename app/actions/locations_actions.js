@@ -6,7 +6,7 @@ import {
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
     REFETCHING_LOCATIONS,
-    SET_SELECTED_LMX
+    SELECT_LOCATION_LIST_FILTER_BY,
 } from './types'
 
 import { getData, putData } from '../config/request'
@@ -50,8 +50,11 @@ export const getLocationsSuccess = (data) => {
   
 export const getLocationsFailure = () => ({ type: FETCHING_LOCATIONS_FAILURE })
 
-export const confirmLocationIsUpToDate = (body, id) => {
-    return putData(`/locations/${id}/confirm.json`, body)
-        .then(() => getData(`/locations/${this.id}.json`))
-        .catch(err => console.log(err))
+export const selectLocationListFilterBy = idx => {
+    return {
+        type: SELECT_LOCATION_LIST_FILTER_BY,
+        idx,
+    }
 }
+
+

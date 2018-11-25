@@ -6,6 +6,7 @@ import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { LocationCard } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
+import { selectLocationListFilterBy } from '../actions/locations_actions'
 
 const moment = require('moment')
 
@@ -14,7 +15,6 @@ export class LocationList extends Component {
         super(props)
 
         this.state = {
-            buttonIndex: 0,
             locations: this.props.locations.mapLocations,
         }
     }
@@ -24,18 +24,19 @@ export class LocationList extends Component {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
             title: 'LocationList',
         }
-    };
+    }
+
+    updateIndex = (buttonIndex) => this.props.selectLocationListFilterBy(buttonIndex)
     
-    updateIndex = (buttonIndex) => {
-        this.setState({ buttonIndex })
-        switch(buttonIndex) {
+    sortLocations(locations, idx) {
+        switch(idx) {
         case 0:
             return this.setState({
-                locations: this.state.locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, b.lat, b.lon))
+                locations: locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, b.lat, b.lon))
             })
         case 1:
             return this.setState({
-                locations: this.state.locations.sort((a, b) => {
+                locations: locations.sort((a, b) => {
                     const locA = a.name.toUpperCase()  
                     const locB = b.name.toUpperCase()
                     return locA < locB ? -1 : locA === locB ? 0 : 1
@@ -43,9 +44,23 @@ export class LocationList extends Component {
             })
         case 2:
             return this.setState({
-                locations: this.state.locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
+                locations: locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
             })
         }
+    }
+
+    UNSAFE_componentWillReceiveProps(props) {
+        if (this.state.locations !== props.locations.mapLocations) {
+            this.sortLocations(props.locations.mapLocations, this.props.locations.selectedLocationListFilter)
+        }
+  
+        if (this.props.locations.selectedLocationListFilter !== props.locations.selectedLocationListFilter) {
+            this.sortLocations(this.state.locations, props.locations.selectedLocationListFilter)
+        }
+    }
+  
+    componentDidMount() {
+        this.sortLocations(this.state.locations, this.props.locations.selectedLocationListFilter)
     }
 
     render() {
@@ -54,7 +69,7 @@ export class LocationList extends Component {
                 <Text style={s.sort}>SORT BY:</Text>
                 <ButtonGroup
                     onPress={this.updateIndex}
-                    selectedIndex={this.state.buttonIndex}
+                    selectedIndex={this.props.locations.selectedLocationListFilter}
                     buttons={['Distance', 'Alphabetically', 'Last Updated']}
                     containerStyle={{ height: 30 }}
                     selectedButtonStyle={s.buttonStyle}
@@ -103,7 +118,11 @@ LocationList.propTypes = {
     locations: PropTypes.object, 
     user: PropTypes.object, 
     navigation: PropTypes.object,
+    selectLocationListFilterBy: PropTypes.func,
 }
 
 const mapStateToProps = ({ locations, user }) => ({ locations, user })
-export default connect(mapStateToProps)(LocationList)
+const mapDispatchToProps = dispatch => ({
+    selectLocationListFilterBy: idx => dispatch(selectLocationListFilterBy(idx))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LocationList)
