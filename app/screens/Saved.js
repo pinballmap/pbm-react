@@ -7,6 +7,7 @@ import { HeaderBackButton } from 'react-navigation'
 import { LocationCard, NotLoggedIn } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
+import { FontAwesome } from '@expo/vector-icons'
 
 const moment = require('moment')
 
@@ -101,7 +102,9 @@ export class LocationList extends Component {
                               </View>
                           </View> : 
                           <View style={{margin:15}}>
-                              <Text style={{fontSize:15}}>{`You have no saved locations. To save your favorite locations, lookup a location then click the heart icon.`}</Text>
+                              <Text style={{fontSize:18,textAlign:'center',color:'#444444'}}>{`You have no saved locations.`}</Text>
+                              <FontAwesome name="heart-o" style={s.savedIcon} />
+                              <Text style={{fontSize:18,textAlign:'center'}}>{`To save your favorite locations, lookup a location then click the heart icon.`}</Text>
                           </View> 
                       }
                   </View>:
@@ -127,6 +130,13 @@ const s = StyleSheet.create({
     textStyle: {
         color: '#000000',
         fontWeight: 'bold',
+    },
+    savedIcon: {
+        fontSize: 50,
+        marginTop: 15,
+        marginBottom: 15,
+        textAlign: 'center',
+        color: '#F53240'
     },
 })
 
