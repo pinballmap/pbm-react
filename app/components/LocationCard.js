@@ -19,7 +19,7 @@ class LocationCard extends Component {
                                 <Text style={s.locationName}>{this.props.name}</Text>
                             </View>
                             <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
-                            {this.props.type && <Text style={[s.gray,s.italic,s.marginS]}>({this.props.type})</Text>}
+                            {this.props.type ? <Text style={[s.gray,s.italic,s.marginS]}>({this.props.type})</Text> : null}
                             <Text style={[s.gray,s.marginS]}>{this.props.distance.toFixed(2)} miles away</Text>
                             <View style={s.margin}>
                                 {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
@@ -34,7 +34,7 @@ class LocationCard extends Component {
                                         </Text>
                                     )})
                                 }
-                                {numMachines > NUM_MACHINES_TO_SHOW && <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text>}
+                                {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                             </View>
                         </View>
                         <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
