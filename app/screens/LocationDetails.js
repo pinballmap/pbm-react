@@ -403,7 +403,7 @@ const s = StyleSheet.create({
         top: 0,
         right: 5,
         fontSize: 24,
-        color: 'red',
+        color: '#F53240',
         padding: 10
     },
     savedIcon: {
