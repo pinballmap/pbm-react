@@ -30,7 +30,7 @@ class Map extends Component {
             },
             authCheck: false, 
             address: '', 
-            locations: this.props.locations.mapLocations,
+            locations: this.props.locations.mapLocations ? this.props.locations.mapLocations : [],
         }
     }
 
@@ -108,7 +108,7 @@ class Map extends Component {
       this.props.getOperators('/operators.json')
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
       if (!this.props.user.lat && props.user.lat) {
           this.setState({
               region: {
@@ -172,6 +172,7 @@ class Map extends Component {
 
       return(
           <View style={{flex: 1}}>
+              {this.props.locations.isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : <Text></Text>}
               <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
                   <MapView
                       ref={this.mapRef}
@@ -180,7 +181,7 @@ class Map extends Component {
                       style={s.map}
                       onRegionChange={this.onRegionChange}
                   >
-                      {this.state.locations && this.state.locations.map(l => (
+                      {this.state.locations.map(l => (
                           <MapView.Marker
                               coordinate={{
                                   latitude: Number(l.lat), 
@@ -199,7 +200,6 @@ class Map extends Component {
                               </MapView.Callout>
                           </MapView.Marker>
                       ))}
-                      {this.props.locations.isRefetchingLocations ? <Text style={{textAlign:'center'}}>Loading...</Text> : <Text></Text>}
                   </MapView>
               </View>
           </View>
@@ -225,7 +225,12 @@ const s = StyleSheet.create({
     titleStyle: {
         color:"#260204",
         fontSize:16,
-    }
+    }, 
+    loading: {
+        textAlign: 'center',
+        zIndex: 10, 
+        fontSize: 18,
+    },
 })
 
 Map.propTypes = {
@@ -240,6 +245,7 @@ Map.propTypes = {
     updateCoordinates: PropTypes.func,
     login: PropTypes.func,
     navigation: PropTypes.object,
+    getFavoriteLocations: PropTypes.func,
 }
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
