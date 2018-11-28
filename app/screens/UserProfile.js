@@ -185,6 +185,7 @@ const s = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#888888',
         borderRadius: 5,
+        borderColor: '#888888',
     },
     margin15: {
         marginLeft:15,

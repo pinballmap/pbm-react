@@ -282,7 +282,7 @@ class LocationDetails extends Component {
                                     </Text></Text> : null}
 
                                 {location.description ? <Text style={[s.meta,s.italic]}>
-                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text>: null}                                   
+                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text> : null}                                   
 
                             </View>
                         }
@@ -416,6 +416,7 @@ const s = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#888888',
         borderRadius: 5,
+        elevation: 0
     },
 })
 
