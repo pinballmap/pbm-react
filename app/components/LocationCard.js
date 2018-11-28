@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import { Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -14,7 +14,7 @@ class LocationCard extends Component {
             <Card>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('LocationDetails', {id: this.props.id, locationName: this.props.name})}>
                     <View style={s.flexi}>
-                        <View style={{width: '95%',zIndex: 10}}>
+                        <View style={{width: '100%',zIndex: 10}}>
                             <View style={s.locationNameContainer}>
                                 <Text style={s.locationName}>{this.props.name}</Text>
                             </View>
@@ -28,7 +28,7 @@ class LocationCard extends Component {
                                     const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
                                     const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                     return (
-                                        <Text key={key} style={{marginBottom:-10}}>
+                                        <Text key={key} style={s.mName}>
                                             <Text style={{fontWeight: 'bold',fontSize: 15}}>{title}</Text>
                                             <Text>{`${info}\n`}</Text>
                                         </Text>
@@ -53,8 +53,11 @@ const s = StyleSheet.create({
         alignContent: 'space-around',
         marginBottom: -10
     },
+    mName: {
+        marginBottom: Platform.OS === 'ios' ? -10 : 0,
+    },
     locationNameContainer: {
-        width: '105%',
+        width: '100%',
         backgroundColor: "#D3ECFF",
         marginBottom: 5,
         padding: 5,
@@ -66,7 +69,7 @@ const s = StyleSheet.create({
     },
     margin: {
         marginTop: 5,
-        marginLeft: 5
+        marginLeft: 5,
     },
     marginS: {
         marginTop: 3,
@@ -81,7 +84,7 @@ const s = StyleSheet.create({
     iconStyle: {
         fontSize: 32,
         color: '#eeeeee',
-        marginRight: -5,
+        marginRight: 0,
         position: "absolute",
         right: 0,
         zIndex: 5
