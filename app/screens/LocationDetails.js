@@ -41,7 +41,7 @@ class LocationDetails extends Component {
     getTitle = machine => (
         <Text style={{marginTop:5,marginBottom:0}}>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year && <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text>}
+            {machine.year ? <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
@@ -86,6 +86,7 @@ class LocationDetails extends Component {
             <ScrollView style={{ flex: 1 }}>
                 <Modal 
                     visible={favoriteModalVisible}
+                    onRequestClose={()=>{}}
                 >
                     <View style={{marginTop: 100}}>
                         {addingFavoriteLocation || removingFavoriteLocation ?
@@ -131,6 +132,7 @@ class LocationDetails extends Component {
                 </Modal>
                 <Modal 
                     visible={errorModalVisible}
+                    onRequestClose={()=>{}}
                 >
                     <View style={{marginTop: 100}}>
                         <Text>{errorText}</Text>
@@ -201,7 +203,7 @@ class LocationDetails extends Component {
                         />
                         {this.state.buttonIndex === 0 ?
                             <View>
-                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                {location.date_last_updated ? <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_id  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text> : null}
                                 <View>
                                     <Button
                                         onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
@@ -242,8 +244,8 @@ class LocationDetails extends Component {
                                             title={this.getTitle(machine)}
                                             subtitle={
                                                 <View style={s.condition}>
-                                                    {machine.condition && <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text>}
-                                                    {machine.condition_date && <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text>}
+                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text> : null}
+                                                    {machine.condition_date ? <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
                                                 </View>
                                             }
                                             rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -262,25 +264,25 @@ class LocationDetails extends Component {
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
                                 {this.props.user.lat && this.props.user.lon && <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>}
                                 
-                                {location.phone && <Text style={[s.phone,s.font18,s.marginB8]} 
+                                {location.phone ? <Text style={[s.phone,s.font18,s.marginB8]} 
                                     onPress={() => Linking.openURL(`tel:${location.phone}`)}>
-                                    {location.phone}</Text>}
+                                    {location.phone}</Text> : null}
 
-                                {location.website && <Text style={[s.website,s.font18,s.marginB8]}
+                                {location.website ? <Text style={[s.website,s.font18,s.marginB8]}
                                     onPress={() => Linking.openURL(location.website)}
-                                >Website</Text>}
+                                >Website</Text> : null}
                                 
-                                {location.location_type_id && <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
+                                {location.location_type_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
                                     {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                </Text></Text>}
+                                </Text></Text> : null}
 
-                                {location.operator_id && <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
+                                {location.operator_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
                                     <Text style={s.notItalic}>
                                         {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
-                                    </Text></Text>}
+                                    </Text></Text> : null}
 
-                                {location.description && <Text style={[s.meta,s.italic]}>
-                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text>}                                   
+                                {location.description ? <Text style={[s.meta,s.italic]}>
+                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text>: null}                                   
 
                             </View>
                         }
