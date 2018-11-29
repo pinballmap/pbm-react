@@ -49,7 +49,7 @@ class UserProfile extends Component {
         const { user } = this.props
         const profileInfo = this.state.profile_info
 
-        return(
+        return (
             <View>
                 <Modal
                     animationType="slide"

@@ -74,6 +74,7 @@ class FindMachine extends Component {
             <View>
                 <Modal
                     visible={this.state.showModal}
+                    onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
