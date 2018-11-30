@@ -87,6 +87,7 @@ class MachineDetails extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.showAddConditionModal}
+                    onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
@@ -94,6 +95,7 @@ class MachineDetails extends Component {
                             <TextInput
                                 multiline={true}
                                 numberOfLines={4}
+                                underlineColorAndroid='transparent'
                                 onChangeText={conditionText => this.setState({ conditionText })}
                                 value={this.state.conditionText}
                                 style={[{padding:5,height: 100},s.textInput]}
@@ -107,7 +109,8 @@ class MachineDetails extends Component {
                                 buttonStyle={s.blueButton}
                                 titleStyle={s.titleStyle}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50,paddingTop:10},s.margin10]}
+                                disabledStyle={{borderRadius:50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <Button
                                 title={'Cancel'}
@@ -125,6 +128,7 @@ class MachineDetails extends Component {
                     animationType="slide"
                     transparent={false}
                     visible={this.state.showAddScoreModal}
+                    onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
@@ -132,6 +136,7 @@ class MachineDetails extends Component {
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
                                 keyboardType='numeric'
+                                underlineColorAndroid='transparent'
                                 onChangeText={score => this.setState({ score })}
                                 value={this.state.score}
                                 returnKeyType="done"
@@ -145,7 +150,8 @@ class MachineDetails extends Component {
                                 buttonStyle={s.blueButton}
                                 titleStyle={s.titleStyle}
                                 style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50,paddingTop:10},s.margin10]}
+                                disabledStyle={{borderRadius:50}}
+                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <Button 
                                 title={'Cancel'}
@@ -264,7 +270,8 @@ const s = StyleSheet.create({
         backgroundColor:'rgba(38,2,4,.1)',
         borderWidth: 1,
         borderColor: '#888888',
-        borderRadius: 5
+        borderRadius: 5,
+        elevation: 0
     },
     externalIcon: {
         fontSize: 24
