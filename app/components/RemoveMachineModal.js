@@ -15,7 +15,9 @@ class RemoveMachineModal extends Component {
         const { curLmx, location } = this.props.location
     
         return(
-            <Modal>
+            <Modal
+                onRequestClose={()=>{}}
+            >
                 <View style={{marginTop: 50}}>
                     {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
                     <Button 
