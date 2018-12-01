@@ -104,6 +104,8 @@ class FindMachine extends Component {
                                 style={[{padding:5,height: 100},s.textInput]}
                                 value={this.state.condition}
                                 onChangeText={condition => this.setState({ condition })}
+                                textAlignVertical='top'
+                                underlineColorAndroid='transparent'
                             />
                         </View>
                     </TouchableWithoutFeedback>
