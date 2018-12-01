@@ -74,6 +74,7 @@ class FindMachine extends Component {
             <View>
                 <Modal
                     visible={this.state.showModal}
+                    onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{paddingTop: 50}}>
@@ -103,6 +104,8 @@ class FindMachine extends Component {
                                 style={[{padding:5,height: 100},s.textInput]}
                                 value={this.state.condition}
                                 onChangeText={condition => this.setState({ condition })}
+                                textAlignVertical='top'
+                                underlineColorAndroid='transparent'
                             />
                         </View>
                     </TouchableWithoutFeedback>

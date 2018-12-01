@@ -49,7 +49,7 @@ class UserProfile extends Component {
         const { user } = this.props
         const profileInfo = this.state.profile_info
 
-        return(
+        return (
             <View>
                 <Modal
                     animationType="slide"
@@ -94,11 +94,26 @@ class UserProfile extends Component {
                     <ScrollView style={{backgroundColor:'#ffffff'}}>
                         <Text style={s.username}>{user.username}</Text>
                         <Text style={s.member}>{`Member since: ${moment(profileInfo.created_at).format('MMM-DD-YYYY')}`}</Text>
-                        <Text style={s.stat}>Machines Added: <Text style={s.statNum}>{` ${profileInfo.num_machines_added} `}</Text></Text>
-                        <Text style={s.stat}>Machines Removed: <Text style={s.statNum}>{` ${profileInfo.num_machines_removed} `}</Text></Text>
-                        <Text style={s.stat}>Machines Comments: <Text style={s.statNum}>{` ${profileInfo.num_lmx_comments_left} `}</Text></Text>
-                        <Text style={s.stat}>Locations Submitted: <Text style={s.statNum}>{` ${profileInfo.num_locations_suggested} `}</Text></Text>
-                        <Text style={s.stat}>Locations Edited: <Text style={s.statNum}>{` ${profileInfo.num_locations_edited} `}</Text></Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={s.stat}>Machines Added:</Text>
+                            <Text style={s.statNum}>{` ${profileInfo.num_machines_added} `}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={s.stat}>Machines Removed:</Text>
+                            <Text style={s.statNum}>{` ${profileInfo.num_machines_removed} `}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={s.stat}>Machines Comments:</Text>
+                            <Text style={s.statNum}>{` ${profileInfo.num_lmx_comments_left} `}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={s.stat}>Locations Submitted:</Text>
+                            <Text style={s.statNum}>{` ${profileInfo.num_locations_suggested} `}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={s.stat}>Locations Edited:</Text>
+                            <Text style={s.statNum}>{` ${profileInfo.num_locations_edited} `}</Text>
+                        </View>
                         <Button 
                             title={'Saved Locations'}
                             onPress={() => this.props.navigation.navigate('Saved')}
@@ -185,6 +200,7 @@ const s = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#888888',
         borderRadius: 5,
+        elevation: 0
     },
     margin15: {
         marginLeft:15,
@@ -205,12 +221,16 @@ const s = StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: "#444444"
+        color: "#444444",
+        width: 200
     },
     statNum: {
         fontWeight: "bold",
         color: "#000000",
         backgroundColor: "#D3ECFF",
+        fontSize: 16,
+        marginTop: 5,
+        marginLeft: 10
     },
     member: {
         textAlign:"center",
