@@ -100,6 +100,7 @@ class MachineDetails extends Component {
                                 value={this.state.conditionText}
                                 style={[{padding:5,height: 100},s.textInput]}
                                 placeholder={'Enter machine condition...'}
+                                textAlignVertical='top'
                             />
                             <Button
                                 title={'Add Condition'}
