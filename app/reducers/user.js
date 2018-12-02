@@ -53,8 +53,8 @@ export default (state = initialState, action) => {
         return {
             ...state,
             isFetchingLocationTrackingEnabled: false,
-            lat: null,
-            lon: null,
+            lat: 45.51322,
+            lon: -122.6587,
             locationTrackingServicesEnabled: false,
         }
     case LOG_IN: {
