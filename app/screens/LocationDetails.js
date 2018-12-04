@@ -30,12 +30,18 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
-            headerTitleStyle: {width:deviceWidth - 100}
+            headerTitleStyle: {width:deviceWidth - 100},
+            headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?                 
+                <Text
+                    style={{color: "#F53240", fontSize: 18, marginRight: 10}}
+                    onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
+                >Edit</Text> : null
         }
-    };
+    }
 
     updateIndex = buttonIndex => {
         this.setState({ buttonIndex })
+        buttonIndex === 1 ? this.props.navigation.setParams({buttonIndex: 1}) : this.props.navigation.setParams({buttonIndex: 0})
     }
 
     getTitle = machine => (
@@ -61,6 +67,7 @@ class LocationDetails extends Component {
             
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
+        this.props.navigation.setParams({loggedIn: this.props.user.loggedIn, buttonIndex: 0})
     }
 
     render() {

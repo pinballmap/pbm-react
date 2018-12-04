@@ -22,6 +22,7 @@ import SuggestLocation from '../screens/SuggestLocation'
 import Events from '../screens/Events'
 import Blog from '../screens/Blog'
 import FindMachine from '../screens/FindMachine'
+import EditLocationDetails from '../screens/EditLocationDetails'
 
 const TabNav = TabNavigator({
     Map: { screen: Map },
@@ -110,6 +111,7 @@ export const MapStack = StackNavigator({
     About: { screen: About },
     Podcast: { screen: Podcast },
     FindMachine: { screen: FindMachine },
+    EditLocationDetails: { screen: EditLocationDetails },
 })
 
 export const PbmStack = DrawerNavigator({
