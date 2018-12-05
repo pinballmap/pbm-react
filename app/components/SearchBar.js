@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Platform } from 'react-native'
 import { Button } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -42,12 +42,16 @@ class SearchBar extends Component {
 
     render(){
         return(
-            <View style={{flexDirection: 'row'}}>
+            <View style={Platform.OS === 'android' ? s.viewAndroid : s.viewIOS}>
                 <Autocomplete
                     data={this.state.foundItems} 
                     defaultValue={this.props.query.currQueryString}
                     placeholder={'City, Address, Location'}
                     style={s.searchBox}
+                    inputContainerStyle={s.inputContainer}
+                    listContainerStyle={s.listContainer}
+                    listStyle={s.list}
+                    containerStyle={Platform.OS === 'android' ? s.androidAutocompleteContainer : null}
                     underlineColorAndroid='transparent'
                     selectionColor='#000000'
                     onChangeText={query => this.props.updateQuery(query)}
@@ -95,6 +99,15 @@ const s = StyleSheet.create({
         color: "#260204",
         padding: 5
     },
+    viewIOS: {
+        flexDirection: 'row',
+    },
+    viewAndroid: {
+        flexDirection: 'row',
+        position: "absolute",
+        top: 12,
+        zIndex: 999
+    },
     addButton: {
         backgroundColor: "transparent",
         paddingLeft: 5
@@ -102,12 +115,26 @@ const s = StyleSheet.create({
     searchBox: {
         width: deviceWidth - 140,
         height: 30,
-        padding: 5
+        padding: 5,
+    },
+    listContainer: {
+        width: deviceWidth - 140,
+        //zIndex: 999,
+    },
+    list: {
+        //zIndex: 999,
+        //maxHeight: 400
     },
     location: {
         marginLeft: 5,
         marginTop: 5,
         color: "#260204"
+    },
+    inputContainer: {
+        //borderRadius: 5,   
+    },
+    androidAutocompleteContainer: {
+        zIndex: 999,
     }
 })
 
