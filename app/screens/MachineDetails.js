@@ -73,9 +73,10 @@ class MachineDetails extends Component {
 
         const { loggedIn } = this.props.user
         const { ipdb_link } = this.props.machineDetails
-        const pintipsUrl = curLmx.machine_group_id ? 
-            `http://pintips.net/pinmap/group/${curLmx.machine_group_id}` :
-            `http://pintips.net/pinmap/machine/${curLmx.machine_id}`
+        const { opdb_id } = this.props.machineDetails
+        const pintipsUrl = opdb_id ? 
+            `http://pintips.net/opdb/${opdb_id}` :
+            ``
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.length > 0 ? curLmx.machine_score_xrefs.reverse() : undefined
@@ -224,18 +225,22 @@ class MachineDetails extends Component {
                         }) : 
                         <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>
                     }
-                    <Button
-                        title={'View playing tips on pintips.net'}
-                        onPress={() => Linking.openURL(pintipsUrl)}
-                        buttonStyle={s.externalLink}
-                        titleStyle={{
-                            color:"black", 
-                            fontSize:16
-                        }}
-                        iconRight
-                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                        containerStyle={s.margin15}
-                    />
+                    
+                    {pintipsUrl ?
+                        <Button
+                            title={'View playing tips on PinTips'}
+                            onPress={() => Linking.openURL(pintipsUrl)}
+                            buttonStyle={s.externalLink}
+                            titleStyle={{
+                                color:"black", 
+                                fontSize:16
+                            }}
+                            iconRight
+                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                            containerStyle={s.margin15}
+                        /> :
+                        ''
+                    }
                     <Button
                         title={'View on IPDB'}
                         onPress={() => Linking.openURL(ipdb_link)}
