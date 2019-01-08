@@ -26,6 +26,8 @@ class FAQ extends Component {
                         <Text style={s.text}>{`Click on the machine name, and then look for a "remove" button.`}</Text>
                         <Text style={s.bold}>{`This location closed/no longer has machines.`}</Text>
                         <Text style={s.text}>{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+                        <Text style={s.bold}>{`What is your privacy policy?`}</Text>
+                        <Text style={s.text}>{`We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.`}</Text>
                         <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
                     </View>  
                 </View>
