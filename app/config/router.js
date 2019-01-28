@@ -61,8 +61,7 @@ const TabNav = TabNavigator({
             case 'Profile':
                 return label = focused ? <Text style={s.activeTabText}>Profile</Text> : <Text style={s.inactiveTabText}>Profile</Text>
             case 'Menu':
-                return label = focused ? <Text style={s.activeTabText}>More</Text> : <Text style={s.inactiveTabText}>More</Text>
-            
+                return label = focused ? <Text style={s.activeTabText}>More</Text> : <Text style={s.inactiveTabText}>More</Text>         
             }
             return label
         },
