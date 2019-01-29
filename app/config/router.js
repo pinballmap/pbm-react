@@ -45,7 +45,7 @@ const TabNav = TabNavigator({
             case 'Profile':
                 return <MaterialIcons name='face' size={(focused) ? 28 : 26} color={tintColor} />
             case 'Menu':
-                return <MaterialIcons name='menu' size={50} color={tintColor} />
+                return <MaterialIcons name='more-horiz' size={(focused) ? 30 : 28} color={tintColor} />
             }
         },
         tabBarLabel: ({ focused, tintColor }) => {
@@ -61,7 +61,7 @@ const TabNav = TabNavigator({
             case 'Profile':
                 return label = focused ? <Text style={s.activeTabText}>Profile</Text> : <Text style={s.inactiveTabText}>Profile</Text>
             case 'Menu':
-                return label = null
+                return label = focused ? <Text style={s.activeTabText}>More</Text> : <Text style={s.inactiveTabText}>More</Text>         
             }
             return label
         },
