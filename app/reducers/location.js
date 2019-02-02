@@ -11,6 +11,8 @@ import {
     ADDING_MACHINE_TO_LOCATION,
     MACHINE_ADDED_TO_LOCATION,
     MACHINE_ADDED_TO_LOCATION_FAILURE,
+    UPDATING_LOCATION_DETAILS,
+    LOCATION_DETAILS_UPDATED,
 } from '../actions/types'
 
 const moment = require('moment')
@@ -22,6 +24,7 @@ export const initialState = {
     confirmationMessage: '',
     curLmx: null,
     addingMachineToLocation: false,
+    updatingLocationDetails: false,
 }
 
 export default (state = initialState, action) => {
@@ -139,6 +142,27 @@ export default (state = initialState, action) => {
             ...state,
             addingMachineToLocation: false,
         }
+    case UPDATING_LOCATION_DETAILS:
+        return {
+            ...state,
+            updatingLocationDetails: true,
+        }
+    case LOCATION_DETAILS_UPDATED: {
+        const { phone, website, description, operator_id, location_type_id } =  action.data.location
+        return {
+            ...state,
+            updatingLocationDetails: false,
+            location: {
+                ...state.location,
+                last_updated_by_username: action.username,   
+                date_last_updated: moment().format('YYYY-MM-DD'),
+                phone,
+                website,
+                description,
+                operator_id,
+                location_type_id,
+            },
+        }}
     default:
         return state
     }

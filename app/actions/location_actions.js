@@ -12,6 +12,9 @@ import {
     MACHINE_ADDED_TO_LOCATION,
     MACHINE_ADDED_TO_LOCATION_FAILURE,
     DISPLAY_API_ERROR,
+    UPDATING_LOCATION_DETAILS,
+    LOCATION_DETAILS_UPDATED,
+    FAILED_LOCATION_DETAILS_UPDATE,
 } from './types'
 
 import { getData, postData, putData, deleteData } from '../config/request'
@@ -153,3 +156,38 @@ export const addMachineToLocationFailure = (err) => dispatch => {
     dispatch({type: DISPLAY_API_ERROR, err: err.message})
     dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
 } 
+
+export const updateLocationDetails = (goBack, phone, website, description, location_type, operator_id) => (dispatch, getState) => {
+    dispatch({ type: UPDATING_LOCATION_DETAILS })
+
+    const { email, authentication_token, username } = getState().user
+    const { id } = getState().location.location
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        phone, 
+        website,
+        description,
+    }
+    
+    // Must submit int if submitting for these attributes
+    if (location_type !== 'NONE')
+        body.location_type = location_type
+
+    if (operator_id !== 'NONE')
+        body.operator_id = operator_id
+
+    return putData(`/locations/${id}.json`, body)
+        .then(data => dispatch(locationDetailsUpdated(goBack, data, username)))
+        .catch(err => dispatch(updateLocationDetailsFailure(err)))
+}
+
+export const locationDetailsUpdated = (goBack, data, username) => dispatch => {
+    dispatch({type: LOCATION_DETAILS_UPDATED, data, username})
+    goBack()
+}
+
+export const updateLocationDetailsFailure = (err) => dispatch => {
+    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: FAILED_LOCATION_DETAILS_UPDATE})
+}
