@@ -31,11 +31,15 @@ class LocationDetails extends Component {
             headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
             headerTitleStyle: {width:deviceWidth - 100},
-            headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?                 
-                <Text
-                    style={{color: "#F53240", fontSize: 18, marginRight: 10}}
+            headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
+                <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
-                >Edit</Text> : null
+                    containerStyle={{width:50}}
+                    title="Edit"
+                    accessibilityLabel="Edit"
+                    titleStyle={{color: "#F53240", fontSize: 18}}
+                    clear={true}
+                /> : null
         }
     }
 
