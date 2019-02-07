@@ -7,11 +7,20 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { fetchLocation } from '../actions/location_actions'
-import { closeConfirmModal, confirmLocationIsUpToDate, setCurrentMachine } from '../actions/location_actions'
-import { addFavoriteLocation, removeFavoriteLocation, closeFavoriteLocationModal } from '../actions/user_actions'
-import { clearError } from '../actions/error_actions'
+import { ConfirmationModal } from '../components'
+import { 
+    addFavoriteLocation,
+    clearError,
+    closeConfirmModal, 
+    closeFavoriteLocationModal, 
+    confirmLocationIsUpToDate, 
+    fetchLocation,
+    removeFavoriteLocation,
+    setCurrentMachine, 
+} from '../actions'
+
 import { alphaSort, getDistance } from '../utils/utilityFunctions'
+
 
 const moment = require('moment')
 
@@ -95,51 +104,44 @@ class LocationDetails extends Component {
 
         return (
             <ScrollView style={{ flex: 1 }}>
-                <Modal 
-                    animationType="slide"
-                    transparent={true}
-                    visible={favoriteModalVisible}
-                    onRequestClose={()=>{}}
-                >
-                    <View style={ s.modalBg}>
-                        {addingFavoriteLocation || removingFavoriteLocation ?
-                            <ActivityIndicator /> : 
-                            <View style={ s.modal }>
-                                <Text style={s.confirmText}>{favoriteModalText}</Text> 
-                                <View> 
-                                    <Button
-                                        title={"Great!"}
-                                        onPress={this.props.closeFavoriteLocationModal}
-                                        accessibilityLabel="Great!"
-                                        raised
-                                        buttonStyle={s.blueButton}
-                                        titleStyle={{
-                                            color:"black", 
-                                            fontSize:18
-                                        }}
-                                        style={{borderRadius: 50}}
-                                        containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
-                                    />
-                                    <Button 
-                                        title={'View Saved Locations'}
-                                        onPress={() => {
-                                            this.props.closeFavoriteLocationModal()
-                                            this.props.navigation.navigate('Saved')
-                                        }}
-                                        buttonStyle={s.savedLink}
-                                        titleStyle={{
-                                            color:"black", 
-                                            fontSize:16
-                                        }}
-                                        iconLeft
-                                        icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                        containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
-                                    />
-                                </View>
+                <ConfirmationModal visible={favoriteModalVisible}>
+                    {addingFavoriteLocation || removingFavoriteLocation ?
+                        <ActivityIndicator /> : 
+                        <View>
+                            <Text style={s.confirmText}>{favoriteModalText}</Text> 
+                            <View> 
+                                <Button
+                                    title={"Great!"}
+                                    onPress={this.props.closeFavoriteLocationModal}
+                                    accessibilityLabel="Great!"
+                                    raised
+                                    buttonStyle={s.blueButton}
+                                    titleStyle={{
+                                        color:"black", 
+                                        fontSize:18
+                                    }}
+                                    style={{borderRadius: 50}}
+                                    containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
+                                />
+                                <Button 
+                                    title={'View Saved Locations'}
+                                    onPress={() => {
+                                        this.props.closeFavoriteLocationModal()
+                                        this.props.navigation.navigate('Saved')
+                                    }}
+                                    buttonStyle={s.savedLink}
+                                    titleStyle={{
+                                        color:"black", 
+                                        fontSize:16
+                                    }}
+                                    iconLeft
+                                    icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
+                                    containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
+                                />
                             </View>
-                        }
-                    </View>
-                </Modal>
+                        </View>
+                    }
+                </ConfirmationModal>
                 <Modal 
                     visible={errorModalVisible}
                     onRequestClose={()=>{}}
@@ -152,36 +154,27 @@ class LocationDetails extends Component {
                         />
                     </View>
                 </Modal>
-                <Modal 
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.props.location.confirmModalVisible}
-                    onRequestClose={()=>{}}
-                >
-                    <View style={ s.modalBg }>
-                        <View style={ s.modal }>
-                            <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
-                            <View> 
-                                <Button
-                                    title={"You're Welcome"}
-                                    onPress={this.props.closeConfirmModal}
-                                    accessibilityLabel="You're Welcome"
-                                    raised
-                                    buttonStyle={s.blueButton}
-                                    titleStyle={{
-                                        color:"black", 
-                                        fontSize:18
-                                    }}
-                                    style={{borderRadius: 50}}
-                                    containerStyle={{marginTop:20,marginBottom:10,marginRight:30,marginLeft:30,borderRadius:50}}
-                                />
-                            </View>
-                            <View style={s.logoWrapper}>
-                                <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
-                            </View>
-                        </View>
+                <ConfirmationModal visible={this.props.location.confirmModalVisible}>
+                    <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
+                    <View> 
+                        <Button
+                            title={"You're Welcome"}
+                            onPress={this.props.closeConfirmModal}
+                            accessibilityLabel="You're Welcome"
+                            raised
+                            buttonStyle={s.blueButton}
+                            titleStyle={{
+                                color:"black", 
+                                fontSize:18
+                            }}
+                            style={{borderRadius: 50}}
+                            containerStyle={{marginTop:20,marginBottom:10,marginRight:30,marginLeft:30,borderRadius:50}}
+                        />
                     </View>
-                </Modal>
+                    <View style={s.logoWrapper}>
+                        <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                    </View>
+                </ConfirmationModal>
                 <View style={{ flex: 1, position: 'relative' }}>
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
@@ -430,20 +423,6 @@ const s = StyleSheet.create({
         borderRadius: 5,
         elevation: 0
     },
-    modalBg: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
-    },
-    modal: {
-        backgroundColor: '#ffffff',
-        borderRadius: 15,
-        width: '80%',
-        paddingTop: 15,
-        paddingBottom: 15
-    }
 })
 
 LocationDetails.propTypes = {
