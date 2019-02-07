@@ -16,28 +16,32 @@ class RemoveMachineModal extends Component {
     
         return(
             <Modal
+                animationType="slide"
+                transparent={true}
                 onRequestClose={()=>{}}
             >
-                <View style={{marginTop: 50}}>
-                    {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
-                    <Button 
-                        title={'Yes, Remove It'}
-                        onPress={() => this.removeLmx(curLmx.id)}
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={s.titleStyle}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
-                    />
-                    <Button 
-                        title={'Cancel'}
-                        onPress={() => this.props.closeModal()}
-                        raised
-                        buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#f53240'}}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
-                    />
+                <View style={s.modalBg}>
+                    <View style= {s.modal}>
+                        {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
+                        <Button 
+                            title={'Yes, Remove It'}
+                            onPress={() => this.removeLmx(curLmx.id)}
+                            raised
+                            buttonStyle={s.blueButton}
+                            titleStyle={s.titleStyle}
+                            style={{borderRadius: 50}}
+                            containerStyle={[{borderRadius:50},s.margin15]}
+                        />
+                        <Button 
+                            title={'Cancel'}
+                            onPress={() => this.props.closeModal()}
+                            raised
+                            buttonStyle={s.redButton}
+                            titleStyle={{fontSize:18,color:'#f53240'}}
+                            style={{borderRadius: 50}}
+                            containerStyle={[{borderRadius:50},s.margin15]}
+                        />
+                </View>
                 </View>
             </Modal>    
 
@@ -68,6 +72,20 @@ const s = StyleSheet.create({
         marginTop:15,
         marginBottom:15
     },
+    modalBg: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    modal: {
+        backgroundColor: '#ffffff',
+        borderRadius: 15,
+        width: '80%',
+        paddingTop: 15,
+        paddingBottom: 15
+    }
 })
 
 RemoveMachineModal.propTypes = {

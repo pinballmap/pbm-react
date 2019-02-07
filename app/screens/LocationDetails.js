@@ -96,13 +96,15 @@ class LocationDetails extends Component {
         return (
             <ScrollView style={{ flex: 1 }}>
                 <Modal 
+                    animationType="slide"
+                    transparent={true}
                     visible={favoriteModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={{marginTop: 100}}>
+                    <View style={ s.modalBg}>
                         {addingFavoriteLocation || removingFavoriteLocation ?
                             <ActivityIndicator /> : 
-                            <View>
+                            <View style={ s.modal }>
                                 <Text style={s.confirmText}>{favoriteModalText}</Text> 
                                 <View> 
                                     <Button
@@ -119,7 +121,7 @@ class LocationDetails extends Component {
                                         containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
                                     />
                                     <Button 
-                                        title={'View My Saved Locations'}
+                                        title={'View Saved Locations'}
                                         onPress={() => {
                                             this.props.closeFavoriteLocationModal()
                                             this.props.navigation.navigate('Saved')
@@ -133,9 +135,6 @@ class LocationDetails extends Component {
                                         icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
                                         containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
                                     />
-                                </View>
-                                <View style={s.logoWrapper}>
-                                    <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
                                 </View>
                             </View>
                         }
@@ -153,31 +152,33 @@ class LocationDetails extends Component {
                         />
                     </View>
                 </Modal>
-                <Modal
+                <Modal 
                     animationType="slide"
-                    transparent={false}
+                    transparent={true}
                     visible={this.props.location.confirmModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={{marginTop: 100}}>
-                        <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
-                        <View> 
-                            <Button
-                                title={"You're Welcome"}
-                                onPress={this.props.closeConfirmModal}
-                                accessibilityLabel="You're Welcome"
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={{
-                                    color:"black", 
-                                    fontSize:18
-                                }}
-                                style={{borderRadius: 50}}
-                                containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
-                            />
-                        </View>
-                        <View style={s.logoWrapper}>
-                            <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                    <View style={ s.modalBg }>
+                        <View style={ s.modal }>
+                            <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
+                            <View> 
+                                <Button
+                                    title={"You're Welcome"}
+                                    onPress={this.props.closeConfirmModal}
+                                    accessibilityLabel="You're Welcome"
+                                    raised
+                                    buttonStyle={s.blueButton}
+                                    titleStyle={{
+                                        color:"black", 
+                                        fontSize:18
+                                    }}
+                                    style={{borderRadius: 50}}
+                                    containerStyle={{marginTop:20,marginBottom:10,marginRight:30,marginLeft:30,borderRadius:50}}
+                                />
+                            </View>
+                            <View style={s.logoWrapper}>
+                                <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                            </View>
                         </View>
                     </View>
                 </Modal>
@@ -429,6 +430,20 @@ const s = StyleSheet.create({
         borderRadius: 5,
         elevation: 0
     },
+    modalBg: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    modal: {
+        backgroundColor: '#ffffff',
+        borderRadius: 15,
+        width: '80%',
+        paddingTop: 15,
+        paddingBottom: 15
+    }
 })
 
 LocationDetails.propTypes = {
