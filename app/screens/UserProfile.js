@@ -53,12 +53,12 @@ class UserProfile extends Component {
             <View>
                 <Modal
                     animationType="slide"
-                    transparent={false}
+                    transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={{marginTop: 100}}>
-                        <View>
+                    <View style={s.modalBg}>
+                        <View style={s.modal}>
                             <Button
                                 title={"Really Logout?"}
                                 onPress={() => {
@@ -74,7 +74,7 @@ class UserProfile extends Component {
                                 containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                             />
                             <Button
-                                title={"Nevermind. Stay Logged In"}
+                                title={"Stay Logged In"}
                                 onPress={() => this.setModalVisible(false)}
                                 accessibilityLabel="Stay Loggin In"
                                 raised
@@ -84,7 +84,7 @@ class UserProfile extends Component {
                                     fontSize:18
                                 }}
                                 style={{borderRadius: 50}}
-                                containerStyle={{borderRadius:50,marginLeft:15,marginRight:15}}
+                                containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginBottom:10}}
                             />
                         </View>
                     </View>
@@ -238,6 +238,20 @@ const s = StyleSheet.create({
         fontWeight:"bold",
         fontSize: 16,
         marginTop: 5
+    },
+    modalBg: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    modal: {
+        backgroundColor: '#ffffff',
+        borderRadius: 15,
+        width: '80%',
+        paddingTop: 15,
+        paddingBottom: 15
     }
 })
 
