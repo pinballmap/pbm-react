@@ -4,6 +4,7 @@ import RemoveMachineModal from './RemoveMachineModal'
 import SaveAddMachine from './SaveAddMachine'
 import SearchBar from './SearchBar'
 import NotLoggedIn from './NotLoggedIn'
+import ConfirmationModal from './ConfirmationModal'
 
 export {
     LocationCard,
@@ -12,4 +13,5 @@ export {
     SaveAddMachine,
     SearchBar,
     NotLoggedIn,
+    ConfirmationModal,
 }

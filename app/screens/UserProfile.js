@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Text, View, StyleSheet, ScrollView } from 'react-native'
+import { ActivityIndicator, Text, View, StyleSheet, ScrollView } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
-import { NotLoggedIn } from '../components'
+import { ConfirmationModal, NotLoggedIn } from '../components'
 import { getData } from '../config/request'
-import { logout } from '../actions/user_actions'
+import { logout } from '../actions'
 
 const moment = require('moment')
 
@@ -51,44 +51,35 @@ class UserProfile extends Component {
 
         return (
             <View>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={()=>{}}
-                >
-                    <View style={s.modalBg}>
-                        <View style={s.modal}>
-                            <Button
-                                title={"Really Logout?"}
-                                onPress={() => {
-                                    this.setModalVisible(false)
-                                    this.props.logout()
-                                    this.props.navigation.navigate('Login')
-                                }}
-                                accessibilityLabel="Logout"
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={{fontSize:18,color:"black"}}
-                                style={{borderRadius: 50}}
-                                containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
-                            />
-                            <Button
-                                title={"Stay Logged In"}
-                                onPress={() => this.setModalVisible(false)}
-                                accessibilityLabel="Stay Loggin In"
-                                raised
-                                buttonStyle={s.pinkButton}
-                                titleStyle={{
-                                    color:'#f53240', 
-                                    fontSize:18
-                                }}
-                                style={{borderRadius: 50}}
-                                containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginBottom:10}}
-                            />
-                        </View>
-                    </View>
-                </Modal>
+                <ConfirmationModal visible={this.state.modalVisible} >
+                    <Button
+                        title={"Really Logout?"}
+                        onPress={() => {
+                            this.setModalVisible(false)
+                            this.props.logout()
+                            this.props.navigation.navigate('Login')
+                        }}
+                        accessibilityLabel="Logout"
+                        raised
+                        buttonStyle={s.blueButton}
+                        titleStyle={{fontSize:18,color:"black"}}
+                        style={{borderRadius: 50}}
+                        containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
+                    />
+                    <Button
+                        title={"Stay Logged In"}
+                        onPress={() => this.setModalVisible(false)}
+                        accessibilityLabel="Stay Loggin In"
+                        raised
+                        buttonStyle={s.pinkButton}
+                        titleStyle={{
+                            color:'#f53240', 
+                            fontSize:18
+                        }}
+                        style={{borderRadius: 50}}
+                        containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginBottom:10}}
+                    />
+                </ConfirmationModal>
 
                 {user.loggedIn ?
                     <ScrollView style={{backgroundColor:'#ffffff'}}>
@@ -239,20 +230,6 @@ const s = StyleSheet.create({
         fontSize: 16,
         marginTop: 5
     },
-    modalBg: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
-    },
-    modal: {
-        backgroundColor: '#ffffff',
-        borderRadius: 15,
-        width: '80%',
-        paddingTop: 15,
-        paddingBottom: 15
-    }
 })
 
 UserProfile.propTypes = {
