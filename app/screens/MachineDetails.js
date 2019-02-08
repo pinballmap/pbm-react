@@ -91,7 +91,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50}}>
                             <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                             <TextInput
                                 multiline={true}
@@ -123,7 +123,7 @@ class MachineDetails extends Component {
                                 style={{borderRadius: 50}}
                                 containerStyle={[{borderRadius:50},s.margin10]}
                             />
-                        </View>
+                        </ScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
                 <Modal
@@ -133,7 +133,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50}}>
                             <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -164,7 +164,7 @@ class MachineDetails extends Component {
                                 style={{borderRadius: 50}}
                                 containerStyle={[{borderRadius:50},s.margin10]}
                             />
-                        </View>
+                        </ScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
                 {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
