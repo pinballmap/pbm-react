@@ -218,11 +218,11 @@ class LocationDetails extends Component {
                                         raised
                                         buttonStyle={s.addButton}
                                         titleStyle={{
-                                            color:"black", 
+                                            color:"black",
                                             fontSize:18
                                         }}
                                         style={{borderRadius: 50}}
-                                        containerStyle={{marginTop:5,marginBottom:5,marginRight:10,marginLeft:10,borderRadius:50}}
+                                        containerStyle={{marginTop:5,marginBottom:5,marginRight:20,marginLeft:20,borderRadius:50}}
                                     />
                                     <Button
                                         onPress={() => this.handleConfirmPress(location.id)}
