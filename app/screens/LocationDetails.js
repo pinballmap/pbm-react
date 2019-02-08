@@ -103,7 +103,7 @@ class LocationDetails extends Component {
         }))
 
         return (
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <ConfirmationModal visible={favoriteModalVisible}>
                     {addingFavoriteLocation || removingFavoriteLocation ?
                         <ActivityIndicator /> : 
@@ -197,7 +197,7 @@ class LocationDetails extends Component {
                             }}
                         />
                     </MapView>
-                    <View style={{ flex: 3 }}>
+                    <View style={{ flex: 3,backgroundColor: "#ffffff" }}>
                         <ButtonGroup
                             onPress={this.updateIndex}
                             selectedIndex={this.state.buttonIndex}
@@ -245,6 +245,12 @@ class LocationDetails extends Component {
                                             this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
                                             this.props.setCurrentMachine(machine.id)
                                         }}>
+                                        <View
+                                            style={{
+                                                borderBottomColor: '#D3ECFF',
+                                                borderBottomWidth: 1,
+                                            }}
+                                        />
                                         <ListItem
                                             title={this.getTitle(machine)}
                                             subtitle={
@@ -255,12 +261,6 @@ class LocationDetails extends Component {
                                             }
                                             rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
                                         />
-                                        <View
-                                            style={{
-                                                borderBottomColor: '#D3ECFF',
-                                                borderBottomWidth: 1,
-                                            }}
-                                        />
                                     </TouchableOpacity>
                                 ))}
                             </View> :
@@ -269,11 +269,11 @@ class LocationDetails extends Component {
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
                                 {this.props.user.lat && this.props.user.lon && <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>}
                                 
-                                {location.phone ? <Text style={[s.phone,s.font18,s.marginB8]} 
+                                {location.phone ? <Text style={[s.link,s.font18,s.marginB8]} 
                                     onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                     {location.phone}</Text> : null}
 
-                                {location.website ? <Text style={[s.website,s.font18,s.marginB8]}
+                                {location.website ? <Text style={[s.link,s.font18,s.marginB8]}
                                     onPress={() => Linking.openURL(location.website)}
                                 >Website</Text> : null}
                                 
@@ -319,9 +319,10 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        marginTop: 5,
     },
     font18: {
         fontSize: 18
@@ -332,22 +333,20 @@ const s = StyleSheet.create({
     street: {
         fontWeight: 'bold'
     },
-    phone: {
-        textDecorationLine: 'underline'
-    },
-    website: {
-        textDecorationLine: 'underline'
+    link: {
+        textDecorationLine: 'underline',
+        color: '#260204'
     },
     italic: {
         fontStyle: 'italic',
-        color: '#444444'
     },
     notItalic: {
-        fontStyle: 'normal'
+        fontStyle: 'normal',
+        color: '#444444'
     },
     meta: {
         fontSize: 16,
-        color: '#666666'
+        color: '#260204'
     },
     iconStyle: {
         fontSize: 32,
