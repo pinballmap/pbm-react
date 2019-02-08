@@ -75,9 +75,10 @@ class FindMachine extends Component {
                 <Modal
                     visible={this.state.showModal}
                     onRequestClose={()=>{}}
+                    transparent={false}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50}}>
                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
                             <Button 
                                 title={'Add'}
@@ -107,7 +108,7 @@ class FindMachine extends Component {
                                 textAlignVertical='top'
                                 underlineColorAndroid='transparent'
                             />
-                        </View>
+                        </ScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
                 <ScrollView>

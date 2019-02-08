@@ -72,12 +72,12 @@ class EditLocationDetails extends Component {
                             <Text style={s.preview}>{phone}</Text>
                             <Text style={s.title}>Website</Text>
                             <Text style={s.preview}>{website}</Text>
+                            <Text style={s.title}>Location Notes</Text>
+                            <Text style={s.preview}>{description}</Text>
                             <Text style={s.title}>Location Type</Text>
                             <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
                             <Text style={s.title}>Operator</Text>
                             <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
-                            <Text style={s.title}>Location Notes</Text>
-                            <Text style={s.preview}>{description}</Text>
                             <Button
                                 title={'Confirm Details'}
                                 onPress={() => this.confirmEditLocationDetails()}
@@ -122,6 +122,17 @@ class EditLocationDetails extends Component {
                                 returnKeyType="done"
                                 placeholder={website || 'http://...'}
                             />
+                            <Text style={s.title}>Location Notes</Text>
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={4}
+                                style={[{padding:5,height: 100},s.textInput]}
+                                onChangeText={description => this.setState({ description })}
+                                underlineColorAndroid='transparent'
+                                value={description}
+                                placeholder={description || 'Location description...'}
+                                textAlignVertical='top'
+                            />
                             <Text style={s.title}>Location Type</Text>
                             <Picker style={s.pickerbg}
                                 selectedValue={selectedLocationType}
@@ -137,18 +148,7 @@ class EditLocationDetails extends Component {
                                 {operators.map(m => (
                                     <Picker.Item label={m.name} value={m.id} key={m.id} />
                                 ))}
-                            </Picker>
-                            <Text style={s.title}>Location Notes</Text>
-                            <TextInput
-                                multiline={true}
-                                numberOfLines={4}
-                                style={[{padding:5,height: 100},s.textInput]}
-                                onChangeText={description => this.setState({ description })}
-                                underlineColorAndroid='transparent'
-                                value={description}
-                                placeholder={description || 'Location description...'}
-                                textAlignVertical='top'
-                            />
+                            </Picker>                            
                             <Button
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
