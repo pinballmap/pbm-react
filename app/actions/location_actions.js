@@ -168,14 +168,9 @@ export const updateLocationDetails = (goBack, phone, website, description, locat
         phone, 
         website,
         description,
+        location_type,
+        operator_id,
     }
-    
-    // Must submit int if submitting for these attributes
-    if (location_type !== 'NONE')
-        body.location_type = location_type
-
-    if (operator_id !== 'NONE')
-        body.operator_id = operator_id
 
     return putData(`/locations/${id}.json`, body)
         .then(data => dispatch(locationDetailsUpdated(goBack, data, username)))
