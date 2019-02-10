@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { HeaderBackButton } from 'react-navigation'
 import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { Button } from 'react-native-elements'
-import { ConfirmationModal, WarningButton } from '../components'
+import { ConfirmationModal, PbmButton, WarningButton } from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
 
@@ -84,14 +83,9 @@ class EditLocationDetails extends Component {
                             ))}
                         </Picker>
                     </ScrollView>
-                    <Button
+                    <PbmButton
                         title={'OK'}
                         onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={s.titleStyle}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     <WarningButton 
                         title={'Cancel'}
@@ -110,14 +104,9 @@ class EditLocationDetails extends Component {
                             ))}
                         </Picker>
                     </ScrollView>
-                    <Button
+                    <PbmButton
                         title={'OK'}
                         onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={s.titleStyle}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     <WarningButton 
                         title={'Cancel'}
@@ -133,7 +122,7 @@ class EditLocationDetails extends Component {
                     {errorText ? 
                         <View style={{marginTop: 100}}>
                             <Text>{errorText}</Text>
-                            <Button 
+                            <PbmButton 
                                 title={"OK"}
                                 onPress={() => this.acceptError()}
                             />
@@ -150,14 +139,9 @@ class EditLocationDetails extends Component {
                             <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
                             <Text style={s.title}>Operator</Text>
                             <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
-                            <Button
+                            <PbmButton
                                 title={'Confirm Details'}
                                 onPress={() => this.confirmEditLocationDetails()}
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={s.titleStyle}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <WarningButton
                                 title={'Cancel'}
@@ -202,14 +186,9 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Location Type</Text>
                             {Platform.OS === "ios" ? 
-                                <Button
+                                <PbmButton
                                     title={locationTypeName}
                                     onPress={() => this.selectingLocationType()}
-                                    raised
-                                    buttonStyle={s.blueButton}
-                                    titleStyle={s.titleStyle}
-                                    style={{borderRadius: 50}}
-                                    containerStyle={[{borderRadius:50},s.margin15]}
                                 /> : 
                                 <Picker 
                                     style={s.pickerbg}
@@ -222,14 +201,9 @@ class EditLocationDetails extends Component {
                             }
                             <Text style={s.title}>Operator</Text>
                             {Platform.OS === "ios" ? 
-                                <Button
+                                <PbmButton
                                     title={operatorName}
                                     onPress={() => this.selectingOperator()}
-                                    raised
-                                    buttonStyle={s.blueButton}
-                                    titleStyle={s.titleStyle}
-                                    style={{borderRadius: 50}}
-                                    containerStyle={[{borderRadius:50},s.margin15]}
                                 /> :
                                 <Picker 
                                     style={s.pickerbg}
@@ -240,14 +214,9 @@ class EditLocationDetails extends Component {
                                     ))}
                                 </Picker>    
                             }                        
-                            <Button
+                            <PbmButton
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={s.titleStyle}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                         </View>
                     </TouchableWithoutFeedback>
@@ -270,16 +239,6 @@ const s = StyleSheet.create({
         marginRight: 15,
         marginLeft: 15
     },
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
-    },
     textInput: {
         backgroundColor: '#f6f6f6', 
         borderColor: '#888888', 
@@ -287,12 +246,6 @@ const s = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 5
-    },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
     },
     pickerbg: {
         backgroundColor: '#f6f6f6',

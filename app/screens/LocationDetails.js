@@ -7,7 +7,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { ConfirmationModal } from '../components'
+import { ConfirmationModal, PbmButton } from '../components'
 import { 
     addFavoriteLocation,
     clearError,
@@ -110,18 +110,10 @@ class LocationDetails extends Component {
                         <View>
                             <Text style={s.confirmText}>{favoriteModalText}</Text> 
                             <View> 
-                                <Button
+                                <PbmButton
                                     title={"Great!"}
                                     onPress={this.props.closeFavoriteLocationModal}
                                     accessibilityLabel="Great!"
-                                    raised
-                                    buttonStyle={s.blueButton}
-                                    titleStyle={{
-                                        color:"black", 
-                                        fontSize:18
-                                    }}
-                                    style={{borderRadius: 50}}
-                                    containerStyle={{marginTop:20,marginBottom:10,marginRight:20,marginLeft:20,borderRadius:50}}
                                 />
                                 <Button 
                                     title={'View Saved Locations'}
@@ -157,18 +149,10 @@ class LocationDetails extends Component {
                 <ConfirmationModal visible={this.props.location.confirmModalVisible}>
                     <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
                     <View> 
-                        <Button
+                        <PbmButton
                             title={"You're Welcome"}
                             onPress={this.props.closeConfirmModal}
                             accessibilityLabel="You're Welcome"
-                            raised
-                            buttonStyle={s.blueButton}
-                            titleStyle={{
-                                color:"black", 
-                                fontSize:18
-                            }}
-                            style={{borderRadius: 50}}
-                            containerStyle={{marginTop:20,marginBottom:10,marginRight:30,marginLeft:30,borderRadius:50}}
                         />
                     </View>
                     <View style={s.logoWrapper}>
@@ -210,19 +194,11 @@ class LocationDetails extends Component {
                             <View>
                                 {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_username  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
-                                    <Button
+                                    <PbmButton
                                         onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={loggedIn ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
-                                        raised
-                                        buttonStyle={s.addButton}
-                                        titleStyle={{
-                                            color:"black",
-                                            fontSize:18
-                                        }}
-                                        style={{borderRadius: 50}}
-                                        containerStyle={{marginTop:5,marginBottom:5,marginRight:20,marginLeft:20,borderRadius:50}}
                                     />
                                     <Button
                                         onPress={() => this.handleConfirmPress(location.id)}
@@ -351,18 +327,6 @@ const s = StyleSheet.create({
     iconStyle: {
         fontSize: 32,
         color: '#cccccc',
-    },
-    addButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
     },
     confirmButton: {
         backgroundColor:"#dddddd",
