@@ -5,7 +5,7 @@ import { ActivityIndicator, Text, View, StyleSheet, ScrollView } from 'react-nat
 import { FontAwesome } from '@expo/vector-icons'
 import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
-import { ConfirmationModal, NotLoggedIn } from '../components'
+import { ConfirmationModal, NotLoggedIn, PbmButton, WarningButton } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
 
@@ -52,7 +52,7 @@ class UserProfile extends Component {
         return (
             <View>
                 <ConfirmationModal visible={this.state.modalVisible} >
-                    <Button
+                    <PbmButton
                         title={"Really Logout?"}
                         onPress={() => {
                             this.setModalVisible(false)
@@ -60,24 +60,11 @@ class UserProfile extends Component {
                             this.props.navigation.navigate('Login')
                         }}
                         accessibilityLabel="Logout"
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={{fontSize:18,color:"black"}}
-                        style={{borderRadius: 50}}
-                        containerStyle={{borderRadius:50,marginTop:10,marginBottom:15,marginLeft:15,marginRight:15}}
                     />
-                    <Button
+                    <WarningButton
                         title={"Stay Logged In"}
                         onPress={() => this.setModalVisible(false)}
                         accessibilityLabel="Stay Loggin In"
-                        raised
-                        buttonStyle={s.pinkButton}
-                        titleStyle={{
-                            color:'#f53240', 
-                            fontSize:18
-                        }}
-                        style={{borderRadius: 50}}
-                        containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginBottom:10}}
                     />
                 </ConfirmationModal>
 
@@ -138,15 +125,10 @@ class UserProfile extends Component {
                                 /> 
                             })}
                         </View>
-                        <Button
+                        <WarningButton
                             title={"Logout"} 
                             onPress={() => this.setModalVisible(true)}
                             accessibilityLabel="Logout"
-                            raised
-                            buttonStyle={s.pinkButton}
-                            titleStyle={{fontSize:18,color:'#f53240'}}
-                            style={{borderRadius: 50}}
-                            containerStyle={{borderRadius:50,marginLeft:15,marginRight:15,marginTop:10,marginBottom:20}}
                         /> 
                     </ScrollView> :
                     <NotLoggedIn 
@@ -161,18 +143,6 @@ class UserProfile extends Component {
 }
 
 const s = StyleSheet.create({
-    pinkButton: {
-        backgroundColor:"#fdd4d7",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
     bold: {
         fontWeight: 'bold',
         fontSize: 16,

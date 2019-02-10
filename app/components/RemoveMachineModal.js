@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Text, StyleSheet } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Text } from 'react-native'
 import { removeMachineFromLocation } from '../actions/location_actions'
-import { ConfirmationModal, WarningButton } from './'
+import { ConfirmationModal, PbmButton, WarningButton } from './'
 
 class RemoveMachineModal extends Component {
     removeLmx = (lmx) => {
@@ -18,14 +17,9 @@ class RemoveMachineModal extends Component {
         return(
             <ConfirmationModal>
                 {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
-                <Button 
+                <PbmButton 
                     title={'Yes, Remove It'}
                     onPress={() => this.removeLmx(curLmx.id)}
-                    raised
-                    buttonStyle={s.blueButton}
-                    titleStyle={s.titleStyle}
-                    style={{borderRadius: 50}}
-                    containerStyle={[{borderRadius:50},s.margin15]}
                 />
                 <WarningButton 
                     title={'Cancel'}
@@ -35,25 +29,6 @@ class RemoveMachineModal extends Component {
         )
     }
 }
-
-const s = StyleSheet.create({
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
-    },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
-})
 
 RemoveMachineModal.propTypes = {
     removeMachineFromLocation: PropTypes.func,

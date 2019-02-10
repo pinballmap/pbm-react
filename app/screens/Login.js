@@ -7,7 +7,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { login, loginLater } from '../actions/user_actions'
 import { getData } from '../config/request'
 
-var DismissKeyboard = require('dismissKeyboard');
+var DismissKeyboard = require('dismissKeyboard')
 
 class Login extends Component {
     constructor(props) {
@@ -54,83 +54,83 @@ class Login extends Component {
         return (
             <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>
                 <View style={s.mask}>
-                        <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                            <View>
-                                {this.state.errors && 
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <View>
+                            {this.state.errors && 
                                     <Text style={s.errorText}>
                                         {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
                                     </Text>
-                                }
-                                <Text style={s.bold}>Log In</Text>
-                                <Input
-                                    placeholder='Username or Email'
-                                    leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                                    onChangeText={login => this.setState({login})}
-                                    value={this.state.login}
-                                    errorStyle={{ color: 'red' }}
-                                    errorMessage={this.state.loginError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    spellCheck={false}
-                                />
-                                <Input 
-                                    placeholder='Password'
-                                    leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                                    onChangeText={password => this.setState({password})}
-                                    value={this.state.password}
-                                    errorStyle={{ color: 'red' }}
-                                    errorMessage={this.state.passwordError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    secureTextEntry={true}
-                                    spellCheck={false}
-                                />
-                                <Button
-                                    onPress={() => this.submit()}
-                                    raised
-                                    buttonStyle={s.buttonStyle}
-                                    titleStyle={{
-                                        color:"black", 
-                                        fontSize:18
-                                    }}
-                                    containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
-                                    style={{borderRadius: 50}}
-                                    title="Log In"
-                                    accessibilityLabel="Log In"
-                                    disabled={!this.state.login || !this.state.password}
-                                    disabledStyle={{borderRadius:50}}
-                                />
-                                <Button
-                                    onPress={() => this.props.navigation.navigate('Signup')}
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="Not a user? SIGN UP!"
-                                />              
-                                <Button
-                                    title="I forgot my password"
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                />
-                                <Button
-                                    title="Resend my confirmation email"
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                />                       
-                                <Button 
-                                    onPress={() => {
-                                        this.props.loginLater()
-                                        this.props.navigation.navigate('Map')
-                                    }} 
-                                    titleStyle={s.textLink}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="skip logging in for now"
-                                />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
+                            }
+                            <Text style={s.bold}>Log In</Text>
+                            <Input
+                                placeholder='Username or Email'
+                                leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                                onChangeText={login => this.setState({login})}
+                                value={this.state.login}
+                                errorStyle={{ color: 'red' }}
+                                errorMessage={this.state.loginError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                spellCheck={false}
+                            />
+                            <Input 
+                                placeholder='Password'
+                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                onChangeText={password => this.setState({password})}
+                                value={this.state.password}
+                                errorStyle={{ color: 'red' }}
+                                errorMessage={this.state.passwordError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                secureTextEntry={true}
+                                spellCheck={false}
+                            />
+                            <Button
+                                onPress={() => this.submit()}
+                                raised
+                                buttonStyle={s.buttonStyle}
+                                titleStyle={{
+                                    color:"black", 
+                                    fontSize:18
+                                }}
+                                containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
+                                style={{borderRadius: 50}}
+                                title="Log In"
+                                accessibilityLabel="Log In"
+                                disabled={!this.state.login || !this.state.password}
+                                disabledStyle={{borderRadius:50}}
+                            />
+                            <Button
+                                onPress={() => this.props.navigation.navigate('Signup')}
+                                titleStyle={s.textLink}
+                                containerStyle={{marginBottom: 20}}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="Not a user? SIGN UP!"
+                            />              
+                            <Button
+                                title="I forgot my password"
+                                titleStyle={s.textLink}
+                                containerStyle={{marginBottom: 20}}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            />
+                            <Button
+                                title="Resend my confirmation email"
+                                titleStyle={s.textLink}
+                                containerStyle={{marginBottom: 20}}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                            />                       
+                            <Button 
+                                onPress={() => {
+                                    this.props.loginLater()
+                                    this.props.navigation.navigate('Map')
+                                }} 
+                                titleStyle={s.textLink}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="skip logging in for now"
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
             </ImageBackground>
         )
     }
@@ -157,10 +157,6 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 18,
-    },
-    padding_5: {
-        paddingTop: 5,
-        paddingBottom: 5
     },
     inputBox: {
         width: '100%',

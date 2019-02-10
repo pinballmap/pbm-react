@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, Text, View } from 'react-native'
-import { Button } from 'react-native-elements'
+import { PbmButton } from './'
 
 class NotLoggedIn extends Component {
     render(){
@@ -9,15 +9,10 @@ class NotLoggedIn extends Component {
             <View>
                 <Text style={s.pageTitle}>{this.props.title}</Text>
                 <Text style={s.hiya}>{this.props.text}</Text>
-                <Button
+                <PbmButton
                     title={"Login"} 
                     onPress={() => this.props.onPress()}
                     accessibilityLabel="Login"
-                    raised
-                    buttonStyle={s.blueButton}
-                    titleStyle={s.titleStyle}
-                    style={{borderRadius: 50}}
-                    containerStyle={{borderRadius:50,marginTop:15,marginLeft:15,marginRight:15}}
                 />
             </View>
         )
@@ -25,12 +20,6 @@ class NotLoggedIn extends Component {
 }
 
 const s = StyleSheet.create({
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
     pageTitle: {
         fontSize: 14,
         textAlign: "center",
@@ -45,10 +34,6 @@ const s = StyleSheet.create({
         paddingBottom: 10,
         color: '#444444',
         textAlign: 'center'
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
     },
 })
 

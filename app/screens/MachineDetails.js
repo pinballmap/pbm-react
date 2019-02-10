@@ -6,7 +6,7 @@ import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
-import { RemoveMachine, RemoveMachineModal, WarningButton }  from '../components'
+import { PbmButton, RemoveMachine, RemoveMachineModal, WarningButton }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
@@ -103,16 +103,10 @@ class MachineDetails extends Component {
                                 placeholder={'Enter machine condition...'}
                                 textAlignVertical='top'
                             />
-                            <Button
+                            <PbmButton
                                 title={'Add Condition'}
                                 disabled={this.state.conditionText.length === 0}
                                 onPress={() => this.addCondition(curLmx.id)}
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={s.titleStyle}
-                                style={{borderRadius: 50}}
-                                disabledStyle={{borderRadius:50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <WarningButton
                                 title={'Cancel'}
@@ -139,16 +133,10 @@ class MachineDetails extends Component {
                                 returnKeyType="done"
                                 placeholder={'123...'}
                             />
-                            <Button 
+                            <PbmButton 
                                 title={'Add Score'}
                                 disabled={this.state.score.length === 0}
                                 onPress={() => this.addScore(curLmx.id)}
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={s.titleStyle}
-                                style={{borderRadius: 50}}
-                                disabledStyle={{borderRadius:50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <WarningButton 
                                 title={'Cancel'}
@@ -159,18 +147,12 @@ class MachineDetails extends Component {
                 </Modal>
                 {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                 <ScrollView>
-                    <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>
-                    
-                    <Button
+                    <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
+                    <PbmButton
                         title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={s.titleStyle}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
                         {mostRecentComments ? 
@@ -187,17 +169,12 @@ class MachineDetails extends Component {
                             <Text style={s.noneYet}>No machine condition added yet</Text>
                         }
                     </View>
-                    <Button 
+                    <PbmButton 
                         title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddScoreModal: true }) :
                             () => this.props.navigation.navigate('Login')
                         }
-                        raised
-                        buttonStyle={s.blueButton}
-                        titleStyle={s.titleStyle}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
                     />
                     {scores ? 
                         scores.map(scoreObj => {
@@ -215,7 +192,6 @@ class MachineDetails extends Component {
                         }) : 
                         <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>
                     }
-                    
                     {pintipsUrl ?
                         <Button
                             title={'View playing tips on PinTips'}
@@ -266,16 +242,6 @@ const s = StyleSheet.create({
     },
     externalIcon: {
         fontSize: 24
-    },
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
     },
     margin15: {
         marginLeft:15,

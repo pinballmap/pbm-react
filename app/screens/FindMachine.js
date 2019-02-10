@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { ListItem, SearchBar, Button } from 'react-native-elements'
+import { ListItem, SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineToLocation } from '../actions/location_actions'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { WarningButton } from '../components'
+import { PbmButton, WarningButton } from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
 
@@ -81,14 +81,9 @@ class FindMachine extends Component {
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <ScrollView style={{paddingTop: 50}}>
                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
-                            <Button 
+                            <PbmButton 
                                 title={'Add'}
                                 onPress={this.addMachine}
-                                raised
-                                buttonStyle={s.blueButton}
-                                titleStyle={s.titleStyle}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}
                             />
                             <WarningButton
                                 title={'Cancel'}
@@ -135,22 +130,6 @@ class FindMachine extends Component {
 }
 
 const s = StyleSheet.create({
-    blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    titleStyle: {
-        color:"black",
-        fontSize:18
-    },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
     textInput: {
         backgroundColor: '#f6f6f6', 
         borderColor: '#888888', 
