@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { HeaderBackButton } from 'react-navigation'
-import { ActivityIndicator, Modal, Picker, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Button } from 'react-native-elements'
+import { ConfirmationModal } from '../components'
 
-import { updateLocationDetails } from '../actions'
-import { clearError } from '../actions'
+var DismissKeyboard = require('dismissKeyboard')
+
+import { clearError, updateLocationDetails } from '../actions'
 
 class EditLocationDetails extends Component {
     constructor(props) {
         super(props)
         const { locationTypes }  = this.props.locations
         const { operators } = this.props.operators
-        locationTypes.unshift({name: '', id: '' })
-        operators.unshift({name: '', id: '' })
+        locationTypes.unshift({name: 'None Selected', id: '' })
+        operators.unshift({name: 'None Selected', id: '' })
 
         this.state = {
             phone: props.location.location.phone,
@@ -25,6 +27,10 @@ class EditLocationDetails extends Component {
             locationTypes,
             operators,
             showEditLocationDetailsModal: false,
+            showSelectLocationTypeModal: false,
+            showSelectOperatorModal: false, 
+            originalLocationType: null,
+            originalOperator: null,
         }
     }
 
@@ -40,6 +46,14 @@ class EditLocationDetails extends Component {
         this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, selectedOperatorId)
     }
 
+    selectingLocationType = () => {
+        this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType })
+    }
+
+    selectingOperator = () => {
+        this.setState({ showSelectOperatorModal: true, originalOperator: this.state.selectedOperatorId})
+    }
+
     acceptError = () => {
         this.props.clearError()
         this.setState({ showEditLocationDetailsModal: false })
@@ -50,8 +64,76 @@ class EditLocationDetails extends Component {
         const { updatingLocationDetails } = this.props.location.location
         const { errorText } = this.props.error
 
+        const locationTypeObj = locationTypes.find(type => type.id === selectedLocationType) || {}
+        const { name: locationTypeName = 'Select location type' } = locationTypeObj
+
+        const operatorObj = operators.find(operator => operator.id === selectedOperatorId) || {}
+        const { name: operatorName = "Select operator" } = operatorObj
+
         return(
             <ScrollView style={{ flex: 1 }}>
+                <ConfirmationModal 
+                    visible={this.state.showSelectLocationTypeModal}
+                >
+                    <ScrollView>
+                        <Picker 
+                            selectedValue={selectedLocationType}
+                            onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                            {locationTypes.map(m => (
+                                <Picker.Item label={m.name} value={m.id} key={m.id} />
+                            ))}
+                        </Picker>
+                    </ScrollView>
+                    <Button
+                        title={'OK'}
+                        onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
+                        raised
+                        buttonStyle={s.blueButton}
+                        titleStyle={s.titleStyle}
+                        style={{borderRadius: 50}}
+                        containerStyle={[{borderRadius:50},s.margin15]}
+                    />
+                    <Button 
+                        title={'Cancel'}
+                        onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: this.state.originalLocationType, originalLocationType: null })}
+                        raised
+                        buttonStyle={s.redButton}
+                        titleStyle={{fontSize:18,color:'#f53240'}}
+                        style={{borderRadius: 50}}
+                        containerStyle={[{borderRadius:50},s.margin10]}
+                    />
+                </ConfirmationModal>
+                <ConfirmationModal 
+                    visible={this.state.showSelectOperatorModal}
+                >
+                    <ScrollView>
+                        <Picker 
+                            selectedValue={selectedOperatorId}
+                            onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
+                            {operators.map(m => (
+                                <Picker.Item label={m.name} value={m.id} key={m.id} />
+                            ))}
+                        </Picker>
+                    </ScrollView>
+                    <Button
+                        title={'OK'}
+                        onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
+                        raised
+                        buttonStyle={s.blueButton}
+                        titleStyle={s.titleStyle}
+                        style={{borderRadius: 50}}
+                        containerStyle={[{borderRadius:50},s.margin15]}
+                    />
+                    <Button 
+                        title={'Cancel'}
+                        onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
+                        raised
+                        buttonStyle={s.redButton}
+                        titleStyle={{fontSize:18,color:'#f53240'}}
+                        style={{borderRadius: 50}}
+                        containerStyle={[{borderRadius:50},s.margin10]}
+                    />
+                </ConfirmationModal>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -134,21 +216,45 @@ class EditLocationDetails extends Component {
                                 textAlignVertical='top'
                             />
                             <Text style={s.title}>Location Type</Text>
-                            <Picker style={s.pickerbg}
-                                selectedValue={selectedLocationType}
-                                onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
-                                {locationTypes.map(m => (
-                                    <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                ))}
-                            </Picker>
+                            {Platform.OS === "ios" ? 
+                                <Button
+                                    title={locationTypeName}
+                                    onPress={() => this.selectingLocationType()}
+                                    raised
+                                    buttonStyle={s.blueButton}
+                                    titleStyle={s.titleStyle}
+                                    style={{borderRadius: 50}}
+                                    containerStyle={[{borderRadius:50},s.margin15]}
+                                /> : 
+                                <Picker 
+                                    style={s.pickerbg}
+                                    selectedValue={selectedLocationType}
+                                    onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                                    {locationTypes.map(m => (
+                                        <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                    ))}
+                                </Picker>
+                            }
                             <Text style={s.title}>Operator</Text>
-                            <Picker style={s.pickerbg}
-                                selectedValue={selectedOperatorId}
-                                onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
-                                {operators.map(m => (
-                                    <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                ))}
-                            </Picker>                            
+                            {Platform.OS === "ios" ? 
+                                <Button
+                                    title={operatorName}
+                                    onPress={() => this.selectingOperator()}
+                                    raised
+                                    buttonStyle={s.blueButton}
+                                    titleStyle={s.titleStyle}
+                                    style={{borderRadius: 50}}
+                                    containerStyle={[{borderRadius:50},s.margin15]}
+                                /> :
+                                <Picker 
+                                    style={s.pickerbg}
+                                    selectedValue={selectedOperatorId}
+                                    onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
+                                    {operators.map(m => (
+                                        <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                    ))}
+                                </Picker>    
+                            }                        
                             <Button
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
