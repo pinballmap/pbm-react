@@ -62,7 +62,11 @@ class Map extends Component {
   };
 
   reloadMap() { 
-      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};max_distance=5;send_all_within_distance=1`, true)  
+      const { machineId, locationType, numMachines } = this.props.query
+      const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
+      const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
+      const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}max_distance=5;send_all_within_distance=1`, true)  
   }
 
   onRegionChange = (region) => {
