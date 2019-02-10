@@ -6,7 +6,7 @@ import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
-import { RemoveMachine, RemoveMachineModal }  from '../components'
+import { RemoveMachine, RemoveMachineModal, WarningButton }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
@@ -114,14 +114,9 @@ class MachineDetails extends Component {
                                 disabledStyle={{borderRadius:50}}
                                 containerStyle={[{borderRadius:50},s.margin15]}
                             />
-                            <Button
+                            <WarningButton
                                 title={'Cancel'}
                                 onPress={this.cancelAddCondition}
-                                raised
-                                buttonStyle={s.redButton}
-                                titleStyle={{fontSize:18,color:'#f53240'}}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin10]}
                             />
                         </ScrollView>
                     </TouchableWithoutFeedback>
@@ -155,14 +150,9 @@ class MachineDetails extends Component {
                                 disabledStyle={{borderRadius:50}}
                                 containerStyle={[{borderRadius:50},s.margin15]}
                             />
-                            <Button 
+                            <WarningButton 
                                 title={'Cancel'}
                                 onPress={this.cancelAddScore}
-                                raised
-                                buttonStyle={s.redButton}
-                                titleStyle={{fontSize:18,color:'#f53240'}}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin10]}
                             />
                         </ScrollView>
                     </TouchableWithoutFeedback>
@@ -253,17 +243,12 @@ class MachineDetails extends Component {
                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                         containerStyle={s.margin15}
                     />
-                    <Button 
+                    <WarningButton 
                         title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
                         onPress={loggedIn ? 
                             () => this.setState({ showRemoveMachineModal: true }) :
                             () => this.props.navigation.navigate('Login')
-                        }
-                        raised
-                        buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#f53240'}}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin15]}
+                        } 
                     />
                 </ScrollView>
             </View>
@@ -288,12 +273,6 @@ const s = StyleSheet.create({
         width: '100%',
         elevation: 0
     },
-    redButton: {
-        backgroundColor: "#fdd4d7",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
     titleStyle: {
         color:"black",
         fontSize:18
@@ -303,15 +282,6 @@ const s = StyleSheet.create({
         marginRight:15,
         marginTop:15,
         marginBottom:15
-    },
-    margin10: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:10,
-        marginBottom:15
-    },
-    italic: {
-        fontStyle:'italic'
     },
     conditionText: {
         color: '#555555',
