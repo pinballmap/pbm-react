@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { HeaderBackButton } from 'react-navigation'
 import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Button } from 'react-native-elements'
-import { ConfirmationModal } from '../components'
+import { ConfirmationModal, WarningButton } from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
 
@@ -93,14 +93,9 @@ class EditLocationDetails extends Component {
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
-                    <Button 
+                    <WarningButton 
                         title={'Cancel'}
                         onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: this.state.originalLocationType, originalLocationType: null })}
-                        raised
-                        buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#f53240'}}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin10]}
                     />
                 </ConfirmationModal>
                 <ConfirmationModal 
@@ -124,14 +119,9 @@ class EditLocationDetails extends Component {
                         style={{borderRadius: 50}}
                         containerStyle={[{borderRadius:50},s.margin15]}
                     />
-                    <Button 
+                    <WarningButton 
                         title={'Cancel'}
                         onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
-                        raised
-                        buttonStyle={s.redButton}
-                        titleStyle={{fontSize:18,color:'#f53240'}}
-                        style={{borderRadius: 50}}
-                        containerStyle={[{borderRadius:50},s.margin10]}
                     />
                 </ConfirmationModal>
                 <Modal
@@ -169,14 +159,9 @@ class EditLocationDetails extends Component {
                                 style={{borderRadius: 50}}
                                 containerStyle={[{borderRadius:50},s.margin15]}
                             />
-                            <Button
+                            <WarningButton
                                 title={'Cancel'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: false})}
-                                raised
-                                buttonStyle={s.redButton}
-                                titleStyle={{fontSize:18,color:'#f53240'}}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin10]}
                             />
                         </ScrollView>
                     }
@@ -291,12 +276,6 @@ const s = StyleSheet.create({
         width: '100%',
         elevation: 0
     },
-    redButton: {
-        backgroundColor: "#fdd4d7",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
     titleStyle: {
         color:"black",
         fontSize:18
@@ -313,12 +292,6 @@ const s = StyleSheet.create({
         marginLeft:15,
         marginRight:15,
         marginTop:15,
-        marginBottom:15
-    },
-    margin10: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:10,
         marginBottom:15
     },
     pickerbg: {

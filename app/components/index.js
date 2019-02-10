@@ -4,6 +4,7 @@ import RemoveMachineModal from './RemoveMachineModal'
 import SearchBar from './SearchBar'
 import NotLoggedIn from './NotLoggedIn'
 import ConfirmationModal from './ConfirmationModal'
+import WarningButton from './WarningButton'
 
 export {
     LocationCard,
@@ -12,4 +13,5 @@ export {
     SearchBar,
     NotLoggedIn,
     ConfirmationModal,
+    WarningButton,
 }

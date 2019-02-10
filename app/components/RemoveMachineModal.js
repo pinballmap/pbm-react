@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Text, StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
 import { removeMachineFromLocation } from '../actions/location_actions'
-import { ConfirmationModal } from './'
+import { ConfirmationModal, WarningButton } from './'
 
 class RemoveMachineModal extends Component {
     removeLmx = (lmx) => {
@@ -27,14 +27,9 @@ class RemoveMachineModal extends Component {
                     style={{borderRadius: 50}}
                     containerStyle={[{borderRadius:50},s.margin15]}
                 />
-                <Button 
+                <WarningButton 
                     title={'Cancel'}
                     onPress={() => this.props.closeModal()}
-                    raised
-                    buttonStyle={s.redButton}
-                    titleStyle={{fontSize:18,color:'#f53240'}}
-                    style={{borderRadius: 50}}
-                    containerStyle={[{borderRadius:50},s.margin15]}
                 />
             </ConfirmationModal>    
         )
@@ -44,12 +39,6 @@ class RemoveMachineModal extends Component {
 const s = StyleSheet.create({
     blueButton: {
         backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    redButton: {
-        backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0

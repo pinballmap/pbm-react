@@ -6,8 +6,9 @@ import { ListItem, SearchBar, Button } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineToLocation } from '../actions/location_actions'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { WarningButton } from '../components'
 
-var DismissKeyboard = require('dismissKeyboard');
+var DismissKeyboard = require('dismissKeyboard')
 
 class FindMachine extends Component {
     state = {
@@ -89,14 +90,9 @@ class FindMachine extends Component {
                                 style={{borderRadius: 50}}
                                 containerStyle={[{borderRadius:50},s.margin15]}
                             />
-                            <Button
+                            <WarningButton
                                 title={'Cancel'}
-                                onPress={this.cancelAddMachine}
-                                raised
-                                buttonStyle={s.redButton}
-                                titleStyle={{fontSize:18,color:'#f53240'}}
-                                style={{borderRadius: 50}}
-                                containerStyle={[{borderRadius:50},s.margin15]}                           
+                                onPress={this.cancelAddMachine}                      
                             />
                             <TextInput
                                 multiline={true}
@@ -141,12 +137,6 @@ class FindMachine extends Component {
 const s = StyleSheet.create({
     blueButton: {
         backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    redButton: {
-        backgroundColor:"#fdd4d7",
         borderRadius: 50,
         width: '100%',
         elevation: 0
