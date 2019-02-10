@@ -13,8 +13,8 @@ class EditLocationDetails extends Component {
         super(props)
         const { locationTypes }  = this.props.locations
         const { operators } = this.props.operators
-        locationTypes.unshift({name: '', id: 'NONE' })
-        operators.unshift({name: '', id: 'NONE' })
+        locationTypes.unshift({name: '', id: '' })
+        operators.unshift({name: '', id: '' })
 
         this.state = {
             phone: props.location.location.phone,
