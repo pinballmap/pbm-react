@@ -188,8 +188,11 @@ class Map extends Component {
               {filterApplied ? 
                   <View style={s.filter}>
                       <Button 
-                          title={'Clear Applied Filters'} 
+                          title={'Clear Filter'} 
                           onPress={() => this.props.clearFilters()}
+                          clear={true}
+                          containerStyle={{width:100,position:'absolute',right:0}}
+                          titleStyle={{fontSize:14,color:"#F53240"}}
                       />
                   </View> : 
                   null
