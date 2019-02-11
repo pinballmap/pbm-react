@@ -5,12 +5,17 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { SearchBar } from '../components'
-import { updateCurrCoordindates } from '../actions/query_actions'
-import { fetchLocations } from '../actions/locations_actions'
-import { fetchCurrentLocation, login, getFavoriteLocations } from '../actions/user_actions'
-import { fetchLocationTypes } from '../actions/locations_actions'
-import { fetchMachines } from '../actions/machines_actions'
-import { fetchOperators } from '../actions/operators_actions'
+import { 
+    fetchLocations,
+    updateCurrCoordindates,
+    fetchCurrentLocation, 
+    login, 
+    getFavoriteLocations,
+    fetchLocationTypes,
+    fetchMachines,
+    fetchOperators,
+    clearFilters,
+} from '../actions'
 import { retrieveItem } from '../config/utils'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -158,6 +163,10 @@ class Map extends Component {
   }
 
   render(){
+      const { isFetchingLocations, isRefetchingLocations } = this.props.locations
+      const { machineId = false, locationType = false, numMachines = false } = this.props.query
+      const filterApplied = machineId || locationType || numMachines ? true : false
+
       if (!this.state.authCheck) {
           return (
               <View style={{flex: 1, padding: 20}}>
@@ -166,7 +175,7 @@ class Map extends Component {
           )
       } 
 
-      if (this.props.locations.isFetchingLocations || !this.state.region.latitude) {
+      if (isFetchingLocations || !this.state.region.latitude) {
           return(
               <View style={{flex: 1, padding: 20}}>
                   <ActivityIndicator/>
@@ -176,7 +185,16 @@ class Map extends Component {
 
       return(
           <View style={{flex: 1}}>
-              {this.props.locations.isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : <Text></Text>}
+              {filterApplied ? 
+                  <View style={s.filter}>
+                      <Button 
+                          title={'Clear Applied Filters'} 
+                          onPress={() => this.props.clearFilters()}
+                      />
+                  </View> : 
+                  null
+              }
+              {isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
               <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
                   <MapView
                       ref={this.mapRef}
@@ -235,6 +253,9 @@ const s = StyleSheet.create({
         zIndex: 10, 
         fontSize: 18,
     },
+    filter: {
+        zIndex: 10, 
+    }
 })
 
 Map.propTypes = {
@@ -250,6 +271,7 @@ Map.propTypes = {
     login: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
+    clearFilters: PropTypes.func,
 }
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
@@ -261,7 +283,8 @@ const mapDispatchToProps = (dispatch) => ({
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
     login: credentials => dispatch(login(credentials)),
-    getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id))
+    getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
+    clearFilters: () => dispatch(clearFilters()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
