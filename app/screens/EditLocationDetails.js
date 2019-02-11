@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { HeaderBackButton } from 'react-navigation'
 import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ConfirmationModal, PbmButton, WarningButton } from '../components'
+import { Button } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons'
+
 
 var DismissKeyboard = require('dismissKeyboard')
 
@@ -186,9 +189,18 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Location Type</Text>
                             {Platform.OS === "ios" ? 
-                                <PbmButton
+                                <Button
                                     title={locationTypeName}
                                     onPress={() => this.selectingLocationType()}
+                                    buttonStyle={s.dropdown}
+                                    titleStyle={{
+                                        color:"#260204",
+                                        fontSize:16
+                                    }}
+                                    style={{borderRadius: 5}}
+                                    icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
+                                    iconRight
+                                    containerStyle={{marginTop:5,marginBottom:10,marginRight:10,marginLeft:10,borderColor: '#888888',}}
                                 /> : 
                                 <Picker 
                                     style={s.pickerbg}
@@ -201,9 +213,18 @@ class EditLocationDetails extends Component {
                             }
                             <Text style={s.title}>Operator</Text>
                             {Platform.OS === "ios" ? 
-                                <PbmButton
+                                <Button
                                     title={operatorName}
                                     onPress={() => this.selectingOperator()}
+                                    buttonStyle={s.dropdown}
+                                    titleStyle={{
+                                        color:"#260204",
+                                        fontSize:16
+                                    }}
+                                    style={{borderRadius: 5}}
+                                    icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
+                                    iconRight
+                                    containerStyle={{marginTop:5,marginBottom:10,marginRight:10,marginLeft:10}}
                                 /> :
                                 <Picker 
                                     style={s.pickerbg}
@@ -255,6 +276,16 @@ const s = StyleSheet.create({
         borderColor: '#888888',
         borderRadius: 5
     },
+    dropdown: {
+        backgroundColor:"#dddddd",
+        width: '100%',
+        elevation: 0,
+        borderColor: '#888888',borderWidth:2
+    },
+    dropdownIcon: {
+        color: "#888888",
+        fontSize: 32
+    }
 })
 
 EditLocationDetails.propTypes = {

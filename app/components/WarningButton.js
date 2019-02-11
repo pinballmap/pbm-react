@@ -14,7 +14,7 @@ class WarningButton extends Component {
                 buttonStyle={s.redButton}
                 titleStyle={{fontSize:18,color:'#f53240'}}    
                 style={{borderRadius: 50}}
-                containerStyle={[{borderRadius:50}, s.margin10]}
+                containerStyle={[{borderRadius:50}, s.margin15]}
             /> 
         )
     }
@@ -27,11 +27,11 @@ WarningButton.propTypes = {
 }
 
 const s = StyleSheet.create({
-    margin10: {
-        marginLeft:10,
-        marginRight:10,
-        marginTop:10,
-        marginBottom:10
+    margin15: {
+        marginLeft:15,
+        marginRight:15,
+        marginTop:15,
+        marginBottom:15
     },
     redButton: {
         backgroundColor: "#fdd4d7",
