@@ -27,6 +27,7 @@ class FilterMap extends Component {
             showSelectLocationTypeModal: false,
             showSelectOperatorModal: false, 
             originalOperator: null,
+            originalLocationType: null,
         }
     }
 
@@ -70,6 +71,9 @@ class FilterMap extends Component {
   updateNumMachinesSelected = idx => {
       this.setState({ selectedNumMachines: idx })
   }
+  selectingLocationType = () => {
+      this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType})
+  }
 
   selectingOperator = () => {
       this.setState({ showSelectOperatorModal: true, originalOperator: this.state.selectedOperator})
@@ -84,6 +88,7 @@ class FilterMap extends Component {
   }
 
   render(){
+      console.log(this.state)
       const machines = [{name: 'All', id: null}].concat(this.props.machines.machines.sort((machineA, machineB) => {
           return machineA.name < machineB.name ? -1 : machineA.name === machineB.name ? 0 : 1
       }))
@@ -91,12 +96,34 @@ class FilterMap extends Component {
       const locationTypes = [{name: 'All', id: ''}].concat(this.props.locations.locationTypes.sort((locationA, locationB) => {
           return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
       }))
+      const locationTypeName = locationTypes.find(location => location.id === this.state.selectedLocationType).name
 
       const operators =  [{name: 'All', id: ''}].concat(this.props.operators.operators)
       const operatorName = operators.find(operator => operator.id === this.state.selectedOperator).name
     
       return(
           <ScrollView style={{flex: 1}}>
+              <ConfirmationModal 
+                  visible={this.state.showSelectLocationTypeModal}
+              >
+                  <ScrollView>
+                      <Picker 
+                          selectedValue={this.state.selectedLocationType}
+                          onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                          {locationTypes.map(m => (
+                              <Picker.Item label={m.name} value={m.id} key={m.id} />
+                          ))}
+                      </Picker>
+                  </ScrollView>
+                  <PbmButton
+                      title={'OK'}
+                      onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
+                  />
+                  <WarningButton 
+                      title={'Cancel'}
+                      onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: this.state.originalLocationType, originalLocationType: null })}
+                  />
+              </ConfirmationModal>
               <ConfirmationModal 
                   visible={this.state.showSelectOperatorModal}
               >
@@ -115,7 +142,7 @@ class FilterMap extends Component {
                   />
                   <WarningButton 
                       title={'Cancel'}
-                      onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
+                      onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperator: this.state.originalOperator, originalOperator: null })}
                   />
               </ConfirmationModal>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
@@ -137,13 +164,19 @@ class FilterMap extends Component {
                   selectedTextStyle={s.textStyle}
               />
               <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
-              <Picker style={[s.border,s.whitebg]}
-                  selectedValue={this.state.selectedLocationType}
-                  onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
-                  {locationTypes.map(m => (
-                      <Picker.Item label={m.name} value={m.id} key={m.id} />
-                  ))}
-              </Picker>
+              {Platform.OS === "ios" ? 
+                  <DropDownButton
+                      title={locationTypeName}
+                      onPress={() => this.selectingLocationType()}
+                  /> : 
+                  <Picker style={[s.border,s.whitebg]}
+                      selectedValue={this.state.selectedLocationType}
+                      onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                      {locationTypes.map(m => (
+                          <Picker.Item label={m.name} value={m.id} key={m.id} />
+                      ))}
+                  </Picker>
+              }
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
               {Platform.OS === "ios" ? 
                   <DropDownButton

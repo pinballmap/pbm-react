@@ -157,10 +157,10 @@ class Map extends Component {
 
       if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator) {
           const machine = machineId ? `by_machine_id=${machineId};` : ''
-          const locationType = locationType ? `by_type_id=${locationType};` : ''
+          const byLocationType = locationType ? `by_type_id=${locationType};` : ''
           const byNumMachines = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
           const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-          this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${locationType}${byNumMachines}${byOperator}max_distance=5;send_all_within_distance=1`, true)
+          this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=5;send_all_within_distance=1`, true)
       }
 
   }
