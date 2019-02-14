@@ -28,6 +28,7 @@ class FilterMap extends Component {
             showSelectOperatorModal: false, 
             originalOperator: null,
             originalLocationType: null,
+            originalMachine: null,
         }
     }
 
@@ -71,6 +72,11 @@ class FilterMap extends Component {
   updateNumMachinesSelected = idx => {
       this.setState({ selectedNumMachines: idx })
   }
+  
+  selectingMachine = () => {
+      this.setState({ showSelectMachineModal: true, originalMachine: this.state.selectedMachine })
+  }
+
   selectingLocationType = () => {
       this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType})
   }
@@ -88,10 +94,10 @@ class FilterMap extends Component {
   }
 
   render(){
-      console.log(this.state)
       const machines = [{name: 'All', id: null}].concat(this.props.machines.machines.sort((machineA, machineB) => {
           return machineA.name < machineB.name ? -1 : machineA.name === machineB.name ? 0 : 1
       }))
+      const machineName = machines.find(machine => machine.id === this.state.selectedMachine).name
 
       const locationTypes = [{name: 'All', id: ''}].concat(this.props.locations.locationTypes.sort((locationA, locationB) => {
           return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
@@ -103,6 +109,27 @@ class FilterMap extends Component {
     
       return(
           <ScrollView style={{flex: 1}}>
+              <ConfirmationModal 
+                  visible={this.state.showSelectMachineModal}
+              >
+                  <ScrollView>
+                      <Picker 
+                          selectedValue={this.state.selectedMachine}
+                          onValueChange={itemValue => this.setState({ selectedMachine: itemValue })}>
+                          {machines.map(m => (
+                              <Picker.Item label={m.name} value={m.id} key={m.id} />
+                          ))}
+                      </Picker>
+                  </ScrollView>
+                  <PbmButton
+                      title={'OK'}
+                      onPress={() => this.setState({ showSelectMachineModal: false, originalMachine: null })}
+                  />
+                  <WarningButton 
+                      title={'Cancel'}
+                      onPress={() => this.setState({ showSelectMachineModal: false, selectedMachine: this.state.originalMachine, originalMachine: null })}
+                  />
+              </ConfirmationModal>
               <ConfirmationModal 
                   visible={this.state.showSelectLocationTypeModal}
               >
@@ -147,13 +174,19 @@ class FilterMap extends Component {
               </ConfirmationModal>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
-              <Picker style={[s.border,s.whitebg]}
-                  selectedValue={this.state.selectedMachine}
-                  onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
-                  {machines.map(m => (
-                      <Picker.Item label={m.name} value={m.id} key={m.id} />
-                  ))}
-              </Picker>
+              {Platform.OS === "ios" ? 
+                  <DropDownButton
+                      title={machineName}
+                      onPress={() => this.selectingMachine()}
+                  /> : 
+                  <Picker style={[s.border,s.whitebg]}
+                      selectedValue={this.state.selectedMachine}
+                      onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
+                      {machines.map(m => (
+                          <Picker.Item label={m.name} value={m.id} key={m.id} />
+                      ))}
+                  </Picker>
+              }
               <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateNumMachinesSelected}
