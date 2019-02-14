@@ -6,6 +6,7 @@ import NotLoggedIn from './NotLoggedIn'
 import ConfirmationModal from './ConfirmationModal'
 import WarningButton from './WarningButton'
 import PbmButton from './PbmButton'
+import DropDownButton from './DropDownButton'
 
 export {
     LocationCard,
@@ -16,4 +17,5 @@ export {
     ConfirmationModal,
     WarningButton,
     PbmButton,
+    DropDownButton,
 }
