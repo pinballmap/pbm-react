@@ -5,6 +5,7 @@ import {
     SET_SELECTED_MACHINE,
     SET_SELECTED_LOCATION_TYPE,
     SET_SELECTED_NUM_MACHINES,
+    SET_SELECTED_OPERATOR,
     CLEAR_FILTERS,
 } from './types'
 
@@ -14,5 +15,6 @@ export const updateCurrCoordindates = (lat, lon, latDelta = 0.1, lonDelta = 0.1)
 export const setSelectedMachine = machineId => ({ type: SET_SELECTED_MACHINE, machineId })
 export const setSelectedLocationType = locationType => ({ type: SET_SELECTED_LOCATION_TYPE, locationType })
 export const setSelectedNumMachines = num => ({ type: SET_SELECTED_NUM_MACHINES, num })
+export const setSelectedOperator = selectedOperator => ({ type: SET_SELECTED_OPERATOR, selectedOperator }) 
 
 export const clearFilters = () => ({ type: CLEAR_FILTERS })
