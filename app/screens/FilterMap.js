@@ -4,17 +4,24 @@ import { connect } from 'react-redux'
 import { Picker, Text, View, StyleSheet, ScrollView } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { setSelectedMachine, setSelectedLocationType, setSelectedNumMachines } from '../actions/query_actions'
+import { 
+    setSelectedMachine, 
+    setSelectedLocationType, 
+    setSelectedNumMachines,
+    setSelectedOperator,
+} from '../actions'
 
 class FilterMap extends Component {
     constructor(props){
         super(props)
 
+        const { machineId, locationType, selectedOperator, numMachines } = this.props.query
         this.state ={ 
             isLoading: true,
-            selectedMachine: this.props.query.machineId,
-            selectedLocationType: this.props.query.locationType,
-            selectedNumMachines: this.getIdx(this.props.query.numMachines),
+            selectedMachine: machineId,
+            selectedLocationType: locationType,
+            selectedOperator,
+            selectedNumMachines: this.getIdx(numMachines),
         }
     }
 
@@ -64,10 +71,10 @@ class FilterMap extends Component {
       this.props.setSelectedLocationType(this.state.selectedLocationType)
       const numMachines = this.getNumMachines(this.state.selectedNumMachines)
       this.props.setSelectedNumMachines(numMachines)
+      this.props.setSelectedOperator(this.state.selectedOperator)
   }
 
   render(){
-    
       const machines = [{name: 'All', id: null}].concat(this.props.machines.machines.sort((machineA, machineB) => {
           return machineA.name < machineB.name ? -1 : machineA.name === machineB.name ? 0 : 1
       }))
@@ -75,36 +82,47 @@ class FilterMap extends Component {
       const locationTypes = [{name: 'All', id: ''}].concat(this.props.locations.locationTypes.sort((locationA, locationB) => {
           return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
       }))
-  
+
+      const operators =  [{name: 'All', id: ''}].concat(this.props.operators.operators)
+    
       return(
-            <ScrollView style={{flex: 1}}>
-                <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
-                <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
-                <Picker style={[s.border,s.whitebg]}
-                    selectedValue={this.state.selectedMachine}
-                    onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
-                    {machines.map(m => (
-                        <Picker.Item label={m.name} value={m.id} key={m.id} />
-                    ))}
-                </Picker>
-                <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
-                <ButtonGroup style={s.border}
-                    onPress={this.updateNumMachinesSelected}
-                    selectedIndex={this.state.selectedNumMachines}
-                    buttons={['All', '2+', '3+', '4+', '5+']}
-                    containerStyle={{ height: 30 }}
-                    selectedButtonStyle={s.buttonStyle}
-                    selectedTextStyle={s.textStyle}
-                />
-                <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
-                <Picker style={[s.border,s.whitebg]}
-                    selectedValue={this.state.selectedLocationType}
-                    onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
-                    {locationTypes.map(m => (
-                        <Picker.Item label={m.name} value={m.id} key={m.id} />
-                    ))}
-                </Picker>
-            </ScrollView>
+          <ScrollView style={{flex: 1}}>
+              <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
+              <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
+              <Picker style={[s.border,s.whitebg]}
+                  selectedValue={this.state.selectedMachine}
+                  onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
+                  {machines.map(m => (
+                      <Picker.Item label={m.name} value={m.id} key={m.id} />
+                  ))}
+              </Picker>
+              <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
+              <ButtonGroup style={s.border}
+                  onPress={this.updateNumMachinesSelected}
+                  selectedIndex={this.state.selectedNumMachines}
+                  buttons={['All', '2+', '3+', '4+', '5+']}
+                  containerStyle={{ height: 30 }}
+                  selectedButtonStyle={s.buttonStyle}
+                  selectedTextStyle={s.textStyle}
+              />
+              <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
+              <Picker style={[s.border,s.whitebg]}
+                  selectedValue={this.state.selectedLocationType}
+                  onValueChange={(itemValue, idx) => this.setState({ selectedLocationType: itemValue })}>
+                  {locationTypes.map(m => (
+                      <Picker.Item label={m.name} value={m.id} key={m.id} />
+                  ))}
+              </Picker>
+              <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
+              <Picker 
+                  style={[s.border,s.whitebg]}
+                  selectedValue={this.state.selectedOperator}
+                  onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
+                  {operators.map(m => (
+                      <Picker.Item label={m.name} value={m.id} key={m.id} />
+                  ))}
+              </Picker>    
+          </ScrollView>
       )
   }
 }
@@ -159,15 +177,18 @@ FilterMap.propTypes = {
     setSelectedMachine: PropTypes.func,
     setSelectedLocationType: PropTypes.func,
     setSelectedNumMachines: PropTypes.func,
+    setSelectedOperator: PropTypes.func,
     machines: PropTypes.object, 
     locations: PropTypes.object,
+    operators: PropTypes.object,
 }
 
-const mapStateToProps = ({ locations, machines, query }) => ({ locations, machines, query })
+const mapStateToProps = ({ locations, machines, query, operators }) => ({ locations, machines, query, operators })
 const mapDispatchToProps = (dispatch) => ({
     setSelectedMachine: machine => dispatch(setSelectedMachine(machine)),
     setSelectedLocationType: type => dispatch(setSelectedLocationType(type)),
     setSelectedNumMachines: num => dispatch(setSelectedNumMachines(num)),
+    setSelectedOperator: operator => dispatch(setSelectedOperator(operator))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
 

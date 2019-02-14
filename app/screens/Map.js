@@ -67,11 +67,12 @@ class Map extends Component {
   };
 
   reloadMap() { 
-      const { machineId, locationType, numMachines } = this.props.query
+      const { machineId, locationType, numMachines, selectedOperator } = this.props.query
       const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
       const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
       const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
-      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}max_distance=5;send_all_within_distance=1`, true)  
+      const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
+      this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=5;send_all_within_distance=1`, true)  
   }
 
   onRegionChange = (region) => {
@@ -118,6 +119,7 @@ class Map extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(props) {
+      const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, latDelta, lonDelta, locationId, locationName } = props.query
       if (!this.props.user.lat && props.user.lat) {
           this.setState({
               region: {
@@ -133,39 +135,40 @@ class Map extends Component {
           this.props.getFavoriteLocations(props.user.id)
       }
 
-      if (props.query.locationId !== this.props.query.locationId) {
-          this.props.navigation.navigate('LocationDetails', {id: props.query.locationId.toString(), locationName: props.query.locationName})
+      if (locationId !== this.props.query.locationId) {
+          this.props.navigation.navigate('LocationDetails', {id: locationId.toString(), locationName})
       }
 
       if (props.locations.mapLocations !== this.props.locations.mapLocations) {
           this.setState({ locations: props.locations.mapLocations })
       }
 
-      if (props.query.curLat !== this.props.query.curLat || props.query.curLon !== this.props.query.curLon ) {
+      if (curLat !== this.props.query.curLat || curLon !== this.props.query.curLon ) {
           this.setState({
               region: {
-                  latitude: props.query.curLat,
-                  longitude: props.query.curLon,
-                  latitudeDelta: props.query.latDelta,
-                  longitudeDelta: props.query.lonDelta,
+                  latitude: curLat,
+                  longitude: curLon,
+                  latitudeDelta: latDelta,
+                  longitudeDelta: lonDelta,
 
               }
           })
       }
 
-      if (props.query.machineId !== this.props.query.machineId || props.query.locationType !== this.props.query.locationType || props.query.numMachines !== this.props.query.numMachines) {
-          const machine = props.query.machineId ? `by_machine_id=${props.query.machineId};` : ''
-          const locationType = props.query.locationType ? `by_type_id=${props.query.locationType};` : ''
-          const numMachines = props.query.numMachines ? `by_at_least_n_machines_type=${props.query.numMachines};` : ''
-          this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${locationType}${numMachines}max_distance=5;send_all_within_distance=1`, true)
+      if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator) {
+          const machine = machineId ? `by_machine_id=${machineId};` : ''
+          const locationType = locationType ? `by_type_id=${locationType};` : ''
+          const byNumMachines = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
+          const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
+          this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${locationType}${byNumMachines}${byOperator}max_distance=5;send_all_within_distance=1`, true)
       }
 
   }
 
   render(){
       const { isFetchingLocations, isRefetchingLocations } = this.props.locations
-      const { machineId = false, locationType = false, numMachines = false } = this.props.query
-      const filterApplied = machineId || locationType || numMachines ? true : false
+      const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
+      const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
 
       if (!this.state.authCheck) {
           return (
@@ -206,7 +209,7 @@ class Map extends Component {
                       style={s.map}
                       onRegionChange={this.onRegionChange}
                   >
-                      {this.state.locations.map(l => (
+                      {this.state.locations ? this.state.locations.map(l => (
                           <MapView.Marker
                               coordinate={{
                                   latitude: Number(l.lat), 
@@ -224,7 +227,7 @@ class Map extends Component {
                                   </View>
                               </MapView.Callout>
                           </MapView.Marker>
-                      ))}
+                      )) : null}
                   </MapView>
               </View>
           </View>
