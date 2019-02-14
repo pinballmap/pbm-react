@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Picker, Text, View, StyleSheet, ScrollView } from 'react-native'
+import { Picker, Text, View, StyleSheet, ScrollView, Platform } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
+import { ConfirmationModal, DropDownButton, PbmButton, WarningButton } from '../components'
 import { 
     setSelectedMachine, 
     setSelectedLocationType, 
@@ -22,6 +23,10 @@ class FilterMap extends Component {
             selectedLocationType: locationType,
             selectedOperator,
             selectedNumMachines: this.getIdx(numMachines),
+            showSelectMachineModal: false,
+            showSelectLocationTypeModal: false,
+            showSelectOperatorModal: false, 
+            originalOperator: null,
         }
     }
 
@@ -66,6 +71,10 @@ class FilterMap extends Component {
       this.setState({ selectedNumMachines: idx })
   }
 
+  selectingOperator = () => {
+      this.setState({ showSelectOperatorModal: true, originalOperator: this.state.selectedOperator})
+  }
+
   componentWillUnmount() {
       this.props.setSelectedMachine(this.state.selectedMachine)
       this.props.setSelectedLocationType(this.state.selectedLocationType)
@@ -84,9 +93,31 @@ class FilterMap extends Component {
       }))
 
       const operators =  [{name: 'All', id: ''}].concat(this.props.operators.operators)
+      const operatorName = operators.find(operator => operator.id === this.state.selectedOperator).name
     
       return(
           <ScrollView style={{flex: 1}}>
+              <ConfirmationModal 
+                  visible={this.state.showSelectOperatorModal}
+              >
+                  <ScrollView>
+                      <Picker 
+                          selectedValue={this.state.selectedOperator}
+                          onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
+                          {operators.map(m => (
+                              <Picker.Item label={m.name} value={m.id} key={m.id} />
+                          ))}
+                      </Picker>
+                  </ScrollView>
+                  <PbmButton
+                      title={'OK'}
+                      onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
+                  />
+                  <WarningButton 
+                      title={'Cancel'}
+                      onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
+                  />
+              </ConfirmationModal>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
               <Picker style={[s.border,s.whitebg]}
@@ -114,14 +145,20 @@ class FilterMap extends Component {
                   ))}
               </Picker>
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
-              <Picker 
-                  style={[s.border,s.whitebg]}
-                  selectedValue={this.state.selectedOperator}
-                  onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
-                  {operators.map(m => (
-                      <Picker.Item label={m.name} value={m.id} key={m.id} />
-                  ))}
-              </Picker>    
+              {Platform.OS === "ios" ? 
+                  <DropDownButton
+                      title={operatorName}
+                      onPress={() => this.selectingOperator()}
+                  /> : 
+                  <Picker 
+                      style={[s.border,s.whitebg]}
+                      selectedValue={this.state.selectedOperator}
+                      onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
+                      {operators.map(m => (
+                          <Picker.Item label={m.name} value={m.id} key={m.id} />
+                      ))}
+                  </Picker> 
+              }     
           </ScrollView>
       )
   }
