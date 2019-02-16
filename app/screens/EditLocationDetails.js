@@ -131,12 +131,16 @@ class EditLocationDetails extends Component {
                         <ScrollView style={{marginTop: 50}}>
                             <Text style={s.title}>Phone</Text>
                             <Text style={s.preview}>{phone}</Text>
+                            <View style={s.hr}></View>
                             <Text style={s.title}>Website</Text>
                             <Text style={s.preview}>{website}</Text>
+                            <View style={s.hr}></View>
                             <Text style={s.title}>Location Notes</Text>
                             <Text style={s.preview}>{description}</Text>
+                            <View style={s.hr}></View>
                             <Text style={s.title}>Location Type</Text>
                             <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
+                            <View style={s.hr}></View>
                             <Text style={s.title}>Operator</Text>
                             <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
                             <PbmButton
@@ -236,8 +240,8 @@ const s = StyleSheet.create({
     },
     preview: {
         fontSize: 14,
-        marginRight: 15,
-        marginLeft: 15
+        marginRight: 25,
+        marginLeft: 25
     },
     textInput: {
         backgroundColor: '#f6f6f6', 
@@ -254,6 +258,13 @@ const s = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#888888',
         borderRadius: 5
+    },
+    hr: {
+        marginLeft:25,
+        marginRight:25,
+        height:2,
+        marginTop: 10,
+        backgroundColor:"#D3ECFF"
     },
 })
 

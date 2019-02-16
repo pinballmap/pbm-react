@@ -239,17 +239,24 @@ class LocationDetails extends Component {
                                         />
                                     </TouchableOpacity>
                                 ))}
-                            </View> :
+                            </View> :            
                             <View style={s.locationMeta}>
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
-                                {this.props.user.lat && this.props.user.lon && <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>}
                                 
-                                {location.phone ? <Text style={[s.link,s.font18,s.marginB8]} 
+                                {this.props.user.lat && this.props.user.lon && <View style={s.hr}></View>}
+
+                                {this.props.user.lat && this.props.user.lon && 
+                                    <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>
+                                }
+                                
+                                {location.phone || location.website || location.location_type_id || location.operator_id || location.description ? <View style={s.hr}></View>: null}
+
+                                {location.phone ? <Text style={[s.link,s.font16,s.marginB8]} 
                                     onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                     {location.phone}</Text> : null}
 
-                                {location.website ? <Text style={[s.link,s.font18,s.marginB8]}
+                                {location.website ? <Text style={[s.link,s.font16,s.marginB8]}
                                     onPress={() => Linking.openURL(location.website)}
                                 >Website</Text> : null}
                                 
@@ -295,13 +302,23 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     locationMeta: {
-        paddingLeft: 10,
-        paddingRight: 10,
+        marginLeft: 15,
+        marginRight: 15,
         paddingTop: 5,
         marginTop: 5,
     },
+    hr: {
+        marginLeft:25,
+        marginRight:25,
+        height:2,
+        marginBottom:5,
+        backgroundColor:"#D3ECFF"
+    },
     font18: {
         fontSize: 18
+    },
+    font16: {
+        fontSize: 16
     },
     marginB8: {
         marginBottom: 8
