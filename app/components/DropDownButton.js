@@ -18,7 +18,7 @@ class DropDownButton extends Component {
                 style={{borderRadius: 5}}
                 icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
                 iconRight
-                containerStyle={{marginTop:5,marginBottom:10,marginRight:10,marginLeft:10}}
+                containerStyle={{marginTop:5,marginRight:10,marginLeft:10}}
             />
         )
     }
