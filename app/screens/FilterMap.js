@@ -6,10 +6,7 @@ import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { ConfirmationModal, DropDownButton, PbmButton, WarningButton } from '../components'
 import { 
-    setSelectedMachine, 
-    setSelectedLocationType, 
-    setSelectedNumMachines,
-    setSelectedOperator,
+    setFilters,
 } from '../actions'
 
 class FilterMap extends Component {
@@ -96,11 +93,8 @@ class FilterMap extends Component {
 
   componentWillUnmount() {
       const { selectedMachine, selectedLocationType, selectedNumMachines, selectedOperator} = this.state
-      this.props.setSelectedMachine(selectedMachine)
-      this.props.setSelectedLocationType(selectedLocationType)
       const numMachines = this.getNumMachines(selectedNumMachines)
-      this.props.setSelectedNumMachines(numMachines)
-      this.props.setSelectedOperator(selectedOperator)
+      this.props.setFilters(selectedMachine, selectedLocationType, numMachines, selectedOperator)
   }
 
   render(){
@@ -307,10 +301,7 @@ const s = StyleSheet.create({
 
 FilterMap.propTypes = {
     query: PropTypes.object,
-    setSelectedMachine: PropTypes.func,
-    setSelectedLocationType: PropTypes.func,
-    setSelectedNumMachines: PropTypes.func,
-    setSelectedOperator: PropTypes.func,
+    setFilters: PropTypes.func,
     machines: PropTypes.object, 
     locations: PropTypes.object,
     operators: PropTypes.object,
@@ -318,10 +309,7 @@ FilterMap.propTypes = {
 
 const mapStateToProps = ({ locations, machines, query, operators }) => ({ locations, machines, query, operators })
 const mapDispatchToProps = (dispatch) => ({
-    setSelectedMachine: machine => dispatch(setSelectedMachine(machine)),
-    setSelectedLocationType: type => dispatch(setSelectedLocationType(type)),
-    setSelectedNumMachines: num => dispatch(setSelectedNumMachines(num)),
-    setSelectedOperator: operator => dispatch(setSelectedOperator(operator)),
+    setFilters: (machine, location, numMachines, operator) => dispatch(setFilters(machine, location, numMachines, operator))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
 
