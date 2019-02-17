@@ -134,9 +134,10 @@ export const locationMachineRemoved = (lmx, machine_id, location_id) => {
     }
 }
 
-export const addMachineToLocation = (machine_id, condition) => (dispatch, getState) => {
+export const addMachineToLocation = (machine, condition) => (dispatch, getState) => {
     dispatch({type: ADDING_MACHINE_TO_LOCATION})
     
+    const { id: machine_id } = machine
     const { email, authentication_token } = getState().user
     const { id: location_id } = getState().location.location
     const body = {
@@ -150,10 +151,17 @@ export const addMachineToLocation = (machine_id, condition) => (dispatch, getSta
         body.condition = condition
         
     return postData(`/location_machine_xrefs.json`, body)
-        .then(() => {
-            dispatch({type: MACHINE_ADDED_TO_LOCATION})
-        }, err => dispatch(addMachineToLocationFailure(err)))
+        .then(() => 
+            dispatch(machineAddedToLocation(location_id, machine)),
+        err => dispatch(addMachineToLocationFailure(err)))
 }
+
+const machineAddedToLocation = (location_id, machine) => dispatch => 
+    dispatch({
+        type: MACHINE_ADDED_TO_LOCATION,
+        location_id,
+        machine,
+    })
 
 export const addMachineToLocationFailure = (err) => dispatch => {
     dispatch({type: DISPLAY_API_ERROR, err: err.message})
