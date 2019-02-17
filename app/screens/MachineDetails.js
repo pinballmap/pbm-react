@@ -50,11 +50,6 @@ class MachineDetails extends Component {
         this.setState({ showAddScoreModal: false })
     }
 
-    removeLmx = (lmx) => {
-        this.props.removeMachineFromLocation(lmx)
-        this.setState({ showRemoveMachineModal: false })
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps.location.curLmx && !this.props.location.curLmx)
             this.props.navigation.goBack()

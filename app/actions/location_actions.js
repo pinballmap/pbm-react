@@ -112,7 +112,8 @@ export const machineScoreAdded = (data) => {
     }
 }
 
-export const removeMachineFromLocation = lmx => (dispatch, getState) => {
+export const removeMachineFromLocation = (curLmx, location_id) => (dispatch, getState) => {
+    const { id: lmx, machine_id } = curLmx
     const { email, authentication_token } = getState().user
     const body = {
         user_email: email,
@@ -120,14 +121,16 @@ export const removeMachineFromLocation = lmx => (dispatch, getState) => {
     }
 
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
-        .then(() => dispatch(locationMachineRemoved(lmx)))
+        .then(() => dispatch(locationMachineRemoved(lmx, machine_id, location_id)))
         .catch(err => console.log(err))
 }
 
-export const locationMachineRemoved = (lmx) => {
+export const locationMachineRemoved = (lmx, machine_id, location_id) => {
     return {
         type: LOCATION_MACHINE_REMOVED,
         lmx,
+        machine_id,
+        location_id,
     }
 }
 
