@@ -17,7 +17,7 @@ export const initialState = {
     curLon: null,
     latDelta: null,
     lonDelta: null,
-    machineId: null,
+    machineId: '',
     locationType: '',
     numMachines: '',
     selectedOperator: '',
@@ -68,7 +68,7 @@ export default (state = initialState, action) => {
     case CLEAR_FILTERS:
         return {
             ...state,
-            machineId: null,
+            machineId: '',
             locationType: '',
             numMachines: '',
             selectedOperator: '',
