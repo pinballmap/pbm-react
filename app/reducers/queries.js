@@ -2,10 +2,7 @@ import {
     UPDATE_QUERY,
     SET_LOCATION_ID,
     UPDATE_COORDINATES,
-    SET_SELECTED_MACHINE,
-    SET_SELECTED_LOCATION_TYPE,
-    SET_SELECTED_NUM_MACHINES,
-    SET_SELECTED_OPERATOR,
+    SET_FILTERS,
     CLEAR_FILTERS,
 } from '../actions/types'
 
@@ -45,24 +42,12 @@ export default (state = initialState, action) => {
             latDelta: action.latDelta,
             lonDelta: action.lonDelta,
         }
-    case SET_SELECTED_MACHINE: 
+    case SET_FILTERS: 
         return {
             ...state, 
-            machineId: action.machineId
-        }
-    case SET_SELECTED_LOCATION_TYPE:
-        return {
-            ...state,
-            locationType: action.locationType,
-        }
-    case SET_SELECTED_NUM_MACHINES:
-        return {
-            ...state,
-            numMachines: action.num,
-        }
-    case SET_SELECTED_OPERATOR:
-        return {
-            ...state,
+            machineId: action.selectedMachine,
+            locationType: action.selectedLocationType,
+            numMachines: action.numMachines,
             selectedOperator: action.selectedOperator,
         }
     case CLEAR_FILTERS:
