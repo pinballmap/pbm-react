@@ -8,6 +8,7 @@ import {
     REFETCHING_LOCATIONS,
     SELECT_LOCATION_LIST_FILTER_BY,
     LOCATION_DETAILS_CONFIRMED,
+    LOCATION_MACHINE_REMOVED
 } from '../actions/types'
 
 const moment = require('moment')
@@ -84,6 +85,31 @@ export default (state = initialState, action) => {
         return {
             ...state, 
             mapLocations,
+        }
+    }
+    case LOCATION_MACHINE_REMOVED:
+    {   
+        //Updates location list / map state when a machine is removed from a location
+        //Logic is more fragile than I'd like it to be. Keep an eye out here for issues. 
+        const { machine_id, location_id } = action
+        const mapLocations = state.mapLocations.map(loc => {
+            if (loc.id === location_id) {
+                const machineIdx = loc.machine_ids.findIndex(id => id === machine_id)
+                const machine_ids = loc.machine_ids.filter((_, idx) => idx !== machineIdx)
+                const machine_names = loc.machine_names.filter((_, idx) => idx !== machineIdx)
+                return {
+                    ...loc,
+                    updated_at: moment.utc().format(),
+                    machine_ids,
+                    machine_names,
+                }
+            }
+            return loc
+        })
+
+        return {
+            ...state,
+            mapLocations
         }
     }
     default:

@@ -6,8 +6,8 @@ import { removeMachineFromLocation } from '../actions/location_actions'
 import { ConfirmationModal, PbmButton, WarningButton } from './'
 
 class RemoveMachineModal extends Component {
-    removeLmx = (lmx) => {
-        this.props.removeMachineFromLocation(lmx)
+    removeLmx = (curLmx, location_id) => {
+        this.props.removeMachineFromLocation(curLmx, location_id)
         this.props.closeModal()
     }
 
@@ -19,7 +19,7 @@ class RemoveMachineModal extends Component {
                 {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
                 <PbmButton 
                     title={'Yes, Remove It'}
-                    onPress={() => this.removeLmx(curLmx.id)}
+                    onPress={() => this.removeLmx(curLmx, location.id)}
                 />
                 <WarningButton 
                     title={'Cancel'}
@@ -42,6 +42,6 @@ const mapStateToProps = ({ location, machines }) => {
     return ({ location, machineName })
 }
 const mapDispatchToProps = (dispatch) => ({
-    removeMachineFromLocation: (lmx) => dispatch(removeMachineFromLocation(lmx))
+    removeMachineFromLocation: (curLmx, location_id) => dispatch(removeMachineFromLocation(curLmx, location_id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(RemoveMachineModal)
