@@ -19,7 +19,7 @@ import {
     setCurrentMachine, 
 } from '../actions'
 
-import { alphaSort, getDistance } from '../utils/utilityFunctions'
+import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
 
 const moment = require('moment')
@@ -97,7 +97,7 @@ class LocationDetails extends Component {
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
-        const sortedMachines = alphaSort(location.location_machine_xrefs.map(machine => {
+        const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))

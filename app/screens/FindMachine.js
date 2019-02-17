@@ -16,8 +16,7 @@ class FindMachine extends Component {
         allMachines: this.props.machines.machines,
         query: '',
         showModal: false,
-        machineId: null, 
-        machineName: '', 
+        machine: {}, 
         condition: '',
     }
     
@@ -37,13 +36,12 @@ class FindMachine extends Component {
     setSelected = machine => {
         this.setState({ 
             showModal: true,
-            machineId: machine.id,
-            machineName: machine.name, 
+            machine,
         })
     }
 
     addMachine = () => {
-        this.props.addMachineToLocation(this.state.machineId, this.state.condition)
+        this.props.addMachineToLocation(this.state.machine, this.state.condition)
         this.setState({ showModal: false })
         this.props.navigation.goBack()
     }
@@ -51,8 +49,7 @@ class FindMachine extends Component {
     cancelAddMachine = () => {
         this.setState({
             showModal: false,
-            machineId: null,
-            machineName: '',
+            machine: {},
             condition: '',
         })
     }
@@ -80,7 +77,7 @@ class FindMachine extends Component {
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <ScrollView style={{paddingTop: 50}}>
-                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machineName} to ${this.props.location.location.name}?`}</Text>                
+                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
                             <PbmButton 
                                 title={'Add'}
                                 onPress={this.addMachine}
@@ -151,6 +148,6 @@ FindMachine.propTypes = {
 
 const mapStateToProps = ({ location, machines }) => ({ location, machines })
 const mapDispatchToProps = (dispatch) => ({
-    addMachineToLocation: (lmx, condition) => dispatch(addMachineToLocation(lmx, condition)),
+    addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)

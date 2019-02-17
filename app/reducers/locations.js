@@ -8,8 +8,10 @@ import {
     REFETCHING_LOCATIONS,
     SELECT_LOCATION_LIST_FILTER_BY,
     LOCATION_DETAILS_CONFIRMED,
-    LOCATION_MACHINE_REMOVED
+    LOCATION_MACHINE_REMOVED,
+    MACHINE_ADDED_TO_LOCATION,
 } from '../actions/types'
+import { alphaSort } from '../utils/utilityFunctions'
 
 const moment = require('moment')
 
@@ -110,6 +112,29 @@ export default (state = initialState, action) => {
         return {
             ...state,
             mapLocations
+        }
+    }
+    case MACHINE_ADDED_TO_LOCATION:
+    {
+        //Updates location list / map state when a machine is added to a location
+        //Logic is more fragile than I'd like it to be. Keep an eye out here for issues. 
+        const { machine, location_id } = action
+        const machineName = `${machine.name} (${machine.manufacturer}, ${machine.year})`
+        const mapLocations = state.mapLocations.map(loc => {
+            if (loc.id === location_id) {
+                const machine_names = alphaSort([machineName].concat(loc.machine_names))
+                return {
+                    ...loc,
+                    updated_at: moment.utc().format(),
+                    machine_names,
+                }
+            }
+            return loc
+        })
+
+        return {
+            ...state,
+            mapLocations,
         }
     }
     default:
