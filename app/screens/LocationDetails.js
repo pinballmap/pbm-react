@@ -248,7 +248,7 @@ class LocationDetails extends Component {
 
                                 {location.location_type_id || (this.props.user.lat && this.props.user.lon) ? <Text style={[s.meta,s.marginB8]}>{location.location_type_id ? <Text>
                                     {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                </Text>: null}{location.location_type_id && this.props.user.lat && this.props.user.lon ? <Text> • </Text>: null }{this.props.user.lat && this.props.user.lon && 
+                                </Text>: null}{location.location_type_id && this.props.user.lat && this.props.user.lon ? <Text> • </Text> : null }{this.props.user.lat && this.props.user.lon && 
                                     <Text>{getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text>
                                 }</Text>: null }
                                 
