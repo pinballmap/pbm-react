@@ -18,9 +18,8 @@ class LocationCard extends Component {
                             <View style={s.locationNameContainer}>
                                 <Text style={s.locationName}>{this.props.name}</Text>
                             </View>
-                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>
-                            {this.props.type ? <Text style={[s.gray,s.italic,s.marginS]}>({this.props.type})</Text> : null}
-                            <Text style={[s.gray,s.marginS]}>{this.props.distance.toFixed(2)} miles away</Text>
+                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>                           
+                            <Text style={s.marginS}>{this.props.type ? <Text style={s.gray}>{this.props.type} • </Text> : null}<Text style={[s.gray,s.marginS]}>{this.props.distance.toFixed(2)} mi</Text></Text>
                             <View style={s.margin}>
                                 {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
