@@ -246,23 +246,19 @@ class LocationDetails extends Component {
                                 
                                 {this.props.user.lat && this.props.user.lon && <View style={s.hr}></View>}
 
-                                {this.props.user.lat && this.props.user.lon && 
-                                    <Text style={[s.font18,s.marginB8,s.italic]}>Distance:<Text style={s.notItalic}> {getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text></Text>
-                                }
+                                {location.location_type_id || (this.props.user.lat && this.props.user.lon) ? <Text style={[s.meta,s.marginB8]}>{location.location_type_id ? <Text>
+                                    {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
+                                </Text>: null}{location.location_type_id && this.props.user.lat && this.props.user.lon ? <Text> • </Text>: null }{this.props.user.lat && this.props.user.lon && 
+                                    <Text>{getDistance(this.props.user.lat, this.props.user.lon, location.lat, location.lon).toFixed(2)} mi</Text>
+                                }</Text>: null }
                                 
-                                {location.phone || location.website || location.location_type_id || location.operator_id || location.description ? <View style={s.hr}></View>: null}
-
-                                {location.phone ? <Text style={[s.link,s.font16,s.marginB8]} 
+                                {location.phone ? <Text style={[s.link,s.marginB8]} 
                                     onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                     {location.phone}</Text> : null}
 
-                                {location.website ? <Text style={[s.link,s.font16,s.marginB8]}
+                                {location.website ? <Text style={[s.link,s.marginB8]}
                                     onPress={() => Linking.openURL(location.website)}
-                                >Website</Text> : null}
-                                
-                                {location.location_type_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Location Type: <Text style={s.notItalic}>
-                                    {this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}
-                                </Text></Text> : null}
+                                >Website</Text> : null}                               
 
                                 {location.operator_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
                                     <Text style={s.notItalic}>
@@ -338,8 +334,8 @@ const s = StyleSheet.create({
         color: '#444444'
     },
     meta: {
-        fontSize: 16,
-        color: '#260204'
+        fontSize: 14,
+        color: '#460407'
     },
     iconStyle: {
         fontSize: 32,
