@@ -8,20 +8,24 @@ const NUM_MACHINES_TO_SHOW = 5
 
 class LocationCard extends Component {
     render(){
-        const numMachines = this.props.machines.length
+        const { distance, id, machines = [], name: locationName, navigation, state, street, type, zip } = this.props
+        const numMachines = machines.length
 
         return(
             <Card containerStyle={{borderRadius: 5}}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('LocationDetails', {id: this.props.id, locationName: this.props.name})}>
+                <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
                     <View style={s.flexi}>
                         <View style={{width: '100%',zIndex: 10}}>
                             <View style={s.locationNameContainer}>
-                                <Text style={s.locationName}>{this.props.name}</Text>
+                                <Text style={s.locationName}>{locationName}</Text>
                             </View>
-                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${this.props.street}, ${this.props.state} ${this.props.zip}`}</Text>                           
-                            <Text style={s.marginS}>{this.props.type ? <Text style={s.gray}>{this.props.type} • </Text> : null}<Text style={[s.gray,s.marginS]}>{this.props.distance.toFixed(2)} mi</Text></Text>
+                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${state} ${zip}`}</Text>                           
+                            <Text style={s.marginS}>
+                                {type ? <Text style={s.gray}>{type} • </Text> : null}
+                                {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
+                            </Text>
                             <View style={s.margin}>
-                                {this.props.machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
+                                {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
                                     const title = typeof m === 'string' ? m.slice(0, idx) : m.name
                                     const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
