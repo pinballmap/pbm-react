@@ -286,11 +286,11 @@ const s = StyleSheet.create({
         backgroundColor: '#D3ECFF',
     },
     textStyle: {
-        color: '#000000',
+        color: '#000e18',
         fontWeight: 'bold',
     },
     machineName: {
-        color: '#000000',
+        color: '#000e18',
         fontWeight: 'bold',
         fontSize: 18,
     },
@@ -328,21 +328,22 @@ const s = StyleSheet.create({
     },
     italic: {
         fontStyle: 'italic',
+        color: '#4b5862'
     },
     notItalic: {
         fontStyle: 'normal',
-        color: '#444444'
+        color: '#6a7d8a'
     },
     meta: {
         fontSize: 14,
-        color: '#460407'
+        color: '#6a7d8a'
     },
     iconStyle: {
         fontSize: 32,
-        color: '#cccccc',
+        color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor:"#dddddd",
+        backgroundColor:"#f5fbff",
         width: '100%',
         elevation: 0
     },
@@ -350,7 +351,7 @@ const s = StyleSheet.create({
         marginTop: 10
     },
     conditionText: {
-        color: '#888888',
+        color: '#6a7d8a',
         fontSize: 14,
         fontStyle: 'italic',
         marginLeft: 5,
@@ -393,9 +394,9 @@ const s = StyleSheet.create({
         fontSize: 24
     },
     savedLink: {
-        backgroundColor:'rgba(38,2,4,.1)',
+        backgroundColor:'#f5fbff',
         borderWidth: 1,
-        borderColor: '#888888',
+        borderColor: '#4b5862',
         borderRadius: 5,
         elevation: 0
     },

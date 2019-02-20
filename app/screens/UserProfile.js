@@ -157,9 +157,9 @@ const s = StyleSheet.create({
         fontSize: 24
     },
     savedLink: {
-        backgroundColor:'rgba(38,2,4,.1)',
+        backgroundColor:'#f5fbff',
         borderWidth: 1,
-        borderColor: '#888888',
+        borderColor: '#6a7d8a',
         borderRadius: 5,
         elevation: 0
     },
@@ -182,12 +182,12 @@ const s = StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: "#444444",
+        color: "#4b5862",
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: "#000000",
+        color: "#000e18",
         backgroundColor: "#D3ECFF",
         fontSize: 16,
         marginTop: 5,

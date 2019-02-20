@@ -262,13 +262,13 @@ const s = StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#000000',
+        borderColor: '#000e18',
         backgroundColor: "#ffffff",
         marginTop: 15,
         marginBottom: 15,
     },
     inputText: {
-        color: '#000000',
+        color: '#000e18',
     },
     textLink: {
         fontSize: 14,
@@ -278,7 +278,7 @@ const s = StyleSheet.create({
     },
     iconStyle: {
         fontSize: 24,
-        color: '#cccccc',
+        color: '#97a5af',
     },
     buttonStyle: {
         backgroundColor:"#fdd4d7",

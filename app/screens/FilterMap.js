@@ -294,7 +294,7 @@ const s = StyleSheet.create({
         backgroundColor: '#D3ECFF',
     },
     textStyle: {
-        color: '#000000',
+        color: '#000e18',
         fontWeight: 'bold',
     },
 })

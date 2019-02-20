@@ -53,7 +53,7 @@ class SearchBar extends Component {
                     listStyle={s.list}
                     containerStyle={Platform.OS === 'android' ? s.androidAutocompleteContainer : null}
                     underlineColorAndroid='transparent'
-                    selectionColor='#000000'
+                    selectionColor='#000e18'
                     onChangeText={query => this.props.updateQuery(query)}
                     renderItem={item => (
                         <TouchableOpacity onPress={() => this.props.setLocationId(item.id, item.value)}>
