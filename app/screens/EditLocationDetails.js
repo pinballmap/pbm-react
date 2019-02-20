@@ -245,7 +245,7 @@ const s = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#f6f6f6', 
-        borderColor: '#888888', 
+        borderColor: '#4b5862', 
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
@@ -256,7 +256,7 @@ const s = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         borderWidth: 2,
-        borderColor: '#888888',
+        borderColor: '#4b5862',
         borderRadius: 5
     },
     hr: {

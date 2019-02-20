@@ -102,7 +102,7 @@ export class LocationList extends Component {
                               </View>
                           </View> : 
                           <View style={{margin:15}}>
-                              <Text style={{fontSize:18,textAlign:'center',color:'#444444'}}>{`You have no saved locations.`}</Text>
+                              <Text style={{fontSize:18,textAlign:'center',color:'#4b5862'}}>{`You have no saved locations.`}</Text>
                               <FontAwesome name="heart-o" style={s.savedIcon} />
                               <Text style={{fontSize:18,textAlign:'center'}}>{`To save your favorite locations, lookup a location then click the heart icon.`}</Text>
                           </View> 
@@ -128,7 +128,7 @@ const s = StyleSheet.create({
         backgroundColor: '#D3ECFF',
     },
     textStyle: {
-        color: '#000000',
+        color: '#000e18',
         fontWeight: 'bold',
     },
     savedIcon: {

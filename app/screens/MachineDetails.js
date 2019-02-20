@@ -231,7 +231,7 @@ const s = StyleSheet.create({
     externalLink: {
         backgroundColor:'rgba(38,2,4,.1)',
         borderWidth: 1,
-        borderColor: '#888888',
+        borderColor: '#4b5862',
         borderRadius: 5,
         elevation: 0
     },
@@ -258,7 +258,7 @@ const s = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#f6f6f6', 
-        borderColor: '#888888', 
+        borderColor: '#4b5862', 
         borderWidth: 2,
         marginLeft: 20,
         marginRight: 20,

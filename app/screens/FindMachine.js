@@ -105,7 +105,7 @@ class FindMachine extends Component {
                         lightTheme
                         placeholder='Filter machines...'
                         platform='default'
-                        searchIcon={<MaterialIcons name='search' size={25} color="#888888" />}
+                        searchIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
                         clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
                         onChangeText={this.handleSearch}
                         inputStyle={{color:'#260204'}}
@@ -129,7 +129,7 @@ class FindMachine extends Component {
 const s = StyleSheet.create({
     textInput: {
         backgroundColor: '#f6f6f6', 
-        borderColor: '#888888', 
+        borderColor: '#4b5862', 
         borderWidth: 1,
         height: 80,
         marginLeft:20,

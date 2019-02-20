@@ -248,7 +248,7 @@ const s = StyleSheet.create({
     iconStyle: {
         marginLeft: 15,
         fontSize: 22,
-        color: '#cccccc',
+        color: '#97a5af',
     },
     titleStyle: {
         color:"#260204",

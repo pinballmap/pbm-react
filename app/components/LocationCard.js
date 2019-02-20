@@ -75,7 +75,7 @@ const s = StyleSheet.create({
         marginLeft: 5
     },
     gray: {
-        color: "#444444",
+        color: "#4b5862",
     },
     italic: {
         fontStyle: 'italic',
