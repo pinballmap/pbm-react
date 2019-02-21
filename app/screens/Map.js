@@ -197,6 +197,7 @@ class Map extends Component {
                         type='font-awesome'
                         color='#4b5862'
                         size={20}
+                        containerStyle={{position:'absolute'}}
                         onPress={() => {
                             this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
                             this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
@@ -271,7 +272,8 @@ const s = StyleSheet.create({
     loading: {
         textAlign: 'center',
         zIndex: 10, 
-        fontSize: 16,
+        fontSize: 14,
+        marginTop: 5
     },
     filter: {
         zIndex: 10, 
