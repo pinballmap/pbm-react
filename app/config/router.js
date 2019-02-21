@@ -1,6 +1,6 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { StyleSheet, Text } from 'react-native'
 
 import FilterMap from '../screens/FilterMap.js'
@@ -39,7 +39,7 @@ const TabNav = TabNavigator({
             case 'Map':
                 return <MaterialIcons name='search' size={(focused) ? 30 : 28} color={tintColor} />
             case 'Saved':
-                return <FontAwesome name='heart-o' size={(focused) ? 26 : 24} color={tintColor} />
+                return <MaterialCommunityIcons name='heart-outline' size={(focused) ? 28 : 26} color={tintColor} />
             case 'Activity':
                 return <FontAwesome name='newspaper-o' size={(focused) ? 26 : 24} color={tintColor} />
             case 'Profile':
