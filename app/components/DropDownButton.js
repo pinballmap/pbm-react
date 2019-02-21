@@ -37,7 +37,8 @@ const s = StyleSheet.create({
         backgroundColor:"#f5fbff",
         width: '100%',
         elevation: 0,
-        borderColor: '#4b5862',borderWidth:2
+        borderColor: '#4b5862',
+        borderWidth: 2
     },
     dropdownIcon: {
         color: "#4b5862",

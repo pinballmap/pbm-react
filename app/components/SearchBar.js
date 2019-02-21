@@ -73,11 +73,11 @@ class SearchBar extends Component {
                         }
                     )
                     }
-                    containerStyle={{width:30,marginLeft:-30,marginTop:5}}
+                    containerStyle={{width:30,marginLeft:-30,marginTop:4}}
                     title=""
                     accessibilityLabel=""
-                    icon={<MaterialIcons name='search' size={25} />}
-                    buttonStyle={s.addButton}
+                    icon={<MaterialIcons name='search' size={25} style={s.searchIcon} />}
+                    buttonStyle={s.searchIconButton}
                     clear
                 />
             </View>
@@ -99,7 +99,10 @@ const s = StyleSheet.create({
         top: 12,
         zIndex: 999
     },
-    addButton: {
+    searchIcon: {
+        color: "#97a5af"
+    },
+    searchIconButton: {
         backgroundColor: "transparent",
         paddingLeft: 5
     },
