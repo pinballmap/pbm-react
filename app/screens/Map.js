@@ -19,7 +19,6 @@ import {
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { Ionicons } from '@expo/vector-icons'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 class Map extends Component {
     constructor(props){
