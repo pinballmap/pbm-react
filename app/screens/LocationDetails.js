@@ -245,7 +245,7 @@ class LocationDetails extends Component {
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
                                 
-                                {userLocation && <View style={s.hr}></View>}
+                                {(userLocation || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
                                 {location.location_type_id || userLocation ? 
                                     <Text style={[s.meta,s.marginB8]}>
