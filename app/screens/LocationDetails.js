@@ -95,13 +95,12 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
-        const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon } = this.props.user
+        const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))
-        const userLocation = userLat && userLon
 
         return (
             <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
@@ -245,13 +244,13 @@ class LocationDetails extends Component {
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
                                 
-                                {(userLocation || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
+                                {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
-                                {location.location_type_id || userLocation ? 
+                                {location.location_type_id || locationTrackingServicesEnabled ? 
                                     <Text style={[s.meta,s.marginB8]}>
                                         {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
-                                        {location.location_type_id && userLocation ? <Text> • </Text> : null }
-                                        {userLocation && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
+                                        {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
+                                        {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
                                     </Text>: null 
                                 }
                                 

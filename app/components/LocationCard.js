@@ -20,10 +20,13 @@ class LocationCard extends Component {
                                 <Text style={s.locationName}>{locationName}</Text>
                             </View>
                             <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${state} ${zip}`}</Text>                           
-                            <Text style={s.marginS}>
-                                {type ? <Text style={s.gray}>{type} • </Text> : null}
-                                {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
-                            </Text>
+                            {type || distance ? 
+                                <Text style={s.marginS}>
+                                    {type ? <Text style={s.gray}>{type}</Text> : null}
+                                    {type && distance ? <Text> • </Text> : null }
+                                    {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
+                                </Text> : null
+                            }
                             <View style={s.margin}>
                                 {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
