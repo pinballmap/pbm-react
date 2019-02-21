@@ -37,6 +37,7 @@ class Map extends Component {
             authCheck: false, 
             address: '', 
             locations: this.props.locations.mapLocations ? this.props.locations.mapLocations : [],
+            fontAwesomeLoaded: false,
         }
     }
 
@@ -99,8 +100,7 @@ class Map extends Component {
         }
     }
 
-    componentDidMount(){
-        Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
+    async componentDidMount(){
         retrieveItem('auth').then((auth) => {
             if (!auth && !this.props.user.loginLater) {
                 this.props.navigation.navigate('SignupLogin')
@@ -118,6 +118,8 @@ class Map extends Component {
         this.props.getLocationTypes('/location_types.json')
         this.props.getMachines('/machines.json')
         this.props.getOperators('/operators.json')
+        await Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
+        this.setState({ fontAwesomeLoaded: true })
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -169,6 +171,7 @@ class Map extends Component {
 
     render(){
         const { isFetchingLocations, isRefetchingLocations } = this.props.locations
+        const { fontAwesomeLoaded } = this.state
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
 
@@ -191,7 +194,7 @@ class Map extends Component {
         return(
             <View style={{flex: 1}}>
                 <View style={s.filter}>
-                    <Icon
+                    {fontAwesomeLoaded ? <Icon
                         raised
                         name='location-arrow'
                         type='font-awesome'
@@ -202,7 +205,7 @@ class Map extends Component {
                             this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
                             this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
                         }}
-                    />
+                    /> : null}
                 </View>                
                 {filterApplied ? 
                     <View style={s.filter}>
@@ -277,13 +280,6 @@ const s = StyleSheet.create({
     },
     filter: {
         zIndex: 10, 
-    },
-    location: {
-        backgroundColor:"#f5fbff",
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        elevation: 0,
     },
 })
 
