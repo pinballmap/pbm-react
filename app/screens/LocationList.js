@@ -64,6 +64,8 @@ export class LocationList extends Component {
     }
 
     render() {
+        const { lat, lon, locationTrackingServicesEnabled } = this.props.user
+
         return (
             <View style={{ flex: 1 }}>
                 <Text style={s.sort}>SORT BY:</Text>
@@ -82,7 +84,7 @@ export class LocationList extends Component {
                         renderItem={({ item }) =>
                             <LocationCard
                                 name={item.name}
-                                distance={getDistance(this.props.user.lat, this.props.user.lon, item.lat, item.lon)}
+                                distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
                                 street={item.street}
                                 state={item.state}
                                 zip={item.zip}
