@@ -80,15 +80,6 @@ class SearchBar extends Component {
                     buttonStyle={s.addButton}
                     clear
                 />
-                <FontAwesome 
-                    name='location-arrow' 
-                    size={20}
-                    style={s.location}
-                    onPress={() => {
-                        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
-                        this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
-                    }}
-                />
             </View>
         )
     }
@@ -113,12 +104,12 @@ const s = StyleSheet.create({
         paddingLeft: 5
     },
     searchBox: {
-        width: deviceWidth - 140,
+        width: deviceWidth - 110,
         height: 30,
         padding: 5,
     },
     listContainer: {
-        width: deviceWidth - 140,
+        width: deviceWidth - 110,
         //zIndex: 999,
     },
     list: {
