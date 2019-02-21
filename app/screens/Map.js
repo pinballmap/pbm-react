@@ -100,7 +100,7 @@ class Map extends Component {
     }
 
     componentDidMount(){
-    Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
+        Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
         retrieveItem('auth').then((auth) => {
             if (!auth && !this.props.user.loginLater) {
                 this.props.navigation.navigate('SignupLogin')
