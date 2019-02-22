@@ -5,7 +5,7 @@ import { Font } from 'expo'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { SearchBar } from '../components'
+import { PbmButton, ConfirmationModal, SearchBar } from '../components'
 import { 
     fetchLocations,
     updateCurrCoordindates,
@@ -38,6 +38,7 @@ class Map extends Component {
             address: '', 
             locations: this.props.locations.mapLocations ? this.props.locations.mapLocations : [],
             fontAwesomeLoaded: false,
+            showNoLocationTrackingModal: false,
         }
     }
 
@@ -92,6 +93,12 @@ class Map extends Component {
 
         setTimeout(compareRegion, 500, region)
         this.prevRegion = region
+    }
+
+    updateCurrentLocation = () => {
+        const { lat, lon } = this.props.user
+        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lon + ';send_all_within_distance=1;max_distance=5', true)
+        this.props.updateCoordinates(lat, lon)
     }
 
     componentDidUpdate(){
@@ -171,7 +178,8 @@ class Map extends Component {
 
     render(){
         const { isFetchingLocations, isRefetchingLocations } = this.props.locations
-        const { fontAwesomeLoaded } = this.state
+        const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
+        const { locationTrackingServicesEnabled } = this.props.user
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
 
@@ -193,6 +201,17 @@ class Map extends Component {
 
         return(
             <View style={{flex: 1}}>
+                <ConfirmationModal 
+                    visible={showNoLocationTrackingModal}>
+                    <View> 
+                        <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
+                        <PbmButton
+                            title={"OK"}
+                            onPress={() => this.setState({ showNoLocationTrackingModal: false })}
+                            accessibilityLabel="Great!"
+                        />
+                    </View>
+                </ConfirmationModal>
                 <View style={s.filter}>
                     {fontAwesomeLoaded ? <Icon
                         raised
@@ -202,8 +221,7 @@ class Map extends Component {
                         size={20}
                         containerStyle={{position:'absolute'}}
                         onPress={() => {
-                            this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + this.props.user.lat + ';lon=' + this.props.user.lon + ';send_all_within_distance=1;max_distance=5', true)
-                            this.props.updateCoordinates(this.props.user.lat, this.props.user.lon)
+                            locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
                     /> : null}
                 </View>                
@@ -280,6 +298,13 @@ const s = StyleSheet.create({
     },
     filter: {
         zIndex: 10, 
+    },
+    confirmText: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginRight: 10
     },
 })
 
