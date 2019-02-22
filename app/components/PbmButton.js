@@ -38,7 +38,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color:"black",
+        color:"#000e18",
         fontSize:18
     },
     margin15: {

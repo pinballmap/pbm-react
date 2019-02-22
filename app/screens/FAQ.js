@@ -8,7 +8,7 @@ class FAQ extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'FAQ', 
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: 'FAQ',
         }
     }
@@ -58,7 +58,7 @@ const s = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: "#f5fbff",
-        backgroundColor: "#260204"
+        backgroundColor: "#000e18"
     },
     textLink: {
         textDecorationLine: 'underline',

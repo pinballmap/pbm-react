@@ -12,7 +12,7 @@ class DropDownButton extends Component {
                 onPress={() => this.props.onPress()}
                 buttonStyle={s.dropdown}
                 titleStyle={{
-                    color:"#260204",
+                    color:"#000e18",
                     fontSize:16
                 }}
                 style={{borderRadius: 5}}
