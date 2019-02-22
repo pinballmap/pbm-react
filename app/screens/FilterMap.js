@@ -31,7 +31,7 @@ class FilterMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
+          headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter Results',
       }
   };
@@ -258,7 +258,7 @@ const s = StyleSheet.create({
     pageTitle: {
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: "#260204"
+        backgroundColor: "#000e18"
     },
     pageTitleText: {
         textAlign: 'center',
@@ -274,7 +274,7 @@ const s = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: "bold",
-        color: "#260204"
+        color: "#000e18"
     },
     padding10: {
         padding: 10

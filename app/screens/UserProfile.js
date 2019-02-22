@@ -20,7 +20,7 @@ class UserProfile extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: 'Profile',
         }
     };
@@ -97,7 +97,7 @@ class UserProfile extends Component {
                             onPress={() => this.props.navigation.navigate('Saved')}
                             buttonStyle={s.savedLink}
                             titleStyle={{
-                                color:"black", 
+                                color:"#000e18", 
                                 fontSize:16
                             }}
                             iconLeft
@@ -150,7 +150,7 @@ const s = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 5,
         paddingBottom: 5,
-        color: "#260204",
+        color: "#000e18",
         backgroundColor: "#D3ECFF"
     },
     savedIcon: {
@@ -159,7 +159,7 @@ const s = StyleSheet.create({
     savedLink: {
         backgroundColor:'#f5fbff',
         borderWidth: 1,
-        borderColor: '#6a7d8a',
+        borderColor: '#97a5af',
         borderRadius: 5,
         elevation: 0
     },
@@ -175,7 +175,7 @@ const s = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: "#f5fbff",
-        backgroundColor: "#260204",
+        backgroundColor: "#000e18",
         textAlign: "center"
     },
     stat: {

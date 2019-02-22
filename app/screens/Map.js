@@ -287,7 +287,7 @@ const s = StyleSheet.create({
         color: '#97a5af',
     },
     titleStyle: {
-        color:"#260204",
+        color:"#000e18",
         fontSize:16,
     }, 
     loading: {
