@@ -173,7 +173,11 @@ class SuggestLocation extends Component {
                                         <Picker.Item label={m.name} value={m.id} key={m.id} />
                                     ))}
                                 </Picker>    
-                            }                     
+                            }    
+                            <PbmButton
+                                title={'Machines on Location'}
+                                onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
+                            />                    
                             <PbmButton
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
