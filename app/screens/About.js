@@ -16,7 +16,7 @@ class About extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'About', 
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
             title: 'About',
         }
     }

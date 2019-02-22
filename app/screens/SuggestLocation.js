@@ -8,7 +8,7 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Suggest Location', 
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
             title: 'Suggest Location',
         }
     }
