@@ -67,6 +67,7 @@ class FindMachine extends Component {
             const machB = b.name.toUpperCase()
             return machA < machB ? -1 : machA === machB ? 0 : 1
         })
+        const multiSelect = this.props.navigation.state.params['multiSelect'] || false
 
         return (
             <View>
@@ -111,16 +112,26 @@ class FindMachine extends Component {
                         inputStyle={{color:'#000e18'}}
                         value={this.state.query}
                     />
-                    {sortedMachines.map(machine => (
-                        <TouchableOpacity
-                            key={machine.id}
-                            onPress={() => this.setSelected(machine)}
-                        >
-                            <ListItem 
-                                title={this.getDisplayText(machine)}
-                            />
-                        </TouchableOpacity>
-                    ))}
+                    {sortedMachines.map(machine => {
+                        return multiSelect ?
+                            <TouchableOpacity
+                                key={machine.id}
+                                onPress={() => this.setSelected(machine)}
+                            >
+                                <ListItem 
+                                    title={this.getDisplayText(machine)}
+                                />
+                            </TouchableOpacity> :
+                            <TouchableOpacity
+                                key={machine.id}
+                                onPress={() => this.setSelected(machine)}
+                            >
+                                <ListItem 
+                                    title={this.getDisplayText(machine)}
+                                />
+                            </TouchableOpacity>
+                    }
+                    )}
                 </ScrollView>
             </View>)
     }
@@ -144,6 +155,7 @@ FindMachine.propTypes = {
     addMachineToLocation: PropTypes.func,
     navigation: PropTypes.object,
     location: PropTypes.object,
+    multiSelect: PropTypes.bool,
 }
 
 const mapStateToProps = ({ location, machines }) => ({ location, machines })
