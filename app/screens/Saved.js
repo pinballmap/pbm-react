@@ -22,7 +22,7 @@ export class LocationList extends Component {
   
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,          
+          headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,          
           title: 'Saved',
       }
   }

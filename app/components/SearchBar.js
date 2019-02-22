@@ -87,7 +87,7 @@ class SearchBar extends Component {
 
 const s = StyleSheet.create({
     autoComplete: {
-        color: "#260204",
+        color: "#000e18",
         padding: 5
     },
     viewIOS: {
@@ -122,7 +122,7 @@ const s = StyleSheet.create({
     location: {
         marginLeft: 5,
         marginTop: 5,
-        color: "#260204"
+        color: "#000e18"
     },
     inputContainer: {
         //borderRadius: 5,   

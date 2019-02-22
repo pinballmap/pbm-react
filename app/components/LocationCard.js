@@ -71,7 +71,7 @@ const s = StyleSheet.create({
     locationName: {
         fontWeight: 'bold',
         fontSize: 16,
-        color: "#260204"
+        color: "#000e18"
     },
     margin: {
         marginTop: 5,

@@ -35,7 +35,7 @@ class EditLocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('name')}</Text>,
         }
     }
@@ -244,7 +244,7 @@ const s = StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: '#f6f6f6', 
+        backgroundColor: '#f5fbfe', 
         borderColor: '#4b5862', 
         borderWidth: 2,
         marginLeft: 10,
@@ -252,7 +252,7 @@ const s = StyleSheet.create({
         borderRadius: 5
     },
     pickerbg: {
-        backgroundColor: '#f6f6f6',
+        backgroundColor: '#f5fbfe',
         marginLeft: 10,
         marginRight: 10,
         borderWidth: 2,

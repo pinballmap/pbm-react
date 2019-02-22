@@ -37,7 +37,7 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
             headerTitleStyle: {width:deviceWidth - 100},
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
@@ -123,7 +123,7 @@ class LocationDetails extends Component {
                                     }}
                                     buttonStyle={s.savedLink}
                                     titleStyle={{
-                                        color:"black", 
+                                        color:"#000e18", 
                                         fontSize:16
                                     }}
                                     iconLeft
@@ -207,7 +207,7 @@ class LocationDetails extends Component {
                                         raised
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
-                                            color:"#260204",
+                                            color:"#000e18",
                                             fontSize:16
                                         }}
                                         style={{borderRadius: 5}}
@@ -326,7 +326,7 @@ const s = StyleSheet.create({
     },
     link: {
         textDecorationLine: 'underline',
-        color: '#260204'
+        color: '#000e18'
     },
     italic: {
         fontStyle: 'italic',

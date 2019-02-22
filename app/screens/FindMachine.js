@@ -22,7 +22,7 @@ class FindMachine extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`Select Machine to Add`}</Text>,
         }
     }
@@ -108,7 +108,7 @@ class FindMachine extends Component {
                         searchIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
                         clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
                         onChangeText={this.handleSearch}
-                        inputStyle={{color:'#260204'}}
+                        inputStyle={{color:'#000e18'}}
                         value={this.state.query}
                     />
                     {sortedMachines.map(machine => (
@@ -128,7 +128,7 @@ class FindMachine extends Component {
 
 const s = StyleSheet.create({
     textInput: {
-        backgroundColor: '#f6f6f6', 
+        backgroundColor: '#f5fbfe', 
         borderColor: '#4b5862', 
         borderWidth: 1,
         height: 80,

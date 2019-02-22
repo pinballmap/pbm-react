@@ -26,7 +26,7 @@ class MachineDetails extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#260204" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
             headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />
@@ -193,7 +193,7 @@ class MachineDetails extends Component {
                             onPress={() => Linking.openURL(pintipsUrl)}
                             buttonStyle={s.externalLink}
                             titleStyle={{
-                                color:"black", 
+                                color:"#000e18", 
                                 fontSize:16
                             }}
                             iconRight
@@ -207,7 +207,7 @@ class MachineDetails extends Component {
                         onPress={() => Linking.openURL(ipdb_link)}
                         buttonStyle={s.externalLink}
                         titleStyle={{
-                            color:"black", 
+                            color:"#000e18", 
                             fontSize:16
                         }}
                         iconRight
@@ -257,7 +257,7 @@ const s = StyleSheet.create({
         color:'#555555'
     },
     textInput: {
-        backgroundColor: '#f6f6f6', 
+        backgroundColor: '#f5fbfe', 
         borderColor: '#4b5862', 
         borderWidth: 2,
         marginLeft: 20,
