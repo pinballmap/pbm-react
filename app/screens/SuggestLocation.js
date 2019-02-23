@@ -37,7 +37,6 @@ class SuggestLocation extends Component {
             showSelectCountryModal: false,
             locationTypes,
             operators,
-            countries,
             showSuggestLocationModal: false,
         }
     }
@@ -210,8 +209,12 @@ class SuggestLocation extends Component {
                         <View style={s.hr}></View>
                         <Text style={s.title}>Operator</Text>
                         <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                        <Text style={s.title}>Machine List</Text>
+                        {machineList.map(m => 
+                            <Text key={m.name}>{m.name}</Text>
+                        )}
                         <PbmButton
-                            title={'Confirm Details'}
+                            title={'Submit Location'}
                             onPress={() => this.confirmSuggestLocationDetails()}
                         />
                         <WarningButton
