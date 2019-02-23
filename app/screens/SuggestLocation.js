@@ -7,6 +7,7 @@ import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { ConfirmationModal, DropDownButton, NotLoggedIn, PbmButton, WarningButton } from '../components'
 import { clearMachineList, removeMachineFromList } from '../actions'
+import countries from '../utils/countries'
 
 const DismissKeyboard = require('dismissKeyboard')
 
@@ -23,7 +24,7 @@ class SuggestLocation extends Component {
             street: '',
             city: '',
             state: '',
-            country: '',
+            country: 'United States',
             phone: '',
             website: '', 
             description: '',
@@ -33,8 +34,10 @@ class SuggestLocation extends Component {
             originalLocationType: '',
             showSelectOperatorModal: false, 
             originalOperator: '',
+            showSelectCountryModal: false,
             locationTypes,
             operators,
+            countries,
             showSuggestLocationModal: false,
         }
     }
@@ -86,6 +89,7 @@ class SuggestLocation extends Component {
             operator, 
             showSelectLocationTypeModal, 
             showSelectOperatorModal,
+            showSelectCountryModal,
             locationTypes,
             operators,
         } = this.state
@@ -98,6 +102,8 @@ class SuggestLocation extends Component {
 
         const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
+
+        console.log(this.state.country)
 
         return(
             <ScrollView style={{flex: 1}}>
@@ -141,6 +147,27 @@ class SuggestLocation extends Component {
                     <WarningButton 
                         title={'Cancel'}
                         onPress={() => this.setState({ showSelectOperatorModal: false, operator: this.state.originalOperator, originalOperator: null })}
+                    />
+                </ConfirmationModal>
+                <ConfirmationModal 
+                    visible={showSelectCountryModal}
+                >
+                    <ScrollView>
+                        <Picker 
+                            selectedValue={country}
+                            onValueChange={country => this.setState({ country })}>
+                            {countries.map(m => (
+                                <Picker.Item label={m.name} value={m.name} key={m.name} />
+                            ))}
+                        </Picker>
+                    </ScrollView>
+                    <PbmButton
+                        title={'OK'}
+                        onPress={() => this.setState({ showSelectCountryModal: false })}
+                    />
+                    <WarningButton 
+                        title={'Cancel'}
+                        onPress={() => this.setState({ showSelectCountryModal: false })}
                     />
                 </ConfirmationModal>
                 <Modal
@@ -234,6 +261,21 @@ class SuggestLocation extends Component {
                                 returnKeyType="done"
                                 placeholder={'...'}
                             />
+                            <Text style={s.title}>Country</Text>
+                            {Platform.OS === "ios" ? 
+                                <DropDownButton
+                                    title={country}
+                                    onPress={() => this.setState({ showSelectCountryModal: true })}
+                                /> :
+                                <Picker 
+                                    style={s.pickerbg}
+                                    selectedValue={country}
+                                    onValueChange={country => this.setState({ country })}>
+                                    {countries.map(m => (
+                                        <Picker.Item label={m.name} value={m.name} key={m.name} />
+                                    ))}
+                                </Picker>    
+                            }   
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
