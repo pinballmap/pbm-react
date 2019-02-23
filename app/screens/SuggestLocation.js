@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { Modal, Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -19,6 +19,11 @@ class SuggestLocation extends Component {
         operators.unshift({name: 'N/A', id: '' })
 
         this.state = {
+            locationName: '',
+            street: '',
+            city: '',
+            state: '',
+            country: '',
             phone: '',
             website: '', 
             description: '',
@@ -30,6 +35,7 @@ class SuggestLocation extends Component {
             originalOperator: '',
             locationTypes,
             operators,
+            showSuggestLocationModal: false,
         }
     }
   
@@ -49,6 +55,12 @@ class SuggestLocation extends Component {
         this.setState({ showSelectOperatorModal: true, originalOperator: this.state.operator })
     }
 
+    confirmSuggestLocationDetails = () => {
+        this.setState({ showSuggestLocationModal: false })
+        // const { phone, website, description, selectedLocationType, selectedOperatorId } = this.state
+        // this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, selectedOperatorId)
+    } 
+
     getDisplayText = machine => (
         <Text style={{fontSize: 16}}>
             <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
@@ -62,6 +74,11 @@ class SuggestLocation extends Component {
      
     render(){
         const { 
+            locationName,
+            street, 
+            city, 
+            state,
+            country,
             phone, 
             website, 
             description, 
@@ -79,7 +96,7 @@ class SuggestLocation extends Component {
         const locationTypeObj = locationTypes.find(type => type.id === locationType) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
 
-        const operatorObj = operators.find(operator => operator.id === operator) || {}
+        const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
@@ -123,13 +140,100 @@ class SuggestLocation extends Component {
                     />
                     <WarningButton 
                         title={'Cancel'}
-                        onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
+                        onPress={() => this.setState({ showSelectOperatorModal: false, operator: this.state.originalOperator, originalOperator: null })}
                     />
                 </ConfirmationModal>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.showSuggestLocationModal}
+                    onRequestClose={()=>{}}
+                >
+                    {/* {errorText ? 
+                        <View style={{marginTop: 100}}>
+                            <Text>{errorText}</Text>
+                            <PbmButton 
+                                title={"OK"}
+                                onPress={() => this.acceptError()}
+                            />
+                        </View>
+                        :                        */}
+                    <ScrollView style={{marginTop: 50}}>
+                        <Text style={s.title}>Location Name</Text>
+                        <Text style={s.preview}>{locationName}</Text>
+                        <Text style={s.title}>Street</Text>
+                        <Text style={s.preview}>{street}</Text>
+                        <Text style={s.title}>City</Text>
+                        <Text style={s.preview}>{city}</Text>
+                        <Text style={s.title}>State</Text>
+                        <Text style={s.preview}>{state}</Text>
+                        <Text style={s.title}>Country</Text>
+                        <Text style={s.preview}>{country}</Text>
+                        <Text style={s.title}>Phone</Text>
+                        <Text style={s.preview}>{phone}</Text>
+                        <View style={s.hr}></View>
+                        <Text style={s.title}>Website</Text>
+                        <Text style={s.preview}>{website}</Text>
+                        <View style={s.hr}></View>
+                        <Text style={s.title}>Location Notes</Text>
+                        <Text style={s.preview}>{description}</Text>
+                        <View style={s.hr}></View>
+                        <Text style={s.title}>Location Type</Text>
+                        <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                        <View style={s.hr}></View>
+                        <Text style={s.title}>Operator</Text>
+                        <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                        <PbmButton
+                            title={'Confirm Details'}
+                            onPress={() => this.confirmSuggestLocationDetails()}
+                        />
+                        <WarningButton
+                            title={'Cancel'}
+                            onPress={() => this.setState({ showSuggestLocationModal: false})}
+                        />
+                    </ScrollView>
+                    {/* } */}
+                </Modal>
                 { loggedIn ?
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text>{`Add a new location to the database. Fill in this form. We'll review it to make sure the data works... so don't expect it to show up just yet. Thanks for helping out!`}</Text>
+                            <Text style={s.title}>Location Name</Text>
+                            <TextInput
+                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={locationName => this.setState({ locationName })}
+                                value={locationName}
+                                returnKeyType="done"
+                                placeholder={'...'}
+                            />
+                            <Text style={s.title}>Street</Text>
+                            <TextInput
+                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={street => this.setState({ street })}
+                                value={street}
+                                returnKeyType="done"
+                                placeholder={'...'}
+                            />
+                            <Text style={s.title}>City</Text>
+                            <TextInput
+                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={city => this.setState({ city })}
+                                value={city}
+                                returnKeyType="done"
+                                placeholder={'...'}
+                            />
+                            <Text style={s.title}>State</Text>
+                            <TextInput
+                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={state => this.setState({ state })}
+                                value={state}
+                                returnKeyType="done"
+                                placeholder={'...'}
+                            />
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -147,7 +251,7 @@ class SuggestLocation extends Component {
                                 onChangeText={website => this.setState({ website })}
                                 value={website}
                                 returnKeyType="done"
-                                placeholder={website || 'http://...'}
+                                placeholder={'http://...'}
                             />
                             <Text style={s.title}>Location Notes</Text>
                             <TextInput
@@ -157,7 +261,7 @@ class SuggestLocation extends Component {
                                 onChangeText={description => this.setState({ description })}
                                 underlineColorAndroid='transparent'
                                 value={description}
-                                placeholder={description || 'Location description...'}
+                                placeholder={'Location description...'}
                                 textAlignVertical='top'
                             />
                             <Text style={s.title}>Location Type</Text>
@@ -169,7 +273,7 @@ class SuggestLocation extends Component {
                                 <Picker 
                                     style={s.pickerbg}
                                     selectedValue={locationType}
-                                    onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                                    onValueChange={itemValue => this.setState({ locationType: itemValue })}>
                                     {locationTypes.map(m => (
                                         <Picker.Item label={m.name} value={m.id} key={m.id} />
                                     ))}
@@ -184,7 +288,7 @@ class SuggestLocation extends Component {
                                 <Picker 
                                     style={s.pickerbg}
                                     selectedValue={operator}
-                                    onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
+                                    onValueChange={itemValue => this.setState({ operator: itemValue })}>
                                     {operators.map(m => (
                                         <Picker.Item label={m.name} value={m.id} key={m.id} />
                                     ))}
@@ -203,8 +307,8 @@ class SuggestLocation extends Component {
                                 />
                             )}                 
                             <PbmButton
-                                title={'Submit Location Details'}
-                                onPress={() => this.setState({ showEditLocationDetailsModal: true })}
+                                title={'Submit Location'}
+                                onPress={() => this.setState({ showSuggestLocationModal: true })}
                             />
                         </View>
                     </TouchableWithoutFeedback> :
@@ -253,6 +357,7 @@ SuggestLocation.propTypes = {
     navigation: PropTypes.object,
     location: PropTypes.object,
     removeMachineFromList: PropTypes.func,
+    clearMachineList: PropTypes.func,
 }
 
 const mapStateToProps = ({ location, locations, operators, user }) => ({ location, locations, operators, user })
