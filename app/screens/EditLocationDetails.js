@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 import { HeaderBackButton } from 'react-navigation'
 import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ConfirmationModal, DropDownButton, PbmButton, WarningButton } from '../components'
-
-var DismissKeyboard = require('dismissKeyboard')
-
 import { clearError, updateLocationDetails } from '../actions'
+
+const DismissKeyboard = require('dismissKeyboard')
 
 class EditLocationDetails extends Component {
     constructor(props) {
