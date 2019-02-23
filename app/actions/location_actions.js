@@ -15,6 +15,9 @@ import {
     UPDATING_LOCATION_DETAILS,
     LOCATION_DETAILS_UPDATED,
     FAILED_LOCATION_DETAILS_UPDATE,
+    ADD_MACHINE_TO_LIST,
+    REMOVE_MACHINE_FROM_LIST,
+    CLEAR_MACHINE_LIST,
 } from './types'
 
 import { getData, postData, putData, deleteData } from '../config/request'
@@ -197,3 +200,7 @@ export const updateLocationDetailsFailure = (err) => dispatch => {
     dispatch({type: DISPLAY_API_ERROR, err: err.message})
     dispatch({type: FAILED_LOCATION_DETAILS_UPDATE})
 }
+
+export const addMachineToList = machine => ({ type: ADD_MACHINE_TO_LIST, machine })
+export const removeMachineFromList = machine => ({ type: REMOVE_MACHINE_FROM_LIST, machine })
+export const clearMachineList = () => ({ type: CLEAR_MACHINE_LIST })

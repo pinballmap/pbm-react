@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { ConfirmationModal, DropDownButton, NotLoggedIn, PbmButton, WarningButton } from '../components'
+import { clearMachineList, removeMachineFromList } from '../actions'
 
 const DismissKeyboard = require('dismissKeyboard')
 
@@ -45,6 +48,17 @@ class SuggestLocation extends Component {
     selectingOperator = () => {
         this.setState({ showSelectOperatorModal: true, originalOperator: this.state.operator })
     }
+
+    getDisplayText = machine => (
+        <Text style={{fontSize: 16}}>
+            <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
+            <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        </Text>
+    )
+
+    componentWillUnmount() {
+        this.props.clearMachineList()
+    }
      
     render(){
         const { 
@@ -59,6 +73,8 @@ class SuggestLocation extends Component {
             operators,
         } = this.state
         const { loggedIn } = this.props.user
+
+        const { machineList = [] } = this.props.location
 
         const locationTypeObj = locationTypes.find(type => type.id === locationType) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
@@ -175,9 +191,17 @@ class SuggestLocation extends Component {
                                 </Picker>    
                             }    
                             <PbmButton
-                                title={'Machines on Location'}
+                                title={'Select Machines to Add'}
                                 onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
-                            />                    
+                            />   
+                            {machineList.map(machine => 
+                                <ListItem 
+                                    title={this.getDisplayText(machine)}
+                                    key={machine.id}
+                                    checkmark={<MaterialIcons name='cancel' size={15} color="#4b5862" />}
+                                    onPress={() => this.props.removeMachineFromList(machine)}
+                                />
+                            )}                 
                             <PbmButton
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
@@ -227,9 +251,13 @@ SuggestLocation.propTypes = {
     operators: PropTypes.object,
     user: PropTypes.object,
     navigation: PropTypes.object,
+    location: PropTypes.object,
+    removeMachineFromList: PropTypes.func,
 }
 
-const mapStateToProps = ({ locations, operators, user }) => ({ locations, operators, user })
+const mapStateToProps = ({ location, locations, operators, user }) => ({ location, locations, operators, user })
 const mapDispatchToProps = (dispatch) => ({
+    removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
+    clearMachineList: () => dispatch(clearMachineList()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuggestLocation)

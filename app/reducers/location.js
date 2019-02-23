@@ -13,6 +13,9 @@ import {
     MACHINE_ADDED_TO_LOCATION_FAILURE,
     UPDATING_LOCATION_DETAILS,
     LOCATION_DETAILS_UPDATED,
+    ADD_MACHINE_TO_LIST,
+    REMOVE_MACHINE_FROM_LIST,
+    CLEAR_MACHINE_LIST
 } from '../actions/types'
 
 const moment = require('moment')
@@ -25,6 +28,7 @@ export const initialState = {
     curLmx: null,
     addingMachineToLocation: false,
     updatingLocationDetails: false,
+    machineList: [],
 }
 
 export default (state = initialState, action) => {
@@ -163,6 +167,24 @@ export default (state = initialState, action) => {
                 location_type_id,
             },
         }}
+    case ADD_MACHINE_TO_LIST: 
+        return {
+            ...state,
+            machineList: state.machineList.concat([action.machine]),
+        }
+    case REMOVE_MACHINE_FROM_LIST: {
+        const { id } = action.machine
+        const machineList = state.machineList.filter(m => m.id !== id)
+        return {
+            ...state,
+            machineList,
+        }
+    }
+    case CLEAR_MACHINE_LIST: 
+        return {
+            ...state,
+            machineList: [],
+        }
     default:
         return state
     }

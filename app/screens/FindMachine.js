@@ -4,8 +4,12 @@ import { connect } from 'react-redux'
 import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ListItem, SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { addMachineToLocation } from '../actions/location_actions'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { 
+    addMachineToLocation,
+    addMachineToList,
+    removeMachineFromList,
+} from '../actions'
 import { PbmButton, WarningButton } from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
@@ -62,12 +66,13 @@ class FindMachine extends Component {
     )
 
     render() {
+        const { machineList = [] } = this.props.location
         const sortedMachines =  this.state.machines.sort((a, b) => {
             const machA = a.name.toUpperCase()  
             const machB = b.name.toUpperCase()
             return machA < machB ? -1 : machA === machB ? 0 : 1
         })
-        const multiSelect = this.props.navigation.state.params['multiSelect'] || false
+        const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
 
         return (
             <View>
@@ -113,13 +118,15 @@ class FindMachine extends Component {
                         value={this.state.query}
                     />
                     {sortedMachines.map(machine => {
+                        const selected = machineList.find(m => m.id === machine.id)
                         return multiSelect ?
                             <TouchableOpacity
                                 key={machine.id}
-                                onPress={() => this.setSelected(machine)}
+                                onPress={() => selected ? this.props.removeMachineFromList(machine) : this.props.addMachineToList(machine) }
                             >
                                 <ListItem 
                                     title={this.getDisplayText(machine)}
+                                    checkmark={selected ? <MaterialIcons name='cancel' size={15} color="#4b5862" /> : null}
                                 />
                             </TouchableOpacity> :
                             <TouchableOpacity
@@ -153,6 +160,8 @@ const s = StyleSheet.create({
 FindMachine.propTypes = {
     machines: PropTypes.object,
     addMachineToLocation: PropTypes.func,
+    addMachineToList: PropTypes.func,
+    removeMachineFromList: PropTypes.func,
     navigation: PropTypes.object,
     location: PropTypes.object,
     multiSelect: PropTypes.bool,
@@ -161,5 +170,7 @@ FindMachine.propTypes = {
 const mapStateToProps = ({ location, machines }) => ({ location, machines })
 const mapDispatchToProps = (dispatch) => ({
     addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
+    addMachineToList: machine => dispatch(addMachineToList(machine)),
+    removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)
