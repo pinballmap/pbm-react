@@ -74,7 +74,9 @@ class MachineDetails extends Component {
             ``
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
-        const scores = curLmx.machine_score_xrefs.length > 0 ? curLmx.machine_score_xrefs.reverse() : undefined
+        const scores = curLmx.machine_score_xrefs.length > 0 ? 
+            curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) : 
+            undefined
         const { name: machineName } = this.props.machineDetails
 
         return (
@@ -172,19 +174,21 @@ class MachineDetails extends Component {
                         }
                     />
                     {scores ? 
-                        scores.map(scoreObj => {
-                            const {id, score, created_at, username} = scoreObj
+                        <ScrollView style={{height: 300}}>
+                            {scores.map(scoreObj => {
+                                const {id, score, created_at, username} = scoreObj
         
-                            return (
-                                <ListItem
-                                    containerStyle={{paddingLeft:30}}
-                                    key={id}
-                                    title={formatNumWithCommas(score)}
-                                    subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
-                                    titleStyle={{ fontSize: 16, fontWeight: 'bold' }}
-                                    subtitleStyle={{ paddingTop:3 }}
-                                />)
-                        }) : 
+                                return (
+                                    <ListItem
+                                        containerStyle={{paddingLeft:30}}
+                                        key={id}
+                                        title={formatNumWithCommas(score)}
+                                        subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
+                                        titleStyle={{ fontSize: 16, fontWeight: 'bold' }}
+                                        subtitleStyle={{ paddingTop:3 }}
+                                    />)
+                            })}
+                        </ScrollView> : 
                         <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>
                     }
                     {pintipsUrl ?
