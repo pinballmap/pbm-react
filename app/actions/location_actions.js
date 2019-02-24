@@ -18,6 +18,9 @@ import {
     ADD_MACHINE_TO_LIST,
     REMOVE_MACHINE_FROM_LIST,
     CLEAR_MACHINE_LIST,
+    SUGGESTING_LOCATION,
+    LOCATION_SUGGESTED,
+    FAILED_SUGGEST_LOCATION,
 } from './types'
 
 import { getData, postData, putData, deleteData } from '../config/request'
@@ -204,3 +207,59 @@ export const updateLocationDetailsFailure = (err) => dispatch => {
 export const addMachineToList = machine => ({ type: ADD_MACHINE_TO_LIST, machine })
 export const removeMachineFromList = machine => ({ type: REMOVE_MACHINE_FROM_LIST, machine })
 export const clearMachineList = () => ({ type: CLEAR_MACHINE_LIST })
+
+export const suggestLocation = (locationDetails) => (dispatch, getState) => {
+    dispatch({ type: SUGGESTING_LOCATION }) 
+
+    const { email, authentication_token } = getState().user
+    const {
+        locationName: location_name,
+        street: location_street, 
+        city: location_city, 
+        state: location_state,
+        country: location_country,
+        phone: location_phone,
+        website: location_website,
+        description: location_comments,
+        locationType: location_type, 
+        operator: location_operator,
+        machineList,
+    } = locationDetails
+    
+    const location_machines = machineList.map(m => m.name).join(', ')
+    
+    const body = {
+        user_email: email,
+        user_token: authentication_token,
+        region_id: 1,
+        location_name,
+        location_street,
+        location_city,
+        location_state,
+        location_country,
+        location_phone,
+        location_website,
+        location_comments,
+        location_type,
+        location_operator,
+        location_machines,
+    }
+
+    return postData(`/locations/suggest.json`, body)
+        .then(response => {
+            if (response.errors) {
+                throw new Error(response.errors)
+            }
+            dispatch(locationSuggested())
+        })
+        .catch(err => dispatch(suggestLocationFailure(err)))
+}
+
+export const locationSuggested = () => dispatch => {
+    dispatch({type: LOCATION_SUGGESTED })
+}
+
+export const suggestLocationFailure = (err) => dispatch => {
+    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: FAILED_SUGGEST_LOCATION})
+}

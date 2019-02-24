@@ -1,12 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Modal, Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { ConfirmationModal, DropDownButton, NotLoggedIn, PbmButton, WarningButton } from '../components'
-import { clearMachineList, removeMachineFromList } from '../actions'
+import { 
+    ConfirmationModal, 
+    DropDownButton, 
+    NotLoggedIn, 
+    PbmButton, 
+    WarningButton, 
+} from '../components'
+import { 
+    clearError,
+    clearMachineList, 
+    removeMachineFromList,
+    suggestLocation,
+} from '../actions'
 import countries from '../utils/countries'
 
 const DismissKeyboard = require('dismissKeyboard')
@@ -58,9 +69,33 @@ class SuggestLocation extends Component {
     }
 
     confirmSuggestLocationDetails = () => {
-        this.setState({ showSuggestLocationModal: false })
-        // const { phone, website, description, selectedLocationType, selectedOperatorId } = this.state
-        // this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, selectedOperatorId)
+        const { 
+            locationName,
+            street, 
+            city, 
+            state,
+            country,
+            phone, 
+            website, 
+            description, 
+            locationType, 
+            operator, 
+        } = this.state
+
+        const locationDetails = {
+            locationName,
+            street, 
+            city, 
+            state,
+            country,
+            phone, 
+            website, 
+            description, 
+            locationType, 
+            operator, 
+            machineList: this.props.location.machineList,
+        }
+        this.props.suggestLocation(locationDetails)
     } 
 
     getDisplayText = machine => (
@@ -69,6 +104,11 @@ class SuggestLocation extends Component {
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
+
+    acceptError = () => {
+        this.props.clearError()
+        this.setState({ showSuggestLocationModal: false })
+    }
 
     componentWillUnmount() {
         this.props.clearMachineList()
@@ -93,16 +133,15 @@ class SuggestLocation extends Component {
             operators,
         } = this.state
         const { loggedIn } = this.props.user
+        const { errorText } = this.props.error
 
-        const { machineList = [] } = this.props.location
+        const { isSuggestingLocation, locationSuggested, machineList = [] } = this.props.location
 
         const locationTypeObj = locationTypes.find(type => type.id === locationType) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
 
         const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
-
-        console.log(this.state.country)
 
         return(
             <ScrollView style={{flex: 1}}>
@@ -175,54 +214,64 @@ class SuggestLocation extends Component {
                     visible={this.state.showSuggestLocationModal}
                     onRequestClose={()=>{}}
                 >
-                    {/* {errorText ? 
-                        <View style={{marginTop: 100}}>
-                            <Text>{errorText}</Text>
-                            <PbmButton 
-                                title={"OK"}
-                                onPress={() => this.acceptError()}
-                            />
-                        </View>
-                        :                        */}
-                    <ScrollView style={{marginTop: 50}}>
-                        <Text style={s.title}>Location Name</Text>
-                        <Text style={s.preview}>{locationName}</Text>
-                        <Text style={s.title}>Street</Text>
-                        <Text style={s.preview}>{street}</Text>
-                        <Text style={s.title}>City</Text>
-                        <Text style={s.preview}>{city}</Text>
-                        <Text style={s.title}>State</Text>
-                        <Text style={s.preview}>{state}</Text>
-                        <Text style={s.title}>Country</Text>
-                        <Text style={s.preview}>{country}</Text>
-                        <Text style={s.title}>Phone</Text>
-                        <Text style={s.preview}>{phone}</Text>
-                        <View style={s.hr}></View>
-                        <Text style={s.title}>Website</Text>
-                        <Text style={s.preview}>{website}</Text>
-                        <View style={s.hr}></View>
-                        <Text style={s.title}>Location Notes</Text>
-                        <Text style={s.preview}>{description}</Text>
-                        <View style={s.hr}></View>
-                        <Text style={s.title}>Location Type</Text>
-                        <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
-                        <View style={s.hr}></View>
-                        <Text style={s.title}>Operator</Text>
-                        <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
-                        <Text style={s.title}>Machine List</Text>
-                        {machineList.map(m => 
-                            <Text key={m.name}>{m.name}</Text>
-                        )}
-                        <PbmButton
-                            title={'Submit Location'}
-                            onPress={() => this.confirmSuggestLocationDetails()}
-                        />
-                        <WarningButton
-                            title={'Cancel'}
-                            onPress={() => this.setState({ showSuggestLocationModal: false})}
-                        />
-                    </ScrollView>
-                    {/* } */}
+                    {isSuggestingLocation ? 
+                        <ActivityIndicator /> :
+                        errorText ? 
+                            <View style={{marginTop: 100}}>
+                                <Text>{errorText}</Text>
+                                <PbmButton 
+                                    title={"OK"}
+                                    onPress={() => this.acceptError()}
+                                />
+                            </View> :
+                            locationSuggested ?
+                                <View style={{marginTop: 100}}>
+                                    <Text>Location Suggestion Received, thanks!</Text>
+                                    <PbmButton 
+                                        title={"OK"}
+                                        onPress={() => this.setState({ showSuggestLocationModal: false })}
+                                    />
+                                </View>
+                                :                       
+                                <ScrollView style={{marginTop: 50}}>
+                                    <Text style={s.title}>Location Name</Text>
+                                    <Text style={s.preview}>{locationName}</Text>
+                                    <Text style={s.title}>Street</Text>
+                                    <Text style={s.preview}>{street}</Text>
+                                    <Text style={s.title}>City</Text>
+                                    <Text style={s.preview}>{city}</Text>
+                                    <Text style={s.title}>State</Text>
+                                    <Text style={s.preview}>{state}</Text>
+                                    <Text style={s.title}>Country</Text>
+                                    <Text style={s.preview}>{country}</Text>
+                                    <Text style={s.title}>Phone</Text>
+                                    <Text style={s.preview}>{phone}</Text>
+                                    <View style={s.hr}></View>
+                                    <Text style={s.title}>Website</Text>
+                                    <Text style={s.preview}>{website}</Text>
+                                    <View style={s.hr}></View>
+                                    <Text style={s.title}>Location Notes</Text>
+                                    <Text style={s.preview}>{description}</Text>
+                                    <View style={s.hr}></View>
+                                    <Text style={s.title}>Location Type</Text>
+                                    <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                                    <View style={s.hr}></View>
+                                    <Text style={s.title}>Operator</Text>
+                                    <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                    <Text style={s.title}>Machine List</Text>
+                                    {machineList.map(m => 
+                                        <Text key={m.name}>{m.name}</Text>
+                                    )}
+                                    <PbmButton
+                                        title={'Submit Location'}
+                                        onPress={() => this.confirmSuggestLocationDetails()}
+                                    />
+                                    <WarningButton
+                                        title={'Cancel'}
+                                        onPress={() => this.setState({ showSuggestLocationModal: false})}
+                                    />
+                                </ScrollView>
+                    }
                 </Modal>
                 { loggedIn ?
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
@@ -396,18 +445,23 @@ const s = StyleSheet.create({
 })
 
 SuggestLocation.propTypes = {
+    error: PropTypes.object,
     locations: PropTypes.object,
     operators: PropTypes.object,
     user: PropTypes.object,
     navigation: PropTypes.object,
     location: PropTypes.object,
+    clearError: PropTypes.func, 
     removeMachineFromList: PropTypes.func,
     clearMachineList: PropTypes.func,
+    suggestLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, locations, operators, user }) => ({ location, locations, operators, user })
+const mapStateToProps = ({ error, location, locations, operators, user }) => ({ error, location, locations, operators, user })
 const mapDispatchToProps = (dispatch) => ({
+    clearError: () => dispatch(clearError()),
     removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
     clearMachineList: () => dispatch(clearMachineList()),
+    suggestLocation: (goBack, locationDetails) => dispatch(suggestLocation(goBack, locationDetails))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuggestLocation)
