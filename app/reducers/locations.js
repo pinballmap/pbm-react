@@ -91,18 +91,13 @@ export default (state = initialState, action) => {
     }
     case LOCATION_MACHINE_REMOVED:
     {   
-        //Updates location list / map state when a machine is removed from a location
-        //Logic is more fragile than I'd like it to be. Keep an eye out here for issues. 
-        const { machine_id, location_id } = action
+        const { nameManYear, location_id } = action
         const mapLocations = state.mapLocations.map(loc => {
             if (loc.id === location_id) {
-                const machineIdx = loc.machine_ids.findIndex(id => id === machine_id)
-                const machine_ids = loc.machine_ids.filter((_, idx) => idx !== machineIdx)
-                const machine_names = loc.machine_names.filter((_, idx) => idx !== machineIdx)
+                const machine_names = loc.machine_names.filter(name => name !== nameManYear)
                 return {
                     ...loc,
                     updated_at: moment.utc().format(),
-                    machine_ids,
                     machine_names,
                 }
             }
@@ -116,13 +111,10 @@ export default (state = initialState, action) => {
     }
     case MACHINE_ADDED_TO_LOCATION:
     {
-        //Updates location list / map state when a machine is added to a location
-        //Logic is more fragile than I'd like it to be. Keep an eye out here for issues. 
         const { machine, location_id } = action
-        const machineName = `${machine.name} (${machine.manufacturer}, ${machine.year})`
         const mapLocations = state.mapLocations.map(loc => {
             if (loc.id === location_id) {
-                const machine_names = alphaSort([machineName].concat(loc.machine_names))
+                const machine_names = alphaSort([machine.nameManYear].concat(loc.machine_names))
                 return {
                     ...loc,
                     updated_at: moment.utc().format(),
