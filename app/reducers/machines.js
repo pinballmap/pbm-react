@@ -16,12 +16,19 @@ export default (state = initialState, action) => {
             ...state,
             isFetchingMachines: true,
         }
-    case FETCHING_MACHINES_SUCCESS:
+    case FETCHING_MACHINES_SUCCESS: {
+        const machines = action.machines.map(machine => {
+            return {
+                ...machine,
+                nameManYear: `${machine.name} (${machine.manufacturer}, ${machine.year})`
+            }
+        })
         return {
             ...state,
             isFetchingMachines: false,
-            machines: action.machines,
+            machines,
         }
+    }
     case FETCHING_MACHINES_FAILURE:
         return {
             ...state,
