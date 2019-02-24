@@ -15,7 +15,10 @@ import {
     LOCATION_DETAILS_UPDATED,
     ADD_MACHINE_TO_LIST,
     REMOVE_MACHINE_FROM_LIST,
-    CLEAR_MACHINE_LIST
+    CLEAR_MACHINE_LIST,
+    SUGGESTING_LOCATION,
+    LOCATION_SUGGESTED,
+    FAILED_SUGGEST_LOCATION,
 } from '../actions/types'
 
 const moment = require('moment')
@@ -29,6 +32,8 @@ export const initialState = {
     addingMachineToLocation: false,
     updatingLocationDetails: false,
     machineList: [],
+    isSuggestingLocation: false,
+    locationSuggested: false,
 }
 
 export default (state = initialState, action) => {
@@ -184,6 +189,24 @@ export default (state = initialState, action) => {
         return {
             ...state,
             machineList: [],
+        }
+    case SUGGESTING_LOCATION:
+        return {
+            ...state,
+            isSuggestingLocation: true,
+            locationSuggested: false,
+        }
+    case LOCATION_SUGGESTED: 
+        return {
+            ...state,
+            isSuggestingLocation: false,
+            locationSuggested: true,
+        }
+    case FAILED_SUGGEST_LOCATION: 
+        return {
+            ...state,
+            isSuggestingLocation: false,
+            locationSuggested: false,
         }
     default:
         return state
