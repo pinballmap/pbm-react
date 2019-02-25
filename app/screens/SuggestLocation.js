@@ -55,7 +55,7 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Suggest Location', 
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: 'Suggest Location',
         }
     }
@@ -236,14 +236,19 @@ class SuggestLocation extends Component {
                                 <ScrollView style={{marginTop: 50}}>
                                     <Text style={s.title}>Location Name</Text>
                                     <Text style={s.preview}>{locationName}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Street</Text>
                                     <Text style={s.preview}>{street}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>City</Text>
                                     <Text style={s.preview}>{city}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>State</Text>
                                     <Text style={s.preview}>{state}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Country</Text>
                                     <Text style={s.preview}>{country}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Phone</Text>
                                     <Text style={s.preview}>{phone}</Text>
                                     <View style={s.hr}></View>
@@ -331,7 +336,6 @@ class SuggestLocation extends Component {
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
-                                keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
                                 value={phone}
@@ -425,6 +429,11 @@ const s = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold"
     },
+    preview: {
+        fontSize: 14,
+        marginRight: 25,
+        marginLeft: 25
+    },
     textInput: {
         backgroundColor: '#f5fbfe', 
         borderColor: '#4b5862', 
@@ -441,7 +450,13 @@ const s = StyleSheet.create({
         borderColor: '#4b5862',
         borderRadius: 5
     },
-
+    hr: {
+        marginLeft:25,
+        marginRight:25,
+        height:2,
+        marginTop: 10,
+        backgroundColor:"#D3ECFF"
+    },
 })
 
 SuggestLocation.propTypes = {
