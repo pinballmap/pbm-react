@@ -265,7 +265,7 @@ class SuggestLocation extends Component {
                                     <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                     <Text style={s.title}>Machine List</Text>
                                     {machineList.map(m => 
-                                        <Text key={m.name}>{m.name}</Text>
+                                        <Text style={s.preview} key={m.name}>{m.name}</Text>
                                     )}
                                     <PbmButton
                                         title={'Submit Location'}
