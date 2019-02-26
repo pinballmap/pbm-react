@@ -218,7 +218,7 @@ class SuggestLocation extends Component {
                         <ActivityIndicator /> :
                         errorText ? 
                             <View style={{marginTop: 100}}>
-                                <Text>{errorText}</Text>
+                                <Text style={[s.error,s.success]}>{errorText}</Text>
                                 <PbmButton 
                                     title={"OK"}
                                     onPress={() => this.acceptError()}
@@ -226,7 +226,7 @@ class SuggestLocation extends Component {
                             </View> :
                             locationSuggested ?
                                 <View style={{marginTop: 100}}>
-                                    <Text>Location Suggestion Received, thanks!</Text>
+                                    <Text style={s.success}>Location Suggestion Received, thanks!</Text>
                                     <PbmButton 
                                         title={"OK"}
                                         onPress={() => this.setState({ showSuggestLocationModal: false })}
@@ -281,7 +281,7 @@ class SuggestLocation extends Component {
                 { loggedIn ?
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{marginLeft:10,marginRight:10}}>
-                            <Text>{`Add a new location to the database. Fill in this form. We'll review it to make sure the data works... so don't expect it to show up just yet. Thanks for helping out!`}</Text>
+                            <Text>{`We'll review your submission, so don't expect it to show up immediately. Thanks for helping out!`}</Text>
                             <Text style={s.title}>Location Name</Text>
                             <TextInput
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -457,6 +457,16 @@ const s = StyleSheet.create({
         marginTop: 10,
         backgroundColor:"#D3ECFF"
     },
+    success: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginRight: 10
+    },
+    error: {
+        color: '#F53240'
+    }
 })
 
 SuggestLocation.propTypes = {
