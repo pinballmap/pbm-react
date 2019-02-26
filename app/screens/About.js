@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-native'
+import { View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
+import { Text } from '../components'
 
 let deviceWidth = Dimensions.get('window').width
 

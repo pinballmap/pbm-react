@@ -12,9 +12,10 @@ class PbmText extends Component {
     }
   }
 
-PbmText.propTypes = {
-    children: PropTypes.string,
-}
+children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+])
 
 const s = StyleSheet.create({
     text: {

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { HeaderBackButton } from 'react-navigation'
-import { ActivityIndicator, Modal, Picker, Platform, Text, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { ConfirmationModal, DropDownButton, PbmButton, WarningButton } from '../components'
+import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
 import { clearError, updateLocationDetails } from '../actions'
 
 const DismissKeyboard = require('dismissKeyboard')
@@ -244,19 +244,15 @@ const s = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#f5fbfe', 
-        borderColor: '#4b5862', 
+        borderColor: '#97a5af', 
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 5
     },
     pickerbg: {
-        backgroundColor: '#f5fbfe',
         marginLeft: 10,
         marginRight: 10,
-        borderWidth: 2,
-        borderColor: '#4b5862',
-        borderRadius: 5
     },
     hr: {
         marginLeft:25,
