@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -10,7 +10,8 @@ import {
     DropDownButton, 
     NotLoggedIn, 
     PbmButton, 
-    WarningButton, 
+    WarningButton,
+    Text
 } from '../components'
 import { 
     clearError,
@@ -436,19 +437,15 @@ const s = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#f5fbfe', 
-        borderColor: '#4b5862', 
+        borderColor: '#97a5af', 
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 5
     },
     pickerbg: {
-        backgroundColor: '#f5fbfe',
         marginLeft: 10,
         marginRight: 10,
-        borderWidth: 2,
-        borderColor: '#4b5862',
-        borderRadius: 5
     },
     hr: {
         marginLeft:25,
