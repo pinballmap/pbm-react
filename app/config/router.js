@@ -75,7 +75,7 @@ const TabNav = TabNavigator({
     }), 
     tabBarOptions: {
         activeTintColor: '#000e18',
-        inactiveTintColor: '#6c5d5e',
+        inactiveTintColor: '#6a7d8a',
         showIcon: true,
         style: {
             backgroundColor: '#ffffff',

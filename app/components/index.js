@@ -7,6 +7,7 @@ import ConfirmationModal from './ConfirmationModal'
 import WarningButton from './WarningButton'
 import PbmButton from './PbmButton'
 import DropDownButton from './DropDownButton'
+import Text from './PbmText'
 
 export {
     LocationCard,
@@ -18,4 +19,5 @@ export {
     WarningButton,
     PbmButton,
     DropDownButton,
+    Text
 }

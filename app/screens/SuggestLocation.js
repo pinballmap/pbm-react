@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -10,7 +10,8 @@ import {
     DropDownButton, 
     NotLoggedIn, 
     PbmButton, 
-    WarningButton, 
+    WarningButton,
+    Text
 } from '../components'
 import { 
     clearError,
@@ -55,7 +56,7 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Suggest Location', 
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
             title: 'Suggest Location',
         }
     }
@@ -218,7 +219,7 @@ class SuggestLocation extends Component {
                         <ActivityIndicator /> :
                         errorText ? 
                             <View style={{marginTop: 100}}>
-                                <Text>{errorText}</Text>
+                                <Text style={[s.error,s.success]}>{errorText}</Text>
                                 <PbmButton 
                                     title={"OK"}
                                     onPress={() => this.acceptError()}
@@ -226,7 +227,7 @@ class SuggestLocation extends Component {
                             </View> :
                             locationSuggested ?
                                 <View style={{marginTop: 100}}>
-                                    <Text>Location Suggestion Received, thanks!</Text>
+                                    <Text style={s.success}>Location Suggestion Received, thanks!</Text>
                                     <PbmButton 
                                         title={"OK"}
                                         onPress={() => this.setState({ showSuggestLocationModal: false })}
@@ -236,14 +237,19 @@ class SuggestLocation extends Component {
                                 <ScrollView style={{marginTop: 50}}>
                                     <Text style={s.title}>Location Name</Text>
                                     <Text style={s.preview}>{locationName}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Street</Text>
                                     <Text style={s.preview}>{street}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>City</Text>
                                     <Text style={s.preview}>{city}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>State</Text>
                                     <Text style={s.preview}>{state}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Country</Text>
                                     <Text style={s.preview}>{country}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Phone</Text>
                                     <Text style={s.preview}>{phone}</Text>
                                     <View style={s.hr}></View>
@@ -260,7 +266,7 @@ class SuggestLocation extends Component {
                                     <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                     <Text style={s.title}>Machine List</Text>
                                     {machineList.map(m => 
-                                        <Text key={m.name}>{m.name}</Text>
+                                        <Text style={s.preview} key={m.name}>{m.name}</Text>
                                     )}
                                     <PbmButton
                                         title={'Submit Location'}
@@ -276,7 +282,7 @@ class SuggestLocation extends Component {
                 { loggedIn ?
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
                         <View style={{marginLeft:10,marginRight:10}}>
-                            <Text>{`Add a new location to the database. Fill in this form. We'll review it to make sure the data works... so don't expect it to show up just yet. Thanks for helping out!`}</Text>
+                            <Text>{`We'll review your submission, so don't expect it to show up immediately. Thanks for helping out!`}</Text>
                             <Text style={s.title}>Location Name</Text>
                             <TextInput
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -331,7 +337,6 @@ class SuggestLocation extends Component {
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
-                                keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
                                 value={phone}
@@ -425,23 +430,40 @@ const s = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold"
     },
+    preview: {
+        fontSize: 14,
+        marginRight: 25,
+        marginLeft: 25
+    },
     textInput: {
         backgroundColor: '#f5fbfe', 
-        borderColor: '#4b5862', 
+        borderColor: '#97a5af', 
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 5
     },
     pickerbg: {
-        backgroundColor: '#f5fbfe',
         marginLeft: 10,
         marginRight: 10,
-        borderWidth: 2,
-        borderColor: '#4b5862',
-        borderRadius: 5
     },
-
+    hr: {
+        marginLeft:25,
+        marginRight:25,
+        height:2,
+        marginTop: 10,
+        backgroundColor:"#D3ECFF"
+    },
+    success: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginRight: 10
+    },
+    error: {
+        color: '#F53240'
+    }
 })
 
 SuggestLocation.propTypes = {
