@@ -347,7 +347,7 @@ class SuggestLocation extends Component {
                             <TextInput
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
                                 underlineColorAndroid='transparent'
-                                onChangeText={website => this.setState({ website })}
+                                onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                 value={website}
                                 returnKeyType="done"
                                 placeholder={'http://...'}
