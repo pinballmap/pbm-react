@@ -28,12 +28,9 @@ class SearchBar extends Component {
         }
     }
     
-    findItem = async (query) => {
-        if (query === '')
-            return this.setState({ foundItems: []})
-        
+    findItem = async (query) => {        
         const foundItems = await getData(`/locations/autocomplete?name=${query}`)
-        this.setState({ foundItems })
+        query === '' ? this.setState({ foundItems: []}) : this.setState({ foundItems })
     }
 
     componentWillReceiveProps(props) {
