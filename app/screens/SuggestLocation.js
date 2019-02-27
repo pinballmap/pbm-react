@@ -408,6 +408,7 @@ class SuggestLocation extends Component {
                             <PbmButton
                                 title={'Submit Location'}
                                 onPress={() => this.setState({ showSuggestLocationModal: true })}
+                                disabled={machineList.length === 0 || locationName.length === 0}
                             />
                         </View>
                     </TouchableWithoutFeedback> :
