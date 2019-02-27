@@ -228,7 +228,7 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
         machineList,
     } = locationDetails
     
-    const location_machines = machineList.map(m => m.nameManYear).join(', ')
+    const location_machines = `${machineList.map(m => m.nameManYear).join(', ')},`
     
     const body = {
         user_email: email,
