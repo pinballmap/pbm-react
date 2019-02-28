@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ListItem, SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -10,7 +10,7 @@ import {
     addMachineToList,
     removeMachineFromList,
 } from '../actions'
-import { PbmButton, WarningButton } from '../components'
+import { PbmButton, WarningButton, Text } from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
 

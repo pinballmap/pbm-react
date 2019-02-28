@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Font } from 'expo'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { PbmButton, ConfirmationModal, SearchBar } from '../components'
+import { PbmButton, ConfirmationModal, SearchBar, Text } from '../components'
 import { 
     fetchLocations,
     updateCurrCoordindates,

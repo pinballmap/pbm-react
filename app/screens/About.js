@@ -41,7 +41,7 @@ class About extends Component {
      
     render(){
         return(
-            <ScrollView style={{flex:1,backgroundColor:'#ffffff'}}>
+            <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <View style={s.container}>
                     <View style={[s.logoWrapper,s.child]}>
                         <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo}/>
