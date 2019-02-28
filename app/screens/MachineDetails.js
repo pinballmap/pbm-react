@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, Text, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import { ActivityIndicator, Linking, Modal, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
-import { PbmButton, RemoveMachine, RemoveMachineModal, WarningButton }  from '../components'
+import { PbmButton, RemoveMachine, RemoveMachineModal, WarningButton, Text }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
 
 const moment = require('moment')
