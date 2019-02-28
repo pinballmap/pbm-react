@@ -5,6 +5,7 @@ import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, Tex
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal, 
     DropDownButton, 
@@ -403,6 +404,7 @@ class SuggestLocation extends Component {
                             <PbmButton
                                 title={'Select Machines to Add'}
                                 onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
+                                icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                             />   
                             {machineList.map(machine => 
                                 <ListItem 
@@ -470,7 +472,11 @@ const s = StyleSheet.create({
     },
     error: {
         color: '#F53240'
-    }
+    },
+    plusButton: {
+        color: "#F53240",
+        fontSize: 24
+    },
 })
 
 SuggestLocation.propTypes = {
