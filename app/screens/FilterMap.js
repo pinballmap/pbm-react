@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Picker, Text, View, StyleSheet, ScrollView, Platform } from 'react-native'
+import { Picker, View, StyleSheet, ScrollView, Platform } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { ConfirmationModal, DropDownButton, PbmButton, WarningButton } from '../components'
+import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
 import { 
     setFilters,
 } from '../actions'
@@ -258,7 +258,7 @@ const s = StyleSheet.create({
     pageTitle: {
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: "#000e18"
+        backgroundColor: "#6a7d8a"
     },
     pageTitleText: {
         textAlign: 'center',

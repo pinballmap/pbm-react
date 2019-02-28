@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
+import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, TouchableOpacity, View, Image, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { ConfirmationModal, PbmButton } from '../components'
+import { ConfirmationModal, PbmButton, Text } from '../components'
 import { 
     addFavoriteLocation,
     clearError,

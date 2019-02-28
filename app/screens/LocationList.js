@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { FlatList, Text, View, StyleSheet } from 'react-native'
+import { FlatList, View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { LocationCard } from '../components'
+import { LocationCard, Text } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
 

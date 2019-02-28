@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, ScrollView, Image, Linking, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, Image, Linking, View, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import { Text } from '../components'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -17,7 +18,7 @@ class Podcast extends Component {
 
   render(){
       return(
-          <ScrollView style={{flex:1}}>
+          <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
               <View style={s.container}>
                   <View style={[s.logoWrapper,s.child]}>
                       <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
