@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import { Text } from '../components'
 
 class FAQ extends Component {
   
@@ -58,7 +59,7 @@ const s = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: "#f5fbff",
-        backgroundColor: "#000e18"
+        backgroundColor: "#6a7d8a"
     },
     textLink: {
         textDecorationLine: 'underline',
