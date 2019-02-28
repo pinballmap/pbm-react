@@ -236,6 +236,12 @@ class SuggestLocation extends Component {
                                 </View>
                                 :                       
                                 <ScrollView style={{marginTop: 50}}>
+                                    <View style={s.pageTitle}>
+                                        {machineList.length === 0 || locationName.length === 0 ? 
+                                            <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
+                                            : <Text style={s.pageTitleText}>Please review your submission</Text>
+                                        }
+                                    </View>
                                     <Text style={s.title}>Location Name</Text>
                                     {locationName.length === 0 ?
                                         <Text style={[s.error,s.preview]}>Include a location name</Text>
@@ -268,6 +274,7 @@ class SuggestLocation extends Component {
                                     <View style={s.hr}></View>
                                     <Text style={s.title}>Operator</Text>
                                     <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                    <View style={s.hr}></View>
                                     <Text style={s.title}>Machine List</Text>
                                     {machineList.length === 0 ? 
                                         <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
@@ -289,8 +296,8 @@ class SuggestLocation extends Component {
                 </Modal>
                 { loggedIn ?
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{marginLeft:10,marginRight:10}}>
-                            <Text>{`We'll review your submission, so don't expect it to show up immediately. Thanks for helping out!`}</Text>
+                        <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                            <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                             <Text style={s.title}>Location Name</Text>
                             <TextInput
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -444,6 +451,18 @@ const s = StyleSheet.create({
         marginRight: 25,
         marginLeft: 25
     },
+    pageTitle: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: "#6a7d8a"
+    },
+    pageTitleText: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        fontSize: 18,
+        color: '#f5fbff'
+    },
     textInput: {
         backgroundColor: '#f5fbfe', 
         borderColor: '#97a5af', 
@@ -472,6 +491,9 @@ const s = StyleSheet.create({
     },
     error: {
         color: '#F53240'
+    },
+    errorTitle: {
+        color: '#fdd4d7'
     },
     plusButton: {
         color: "#F53240",
