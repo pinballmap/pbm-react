@@ -116,6 +116,7 @@ class FindMachine extends Component {
                         onChangeText={this.handleSearch}
                         inputStyle={{color:'#000e18'}}
                         value={this.state.query}
+                        inputContainerStyle={{height:40}}
                     />
                     {sortedMachines.map(machine => {
                         const selected = machineList.find(m => m.id === machine.id)
