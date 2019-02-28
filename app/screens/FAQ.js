@@ -16,7 +16,7 @@ class FAQ extends Component {
      
     render(){
         return(
-            <ScrollView style={{flex:1}}>
+            <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <View style={s.container}>
                     <View style={s.child}>
                         <Text style={s.bold}>{`How do I search for a particular machine?`}</Text>

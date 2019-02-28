@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Text, View, StyleSheet, ScrollView } from 'react-native'
+import { ActivityIndicator, View, StyleSheet, ScrollView } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
-import { ConfirmationModal, NotLoggedIn, PbmButton, WarningButton } from '../components'
+import { ConfirmationModal, NotLoggedIn, PbmButton, WarningButton, Text } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
 
