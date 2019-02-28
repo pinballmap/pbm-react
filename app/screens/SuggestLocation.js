@@ -236,7 +236,10 @@ class SuggestLocation extends Component {
                                 :                       
                                 <ScrollView style={{marginTop: 50}}>
                                     <Text style={s.title}>Location Name</Text>
-                                    <Text style={s.preview}>{locationName}</Text>
+                                    {locationName.length === 0 ?
+                                        <Text style={[s.error,s.preview]}>Include a location name</Text>
+                                        : <Text style={s.preview}>{locationName}</Text>
+                                    }
                                     <View style={s.hr}></View>
                                     <Text style={s.title}>Street</Text>
                                     <Text style={s.preview}>{street}</Text>
@@ -265,12 +268,16 @@ class SuggestLocation extends Component {
                                     <Text style={s.title}>Operator</Text>
                                     <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                     <Text style={s.title}>Machine List</Text>
-                                    {machineList.map(m => 
-                                        <Text style={s.preview} key={m.name}>{m.name}</Text>
-                                    )}
+                                    {machineList.length === 0 ? 
+                                        <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
+                                        : machineList.map(m => 
+                                            <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
+                                        )
+                                    }                             
                                     <PbmButton
                                         title={'Submit Location'}
                                         onPress={() => this.confirmSuggestLocationDetails()}
+                                        disabled={machineList.length === 0 || locationName.length === 0}
                                     />
                                     <WarningButton
                                         title={'Cancel'}
@@ -408,7 +415,6 @@ class SuggestLocation extends Component {
                             <PbmButton
                                 title={'Submit Location'}
                                 onPress={() => this.setState({ showSuggestLocationModal: true })}
-                                disabled={machineList.length === 0 || locationName.length === 0}
                             />
                         </View>
                     </TouchableWithoutFeedback> :
@@ -432,7 +438,7 @@ const s = StyleSheet.create({
         fontWeight: "bold"
     },
     preview: {
-        fontSize: 14,
+        fontSize: 15,
         marginRight: 25,
         marginLeft: 25
     },
