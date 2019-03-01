@@ -20,12 +20,16 @@ export class LocationList extends Component {
         }
     }
   
-  static navigationOptions = ({ navigation }) => {
-      return {
-          headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,          
-          title: 'Saved',
-      }
-  }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,          
+            title: 'Saved',
+            headerStyle: {
+                backgroundColor:'#f5fbff',                
+            },
+            headerTintColor: '#4b5862'
+        }
+    }
   
   updateIndex = (buttonIndex) => this.props.selectFavoriteLocationFilterBy(buttonIndex)
 
@@ -66,7 +70,7 @@ export class LocationList extends Component {
 
   render() {     
       return (
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
               {this.props.user.loggedIn ? 
                   <View style={{ flex: 1 }}>
                       {this.state.locations.length > 0 ? 
@@ -76,7 +80,7 @@ export class LocationList extends Component {
                                   onPress={this.updateIndex}
                                   selectedIndex={this.props.user.selectedFavoriteLocationFilter}
                                   buttons={['Distance', 'Alphabetically', 'Last Added']}
-                                  containerStyle={{ height: 30 }}
+                                  containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
                                   selectedButtonStyle={s.buttonStyle}
                                   selectedTextStyle={s.textStyle}
                               />

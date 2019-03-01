@@ -26,8 +26,12 @@ class FindMachine extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`Select Machine to Add`}</Text>,
+            headerStyle: {
+                backgroundColor:'#f5fbff',               
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -75,14 +79,14 @@ class FindMachine extends Component {
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
 
         return (
-            <View>
+            <View style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <Modal
                     visible={this.state.showModal}
                     onRequestClose={()=>{}}
                     transparent={false}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50,backgroundColor:'#f5fbff'}}>
                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
                             <PbmButton 
                                 title={'Add'}
@@ -116,7 +120,8 @@ class FindMachine extends Component {
                         onChangeText={this.handleSearch}
                         inputStyle={{color:'#000e18'}}
                         value={this.state.query}
-                        inputContainerStyle={{height:40}}
+                        inputContainerStyle={{height:35,backgroundColor:'#ffffff'}}
+                        containerStyle={{backgroundColor:'#97a5af'}}
                     />
                     {sortedMachines.map(machine => {
                         const selected = machineList.find(m => m.id === machine.id)
@@ -127,15 +132,17 @@ class FindMachine extends Component {
                             >
                                 <ListItem 
                                     title={this.getDisplayText(machine)}
+                                    containerStyle={{backgroundColor:'#f5fbff'}}
                                     checkmark={selected ? <MaterialIcons name='cancel' size={15} color="#4b5862" /> : null}
                                 />
                             </TouchableOpacity> :
-                            <TouchableOpacity
+                            <TouchableOpacity                           
                                 key={machine.id}
                                 onPress={() => this.setSelected(machine)}
                             >
                                 <ListItem 
                                     title={this.getDisplayText(machine)}
+                                    containerStyle={{backgroundColor:'#f5fbff'}}
                                 />
                             </TouchableOpacity>
                     }
@@ -147,9 +154,9 @@ class FindMachine extends Component {
 
 const s = StyleSheet.create({
     textInput: {
-        backgroundColor: '#f5fbfe', 
-        borderColor: '#4b5862', 
-        borderWidth: 1,
+        backgroundColor: '#ffffff', 
+        borderColor: '#97a5af', 
+        borderWidth: 2,
         height: 80,
         marginLeft:20,
         marginRight:20, 

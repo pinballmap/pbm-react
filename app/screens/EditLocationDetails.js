@@ -34,8 +34,12 @@ class EditLocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('name')}</Text>,
+            headerStyle: {
+                backgroundColor:'#f5fbff',               
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -69,7 +73,7 @@ class EditLocationDetails extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1,backgroundColor:'#f5fbff' }}>
                 <ConfirmationModal 
                     visible={this.state.showSelectLocationTypeModal}
                 >
@@ -127,7 +131,7 @@ class EditLocationDetails extends Component {
                             />
                         </View>
                         :                       
-                        <ScrollView style={{marginTop: 50}}>
+                        <ScrollView style={{marginTop: 50, backgroundColor:'#f5fbff'}}>
                             <Text style={s.title}>Phone</Text>
                             <Text style={s.preview}>{phone}</Text>
                             <View style={s.hr}></View>

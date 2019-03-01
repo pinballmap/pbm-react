@@ -37,7 +37,7 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
             headerTitleStyle: {width:deviceWidth - 100},
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
@@ -48,7 +48,11 @@ class LocationDetails extends Component {
                     accessibilityLabel="Edit"
                     titleStyle={{color: "#F53240", fontSize: 18}}
                     clear={true}
-                /> : null
+                /> : null,
+            headerStyle: {
+                backgroundColor:'#f5fbff',               
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -103,7 +107,7 @@ class LocationDetails extends Component {
         }))
 
         return (
-            <ScrollView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            <ScrollView style={{ flex: 1, backgroundColor:'#f5fbff' }}>
                 <ConfirmationModal visible={favoriteModalVisible}>
                     {addingFavoriteLocation || removingFavoriteLocation ?
                         <ActivityIndicator /> : 
@@ -138,7 +142,7 @@ class LocationDetails extends Component {
                     visible={errorModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={{marginTop: 100}}>
+                    <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
                         <Text>{errorText}</Text>
                         <Button 
                             title={"OK"}
@@ -181,12 +185,12 @@ class LocationDetails extends Component {
                             }}
                         />
                     </MapView>
-                    <View style={{ flex: 3,backgroundColor: "#ffffff" }}>
+                    <View style={{ flex: 3,backgroundColor: "#f5fbff" }}>
                         <ButtonGroup
                             onPress={this.updateIndex}
                             selectedIndex={this.state.buttonIndex}
                             buttons={['Machines', 'Info']}
-                            containerStyle={{ height: 30 }}
+                            containerStyle={{ height: 35, borderWidth: 2 }}
                             selectedButtonStyle={s.buttonStyle}
                             selectedTextStyle={s.textStyle}
                         />
@@ -345,7 +349,7 @@ const s = StyleSheet.create({
         color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor:"#f5fbff",
+        backgroundColor:"#ffffff",
         width: '100%',
         elevation: 0
     },

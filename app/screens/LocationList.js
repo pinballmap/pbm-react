@@ -21,8 +21,12 @@ export class LocationList extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
             title: 'LocationList',
+            headerStyle: {
+                backgroundColor:'#f5fbff',                
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -67,13 +71,13 @@ export class LocationList extends Component {
         const { lat, lon, locationTrackingServicesEnabled } = this.props.user
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor:'#f5fbff' }}>
                 <Text style={s.sort}>SORT BY:</Text>
                 <ButtonGroup
                     onPress={this.updateIndex}
                     selectedIndex={this.props.locations.selectedLocationListFilter}
                     buttons={['Distance', 'Alphabetically', 'Last Updated']}
-                    containerStyle={{ height: 30 }}
+                    containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
                     selectedButtonStyle={s.buttonStyle}
                     selectedTextStyle={s.textStyle}
                 />

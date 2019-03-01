@@ -78,7 +78,7 @@ const TabNav = TabNavigator({
         inactiveTintColor: '#6a7d8a',
         showIcon: true,
         style: {
-            backgroundColor: '#ffffff',
+            backgroundColor:'#f5fbff',
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'

@@ -9,8 +9,12 @@ class FAQ extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'FAQ', 
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'FAQ',
+            headerStyle: {
+                backgroundColor:'#f5fbff',               
+            },
+            headerTintColor: '#4b5862'
         }
     }
      
