@@ -164,7 +164,7 @@ class MachineDetails extends Component {
                                     titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
                                     title={`"${comment}"`}
                                     subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
-                                    subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15}}
+                                    subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15,fontSize:14}}
                                 /> 
                             }) :
                             <Text style={s.noneYet}>No machine condition added yet</Text>
@@ -239,7 +239,7 @@ const s = StyleSheet.create({
     externalLink: {
         backgroundColor:'#ffffff',
         borderWidth: 1,
-        borderColor: '#4b5862',
+        borderColor: '#97a5af',
         borderRadius: 5,
         elevation: 0
     },
@@ -253,7 +253,7 @@ const s = StyleSheet.create({
         marginBottom:15
     },
     conditionText: {
-        color: '#4b5862',
+        color: '#6a7d8a',
         fontStyle: 'italic',
         fontSize: 14
     },
