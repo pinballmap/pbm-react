@@ -8,14 +8,18 @@ class Blog extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Blog', 
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Blog',
+            headerStyle: {
+                backgroundColor:'#f5fbff',                
+            },
+            headerTintColor: '#4b5862'
         }
     }
      
     render(){
         return(
-            <View style={{marginTop: 300, flex: 1}}>
+            <View style={{marginTop: 300, flex: 1,backgroundColor:'#f5fbff'}}>
                 <Button
                     onPress={ () => this.props.navigation.navigate('Map') }
                     style={{width:30, paddingTop: 15}}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, StatusBar } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -57,8 +57,12 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Suggest Location', 
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Suggest Location',
+            headerStyle: {
+                backgroundColor:'#f5fbff',         
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -146,7 +150,7 @@ class SuggestLocation extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
-            <ScrollView style={{flex: 1}}>
+            <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 <ConfirmationModal 
                     visible={showSelectLocationTypeModal}
                 >
@@ -219,7 +223,7 @@ class SuggestLocation extends Component {
                     {isSuggestingLocation ? 
                         <ActivityIndicator /> :
                         errorText ? 
-                            <View style={{marginTop: 100}}>
+                            <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
                                 <Text style={[s.error,s.success]}>{errorText}</Text>
                                 <PbmButton 
                                     title={"OK"}
@@ -227,7 +231,7 @@ class SuggestLocation extends Component {
                                 />
                             </View> :
                             locationSuggested ?
-                                <View style={{marginTop: 100}}>
+                                <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
                                     <Text style={s.success}>Location Suggestion Received, thanks!</Text>
                                     <PbmButton 
                                         title={"OK"}
@@ -464,7 +468,7 @@ const s = StyleSheet.create({
         color: '#f5fbff'
     },
     textInput: {
-        backgroundColor: '#f5fbfe', 
+        backgroundColor: '#ffffff', 
         borderColor: '#97a5af', 
         borderWidth: 2,
         marginLeft: 10,

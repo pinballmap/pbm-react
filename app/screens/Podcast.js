@@ -8,31 +8,35 @@ let deviceWidth = Dimensions.get('window').width
 
 class Podcast extends Component {
      
-  static navigationOptions = ({ navigation }) => {
-      return {
-          drawerLabel: 'Podcast', 
-          headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
-          title: 'Podcast',
-      }
-  }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            drawerLabel: 'Podcast', 
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            title: 'Podcast',
+            headerStyle: {
+                backgroundColor:'#f5fbff',          
+            },
+            headerTintColor: '#4b5862'
+        }
+    }
 
-  render(){
-      return(
-          <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
-              <View style={s.container}>
-                  <View style={[s.logoWrapper,s.child]}>
-                      <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
-                  </View>
-                  <View style={s.child}>
-                      <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode once a month. Check it out!</Text>
-                      <Text style={s.textLink}
-                          onPress={() => Linking.openURL('http://pod.pinballmap.com')}
-                      >pod.pinballmap.com</Text>
-                  </View>  
-              </View>
-          </ScrollView>
-      )
-  }
+    render(){
+        return(
+            <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
+                <View style={s.container}>
+                    <View style={[s.logoWrapper,s.child]}>
+                        <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
+                    </View>
+                    <View style={s.child}>
+                        <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode once a month. Check it out!</Text>
+                        <Text style={s.textLink}
+                            onPress={() => Linking.openURL('http://pod.pinballmap.com')}
+                        >pod.pinballmap.com</Text>
+                    </View>  
+                </View>
+            </ScrollView>
+        )
+    }
 }
 
 const s = StyleSheet.create({

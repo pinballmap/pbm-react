@@ -20,8 +20,12 @@ class UserProfile extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Profile',
+            headerStyle: {
+                backgroundColor:'#f5fbff',                
+            },
+            headerTintColor: '#4b5862'
         }
     };
 
@@ -69,7 +73,7 @@ class UserProfile extends Component {
                 </ConfirmationModal>
 
                 {user.loggedIn ?
-                    <ScrollView style={{backgroundColor:'#ffffff'}}>
+                    <ScrollView style={{backgroundColor:'#f5fbff'}}>
                         <Text style={s.username}>{user.username}</Text>
                         <Text style={s.member}>{`Member since: ${moment(profileInfo.created_at).format('MMM-DD-YYYY')}`}</Text>
                         <View style={{flexDirection: 'row'}}>

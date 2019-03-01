@@ -26,10 +26,14 @@ class MachineDetails extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
             headerTitleStyle: {width:deviceWidth - 90},
-            headerRight: <RemoveMachine />
+            headerRight: <RemoveMachine />,
+            headerStyle: {
+                backgroundColor:'#f5fbff',               
+            },
+            headerTintColor: '#4b5862'
         }
     }
 
@@ -80,7 +84,7 @@ class MachineDetails extends Component {
         const { name: machineName } = this.props.machineDetails
 
         return (
-            <View>
+            <View style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -88,7 +92,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50, backgroundColor:'#f5fbff'}}>
                             <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                             <TextInput
                                 multiline={true}
@@ -119,7 +123,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{paddingTop: 50}}>
+                        <ScrollView style={{paddingTop: 50,backgroundColor:'#f5fbff'}}>
                             <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                             <TextInput 
                                 style={[{height: 40,textAlign:'center'},s.textInput]}
@@ -233,7 +237,7 @@ class MachineDetails extends Component {
 
 const s = StyleSheet.create({
     externalLink: {
-        backgroundColor:'rgba(38,2,4,.1)',
+        backgroundColor:'#ffffff',
         borderWidth: 1,
         borderColor: '#4b5862',
         borderRadius: 5,
@@ -249,7 +253,7 @@ const s = StyleSheet.create({
         marginBottom:15
     },
     conditionText: {
-        color: '#555555',
+        color: '#4b5862',
         fontStyle: 'italic',
         fontSize: 14
     },
@@ -261,8 +265,8 @@ const s = StyleSheet.create({
         color:'#555555'
     },
     textInput: {
-        backgroundColor: '#f5fbfe', 
-        borderColor: '#4b5862', 
+        backgroundColor: '#ffffff', 
+        borderColor: '#97a5af',
         borderWidth: 2,
         marginLeft: 20,
         marginRight: 20,

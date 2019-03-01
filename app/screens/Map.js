@@ -65,7 +65,11 @@ class Map extends Component {
             accessibilityLabel="Filter"
             titleStyle={s.titleStyle}
             clear={true}
-        />
+        />,
+            headerStyle: {
+                backgroundColor:'#f5fbff',              
+            },
+            headerTintColor: '#4b5862'
         }
     };
 
@@ -200,7 +204,7 @@ class Map extends Component {
         }
 
         return(
-            <View style={{flex: 1}}>
+            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 <ConfirmationModal 
                     visible={showNoLocationTrackingModal}>
                     <View> 

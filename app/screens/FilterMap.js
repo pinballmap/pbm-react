@@ -31,8 +31,12 @@ class FilterMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#000e18" onPress={() => navigation.goBack(null)} title="Map" />,
+          headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter Results',
+          headerStyle: {
+            backgroundColor:'#f5fbff',            
+        },
+        headerTintColor: '#4b5862'
       }
   };
 
@@ -126,7 +130,7 @@ class FilterMap extends Component {
       const filterSelected = selectedMachine !== '' || selectedLocationType !== '' || selectedOperator !== '' || selectedNumMachines !== 0 ? true : false
     
       return(
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
               <ConfirmationModal 
                   visible={showSelectMachineModal}
               >
@@ -210,7 +214,7 @@ class FilterMap extends Component {
                   onPress={this.updateNumMachinesSelected}
                   selectedIndex={selectedNumMachines}
                   buttons={['All', '2+', '3+', '4+', '5+']}
-                  containerStyle={{ height: 30 }}
+                  containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
                   selectedButtonStyle={s.buttonStyle}
                   selectedTextStyle={s.textStyle}
               />
@@ -268,7 +272,7 @@ const s = StyleSheet.create({
     },
     border: {
         borderWidth: 2,
-        borderColor: "#D3ECFF",
+        borderColor: "#97a5af",
     },
     sectionTitle: {
         textAlign: 'center',
