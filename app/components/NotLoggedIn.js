@@ -6,7 +6,7 @@ import { PbmButton } from './'
 class NotLoggedIn extends Component {
     render(){
         return(
-            <View style={{backgroundColor:'#f5fbff'}}>
+            <View style={{flex: 1, backgroundColor:'#f5fbff'}}>
                 <Text style={s.pageTitle}>{this.props.title}</Text>
                 <Text style={s.hiya}>{this.props.text}</Text>
                 <PbmButton

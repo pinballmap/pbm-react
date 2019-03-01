@@ -68,10 +68,16 @@ export class LocationList extends Component {
       this.sortLocations(this.state.locations, this.props.user.selectedFavoriteLocationFilter)
   }
 
-  render() {     
+  render() { 
+      const { loggedIn } = this.props.user     
       return (
           <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-              {this.props.user.loggedIn ? 
+              {loggedIn ? 
+                  <NotLoggedIn 
+                      text={`Please login to start saving your favorite locations.`}
+                      title={'Saved Locations'}
+                      onPress={() => this.props.navigation.navigate('Login')}
+                  /> :
                   <View style={{ flex: 1 }}>
                       {this.state.locations.length > 0 ? 
                           <View style={{ flex: 1}}>
@@ -111,12 +117,7 @@ export class LocationList extends Component {
                               <Text style={{fontSize:18,textAlign:'center'}}>{`To save your favorite locations, lookup a location then click the heart icon.`}</Text>
                           </View> 
                       }
-                  </View>:
-                  <NotLoggedIn 
-                      text={`Please login to start saving your favorite locations.`}
-                      title={'Saved Locations'}
-                      onPress={() => this.props.navigation.navigate('Login')}
-                  />
+                  </View>
               }
           </View>
       )

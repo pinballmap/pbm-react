@@ -151,293 +151,293 @@ class SuggestLocation extends Component {
 
         return(
             <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                <ConfirmationModal 
-                    visible={showSelectLocationTypeModal}
-                >
-                    <ScrollView>
-                        <Picker 
-                            selectedValue={locationType}
-                            onValueChange={itemValue => this.setState({ locationType: itemValue })}>
-                            {locationTypes.map(m => (
-                                <Picker.Item label={m.name} value={m.id} key={m.id} />
-                            ))}
-                        </Picker>
-                    </ScrollView>
-                    <PbmButton
-                        title={'OK'}
-                        onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
-                    />
-                    <WarningButton 
-                        title={'Cancel'}
-                        onPress={() => this.setState({ showSelectLocationTypeModal: false, locationType: this.state.originalLocationType, originalLocationType: null })}
-                    />
-                </ConfirmationModal>
-                <ConfirmationModal 
-                    visible={showSelectOperatorModal}
-                >
-                    <ScrollView>
-                        <Picker 
-                            selectedValue={operator}
-                            onValueChange={itemValue => this.setState({ operator: itemValue })}>
-                            {operators.map(m => (
-                                <Picker.Item label={m.name} value={m.id} key={m.id} />
-                            ))}
-                        </Picker>
-                    </ScrollView>
-                    <PbmButton
-                        title={'OK'}
-                        onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
-                    />
-                    <WarningButton 
-                        title={'Cancel'}
-                        onPress={() => this.setState({ showSelectOperatorModal: false, operator: this.state.originalOperator, originalOperator: null })}
-                    />
-                </ConfirmationModal>
-                <ConfirmationModal 
-                    visible={showSelectCountryModal}
-                >
-                    <ScrollView>
-                        <Picker 
-                            selectedValue={country}
-                            onValueChange={country => this.setState({ country })}>
-                            {countries.map(m => (
-                                <Picker.Item label={m.name} value={m.name} key={m.name} />
-                            ))}
-                        </Picker>
-                    </ScrollView>
-                    <PbmButton
-                        title={'OK'}
-                        onPress={() => this.setState({ showSelectCountryModal: false })}
-                    />
-                    <WarningButton 
-                        title={'Cancel'}
-                        onPress={() => this.setState({ showSelectCountryModal: false })}
-                    />
-                </ConfirmationModal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showSuggestLocationModal}
-                    onRequestClose={()=>{}}
-                >
-                    {isSuggestingLocation ? 
-                        <ActivityIndicator /> :
-                        errorText ? 
-                            <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
-                                <Text style={[s.error,s.success]}>{errorText}</Text>
-                                <PbmButton 
-                                    title={"OK"}
-                                    onPress={() => this.acceptError()}
-                                />
-                            </View> :
-                            locationSuggested ?
-                                <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
-                                    <Text style={s.success}>Location Suggestion Received, thanks!</Text>
-                                    <PbmButton 
-                                        title={"OK"}
-                                        onPress={() => this.setState({ showSuggestLocationModal: false })}
-                                    />
-                                </View>
-                                :                       
-                                <ScrollView style={{marginTop: 50}}>
-                                    <View style={s.pageTitle}>
-                                        {machineList.length === 0 || locationName.length === 0 ? 
-                                            <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
-                                            : <Text style={s.pageTitleText}>Please review your submission</Text>
-                                        }
-                                    </View>
-                                    <Text style={s.title}>Location Name</Text>
-                                    {locationName.length === 0 ?
-                                        <Text style={[s.error,s.preview]}>Include a location name</Text>
-                                        : <Text style={s.preview}>{locationName}</Text>
-                                    }
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Street</Text>
-                                    <Text style={s.preview}>{street}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>City</Text>
-                                    <Text style={s.preview}>{city}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>State</Text>
-                                    <Text style={s.preview}>{state}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Country</Text>
-                                    <Text style={s.preview}>{country}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Phone</Text>
-                                    <Text style={s.preview}>{phone}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Website</Text>
-                                    <Text style={s.preview}>{website}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Location Notes</Text>
-                                    <Text style={s.preview}>{description}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Location Type</Text>
-                                    <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Operator</Text>
-                                    <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
-                                    <View style={s.hr}></View>
-                                    <Text style={s.title}>Machine List</Text>
-                                    {machineList.length === 0 ? 
-                                        <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
-                                        : machineList.map(m => 
-                                            <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
-                                        )
-                                    }                             
-                                    <PbmButton
-                                        title={'Submit Location'}
-                                        onPress={() => this.confirmSuggestLocationDetails()}
-                                        disabled={machineList.length === 0 || locationName.length === 0}
-                                    />
-                                    <WarningButton
-                                        title={'Cancel'}
-                                        onPress={() => this.setState({ showSuggestLocationModal: false})}
-                                    />
-                                </ScrollView>
-                    }
-                </Modal>
-                { loggedIn ?
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
-                            <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
-                            <Text style={s.title}>Location Name</Text>
-                            <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={locationName => this.setState({ locationName })}
-                                value={locationName}
-                                returnKeyType="done"
-                                placeholder={'...'}
-                            />
-                            <Text style={s.title}>Street</Text>
-                            <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={street => this.setState({ street })}
-                                value={street}
-                                returnKeyType="done"
-                                placeholder={'...'}
-                            />
-                            <Text style={s.title}>City</Text>
-                            <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={city => this.setState({ city })}
-                                value={city}
-                                returnKeyType="done"
-                                placeholder={'...'}
-                            />
-                            <Text style={s.title}>State</Text>
-                            <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={state => this.setState({ state })}
-                                value={state}
-                                returnKeyType="done"
-                                placeholder={'...'}
-                            />
-                            <Text style={s.title}>Country</Text>
-                            {Platform.OS === "ios" ? 
-                                <DropDownButton
-                                    title={country}
-                                    onPress={() => this.setState({ showSelectCountryModal: true })}
-                                /> :
+                {!loggedIn ? 
+                    <NotLoggedIn
+                        title={'Suggest a New Location'}
+                        text={'But first! We ask that you Login. Thank you!'}
+                        onPress={() => this.props.navigation.navigate('Login')}
+                    /> :
+                    <View>
+                        <ConfirmationModal 
+                            visible={showSelectLocationTypeModal}
+                        >
+                            <ScrollView>
                                 <Picker 
-                                    style={s.pickerbg}
-                                    selectedValue={country}
-                                    onValueChange={country => this.setState({ country })}>
-                                    {countries.map(m => (
-                                        <Picker.Item label={m.name} value={m.name} key={m.name} />
-                                    ))}
-                                </Picker>    
-                            }   
-                            <Text style={s.title}>Phone</Text>
-                            <TextInput 
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={phone => this.setState({ phone })}
-                                value={phone}
-                                returnKeyType="done"
-                                placeholder={phone || '(503) xxx-xxxx'}
-                            />
-                            <Text style={s.title}>Website</Text>
-                            <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
-                                value={website}
-                                returnKeyType="done"
-                                placeholder={'http://...'}
-                            />
-                            <Text style={s.title}>Location Notes</Text>
-                            <TextInput
-                                multiline={true}
-                                numberOfLines={4}
-                                style={[{padding:5,height: 100},s.textInput]}
-                                onChangeText={description => this.setState({ description })}
-                                underlineColorAndroid='transparent'
-                                value={description}
-                                placeholder={'Location description...'}
-                                textAlignVertical='top'
-                            />
-                            <Text style={s.title}>Location Type</Text>
-                            {Platform.OS === "ios" ? 
-                                <DropDownButton
-                                    title={locationTypeName}
-                                    onPress={() => this.selectingLocationType()}
-                                /> : 
-                                <Picker 
-                                    style={s.pickerbg}
                                     selectedValue={locationType}
                                     onValueChange={itemValue => this.setState({ locationType: itemValue })}>
                                     {locationTypes.map(m => (
                                         <Picker.Item label={m.name} value={m.id} key={m.id} />
                                     ))}
                                 </Picker>
-                            }
-                            <Text style={s.title}>Operator</Text>
-                            {Platform.OS === "ios" ? 
-                                <DropDownButton
-                                    title={operatorName}
-                                    onPress={() => this.selectingOperator()}
-                                /> :
+                            </ScrollView>
+                            <PbmButton
+                                title={'OK'}
+                                onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
+                            />
+                            <WarningButton 
+                                title={'Cancel'}
+                                onPress={() => this.setState({ showSelectLocationTypeModal: false, locationType: this.state.originalLocationType, originalLocationType: null })}
+                            />
+                        </ConfirmationModal>
+                        <ConfirmationModal 
+                            visible={showSelectOperatorModal}
+                        >
+                            <ScrollView>
                                 <Picker 
-                                    style={s.pickerbg}
                                     selectedValue={operator}
                                     onValueChange={itemValue => this.setState({ operator: itemValue })}>
                                     {operators.map(m => (
                                         <Picker.Item label={m.name} value={m.id} key={m.id} />
                                     ))}
-                                </Picker>    
-                            }    
+                                </Picker>
+                            </ScrollView>
                             <PbmButton
-                                title={'Select Machines to Add'}
-                                onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
-                                icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                            />   
-                            {machineList.map(machine => 
-                                <ListItem 
-                                    title={this.getDisplayText(machine)}
-                                    key={machine.id}
-                                    checkmark={<MaterialIcons name='cancel' size={15} color="#4b5862" />}
-                                    onPress={() => this.props.removeMachineFromList(machine)}
-                                />
-                            )}                 
-                            <PbmButton
-                                title={'Submit Location'}
-                                onPress={() => this.setState({ showSuggestLocationModal: true })}
+                                title={'OK'}
+                                onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
                             />
-                        </View>
-                    </TouchableWithoutFeedback> :
-                    <NotLoggedIn
-                        title={'Suggest a New Location'}
-                        text={'But first! We ask that you Login. Thank you!'}
-                        onPress={() => this.props.navigation.navigate('Login')}
-                    />
-                }
-
+                            <WarningButton 
+                                title={'Cancel'}
+                                onPress={() => this.setState({ showSelectOperatorModal: false, operator: this.state.originalOperator, originalOperator: null })}
+                            />
+                        </ConfirmationModal>
+                        <ConfirmationModal 
+                            visible={showSelectCountryModal}
+                        >
+                            <ScrollView>
+                                <Picker 
+                                    selectedValue={country}
+                                    onValueChange={country => this.setState({ country })}>
+                                    {countries.map(m => (
+                                        <Picker.Item label={m.name} value={m.name} key={m.name} />
+                                    ))}
+                                </Picker>
+                            </ScrollView>
+                            <PbmButton
+                                title={'OK'}
+                                onPress={() => this.setState({ showSelectCountryModal: false })}
+                            />
+                            <WarningButton 
+                                title={'Cancel'}
+                                onPress={() => this.setState({ showSelectCountryModal: false })}
+                            />
+                        </ConfirmationModal>
+                        <Modal
+                            animationType="slide"
+                            transparent={false}
+                            visible={this.state.showSuggestLocationModal}
+                            onRequestClose={()=>{}}
+                        >
+                            {isSuggestingLocation ? 
+                                <ActivityIndicator /> :
+                                errorText ? 
+                                    <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
+                                        <Text style={[s.error,s.success]}>{errorText}</Text>
+                                        <PbmButton 
+                                            title={"OK"}
+                                            onPress={() => this.acceptError()}
+                                        />
+                                    </View> :
+                                    locationSuggested ?
+                                        <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
+                                            <Text style={s.success}>Location Suggestion Received, thanks!</Text>
+                                            <PbmButton 
+                                                title={"OK"}
+                                                onPress={() => this.setState({ showSuggestLocationModal: false })}
+                                            />
+                                        </View>
+                                        :                       
+                                        <ScrollView style={{marginTop: 50}}>
+                                            <View style={s.pageTitle}>
+                                                {machineList.length === 0 || locationName.length === 0 ? 
+                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
+                                                    : <Text style={s.pageTitleText}>Please review your submission</Text>
+                                                }
+                                            </View>
+                                            <Text style={s.title}>Location Name</Text>
+                                            {locationName.length === 0 ?
+                                                <Text style={[s.error,s.preview]}>Include a location name</Text>
+                                                : <Text style={s.preview}>{locationName}</Text>
+                                            }
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Street</Text>
+                                            <Text style={s.preview}>{street}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>City</Text>
+                                            <Text style={s.preview}>{city}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>State</Text>
+                                            <Text style={s.preview}>{state}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Country</Text>
+                                            <Text style={s.preview}>{country}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Phone</Text>
+                                            <Text style={s.preview}>{phone}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Website</Text>
+                                            <Text style={s.preview}>{website}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Location Notes</Text>
+                                            <Text style={s.preview}>{description}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Location Type</Text>
+                                            <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Operator</Text>
+                                            <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Machine List</Text>
+                                            {machineList.length === 0 ? 
+                                                <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
+                                                : machineList.map(m => 
+                                                    <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
+                                                )
+                                            }                             
+                                            <PbmButton
+                                                title={'Submit Location'}
+                                                onPress={() => this.confirmSuggestLocationDetails()}
+                                                disabled={machineList.length === 0 || locationName.length === 0}
+                                            />
+                                            <WarningButton
+                                                title={'Cancel'}
+                                                onPress={() => this.setState({ showSuggestLocationModal: false})}
+                                            />
+                                        </ScrollView>
+                            }
+                        </Modal>
+                        <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                            <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                                <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
+                                <Text style={s.title}>Location Name</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={locationName => this.setState({ locationName })}
+                                    value={locationName}
+                                    returnKeyType="done"
+                                    placeholder={'...'}
+                                />
+                                <Text style={s.title}>Street</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={street => this.setState({ street })}
+                                    value={street}
+                                    returnKeyType="done"
+                                    placeholder={'...'}
+                                />
+                                <Text style={s.title}>City</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={city => this.setState({ city })}
+                                    value={city}
+                                    returnKeyType="done"
+                                    placeholder={'...'}
+                                />
+                                <Text style={s.title}>State</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={state => this.setState({ state })}
+                                    value={state}
+                                    returnKeyType="done"
+                                    placeholder={'...'}
+                                />
+                                <Text style={s.title}>Country</Text>
+                                {Platform.OS === "ios" ? 
+                                    <DropDownButton
+                                        title={country}
+                                        onPress={() => this.setState({ showSelectCountryModal: true })}
+                                    /> :
+                                    <Picker 
+                                        style={s.pickerbg}
+                                        selectedValue={country}
+                                        onValueChange={country => this.setState({ country })}>
+                                        {countries.map(m => (
+                                            <Picker.Item label={m.name} value={m.name} key={m.name} />
+                                        ))}
+                                    </Picker>    
+                                }   
+                                <Text style={s.title}>Phone</Text>
+                                <TextInput 
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={phone => this.setState({ phone })}
+                                    value={phone}
+                                    returnKeyType="done"
+                                    placeholder={phone || '(503) xxx-xxxx'}
+                                />
+                                <Text style={s.title}>Website</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
+                                    value={website}
+                                    returnKeyType="done"
+                                    placeholder={'http://...'}
+                                />
+                                <Text style={s.title}>Location Notes</Text>
+                                <TextInput
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    style={[{padding:5,height: 100},s.textInput]}
+                                    onChangeText={description => this.setState({ description })}
+                                    underlineColorAndroid='transparent'
+                                    value={description}
+                                    placeholder={'Location description...'}
+                                    textAlignVertical='top'
+                                />
+                                <Text style={s.title}>Location Type</Text>
+                                {Platform.OS === "ios" ? 
+                                    <DropDownButton
+                                        title={locationTypeName}
+                                        onPress={() => this.selectingLocationType()}
+                                    /> : 
+                                    <Picker 
+                                        style={s.pickerbg}
+                                        selectedValue={locationType}
+                                        onValueChange={itemValue => this.setState({ locationType: itemValue })}>
+                                        {locationTypes.map(m => (
+                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                        ))}
+                                    </Picker>
+                                }
+                                <Text style={s.title}>Operator</Text>
+                                {Platform.OS === "ios" ? 
+                                    <DropDownButton
+                                        title={operatorName}
+                                        onPress={() => this.selectingOperator()}
+                                    /> :
+                                    <Picker 
+                                        style={s.pickerbg}
+                                        selectedValue={operator}
+                                        onValueChange={itemValue => this.setState({ operator: itemValue })}>
+                                        {operators.map(m => (
+                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                        ))}
+                                    </Picker>    
+                                }    
+                                <PbmButton
+                                    title={'Select Machines to Add'}
+                                    onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
+                                    icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                />   
+                                {machineList.map(machine => 
+                                    <ListItem 
+                                        title={this.getDisplayText(machine)}
+                                        key={machine.id}
+                                        checkmark={<MaterialIcons name='cancel' size={15} color="#4b5862" />}
+                                        onPress={() => this.props.removeMachineFromList(machine)}
+                                    />
+                                )}                 
+                                <PbmButton
+                                    title={'Submit Location'}
+                                    onPress={() => this.setState({ showSuggestLocationModal: true })}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>}
             </ScrollView>)
     }
 }

@@ -64,26 +64,30 @@ class UserProfile extends Component {
         } = profileInfo
 
         return (
-            <View>
-                <ConfirmationModal visible={this.state.modalVisible} >
-                    <PbmButton
-                        title={"Really Logout?"}
-                        onPress={() => {
-                            this.setModalVisible(false)
-                            this.props.logout()
-                            this.props.navigation.navigate('Login')
-                        }}
-                        accessibilityLabel="Logout"
-                    />
-                    <WarningButton
-                        title={"Stay Logged In"}
-                        onPress={() => this.setModalVisible(false)}
-                        accessibilityLabel="Stay Loggin In"
-                    />
-                </ConfirmationModal>
-
-                {user.loggedIn ?
-                    <ScrollView style={{backgroundColor:'#f5fbff'}}>
+            <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                {!user.loggedIn ? 
+                    <NotLoggedIn 
+                        text={`Hi, you're not logged in, so you don't have a profile!`}
+                        title={'User Profile'}
+                        onPress={() => this.props.navigation.navigate('Login')}
+                    /> :
+                    <View>
+                        <ConfirmationModal visible={this.state.modalVisible} >
+                            <PbmButton
+                                title={"Really Logout?"}
+                                onPress={() => {
+                                    this.setModalVisible(false)
+                                    this.props.logout()
+                                    this.props.navigation.navigate('Login')
+                                }}
+                                accessibilityLabel="Logout"
+                            />
+                            <WarningButton
+                                title={"Stay Logged In"}
+                                onPress={() => this.setModalVisible(false)}
+                                accessibilityLabel="Stay Loggin In"
+                            />
+                        </ConfirmationModal>
                         <Text style={s.username}>{user.username}</Text>
                         <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM-DD-YYYY')}`}</Text>
                         <View style={{flexDirection: 'row'}}>
@@ -144,14 +148,9 @@ class UserProfile extends Component {
                             onPress={() => this.setModalVisible(true)}
                             accessibilityLabel="Logout"
                         /> 
-                    </ScrollView> :
-                    <NotLoggedIn 
-                        text={`Hi, you're not logged in, so you don't have a profile!`}
-                        title={'User Profile'}
-                        onPress={() => this.props.navigation.navigate('Login')}
-                    />
+                    </View>
                 }                      
-            </View>
+            </ScrollView>
         )
     }
 }
