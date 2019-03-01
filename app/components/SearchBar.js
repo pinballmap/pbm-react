@@ -34,7 +34,8 @@ class SearchBar extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.findItem(props.query.currQueryString)
+        if (this.props.query.currQueryString !== props.query.currQueryString)
+            this.findItem(props.query.currQueryString)
     }
 
     render(){
