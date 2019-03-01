@@ -179,7 +179,7 @@ const s = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: "#f5fbff",
-        backgroundColor: "#000e18",
+        backgroundColor: "#6a7d8a",
         textAlign: "center"
     },
     stat: {
