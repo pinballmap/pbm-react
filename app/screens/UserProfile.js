@@ -52,6 +52,16 @@ class UserProfile extends Component {
 
         const { user } = this.props
         const profileInfo = this.state.profile_info
+        const { 
+            profile_list_of_edited_locations = [], 
+            profile_list_of_high_scores = [], 
+            created_at, 
+            num_machines_added, 
+            num_machines_removed, 
+            num_lmx_comments_left, 
+            num_locations_suggested, 
+            num_locations_edited 
+        } = profileInfo
 
         return (
             <View>
@@ -75,26 +85,26 @@ class UserProfile extends Component {
                 {user.loggedIn ?
                     <ScrollView style={{backgroundColor:'#f5fbff'}}>
                         <Text style={s.username}>{user.username}</Text>
-                        <Text style={s.member}>{`Member since: ${moment(profileInfo.created_at).format('MMM-DD-YYYY')}`}</Text>
+                        <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM-DD-YYYY')}`}</Text>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={s.stat}>Machines Added:</Text>
-                            <Text style={s.statNum}>{` ${profileInfo.num_machines_added} `}</Text>
+                            <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={s.stat}>Machines Removed:</Text>
-                            <Text style={s.statNum}>{` ${profileInfo.num_machines_removed} `}</Text>
+                            <Text style={s.statNum}>{` ${num_machines_removed} `}</Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={s.stat}>Machines Comments:</Text>
-                            <Text style={s.statNum}>{` ${profileInfo.num_lmx_comments_left} `}</Text>
+                            <Text style={s.statNum}>{` ${num_lmx_comments_left} `}</Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={s.stat}>Locations Submitted:</Text>
-                            <Text style={s.statNum}>{` ${profileInfo.num_locations_suggested} `}</Text>
+                            <Text style={s.statNum}>{` ${num_locations_suggested} `}</Text>
                         </View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={s.stat}>Locations Edited:</Text>
-                            <Text style={s.statNum}>{` ${profileInfo.num_locations_edited} `}</Text>
+                            <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
                         </View>
                         <Button 
                             title={'Saved Locations'}
@@ -110,7 +120,7 @@ class UserProfile extends Component {
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
                         <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:0,marginBottom:8,marginTop:8}}>
-                            {profileInfo.profile_list_of_edited_locations.slice(0, 50).map(location => {
+                            {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
                                     key={location[0]}
                                     titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-8,marginTop:-8}}
@@ -121,7 +131,7 @@ class UserProfile extends Component {
                         </View>
                         <Text style={s.bold}>High Scores:</Text>
                         <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:15}}>
-                            {profileInfo.profile_list_of_high_scores.map((score, idx) => {
+                            {profile_list_of_high_scores.map((score, idx) => {
                                 return <ListItem
                                     key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
                                     titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
