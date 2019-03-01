@@ -291,8 +291,9 @@ const s = StyleSheet.create({
         color: '#97a5af',
     },
     titleStyle: {
-        color:"#000e18",
-        fontSize:16,
+        color: "#6a7d8a",
+        fontSize: 16,
+        fontWeight: 'bold'
     }, 
     loading: {
         textAlign: 'center',
