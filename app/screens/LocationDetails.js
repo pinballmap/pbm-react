@@ -199,13 +199,13 @@ class LocationDetails extends Component {
                                 {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_username  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <PbmButton
-                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('SignupLogin') }
+                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={loggedIn ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                     />
                                     <Button
-                                        onPress={() => this.handleConfirmPress(location.id)}
+                                        onPress={() => loggedIn ? this.handleConfirmPress(location.id) : this.props.navigation.navigate('Login') }
                                         title={'Confirm machine list is up to date'}
                                         accessibilityLabel="Confirm machine list is up to date"
                                         raised
