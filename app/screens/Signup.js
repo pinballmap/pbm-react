@@ -198,7 +198,7 @@ class Signup extends Component {
                                 raised
                                 buttonStyle={s.buttonStyle}
                                 titleStyle={{
-                                    color:"000e18", 
+                                    color:"#000e18", 
                                     fontSize:18
                                 }}
                                 containerStyle={{marginTop: 15,marginBottom: 25,borderRadius:50}}
