@@ -246,7 +246,7 @@ class SuggestLocation extends Component {
                                             />
                                         </View>
                                         :                       
-                                        <ScrollView style={{marginTop: 50}}>
+                                        <ScrollView style={{marginTop: 50,backgroundColor:'#f5fbff'}}>
                                             <View style={s.pageTitle}>
                                                 {machineList.length === 0 || locationName.length === 0 ? 
                                                     <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
