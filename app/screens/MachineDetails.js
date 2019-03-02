@@ -61,7 +61,8 @@ class MachineDetails extends Component {
 
     render() {
         const { curLmx, location } = this.props.location   
-
+        const { machine_score_xrefs = [] } = curLmx
+        
         if (!curLmx) {
             return (
                 <View style={{ flex: 1, padding: 20 }}>
@@ -70,7 +71,7 @@ class MachineDetails extends Component {
             )   
         }
 
-        const { loggedIn } = this.props.user
+        const { id: userId, loggedIn } = this.props.user
         const { ipdb_link } = this.props.machineDetails
         const { opdb_id } = this.props.machineDetails
         const pintipsUrl = opdb_id ? 
@@ -78,9 +79,8 @@ class MachineDetails extends Component {
             ``
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
-        const scores = curLmx.machine_score_xrefs.length > 0 ? 
-            curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) : 
-            undefined
+        const scores = machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) 
+        const { score: userHighScore } = machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
 
         return (
@@ -177,7 +177,12 @@ class MachineDetails extends Component {
                             () => this.props.navigation.navigate('Login')
                         }
                     />
-                    {scores ? 
+                    {userHighScore ? 
+                        <Text style={{textAlign:'center',marginTop:10}}>{`Your high score on this machine is ${userHighScore}`}</Text>  :
+                        loggedIn ? <Text style={{textAlign:'center',marginTop:10}}>{`You have no high score recorded on this machine yet`}</Text>  :
+                            <Text style={{textAlign:'center',marginTop:10}}>{`Log in to see your high score on this machine`}</Text>  
+                    }
+                    {scores.length > 0 ? 
                         <ScrollView style={{height: 300}}>
                             {scores.map(scoreObj => {
                                 const {id, score, created_at, username} = scoreObj
