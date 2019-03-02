@@ -123,9 +123,10 @@ class UserProfile extends Component {
                             containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
-                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:0,marginBottom:8,marginTop:8}}>
+                        <View style={{paddingTop:8,paddingBottom:8}}>
                             {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
+                                    containerStyle={{backgroundColor:'#f5fbff'}}
                                     key={location[0]}
                                     titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-8,marginTop:-8}}
                                     title={location[1]}
@@ -134,9 +135,10 @@ class UserProfile extends Component {
                             })}
                         </View>
                         <Text style={s.bold}>High Scores:</Text>
-                        <View style={{backgroundColor:'#ffffff',paddingTop:0,paddingBottom:15}}>
+                        <View style={{paddingTop:0,paddingBottom:15}}>
                             {profile_list_of_high_scores.map((score, idx) => {
                                 return <ListItem
+                                    containerStyle={{backgroundColor:'#f5fbff'}}
                                     key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
                                     titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
                                     title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
@@ -170,7 +172,7 @@ const s = StyleSheet.create({
         fontSize: 24
     },
     savedLink: {
-        backgroundColor:'#f5fbff',
+        backgroundColor:'#ffffff',
         borderWidth: 1,
         borderColor: '#97a5af',
         borderRadius: 5,
