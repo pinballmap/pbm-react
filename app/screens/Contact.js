@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Text, View } from 'react-native'
+import { Button, Text, View, StyleSheet } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 class Contact extends Component {
   
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'Contact', 
+            drawerLabel: 'Contact',
+            drawerIcon: ({tintColor}) => (
+                <MaterialCommunityIcons name='email-outline' style={[s.drawerIcon]} />
+            ), 
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Contact',
             headerStyle: {
@@ -29,6 +33,13 @@ class Contact extends Component {
             </View>)
     }
 }
+
+const s = StyleSheet.create({ 
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
+    },
+})
 
 Contact.propTypes = {
     navigation: PropTypes.object,
