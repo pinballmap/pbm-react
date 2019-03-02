@@ -56,7 +56,10 @@ class SuggestLocation extends Component {
   
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'Suggest Location', 
+            drawerLabel: 'Suggest Location',
+            drawerIcon: ({tintColor}) => (
+                <MaterialIcons name='add-location' style={[s.drawerIcon]} />
+            ),
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Suggest Location',
             headerStyle: {
@@ -246,7 +249,7 @@ class SuggestLocation extends Component {
                                             />
                                         </View>
                                         :                       
-                                        <ScrollView style={{marginTop: 50}}>
+                                        <ScrollView style={{marginTop: 50,backgroundColor:'#f5fbff'}}>
                                             <View style={s.pageTitle}>
                                                 {machineList.length === 0 || locationName.length === 0 ? 
                                                     <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
@@ -502,6 +505,10 @@ const s = StyleSheet.create({
     plusButton: {
         color: "#F53240",
         fontSize: 24
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
     },
 })
 

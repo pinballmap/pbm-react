@@ -4,6 +4,7 @@ import { View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-
 import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
 import { Text } from '../components'
+import { MaterialIcons } from '@expo/vector-icons'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -16,7 +17,10 @@ class About extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'About', 
+            drawerLabel: 'About',
+            drawerIcon: ({tintColor}) => (
+                <MaterialIcons name='info-outline' style={[s.drawerIcon]} />
+            ),
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'About',
             headerStyle: {
@@ -103,6 +107,10 @@ const s = StyleSheet.create({
         textDecorationLine: 'underline',
         color: "#F53240",
         fontSize: 16,
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
     },
 })
 
