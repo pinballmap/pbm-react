@@ -18,7 +18,7 @@ import {
     clearFilters,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, Feather } from '@expo/vector-icons'
 
 class Map extends Component {
     constructor(props){
@@ -45,6 +45,9 @@ class Map extends Component {
     static navigationOptions = ({ navigation }) => {  
         return {
             drawerLabel: 'Map',
+            drawerIcon: ({tintColor}) => (
+                <Feather name='map' style={[s.drawerIcon]} />
+            ),
             headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
@@ -310,6 +313,10 @@ const s = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
     },
 })
 
