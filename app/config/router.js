@@ -88,7 +88,6 @@ const TabNav = TabNavigator({
     swipeEnabled: true,
 })
 
-  
 export const MapStack = StackNavigator({
     Map: { screen: TabNav },
     SignupLogin: { screen: SignupLogin, },
@@ -127,10 +126,11 @@ export const PbmStack = DrawerNavigator({
 {
     contentOptions: {
         activeTintColor: '#000e18',
+        inactiveTintColor: '#6a7d8a',
         activeBackgroundColor: '#D3ECFF',
     },
     drawerPosition: 'right',
-    drawerWidth: 200,
+    drawerWidth: 250,
 })
 
 const s = StyleSheet.create({ 

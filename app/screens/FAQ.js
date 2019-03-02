@@ -3,12 +3,16 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { Text } from '../components'
+import { FontAwesome } from '@expo/vector-icons'
 
 class FAQ extends Component {
   
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'FAQ', 
+            drawerLabel: 'FAQ',
+            drawerIcon: ({tintColor}) => (
+                <FontAwesome name='question-circle-o' style={[s.drawerIcon]} />
+            ), 
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'FAQ',
             headerStyle: {
@@ -68,6 +72,10 @@ const s = StyleSheet.create({
     textLink: {
         textDecorationLine: 'underline',
         color: "#D3ECFF",
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
     },
 })
 

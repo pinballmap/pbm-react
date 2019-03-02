@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Text, View } from 'react-native'
+import { Button, Text, View, StyleSheet } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import { MaterialIcons } from '@expo/vector-icons'
+
 
 class Events extends Component {
   
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'Events', 
+            drawerLabel: 'Events',
+            drawerIcon: ({tintColor}) => (
+                <MaterialIcons name='event-note' style={[s.drawerIcon]} />
+            ),
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Events',
             headerStyle: {
@@ -29,6 +34,13 @@ class Events extends Component {
             </View>)
     }
 }
+
+const s = StyleSheet.create({ 
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
+    },
+})
 
 Events.propTypes = {
     navigation: PropTypes.object,

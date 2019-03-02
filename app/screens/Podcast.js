@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { StyleSheet, ScrollView, Image, Linking, View, Dimensions } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { Text } from '../components'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -10,7 +11,10 @@ class Podcast extends Component {
      
     static navigationOptions = ({ navigation }) => {
         return {
-            drawerLabel: 'Podcast', 
+            drawerLabel: 'Podcast',
+            drawerIcon: ({tintColor}) => (
+                <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />
+            ), 
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Podcast',
             headerStyle: {
@@ -74,7 +78,11 @@ const s = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: "#D3ECFF",
         fontWeight: 'bold'
-    }
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
+    },
 })
 
 Podcast.propTypes = {
