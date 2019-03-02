@@ -177,11 +177,7 @@ class MachineDetails extends Component {
                             () => this.props.navigation.navigate('Login')
                         }
                     />
-                    {userHighScore ? 
-                        <Text style={{textAlign:'center',marginTop:10}}>{`Your high score on this machine is ${userHighScore}`}</Text>  :
-                        loggedIn ? <Text style={{textAlign:'center',marginTop:10}}>{`You have no high score recorded on this machine yet`}</Text>  :
-                            <Text style={{textAlign:'center',marginTop:10}}>{`Log in to see your high score on this machine`}</Text>  
-                    }
+                    {userHighScore ? <Text style={{textAlign:'center',marginTop:10}}>{`Your high score on this machine is ${userHighScore}`}</Text> : null}
                     {scores.length > 0 ? 
                         <ScrollView style={{height: 300}}>
                             {scores.map(scoreObj => {
