@@ -155,6 +155,7 @@ class MachineDetails extends Component {
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
                     />
+                    <Text style={s.sectionTitle}>Machine Comments</Text>
                     <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
                         {mostRecentComments ? 
                             mostRecentComments.map(commentObj => {
@@ -177,9 +178,19 @@ class MachineDetails extends Component {
                             () => this.props.navigation.navigate('Login')
                         }
                     />
-                    {userHighScore ? <Text style={{textAlign:'center',marginTop:10}}>{`Your high score on this machine is ${userHighScore}`}</Text> : null}
+                    {userHighScore ? 
+                        <View>
+                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                            <Text style={s.userHighScore}>{`${userHighScore}`}</Text>
+                        </View>                       
+                        : null
+                    }
+                    <View>
+                        <Text style={s.sectionTitle}>Top Scores</Text>
+                    </View>
                     {scores.length > 0 ? 
                         <ScrollView style={{height: 300}}>
+                                    
                             {scores.map(scoreObj => {
                                 const {id, score, created_at, username} = scoreObj
         
@@ -189,8 +200,8 @@ class MachineDetails extends Component {
                                         key={id}
                                         title={formatNumWithCommas(score)}
                                         subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
-                                        titleStyle={{ fontSize: 16, fontWeight: 'bold' }}
-                                        subtitleStyle={{ paddingTop:3 }}
+                                        titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
+                                        subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
                                     />)
                             })}
                         </ScrollView> : 
@@ -273,6 +284,23 @@ const s = StyleSheet.create({
         marginRight: 20,
         borderRadius: 5
     },
+    sectionTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingBottom: 10
+    },
+    userScoreTitle: {
+        textAlign: 'center',
+        marginTop: 10,
+        marginBottom: 5,
+        color: '#6a7d8a'
+    },
+    userHighScore: {
+        textAlign:'center',
+        fontSize: 16,
+        paddingBottom: 10
+    }
 })
 
 MachineDetails.propTypes = {
