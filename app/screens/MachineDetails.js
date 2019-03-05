@@ -181,11 +181,11 @@ class MachineDetails extends Component {
                     {userHighScore ? 
                         <View>
                             <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                            <Text style={s.userHighScore}>{`${userHighScore}`}</Text>
+                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
                         </View>                       
                         : null
                     }
-                        <Text style={s.sectionTitle}>Top Scores</Text>
+                    <Text style={s.sectionTitle}>Top Scores</Text>
                     {scores.length > 0 ? 
                         <View style={{paddingBottom:5}}>                                  
                             {scores.map(scoreObj => {
