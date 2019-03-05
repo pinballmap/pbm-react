@@ -156,7 +156,7 @@ class MachineDetails extends Component {
                             () => this.props.navigation.navigate('Login')}
                     />
                     <Text style={s.sectionTitle}>Machine Comments</Text>
-                    <View style={{backgroundColor:'#ffffff',paddingTop:5,paddingBottom:5}}>
+                    <View>
                         {mostRecentComments ? 
                             mostRecentComments.map(commentObj => {
                                 const { comment, created_at, username } = commentObj
@@ -185,18 +185,15 @@ class MachineDetails extends Component {
                         </View>                       
                         : null
                     }
-                    <View>
                         <Text style={s.sectionTitle}>Top Scores</Text>
-                    </View>
                     {scores.length > 0 ? 
-                        <ScrollView style={{height: 300}}>
-                                    
+                        <View style={{paddingBottom:5}}>                                  
                             {scores.map(scoreObj => {
                                 const {id, score, created_at, username} = scoreObj
         
                                 return (
                                     <ListItem
-                                        containerStyle={{paddingLeft:30}}
+                                        containerStyle={{paddingLeft:30, paddingTop:5}}
                                         key={id}
                                         title={formatNumWithCommas(score)}
                                         subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
@@ -204,8 +201,8 @@ class MachineDetails extends Component {
                                         subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
                                     />)
                             })}
-                        </ScrollView> : 
-                        <Text style={[{paddingTop:5,paddingBottom:5,backgroundColor:'#ffffff'},s.noneYet]}>No scores yet!</Text>
+                        </View> : 
+                        <Text style={s.noneYet}>No scores yet!</Text>
                     }
                     {pintipsUrl ?
                         <Button
@@ -267,14 +264,17 @@ const s = StyleSheet.create({
     conditionText: {
         color: '#6a7d8a',
         fontStyle: 'italic',
-        fontSize: 14
+        fontSize: 14,
     },
     noneYet: {
         textAlign:'center',
         paddingLeft:15,
         paddingRight:15,
         fontStyle:'italic',
-        color:'#555555'
+        color:'#97a5af',
+        paddingTop:5,
+        paddingBottom:5,
+        backgroundColor:'#ffffff',
     },
     textInput: {
         backgroundColor: '#ffffff', 
@@ -288,19 +288,20 @@ const s = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-        paddingBottom: 10
+        marginBottom: 10
     },
     userScoreTitle: {
         textAlign: 'center',
-        marginTop: 10,
+        marginTop: 5,
         marginBottom: 5,
         color: '#6a7d8a'
     },
     userHighScore: {
         textAlign:'center',
-        fontSize: 16,
-        paddingBottom: 10
-    }
+        fontSize: 24,
+        paddingBottom: 15,
+        color: '#4b5862'
+    },
 })
 
 MachineDetails.propTypes = {

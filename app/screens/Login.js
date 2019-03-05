@@ -174,7 +174,7 @@ const s = StyleSheet.create({
         fontSize: 14,
         textAlign: "center",
         fontWeight: "bold",
-        color: '#333333',
+        color: '#4b5862',
     },
     iconStyle: {
         fontSize: 24,
