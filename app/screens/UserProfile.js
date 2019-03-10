@@ -34,18 +34,21 @@ class UserProfile extends Component {
     }
 
     componentDidMount() {
-        const id = this.props.user.id
-        if (id) {
-            getData(`/users/${id}/profile_info.json`)
-                .then(data => {
-                    this.setState({
-                        fetchingUserInfo: false,
-                        profile_info: data.profile_info,
+        //The listener will refetch user profile data every time the profile screen is navigated to
+        this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
+            const id = this.props.user.id
+            if (id) {
+                getData(`/users/${id}/profile_info.json`)
+                    .then(data => {
+                        this.setState({
+                            fetchingUserInfo: false,
+                            profile_info: data.profile_info,
+                        })
                     })
-                })
-        }
+            }
+        })
     }
-
+      
     render(){
         if (this.state.fetchingUserInfo)
             return <ActivityIndicator />
