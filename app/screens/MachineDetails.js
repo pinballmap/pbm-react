@@ -217,7 +217,7 @@ class MachineDetails extends Component {
                             icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                             containerStyle={s.margin15}
                         /> :
-                        ''
+                        null
                     }
                     <Button
                         title={'View on IPDB'}
