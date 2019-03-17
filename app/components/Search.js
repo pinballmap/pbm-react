@@ -38,12 +38,19 @@ class Search extends Component {
                 >
                     <View>
                         <View style={{paddingTop: 50, display: 'flex', flexDirection: 'row'}}>
-                            <Text style={{marginRight: 15, fontSize: 30, fontWeight: 'bold'}} onPress={() => this.setState({searchModalVisible: false})}>X</Text>
+                            <Text 
+                                style={{marginRight: 15, fontSize: 30, fontWeight: 'bold'}} 
+                                onPress={() => {
+                                    this.setState({searchModalVisible: false})
+                                    this.props.updateQuery('')
+                                }}>X
+                            </Text>
                             <Input
                                 placeholder='City, Address, Location'
                                 leftIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
-                                rightIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
+                                rightIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.props.updateQuery('')} />}
                                 onChangeText={query => this.props.updateQuery(query)}
+                                value={this.props.query.currQueryString}
                             />
                         </View>
                         {foundItems ? 
@@ -52,6 +59,7 @@ class Search extends Component {
                                     key={location.id} 
                                     onPress={() => {
                                         this.props.setLocationId(location.id, location.value)
+                                        this.props.updateQuery('')
                                         this.setState({searchModalVisible: false})
                                     }}>
                                     <ListItem
