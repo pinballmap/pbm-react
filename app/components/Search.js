@@ -28,7 +28,6 @@ class Search extends Component {
     }
 
     render(){
-        console.log(this.state.foundItems)
         const { foundItems, searchModalVisible } = this.state
         return(
             <View>
@@ -47,7 +46,6 @@ class Search extends Component {
                                 onChangeText={query => this.props.updateQuery(query)}
                             />
                         </View>
-                        <Text>WTF</Text>
                         {foundItems ? 
                             foundItems.map(location => 
                                 (<TouchableOpacity 
