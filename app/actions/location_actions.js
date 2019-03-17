@@ -213,7 +213,8 @@ export const clearMachineList = () => ({ type: CLEAR_MACHINE_LIST })
 export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     dispatch({ type: SUGGESTING_LOCATION }) 
 
-    const { email, authentication_token } = getState().user
+    // NOTE: using lat/lon from user will default to PDX if the location services are not enabled
+    const { email, authentication_token, lat, lon } = getState().user
     const {
         locationName: location_name,
         street: location_street, 
@@ -233,7 +234,8 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     const body = {
         user_email: email,
         user_token: authentication_token,
-        region_id: 1,
+        lat,
+        lon,
         location_name,
         location_street,
         location_city,
