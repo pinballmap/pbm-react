@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, View } from 'react-native'
+import { Text, View, ScrollView, StyleSheet } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
@@ -47,31 +47,64 @@ class RecentActivity extends Component {
         const { locationTrackingServicesEnabled } = this.props.user
 
         return(
-            <View>
+            <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                <View>
+                    <Text style={s.title}>Recent Nearby Activity</Text>
+                    <Text style={s.paren}>(30 miles, 30 days)</Text>
+                </View>
                 {!locationTrackingServicesEnabled ? 
-                    <Text>Enable location tracking to view recent nearby activity</Text> :
+                    <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
                     recentActivity.length === 0 ?
-                        <Text>No recent activity</Text> :
+                        <Text style={s.problem}>No recent activity</Text> :
                         recentActivity.map(activity => {
-                            return (
+                            return (                               
                                 <View key={activity.id}>
-                                    <View
-                                        style={{
-                                            borderBottomColor: '#D3ECFF',
-                                            borderBottomWidth: 1,
-                                        }}
-                                    />
                                     <ListItem
                                         title={activity.submission}
-                                        subtitle={`Updated At: ${moment(activity.updated_at).format('LL')}`}
+                                        titleStyle={{color:'#000e18'}}
+                                        subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                        subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                        containerStyle={s.list}
                                     />
                                 </View>
                             )})
                 }
-            </View>
+            </ScrollView>
         )
     }
 }
+
+const s = StyleSheet.create({
+    title: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        paddingTop: 10,
+        color: "#f5fbff",
+        backgroundColor: "#6a7d8a",
+        textAlign: "center"
+    },
+    paren: {
+        fontSize: 12,
+        paddingBottom: 10,
+        color: "#f5fbff",
+        backgroundColor: "#6a7d8a",
+        textAlign: "center",
+        fontStyle: "italic"
+    },
+    list: {
+        borderRadius: 5,
+        borderWidth: 3,
+        borderColor: '#D3ECFF',
+        padding: 8,
+        margin: 5
+    },
+    problem: {
+        textAlign: "center",
+        color: '#000e18',
+        fontWeight: 'bold',
+        marginTop: 20
+    }
+})
 
 RecentActivity.propTypes = {
     user: PropTypes.object,
