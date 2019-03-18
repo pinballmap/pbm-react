@@ -105,12 +105,12 @@ const s = StyleSheet.create({
         paddingLeft: 5
     },
     searchBox: {
-        width: deviceWidth - 110,
+        width: deviceWidth - 115,
         height: 30,
         padding: 5,
     },
     listContainer: {
-        width: deviceWidth - 110,
+        width: deviceWidth - 115,
         //zIndex: 999,
     },
     list: {
