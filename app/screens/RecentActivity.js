@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Text, View, ScrollView, StyleSheet } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { Icon, ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
+import { MaterialIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 const moment = require('moment')
 
@@ -21,6 +22,21 @@ class RecentActivity extends Component {
                 backgroundColor:'#f5fbff',          
             },
             headerTintColor: '#4b5862'
+        }
+    }
+
+    getIcon(type) {
+        switch(type) {
+        case 'new_lmx':
+        case 'contact_us':
+        case 'new_condition':
+        case 'remove_machine':
+        case 'suggest_location':
+        case 'new_msx':
+        case 'confirm_location':
+        case 'delete_location':
+            return <MaterialIcons name='search' size={28} />
+
         }
     }
 
@@ -50,13 +66,14 @@ class RecentActivity extends Component {
             <ScrollView style={{backgroundColor:'#f5fbff'}}>
                 <View>
                     <Text style={s.title}>Recent Nearby Activity</Text>
-                    <Text style={s.paren}>(30 miles, 30 days)</Text>
+                    <Text style={s.paren}>(5 miles, 30 days)</Text>
                 </View>
                 {!locationTrackingServicesEnabled ? 
                     <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
                     recentActivity.length === 0 ?
                         <Text style={s.problem}>No recent activity</Text> :
                         recentActivity.map(activity => {
+                            const submissionTypeIcon = this.getIcon(activity.submission_type)
                             return (                               
                                 <View key={activity.id}>
                                     <ListItem
@@ -65,6 +82,7 @@ class RecentActivity extends Component {
                                         subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
                                         subtitle={`${moment(activity.updated_at).format('LL')}`}
                                         containerStyle={s.list}
+                                        leftAvatar={submissionTypeIcon}
                                     />
                                 </View>
                             )})
