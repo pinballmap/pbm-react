@@ -1,5 +1,4 @@
 import {
-    UPDATE_QUERY,
     SET_LOCATION_ID,
     UPDATE_COORDINATES,
     SET_FILTERS,
@@ -22,11 +21,6 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    case UPDATE_QUERY: 
-        return {
-            ...state,
-            currQueryString: action.payload,
-        }
     case SET_LOCATION_ID:
         return {
             ...state,

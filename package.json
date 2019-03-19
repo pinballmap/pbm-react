@@ -15,7 +15,8 @@
     "react-native-maps": "^0.21.0",
     "react-navigation": "^1.5.12",
     "redux-devtools-extension": "^2.13.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
