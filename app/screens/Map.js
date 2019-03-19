@@ -226,6 +226,7 @@ class Map extends Component {
                         type='font-awesome'
                         color='#4b5862'
                         size={20}
+                        containerStyle={{position:'absolute'}}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
