@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { ActivityIndicator, Text, View, ScrollView, StyleSheet } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 const moment = require('moment')
 
@@ -28,15 +28,18 @@ class RecentActivity extends Component {
     getIcon(type) {
         switch(type) {
         case 'new_lmx':
+            return <MaterialCommunityIcons name='plus-box' size={28} color='#4e7b57' />
         case 'contact_us':
         case 'new_condition':
+            return <MaterialCommunityIcons name='comment-text' size={28} color='#458284' />
         case 'remove_machine':
+            return <MaterialCommunityIcons name='minus-box' size={28} color='#854444' />
         case 'suggest_location':
         case 'new_msx':
+            return <MaterialCommunityIcons name='numeric' size={28} color='#986c31' />
         case 'confirm_location':
+            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#7a4f71' />
         case 'delete_location':
-            return <MaterialIcons name='search' size={28} />
-
         }
     }
 
