@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, StyleSheet } from 'react-native'
-import { Icon, ListItem } from 'react-native-elements'
+import { ActivityIndicator, Text, View, ScrollView, StyleSheet } from 'react-native'
+import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { MaterialIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -47,10 +47,9 @@ class RecentActivity extends Component {
             if (locationTrackingServicesEnabled) {
                 getData(`/user_submissions/list_within_range.json?lat=${lat};lon=${lon}`)
                     .then(data => {
-                        console.log(data)
                         this.setState({
                             fetchingRecentActivity: false,
-                            recentActivity: data.user_submissions,
+                            recentActivity: data.user_submissions.reverse(),
                         })
                     })
             }
@@ -59,7 +58,7 @@ class RecentActivity extends Component {
       
 
     render(){
-        const { recentActivity } = this.state
+        const { recentActivity, fetchingRecentActivity } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
 
         return(
@@ -68,24 +67,26 @@ class RecentActivity extends Component {
                     <Text style={s.title}>Recent Nearby Activity</Text>
                     <Text style={s.paren}>(5 miles, 30 days)</Text>
                 </View>
-                {!locationTrackingServicesEnabled ? 
-                    <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
-                    recentActivity.length === 0 ?
-                        <Text style={s.problem}>No recent activity</Text> :
-                        recentActivity.map(activity => {
-                            const submissionTypeIcon = this.getIcon(activity.submission_type)
-                            return (                               
-                                <View key={activity.id}>
-                                    <ListItem
-                                        title={activity.submission}
-                                        titleStyle={{color:'#000e18'}}
-                                        subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
-                                        subtitle={`${moment(activity.updated_at).format('LL')}`}
-                                        containerStyle={s.list}
-                                        leftAvatar={submissionTypeIcon}
-                                    />
-                                </View>
-                            )})
+                {fetchingRecentActivity ? 
+                    <ActivityIndicator /> :
+                    !locationTrackingServicesEnabled ? 
+                        <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
+                        recentActivity.length === 0 ?
+                            <Text style={s.problem}>No recent activity</Text> :
+                            recentActivity.map(activity => {
+                                const submissionTypeIcon = this.getIcon(activity.submission_type)
+                                return (                               
+                                    <View key={activity.id}>
+                                        <ListItem
+                                            title={activity.submission}
+                                            titleStyle={{color:'#000e18'}}
+                                            subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                            subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                            containerStyle={s.list}
+                                            leftAvatar={submissionTypeIcon}
+                                        />
+                                    </View>
+                                )})
                 }
             </ScrollView>
         )
