@@ -7,8 +7,6 @@ import { Modal, Text, TouchableOpacity, View } from 'react-native'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { getData } from '../config/request'
-import { setLocationId, updateCurrCoordindates } from '../actions/query_actions'
-import { fetchLocations } from '../actions/locations_actions'
 
 class Search extends Component {
     constructor(props) {
@@ -76,7 +74,7 @@ class Search extends Component {
                                 (<TouchableOpacity 
                                     key={location.id} 
                                     onPress={() => {
-                                        this.props.setLocationId(location.id, location.value)
+                                        this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
                                         this.changeQuery('')
                                         this.setState({searchModalVisible: false})
                                     }}>
@@ -101,13 +99,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-    setLocationId: PropTypes.func,
+    navigate: PropTypes.func,
 }
 
 const mapStateToProps = ({ query, user }) => ({ query, user})
-const mapDispatchToProps = (dispatch) => ({
-    getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
-    updateCoordinates: (lat, lon) => dispatch(updateCurrCoordindates(lat, lon)),
-    setLocationId: (id, name) => dispatch(setLocationId(id, name)),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, null)(Search)
