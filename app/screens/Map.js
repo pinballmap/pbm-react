@@ -58,7 +58,9 @@ class Map extends Component {
             clear={true}
         />,
             headerTitle:
-        <Search />,
+        <Search 
+            navigate={ navigation.navigate }
+        />,
             headerRight:
         <Button
             onPress={ () => navigation.navigate('FilterMap')}
