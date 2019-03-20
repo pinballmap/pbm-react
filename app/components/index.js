@@ -8,6 +8,7 @@ import WarningButton from './WarningButton'
 import PbmButton from './PbmButton'
 import DropDownButton from './DropDownButton'
 import Text from './PbmText'
+import FilterRecentActivity from './FilterRecentActivity'
 
 export {
     LocationCard,
@@ -19,5 +20,6 @@ export {
     WarningButton,
     PbmButton,
     DropDownButton,
-    Text
+    Text,
+    FilterRecentActivity,
 }
