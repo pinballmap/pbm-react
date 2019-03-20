@@ -18,6 +18,7 @@ class FilterRecentActivity extends Component {
     render(){
         const { showModal } = this.state
         const { selectedActivity } = this.props.query
+        const { locationTrackingServicesEnabled } = this.props.user
 
         return(
             <View>
@@ -66,14 +67,16 @@ class FilterRecentActivity extends Component {
                         </View>
                     </ ConfirmationModal>
                 }
-                <Button
-                    onPress={ () => this.setState({ showModal: true })}
-                    containerStyle={{width:60}}
-                    title="Filter"
-                    accessibilityLabel="Filter"
-                    titleStyle={{color: "#6a7d8a", fontSize: 16, fontWeight: 'bold'}}
-                    clear={true}
-                />
+                {locationTrackingServicesEnabled ? 
+                    <Button
+                        onPress={ () => this.setState({ showModal: true })}
+                        containerStyle={{width:60}}
+                        title="Filter"
+                        accessibilityLabel="Filter"
+                        titleStyle={{color: "#6a7d8a", fontSize: 16, fontWeight: 'bold'}}
+                        clear={true}
+                    /> : null
+                }
             </View>
         )
     }
@@ -82,9 +85,10 @@ class FilterRecentActivity extends Component {
 FilterRecentActivity.propTypes = {
     query: PropTypes.object,
     setSelectedActivityFilter: PropTypes.func,
+    user: PropTypes.object, 
 }
 
-const mapStateToProps = ({ query }) => ({ query })
+const mapStateToProps = ({ user, query }) => ({ user, query })
 const mapDispatchToProps = (dispatch) => ({
     setSelectedActivityFilter: activity => dispatch(setSelectedActivityFilter(activity))
 })
