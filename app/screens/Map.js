@@ -5,7 +5,7 @@ import { Font } from 'expo'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { PbmButton, ConfirmationModal, SearchBar, Text } from '../components'
+import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchLocations,
     updateCurrCoordindates,
@@ -58,7 +58,8 @@ class Map extends Component {
             clear={true}
         />,
             headerTitle:
-        <SearchBar
+        <Search 
+            navigate={ navigation.navigate }
         />,
             headerRight:
         <Button
