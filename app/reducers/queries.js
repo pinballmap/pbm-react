@@ -1,13 +1,10 @@
 import {
-    SET_LOCATION_ID,
     UPDATE_COORDINATES,
     SET_FILTERS,
     CLEAR_FILTERS,
 } from '../actions/types'
 
 export const initialState = {
-    currQueryString: '',
-    locationId: '', 
     locationName: '',
     curLat: null,
     curLon: null,
@@ -21,13 +18,6 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    case SET_LOCATION_ID:
-        return {
-            ...state,
-            currQueryString: '', 
-            locationId: action.id,
-            locationName: action.name,
-        }
     case UPDATE_COORDINATES: 
         return {
             ...state,

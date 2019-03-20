@@ -30,7 +30,7 @@ class LocationDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: this.props.navigation.state.params['id'] ? this.props.navigation.state.params['id'] : this.props.query.locationId,
+            id: this.props.navigation.state.params['id'],
             buttonIndex: 0,
         }
     }
@@ -415,7 +415,6 @@ LocationDetails.propTypes = {
     locations: PropTypes.object,
     operators: PropTypes.object,
     machines: PropTypes.object,
-    query: PropTypes.object,
     user: PropTypes.object,
     closeConfirmModal: PropTypes.func,
     setCurrentMachine: PropTypes.func,
@@ -427,7 +426,7 @@ LocationDetails.propTypes = {
     addFavoriteLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ application, error, location, locations, operators, machines, query, user }) => ({ application, error, location, locations, operators, machines, query, user})
+const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user})
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
