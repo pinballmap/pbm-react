@@ -61,7 +61,6 @@ class MachineDetails extends Component {
 
     render() {
         const { curLmx, location } = this.props.location   
-        const { machine_score_xrefs = [] } = curLmx
         
         if (!curLmx) {
             return (
@@ -79,8 +78,8 @@ class MachineDetails extends Component {
             ``
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
-        const scores = machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) 
-        const { score: userHighScore } = machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
+        const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) 
+        const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
 
         return (
