@@ -6,6 +6,8 @@ import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
+import { FilterRecentActivity } from '../components'
+import { clearActivityFilter } from '../actions'
 const moment = require('moment')
 
 class RecentActivity extends Component {
@@ -21,7 +23,8 @@ class RecentActivity extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',          
             },
-            headerTintColor: '#4b5862'
+            headerTintColor: '#4b5862',
+            headerRight: <FilterRecentActivity />
         }
     }
 
@@ -29,17 +32,32 @@ class RecentActivity extends Component {
         switch(type) {
         case 'new_lmx':
             return <MaterialCommunityIcons name='plus-box' size={28} color='#4e7b57' />
-        case 'contact_us':
         case 'new_condition':
             return <MaterialCommunityIcons name='comment-text' size={28} color='#458284' />
         case 'remove_machine':
             return <MaterialCommunityIcons name='minus-box' size={28} color='#854444' />
-        case 'suggest_location':
         case 'new_msx':
             return <MaterialCommunityIcons name='numeric' size={28} color='#986c31' />
         case 'confirm_location':
             return <MaterialCommunityIcons name='clipboard-check' size={28} color='#7a4f71' />
-        case 'delete_location':
+        default:
+            return null
+        }
+    }
+
+    getText(selectedActivity) {
+        const activity = 'Viewing recently'
+        switch(selectedActivity) {
+        case 'new_lmx':
+            return `${activity} added machines`
+        case 'new_condition':
+            return `${activity} added conditions`
+        case 'remove_machine':
+            return `${activity} removed machines`
+        case 'new_msx':
+            return `${activity} added scores`
+        case 'confirm_location':
+            return `${activity} confirmed locations`
         }
     }
 
@@ -63,11 +81,18 @@ class RecentActivity extends Component {
     render(){
         const { recentActivity, fetchingRecentActivity } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
+        const { selectedActivity } = this.props.query
 
         return(
             <ScrollView style={{backgroundColor:'#f5fbff'}}>
                 <View>
-                    <Text style={s.title}>Recent Nearby Activity</Text>
+                    {selectedActivity ? 
+                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Text>{this.getText(selectedActivity)}</Text>
+                            <MaterialCommunityIcons name='close-circle' size={28} onPress={() => this.props.clearActivityFilter()}/>
+                        </View> : 
+                        <Text style={s.title}>Recent Nearby Activity</Text> 
+                    }
                     <Text style={s.paren}>(5 miles, 30 days)</Text>
                 </View>
                 {fetchingRecentActivity ? 
@@ -76,20 +101,28 @@ class RecentActivity extends Component {
                         <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
                         recentActivity.length === 0 ?
                             <Text style={s.problem}>No recent activity</Text> :
-                            recentActivity.map(activity => {
+                            recentActivity.filter(activity => {
                                 const submissionTypeIcon = this.getIcon(activity.submission_type)
-                                return (                               
-                                    <View key={activity.id}>
-                                        <ListItem
-                                            title={activity.submission}
-                                            titleStyle={{color:'#000e18'}}
-                                            subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
-                                            subtitle={`${moment(activity.updated_at).format('LL')}`}
-                                            containerStyle={s.list}
-                                            leftAvatar={submissionTypeIcon}
-                                        />
-                                    </View>
-                                )})
+                                const showType = selectedActivity ? 
+                                    selectedActivity === activity.submission_type ? true : false 
+                                    : true 
+
+                                if (submissionTypeIcon && showType) {
+                                    activity.submissionTypeIcon = submissionTypeIcon
+                                    return activity
+                                }
+                            }).map(activity => (                               
+                                <View key={activity.id}>
+                                    <ListItem
+                                        title={activity.submission}
+                                        titleStyle={{color:'#000e18'}}
+                                        subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                        subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                        containerStyle={s.list}
+                                        leftAvatar={activity.submissionTypeIcon}
+                                    />
+                                </View>
+                            ))
                 }
             </ScrollView>
         )
@@ -129,10 +162,14 @@ const s = StyleSheet.create({
 })
 
 RecentActivity.propTypes = {
+    query: PropTypes.object,
     user: PropTypes.object,
     navigation: PropTypes.object,
 }
 
-const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, null)(RecentActivity)
+const mapStateToProps = ({ query, user }) => ({ query, user })
+const mapDispatchToProps = (dispatch) => ({
+    clearActivityFilter: () => dispatch(clearActivityFilter())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(RecentActivity)
 

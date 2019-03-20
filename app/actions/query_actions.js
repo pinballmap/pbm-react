@@ -4,6 +4,8 @@ import {
     UPDATE_COORDINATES,
     SET_FILTERS,
     CLEAR_FILTERS,
+    SET_SELECTED_ACTIVITY_FILTER,
+    CLEAR_ACTIVITY_FILTER,
 } from './types'
 
 export const updateQuery = payload => ({ type: UPDATE_QUERY, payload })
@@ -19,3 +21,10 @@ export const setFilters = (selectedMachine, selectedLocationType, numMachines = 
 })
 
 export const clearFilters = () => ({ type: CLEAR_FILTERS })
+
+export const setSelectedActivityFilter = (selectedActivity) => ({
+    type: SET_SELECTED_ACTIVITY_FILTER,
+    selectedActivity,
+})
+
+export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER })

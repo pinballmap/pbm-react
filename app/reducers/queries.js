@@ -4,6 +4,8 @@ import {
     UPDATE_COORDINATES,
     SET_FILTERS,
     CLEAR_FILTERS,
+    SET_SELECTED_ACTIVITY_FILTER,
+    CLEAR_ACTIVITY_FILTER,
 } from '../actions/types'
 
 export const initialState = {
@@ -18,6 +20,7 @@ export const initialState = {
     locationType: '',
     numMachines: '',
     selectedOperator: '',
+    selectedActivity: '',
 }
 
 export default (state = initialState, action) => {
@@ -58,6 +61,17 @@ export default (state = initialState, action) => {
             numMachines: '',
             selectedOperator: '',
         }
+    case SET_SELECTED_ACTIVITY_FILTER:
+        return {
+            ...state,
+            selectedActivity: action.selectedActivity,
+        }
+    case CLEAR_ACTIVITY_FILTER: 
+        return {
+            ...state,
+            selectedActivity: '',
+        }
+        
     default:
         return state
     }
