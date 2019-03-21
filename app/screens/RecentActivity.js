@@ -125,6 +125,7 @@ class RecentActivity extends Component {
                                         subtitle={`${moment(activity.updated_at).format('LL')}`}
                                         containerStyle={s.list}
                                         leftAvatar={activity.submissionTypeIcon}
+                                        onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
                                     />
                                 </View>
                             ))
@@ -186,6 +187,7 @@ RecentActivity.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     navigation: PropTypes.object,
+    clearActivityFilter: PropTypes.func,
 }
 
 const mapStateToProps = ({ query, user }) => ({ query, user })
