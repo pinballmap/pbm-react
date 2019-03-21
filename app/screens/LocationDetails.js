@@ -21,7 +21,6 @@ import {
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
-
 const moment = require('moment')
 
 let deviceWidth = Dimensions.get('window').width
@@ -80,6 +79,10 @@ class LocationDetails extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.location.addingMachineToLocation && !props.location.addingMachineToLocation)
             this.props.fetchLocation(this.state.id)
+
+        // If the location name isn't known before arriving on this screen, this will populate the header with the location name once it comes back
+        if (!this.props.navigation.getParam('locationName') && !this.props.location.location.name && props.location.location.name)
+            this.props.navigation.setParams({ locationName: props.location.location.name })
     }
             
     componentDidMount() {
