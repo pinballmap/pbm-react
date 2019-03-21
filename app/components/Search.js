@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from 'throttle-debounce'
-import { Modal, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, Text, TouchableOpacity, View, Dimensions, StyleSheet } from 'react-native'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { getData } from '../config/request'
+
+let deviceWidth = Dimensions.get('window').width
 
 class Search extends Component {
     constructor(props) {
@@ -88,8 +90,8 @@ class Search extends Component {
                     </View>
                 </Modal>
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
-                    <View style={{width: 250, backgroundColor: '#e3e5e8', height: 30, borderRadius: 4, display: 'flex', flexDirection: 'row'}}>
-                        <MaterialIcons name='search' size={25} color="#4b5862" />
+                    <View style={s.searchMap}>
+                        <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
                         <Text></Text>
                     </View>
                 </TouchableOpacity>
@@ -97,6 +99,21 @@ class Search extends Component {
         )
     }
 }
+
+const s = StyleSheet.create({
+    searchMap: {
+        width: deviceWidth - 115,
+        backgroundColor: '#e3e5e8',
+        height: 30,
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    searchIcon: {
+        paddingTop: 2,
+        paddingLeft: 5
+    }
+})
 
 Search.propTypes = {
     navigate: PropTypes.func,
