@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { ConfirmationModal } from './'
@@ -24,9 +24,14 @@ class FilterRecentActivity extends Component {
             <View>
                 {showModal && 
                     <ConfirmationModal>
-                        <View style={{ display: 'flex', flexDirection: 'row' }}>
-                            <Text>Filter Recent Activity by Type</Text>
-                            <MaterialCommunityIcons name='close-circle' size={28} onPress={() => this.setState({ showModal: false })}/>
+                        <View style={s.header}>
+                            <Text style={s.filterTitle}>Filter Recent Activity by Type</Text>
+                            <MaterialCommunityIcons 
+                                name='close-circle' 
+                                size={34} 
+                                onPress={() => this.setState({ showModal: false })}
+                                style={{position:'absolute',right:-15,top:-15,color:'white'}}
+                            />
                         </View>
                         <View>
                             <ListItem
@@ -65,7 +70,7 @@ class FilterRecentActivity extends Component {
                                 onPress={() => this.setRecentActivityFilter('confirm_location')}
                             />
                         </View>
-                    </ ConfirmationModal>
+                    </ConfirmationModal>
                 }
                 {locationTrackingServicesEnabled ? 
                     <Button
@@ -81,6 +86,26 @@ class FilterRecentActivity extends Component {
         )
     }
 }
+
+const s = StyleSheet.create({
+
+    header: {
+        backgroundColor: "#6a7d8a", 
+        marginTop: -15,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        height: 40,
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    filterTitle: {
+        color: "#f5fbff",
+        textAlign: "center",
+        fontSize: 14,
+        fontWeight: 'bold'
+    }
+
+})
 
 FilterRecentActivity.propTypes = {
     query: PropTypes.object,
