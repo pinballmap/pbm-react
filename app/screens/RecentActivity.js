@@ -46,7 +46,7 @@ class RecentActivity extends Component {
     }
 
     getText(selectedActivity) {
-        const activity = 'Viewing recently'
+        const activity = 'Filtering by recently'
         switch(selectedActivity) {
         case 'new_lmx':
             return `${activity} added machines`
@@ -84,17 +84,22 @@ class RecentActivity extends Component {
         const { selectedActivity } = this.props.query
 
         return(
-            <ScrollView style={{backgroundColor:'#f5fbff'}}>
-                <View>
-                    {selectedActivity ? 
-                        <View style={{ display: 'flex', flexDirection: 'row' }}>
-                            <Text>{this.getText(selectedActivity)}</Text>
-                            <MaterialCommunityIcons name='close-circle' size={28} onPress={() => this.props.clearActivityFilter()}/>
-                        </View> : 
-                        <Text style={s.title}>Recent Nearby Activity</Text> 
-                    }
-                    <Text style={s.paren}>(5 miles, 30 days)</Text>
+            <ScrollView style={{backgroundColor:'#f5fbff',height:30}}>
+                <View style={s.header}>
+                    <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
+                    <Text style={[s.paren,s.headerText]}>(5 miles, 30 days)</Text>
                 </View>
+                {selectedActivity ? 
+                    <View style={s.filterView}>
+                        <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
+                        <MaterialCommunityIcons 
+                            name='close-circle' 
+                            size={24} 
+                            onPress={() => this.props.clearActivityFilter()}
+                            style={{color:'#f53240',marginLeft:8}}
+                        />
+                    </View> : null
+                }
                 {fetchingRecentActivity ? 
                     <ActivityIndicator /> :
                     !locationTrackingServicesEnabled ? 
@@ -130,21 +135,37 @@ class RecentActivity extends Component {
 }
 
 const s = StyleSheet.create({
-    title: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        paddingTop: 10,
-        color: "#f5fbff",
+    header: {
         backgroundColor: "#6a7d8a",
+        paddingTop: 10,
+        paddingBottom: 10,        
+    },
+    headerText: {
+        color: "#f5fbff",
         textAlign: "center"
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     paren: {
         fontSize: 12,
-        paddingBottom: 10,
-        color: "#f5fbff",
-        backgroundColor: "#6a7d8a",
-        textAlign: "center",
         fontStyle: "italic"
+    },
+    filterView: {
+        backgroundColor:'#fdd4d7',
+        display: 'flex', 
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    filter: {
+        fontSize: 14,
+        textAlign: "center",
+        color: '#000e18',
+        fontWeight: 'bold',
+        paddingTop: 8,
+        paddingBottom: 8
     },
     list: {
         borderRadius: 5,
