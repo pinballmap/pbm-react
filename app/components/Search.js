@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from 'throttle-debounce'
-import { Modal, Text, TouchableOpacity, View, Dimensions, StyleSheet } from 'react-native'
+import { Modal, Text, TouchableOpacity, View, Dimensions, StyleSheet, ScrollView } from 'react-native'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 
 let deviceWidth = Dimensions.get('window').width
@@ -50,43 +51,51 @@ class Search extends Component {
         return(
             <View>
                 <Modal
-                    transparent={false}
+                    transparent={true}
                     visible={searchModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View>
-                        <View style={{paddingTop: 50, display: 'flex', flexDirection: 'row'}}>
-                            <Text 
-                                style={{marginRight: 15, fontSize: 30, fontWeight: 'bold'}} 
+                    <View style={{flex:1,backgroundColor:'rgba(255,255,255,1.0)'}}>
+                        <View style={{paddingTop: 20, display: 'flex', flexDirection: 'row'}}>
+                            <MaterialCommunityIcons 
                                 onPress={() => {
                                     this.setState({searchModalVisible: false})
                                     this.changeQuery('')
-                                }}>X
-                            </Text>
+                                }}
+                                name='close-circle' 
+                                size={30} 
+                                style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:5}}
+                            />
                             <Input
                                 placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
+                                leftIcon={<MaterialIcons name='search' size={25} color="#6a7d8a" style={{marginLeft:-10,marginRight:-8}}/>}
                                 rightIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.changeQuery('')} />}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
+                                containerStyle={{paddingTop:4}}
+                                inputContainerStyle={s.input}
                             />
                         </View>
-                        {foundItems ? 
-                            foundItems.map(location => 
-                                (<TouchableOpacity 
-                                    key={location.id} 
-                                    onPress={() => {
-                                        this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
-                                        this.changeQuery('')
-                                        this.setState({searchModalVisible: false})
-                                    }}>
-                                    <ListItem
-                                        title={location.label}
-                                    /> 
-                                </TouchableOpacity>)
-                            ) :
-                            <Text>No search results...</Text>
-                        }
+                        <ScrollView>
+                            {foundItems ? 
+                                foundItems.map(location => 
+                                    (<TouchableOpacity 
+                                        key={location.id} 
+                                        onPress={() => {
+                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}>
+                                        <ListItem
+                                            title={location.label}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                        /> 
+                                    </TouchableOpacity>)
+                                ) :
+                                <Text>No search results...</Text>
+                            }
+                        </ScrollView>
                     </View>
                 </Modal>
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
@@ -104,14 +113,25 @@ const s = StyleSheet.create({
     searchMap: {
         width: deviceWidth - 115,
         backgroundColor: '#e3e5e8',
-        height: 30,
-        borderRadius: 4,
+        height: 36,
+        borderRadius: 5,
         display: 'flex',
         flexDirection: 'row'
     },
     searchIcon: {
-        paddingTop: 2,
+        paddingTop: 5,
         paddingLeft: 5
+    },
+    input: {
+        borderWidth: 0,
+        borderColor: '#e3e5e8',
+        borderRadius: 5,
+        width: deviceWidth - 60,
+        backgroundColor: '#e3e5e8',
+        height: 36,
+        display: 'flex',
+        flexDirection: 'row',
+        paddingLeft:0
     }
 })
 
