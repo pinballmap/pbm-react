@@ -74,6 +74,7 @@ class Search extends Component {
                                 value={q}
                                 containerStyle={{paddingTop:4}}
                                 inputContainerStyle={s.input}
+                                autoFocus
                             />
                         </View>
                         <ScrollView>
