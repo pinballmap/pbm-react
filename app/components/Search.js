@@ -57,19 +57,19 @@ class Search extends Component {
                 >
                     <View style={{flex:1,backgroundColor:'rgba(255,255,255,1.0)'}}>
                         <View style={{paddingTop: 20, display: 'flex', flexDirection: 'row'}}>
-                            <MaterialCommunityIcons 
+                            <MaterialIcons 
                                 onPress={() => {
                                     this.setState({searchModalVisible: false})
                                     this.changeQuery('')
                                 }}
-                                name='close-circle' 
+                                name='clear' 
                                 size={30} 
-                                style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:5}}
+                                style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:6}}
                             />
                             <Input
                                 placeholder='City, Address, Location'
                                 leftIcon={<MaterialIcons name='search' size={25} color="#6a7d8a" style={{marginLeft:-10,marginRight:-8}}/>}
-                                rightIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.changeQuery('')} />}
+                                rightIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} />}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
                                 containerStyle={{paddingTop:4}}
