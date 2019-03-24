@@ -72,7 +72,7 @@ export class LocationList extends Component {
       const { loggedIn } = this.props.user     
       return (
           <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-              {loggedIn ? 
+              {!loggedIn ? 
                   <NotLoggedIn 
                       text={`Please login to start saving your favorite locations.`}
                       title={'Saved Locations'}
