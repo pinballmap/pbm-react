@@ -143,6 +143,7 @@ class SuggestLocation extends Component {
         } = this.state
         const { loggedIn } = this.props.user
         const { errorText } = this.props.error
+        const { navigate } = this.props.navigation
 
         const { isSuggestingLocation, locationSuggested, machineList = [] } = this.props.location
 
@@ -158,7 +159,7 @@ class SuggestLocation extends Component {
                     <NotLoggedIn
                         title={'Suggest a New Location'}
                         text={'But first! We ask that you Login. Thank you!'}
-                        onPress={() => this.props.navigation.navigate('Login')}
+                        onPress={() => navigate('Login')}
                     /> :
                     <View>
                         <ConfirmationModal 
@@ -245,7 +246,10 @@ class SuggestLocation extends Component {
                                             <Text style={s.success}>Location Suggestion Received, thanks!</Text>
                                             <PbmButton 
                                                 title={"OK"}
-                                                onPress={() => this.setState({ showSuggestLocationModal: false })}
+                                                onPress={() => {
+                                                    this.setState({ showSuggestLocationModal: false })
+                                                    navigate('Map')
+                                                }}
                                             />
                                         </View>
                                         :                       
@@ -423,7 +427,7 @@ class SuggestLocation extends Component {
                                 }    
                                 <PbmButton
                                     title={'Select Machines to Add'}
-                                    onPress={() => this.props.navigation.navigate('FindMachine', { multiSelect: true })}
+                                    onPress={() => navigate('FindMachine', { multiSelect: true })}
                                     icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                 />   
                                 {machineList.map(machine => 
