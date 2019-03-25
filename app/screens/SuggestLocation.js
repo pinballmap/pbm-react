@@ -38,6 +38,7 @@ class SuggestLocation extends Component {
             city: '',
             state: '',
             country: 'United States',
+            zip: '',
             phone: '',
             website: '', 
             description: '',
@@ -83,6 +84,7 @@ class SuggestLocation extends Component {
             street, 
             city, 
             state,
+            zip,
             country,
             phone, 
             website, 
@@ -94,8 +96,9 @@ class SuggestLocation extends Component {
         const locationDetails = {
             locationName,
             street, 
-            city, 
+            city,
             state,
+            zip,
             country,
             phone, 
             website, 
@@ -129,6 +132,7 @@ class SuggestLocation extends Component {
             street, 
             city, 
             state,
+            zip,
             country,
             phone, 
             website, 
@@ -275,6 +279,9 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>State</Text>
                                             <Text style={s.preview}>{state}</Text>
                                             <View style={s.hr}></View>
+                                            <Text style={s.title}>Zip</Text>
+                                            <Text style={s.preview}>{zip}</Text>
+                                            <View style={s.hr}></View>
                                             <Text style={s.title}>Country</Text>
                                             <Text style={s.preview}>{country}</Text>
                                             <View style={s.hr}></View>
@@ -317,39 +324,48 @@ class SuggestLocation extends Component {
                                 <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                 <Text style={s.title}>Location Name</Text>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={locationName => this.setState({ locationName })}
                                     value={locationName}
                                     returnKeyType="done"
-                                    placeholder={'...'}
+                                    placeholder={"ex. Giovanni's Pizza"}
                                 />
                                 <Text style={s.title}>Street</Text>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={street => this.setState({ street })}
                                     value={street}
                                     returnKeyType="done"
-                                    placeholder={'...'}
+                                    placeholder={'ex. 123 Coast Village Road'}
                                 />
                                 <Text style={s.title}>City</Text>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={city => this.setState({ city })}
                                     value={city}
                                     returnKeyType="done"
-                                    placeholder={'...'}
+                                    placeholder={'ex. Montecito'}
                                 />
                                 <Text style={s.title}>State</Text>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={state => this.setState({ state })}
                                     value={state}
                                     returnKeyType="done"
-                                    placeholder={'...'}
+                                    placeholder={'ex. CA'}
+                                />
+                                <Text style={s.title}>Zip Code</Text>
+                                <TextInput
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={zip => this.setState({ zip })}
+                                    value={zip}
+                                    returnKeyType="done"
+                                    placeholder={'ex. 93108'}
                                 />
                                 <Text style={s.title}>Country</Text>
                                 {Platform.OS === "ios" ? 
@@ -368,7 +384,7 @@ class SuggestLocation extends Component {
                                 }   
                                 <Text style={s.title}>Phone</Text>
                                 <TextInput 
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={phone => this.setState({ phone })}
                                     value={phone}
@@ -377,7 +393,7 @@ class SuggestLocation extends Component {
                                 />
                                 <Text style={s.title}>Website</Text>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'left'},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                     value={website}
@@ -480,7 +496,9 @@ const s = StyleSheet.create({
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        paddingLeft: 5,
+        paddingRight: 5
     },
     pickerbg: {
         marginLeft: 10,
