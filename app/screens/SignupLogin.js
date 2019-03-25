@@ -3,7 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native'
 import { Button } from 'react-native-elements'
-import { loginLater } from '../actions/user_actions'
+import { 
+    loginLater,
+    login, 
+    fetchLocationTypes,
+    fetchMachines,
+    fetchOperators,
+} from '../actions'
+import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
 import "../config/globals.js"
 
@@ -36,6 +43,17 @@ export class SignupLogin extends Component {
                 }
             })
             .catch(apiError => this.setState({ apiError }))
+
+        this.props.getLocationTypes('/location_types.json')
+        this.props.getMachines('/machines.json')
+        this.props.getOperators('/operators.json')
+
+        retrieveItem('auth').then((auth) => {
+            if (auth) {
+                this.props.navigation.navigate('Map')
+                this.props.login(auth)
+            }
+        }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
     }
 
     render(){
@@ -46,32 +64,32 @@ export class SignupLogin extends Component {
         if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
             return (
                 <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-                <View style={s.mask}>
-                    <View style={s.logoWrapper}>
-                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
-                    </View>
-                    <View style={s.outerBorder}>
-                        <View style={s.textBg}>
-                            <Text style={{fontSize:18,textAlign:"center"}}>
+                    <View style={s.mask}>
+                        <View style={s.logoWrapper}>
+                            <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                        </View>
+                        <View style={s.outerBorder}>
+                            <View style={s.textBg}>
+                                <Text style={{fontSize:18,textAlign:"center"}}>
                                 To show you pinball machines near you, you’ll need to enable location services for this app.
-                            </Text>
-                        </View>               
-                    </View>
-                    <View style={{padding:15}}>
-                        <Button
+                                </Text>
+                            </View>               
+                        </View>
+                        <View style={{padding:15}}>
+                            <Button
                             //Clear error state to allow user to proceed either way
-                            onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
-                            raised
-                            buttonStyle={s.buttonBlue}
-                            titleStyle={s.titleStyle}
-                            title="Enable Location Services"
-                            accessibilityLabel="Enable Location Services"
-                            containerStyle={{borderRadius:50}}
-                            style={{borderRadius: 50}}
-                        />                    
+                                onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
+                                raised
+                                buttonStyle={s.buttonBlue}
+                                titleStyle={s.titleStyle}
+                                title="Enable Location Services"
+                                accessibilityLabel="Enable Location Services"
+                                containerStyle={{borderRadius:50}}
+                                style={{borderRadius: 50}}
+                            />                    
+                        </View>
                     </View>
-                </View>
-            </ImageBackground>
+                </ImageBackground>
             )
         }
         
@@ -190,12 +208,20 @@ SignupLogin.propTypes = {
     user: PropTypes.object,
     loginLater: PropTypes.func,
     navigation: PropTypes.object,
+    login: PropTypes.func, 
+    fetchLocationTypes: PropTypes.func,
+    fetchMachines: PropTypes.func,
+    fetchOperators: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
 
 const mapDispatchToProps = (dispatch) => ({
-    loginLater: () => dispatch(loginLater())
+    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
+    getMachines: (url) =>  dispatch(fetchMachines(url)),
+    getOperators: (url) => dispatch(fetchOperators(url)),
+    loginLater: () => dispatch(loginLater()),
+    login: (auth) => dispatch(login(auth)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
