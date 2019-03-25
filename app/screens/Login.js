@@ -23,7 +23,12 @@ class Login extends Component {
 
     }
 
-    static navigationOptions = { header: null };
+    static navigationOptions = () => {
+        return {
+            header: () => null,
+            headerLeft: null,
+        } 
+    }
     
     submit = () => {
         this.setState({

@@ -89,8 +89,8 @@ const TabNav = TabNavigator({
 })
 
 export const MapStack = StackNavigator({
-    Map: { screen: TabNav },
     SignupLogin: { screen: SignupLogin, },
+    Map: { screen: TabNav },
     LocationList: {
         screen: LocationList,
         navigationOptions: {
