@@ -7,17 +7,12 @@ import { Button, Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
+    fetchCurrentLocation, 
     fetchLocations,
     updateCurrCoordindates,
-    fetchCurrentLocation, 
-    login, 
     getFavoriteLocations,
-    fetchLocationTypes,
-    fetchMachines,
-    fetchOperators,
     clearFilters,
 } from '../actions'
-import { retrieveItem } from '../config/utils'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
 class Map extends Component {
@@ -34,7 +29,6 @@ class Map extends Component {
                 latitudeDelta: 0.1,
                 longitudeDelta: 0.1,
             },
-            authCheck: false, 
             address: '', 
             locations: this.props.locations.mapLocations ? this.props.locations.mapLocations : [],
             fontAwesomeLoaded: false,
@@ -116,23 +110,7 @@ class Map extends Component {
     }
 
     async componentDidMount(){
-        retrieveItem('auth').then((auth) => {
-            if (!auth && !this.props.user.loginLater) {
-                this.props.navigation.navigate('SignupLogin')
-            }
-            else if (auth) {
-                this.setState({ authCheck: true })
-                this.props.login(auth)
-            } 
-            else {
-                this.setState({ authCheck: true })
-            }
-        }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
-
         this.props.getCurrentLocation()
-        this.props.getLocationTypes('/location_types.json')
-        this.props.getMachines('/machines.json')
-        this.props.getOperators('/operators.json')
         await Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
         this.setState({ fontAwesomeLoaded: true })
     }
@@ -190,14 +168,6 @@ class Map extends Component {
         const { locationTrackingServicesEnabled } = this.props.user
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
-
-        if (!this.state.authCheck) {
-            return (
-                <View style={{flex: 1, padding: 20}}>
-                    <ActivityIndicator/>
-                </View>
-            )
-        } 
 
         if (isFetchingLocations || !this.state.region.latitude) {
             return(
@@ -325,13 +295,9 @@ Map.propTypes = {
     locations: PropTypes.object,
     query: PropTypes.object,
     user: PropTypes.object,
-    getLocationTypes: PropTypes.func,
-    getMachines: PropTypes.func,
     getCurrentLocation: PropTypes.func,
-    getOperators: PropTypes.func,
     getLocations: PropTypes.func,
     updateCoordinates: PropTypes.func,
-    login: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
@@ -339,13 +305,9 @@ Map.propTypes = {
 
 const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
-    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
-    getMachines: (url) =>  dispatch(fetchMachines(url)),
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
-    getOperators: (url) => dispatch(fetchOperators(url)),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
-    login: credentials => dispatch(login(credentials)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
 })
