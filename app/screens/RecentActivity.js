@@ -87,7 +87,7 @@ class RecentActivity extends Component {
             <ScrollView style={{backgroundColor:'#f5fbff',height:30}}>
                 <View style={s.header}>
                     <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
-                    <Text style={[s.paren,s.headerText]}>(5 miles, 30 days)</Text>
+                    <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
                 </View>
                 {selectedActivity ? 
                     <View style={s.filterView}>
