@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { ListItem, SearchBar } from 'react-native-elements'
+import { ListItem, SearchBar, Button } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { 
@@ -32,7 +32,17 @@ class FindMachine extends Component {
                 backgroundColor:'#f5fbff',               
             },
             headerTintColor: '#4b5862',
-            headerRight: navigation.getParam('showDone') ? <TouchableOpacity onPress={() => navigation.goBack(null)}><Text>Done</Text></TouchableOpacity> : null,
+            headerRight: 
+                navigation.getParam('showDone') ? 
+                <Button
+                    onPress={() => navigation.goBack(null)}
+                    containerStyle={{width:50}}
+                    title="Done"
+                    accessibilityLabel="Done"
+                    titleStyle={s.titleStyle}
+                    clear={true}
+                />
+                : null,
         }
     }
 
@@ -171,7 +181,13 @@ const s = StyleSheet.create({
         marginRight:20, 
         marginTop: 20,
         borderRadius: 5
-    }
+    },
+    titleStyle: {
+        color: "#6a7d8a",
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginLeft: -10
+    }, 
 })
 
 FindMachine.propTypes = {
