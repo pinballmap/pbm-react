@@ -238,16 +238,16 @@ class SuggestLocation extends Component {
                             {isSuggestingLocation ? 
                                 <ActivityIndicator /> :
                                 errorText ? 
-                                    <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
+                                    <ScrollView style={{paddingTop: 100,backgroundColor:'#f5fbff'}}>
                                         <Text style={[s.error,s.success]}>{errorText}</Text>
                                         <PbmButton 
                                             title={"OK"}
                                             onPress={() => this.acceptError()}
                                         />
-                                    </View> :
+                                    </ScrollView> :
                                     locationSuggested ?
-                                        <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
-                                            <Text style={s.success}>Location Suggestion Received, thanks!</Text>
+                                        <ScrollView style={{paddingTop: 100,backgroundColor:'#f5fbff'}}>
+                                            <Text style={s.success}>Thanks for submitting that location! We'll review the submission and add it!</Text>
                                             <PbmButton 
                                                 title={"OK"}
                                                 onPress={() => {
@@ -255,9 +255,9 @@ class SuggestLocation extends Component {
                                                     navigate('Map')
                                                 }}
                                             />
-                                        </View>
+                                        </ScrollView>
                                         :                       
-                                        <ScrollView style={{marginTop: 50,backgroundColor:'#f5fbff'}}>
+                                        <ScrollView style={{paddingTop: 20,backgroundColor:'#f5fbff'}}>
                                             <View style={s.pageTitle}>
                                                 {machineList.length === 0 || locationName.length === 0 ? 
                                                     <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
