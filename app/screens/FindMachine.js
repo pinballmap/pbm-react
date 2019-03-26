@@ -31,7 +31,8 @@ class FindMachine extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',               
             },
-            headerTintColor: '#4b5862'
+            headerTintColor: '#4b5862',
+            headerRight: navigation.getParam('showDone') ? <TouchableOpacity onPress={() => navigation.goBack(null)}><Text>Done</Text></TouchableOpacity> : null,
         }
     }
 
@@ -68,6 +69,14 @@ class FindMachine extends Component {
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
+
+    UNSAFE_componentWillReceiveProps(props) {
+        if (this.props.location.machineList.length === 0 && props.location.machineList.length > 0)
+            this.props.navigation.setParams({ showDone: true})
+
+        if (this.props.location.machineList.length > 0 && props.location.machineList.length === 0)
+            this.props.navigation.setParams({ showDone: false})
+    }
 
     render() {
         const { machineList = [] } = this.props.location
@@ -108,21 +117,21 @@ class FindMachine extends Component {
                             />
                         </ScrollView>
                     </TouchableWithoutFeedback>
-                </Modal>
+                </Modal> 
+                <SearchBar
+                    round
+                    lightTheme
+                    placeholder='Filter machines...'
+                    platform='default'
+                    searchIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
+                    clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
+                    onChangeText={this.handleSearch}
+                    inputStyle={{color:'#000e18'}}
+                    value={this.state.query}
+                    inputContainerStyle={{height:35,backgroundColor:'#ffffff'}}
+                    containerStyle={{backgroundColor:'#97a5af'}}
+                />
                 <ScrollView>
-                    <SearchBar
-                        round
-                        lightTheme
-                        placeholder='Filter machines...'
-                        platform='default'
-                        searchIcon={<MaterialIcons name='search' size={25} color="#4b5862" />}
-                        clearIcon={<MaterialIcons name='clear' size={20} color="#F53240" onPress={() => this.handleSearch('')} />}
-                        onChangeText={this.handleSearch}
-                        inputStyle={{color:'#000e18'}}
-                        value={this.state.query}
-                        inputContainerStyle={{height:35,backgroundColor:'#ffffff'}}
-                        containerStyle={{backgroundColor:'#97a5af'}}
-                    />
                     {sortedMachines.map(machine => {
                         const selected = machineList.find(m => m.id === machine.id)
                         return multiSelect ?
