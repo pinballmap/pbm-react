@@ -247,7 +247,7 @@ class SuggestLocation extends Component {
                                     </ScrollView> :
                                     locationSuggested ?
                                         <ScrollView style={{paddingTop: 100,backgroundColor:'#f5fbff'}}>
-                                            <Text style={s.success}>Thanks for submitting that location! We'll review the submission and add it!</Text>
+                                            <Text style={s.success}>{`Thanks for submitting that location! We'll review the submission and add it!`}</Text>
                                             <PbmButton 
                                                 title={"OK"}
                                                 onPress={() => {

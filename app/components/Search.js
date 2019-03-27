@@ -8,6 +8,7 @@ import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
+import { getLocationsByCity } from '../actions'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -16,7 +17,8 @@ class Search extends Component {
         super(props)
         this.state={
             q: '',
-            foundItems: [],
+            foundLocations: [],
+            foundCities: [],
             searchModalVisible: false
         }
 
@@ -37,16 +39,18 @@ class Search extends Component {
     _fetch = async (query) => {        
         this.waitingFor = query
         if (query === '') {
-            await this.setState({ foundItems: []})
+            await this.setState({ foundLocations: [], foundCities: []})
         } else {
-            const foundItems = await getData(`/locations/autocomplete?name=${query}`)
-            if (query === this.waitingFor) 
-                this.setState({ foundItems })
+            const foundLocations = await getData(`/locations/autocomplete?name=${query}`)
+            let foundCities = await getData(`/locations/autocomplete_city.json?name=${query}`)
+            if (query === this.waitingFor) {
+                this.setState({ foundLocations, foundCities })
+            }
         }
     }
 
     render(){
-        const { q, foundItems, searchModalVisible } = this.state
+        const { q, foundLocations = [], foundCities = [], searchModalVisible } = this.state
 
         return(
             <View>
@@ -78,8 +82,8 @@ class Search extends Component {
                             />
                         </View>
                         <ScrollView>
-                            {foundItems ? 
-                                foundItems.map(location => 
+                            {foundLocations ? 
+                                foundLocations.map(location => 
                                     (<TouchableOpacity 
                                         key={location.id} 
                                         onPress={() => {
@@ -93,9 +97,26 @@ class Search extends Component {
                                             containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
                                         /> 
                                     </TouchableOpacity>)
-                                ) :
-                                <Text>No search results...</Text>
+                                ) : null
                             }
+                            {foundCities ? 
+                                foundCities.map(location => 
+                                    (<TouchableOpacity 
+                                        key={location.value} 
+                                        onPress={() => {
+                                            this.props.getLocationsByCity(location.value, this.props.navigate)
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}>
+                                        <ListItem
+                                            title={location.value}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                        /> 
+                                    </TouchableOpacity>)
+                                ) : null
+                            }
+                            {foundLocations.length === 0 && foundCities.length === 0 && q !== '' ? <Text>No search results...</Text> : null }
                         </ScrollView>
                     </View>
                 </Modal>
@@ -141,4 +162,7 @@ Search.propTypes = {
 }
 
 const mapStateToProps = ({ query, user }) => ({ query, user})
-export default connect(mapStateToProps, null)(Search)
+const mapDispatchToProps = (dispatch) => ({
+    getLocationsByCity: (city, navigate) => dispatch(getLocationsByCity(city, navigate)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
