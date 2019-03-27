@@ -82,23 +82,6 @@ class Search extends Component {
                             />
                         </View>
                         <ScrollView>
-                            {foundLocations ? 
-                                foundLocations.map(location => 
-                                    (<TouchableOpacity 
-                                        key={location.id} 
-                                        onPress={() => {
-                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
-                                            this.changeQuery('')
-                                            this.setState({searchModalVisible: false})
-                                        }}>
-                                        <ListItem
-                                            title={location.label}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
-                                        /> 
-                                    </TouchableOpacity>)
-                                ) : null
-                            }
                             {foundCities ? 
                                 foundCities.map(location => 
                                     (<TouchableOpacity 
@@ -116,6 +99,23 @@ class Search extends Component {
                                     </TouchableOpacity>)
                                 ) : null
                             }
+                            {foundLocations ? 
+                                foundLocations.map(location => 
+                                    (<TouchableOpacity 
+                                        key={location.id} 
+                                        onPress={() => {
+                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}>
+                                        <ListItem
+                                            title={location.label}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                        /> 
+                                    </TouchableOpacity>)
+                                ) : null
+                            }                        
                             {foundLocations.length === 0 && foundCities.length === 0 && q !== '' ? <Text>No search results...</Text> : null }
                         </ScrollView>
                     </View>
