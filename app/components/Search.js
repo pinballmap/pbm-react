@@ -93,8 +93,10 @@ class Search extends Component {
                                         }}>
                                         <ListItem
                                             title={location.value}
+                                            rightTitle={'City'}
+                                            rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
@@ -154,7 +156,7 @@ const s = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         paddingLeft:0
-    }
+    },
 })
 
 Search.propTypes = {
