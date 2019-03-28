@@ -9,6 +9,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import { getLocationsByCity } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -60,72 +61,70 @@ class Search extends Component {
                     visible={searchModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <SafeAreaView style={{flex: 1}}>
-                        <View style={{flex:1,backgroundColor:'rgba(255,255,255,1.0)'}}>
-                            <View style={{display: 'flex', flexDirection: 'row'}}>
-                                <MaterialIcons 
-                                    onPress={() => {
-                                        this.setState({searchModalVisible: false})
-                                        this.changeQuery('')
-                                    }}
-                                    name='clear' 
-                                    size={30} 
-                                    style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:6}}
-                                />
-                                <Input
-                                    placeholder='City, Address, Location'
-                                    leftIcon={<MaterialIcons name='search' size={25} color="#6a7d8a" style={{marginLeft:-10,marginRight:-8}}/>}
-                                    rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
-                                    onChangeText={query => this.changeQuery(query)}
-                                    value={q}
-                                    containerStyle={{paddingTop:4}}
-                                    inputContainerStyle={s.input}
-                                    autoFocus
-                                />
-                            </View>
-                            <ScrollView style={{paddingTop: 3}}>
-                                {foundCities ? 
-                                    foundCities.map(location => 
-                                        (<TouchableOpacity 
-                                            key={location.value} 
-                                            onPress={() => {
-                                                this.props.getLocationsByCity(location.value, this.props.navigate)
-                                                this.changeQuery('')
-                                                this.setState({searchModalVisible: false})
-                                            }}>
-                                            <ListItem
-                                                title={location.value}
-                                                rightTitle={'City'}
-                                                rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
-                                                titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                                containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
-                                            /> 
-                                        </TouchableOpacity>)
-                                    ) : null
-                                }
-                                {foundLocations ? 
-                                    foundLocations.map(location => 
-                                        (<TouchableOpacity 
-                                            key={location.id} 
-                                            onPress={() => {
-                                                this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
-                                                this.changeQuery('')
-                                                this.setState({searchModalVisible: false})
-                                            }}>
-                                            <ListItem
-                                                title={location.label}
-                                                titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                                containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
-                                            /> 
-                                        </TouchableOpacity>)
-                                    ) : null
-                                }                        
-                                {foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showNoResults ? 
-                                    <Text style={s.noResults}>No search results...</Text> : null 
-                                }
-                            </ScrollView>
+                    <View style={[s.ifX,{flex:1,backgroundColor:'rgba(255,255,255,1.0)'}]}>
+                        <View style={{display: 'flex', flexDirection: 'row'}}>
+                            <MaterialIcons 
+                                onPress={() => {
+                                    this.setState({searchModalVisible: false})
+                                    this.changeQuery('')
+                                }}
+                                name='clear' 
+                                size={30} 
+                                style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:6}}
+                            />
+                            <Input
+                                placeholder='City, Address, Location'
+                                leftIcon={<MaterialIcons name='search' size={25} color="#6a7d8a" style={{marginLeft:-10,marginRight:-8}}/>}
+                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
+                                onChangeText={query => this.changeQuery(query)}
+                                value={q}
+                                containerStyle={{paddingTop:4}}
+                                inputContainerStyle={s.input}
+                                autoFocus
+                            />
                         </View>
-                    </SafeAreaView>
+                        <ScrollView style={{paddingTop: 3}}>
+                            {foundCities ? 
+                                foundCities.map(location => 
+                                    (<TouchableOpacity 
+                                        key={location.value} 
+                                        onPress={() => {
+                                            this.props.getLocationsByCity(location.value, this.props.navigate)
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}>
+                                        <ListItem
+                                            title={location.value}
+                                            rightTitle={'City'}
+                                            rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                        /> 
+                                    </TouchableOpacity>)
+                                ) : null
+                            }
+                            {foundLocations ? 
+                                foundLocations.map(location => 
+                                    (<TouchableOpacity 
+                                        key={location.id} 
+                                        onPress={() => {
+                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}>
+                                        <ListItem
+                                            title={location.label}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                        /> 
+                                    </TouchableOpacity>)
+                                ) : null
+                            }                        
+                            {foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showNoResults ? 
+                                <Text style={s.noResults}>No search results...</Text> : null 
+                            }
+                        </ScrollView>
+                    </View>
                 </Modal>
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
                     <View style={s.searchMap}>
@@ -143,6 +142,13 @@ Search.propTypes = {
 }
 
 const s = StyleSheet.create({
+    ifX: {
+        ...ifIphoneX({
+            paddingTop: 33,
+        }, {
+            paddingTop: 20
+        })
+    },
     searchMap: {
         width: deviceWidth - 115,
         backgroundColor: '#e3e5e8',

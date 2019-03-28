@@ -8,6 +8,7 @@ import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } fro
 import { 
     setFilters,
 } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class FilterMap extends Component {
     constructor(props){
@@ -34,7 +35,13 @@ class FilterMap extends Component {
           headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter Results',
           headerStyle: {
-            backgroundColor:'#f5fbff',            
+            backgroundColor:'#f5fbff',
+            ...ifIphoneX({
+                paddingTop: 30,
+                height: 60
+            }, {
+                paddingTop: 0
+            })            
         },
         headerTintColor: '#4b5862'
       }

@@ -2,6 +2,7 @@ import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { StyleSheet, Text } from 'react-native'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
@@ -79,6 +80,12 @@ const TabNav = TabNavigator({
         showIcon: true,
         style: {
             backgroundColor:'#f5fbff',
+            ...ifIphoneX({
+                paddingBottom: 20,
+                height: 60
+            }, {
+                paddingBottom: 0
+            })
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
