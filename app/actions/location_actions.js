@@ -9,6 +9,7 @@ import {
     MACHINE_SCORE_ADDED,
     LOCATION_MACHINE_REMOVED,
     ADDING_MACHINE_TO_LOCATION,
+    ADD_MACHINES_TO_LIST,
     MACHINE_ADDED_TO_LOCATION,
     MACHINE_ADDED_TO_LOCATION_FAILURE,
     DISPLAY_API_ERROR,
@@ -210,6 +211,16 @@ export const addMachineToList = machine => ({ type: ADD_MACHINE_TO_LIST, machine
 export const removeMachineFromList = machine => ({ type: REMOVE_MACHINE_FROM_LIST, machine })
 export const clearMachineList = () => ({ type: CLEAR_MACHINE_LIST })
 
+export const addMachinesToList = machinesMap => (dispatch, getState) => {
+    const { machines } = getState().machines
+    let machineList = []
+    machinesMap.forEach((value, key) => {
+        machineList = machineList.concat([machines.find(machine => machine.id === key)])
+    })
+
+    dispatch({ type: ADD_MACHINES_TO_LIST, machineList })
+
+}
 export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     dispatch({ type: SUGGESTING_LOCATION }) 
 
