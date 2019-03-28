@@ -14,6 +14,7 @@ const moment = require('moment')
 var DismissKeyboard = require('dismissKeyboard')
 
 let deviceWidth = Dimensions.get('window').width
+let deviceHeight = Dimensions.get('window').height
 
 class MachineDetails extends Component {
     state = {
@@ -90,29 +91,31 @@ class MachineDetails extends Component {
                     visible={this.state.showAddConditionModal}
                     onRequestClose={()=>{}}
                 >
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{paddingTop: 50, backgroundColor:'#f5fbff'}}>
-                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
-                            <TextInput
-                                multiline={true}
-                                numberOfLines={4}
-                                underlineColorAndroid='transparent'
-                                onChangeText={conditionText => this.setState({ conditionText })}
-                                value={this.state.conditionText}
-                                style={[{padding:5,height: 100},s.textInput]}
-                                placeholder={'Enter machine condition...'}
-                                textAlignVertical='top'
-                            />
-                            <PbmButton
-                                title={'Add Condition'}
-                                disabled={this.state.conditionText.length === 0}
-                                onPress={() => this.addCondition(curLmx.id)}
-                            />
-                            <WarningButton
-                                title={'Cancel'}
-                                onPress={this.cancelAddCondition}
-                            />
-                        </ScrollView>
+                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>                      
+                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                            <View style={s.verticalAlign}>
+                                <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
+                                <TextInput
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={conditionText => this.setState({ conditionText })}
+                                    value={this.state.conditionText}
+                                    style={[{padding:5,height:100},s.textInput]}
+                                    placeholder={'Enter machine condition...'}
+                                    textAlignVertical='top'
+                                />
+                                <PbmButton
+                                    title={'Add Condition'}
+                                    disabled={this.state.conditionText.length === 0}
+                                    onPress={() => this.addCondition(curLmx.id)}
+                                />
+                                <WarningButton
+                                    title={'Cancel'}
+                                    onPress={this.cancelAddCondition}
+                                />
+                            </View>
+                        </ScrollView>          
                     </TouchableWithoutFeedback>
                 </Modal>
                 <Modal
@@ -122,26 +125,28 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{paddingTop: 50,backgroundColor:'#f5fbff'}}>
-                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
-                            <TextInput 
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
-                                keyboardType='numeric'
-                                underlineColorAndroid='transparent'
-                                onChangeText={score => this.setState({ score })}
-                                value={this.state.score}
-                                returnKeyType="done"
-                                placeholder={'123...'}
-                            />
-                            <PbmButton 
-                                title={'Add Score'}
-                                disabled={this.state.score.length === 0}
-                                onPress={() => this.addScore(curLmx.id)}
-                            />
-                            <WarningButton 
-                                title={'Cancel'}
-                                onPress={this.cancelAddScore}
-                            />
+                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                            <View style={s.verticalAlign}>
+                                <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
+                                <TextInput 
+                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    keyboardType='numeric'
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={score => this.setState({ score })}
+                                    value={this.state.score}
+                                    returnKeyType="done"
+                                    placeholder={'123...'}
+                                />
+                                <PbmButton 
+                                    title={'Add Score'}
+                                    disabled={this.state.score.length === 0}
+                                    onPress={() => this.addScore(curLmx.id)}
+                                />
+                                <WarningButton 
+                                    title={'Cancel'}
+                                    onPress={this.cancelAddScore}
+                                />
+                            </View>
                         </ScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
@@ -301,6 +306,11 @@ const s = StyleSheet.create({
         paddingBottom: 15,
         color: '#4b5862'
     },
+    verticalAlign: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height:deviceHeight
+    }
 })
 
 MachineDetails.propTypes = {
