@@ -52,6 +52,9 @@ class FindMachine extends React.PureComponent {
             return machA < machB ? -1 : machA === machB ? 0 : 1
         })
 
+        let selectedMap = new Map()
+        this.props.location.machineList.forEach(machine => selectedMap.set(machine.id, true))
+
         this.state = {
             machines: sortedMachines,
             allMachines: sortedMachines,
@@ -59,7 +62,7 @@ class FindMachine extends React.PureComponent {
             showModal: false,
             machine: {}, 
             condition: '',
-            selected: (new Map(): Map<string, boolean>),
+            selected: selectedMap,
         }   
     }
 
