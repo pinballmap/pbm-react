@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import { FilterRecentActivity } from '../components'
 import { clearActivityFilter } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 const moment = require('moment')
 
 class RecentActivity extends Component {
@@ -21,7 +23,13 @@ class RecentActivity extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Activity',
             headerStyle: {
-                backgroundColor:'#f5fbff',          
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })          
             },
             headerTintColor: '#4b5862',
             headerRight: <FilterRecentActivity />

@@ -8,6 +8,7 @@ import { LocationCard, NotLoggedIn, Text } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
 import { FontAwesome } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -25,7 +26,13 @@ export class LocationList extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,          
             title: 'Saved',
             headerStyle: {
-                backgroundColor:'#f5fbff',                
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })                
             },
             headerTintColor: '#4b5862'
         }

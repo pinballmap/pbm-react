@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -21,6 +21,7 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const DismissKeyboard = require('dismissKeyboard')
 
@@ -64,7 +65,13 @@ class SuggestLocation extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Suggest Location',
             headerStyle: {
-                backgroundColor:'#f5fbff',         
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })         
             },
             headerTintColor: '#4b5862'
         }
@@ -256,67 +263,69 @@ class SuggestLocation extends Component {
                                                 }}
                                             />
                                         </ScrollView>
-                                        :                       
-                                        <ScrollView style={{paddingTop: 20,backgroundColor:'#f5fbff'}}>
-                                            <View style={s.pageTitle}>
-                                                {machineList.length === 0 || locationName.length === 0 ? 
-                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
-                                                    : <Text style={s.pageTitleText}>Please review your submission</Text>
+                                        :        
+                                        <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>               
+                                            <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                                                <View style={s.pageTitle}>
+                                                    {machineList.length === 0 || locationName.length === 0 ? 
+                                                        <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
+                                                        : <Text style={s.pageTitleText}>Please review your submission</Text>
+                                                    }
+                                                </View>
+                                                <Text style={s.title}>Location Name</Text>
+                                                {locationName.length === 0 ?
+                                                    <Text style={[s.error,s.preview]}>Include a location name</Text>
+                                                    : <Text style={s.preview}>{locationName}</Text>
                                                 }
-                                            </View>
-                                            <Text style={s.title}>Location Name</Text>
-                                            {locationName.length === 0 ?
-                                                <Text style={[s.error,s.preview]}>Include a location name</Text>
-                                                : <Text style={s.preview}>{locationName}</Text>
-                                            }
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Street</Text>
-                                            <Text style={s.preview}>{street}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>City</Text>
-                                            <Text style={s.preview}>{city}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>State</Text>
-                                            <Text style={s.preview}>{state}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Zip</Text>
-                                            <Text style={s.preview}>{zip}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Country</Text>
-                                            <Text style={s.preview}>{country}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Phone</Text>
-                                            <Text style={s.preview}>{phone}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Website</Text>
-                                            <Text style={s.preview}>{website}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Location Notes</Text>
-                                            <Text style={s.preview}>{description}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Location Type</Text>
-                                            <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Operator</Text>
-                                            <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Machine List</Text>
-                                            {machineList.length === 0 ? 
-                                                <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
-                                                : machineList.map(m => 
-                                                    <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
-                                                )
-                                            }                             
-                                            <PbmButton
-                                                title={'Submit Location'}
-                                                onPress={() => this.confirmSuggestLocationDetails()}
-                                                disabled={machineList.length === 0 || locationName.length === 0}
-                                            />
-                                            <WarningButton
-                                                title={'Cancel'}
-                                                onPress={() => this.setState({ showSuggestLocationModal: false})}
-                                            />
-                                        </ScrollView>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Street</Text>
+                                                <Text style={s.preview}>{street}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>City</Text>
+                                                <Text style={s.preview}>{city}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>State</Text>
+                                                <Text style={s.preview}>{state}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Zip</Text>
+                                                <Text style={s.preview}>{zip}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Country</Text>
+                                                <Text style={s.preview}>{country}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Phone</Text>
+                                                <Text style={s.preview}>{phone}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Website</Text>
+                                                <Text style={s.preview}>{website}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Location Notes</Text>
+                                                <Text style={s.preview}>{description}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Location Type</Text>
+                                                <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Operator</Text>
+                                                <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                                <View style={s.hr}></View>
+                                                <Text style={s.title}>Machine List</Text>
+                                                {machineList.length === 0 ? 
+                                                    <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
+                                                    : machineList.map(m => 
+                                                        <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
+                                                    )
+                                                }                             
+                                                <PbmButton
+                                                    title={'Submit Location'}
+                                                    onPress={() => this.confirmSuggestLocationDetails()}
+                                                    disabled={machineList.length === 0 || locationName.length === 0}
+                                                />
+                                                <WarningButton
+                                                    title={'Cancel'}
+                                                    onPress={() => this.setState({ showSuggestLocationModal: false})}
+                                                />
+                                            </ScrollView>
+                                        </SafeAreaView>
                             }
                         </Modal>
                         <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>

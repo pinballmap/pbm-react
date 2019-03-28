@@ -8,6 +8,7 @@ import { Button, ListItem } from 'react-native-elements'
 import { ConfirmationModal, NotLoggedIn, PbmButton, WarningButton, Text } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -23,7 +24,13 @@ class UserProfile extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Profile',
             headerStyle: {
-                backgroundColor:'#f5fbff',                
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })                
             },
             headerTintColor: '#4b5862'
         }

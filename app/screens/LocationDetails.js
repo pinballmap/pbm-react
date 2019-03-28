@@ -18,6 +18,7 @@ import {
     removeFavoriteLocation,
     setCurrentMachine, 
 } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -49,7 +50,13 @@ class LocationDetails extends Component {
                     clear={true}
                 /> : null,
             headerStyle: {
-                backgroundColor:'#f5fbff',               
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })               
             },
             headerTintColor: '#4b5862'
         }

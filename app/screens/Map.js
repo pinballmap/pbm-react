@@ -14,6 +14,7 @@ import {
     clearFilters,
 } from '../actions'
 import { Ionicons, Feather } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class Map extends Component {
     constructor(props){
@@ -65,7 +66,13 @@ class Map extends Component {
             clear={true}
         />,
             headerStyle: {
-                backgroundColor:'#f5fbff',              
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })             
             },
             headerTintColor: '#4b5862'
         }

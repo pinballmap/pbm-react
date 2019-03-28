@@ -8,6 +8,7 @@ import { addMachineCondition, addMachineScore, removeMachineFromLocation } from 
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { PbmButton, RemoveMachine, RemoveMachineModal, WarningButton, Text }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -31,7 +32,13 @@ class MachineDetails extends Component {
             headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />,
             headerStyle: {
-                backgroundColor:'#f5fbff',               
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })               
             },
             headerTintColor: '#4b5862'
         }
