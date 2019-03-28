@@ -1,33 +1,73 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { ListItem, SearchBar } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     addMachineToLocation,
     addMachineToList,
+    addMachinesToList,
     removeMachineFromList,
 } from '../actions'
 import { PbmButton, WarningButton, Text } from '../components'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { FlatList } from 'react-native-gesture-handler'
 
 var DismissKeyboard = require('dismissKeyboard')
 
-class FindMachine extends Component {
-    state = {
-        machines: this.props.machines.machines,
-        allMachines: this.props.machines.machines,
-        query: '',
-        showModal: false,
-        machine: {}, 
-        condition: '',
+const getDisplayText = machine => (
+    <Text style={{fontSize: 16}}>
+        <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
+        <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+    </Text>
+)
+
+class MultiSelectRow extends React.PureComponent {
+    _onPress = () => {
+        this.props.onPressItem(this.props.machine.id)
     }
-    
+  
+    render() {
+        return (
+            <TouchableOpacity onPress={this._onPress}>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                    {getDisplayText(this.props.machine)}
+                    {this.props.selected ? <MaterialIcons name='cancel' size={15} color="#4b5862" /> : null}
+                </View>    
+            </TouchableOpacity>
+        )
+    }
+}
+  
+
+class FindMachine extends React.PureComponent {
+    constructor(props) {
+        super(props)
+        const sortedMachines =  this.props.machines.machines.sort((a, b) => {
+            const machA = a.name.toUpperCase()  
+            const machB = b.name.toUpperCase()
+            return machA < machB ? -1 : machA === machB ? 0 : 1
+        })
+
+        this.state = {
+            machines: sortedMachines,
+            allMachines: sortedMachines,
+            query: '',
+            showModal: false,
+            machine: {}, 
+            condition: '',
+            selected: (new Map(): Map<string, boolean>),
+        }   
+    }
+
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: navigation.state.params && navigation.state.params['multiSelect'] ? 
+                <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Cancel</Text></TouchableOpacity> :
+                <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
@@ -73,12 +113,34 @@ class FindMachine extends Component {
         })
     }
 
-    getDisplayText = machine => (
-        <Text style={{fontSize: 16}}>
-            <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
-            <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
-        </Text>
+    renderRow = (machine) => (
+        <TouchableOpacity                           
+            onPress={() => this.setSelected(machine.item)}
+        >
+            <View>
+                {getDisplayText(machine.item)}
+            </View>    
+        </TouchableOpacity>
     )
+
+    renderMultiSelectRow = (machine) => (
+        <MultiSelectRow 
+            machine={machine.item}
+            onPressItem={this.onPressMultiSelect}
+            selected={!!this.state.selected.get(machine.item.id)}
+        />
+    )
+
+    onPressMultiSelect = (id) => {
+        this.setState((state) => {
+            // copy the map rather than modifying state.
+            const selected = new Map(state.selected)
+            selected.set(id, !selected.get(id)) // toggle
+            return {selected}
+        })
+    }
+
+    keyExtractor = machine => `${machine.id}`
 
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.location.machineList.length === 0 && props.location.machineList.length > 0)
@@ -89,14 +151,15 @@ class FindMachine extends Component {
     }
 
     render() {
-        const { machineList = [] } = this.props.location
-        const sortedMachines =  this.state.machines.sort((a, b) => {
-            const machA = a.name.toUpperCase()  
-            const machB = b.name.toUpperCase()
-            return machA < machB ? -1 : machA === machB ? 0 : 1
-        })
+        const { selected } = this.state
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
 
+        let count = 0
+        selected.forEach(value => {
+            if (value) 
+                count++
+        })
+     
         return (
             <View style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <Modal
@@ -141,32 +204,27 @@ class FindMachine extends Component {
                     inputContainerStyle={{height:35,backgroundColor:'#ffffff'}}
                     containerStyle={{backgroundColor:'#97a5af'}}
                 />
-                <ScrollView>
-                    {sortedMachines.map(machine => {
-                        const selected = machineList.find(m => m.id === machine.id)
-                        return multiSelect ?
-                            <TouchableOpacity
-                                key={machine.id}
-                                onPress={() => selected ? this.props.removeMachineFromList(machine) : this.props.addMachineToList(machine) }
-                            >
-                                <ListItem 
-                                    title={this.getDisplayText(machine)}
-                                    containerStyle={{backgroundColor:'#f5fbff'}}
-                                    checkmark={selected ? <MaterialIcons name='cancel' size={15} color="#4b5862" /> : null}
+                {multiSelect ? 
+                    <View>
+                        {count === 0 ? <Text>Select Machines to Add</Text> :
+                            <View style={{display: 'flex', flexDirection: 'row'}}>
+                                <Text>{`Add ${count} machine${count > 1 ? 's' : ''}`}</Text>
+                                <MaterialCommunityIcons 
+                                    name='plus' style={s.plusButton} 
+                                    onPress={() => {
+                                        this.props.addMachinesToList(selected)
+                                        this.props.navigation.goBack()
+                                    }}
                                 />
-                            </TouchableOpacity> :
-                            <TouchableOpacity                           
-                                key={machine.id}
-                                onPress={() => this.setSelected(machine)}
-                            >
-                                <ListItem 
-                                    title={this.getDisplayText(machine)}
-                                    containerStyle={{backgroundColor:'#f5fbff'}}
-                                />
-                            </TouchableOpacity>
-                    }
-                    )}
-                </ScrollView>
+                            </View>
+                        }
+                    </View> : null
+                }
+                <FlatList
+                    data={this.state.machines}
+                    renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
+                    keyExtractor={this.keyExtractor}
+                />
             </View>)
     }
 }
@@ -188,6 +246,10 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10
     }, 
+    plusButton: {
+        color: "#F53240",
+        fontSize: 24
+    },
 })
 
 FindMachine.propTypes = {
@@ -204,6 +266,7 @@ const mapStateToProps = ({ location, machines }) => ({ location, machines })
 const mapDispatchToProps = (dispatch) => ({
     addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
     addMachineToList: machine => dispatch(addMachineToList(machine)),
+    addMachinesToList: machines => dispatch(addMachinesToList(machines)),
     removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)

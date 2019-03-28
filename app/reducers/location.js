@@ -14,6 +14,7 @@ import {
     UPDATING_LOCATION_DETAILS,
     LOCATION_DETAILS_UPDATED,
     ADD_MACHINE_TO_LIST,
+    ADD_MACHINES_TO_LIST,
     REMOVE_MACHINE_FROM_LIST,
     CLEAR_MACHINE_LIST,
     SUGGESTING_LOCATION,
@@ -177,6 +178,12 @@ export default (state = initialState, action) => {
             ...state,
             machineList: state.machineList.concat([action.machine]),
         }
+    case ADD_MACHINES_TO_LIST: {
+        return {
+            ...state,
+            machineList: action.machineList,
+        }
+    }
     case REMOVE_MACHINE_FROM_LIST: {
         const { id } = action.machine
         const machineList = state.machineList.filter(m => m.id !== id)
