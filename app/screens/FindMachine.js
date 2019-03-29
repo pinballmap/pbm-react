@@ -9,7 +9,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     addMachineToLocation,
     addMachineToList,
-    addMachinesToList,
     removeMachineFromList,
 } from '../actions'
 import { PbmButton, WarningButton, Text } from '../components'
@@ -27,7 +26,7 @@ const getDisplayText = machine => (
 
 class MultiSelectRow extends React.PureComponent {
     _onPress = () => {
-        this.props.onPressItem(this.props.machine.id)
+        this.props.onPressItem(this.props.machine)
     }
   
     render() {
@@ -42,6 +41,11 @@ class MultiSelectRow extends React.PureComponent {
     }
 }
   
+MultiSelectRow.propTypes = {
+    onPressItem: PropTypes.func,
+    machine: PropTypes.object,
+    selected: PropTypes.bool,
+}
 
 class FindMachine extends React.PureComponent {
     constructor(props) {
@@ -52,9 +56,6 @@ class FindMachine extends React.PureComponent {
             return machA < machB ? -1 : machA === machB ? 0 : 1
         })
 
-        let selectedMap = new Map()
-        this.props.location.machineList.forEach(machine => selectedMap.set(machine.id, true))
-
         this.state = {
             machines: sortedMachines,
             allMachines: sortedMachines,
@@ -62,15 +63,13 @@ class FindMachine extends React.PureComponent {
             showModal: false,
             machine: {}, 
             condition: '',
-            selected: selectedMap,
+            machineList: props.location.machineList,
         }   
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: navigation.state.params && navigation.state.params['multiSelect'] ? 
-                <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Cancel</Text></TouchableOpacity> :
-                <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
@@ -130,17 +129,19 @@ class FindMachine extends React.PureComponent {
         <MultiSelectRow 
             machine={machine.item}
             onPressItem={this.onPressMultiSelect}
-            selected={!!this.state.selected.get(machine.item.id)}
+            selected={!!this.props.location.machineList.find(m => m.id === machine.item.id)}
         />
     )
 
-    onPressMultiSelect = (id) => {
-        this.setState((state) => {
-            // copy the map rather than modifying state.
-            const selected = new Map(state.selected)
-            selected.set(id, !selected.get(id)) // toggle
-            return {selected}
-        })
+    onPressMultiSelect = (machine) => {
+        const selected = !!this.props.location.machineList.find(m => m.id === machine.id)
+
+        if (selected) {
+            this.props.removeMachineFromList(machine)
+        } 
+        else {
+            this.props.addMachineToList(machine)
+        }
     }
 
     keyExtractor = machine => `${machine.id}`
@@ -154,14 +155,8 @@ class FindMachine extends React.PureComponent {
     }
 
     render() {
-        const { selected } = this.state
+        const { machineList } = this.props.location
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
-
-        let count = 0
-        selected.forEach(value => {
-            if (value) 
-                count++
-        })
      
         return (
             <View style={{flex:1,backgroundColor:'#f5fbff'}}>
@@ -209,15 +204,12 @@ class FindMachine extends React.PureComponent {
                 />
                 {multiSelect ? 
                     <View>
-                        {count === 0 ? <Text>Select Machines to Add</Text> :
+                        {machineList.length === 0 ? <Text>Select Machines to Add</Text> :
                             <View style={{display: 'flex', flexDirection: 'row'}}>
-                                <Text>{`Add ${count} machine${count > 1 ? 's' : ''}`}</Text>
+                                <Text>{`Add ${machineList.length} machine${machineList.length > 1 ? 's' : ''}`}</Text>
                                 <MaterialCommunityIcons 
                                     name='plus' style={s.plusButton} 
-                                    onPress={() => {
-                                        this.props.addMachinesToList(selected)
-                                        this.props.navigation.goBack()
-                                    }}
+                                    onPress={() => this.props.navigation.goBack()}
                                 />
                             </View>
                         }
@@ -269,7 +261,6 @@ const mapStateToProps = ({ location, machines }) => ({ location, machines })
 const mapDispatchToProps = (dispatch) => ({
     addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
     addMachineToList: machine => dispatch(addMachineToList(machine)),
-    addMachinesToList: machines => dispatch(addMachinesToList(machines)),
     removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)
