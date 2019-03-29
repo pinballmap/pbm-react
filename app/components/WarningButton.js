@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
+
+let deviceWidth = Dimensions.get('window').width
 
 class WarningButton extends Component {
     render(){
@@ -14,7 +16,7 @@ class WarningButton extends Component {
                 buttonStyle={s.redButton}
                 titleStyle={{fontSize:18,color:'#f53240'}}    
                 style={{borderRadius: 50}}
-                containerStyle={[{borderRadius:50}, s.margin15]}
+                containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
             /> 
         )
     }
@@ -30,6 +32,12 @@ const s = StyleSheet.create({
     margin15: {
         marginLeft:15,
         marginRight:15,
+        marginTop:15,
+        marginBottom:15
+    },
+    margin25: {
+        marginLeft:25,
+        marginRight:25,
         marginTop:15,
         marginBottom:15
     },

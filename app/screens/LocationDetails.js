@@ -25,6 +25,7 @@ import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 const moment = require('moment')
 
 let deviceWidth = Dimensions.get('window').width
+let deviceHeight = Dimensions.get('window').height
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -183,7 +184,7 @@ class LocationDetails extends Component {
                             latitudeDelta: 0.03,
                             longitudeDelta: 0.03
                         }}
-                        style={s.map}
+                        style={deviceHeight > 800 ? s.mapTall : s.mapShort}
                         provider={PROVIDER_GOOGLE}
                     >
                         <MapView.Marker
@@ -294,13 +295,13 @@ class LocationDetails extends Component {
 }
 
 const s = StyleSheet.create({
-    map: {
+    mapTall: {
         zIndex: -1,
-        ...ifIphoneX({
-            height: 160
-        }, {
-            height: 100
-        })
+        height: 160
+    },
+    mapShort: {
+        height: 100,
+        zIndex: -1
     },
     buttonStyle: {
         backgroundColor: '#D3ECFF',
