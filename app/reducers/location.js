@@ -178,12 +178,7 @@ export default (state = initialState, action) => {
             ...state,
             machineList: state.machineList.concat([action.machine]),
         }
-    case ADD_MACHINES_TO_LIST: {
-        return {
-            ...state,
-            machineList: action.machineList,
-        }
-    }
+        
     case REMOVE_MACHINE_FROM_LIST: {
         const { id } = action.machine
         const machineList = state.machineList.filter(m => m.id !== id)
