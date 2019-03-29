@@ -296,7 +296,11 @@ class LocationDetails extends Component {
 const s = StyleSheet.create({
     map: {
         zIndex: -1,
-        height: 100
+        ...ifIphoneX({
+            height: 160
+        }, {
+            height: 100
+        })
     },
     buttonStyle: {
         backgroundColor: '#D3ECFF',
@@ -340,7 +344,8 @@ const s = StyleSheet.create({
     },
     link: {
         textDecorationLine: 'underline',
-        color: '#000e18'
+        color: '#000e18',
+        fontSize: 16
     },
     italic: {
         fontStyle: 'italic',
@@ -351,7 +356,7 @@ const s = StyleSheet.create({
         color: '#6a7d8a'
     },
     meta: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#6a7d8a'
     },
     iconStyle: {
