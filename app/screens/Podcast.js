@@ -4,6 +4,7 @@ import { StyleSheet, ScrollView, Image, Linking, View, Dimensions } from 'react-
 import { HeaderBackButton } from 'react-navigation'
 import { Text } from '../components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -18,7 +19,13 @@ class Podcast extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Podcast',
             headerStyle: {
-                backgroundColor:'#f5fbff',          
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })          
             },
             headerTintColor: '#4b5862'
         }
