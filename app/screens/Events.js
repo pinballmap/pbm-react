@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Text, View, StyleSheet } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
 import { MaterialIcons } from '@expo/vector-icons'
-
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class Events extends Component {
   
@@ -16,7 +16,13 @@ class Events extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'Events',
             headerStyle: {
-                backgroundColor:'#f5fbff',               
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })               
             },
             headerTintColor: '#4b5862'
         }

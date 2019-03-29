@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { HeaderBackButton } from 'react-navigation'
-import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
 import { clearError, updateLocationDetails } from '../actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const DismissKeyboard = require('dismissKeyboard')
 
@@ -37,7 +38,13 @@ class EditLocationDetails extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: <Text>{navigation.getParam('name')}</Text>,
             headerStyle: {
-                backgroundColor:'#f5fbff',               
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })            
             },
             headerTintColor: '#4b5862'
         }
@@ -130,31 +137,33 @@ class EditLocationDetails extends Component {
                                 onPress={() => this.acceptError()}
                             />
                         </View>
-                        :                       
-                        <ScrollView style={{marginTop: 50, backgroundColor:'#f5fbff'}}>
-                            <Text style={s.title}>Phone</Text>
-                            <Text style={s.preview}>{phone}</Text>
-                            <View style={s.hr}></View>
-                            <Text style={s.title}>Website</Text>
-                            <Text style={s.preview}>{website}</Text>
-                            <View style={s.hr}></View>
-                            <Text style={s.title}>Location Notes</Text>
-                            <Text style={s.preview}>{description}</Text>
-                            <View style={s.hr}></View>
-                            <Text style={s.title}>Location Type</Text>
-                            <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
-                            <View style={s.hr}></View>
-                            <Text style={s.title}>Operator</Text>
-                            <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
-                            <PbmButton
-                                title={'Confirm Details'}
-                                onPress={() => this.confirmEditLocationDetails()}
-                            />
-                            <WarningButton
-                                title={'Cancel'}
-                                onPress={() => this.setState({ showEditLocationDetailsModal: false})}
-                            />
-                        </ScrollView>
+                        :              
+                        <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>         
+                            <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                                <Text style={s.title}>Phone</Text>
+                                <Text style={s.preview}>{phone}</Text>
+                                <View style={s.hr}></View>
+                                <Text style={s.title}>Website</Text>
+                                <Text style={s.preview}>{website}</Text>
+                                <View style={s.hr}></View>
+                                <Text style={s.title}>Location Notes</Text>
+                                <Text style={s.preview}>{description}</Text>
+                                <View style={s.hr}></View>
+                                <Text style={s.title}>Location Type</Text>
+                                <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
+                                <View style={s.hr}></View>
+                                <Text style={s.title}>Operator</Text>
+                                <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                <PbmButton
+                                    title={'Confirm Details'}
+                                    onPress={() => this.confirmEditLocationDetails()}
+                                />
+                                <WarningButton
+                                    title={'Cancel'}
+                                    onPress={() => this.setState({ showEditLocationDetailsModal: false})}
+                                />
+                            </ScrollView>
+                        </SafeAreaView>
                     }
                 </Modal>
                 {updatingLocationDetails ?  

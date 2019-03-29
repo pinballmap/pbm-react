@@ -7,6 +7,7 @@ import { HeaderBackButton } from 'react-navigation'
 import { LocationCard, Text } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -25,6 +26,12 @@ export class LocationList extends Component {
             title: 'LocationList',
             headerStyle: {
                 backgroundColor:'#f5fbff',                
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })
             },
             headerTintColor: '#4b5862'
         }

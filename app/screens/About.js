@@ -5,6 +5,7 @@ import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -24,7 +25,13 @@ class About extends Component {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
             title: 'About',
             headerStyle: {
-                backgroundColor:'#f5fbff',                
+                backgroundColor:'#f5fbff',
+                ...ifIphoneX({
+                    paddingTop: 30,
+                    height: 60
+                }, {
+                    paddingTop: 0
+                })
             },
             headerTintColor: '#4b5862'
         }
