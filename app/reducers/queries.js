@@ -1,10 +1,13 @@
 import {
     UPDATE_COORDINATES,
-    SET_FILTERS,
     CLEAR_FILTERS,
     SET_SELECTED_ACTIVITY_FILTER,
     CLEAR_ACTIVITY_FILTER,
     FETCHING_LOCATIONS_BY_CITY_SUCCESS,
+    SET_MACHINE_FILTER,
+    SET_NUM_MACHINES_FILTER,
+    SET_LOCATION_TYPE_FILTER,
+    SET_OPERATOR_FILTER,
 } from '../actions/types'
 
 export const initialState = {
@@ -18,6 +21,7 @@ export const initialState = {
     numMachines: '',
     selectedOperator: '',
     selectedActivity: '',
+    machine: {},
 }
 
 export default (state = initialState, action) => {
@@ -30,12 +34,27 @@ export default (state = initialState, action) => {
             latDelta: action.latDelta,
             lonDelta: action.lonDelta,
         }
-    case SET_FILTERS: 
+    case SET_MACHINE_FILTER: {
+        console.log(action.machine.id)
         return {
-            ...state, 
-            machineId: action.selectedMachine,
-            locationType: action.selectedLocationType,
+            ...state,
+            machineId: action.machine.id,
+            machine: action.machine,
+        }
+    }
+    case SET_NUM_MACHINES_FILTER: 
+        return {
+            ...state,
             numMachines: action.numMachines,
+        }
+    case SET_LOCATION_TYPE_FILTER:
+        return {
+            ...state,
+            locationType: action.locationType,
+        }
+    case SET_OPERATOR_FILTER: 
+        return {
+            ...state,
             selectedOperator: action.selectedOperator,
         }
     case CLEAR_FILTERS:

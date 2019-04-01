@@ -10,6 +10,7 @@ import {
     addMachineToLocation,
     addMachineToList,
     removeMachineFromList,
+    setMachineFilter,
 } from '../actions'
 import { PbmButton, WarningButton, Text } from '../components'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -95,10 +96,16 @@ class FindMachine extends React.PureComponent {
     }
 
     setSelected = machine => {
-        this.setState({ 
-            showModal: true,
-            machine,
-        })
+        if (this.props.navigation.getParam('machineFilter')) {
+            this.props.setMachineFilter(machine)
+            this.props.navigation.goBack()
+        }
+        else {
+            this.setState({ 
+                showModal: true,
+                machine,
+            })
+        }
     }
 
     addMachine = () => {
@@ -253,6 +260,7 @@ FindMachine.propTypes = {
     navigation: PropTypes.object,
     location: PropTypes.object,
     multiSelect: PropTypes.bool,
+    setMachineFilter: PropTypes.func,
 }
 
 const mapStateToProps = ({ location, machines }) => ({ location, machines })
@@ -260,5 +268,6 @@ const mapDispatchToProps = (dispatch) => ({
     addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
     addMachineToList: machine => dispatch(addMachineToList(machine)),
     removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
+    setMachineFilter: machine => dispatch(setMachineFilter(machine)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FindMachine)
