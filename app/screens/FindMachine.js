@@ -18,7 +18,7 @@ import { FlatList } from 'react-native-gesture-handler'
 var DismissKeyboard = require('dismissKeyboard')
 
 const getDisplayText = machine => (
-    <Text style={{fontSize: 16}}>
+    <Text style={{fontSize: 18}}>
         <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
         <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
@@ -32,9 +32,9 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         return (
             <TouchableOpacity onPress={this._onPress}>
-                <View style={{display: 'flex', flexDirection: 'row'}}>
-                    {getDisplayText(this.props.machine)}
-                    {this.props.selected ? <MaterialIcons name='cancel' size={15} color="#4b5862" /> : null}
+                <View style={{display: 'flex', flexDirection: 'row', padding: 8}}>
+                    <Text style={{fontSize:18}}>{getDisplayText(this.props.machine)}</Text>
+                    {this.props.selected ? <MaterialIcons name='cancel' size={18} color="#4b5862" style={{paddingTop:3,paddingLeft:5}} /> : null}
                 </View>    
             </TouchableOpacity>
         )
@@ -70,7 +70,7 @@ class FindMachine extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
-            title: <Text>{`Select Machine to Add`}</Text>,
+            title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
@@ -119,8 +119,8 @@ class FindMachine extends React.PureComponent {
         <TouchableOpacity                           
             onPress={() => this.setSelected(machine.item)}
         >
-            <View>
-                {getDisplayText(machine.item)}
+            <View style={{padding:8}}>
+                <Text style={{fontSize:18}}>{getDisplayText(machine.item)}</Text>
             </View>    
         </TouchableOpacity>
     )
@@ -203,23 +203,21 @@ class FindMachine extends React.PureComponent {
                     containerStyle={{backgroundColor:'#97a5af'}}
                 />
                 {multiSelect ? 
-                    <View>
+                    <View style={{alignItems:'center',marginTop:5}}>
                         {machineList.length === 0 ? <Text>Select Machines to Add</Text> :
                             <View style={{display: 'flex', flexDirection: 'row'}}>
-                                <Text>{`Add ${machineList.length} machine${machineList.length > 1 ? 's' : ''}`}</Text>
-                                <MaterialCommunityIcons 
-                                    name='plus' style={s.plusButton} 
-                                    onPress={() => this.props.navigation.goBack()}
-                                />
+                                <Text>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
                             </View>
                         }
                     </View> : null
                 }
-                <FlatList
-                    data={this.state.machines}
-                    renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
-                    keyExtractor={this.keyExtractor}
-                />
+                <ScrollView keyboardDismissMode="on-drag">
+                    <FlatList
+                        data={this.state.machines}
+                        renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
+                        keyExtractor={this.keyExtractor}
+                    />
+                </ScrollView>
             </View>)
     }
 }
