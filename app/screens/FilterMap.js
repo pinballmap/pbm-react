@@ -7,6 +7,10 @@ import { HeaderBackButton } from 'react-navigation'
 import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
 import { 
     setFilters,
+    updateNumMachinesSelected,
+    selectedLocationTypeFilter,
+    selectedOperatorTypeFilter,
+    clearFilters,
 } from '../actions'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
@@ -14,18 +18,13 @@ class FilterMap extends Component {
     constructor(props){
         super(props)
 
-        const { machineId, locationType, selectedOperator, numMachines } = this.props.query
         this.state ={ 
             isLoading: true,
-            selectedMachine: machineId,
-            selectedLocationType: locationType,
-            selectedOperator,
-            selectedNumMachines: this.getIdx(numMachines),
             showSelectMachineModal: false,
             showSelectLocationTypeModal: false,
             showSelectOperatorModal: false, 
             originalOperator: null,
-            originalLocationType: null,
+            selectedLocationType: null,
             originalMachine: null,
         }
     }
@@ -35,15 +34,15 @@ class FilterMap extends Component {
           headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
           title: 'Filter Results',
           headerStyle: {
-            backgroundColor:'#f5fbff',
-            ...ifIphoneX({
-                paddingTop: 30,
-                height: 60
-            }, {
-                paddingTop: 0
-            })            
-        },
-        headerTintColor: '#4b5862'
+              backgroundColor:'#f5fbff',
+              ...ifIphoneX({
+                  paddingTop: 30,
+                  height: 60
+              }, {
+                  paddingTop: 0
+              })            
+          },
+          headerTintColor: '#4b5862'
       }
   };
 
@@ -78,94 +77,44 @@ class FilterMap extends Component {
   }
 
   updateNumMachinesSelected = idx => {
-      this.setState({ selectedNumMachines: idx })
-  }
-  
-  selectingMachine = () => {
-      this.setState({ showSelectMachineModal: true, originalMachine: this.state.selectedMachine })
+      this.props.updateNumMachinesSelected(this.getNumMachines(idx))
   }
 
   selectingLocationType = () => {
-      this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType})
+      this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.props.query.locationType})
   }
 
   selectingOperator = () => {
-      this.setState({ showSelectOperatorModal: true, originalOperator: this.state.selectedOperator})
-  }
-
-  clearFilters = () => {
-      this.setState({
-          selectedMachine: '',
-          selectedLocationType: '',
-          selectedOperator: '',
-          selectedNumMachines: 0,
-      })
-  }
-
-  componentWillUnmount() {
-      const { selectedMachine, selectedLocationType, selectedNumMachines, selectedOperator} = this.state
-      const numMachines = this.getNumMachines(selectedNumMachines)
-      this.props.setFilters(selectedMachine, selectedLocationType, numMachines, selectedOperator)
+      this.setState({ showSelectOperatorModal: true, originalOperator: this.props.query.selectedOperator})
   }
 
   render(){
       const { 
-          selectedMachine, 
-          selectedLocationType, 
-          selectedOperator, 
-          selectedNumMachines, 
-          showSelectMachineModal, 
           showSelectLocationTypeModal, 
           showSelectOperatorModal,
-          originalMachine,
           originalLocationType,
           originalOperator,
       } = this.state
-      const machines = [{name: 'All', id: ''}].concat(this.props.machines.machines.sort((machineA, machineB) => {
-          return machineA.name < machineB.name ? -1 : machineA.name === machineB.name ? 0 : 1
-      }))
-      const machineName = machines.find(machine => machine.id === selectedMachine).name
+      const { machine, numMachines, locationType, selectedOperator } = this.props.query
 
       const locationTypes = [{name: 'All', id: ''}].concat(this.props.locations.locationTypes.sort((locationA, locationB) => {
           return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
       }))
-      const locationTypeName = locationTypes.find(location => location.id === selectedLocationType).name
+      const locationTypeName = locationTypes.find(location => location.id === locationType).name
 
       const operators =  [{name: 'All', id: ''}].concat(this.props.operators.operators)
       const operatorName = operators.find(operator => operator.id === selectedOperator).name
-
-      const filterSelected = selectedMachine !== '' || selectedLocationType !== '' || selectedOperator !== '' || selectedNumMachines !== 0 ? true : false
+      const filterSelected = machine !== {} || locationType !== '' || selectedOperator !== '' || numMachines !== 0 ? true : false
     
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
-              <ConfirmationModal 
-                  visible={showSelectMachineModal}
-              >
-                  <ScrollView>
-                      <Picker 
-                          selectedValue={selectedMachine}
-                          onValueChange={itemValue => this.setState({ selectedMachine: itemValue })}>
-                          {machines.map(m => (
-                              <Picker.Item label={m.name} value={m.id} key={m.id} />
-                          ))}
-                      </Picker>
-                  </ScrollView>
-                  <PbmButton
-                      title={'OK'}
-                      onPress={() => this.setState({ showSelectMachineModal: false, originalMachine: null })}
-                  />
-                  <WarningButton 
-                      title={'Cancel'}
-                      onPress={() => this.setState({ showSelectMachineModal: false, selectedMachine: originalMachine, originalMachine: null })}
-                  />
-              </ConfirmationModal>
               <ConfirmationModal 
                   visible={showSelectLocationTypeModal}
               >
                   <ScrollView>
                       <Picker 
-                          selectedValue={selectedLocationType}
-                          onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                          selectedValue={locationType}
+                          onValueChange={selectedLocationType => this.props.selectedLocationTypeFilter(selectedLocationType)}>
                           {locationTypes.map(m => (
                               <Picker.Item label={m.name} value={m.id} key={m.id} />
                           ))}
@@ -177,7 +126,10 @@ class FilterMap extends Component {
                   />
                   <WarningButton 
                       title={'Cancel'}
-                      onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: originalLocationType, originalLocationType: null })}
+                      onPress={() => {
+                          this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })
+                          this.props.selectedLocationTypeFilter(originalLocationType)
+                      }}
                   />
               </ConfirmationModal>
               <ConfirmationModal 
@@ -186,7 +138,7 @@ class FilterMap extends Component {
                   <ScrollView>
                       <Picker 
                           selectedValue={selectedOperator}
-                          onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
+                          onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
                           {operators.map(m => (
                               <Picker.Item label={m.name} value={m.id} key={m.id} />
                           ))}
@@ -198,28 +150,22 @@ class FilterMap extends Component {
                   />
                   <WarningButton 
                       title={'Cancel'}
-                      onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperator: originalOperator, originalOperator: null })}
+                      onPress={() => {
+                          this.setState({ showSelectOperatorModal: false, originalOperator: null })
+                          this.props.selectedOperatorTypeFilter(originalOperator)
+                      }}
                   />
               </ConfirmationModal>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
-              {Platform.OS === "ios" ? 
-                  <DropDownButton
-                      title={machineName}
-                      onPress={() => this.selectingMachine()}
-                  /> : 
-                  <Picker style={[s.border,s.whitebg]}
-                      selectedValue={selectedMachine}
-                      onValueChange={(itemValue) => this.setState({ selectedMachine: itemValue })}>
-                      {machines.map(m => (
-                          <Picker.Item label={m.name} value={m.id} key={m.id} />
-                      ))}
-                  </Picker>
-              }
+              <DropDownButton
+                  title={machine && machine.name ? machine.name : 'All'}
+                  onPress={() => this.props.navigation.navigate('FindMachine', {machineFilter: true})}
+              /> 
               <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateNumMachinesSelected}
-                  selectedIndex={selectedNumMachines}
+                  selectedIndex={this.getIdx(numMachines)}
                   buttons={['All', '2+', '3+', '4+', '5+']}
                   containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
                   selectedButtonStyle={s.buttonStyle}
@@ -232,8 +178,8 @@ class FilterMap extends Component {
                       onPress={() => this.selectingLocationType()}
                   /> : 
                   <Picker style={[s.border,s.whitebg]}
-                      selectedValue={selectedLocationType}
-                      onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                      selectedValue={locationType}
+                      onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
                       {locationTypes.map(m => (
                           <Picker.Item label={m.name} value={m.id} key={m.id} />
                       ))}
@@ -248,7 +194,7 @@ class FilterMap extends Component {
                   <Picker 
                       style={[s.border,s.whitebg]}
                       selectedValue={selectedOperator}
-                      onValueChange={itemValue => this.setState({ selectedOperator: itemValue })}>
+                      onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
                       {operators.map(m => (
                           <Picker.Item label={m.name} value={m.id} key={m.id} />
                       ))}
@@ -257,7 +203,7 @@ class FilterMap extends Component {
               {filterSelected ? 
                   <WarningButton
                       title={'Clear Filters'}
-                      onPress={() => this.clearFilters()}
+                      onPress={() => this.props.clearFilters()}
                   /> : null
               }  
           </ScrollView>
@@ -316,11 +262,20 @@ FilterMap.propTypes = {
     machines: PropTypes.object, 
     locations: PropTypes.object,
     operators: PropTypes.object,
+    updateNumMachinesSelected: PropTypes.func,
+    clearFilters: PropTypes.func,
+    navigation: PropTypes.object,
+    selectedOperatorTypeFilter: PropTypes.func,
+    selectedLocationTypeFilter: PropTypes.func,
 }
 
 const mapStateToProps = ({ locations, machines, query, operators }) => ({ locations, machines, query, operators })
 const mapDispatchToProps = (dispatch) => ({
-    setFilters: (machine, location, numMachines, operator) => dispatch(setFilters(machine, location, numMachines, operator))
+    setFilters: (machine, location, numMachines, operator) => dispatch(setFilters(machine, location, numMachines, operator)),
+    updateNumMachinesSelected: idx => dispatch(updateNumMachinesSelected(idx)), 
+    selectedLocationTypeFilter: type => dispatch(selectedLocationTypeFilter(type)),
+    selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
+    clearFilters: () => dispatch(clearFilters()), 
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
 

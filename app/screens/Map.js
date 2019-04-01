@@ -197,30 +197,31 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                <View style={s.filter}>
-                    {fontAwesomeLoaded ? <Icon
-                        raised
-                        name='location-arrow'
-                        type='font-awesome'
-                        color='#4b5862'
-                        size={20}
-                        containerStyle={Platform.OS === "ios" ? {position:'absolute'} : {}}
-                        onPress={() => {
-                            locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
-                        }}
-                    /> : null}
-                </View>                
-                {filterApplied ? 
-                    <View style={s.filter}>
-                        <Button 
-                            title={'Clear Filter'} 
-                            onPress={() => this.props.clearFilters()}
-                            clear={true}
-                            containerStyle={{width:100,position:'absolute',right:0}}
-                            titleStyle={{fontSize:14,color:"#F53240"}}
-                        />
-                    </View> : null                                    
-                }
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', zIndex: 10}}>
+                    <View>
+                        {fontAwesomeLoaded ? <Icon
+                            raised
+                            name='location-arrow'
+                            type='font-awesome'
+                            color='#4b5862'
+                            size={20}
+                            onPress={() => {
+                                locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
+                            }}
+                        /> : null}
+                    </View>                
+                    <View>
+                        {filterApplied ?     
+                            <Button 
+                                title={'Clear Filter'} 
+                                onPress={() => this.props.clearFilters()}
+                                clear={true}
+                                titleStyle={{fontSize:14,color:"#F53240"}}
+                            />
+                            : null                                    
+                        }
+                    </View>
+                </View>
                 {isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
                     <MapView
@@ -281,9 +282,6 @@ const s = StyleSheet.create({
         zIndex: 10, 
         fontSize: 14,
         marginTop: 5
-    },
-    filter: {
-        zIndex: 10, 
     },
     confirmText: {
         textAlign: 'center',
