@@ -9,6 +9,7 @@ import DropDownButton from './DropDownButton'
 import Text from './PbmText'
 import FilterRecentActivity from './FilterRecentActivity'
 import Search from './Search'
+import DrawerMenu from './DrawerMenu'
 
 export {
     LocationCard,
@@ -22,4 +23,5 @@ export {
     Text,
     FilterRecentActivity,
     Search,
+    DrawerMenu,
 }
