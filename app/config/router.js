@@ -1,7 +1,7 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import FilterMap from '../screens/FilterMap.js'
@@ -24,6 +24,8 @@ import Events from '../screens/Events'
 import Blog from '../screens/Blog'
 import FindMachine from '../screens/FindMachine'
 import EditLocationDetails from '../screens/EditLocationDetails'
+
+import { DrawerMenu } from '../components'
 
 const TabNav = TabNavigator({
     Map: { screen: Map },
@@ -131,6 +133,9 @@ export const PbmStack = DrawerNavigator({
     Blog: { screen: Blog },
 },
 {
+    contentComponent: DrawerMenu,
+    drawerPosition: 'right',
+    drawerWidth: 250,
     contentOptions: {
         activeTintColor: '#000e18',
         inactiveTintColor: '#6a7d8a',
@@ -143,8 +148,6 @@ export const PbmStack = DrawerNavigator({
             })
         }
     },
-    drawerPosition: 'right',
-    drawerWidth: 250,
 })
 
 const s = StyleSheet.create({ 
