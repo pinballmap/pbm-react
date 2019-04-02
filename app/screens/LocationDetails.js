@@ -207,11 +207,11 @@ class LocationDetails extends Component {
                         />
                         {this.state.buttonIndex === 0 ?
                             <View>
-                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_username  && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_user_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                 <View>
                                     <PbmButton
                                         onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
-                                        icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                        icon={<MaterialCommunityIcons name='plus-circle-outline' style={s.plusButton} />}
                                         title={loggedIn ? 'Add Machine' : 'Login to Add Machine'}
                                         accessibilityLabel="Add Machine"
                                     />
@@ -222,11 +222,11 @@ class LocationDetails extends Component {
                                         raised
                                         buttonStyle={s.confirmButton}
                                         titleStyle={{
-                                            color:"#000e18",
+                                            color:"#4b5862",
                                             fontSize:16
                                         }}
-                                        style={{borderRadius: 5}}
-                                        containerStyle={{marginTop:5,marginBottom:10,marginRight:25,marginLeft:25}}
+                                        style={{borderRadius: 50}}
+                                        containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
                                     />
                                 </View>
                                 {sortedMachines.map(machine => (
@@ -367,7 +367,10 @@ const s = StyleSheet.create({
     confirmButton: {
         backgroundColor:"#ffffff",
         width: '100%',
-        elevation: 0
+        elevation: 0,
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: '#f2f4f5'
     },
     condition: {
         marginTop: 10
@@ -381,10 +384,11 @@ const s = StyleSheet.create({
     },
     lastUpdated: {
         textAlign: 'center',
+        marginTop: 5
     },
     plusButton: {
-        color: "#F53240",
-        fontSize: 24
+        color: "#6a7d8a",
+        fontSize: 24,
     },
     confirmText: {
         textAlign: 'center',
@@ -421,6 +425,18 @@ const s = StyleSheet.create({
         borderColor: '#4b5862',
         borderRadius: 5,
         elevation: 0
+    },
+    margin15: {
+        marginLeft:15,
+        marginRight:15,
+        marginTop:0,
+        marginBottom:10
+    },
+    margin25: {
+        marginLeft:25,
+        marginRight:25,
+        marginTop:0,
+        marginBottom:10
     },
 })
 
