@@ -99,7 +99,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>                      
-                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                        <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                                 <TextInput
@@ -132,7 +132,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                        <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 

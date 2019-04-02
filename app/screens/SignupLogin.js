@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Image, StyleSheet, Text, View, ImageBackground } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, ScrollView, Text, View, ImageBackground, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
 import { 
     loginLater,
@@ -13,6 +13,8 @@ import {
 import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
 import "../config/globals.js"
+
+let deviceHeight = Dimensions.get('window').height
 
 export class SignupLogin extends Component {
     constructor(props){
@@ -63,39 +65,41 @@ export class SignupLogin extends Component {
         
         if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
             return (
-                <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-                    <View style={s.mask}>
-                        <View style={s.logoWrapper}>
-                            <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                <ScrollView>
+                    <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
+                        <View style={[s.mask,,s.justify]}>
+                            <View style={s.logoWrapper}>
+                                <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                            </View>
+                            <View style={s.outerBorder}>
+                                <View style={s.textBg}>
+                                    <Text style={{fontSize:18,textAlign:"center"}}>
+                                    To show you pinball machines near you, you’ll need to enable location services for this app.
+                                    </Text>
+                                </View>               
+                            </View>
+                            <View style={{padding:15}}>
+                                <Button
+                                //Clear error state to allow user to proceed either way
+                                    onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
+                                    raised
+                                    buttonStyle={s.buttonBlue}
+                                    titleStyle={s.titleStyle}
+                                    title="Enable Location Services"
+                                    accessibilityLabel="Enable Location Services"
+                                    containerStyle={{borderRadius:50}}
+                                    style={{borderRadius: 50}}
+                                />                    
+                            </View>
                         </View>
-                        <View style={s.outerBorder}>
-                            <View style={s.textBg}>
-                                <Text style={{fontSize:18,textAlign:"center"}}>
-                                To show you pinball machines near you, you’ll need to enable location services for this app.
-                                </Text>
-                            </View>               
-                        </View>
-                        <View style={{padding:15}}>
-                            <Button
-                            //Clear error state to allow user to proceed either way
-                                onPress={ () => this.setState({ showTurnOnLocationServices: false}) }
-                                raised
-                                buttonStyle={s.buttonBlue}
-                                titleStyle={s.titleStyle}
-                                title="Enable Location Services"
-                                accessibilityLabel="Enable Location Services"
-                                containerStyle={{borderRadius:50}}
-                                style={{borderRadius: 50}}
-                            />                    
-                        </View>
-                    </View>
-                </ImageBackground>
+                    </ImageBackground>
+                </ScrollView>
             )
         }
         
         return(
             <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-                <View style={s.mask}>
+                <View style={[s.mask,s.justify]}>
                     <View style={s.logoWrapper}>
                         <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
                     </View>
@@ -201,6 +205,11 @@ const s = StyleSheet.create({
     titleStyle: {
         color:"#000e18",
         fontSize:18
+    },
+    justify: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height:deviceHeight
     }
 })
 

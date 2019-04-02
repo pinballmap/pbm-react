@@ -83,7 +83,7 @@ class Search extends Component {
                                 autoFocus
                             />
                         </View>
-                        <ScrollView style={{paddingTop: 3}}>
+                        <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled">
                             {foundCities ? 
                                 foundCities.map(location => 
                                     (<TouchableOpacity 
