@@ -28,7 +28,7 @@ class MachineDetails extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
             headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />,
@@ -161,7 +161,7 @@ class MachineDetails extends Component {
                 <ScrollView>
                     <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
                     <PbmButton
-                        title={loggedIn ? 'ADD A NEW CONDITION' : 'Login to add a machine condition'}
+                        title={loggedIn ? 'Add a New Condition' : 'Login to add a machine condition'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
@@ -183,7 +183,7 @@ class MachineDetails extends Component {
                         }
                     </View>
                     <PbmButton 
-                        title={loggedIn ? 'ADD YOUR SCORE' : 'Login to add your high score'}
+                        title={loggedIn ? 'Add Your Score' : 'Login to add your high score'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddScoreModal: true }) :
                             () => this.props.navigation.navigate('Login')

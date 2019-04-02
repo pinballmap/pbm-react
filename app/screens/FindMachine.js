@@ -69,7 +69,7 @@ class FindMachine extends React.PureComponent {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard() }} />,
             title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
