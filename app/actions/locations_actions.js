@@ -51,7 +51,6 @@ export const getLocationsByCity = (city) => dispatch => {
         .catch(err => dispatch(getLocationsFailure(err)))
 }
   
-  
 export const getLocationsSuccess = (data) => {
     return {
         type: FETCHING_LOCATIONS_SUCCESS,
