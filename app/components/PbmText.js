@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text } from 'react-native'
+import { 
+    StyleSheet, 
+    Text 
+} from 'react-native'
 
 class PbmText extends Component {
     render() {

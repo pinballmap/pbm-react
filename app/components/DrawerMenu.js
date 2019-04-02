@@ -2,9 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import PropTypes from 'prop-types'
 import { DrawerItems } from 'react-navigation'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { 
+    Text, 
+    TouchableOpacity, 
+    View,
+} from 'react-native'
 import { logout } from '../actions'
-import { ConfirmationModal, PbmButton, WarningButton } from './'
+import { 
+    ConfirmationModal, 
+    PbmButton, 
+    WarningButton 
+} from './'
 
 class DrawerMenu extends Component {
     state = {

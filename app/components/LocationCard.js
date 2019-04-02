@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native'
+import { 
+    Platform,
+    StyleSheet,
+    Text, 
+    TouchableOpacity, 
+    View, 
+} from 'react-native'
 import { Card } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 

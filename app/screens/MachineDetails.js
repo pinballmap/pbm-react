@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Dimensions, 
+    Keyboard,
+    Linking, 
+    Modal, 
+    ScrollView, 
+    StyleSheet, 
+    TextInput, 
+    TouchableWithoutFeedback, 
+    View, 
+} from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'

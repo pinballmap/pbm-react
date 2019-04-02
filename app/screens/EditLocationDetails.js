@@ -2,7 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Keyboard,
+    Modal, 
+    Picker, 
+    Platform, 
+    SafeAreaView, 
+    ScrollView, 
+    StyleSheet, 
+    TextInput, 
+    TouchableWithoutFeedback, 
+    View, 
+} from 'react-native'
 import { 
     ConfirmationModal, 
     DropDownButton, 

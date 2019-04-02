@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, View, StyleSheet } from 'react-native'
+import { 
+    Modal,
+    StyleSheet, 
+    View, 
+} from 'react-native'
 
 class ConfirmationModal extends Component {
     render(){

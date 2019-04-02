@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-native'
+import { 
+    Dimensions,
+    Image, 
+    Linking, 
+    StyleSheet, 
+    ScrollView, 
+    View, 
+} from 'react-native'
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'

@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Text, View, StyleSheet } from 'react-native'
+import { 
+    Button,
+    StyleSheet, 
+    Text, 
+    View, 
+} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 

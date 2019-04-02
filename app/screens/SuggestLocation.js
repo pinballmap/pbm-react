@@ -1,7 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Keyboard } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Keyboard,
+    Modal, 
+    Picker, 
+    Platform, 
+    SafeAreaView, 
+    ScrollView, 
+    StyleSheet, 
+    TextInput, 
+    TouchableWithoutFeedback, 
+    View, 
+} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'

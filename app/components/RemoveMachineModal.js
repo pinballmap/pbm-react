@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Text } from 'react-native'
 import { removeMachineFromLocation } from '../actions/location_actions'
-import { ConfirmationModal, PbmButton, WarningButton } from './'
+import { 
+    ConfirmationModal, 
+    PbmButton, 
+    WarningButton 
+} from './'
 
 class RemoveMachineModal extends Component {
     removeLmx = (curLmx, location_id) => {

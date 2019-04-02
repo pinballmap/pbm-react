@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from 'throttle-debounce'
-import { Modal, Text, TouchableOpacity, View, Dimensions, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
+import { 
+    Dimensions, 
+    Modal,
+    ScrollView,
+    StyleSheet, 
+    Text, 
+    TouchableOpacity, 
+    View, 
+} from 'react-native'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'

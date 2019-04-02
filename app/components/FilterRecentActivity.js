@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Text, View, StyleSheet } from 'react-native'
+import { 
+    StyleSheet,
+    Text, 
+    View, 
+} from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { ConfirmationModal } from './'
