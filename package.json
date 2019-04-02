@@ -17,6 +17,7 @@
     "react-navigation": "^1.5.12",
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
