@@ -62,7 +62,7 @@ class SuggestLocation extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialIcons name='add-location' style={[s.drawerIcon]} />
             ),
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
             title: 'Suggest Location',
             headerStyle: {
                 backgroundColor:'#f5fbff',
