@@ -43,11 +43,11 @@ class RecentActivity extends Component {
         case 'new_condition':
             return <MaterialCommunityIcons name='comment-text' size={28} color='#458284' />
         case 'remove_machine':
-            return <MaterialCommunityIcons name='minus-box' size={28} color='#854444' />
+            return <MaterialCommunityIcons name='minus-box' size={28} color='#973232' />
         case 'new_msx':
             return <MaterialCommunityIcons name='numeric' size={28} color='#986c31' />
         case 'confirm_location':
-            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#7a4f71' />
+            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#874278' />
         default:
             return null
         }
