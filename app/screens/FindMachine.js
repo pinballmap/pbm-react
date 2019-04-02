@@ -162,9 +162,9 @@ class FindMachine extends React.PureComponent {
     }
 
     render() {
-        const { machineList } = this.props.location
+        const { machineList = [] } = this.props.location
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
-     
+        
         return (
             <View style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <Modal
