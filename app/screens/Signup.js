@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, View, ImageBackground, StyleSheet, ScrollView, TouchableWithoutFeedback, Dimensions } from 'react-native'
+import { Text, View, ImageBackground, StyleSheet, ScrollView, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
@@ -9,8 +9,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 let deviceHeight = Dimensions.get('window').height
-
-var DismissKeyboard = require('dismissKeyboard');
 
 class Signup extends Component {
     constructor(props) {
@@ -142,13 +140,13 @@ class Signup extends Component {
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                 <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                     <View style={s.mask}>
-                        <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={s.justify}>
                                 {this.state.errors && 
                                 <Text style={s.errorText}>
                                     {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
                                 </Text>
-                                    }
+                                }
                                 <Text style={s.bold}>Sign Up</Text>
                                 <Input 
                                     placeholder='Username'

@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, ImageBackground, View, ScrollView, StyleSheet, TouchableWithoutFeedback, Dimensions } from 'react-native'
+import { Text, ImageBackground, View, ScrollView, StyleSheet, TouchableWithoutFeedback, Dimensions, Keyboard} from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { login, loginLater } from '../actions/user_actions'
 import { getData } from '../config/request'
 
 let deviceHeight = Dimensions.get('window').height
-
-var DismissKeyboard = require('dismissKeyboard')
 
 class Login extends Component {
     constructor(props) {
@@ -62,7 +60,7 @@ class Login extends Component {
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                 <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>     
                     <View style={s.mask}>
-                        <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={s.justify}>
                                 {this.state.errors && 
                                         <Text style={s.errorText}>

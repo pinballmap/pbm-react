@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { 
     ConfirmationModal, 
     DropDownButton, 
@@ -12,8 +12,6 @@ import {
     Text 
 } from '../components'
 import { clearError, updateLocationDetails } from '../actions'
-
-const DismissKeyboard = require('dismissKeyboard')
 
 class EditLocationDetails extends Component {
     constructor(props) {
@@ -174,7 +172,7 @@ class EditLocationDetails extends Component {
                 </Modal>
                 {updatingLocationDetails ?  
                     <ActivityIndicator /> :
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text style={s.title}>Phone</Text>
                             <TextInput 

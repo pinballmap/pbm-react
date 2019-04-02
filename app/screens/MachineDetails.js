@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import { ActivityIndicator, Linking, Modal, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -21,8 +21,6 @@ import {
 }  from '../components'
 
 const moment = require('moment')
-
-var DismissKeyboard = require('dismissKeyboard')
 
 let deviceWidth = Dimensions.get('window').width
 let deviceHeight = Dimensions.get('window').height
@@ -108,7 +106,7 @@ class MachineDetails extends Component {
                     visible={this.state.showAddConditionModal}
                     onRequestClose={()=>{}}
                 >
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>                      
+                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
                         <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
@@ -141,7 +139,7 @@ class MachineDetails extends Component {
                     visible={this.state.showAddScoreModal}
                     onRequestClose={()=>{}}
                 >
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                         <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
