@@ -165,7 +165,7 @@ class SuggestLocation extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
-            <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
+            <ScrollView keyboardDismissMode="on-drag" style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 {!loggedIn ? 
                     <NotLoggedIn
                         title={'Suggest a New Location'}

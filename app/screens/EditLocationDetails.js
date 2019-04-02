@@ -80,7 +80,7 @@ class EditLocationDetails extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
-            <ScrollView style={{ flex: 1,backgroundColor:'#f5fbff' }}>
+            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" style={{ flex: 1,backgroundColor:'#f5fbff' }}>
                 <ConfirmationModal 
                     visible={this.state.showSelectLocationTypeModal}
                 >
