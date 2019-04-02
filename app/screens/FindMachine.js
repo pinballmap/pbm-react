@@ -247,7 +247,7 @@ const s = StyleSheet.create({
         marginRight: 10
     }, 
     plusButton: {
-        color: "#F53240",
+        color: "#6a7d8a",
         fontSize: 24
     },
 })
