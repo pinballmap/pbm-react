@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native'
+import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Keyboard } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -22,8 +22,6 @@ import {
 } from '../actions'
 import countries from '../utils/countries'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-
-const DismissKeyboard = require('dismissKeyboard')
 
 class SuggestLocation extends Component {
     constructor(props) {
@@ -328,7 +326,7 @@ class SuggestLocation extends Component {
                                         </SafeAreaView>
                             }
                         </Modal>
-                        <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
                                 <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                 <Text style={s.title}>Location Name</Text>

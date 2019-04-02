@@ -1,7 +1,7 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import FilterMap from '../screens/FilterMap.js'

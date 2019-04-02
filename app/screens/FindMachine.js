@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -18,8 +18,6 @@ import {
     Text,
     WarningButton, 
 } from '../components'
-
-var DismissKeyboard = require('dismissKeyboard')
 
 const getDisplayText = machine => (
     <Text style={{fontSize: 18}}>
@@ -175,7 +173,7 @@ class FindMachine extends React.PureComponent {
                     onRequestClose={()=>{}}
                     transparent={false}
                 >
-                    <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
+                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                         <ScrollView style={{paddingTop: 50,backgroundColor:'#f5fbff'}}>
                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
                             <PbmButton 
