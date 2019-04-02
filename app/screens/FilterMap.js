@@ -12,6 +12,13 @@ import {
     selectedOperatorTypeFilter,
     clearFilters,
 } from '../actions'
+import {
+    getLocationTypeName,
+    sortedLocationTypes,
+    sortedOperators,
+    getOperatorName,
+    filterSelected,
+} from '../selectors'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class FilterMap extends Component {
@@ -95,16 +102,16 @@ class FilterMap extends Component {
           originalLocationType,
           originalOperator,
       } = this.state
+      
+      const { 
+          locationTypes,
+          locationTypeName,
+          operators,
+          operatorName,
+          hasFilterSelected,
+      } = this.props
+
       const { machine, numMachines, locationType, selectedOperator } = this.props.query
-
-      const locationTypes = [{name: 'All', id: ''}].concat(this.props.locations.locationTypes.sort((locationA, locationB) => {
-          return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
-      }))
-      const locationTypeName = locationTypes.find(location => location.id === locationType).name
-
-      const operators =  [{name: 'All', id: ''}].concat(this.props.operators.operators)
-      const operatorName = operators.find(operator => operator.id === selectedOperator).name
-      const filterSelected = machine !== {} || locationType !== '' || selectedOperator !== '' || numMachines !== 0 ? true : false
     
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
@@ -200,7 +207,7 @@ class FilterMap extends Component {
                       ))}
                   </Picker> 
               }   
-              {filterSelected ? 
+              {hasFilterSelected ? 
                   <WarningButton
                       title={'Clear Filters'}
                       onPress={() => this.props.clearFilters()}
@@ -258,18 +265,36 @@ const s = StyleSheet.create({
 
 FilterMap.propTypes = {
     query: PropTypes.object,
-    setFilters: PropTypes.func,
-    machines: PropTypes.object, 
-    locations: PropTypes.object,
-    operators: PropTypes.object,
+    operators: PropTypes.array,
+    operatorName: PropTypes.string,
     updateNumMachinesSelected: PropTypes.func,
     clearFilters: PropTypes.func,
     navigation: PropTypes.object,
     selectedOperatorTypeFilter: PropTypes.func,
     selectedLocationTypeFilter: PropTypes.func,
+    locationTypes: PropTypes.array,
+    locationTypeName: PropTypes.string,
+    hasFilterSelected: PropTypes.bool,
 }
 
-const mapStateToProps = ({ locations, machines, query, operators }) => ({ locations, machines, query, operators })
+const mapStateToProps = (state) => {
+    const { query } = state
+    const locationTypes = sortedLocationTypes(state)
+    const locationTypeName = getLocationTypeName(state)
+    const operators = sortedOperators(state)
+    const operatorName = getOperatorName(state)
+    const hasFilterSelected = filterSelected(state)
+    
+    return { 
+        locationTypes,
+        locationTypeName,
+        query, 
+        operators,
+        operatorName, 
+        hasFilterSelected,
+    }
+}
+
 const mapDispatchToProps = (dispatch) => ({
     setFilters: (machine, location, numMachines, operator) => dispatch(setFilters(machine, location, numMachines, operator)),
     updateNumMachinesSelected: idx => dispatch(updateNumMachinesSelected(idx)), 
