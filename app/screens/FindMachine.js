@@ -5,7 +5,6 @@ import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, Touch
 import { SearchBar } from 'react-native-elements'
 import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     addMachineToLocation,
     addMachineToList,
@@ -246,10 +245,6 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10
     }, 
-    plusButton: {
-        color: "#F53240",
-        fontSize: 24
-    },
 })
 
 FindMachine.propTypes = {
