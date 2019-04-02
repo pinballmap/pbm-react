@@ -18,7 +18,7 @@ export const initialState = {
     lonDelta: null,
     machineId: '',
     locationType: '',
-    numMachines: '',
+    numMachines: 0,
     selectedOperator: '',
     selectedActivity: '',
     machine: {},
@@ -35,7 +35,6 @@ export default (state = initialState, action) => {
             lonDelta: action.lonDelta,
         }
     case SET_MACHINE_FILTER: {
-        console.log(action.machine.id)
         return {
             ...state,
             machineId: action.machine.id,
@@ -62,8 +61,9 @@ export default (state = initialState, action) => {
             ...state,
             machineId: '',
             locationType: '',
-            numMachines: '',
+            numMachines: 0,
             selectedOperator: '',
+            machine: {},
         }
     case SET_SELECTED_ACTIVITY_FILTER:
         return {
