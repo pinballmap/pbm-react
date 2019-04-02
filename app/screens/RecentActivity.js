@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Text, View, ScrollView, StyleSheet } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
-import { FilterRecentActivity } from '../components'
+import { 
+    FilterRecentActivity,
+    HeaderBackButton,
+} from '../components'
 import { clearActivityFilter } from '../actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -20,7 +22,7 @@ class RecentActivity extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
             headerStyle: {
                 backgroundColor:'#f5fbff',

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, ScrollView, Image, Linking, View, Dimensions } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
-import { Text } from '../components'
+import { 
+    HeaderBackButton,
+    Text 
+} from '../components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
@@ -16,7 +18,7 @@ class Podcast extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />
             ), 
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Podcast',
             headerStyle: {
                 backgroundColor:'#f5fbff',

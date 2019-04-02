@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, Modal, Picker, Platform, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal, 
     DropDownButton, 
+    HeaderBackButton,
     NotLoggedIn, 
     PbmButton, 
     WarningButton,
@@ -62,7 +62,7 @@ class SuggestLocation extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialIcons name='add-location' style={[s.drawerIcon]} />
             ),
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Suggest Location',
             headerStyle: {
                 backgroundColor:'#f5fbff',

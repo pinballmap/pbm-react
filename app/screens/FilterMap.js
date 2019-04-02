@@ -3,8 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Picker, View, StyleSheet, ScrollView, Platform } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
-import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    ConfirmationModal, 
+    DropDownButton, 
+    HeaderBackButton,
+    PbmButton, 
+    Text,
+    WarningButton, 
+} from '../components'
 import { 
     setFilters,
     updateNumMachinesSelected,
@@ -19,7 +26,6 @@ import {
     getOperatorName,
     filterSelected,
 } from '../selectors'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class FilterMap extends Component {
     constructor(props){
@@ -38,7 +44,7 @@ class FilterMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
       return {
-          headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
+          headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
           title: 'Filter Results',
           headerStyle: {
               backgroundColor:'#f5fbff',

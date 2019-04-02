@@ -3,12 +3,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ActivityIndicator, View, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { HeaderBackButton } from 'react-navigation'
 import { Button, ListItem } from 'react-native-elements'
-import { ConfirmationModal, NotLoggedIn, PbmButton, WarningButton, Text } from '../components'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    ConfirmationModal, 
+    HeaderBackButton,
+    NotLoggedIn, 
+    PbmButton, 
+    Text,
+    WarningButton
+} from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -23,7 +30,7 @@ class UserProfile extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Profile',
             headerStyle: {
                 backgroundColor:'#f5fbff',

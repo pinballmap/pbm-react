@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { HeaderBackButton } from 'react-navigation'
-import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { ConfirmationModal, DropDownButton, PbmButton, WarningButton, Text } from '../components'
-import { clearError, updateLocationDetails } from '../actions'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { ActivityIndicator, Modal, Picker, Platform, TextInput, View, ScrollView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { 
+    ConfirmationModal, 
+    DropDownButton, 
+    HeaderBackButton,
+    PbmButton, 
+    WarningButton, 
+    Text 
+} from '../components'
+import { clearError, updateLocationDetails } from '../actions'
 
 const DismissKeyboard = require('dismissKeyboard')
 
@@ -35,7 +41,7 @@ class EditLocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('name')}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',

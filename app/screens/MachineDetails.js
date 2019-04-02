@@ -3,12 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { ActivityIndicator, Linking, Modal, TextInput, View, StyleSheet, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
-import { addMachineCondition, addMachineScore, removeMachineFromLocation } from '../actions/location_actions'
-import { formatNumWithCommas } from '../utils/utilityFunctions'
-import { PbmButton, RemoveMachine, RemoveMachineModal, WarningButton, Text }  from '../components'
 import { EvilIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    addMachineCondition, 
+    addMachineScore, 
+    removeMachineFromLocation 
+} from '../actions/location_actions'
+import { formatNumWithCommas } from '../utils/utilityFunctions'
+import { 
+    HeaderBackButton,
+    PbmButton, 
+    RemoveMachine, 
+    RemoveMachineModal, 
+    Text,
+    WarningButton, 
+}  from '../components'
 
 const moment = require('moment')
 
@@ -28,7 +38,7 @@ class MachineDetails extends Component {
     
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
             headerTitleStyle: {width:deviceWidth - 90},
             headerRight: <RemoveMachine />,

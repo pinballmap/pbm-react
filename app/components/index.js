@@ -10,6 +10,7 @@ import Text from './PbmText'
 import FilterRecentActivity from './FilterRecentActivity'
 import Search from './Search'
 import DrawerMenu from './DrawerMenu'
+import HeaderBackButton from './HeaderBackButton'
 
 export {
     LocationCard,
@@ -24,4 +25,5 @@ export {
     FilterRecentActivity,
     Search,
     DrawerMenu,
+    HeaderBackButton,
 }

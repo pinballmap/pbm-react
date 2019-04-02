@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Text, View, StyleSheet } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { HeaderBackButton } from '../components'
 
 class Blog extends Component {
   
@@ -12,7 +12,7 @@ class Blog extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />
             ), 
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Blog',
             headerStyle: {
                 backgroundColor:'#f5fbff',                
