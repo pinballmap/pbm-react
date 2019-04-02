@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Image, StyleSheet, ScrollView, Text, View, ImageBackground, Dimensions } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Dimensions,
+    Image, 
+    ImageBackground, 
+    ScrollView,
+    StyleSheet, 
+    Text, 
+    View, 
+} from 'react-native'
 import { Button } from 'react-native-elements'
 import { 
     loginLater,

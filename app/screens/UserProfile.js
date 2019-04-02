@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, View, StyleSheet, ScrollView, Dimensions } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Dimensions,
+    ScrollView, 
+    StyleSheet, 
+    View, 
+} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { Button, ListItem } from 'react-native-elements'
 import { ifIphoneX } from 'react-native-iphone-x-helper'

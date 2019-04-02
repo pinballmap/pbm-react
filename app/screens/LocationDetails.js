@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, TouchableOpacity, View, Image, Dimensions } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Dimensions,
+    Image, 
+    Linking,
+    Modal, 
+    ScrollView, 
+    StyleSheet, 
+    TouchableOpacity, 
+    View, 
+} from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'

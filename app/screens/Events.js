@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Text, View, StyleSheet } from 'react-native'
+import { 
+    Button, 
+    StyleSheet,
+    Text, 
+    View, 
+} from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'

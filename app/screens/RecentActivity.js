@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ActivityIndicator, Text, View, ScrollView, StyleSheet } from 'react-native'
+import { 
+    ActivityIndicator, 
+    Text, 
+    ScrollView,
+    StyleSheet,
+    View,  
+} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { MaterialCommunityIcons } from '@expo/vector-icons'

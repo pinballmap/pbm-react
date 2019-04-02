@@ -1,7 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { 
+    Keyboard,
+    Modal, 
+    ScrollView, 
+    StyleSheet, 
+    TextInput, 
+    TouchableOpacity, 
+    TouchableWithoutFeedback, 
+    View, 
+} from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'

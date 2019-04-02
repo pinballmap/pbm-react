@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Text, View, ImageBackground, StyleSheet, ScrollView, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native'
+import { 
+    Dimensions, 
+    ImageBackground, 
+    Keyboard,
+    ScrollView, 
+    StyleSheet, 
+    Text, 
+    TouchableWithoutFeedback, 
+    View, 
+} from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'

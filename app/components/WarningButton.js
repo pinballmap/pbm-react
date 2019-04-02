@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Dimensions } from 'react-native'
+import { 
+    Dimensions, 
+    StyleSheet, 
+} from 'react-native'
 import { Button } from 'react-native-elements'
 
 let deviceWidth = Dimensions.get('window').width

@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, ScrollView, Image, Linking, View, Dimensions } from 'react-native'
+import { 
+    Dimensions,
+    Image, 
+    Linking, 
+    ScrollView,
+    StyleSheet, 
+    View,
+} from 'react-native'
 import { 
     HeaderBackButton,
     Text 

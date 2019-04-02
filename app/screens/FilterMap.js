@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Picker, View, StyleSheet, ScrollView, Platform } from 'react-native'
+import { 
+    Picker, 
+    Platform,
+    ScrollView, 
+    StyleSheet,
+    View,     
+} from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 

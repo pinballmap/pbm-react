@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { 
+    FlatList,
+    StyleSheet, 
+    View, 
+} from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'

@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View } from 'react-native'
+import { 
+    StyleSheet, 
+    Text, 
+    View,
+} from 'react-native'
 import { PbmButton } from './'
 
 class NotLoggedIn extends Component {

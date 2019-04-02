@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
+import {     
+    SafeAreaView,
+    ScrollView, 
+    StyleSheet, 
+    View, 
+} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
