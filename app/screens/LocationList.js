@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { FlatList, View, StyleSheet } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
-import { LocationCard, Text } from '../components'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    HeaderBackButton,
+    LocationCard, 
+    Text 
+} from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const moment = require('moment')
 
@@ -22,7 +25,7 @@ export class LocationList extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} title="Map" />,
+            headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
             title: 'LocationList',
             headerStyle: {
                 backgroundColor:'#f5fbff',                

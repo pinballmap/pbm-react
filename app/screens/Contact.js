@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Text, View, StyleSheet } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { HeaderBackButton } from '../components'
 
 class Contact extends Component {
   
@@ -13,7 +13,7 @@ class Contact extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialCommunityIcons name='email-outline' style={[s.drawerIcon]} />
             ), 
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Contact',
             headerStyle: {
                 backgroundColor:'#f5fbff',

@@ -4,15 +4,15 @@ import { StyleSheet, Text } from 'react-native'
 
 class PbmText extends Component {
     render() {
-      return (
-        <Text style={[s.text, this.props.style]}>
-          {this.props.children}
-        </Text>
-      )
+        return (
+            <Text style={[s.text, this.props.style]}>
+                {this.props.children}
+            </Text>
+        )
     }
-  }
+}
 
-children: PropTypes.oneOfType([
+PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,
 ])

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, ScrollView, Image, Linking, Dimensions } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { HeaderBackButton } from '../components'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -22,7 +22,7 @@ class About extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialIcons name='info-outline' style={[s.drawerIcon]} />
             ),
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'About',
             headerStyle: {
                 backgroundColor:'#f5fbff',

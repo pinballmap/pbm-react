@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { ActivityIndicator, Linking, Modal, ScrollView, StyleSheet, TouchableOpacity, View, Image, Dimensions } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { ConfirmationModal, PbmButton, Text } from '../components'
+import { 
+    ConfirmationModal, 
+    HeaderBackButton,
+    PbmButton,
+    Text,
+} from '../components'
 import { 
     addFavoriteLocation,
     clearError,
@@ -38,7 +42,7 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
             headerTitleStyle: {width:deviceWidth - 100},
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?

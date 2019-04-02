@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
-import { HeaderBackButton } from 'react-navigation'
-import { Text } from '../components'
 import { FontAwesome } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    HeaderBackButton,
+    Text, 
+} from '../components'
 
 class FAQ extends Component {
   
@@ -14,7 +16,7 @@ class FAQ extends Component {
             drawerIcon: ({tintColor}) => (
                 <FontAwesome name='question-circle-o' style={[s.drawerIcon]} />
             ), 
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'FAQ',
             headerStyle: {
                 backgroundColor:'#f5fbff',

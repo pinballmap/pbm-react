@@ -3,17 +3,21 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Modal, ScrollView, TextInput, TouchableOpacity, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { SearchBar } from 'react-native-elements'
-import { HeaderBackButton } from 'react-navigation'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { FlatList } from 'react-native-gesture-handler'
 import { 
     addMachineToLocation,
     addMachineToList,
     removeMachineFromList,
     setMachineFilter,
 } from '../actions'
-import { PbmButton, WarningButton, Text } from '../components'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
-import { FlatList } from 'react-native-gesture-handler'
+import { 
+    HeaderBackButton,
+    PbmButton, 
+    Text,
+    WarningButton, 
+} from '../components'
 
 var DismissKeyboard = require('dismissKeyboard')
 
@@ -69,7 +73,7 @@ class FindMachine extends React.PureComponent {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard() }} />,
+            headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
