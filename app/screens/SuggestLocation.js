@@ -62,7 +62,7 @@ class SuggestLocation extends Component {
             drawerIcon: ({tintColor}) => (
                 <MaterialIcons name='add-location' style={[s.drawerIcon]} />
             ),
-            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => navigation.goBack(null)} />,
+            headerLeft: <HeaderBackButton tintColor="#4b5862" onPress={() => { navigation.goBack(null); DismissKeyboard(); }} />,
             title: 'Suggest Location',
             headerStyle: {
                 backgroundColor:'#f5fbff',
@@ -453,7 +453,7 @@ class SuggestLocation extends Component {
                                 <PbmButton
                                     title={'Select Machines to Add'}
                                     onPress={() => navigate('FindMachine', { multiSelect: true })}
-                                    icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                    icon={<MaterialCommunityIcons name='plus-circle-outline' style={s.plusButton} />}
                                 />   
                                 {machineList.map(machine => 
                                     <ListItem 
@@ -534,7 +534,7 @@ const s = StyleSheet.create({
         color: '#fdd4d7'
     },
     plusButton: {
-        color: "#F53240",
+        color: "#6a7d8a",
         fontSize: 24
     },
     drawerIcon: {
