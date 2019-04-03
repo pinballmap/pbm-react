@@ -99,7 +99,7 @@ class UserProfile extends Component {
                     <View>
                         <ConfirmationModal visible={this.state.modalVisible} >
                             <PbmButton
-                                title={"Really Logout?"}
+                                title={"Yes! Log Me Out"}
                                 onPress={() => {
                                     this.setModalVisible(false)
                                     this.props.logout()
@@ -110,7 +110,7 @@ class UserProfile extends Component {
                             <WarningButton
                                 title={"Stay Logged In"}
                                 onPress={() => this.setModalVisible(false)}
-                                accessibilityLabel="Stay Loggin In"
+                                accessibilityLabel="Stay LoggedIn"
                             />
                         </ConfirmationModal>
                         <Text style={s.username}>{user.username}</Text>

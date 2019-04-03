@@ -90,7 +90,7 @@ export class LocationList extends Component {
           <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
               {!loggedIn ? 
                   <NotLoggedIn 
-                      text={`Please login to start saving your favorite locations.`}
+                      text={`Please log in to start saving your favorite locations.`}
                       title={'Saved Locations'}
                       onPress={() => this.props.navigation.navigate('Login')}
                   /> :

@@ -212,7 +212,7 @@ const s = StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color:"#000e18",
+        color:"#4b5862",
         fontSize:18
     },
     justify: {

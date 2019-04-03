@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator, 
-    Text, 
+    ActivityIndicator,  
     ScrollView,
     StyleSheet,
     View,  
@@ -15,6 +14,7 @@ import { getData } from '../config/request'
 import { 
     FilterRecentActivity,
     HeaderBackButton,
+    Text
 } from '../components'
 import { clearActivityFilter } from '../actions'
 
@@ -186,10 +186,13 @@ const s = StyleSheet.create({
     },
     list: {
         borderRadius: 5,
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: '#D3ECFF',
         padding: 8,
-        margin: 5
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 10,
+        marginRight: 10
     },
     problem: {
         textAlign: "center",
