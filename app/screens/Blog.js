@@ -14,9 +14,7 @@ class Blog extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Blog',
-            drawerIcon: ({tintColor}) => (
-                <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />
-            ), 
+            drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Blog',
             headerStyle: {

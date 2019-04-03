@@ -26,9 +26,7 @@ class About extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'About',
-            drawerIcon: ({tintColor}) => (
-                <MaterialIcons name='info-outline' style={[s.drawerIcon]} />
-            ),
+            drawerIcon: () => <MaterialIcons name='info-outline' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'About',
             headerStyle: {

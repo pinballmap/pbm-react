@@ -12,6 +12,7 @@ import {
     View, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
+import { Feather } from '@expo/vector-icons'
 import { 
     loginLater,
     login, 
@@ -37,7 +38,11 @@ export class SignupLogin extends Component {
         }
     }
 
-    static navigationOptions = { header: null };
+    static navigationOptions = { 
+        drawerLabel: 'Map',
+        drawerIcon: () => <Feather name='map' style={[s.drawerIcon]} />,
+        header: null 
+    }
 
     componentDidMount(){
         getData('/regions/location_and_machine_counts.json')
@@ -219,7 +224,11 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height:deviceHeight
-    }
+    },
+    drawerIcon: {
+        fontSize: 24,
+        color: '#6a7d8a'
+    },
 })
 
 SignupLogin.propTypes = {
