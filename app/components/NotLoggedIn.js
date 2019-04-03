@@ -14,9 +14,9 @@ class NotLoggedIn extends Component {
                 <Text style={s.pageTitle}>{this.props.title}</Text>
                 <Text style={s.hiya}>{this.props.text}</Text>
                 <PbmButton
-                    title={"Login"} 
+                    title={"Log In"} 
                     onPress={() => this.props.onPress()}
-                    accessibilityLabel="Login"
+                    accessibilityLabel="Log In"
                 />
             </View>
         )
