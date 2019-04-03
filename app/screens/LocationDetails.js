@@ -225,7 +225,7 @@ class LocationDetails extends Component {
                                 <View>
                                     <PbmButton
                                         onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
-                                        icon={<MaterialCommunityIcons name='plus-circle-outline' style={s.plusButton} />}
+                                        icon={<MaterialCommunityIcons name='plus-circle' style={s.plusButton} />}
                                         title={loggedIn ? 'Add Machine' : 'Login to add machine'}
                                         accessibilityLabel="Add Machine"
                                     />
@@ -401,7 +401,7 @@ const s = StyleSheet.create({
         marginTop: 5
     },
     plusButton: {
-        color: "#6a7d8a",
+        color: "#97a5af",
         fontSize: 24,
     },
     confirmText: {
