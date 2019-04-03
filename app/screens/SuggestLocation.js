@@ -463,7 +463,7 @@ class SuggestLocation extends Component {
                                 <PbmButton
                                     title={'Select Machines to Add'}
                                     onPress={() => navigate('FindMachine', { multiSelect: true })}
-                                    icon={<MaterialCommunityIcons name='plus-circle-outline' style={s.plusButton} />}
+                                    icon={<MaterialCommunityIcons name='plus-circle' style={s.plusButton} />}
                                 />   
                                 {machineList.map(machine => 
                                     <ListItem 
@@ -544,7 +544,7 @@ const s = StyleSheet.create({
         color: '#fdd4d7'
     },
     plusButton: {
-        color: "#6a7d8a",
+        color: "#97a5af",
         fontSize: 24
     },
     drawerIcon: {
