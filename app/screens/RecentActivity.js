@@ -186,10 +186,13 @@ const s = StyleSheet.create({
     },
     list: {
         borderRadius: 5,
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: '#D3ECFF',
         padding: 8,
-        margin: 5
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 10,
+        marginRight: 10
     },
     problem: {
         textAlign: "center",
