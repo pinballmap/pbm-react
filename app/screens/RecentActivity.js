@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator, 
-    Text, 
+    ActivityIndicator,  
     ScrollView,
     StyleSheet,
     View,  
@@ -15,6 +14,7 @@ import { getData } from '../config/request'
 import { 
     FilterRecentActivity,
     HeaderBackButton,
+    Text
 } from '../components'
 import { clearActivityFilter } from '../actions'
 
