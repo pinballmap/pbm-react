@@ -18,7 +18,7 @@ class LocationCard extends Component {
         const numMachines = machines.length
 
         return(
-            <Card containerStyle={{borderRadius: 5}}>
+            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
                 <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
                     <View style={s.flexi}>
                         <View style={{width: '100%',zIndex: 10}}>
