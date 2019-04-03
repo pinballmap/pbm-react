@@ -179,7 +179,7 @@ class SuggestLocation extends Component {
                 {!loggedIn ? 
                     <NotLoggedIn
                         title={'Suggest a New Location'}
-                        text={'But first! We ask that you Login. Thank you!'}
+                        text={'But first! We ask that you log in. Thank you!'}
                         onPress={() => navigate('Login')}
                     /> :
                     <View>

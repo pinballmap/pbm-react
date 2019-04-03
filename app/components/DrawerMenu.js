@@ -78,7 +78,7 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         position: 'absolute',
         paddingLeft: 72,
-        paddingRight: 130,
+        paddingRight: 120,
         top: 4
     },
 })

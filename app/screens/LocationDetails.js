@@ -226,7 +226,7 @@ class LocationDetails extends Component {
                                     <PbmButton
                                         onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
                                         icon={<MaterialCommunityIcons name='plus-circle-outline' style={s.plusButton} />}
-                                        title={loggedIn ? 'Add Machine' : 'Login to Add Machine'}
+                                        title={loggedIn ? 'Add Machine' : 'Login to add machine'}
                                         accessibilityLabel="Add Machine"
                                     />
                                     <Button
