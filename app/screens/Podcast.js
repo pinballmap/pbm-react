@@ -8,12 +8,12 @@ import {
     StyleSheet, 
     View,
 } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     HeaderBackButton,
     Text 
 } from '../components'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -22,9 +22,7 @@ class Podcast extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Podcast',
-            drawerIcon: ({tintColor}) => (
-                <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />
-            ), 
+            drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Podcast',
             headerStyle: {
@@ -105,4 +103,5 @@ Podcast.propTypes = {
     navigation: PropTypes.object,
 }
 
+    
 export default Podcast

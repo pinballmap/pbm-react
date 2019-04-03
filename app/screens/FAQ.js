@@ -18,9 +18,7 @@ class FAQ extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'FAQ',
-            drawerIcon: ({tintColor}) => (
-                <FontAwesome name='question-circle-o' style={[s.drawerIcon]} />
-            ), 
+            drawerIcon: () => <FontAwesome name='question-circle-o' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'FAQ',
             headerStyle: {
