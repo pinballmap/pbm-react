@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { DrawerItems } from 'react-navigation'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Left, Right } from 'react-native-elements'
 import { 
     Text, 
     TouchableOpacity, 
