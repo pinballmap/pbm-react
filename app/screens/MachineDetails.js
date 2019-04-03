@@ -180,7 +180,7 @@ class MachineDetails extends Component {
                 <ScrollView>
                     <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
                     <PbmButton
-                        title={loggedIn ? 'Add a New Condition' : 'Login to add a machine condition'}
+                        title={loggedIn ? 'Add a New Condition' : 'Login to add a machine comment'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
