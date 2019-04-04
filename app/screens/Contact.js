@@ -7,7 +7,10 @@ import {
     View, 
 } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX,
+} from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'
 
 class Contact extends Component {
@@ -23,8 +26,8 @@ class Contact extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })               

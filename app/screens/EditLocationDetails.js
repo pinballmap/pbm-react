@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX,
+} from 'react-native-iphone-x-helper'
 import { 
     ActivityIndicator, 
     Keyboard,
@@ -56,8 +59,8 @@ class EditLocationDetails extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })            

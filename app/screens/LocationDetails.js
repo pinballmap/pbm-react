@@ -13,8 +13,15 @@ import {
     View, 
 } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { Button, ButtonGroup, ListItem } from 'react-native-elements'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { 
+    Button,
+    ButtonGroup,
+    ListItem 
+} from 'react-native-elements'
+import { 
+    FontAwesome, 
+    Ionicons 
+} from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal, 
@@ -32,8 +39,10 @@ import {
     removeFavoriteLocation,
     setCurrentMachine, 
 } from '../actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
-
+import { 
+    getStatusBarHeight,
+    ifIphoneX 
+} from 'react-native-iphone-x-helper'
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
@@ -67,8 +76,8 @@ class LocationDetails extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })               

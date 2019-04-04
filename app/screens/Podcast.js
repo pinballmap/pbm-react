@@ -9,7 +9,10 @@ import {
     View,
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX 
+} from 'react-native-iphone-x-helper'
 import { 
     HeaderBackButton,
     Text 
@@ -28,8 +31,8 @@ class Podcast extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })          

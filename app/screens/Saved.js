@@ -8,7 +8,10 @@ import {
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX 
+} from 'react-native-iphone-x-helper'
 import { 
     HeaderBackButton,
     LocationCard, 
@@ -37,8 +40,8 @@ export class LocationList extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })                

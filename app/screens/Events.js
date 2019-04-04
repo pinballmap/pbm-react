@@ -7,7 +7,10 @@ import {
     View, 
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX,
+} from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'
 
 class Events extends Component {
@@ -21,8 +24,8 @@ class Events extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })               

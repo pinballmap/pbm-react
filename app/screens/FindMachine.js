@@ -13,7 +13,10 @@ import {
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX,
+} from 'react-native-iphone-x-helper'
 import { FlatList } from 'react-native-gesture-handler'
 import { 
     addMachineToLocation,
@@ -85,8 +88,8 @@ class FindMachine extends React.PureComponent {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })               

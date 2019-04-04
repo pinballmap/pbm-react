@@ -13,9 +13,15 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { Button, ListItem } from 'react-native-elements'
+import { 
+    Button, 
+    ListItem 
+} from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX
+} from 'react-native-iphone-x-helper'
 import { 
     addMachineCondition, 
     addMachineScore, 
@@ -54,8 +60,8 @@ class MachineDetails extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })               

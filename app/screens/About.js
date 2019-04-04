@@ -11,7 +11,7 @@ import {
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { ifIphoneX, getStatusBarHeight } from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'
 
 let deviceWidth = Dimensions.get('window').width
@@ -32,8 +32,8 @@ class About extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })

@@ -9,7 +9,12 @@ import {
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { PbmButton, ConfirmationModal, Search, Text } from '../components'
+import { 
+    PbmButton,
+    ConfirmationModal, 
+    Search, 
+    Text 
+} from '../components'
 import { 
     fetchCurrentLocation, 
     fetchLocations,
@@ -18,7 +23,10 @@ import {
     clearFilters,
 } from '../actions'
 import { Ionicons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX 
+} from 'react-native-iphone-x-helper'
 
 class Map extends Component {
     constructor(props){
@@ -68,8 +76,8 @@ class Map extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })             

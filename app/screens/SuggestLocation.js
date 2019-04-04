@@ -33,7 +33,10 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX 
+} from 'react-native-iphone-x-helper'
 
 class SuggestLocation extends Component {
     constructor(props) {
@@ -75,8 +78,8 @@ class SuggestLocation extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
+                    height: getStatusBarHeight() + 30,
+                    paddingTop: getStatusBarHeight()
                 }, {
                     paddingTop: 0
                 })         

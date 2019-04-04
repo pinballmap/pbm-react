@@ -9,7 +9,10 @@ import {
     View,     
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { 
+    getStatusBarHeight,
+    ifIphoneX,
+} from 'react-native-iphone-x-helper'
 import { 
     ConfirmationModal, 
     DropDownButton, 
