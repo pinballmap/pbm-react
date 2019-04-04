@@ -47,7 +47,10 @@ class DrawerMenu extends Component {
                     />
                 </ConfirmationModal>
                 <View style={{marginTop: 50}}>
-                    <DrawerItems {...this.props} />
+                    <DrawerItems 
+                        {...this.props} 
+                        onItemPress={(item) => navigation.navigate(item.route.key)}
+                    />
                     {loggedIn ? 
                         <TouchableOpacity style={s.container} onPress={() => this.setState({ modalVisible: true})}>
                             <MaterialCommunityIcons name='logout' style={s.icon} />
