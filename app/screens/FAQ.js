@@ -6,7 +6,7 @@ import {
     StyleSheet, 
     View, 
 } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     HeaderBackButton,
@@ -18,7 +18,7 @@ class FAQ extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'FAQ',
-            drawerIcon: () => <FontAwesome name='question-circle-o' style={[s.drawerIcon]} />, 
+            drawerIcon: () => <MaterialIcons name='question-answer' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'FAQ',
             headerStyle: {
