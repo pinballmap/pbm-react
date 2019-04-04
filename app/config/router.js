@@ -136,10 +136,11 @@ export const PbmStack = DrawerNavigator({
     contentComponent: DrawerMenu,
     drawerPosition: 'right',
     drawerWidth: 250,
+    drawerBackgroundColor: '#f5fbff',
     contentOptions: {
-        activeTintColor: '#000e18',
+        activeTintColor: '#6a7d8a',
         inactiveTintColor: '#6a7d8a',
-        activeBackgroundColor: '#D3ECFF',
+        activeBackgroundColor: '#f5fbff',
         itemsContainerStyle: {
             ...ifIphoneX({
                 paddingTop: 20,
