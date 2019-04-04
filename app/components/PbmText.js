@@ -8,7 +8,7 @@ import {
 class PbmText extends Component {
     render() {
         return (
-            <Text style={[s.text, this.props.style]}>
+            <Text style={[s.text, this.props.style]} onPress={this.props.onPress}>
                 {this.props.children}
             </Text>
         )
