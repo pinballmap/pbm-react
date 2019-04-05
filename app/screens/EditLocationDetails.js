@@ -188,7 +188,7 @@ class EditLocationDetails extends Component {
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                style={[{height: 40},s.textInput]}
                                 keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
@@ -198,7 +198,7 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Website</Text>
                             <TextInput
-                                style={[{height: 40,textAlign:'center'},s.textInput]}
+                                style={[{height: 40},s.textInput]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={website => this.setState({ website })}
                                 value={website}
@@ -209,7 +209,7 @@ class EditLocationDetails extends Component {
                             <TextInput
                                 multiline={true}
                                 numberOfLines={4}
-                                style={[{padding:5,height: 100},s.textInput]}
+                                style={[{height: 100},s.textInput]}
                                 onChangeText={description => this.setState({ description })}
                                 underlineColorAndroid='transparent'
                                 value={description}
@@ -277,7 +277,9 @@ const s = StyleSheet.create({
         borderWidth: 2,
         marginLeft: 10,
         marginRight: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        paddingLeft: 5,
+        paddingRight: 5
     },
     pickerbg: {
         marginLeft: 10,
