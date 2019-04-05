@@ -12,6 +12,10 @@ import {
     FAVORITE_LOCATION_REMOVED,
     ACKNOWLEDGE_FAVORITE_UPDATE,
     SELECT_FAVORITE_LOCATION_FILTER_BY,
+    SUBMITTING_MESSAGE,
+    MESSAGE_SUBMITTED,
+    MESSAGE_SUBMISSION_FAILED,
+    CLEAR_MESSAGE,
 } from './types'
 
 import { getCurrentLocation, getData, postData } from '../config/request'
@@ -128,3 +132,35 @@ export const selectFavoriteLocationFilterBy = idx => {
     }
 }
 
+export const submitMessage = ({name, email, message}) => (dispatch, getState) => {
+    dispatch({ type: SUBMITTING_MESSAGE })
+   
+    const { email: user_email, authentication_token, lat, lon } = getState().user
+    const body = {
+        message,
+        lat,
+        lon,
+        name,
+        email,
+    }
+
+    if (authentication_token) {
+        body.user_token = authentication_token,
+        body.user_email = user_email
+    }
+
+    return postData(`/regions/contact.json`, body)
+        .then(() => dispatch(messageSubmitted()))
+        .catch((err) => dispatch(messageSubmissionFailed(err)))
+}
+
+export const messageSubmitted = () => {
+    return { type: MESSAGE_SUBMITTED }
+}
+
+export const clearMessage = () => ({ type: CLEAR_MESSAGE })
+
+export const messageSubmissionFailed = (err) => {
+    console.log(err)
+    return { type: MESSAGE_SUBMISSION_FAILED }
+}
