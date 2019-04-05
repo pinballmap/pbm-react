@@ -12,7 +12,11 @@ import {
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
     ACKNOWLEDGE_FAVORITE_UPDATE,
-    SELECT_FAVORITE_LOCATION_FILTER_BY
+    SELECT_FAVORITE_LOCATION_FILTER_BY, 
+    SUBMITTING_MESSAGE,
+    MESSAGE_SUBMITTED,
+    MESSAGE_SUBMISSION_FAILED,
+    CLEAR_MESSAGE,
 } from '../actions/types'
 
 export const initialState = {
@@ -22,16 +26,18 @@ export const initialState = {
     locationTrackingServicesEnabled: false, 
     loggedIn: false,
     loginLater: false,
-    authentication_token: null,
-    email: null,
+    authentication_token: '',
+    email: '',
     id: null,
-    username: null,
+    username: '',
     faveLocations: [],
     addingFavoriteLocation: false,
     removingFavoriteLocation: false,
     favoriteModalVisible: false,
     favoriteModalText: '',
     selectedFavoriteLocationFilter: 0,
+    submittingMessage: false, 
+    confirmationMessage: '',
 }
 
 export default (state = initialState, action) => {
@@ -79,10 +85,10 @@ export default (state = initialState, action) => {
             ...state,
             loggedIn: false,
             loginLater: false,
-            authentication_token: null,
-            email: null,
+            authentication_token: '',
+            email: '',
             id: null,
-            username: null,
+            username: '',
         }
     }
     case LOGIN_LATER:
@@ -130,6 +136,28 @@ export default (state = initialState, action) => {
         return {
             ...state,
             selectedFavoriteLocationFilter: action.idx,
+        }
+    case SUBMITTING_MESSAGE: 
+        return {
+            ...state,
+            submittingMessage: true
+        }
+    case MESSAGE_SUBMITTED: 
+        return {
+            ...state,
+            submittingMessage: false,
+            confirmationMessage: 'Thanks for the message.'
+        }
+    case MESSAGE_SUBMISSION_FAILED: 
+        return {
+            ...state,
+            submittingMessage: false,
+            confirmationMessage: 'Oops something went wrong'
+        }
+    case CLEAR_MESSAGE: 
+        return {
+            ...state,
+            confirmationMessage: '',
         }
     default:
         return state
