@@ -27,8 +27,8 @@ class FAQ extends Component {
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
-                    height: getStatusBarHeight() + 30,
-                    paddingTop: getStatusBarHeight()
+                    height: getStatusBarHeight(false) + 30,
+                    paddingTop: getStatusBarHeight(false)
                 }, {
                     paddingTop: 0
                 })
