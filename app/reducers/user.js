@@ -146,7 +146,7 @@ export default (state = initialState, action) => {
         return {
             ...state,
             submittingMessage: false,
-            confirmationMessage: 'Thanks for the message.'
+            confirmationMessage: "Thanks for the message! We'll try to respond soon."
         }
     case MESSAGE_SUBMISSION_FAILED: 
         return {
