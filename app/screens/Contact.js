@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
+    ScrollView,
     StyleSheet, 
     TextInput, 
-    View, 
+    View,
 } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -73,24 +74,24 @@ class Contact extends Component {
         const { loggedIn, submittingMessage, confirmationMessage } = this.props.user
 
         return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+            <ScrollView keyboardDismissMode="on-drag" style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 <ConfirmationModal visible={confirmationMessage.length > 0}>
                     <Text style={s.confirmText}>{confirmationMessage}</Text>
                     <View> 
                         <PbmButton
-                            title={"Ok"}
+                            title={"You bet!"}
                             onPress={() => this.acknowledgeConfirmation()}
                         />
                     </View>
                 </ConfirmationModal>
                 {submittingMessage ? 
                     <ActivityIndicator /> :
-                    <View>
-                        <Text>{`Have a question or a comment or a something that's a little bit inbetween?`}</Text>
+                    <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                        <Text>{`Have a question, comment, or tip? We are here for you.`}</Text>
                         {!loggedIn ?
                             <View>
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={name => this.setState({ name })}
                                     value={this.state.name}
@@ -98,7 +99,7 @@ class Contact extends Component {
                                     placeholder={'Your name...'}
                                 /> 
                                 <TextInput
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40},s.textInput]}
                                     underlineColorAndroid='transparent'
                                     onChangeText={email => this.setState({ email })}
                                     value={this.state.email}
@@ -111,7 +112,7 @@ class Contact extends Component {
                             multiline={true}
                             placeholder={'Tell us about it...'}
                             numberOfLines={10}
-                            style={[{padding:5,height: 100},s.textInput]}
+                            style={[{padding:5,height: 200},s.textInput]}
                             value={this.state.message}
                             onChangeText={message => this.setState({ message })}
                             textAlignVertical='top'
@@ -124,7 +125,7 @@ class Contact extends Component {
                         />
                     </View>
                 }
-            </View>)
+            </ScrollView>)
     }
 }
 
@@ -137,12 +138,21 @@ const s = StyleSheet.create({
         backgroundColor: '#ffffff', 
         borderColor: '#97a5af', 
         borderWidth: 2,
-        height: 80,
-        marginLeft:20,
-        marginRight:20, 
+        marginLeft: 10,
+        marginRight: 10, 
         marginTop: 20,
-        borderRadius: 5
+        borderRadius: 5,
+        paddingLeft: 5,
+        paddingRight: 5,
+        textAlign: 'left'
     },
+    confirmText: {
+        textAlign: 'center',
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 18
+    }
 })
 
 Contact.propTypes = {

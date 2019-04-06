@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { Text } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import { removeMachineFromLocation } from '../actions/location_actions'
 import { 
     ConfirmationModal, 
@@ -20,7 +20,7 @@ class RemoveMachineModal extends Component {
     
         return(
             <ConfirmationModal>
-                {this.props.machineName && <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
+                {this.props.machineName && <Text style={s.confirmText}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
                 <PbmButton 
                     title={'Yes, Remove It'}
                     onPress={() => this.removeLmx(curLmx, location.id)}
@@ -33,6 +33,16 @@ class RemoveMachineModal extends Component {
         )
     }
 }
+
+const s = StyleSheet.create({ 
+    confirmText: {
+        textAlign: 'center',
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 18
+    }
+})
 
 RemoveMachineModal.propTypes = {
     removeMachineFromLocation: PropTypes.func,
