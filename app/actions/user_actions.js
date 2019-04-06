@@ -135,11 +135,9 @@ export const selectFavoriteLocationFilterBy = idx => {
 export const submitMessage = ({name, email, message}) => (dispatch, getState) => {
     dispatch({ type: SUBMITTING_MESSAGE })
    
-    const { email: user_email, authentication_token, lat, lon } = getState().user
+    const { email: user_email, authentication_token, lat, lon, locationTrackingServicesEnabled } = getState().user
     const body = {
         message,
-        lat,
-        lon,
         name,
         email,
     }
@@ -147,6 +145,11 @@ export const submitMessage = ({name, email, message}) => (dispatch, getState) =>
     if (authentication_token) {
         body.user_token = authentication_token,
         body.user_email = user_email
+    }
+
+    if (locationTrackingServicesEnabled) {
+        body.lat = lat
+        body.lon = lon
     }
 
     return postData(`/regions/contact.json`, body)
