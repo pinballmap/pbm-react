@@ -93,7 +93,6 @@ class Map extends Component {
             if (region === this.prevRegion) {
                 this.setState({ 
                     region, 
-                    locations: [], 
                 })
                 this.props.updateCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
                 this.reloadMap()
