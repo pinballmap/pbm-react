@@ -34,7 +34,8 @@ export class SignupLogin extends Component {
             num_locations: 0, 
             num_lmxes: 0, 
             apiError: '',
-            showTurnOnLocationServices: true,
+            fetchingShowTurnOnLocationServices: true,
+            showTurnOnLocationServices: false,
         }
     }
 
@@ -66,22 +67,34 @@ export class SignupLogin extends Component {
 
         retrieveItem('auth').then((auth) => {
             if (auth) {
+                if (auth.id) {
+                    this.props.login(auth)
+                }
                 this.props.navigation.navigate('Map')
-                this.props.login(auth)
+            }
+        }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
+
+
+        retrieveItem('locationServices').then((locationServices) => {
+            if (locationServices) {
+                this.setState({ fetchingShowTurnOnLocationServices: false })
+            } 
+            else {
+                this.setState({ fetchingShowTurnOnLocationServices: false, showTurnOnLocationServices: true})
             }
         }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
     }
 
     render(){
-        if (this.props.user.isFetchingLocationTrackingEnabled || (this.state.num_lmxes === 0 && !this.state.apiError)) {
+        if (this.state.fetchingShowTurnOnLocationServices || (this.state.num_lmxes === 0 && !this.state.apiError)) {
             return <ActivityIndicator />
         }
         
-        if (!this.props.user.locationTrackingServicesEnabled && this.state.showTurnOnLocationServices) {
+        if (this.state.showTurnOnLocationServices) {
             return (
                 <ScrollView>
                     <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-                        <View style={[s.mask,,s.justify]}>
+                        <View style={[s.mask,s.justify]}>
                             <View style={s.logoWrapper}>
                                 <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
                             </View>
@@ -236,9 +249,9 @@ SignupLogin.propTypes = {
     loginLater: PropTypes.func,
     navigation: PropTypes.object,
     login: PropTypes.func, 
-    fetchLocationTypes: PropTypes.func,
-    fetchMachines: PropTypes.func,
-    fetchOperators: PropTypes.func,
+    getLocationTypes: PropTypes.func,
+    getMachines: PropTypes.func,
+    getOperators: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
