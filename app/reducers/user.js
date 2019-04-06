@@ -47,7 +47,8 @@ export default (state = initialState, action) => {
             ...state,
             isFetchingLocationTrackingEnabled: true,
         }
-    case FETCHING_LOCATION_TRACKING_SUCCESS:
+    case FETCHING_LOCATION_TRACKING_SUCCESS: {
+        AsyncStorage.setItem('locationServices', JSON.stringify({enabled: true}))
         return {
             ...state,
             isFetchingLocationTrackingEnabled: false,
@@ -55,7 +56,9 @@ export default (state = initialState, action) => {
             lon: action.lon,
             locationTrackingServicesEnabled: true,
         }
-    case FETCHING_LOCATION_TRACKING_FAILURE:
+    }
+    case FETCHING_LOCATION_TRACKING_FAILURE: {
+        AsyncStorage.setItem('locationServices', JSON.stringify({enabled: false}))
         return {
             ...state,
             isFetchingLocationTrackingEnabled: false,
@@ -63,6 +66,7 @@ export default (state = initialState, action) => {
             lon: -122.6587,
             locationTrackingServicesEnabled: false,
         }
+    }
     case LOG_IN: {
         if (!action.credentials)
             return state
@@ -79,7 +83,7 @@ export default (state = initialState, action) => {
         }
     }
     case LOG_OUT: {
-        AsyncStorage.removeItem('auth')
+        AsyncStorage.setItem('auth', JSON.stringify({loggedIn: false}))
             
         return {
             ...state,
@@ -91,11 +95,14 @@ export default (state = initialState, action) => {
             username: '',
         }
     }
-    case LOGIN_LATER:
+    case LOGIN_LATER: {
+        AsyncStorage.setItem('auth', JSON.stringify({loggedIn: false}))
+
         return {
             ...state,
             loginLater: true,
         }
+    }
     case FETCHING_FAVORITE_LOCATIONS_SUCCESS:
         return {
             ...state,
