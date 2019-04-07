@@ -9,10 +9,9 @@ import {
     MACHINE_SCORE_ADDED,
     LOCATION_MACHINE_REMOVED,
     ADDING_MACHINE_TO_LOCATION,
-    ADD_MACHINES_TO_LIST,
     MACHINE_ADDED_TO_LOCATION,
     MACHINE_ADDED_TO_LOCATION_FAILURE,
-    DISPLAY_API_ERROR,
+    DISPLAY_ERROR,
     UPDATING_LOCATION_DETAILS,
     LOCATION_DETAILS_UPDATED,
     FAILED_LOCATION_DETAILS_UPDATE,
@@ -173,7 +172,7 @@ const machineAddedToLocation = (location_id, machine) => dispatch =>
     })
 
 export const addMachineToLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err: err.message})
     dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
 } 
 
@@ -203,7 +202,7 @@ export const locationDetailsUpdated = (goBack, data, username) => dispatch => {
 }
 
 export const updateLocationDetailsFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err: err.message})
     dispatch({type: FAILED_LOCATION_DETAILS_UPDATE})
 }
 
@@ -269,6 +268,6 @@ export const locationSuggested = () => dispatch => {
 }
 
 export const suggestLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_API_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err: err.message})
     dispatch({type: FAILED_SUGGEST_LOCATION})
 }
