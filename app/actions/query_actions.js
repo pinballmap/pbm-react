@@ -9,7 +9,7 @@ import {
     SET_OPERATOR_FILTER,
 } from './types'
 
-export const updateCurrCoordindates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>  ({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta }) 
+export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>  ({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta }) 
 
 export const clearFilters = () => ({ type: CLEAR_FILTERS })
 
