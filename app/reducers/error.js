@@ -4,7 +4,7 @@ import {
 } from '../actions/types'
 
 export const initialState = {
-    errorText: null,
+    errorText: undefined,
 }
 
 export default (state = initialState, action) => {
@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     case CLEAR_API_ERROR: 
         return {
             ...state,
-            errorText: null
+            errorText: undefined
         }
     default: 
         return state

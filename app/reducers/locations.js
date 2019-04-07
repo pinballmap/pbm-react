@@ -61,12 +61,10 @@ export default (state = initialState, action) => {
             mapLocations: action.locations,
         }
     case FETCHING_LOCATIONS_FAILURE:
-    case FETCHING_LOCATIONS_BY_CITY_FAILURE:
         return {
             ...state,
             isFetchingLocations: false,
             isRefetchingLocations: false,
-            mapLocations: [],
         }
     case REFETCHING_LOCATIONS:
         return {

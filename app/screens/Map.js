@@ -16,6 +16,7 @@ import {
     updateCurrCoordinates,
     getFavoriteLocations,
     clearFilters,
+    clearError,
 } from '../actions'
 import { Ionicons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -172,9 +173,10 @@ class Map extends Component {
         const { isFetchingLocations, isRefetchingLocations } = this.props.locations
         const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
+        const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
-
+    
         if (isFetchingLocations || !this.state.region.latitude) {
             return(
                 <View style={{flex: 1, padding: 20}}>
@@ -193,6 +195,16 @@ class Map extends Component {
                             title={"OK"}
                             onPress={() => this.setState({ showNoLocationTrackingModal: false })}
                             accessibilityLabel="Great!"
+                        />
+                    </View>
+                </ConfirmationModal>
+                <ConfirmationModal 
+                    visible={errorText ? true : false}>
+                    <View> 
+                        <Text style={s.confirmText}>{errorText}</Text>
+                        <PbmButton
+                            title={"OK"}
+                            onPress={() => this.props.clearError()}
                         />
                     </View>
                 </ConfirmationModal>
@@ -301,15 +313,18 @@ Map.propTypes = {
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
+    clearError: PropTypes.func,
+    error: PropTypes.object,
 }
 
-const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
+const mapStateToProps = ({ error, locations, query, user }) => ({ error, locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordinates(lat, lon, latDelta, lonDelta)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
+    clearError: () => dispatch(clearError()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
