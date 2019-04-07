@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Font } from 'expo'
 import { 
     ActivityIndicator,
+    Platform,
     StyleSheet, 
     View,
 } from 'react-native'
@@ -215,6 +216,7 @@ class Map extends Component {
                             name='location-arrow'
                             type='font-awesome'
                             color='#4b5862'
+                            containerStyle={Platform.OS === "ios" ? {position:'absolute'} : {}}
                             size={20}
                             onPress={() => {
                                 locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
@@ -228,6 +230,7 @@ class Map extends Component {
                                 onPress={() => this.props.clearFilters()}
                                 clear={true}
                                 titleStyle={{fontSize:14,color:"#F53240"}}
+                                containerStyle={Platform.OS === "ios" ? {width:100,position:'absolute',right:0} : {}}
                             />
                             : null                                    
                         }
