@@ -18,6 +18,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import { 
+    displayError,
     fetchLocations,
     getLocationsByCity,
     updateCurrCoordinates,
@@ -73,11 +74,14 @@ class Search extends Component {
                 const { lat, lng } = response.results[0].geometry.location
                 this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lng + ';send_all_within_distance=1;max_distance=5', true)
                 this.props.updateCoordinates(lat, lng)
-                this.changeQuery('')
-                this.setState({searchModalVisible: false})
             },
             error => {
-                console.error(error)
+                console.log(error)
+                this.props.displayError('An error occurred geocoding.')
+            })
+            .then(() => {
+                this.changeQuery('')
+                this.setState({searchModalVisible: false})
             })
     }
 
@@ -206,6 +210,7 @@ const s = StyleSheet.create({
 })
 
 Search.propTypes = {
+    displayError: PropTypes.func,
     navigate: PropTypes.func,
     getLocations: PropTypes.func,
     updateCoordinates: PropTypes.func,
@@ -214,6 +219,7 @@ Search.propTypes = {
 
 const mapStateToProps = ({ query, user }) => ({ query, user})
 const mapDispatchToProps = (dispatch) => ({
+    displayError: error => dispatch(displayError(error)),
     getLocationsByCity: (city, navigate) => dispatch(getLocationsByCity(city, navigate)),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
