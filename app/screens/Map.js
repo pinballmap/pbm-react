@@ -13,7 +13,7 @@ import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
     fetchLocations,
-    updateCurrCoordindates,
+    updateCurrCoordinates,
     getFavoriteLocations,
     clearFilters,
 } from '../actions'
@@ -307,7 +307,7 @@ const mapStateToProps = ({ locations, query, user }) => ({ locations, query, use
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
-    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordindates(lat, lon, latDelta, lonDelta)),
+    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordinates(lat, lon, latDelta, lonDelta)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
 })

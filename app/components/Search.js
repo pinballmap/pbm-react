@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from 'throttle-debounce'
+import Geocode from 'react-geocode'
 import { 
     Dimensions, 
     Modal,
@@ -16,10 +17,17 @@ import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
-import { getLocationsByCity } from '../actions'
+import { 
+    fetchLocations,
+    getLocationsByCity,
+    updateCurrCoordinates,
+} from '../actions'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let deviceWidth = Dimensions.get('window').width
+
+const apiKey = process.env['API_KEY']
+Geocode.setApiKey(apiKey)
 
 class Search extends Component {
     constructor(props) {
@@ -29,7 +37,7 @@ class Search extends Component {
             foundLocations: [],
             foundCities: [],
             searchModalVisible: false,
-            showNoResults: false,
+            showSubmitButton: false,
         }
 
         this.autocompleteSearchDebounced = debounce(500, this.autocompleteSearch)
@@ -37,7 +45,7 @@ class Search extends Component {
     }
 
     changeQuery = q => {
-        this.setState({ q, showNoResults: false }, () => {
+        this.setState({ q, showSubmitButton: false }, () => {
             this.autocompleteSearchDebounced(this.state.q)
         })
     }
@@ -54,13 +62,28 @@ class Search extends Component {
             const foundLocations = await getData(`/locations/autocomplete?name=${query}`)
             let foundCities = await getData(`/locations/autocomplete_city.json?name=${query}`)
             if (query === this.waitingFor) {
-                this.setState({ foundLocations, foundCities, showNoResults: true })
+                this.setState({ foundLocations, foundCities, showSubmitButton: true })
             }
         }
     }
 
+    geocodeSearch = (query) => {
+        Geocode.fromAddress(query)
+            .then(response => {
+                const { lat, lng } = response.results[0].geometry.location
+                this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lng + ';send_all_within_distance=1;max_distance=5', true)
+                this.props.updateCoordinates(lat, lng)
+                this.changeQuery('')
+                this.setState({searchModalVisible: false})
+            },
+            error => {
+                console.error(error)
+            })
+    }
+
     render(){
-        const { q, foundLocations = [], foundCities = [], searchModalVisible, showNoResults } = this.state
+        const { q, foundLocations = [], foundCities = [], searchModalVisible, showSubmitButton } = this.state
+        const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
 
         return(
             <View>
@@ -87,6 +110,9 @@ class Search extends Component {
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
                                 containerStyle={{paddingTop:4}}
+                                key={submitButton ? 'search' : 'none'}
+                                returnKeyType={submitButton ? 'search' : 'none'}
+                                onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
                                 inputContainerStyle={s.input}
                                 autoFocus
                             />
@@ -128,9 +154,6 @@ class Search extends Component {
                                     </TouchableOpacity>)
                                 ) : null
                             }                        
-                            {foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showNoResults ? 
-                                <Text style={s.noResults}>No search results...</Text> : null 
-                            }
                         </ScrollView>
                     </View>
                 </Modal>
@@ -180,18 +203,19 @@ const s = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft:0
     },
-    noResults: {
-        paddingTop: 15,
-        paddingLeft: 20,
-    }
 })
 
 Search.propTypes = {
     navigate: PropTypes.func,
+    getLocations: PropTypes.func,
+    updateCoordinates: PropTypes.func,
+    getLocationsByCity: PropTypes.func,
 }
 
 const mapStateToProps = ({ query, user }) => ({ query, user})
 const mapDispatchToProps = (dispatch) => ({
     getLocationsByCity: (city, navigate) => dispatch(getLocationsByCity(city, navigate)),
+    getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
+    updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
