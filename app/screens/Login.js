@@ -55,6 +55,9 @@ class Login extends Component {
 
                     if(data.errors === 'Incorrect password') 
                         this.setState({ passwordError: 'Incorrect password' })
+
+                    if(data.errors === 'User is not yet confirmed. Please follow emailed confirmation instructions.')
+                        this.setState({ apiErrorMsg: 'User is not yet confirmed. Please follow emailed confirmation instructions.'})
                 }
                 if (data.user) {      
                     this.props.login(data.user)
