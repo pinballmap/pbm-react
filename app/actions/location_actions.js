@@ -49,8 +49,10 @@ export const getLocationFailure = () => {
 
 export const confirmLocationIsUpToDate = (body, id, username) => dispatch => {
     return putData(`/locations/${id}/confirm.json`, body)
-        .then(data => dispatch(locationDetailsConfirmed(data.msg, username, id)))
-        .catch(err => console.log(err))
+        .then(data => dispatch(locationDetailsConfirmed(data.msg, username, id)), 
+            err => {throw err }
+        )
+        .catch(err => dispatch({type: DISPLAY_ERROR, err}))
 }
 
 const locationDetailsConfirmed = (msg, username, id) => {
@@ -129,8 +131,9 @@ export const removeMachineFromLocation = (curLmx, location_id) => (dispatch, get
     const nameManYear = machines.find(machine => machine.id === machine_id).nameManYear
 
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
-        .then(() => dispatch(locationMachineRemoved(lmx, nameManYear, location_id)))
-        .catch(err => console.log(err))
+        .then(() => dispatch(locationMachineRemoved(lmx, nameManYear, location_id)), 
+            err => { throw err })
+        .catch(err => dispatch({type: DISPLAY_ERROR, err}))
 }
 
 export const locationMachineRemoved = (lmx, nameManYear, location_id) => {
@@ -161,7 +164,8 @@ export const addMachineToLocation = (machine, condition) => (dispatch, getState)
     return postData(`/location_machine_xrefs.json`, body)
         .then(() => 
             dispatch(machineAddedToLocation(location_id, machine)),
-        err => dispatch(addMachineToLocationFailure(err)))
+        err => { throw err })
+        .catch(err => dispatch(addMachineToLocationFailure(err)))
 }
 
 const machineAddedToLocation = (location_id, machine) => dispatch => 
@@ -172,7 +176,7 @@ const machineAddedToLocation = (location_id, machine) => dispatch =>
     })
 
 export const addMachineToLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err})
     dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
 } 
 
@@ -202,7 +206,7 @@ export const locationDetailsUpdated = (goBack, data, username) => dispatch => {
 }
 
 export const updateLocationDetailsFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err})
     dispatch({type: FAILED_LOCATION_DETAILS_UPDATE})
 }
 
@@ -259,7 +263,7 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
                 throw new Error(response.errors)
             }
             dispatch(locationSuggested())
-        })
+        }, err => { throw err })
         .catch(err => dispatch(suggestLocationFailure(err)))
 }
 
@@ -268,6 +272,6 @@ export const locationSuggested = () => dispatch => {
 }
 
 export const suggestLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err: err.message})
+    dispatch({type: DISPLAY_ERROR, err})
     dispatch({type: FAILED_SUGGEST_LOCATION})
 }

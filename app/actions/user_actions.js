@@ -16,6 +16,8 @@ import {
     MESSAGE_SUBMITTED,
     MESSAGE_SUBMISSION_FAILED,
     CLEAR_MESSAGE,
+    ERROR_ADDING_FAVORITE_LOCATION,
+    ERROR_REMOVING_FAVORITE_LOCATION,
 } from './types'
 
 import { getCurrentLocation, getData, postData } from '../config/request'
@@ -86,9 +88,9 @@ export const addFavoriteLocation = location_id => (dispatch, getState) => {
     }
 
     return postData(`/users/${id}/add_fave_location.json`, body)
-        .then(() => dispatch(favoriteLocationAdded()))
+        .then(() => dispatch(favoriteLocationAdded()), err => { throw err })
         .then(() => dispatch(getFavoriteLocations(id)))
-        .catch(err => console.log(err))
+        .catch(err => dispatch({ type: ERROR_ADDING_FAVORITE_LOCATION, err}))
 }
 
 export const favoriteLocationAdded = () => {
@@ -108,8 +110,8 @@ export const removeFavoriteLocation = location_id => (dispatch, getState) => {
     }
 
     return postData(`/users/${id}/remove_fave_location.json`, body)
-        .then(() => dispatch(favoriteLocationRemoved(location_id)))
-        .catch(err => console.log(err))
+        .then(() => dispatch(favoriteLocationRemoved(location_id)), err => { throw err })
+        .catch(err => dispatch({ type: ERROR_REMOVING_FAVORITE_LOCATION, err}))
 }
 
 export const favoriteLocationRemoved = (id) => {

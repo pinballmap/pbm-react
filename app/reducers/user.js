@@ -17,6 +17,8 @@ import {
     MESSAGE_SUBMITTED,
     MESSAGE_SUBMISSION_FAILED,
     CLEAR_MESSAGE,
+    ERROR_ADDING_FAVORITE_LOCATION,
+    ERROR_REMOVING_FAVORITE_LOCATION,
 } from '../actions/types'
 
 export const initialState = {
@@ -126,12 +128,24 @@ export default (state = initialState, action) => {
             addingFavoriteLocation: false,
             favoriteModalText: 'Successfully added location to your saved list',
         }
+    case ERROR_ADDING_FAVORITE_LOCATION: 
+        return {
+            ...state, 
+            addingFavoriteLocation: false,
+            favoriteModalText: action.err
+        }
     case FAVORITE_LOCATION_REMOVED: 
         return {
             ...state,
             removingFavoriteLocation: false,
             favoriteModalText: 'Successfully removed location from your saved list',
             faveLocations: state.faveLocations.filter(location => location.location_id !== action.id)
+        }
+    case ERROR_REMOVING_FAVORITE_LOCATION: 
+        return {
+            ...state, 
+            removingFavoriteLocation: false,
+            favoriteModalText: action.err
         }
     case ACKNOWLEDGE_FAVORITE_UPDATE: 
         return {
