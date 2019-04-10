@@ -133,6 +133,7 @@ class Login extends Component {
                                     buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
                                 />
                                 <Button
+                                    onPress={() => this.props.navigation.navigate('ResendConfirmation')}
                                     title="Resend my confirmation email"
                                     titleStyle={s.textLink}
                                     containerStyle={{marginBottom: 20}}
