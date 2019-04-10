@@ -44,22 +44,22 @@ class ResendConfirmation extends Component {
 
     render(){
         return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                <ConfirmationModal visible={this.state.modalVisible}>
-                    <Text style={s.confirmText}>Confirmation info resent.</Text>
-                    <View>
-                        <PbmButton
-                            title={"Great!"}
-                            onPress={() => {
-                                this.setState({ modalVisible: false})
-                                this.props.navigation.navigate('Login')
-                            }}
-                        />
-                    </View>
-                </ConfirmationModal>
-                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                    <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
-                        <View style={s.verticalAlign}>
+            <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
+                        <ConfirmationModal visible={this.state.modalVisible}>
+                            <Text style={s.confirmText}>Confirmation info resent.</Text>
+                            <View>
+                                <PbmButton
+                                    title={"Great!"}
+                                    onPress={() => {
+                                        this.setState({ modalVisible: false})
+                                        this.props.navigation.navigate('Login')
+                                    }}
+                                />
+                            </View>
+                        </ConfirmationModal>
+                        <View>
                             <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Resend the Confirmation Email`}</Text>                 
                             <Input 
                                 placeholder='Username or email...'
@@ -76,9 +76,9 @@ class ResendConfirmation extends Component {
                                 disabled={this.state.identification.length === 0}
                             />
                         </View>
-                    </ScrollView>
-                </TouchableWithoutFeedback>
-            </View>)
+                </ScrollView>    
+            </View>
+        </TouchableWithoutFeedback>)
     }
 }
 
@@ -93,11 +93,6 @@ const s = StyleSheet.create({
     },
     inputText: {
         color: '#000e18',
-    },
-    verticalAlign: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height:deviceHeight - 100
     },
     confirmText: {
         textAlign: 'center',
