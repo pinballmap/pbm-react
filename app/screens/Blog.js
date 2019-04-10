@@ -5,6 +5,7 @@ import {
     StyleSheet, 
     Text, 
     View, 
+    WebView,
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
@@ -26,13 +27,11 @@ class Blog extends Component {
      
     render(){
         return(
-            <View style={{marginTop: 300, flex: 1,backgroundColor:'#f5fbff'}}>
-                <Button
-                    onPress={ () => this.props.navigation.navigate('Map') }
-                    style={{width:30, paddingTop: 15}}
-                    title="Back to Map"
+            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+                <WebView
+                    source={{uri: 'http://blog.pinballmap.com/'}}
+                    style={{marginTop: 20}}
                 />
-                <Text>Blog</Text>
             </View>)
     }
 }
