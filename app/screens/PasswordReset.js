@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
+    Dimensions,
+    Keyboard,
+    ScrollView,
     StyleSheet,
-    View, 
+    TouchableWithoutFeedback,
+    View 
 } from 'react-native'
 import {
     Input,
@@ -14,6 +18,8 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
+
+let deviceHeight = Dimensions.get('window').height
 
 class PasswordReset extends Component {
     state = {
@@ -40,46 +46,66 @@ class PasswordReset extends Component {
         return(
             <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 <ConfirmationModal visible={this.state.modalVisible}>
-                    <Text>Password reset was successful. Check your email.</Text>
-                    <PbmButton
-                        title={"Great!"}
-                        onPress={() => {
-                            this.setState({ modalVisible: false})
-                            this.props.navigation.navigate('Login')
-                        }}
-                    />
+                    <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
+                    <View>
+                        <PbmButton
+                            title={"Great!"}
+                            onPress={() => {
+                                this.setState({ modalVisible: false})
+                                this.props.navigation.navigate('Login')
+                            }}
+                        />
+                    </View>
                 </ConfirmationModal>
-                <Input 
-                    placeholder='Username or email...'
-                    onChangeText={identification => this.setState({identification})}
-                    value={this.state.identification}
-                    errorStyle={{ color: 'red' }}
-                    errorMessage={this.state.identificationError}
-                    inputContainerStyle={s.inputBox}
-                    inputStyle={s.inputText}
-                />
-                <PbmButton 
-                    title={'Submit'}
-                    onPress={() => this.submit()}
-                    disabled={this.state.identification.length === 0}
-                />
+                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                    <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                        <View style={s.verticalAlign}>
+                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Reset Your Password`}</Text>                        
+                            <Input 
+                                placeholder='Username or email...'
+                                onChangeText={identification => this.setState({identification})}
+                                value={this.state.identification}
+                                errorStyle={{ color: 'red' }}
+                                errorMessage={this.state.identificationError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                            />
+                            <PbmButton 
+                                title={'Submit'}
+                                onPress={() => this.submit()}
+                                disabled={this.state.identification.length === 0}
+                            />
+                        </View>
+                    </ScrollView>
+                </TouchableWithoutFeedback>
             </View>)
     }
 }
 
 const s = StyleSheet.create({
     inputBox: {
-        width: '100%',
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#000e18',
+        borderColor: '#97a5af',
         backgroundColor: "#ffffff",
-        marginTop: 15,
-        marginBottom: 15,
+        margin: 15,
+        width: '100%'
     },
     inputText: {
         color: '#000e18',
     },
+    verticalAlign: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height:deviceHeight - 80
+    },
+    confirmText: {
+        textAlign: 'center',
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 18
+    }
 })
 
 PasswordReset.propTypes = {
