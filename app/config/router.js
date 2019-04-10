@@ -24,6 +24,7 @@ import Events from '../screens/Events'
 import Blog from '../screens/Blog'
 import FindMachine from '../screens/FindMachine'
 import EditLocationDetails from '../screens/EditLocationDetails'
+import PasswordReset from '../screens/PasswordReset'
 
 import { DrawerMenu } from '../components'
 
@@ -120,6 +121,7 @@ export const MapStack = StackNavigator({
     Podcast: { screen: Podcast },
     FindMachine: { screen: FindMachine },
     EditLocationDetails: { screen: EditLocationDetails },
+    PasswordReset: { screen: PasswordReset },
 })
 
 export const PbmStack = DrawerNavigator({

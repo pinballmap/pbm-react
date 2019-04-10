@@ -126,6 +126,7 @@ class Login extends Component {
                                     title="Not a user? SIGN UP!"
                                 />              
                                 <Button
+                                    onPress={() => this.props.navigation.navigate('PasswordReset')}
                                     title="I forgot my password"
                                     titleStyle={s.textLink}
                                     containerStyle={{marginBottom: 20}}
