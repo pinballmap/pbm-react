@@ -30,7 +30,6 @@ class Blog extends Component {
             <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 <WebView
                     source={{uri: 'http://blog.pinballmap.com/'}}
-                    style={{marginTop: 20}}
                 />
             </View>)
     }
