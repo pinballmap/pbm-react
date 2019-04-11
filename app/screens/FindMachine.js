@@ -216,8 +216,8 @@ class FindMachine extends React.PureComponent {
                     onChangeText={this.handleSearch}
                     inputStyle={{color:'#000e18'}}
                     value={this.state.query}
-                    inputContainerStyle={{height:35,backgroundColor:'#ffffff'}}
-                    containerStyle={{backgroundColor:'#97a5af'}}
+                    inputContainerStyle={{height:35,backgroundColor:'#e0ebf2'}}
+                    containerStyle={{backgroundColor:'#ffffff'}}
                 />
                 {multiSelect ? 
                     <View style={{alignItems:'center',marginTop:5}}>
