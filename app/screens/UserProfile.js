@@ -200,7 +200,7 @@ const s = StyleSheet.create({
         backgroundColor:'#ffffff',
         borderWidth: 1,
         borderColor: '#97a5af',
-        borderRadius: 5,
+        borderRadius: 50,
         elevation: 0
     },
     margin15: {

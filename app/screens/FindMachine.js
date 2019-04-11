@@ -248,7 +248,7 @@ const s = StyleSheet.create({
         marginLeft:20,
         marginRight:20, 
         marginTop: 20,
-        borderRadius: 5
+        borderRadius: 50,
     },
     titleStyle: {
         color: "#6a7d8a",

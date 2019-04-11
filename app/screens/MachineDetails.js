@@ -127,7 +127,7 @@ class MachineDetails extends Component {
                                     underlineColorAndroid='transparent'
                                     onChangeText={conditionText => this.setState({ conditionText })}
                                     value={this.state.conditionText}
-                                    style={[{padding:5,height:100},s.textInput]}
+                                    style={[{padding:5,height:100},s.textInput,s.radius10]}
                                     placeholder={'Enter machine condition...'}
                                     textAlignVertical='top'
                                 />
@@ -155,7 +155,7 @@ class MachineDetails extends Component {
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'center'},s.textInput,s.radius50]}
                                     keyboardType='numeric'
                                     underlineColorAndroid='transparent'
                                     onChangeText={score => this.setState({ score })}
@@ -279,7 +279,7 @@ const s = StyleSheet.create({
         backgroundColor:'#ffffff',
         borderWidth: 1,
         borderColor: '#97a5af',
-        borderRadius: 5,
+        borderRadius: 50,
         elevation: 0
     },
     externalIcon: {
@@ -316,9 +316,15 @@ const s = StyleSheet.create({
         backgroundColor: '#ffffff', 
         borderColor: '#97a5af',
         borderWidth: 2,
-        marginLeft: 20,
-        marginRight: 20,
-        borderRadius: 5
+        marginBottom: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
+    radius50: {
+        borderRadius: 50
+    },
+    radius10: {
+        borderRadius: 10
     },
     sectionTitle: {
         fontSize: 16,

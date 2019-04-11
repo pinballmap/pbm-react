@@ -437,7 +437,7 @@ const s = StyleSheet.create({
         backgroundColor:'#f5fbff',
         borderWidth: 1,
         borderColor: '#4b5862',
-        borderRadius: 5,
+        borderRadius: 50,
         elevation: 0
     },
     margin15: {

@@ -93,7 +93,7 @@ class Events extends Component {
                                     extraData={this.state}
                                     renderItem={({ item }) => {
                                         return (
-                                            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
+                                            <Card containerStyle={{borderRadius: 50,borderColor: "#D3ECFF"}}>
                                                 <Text>{item.start_date}</Text>
                                                 <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
                                                 <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>

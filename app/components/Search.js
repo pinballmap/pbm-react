@@ -188,7 +188,7 @@ const s = StyleSheet.create({
         width: deviceWidth - 115,
         backgroundColor: '#e3e5e8',
         height: 36,
-        borderRadius: 5,
+        borderRadius: 50,
         display: 'flex',
         flexDirection: 'row'
     },
@@ -199,7 +199,7 @@ const s = StyleSheet.create({
     input: {
         borderWidth: 0,
         borderColor: '#e3e5e8',
-        borderRadius: 5,
+        borderRadius: 50,
         width: deviceWidth - 60,
         backgroundColor: '#e3e5e8',
         height: 36,
