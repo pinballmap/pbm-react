@@ -15,7 +15,7 @@ class DropDownButton extends Component {
                     color:"#000e18",
                     fontSize:16
                 }}
-                style={{borderRadius: 5}}
+                style={{borderRadius: 50}}
                 icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
                 iconRight
                 containerStyle={{marginTop:5,marginRight:10,marginLeft:10}}
@@ -39,7 +39,7 @@ const s = StyleSheet.create({
         elevation: 0,
         borderColor: '#97a5af',
         borderWidth: 2,
-        borderRadius: 5
+        borderRadius: 50
     },
     dropdownIcon: {
         color: "#4b5862",
