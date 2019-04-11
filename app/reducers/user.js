@@ -49,8 +49,7 @@ export default (state = initialState, action) => {
             ...state,
             isFetchingLocationTrackingEnabled: true,
         }
-    case FETCHING_LOCATION_TRACKING_SUCCESS: {
-        AsyncStorage.setItem('locationServices', JSON.stringify({enabled: true}))
+    case FETCHING_LOCATION_TRACKING_SUCCESS: 
         return {
             ...state,
             isFetchingLocationTrackingEnabled: false,
@@ -58,9 +57,7 @@ export default (state = initialState, action) => {
             lon: action.lon,
             locationTrackingServicesEnabled: true,
         }
-    }
-    case FETCHING_LOCATION_TRACKING_FAILURE: {
-        AsyncStorage.setItem('locationServices', JSON.stringify({enabled: false}))
+    case FETCHING_LOCATION_TRACKING_FAILURE: 
         return {
             ...state,
             isFetchingLocationTrackingEnabled: false,
@@ -68,7 +65,6 @@ export default (state = initialState, action) => {
             lon: -122.6587,
             locationTrackingServicesEnabled: false,
         }
-    }
     case LOG_IN: {
         if (!action.credentials)
             return state
