@@ -19,6 +19,7 @@ class WarningButton extends Component {
                 buttonStyle={s.redButton}
                 titleStyle={{fontSize:18,color:'#f53240'}}    
                 style={{borderRadius: 50}}
+                containerViewStyle={{alignSelf: 'stretch'}}
                 containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
             /> 
         )
