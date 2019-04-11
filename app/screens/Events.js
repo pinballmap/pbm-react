@@ -34,7 +34,7 @@ class Events extends Component {
             drawerLabel: 'Events',
             drawerIcon: () => <MaterialIcons name='event-note' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Events',
+            title: 'Nearby Events',
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
@@ -88,12 +88,13 @@ class Events extends Component {
                         <Text>Oops. Something went wrong.</Text> :
                         events.length > 0 ?
                             <ScrollView>
+                                <Text style={s.pageTitle}>Upcoming events within 50 miles.</Text>
                                 <FlatList
                                     data={events}
                                     extraData={this.state}
                                     renderItem={({ item }) => {
                                         return (
-                                            <Card containerStyle={{borderRadius: 50,borderColor: "#D3ECFF"}}>
+                                            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
                                                 <Text>{item.start_date}</Text>
                                                 <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
                                                 <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
@@ -111,6 +112,20 @@ class Events extends Component {
 }
 
 const s = StyleSheet.create({ 
+    pageTitle: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 10,
+        padding: 10,
+        color: "#f5fbff",
+        backgroundColor: "#6a7d8a",
+        textAlign: "center"
+    },
+    textLink: {
+        textDecorationLine: 'underline',
+        color: "#F53240",
+        fontSize: 16,
+    },
     drawerIcon: {
         fontSize: 24,
         color: '#6a7d8a'
