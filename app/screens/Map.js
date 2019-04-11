@@ -180,7 +180,7 @@ class Map extends Component {
     
         if (isFetchingLocations || !this.state.region.latitude) {
             return(
-                <View style={{flex: 1, padding: 20}}>
+                <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
                     <ActivityIndicator/>
                 </View>
             )

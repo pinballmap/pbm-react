@@ -91,7 +91,7 @@ class MachineDetails extends Component {
         
         if (!curLmx) {
             return (
-                <View style={{ flex: 1, padding: 20 }}>
+                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
                     <ActivityIndicator />
                 </View>
             )   
@@ -186,7 +186,7 @@ class MachineDetails extends Component {
                             () => this.props.navigation.navigate('Login')}
                     />
                     <Text style={s.sectionTitle}>Machine Comments</Text>
-                    <View>
+                    <View style={s.border}>
                         {mostRecentComments ? 
                             mostRecentComments.map(commentObj => {
                                 const { comment, created_at, username } = commentObj
@@ -216,9 +216,9 @@ class MachineDetails extends Component {
                         : null
                     }
                     <Text style={s.sectionTitle}>Top Scores</Text>
-                    {scores.length > 0 ? 
-                        <View style={{paddingBottom:5}}>                                  
-                            {scores.map(scoreObj => {
+                    <View style={s.border}>
+                        {scores.length > 0 ?                                              
+                            scores.map(scoreObj => {
                                 const {id, score, created_at, username} = scoreObj
         
                                 return (
@@ -230,10 +230,10 @@ class MachineDetails extends Component {
                                         titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
                                         subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
                                     />)
-                            })}
-                        </View> : 
-                        <Text style={s.noneYet}>No scores yet!</Text>
-                    }
+                            }) 
+                         : <Text style={s.noneYet}>No scores yet!</Text> 
+                        }
+                    </View>
                     {pintipsUrl ?
                         <Button
                             title={'View playing tips on PinTips'}
@@ -348,6 +348,12 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height:deviceHeight
+    },
+    border: {
+        borderBottomColor: '#e0ebf2',
+        borderBottomWidth: 1,
+        borderTopColor: '#e0ebf2',
+        borderTopWidth: 1,
     }
 })
 

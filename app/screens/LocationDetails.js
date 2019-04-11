@@ -115,7 +115,7 @@ class LocationDetails extends Component {
     render() {
         if (this.props.location.isFetchingLocation || !this.props.location.location.id || this.props.location.addingMachineToLocation) {
             return (
-                <View style={{ flex: 1, padding: 20 }}>
+                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
                     <ActivityIndicator />
                 </View>
             )

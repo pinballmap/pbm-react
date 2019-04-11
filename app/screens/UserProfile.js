@@ -73,8 +73,11 @@ class UserProfile extends Component {
       
     render(){
         if (this.state.fetchingUserInfo)
-            return <ActivityIndicator />
-
+            return (
+                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
+                    <ActivityIndicator />
+                </View>
+            )
         const { user } = this.props
         const profileInfo = this.state.profile_info
         const { 
