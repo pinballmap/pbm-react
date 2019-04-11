@@ -21,6 +21,7 @@ class PbmButton extends Component {
                 buttonStyle={s.blueButton}
                 titleStyle={s.titleStyle}
                 style={{borderRadius: 50}}
+                containerViewStyle={{alignSelf: 'stretch'}}
                 containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
             />
         )

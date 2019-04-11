@@ -46,7 +46,7 @@ class PasswordReset extends Component {
         return(
             <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }> 
                 <View style={{flex:1,backgroundColor:'#f5fbff'}}>
-                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
+                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
                         <ConfirmationModal visible={this.state.modalVisible}>
                             <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
                             <View>
@@ -60,7 +60,7 @@ class PasswordReset extends Component {
                             </View>
                         </ConfirmationModal>
                         <View>
-                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Reset Your Password`}</Text>                        
+                            <Text style={s.titleText}>{`Reset Your Password`}</Text>                        
                             <Input 
                                 placeholder='Username or email...'
                                 onChangeText={identification => this.setState({identification})}
@@ -88,8 +88,8 @@ const s = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#97a5af',
         backgroundColor: "#ffffff",
-        margin: 15,
-        width: '100%'
+        width: '100%',
+        margin:15,
     },
     inputText: {
         color: '#000e18',
@@ -100,6 +100,12 @@ const s = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18
+    },
+    titleText: {
+        textAlign:'center',
+        marginBottom:10,
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 })
 
