@@ -59,3 +59,5 @@ __snapshots__/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+app/config/keys.js
