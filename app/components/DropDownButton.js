@@ -34,11 +34,11 @@ DropDownButton.propTypes = {
 
 const s = StyleSheet.create({
     dropdown: {
-        backgroundColor:"#ffffff",
+        backgroundColor:"#e0ebf2",
         width: '100%',
         elevation: 0,
-        borderColor: '#97a5af',
-        borderWidth: 2,
+        borderColor: '#e0ebf2',
+        borderWidth: 1,
         borderRadius: 50
     },
     dropdownIcon: {

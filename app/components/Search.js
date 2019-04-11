@@ -186,7 +186,7 @@ const s = StyleSheet.create({
     },
     searchMap: {
         width: deviceWidth - 115,
-        backgroundColor: '#e3e5e8',
+        backgroundColor: '#e0ebf2',
         height: 36,
         borderRadius: 50,
         display: 'flex',
@@ -198,10 +198,10 @@ const s = StyleSheet.create({
     },
     input: {
         borderWidth: 0,
-        borderColor: '#e3e5e8',
+        borderColor: '#e0ebf2',
         borderRadius: 50,
         width: deviceWidth - 60,
-        backgroundColor: '#e3e5e8',
+        backgroundColor: '#e0ebf2',
         height: 36,
         display: 'flex',
         flexDirection: 'row',
