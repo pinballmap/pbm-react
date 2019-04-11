@@ -96,9 +96,8 @@ export class SignupLogin extends Component {
                                     <Text style={s.bold}> {this.state.num_lmxes} </Text>
                                     <Text>machines.</Text>
                                     {"\n"}{"\n"}
-                                    <Text>
-                                        You can use it without being logged in. But to help keep it up to date you gotta log in!
-                                        </Text>
+                                    <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
+                                    {"\n"}{"\n"}
                                     <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
                                         You’ll be prompted to enable location services, so that we can display pinball machines near you!
                                     </Text>
