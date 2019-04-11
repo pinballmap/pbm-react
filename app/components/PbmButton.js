@@ -15,11 +15,11 @@ class PbmButton extends Component {
                 icon={this.props.icon}
                 disabled={this.props.disabled}
                 raised
-                buttonStyle={s.blueButton}
+                buttonStyle={this.props.buttonStyle ? this.props.buttonStyle : s.blueButton}
                 titleStyle={s.titleStyle}
                 style={{borderRadius: 50}}
                 containerViewStyle={{alignSelf: 'stretch'}}
-                containerStyle={[{borderRadius:50},s.margin15]}
+                containerStyle={[{borderRadius:50},this.props.containerStyle ? this.props.containerStyle : s.margin15]}
             />
         )
     }
