@@ -135,9 +135,9 @@ const s = StyleSheet.create({
         color: '#6a7d8a'
     },
     textInput: {
-        backgroundColor: '#ffffff', 
-        borderColor: '#97a5af', 
-        borderWidth: 2,
+        backgroundColor: '#e0ebf2', 
+        borderColor: '#e0ebf2', 
+        borderWidth: 1,
         marginLeft: 10,
         marginRight: 10, 
         marginTop: 20,

@@ -241,9 +241,9 @@ class FindMachine extends React.PureComponent {
 
 const s = StyleSheet.create({
     textInput: {
-        backgroundColor: '#ffffff', 
-        borderColor: '#97a5af', 
-        borderWidth: 2,
+        backgroundColor: '#e0ebf2', 
+        borderColor: '#e0ebf2', 
+        borderWidth: 1,
         height: 80,
         marginLeft:20,
         marginRight:20, 
