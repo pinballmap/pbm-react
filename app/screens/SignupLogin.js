@@ -76,7 +76,11 @@ export class SignupLogin extends Component {
 
     render(){
         if (this.state.fetchingShowTurnOnLocationServices || (this.state.num_lmxes === 0 && !this.state.apiError)) {
-            return <ActivityIndicator />
+            return (
+                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
+                    <ActivityIndicator />
+                </View>
+            )
         }
         
         return(

@@ -264,7 +264,8 @@ const s = StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#6a7d8a"
     },
     preview: {
         fontSize: 14,
