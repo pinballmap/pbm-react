@@ -16,6 +16,7 @@ import {
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { getData } from '../config/request'
 import { 
     displayError,
@@ -23,12 +24,11 @@ import {
     getLocationsByCity,
     updateCurrCoordinates,
 } from '../actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { GOOGLE_MAPS_KEY } from '../config/keys'
 
 let deviceWidth = Dimensions.get('window').width
 
-const apiKey = process.env['API_KEY']
-Geocode.setApiKey(apiKey)
+Geocode.setApiKey(GOOGLE_MAPS_KEY)
 
 class Search extends Component {
     constructor(props) {
