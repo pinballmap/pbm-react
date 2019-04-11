@@ -88,7 +88,10 @@ class Events extends Component {
                         <Text>Oops. Something went wrong.</Text> :
                         events.length > 0 ?
                             <ScrollView>
-                                <Text style={s.pageTitle}>Upcoming events within 50 miles.</Text>
+                                <View style={s.header}>
+                                    <Text style={[s.title,s.headerText]}>Upcoming Events</Text> 
+                                    <Text style={[s.paren,s.headerText]}>(within 50 miles)</Text>
+                                </View>
                                 <FlatList
                                     data={events}
                                     extraData={this.state}
@@ -112,19 +115,22 @@ class Events extends Component {
 }
 
 const s = StyleSheet.create({ 
-    pageTitle: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginBottom: 10,
-        padding: 10,
-        color: "#f5fbff",
+    header: {
         backgroundColor: "#6a7d8a",
+        paddingTop: 10,
+        paddingBottom: 10,        
+    },
+    headerText: {
+        color: "#f5fbff",
         textAlign: "center"
     },
-    textLink: {
-        textDecorationLine: 'underline',
-        color: "#F53240",
-        fontSize: 16,
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    paren: {
+        fontSize: 12,
+        fontStyle: "italic"
     },
     drawerIcon: {
         fontSize: 24,
