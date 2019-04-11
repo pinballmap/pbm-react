@@ -275,9 +275,9 @@ const s = StyleSheet.create({
         backgroundColor: '#f5fbfe', 
         borderColor: '#97a5af', 
         borderWidth: 2,
-        marginLeft: 10,
-        marginRight: 10,
-        paddingLeft: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        paddingLeft: 10,
         paddingRight: 5
     },
     radius50: {

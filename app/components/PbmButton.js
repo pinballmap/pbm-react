@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
-    Dimensions,
     StyleSheet, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
-
-let deviceWidth = Dimensions.get('window').width
 
 class PbmButton extends Component {
     render(){
@@ -22,7 +19,7 @@ class PbmButton extends Component {
                 titleStyle={s.titleStyle}
                 style={{borderRadius: 50}}
                 containerViewStyle={{alignSelf: 'stretch'}}
-                containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
+                containerStyle={[{borderRadius:50,},s.margin15]}
             />
         )
     }
@@ -50,12 +47,6 @@ const s = StyleSheet.create({
     margin15: {
         marginLeft:15,
         marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
-    margin25: {
-        marginLeft:25,
-        marginRight:25,
         marginTop:15,
         marginBottom:15
     },
