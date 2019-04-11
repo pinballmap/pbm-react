@@ -84,11 +84,10 @@ export const getData = uri => {
 export const getIfpaData = address => {
     return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=a3be4f0cde21806308b466b7a6babdf5&address=${address}&m=50`)
         .then(response => {
-            console.log(response)
             if(response.status === 200)
                 return response.json()
 
-            throw new Error('API response was not ok')
+            throw new Error('IFPA API response was not ok')
         })
         .catch(err => err)
 }

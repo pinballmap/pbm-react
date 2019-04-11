@@ -51,13 +51,24 @@ class Events extends Component {
     componentDidMount() {
         const { lat, lon } = this.props.user
         const { curLat, curLon } = this.props.query
+        const { mapLocations = [] } = this.props.locations 
+        
+        let promise
+        if (mapLocations.length > 0 && mapLocations[0].city && mapLocations[0].state) {
+            let address = `${mapLocations[0].city}, ${mapLocations[0].state}`
+            promise = () => Promise.resolve(address)
+            
+        } 
+        else {
+            promise = () => Geocode.fromLatLng(curLat !== null ? curLat : lat, curLon !== null ? curLon : lon)
+                .then(response => response.results[0].formatted_address, error => { throw error }) 
+        }
 
-        Geocode.fromLatLng(curLat !== null ? curLat : lat, curLon !== null ? curLon : lon)
-            .then(response => response.results[0].formatted_address, error => { throw error })   
+        promise()
             .then(async address => {
                 try {
                     const data = await getIfpaData(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}`)
-                    this.setState({ events: data.calendar, gettingEvents: false})
+                    this.setState({ events: data.calendar ? data.calendar : [], gettingEvents: false})
                 }
                 catch(e) {
                     throw e
@@ -75,23 +86,25 @@ class Events extends Component {
                     <ActivityIndicator /> :
                     error ? 
                         <Text>Oops. Something went wrong.</Text> :
-                        <ScrollView>
-                            <FlatList
-                                data={events}
-                                extraData={this.state}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
-                                            <Text>{item.start_date}</Text>
-                                            <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                            <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                            <Text>{item.address1}, {item.city}, {item.state}</Text>
-                                        </Card>
-                                    )
-                                }}
-                                keyExtractor={event => `${event.calendar_id}`}
-                            />
-                        </ScrollView>
+                        events.length > 0 ?
+                            <ScrollView>
+                                <FlatList
+                                    data={events}
+                                    extraData={this.state}
+                                    renderItem={({ item }) => {
+                                        return (
+                                            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
+                                                <Text>{item.start_date}</Text>
+                                                <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                <Text>{item.address1}, {item.city}, {item.state}</Text>
+                                            </Card>
+                                        )
+                                    }}
+                                    keyExtractor={event => `${event.calendar_id}`}
+                                />
+                            </ScrollView> : 
+                            <Text>No Events Found</Text>
                 }
             </View>)
     }
@@ -116,7 +129,10 @@ const s = StyleSheet.create({
 
 Events.propTypes = {
     navigation: PropTypes.object,
+    user: PropTypes.object, 
+    locations: PropTypes.object,
+    query: PropTypes.object,
 }
 
-const mapStateToProps = ({ query, user }) => ({ query, user })
+const mapStateToProps = ({ locations, query, user }) => ({ locations, query, user })
 export default connect(mapStateToProps, null)(Events)
