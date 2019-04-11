@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
-    Dimensions,
     Keyboard,
     ScrollView,
     StyleSheet,
@@ -18,8 +17,6 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
-
-let deviceHeight = Dimensions.get('window').height
 
 class PasswordReset extends Component {
     state = {
