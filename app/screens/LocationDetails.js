@@ -7,6 +7,7 @@ import {
     Image, 
     Linking,
     Modal, 
+    Platform,
     ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
@@ -54,7 +55,7 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
-            headerTitleStyle: {width:deviceWidth - 150,textAlign:'center'},
+            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {width:deviceWidth - 160,textAlign:'center'},            
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
