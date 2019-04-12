@@ -188,7 +188,7 @@ class EditLocationDetails extends Component {
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
-                                style={[{height: 40},s.textInput]}
+                                style={[{height: 40},s.textInput,s.radius10]}
                                 keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
@@ -198,7 +198,7 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Website</Text>
                             <TextInput
-                                style={[{height: 40},s.textInput]}
+                                style={[{height: 40},s.textInput,s.radius10]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={website => this.setState({ website })}
                                 value={website}
@@ -209,7 +209,7 @@ class EditLocationDetails extends Component {
                             <TextInput
                                 multiline={true}
                                 numberOfLines={4}
-                                style={[{height: 100},s.textInput]}
+                                style={[{height: 100},s.textInput,s.radius10]}
                                 onChangeText={description => this.setState({ description })}
                                 underlineColorAndroid='transparent'
                                 value={description}
@@ -264,7 +264,8 @@ const s = StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#6a7d8a"
     },
     preview: {
         fontSize: 14,
@@ -272,14 +273,16 @@ const s = StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: '#f5fbfe', 
-        borderColor: '#97a5af', 
-        borderWidth: 2,
-        marginLeft: 10,
-        marginRight: 10,
-        borderRadius: 5,
-        paddingLeft: 5,
+        backgroundColor: '#e0ebf2', 
+        borderColor: '#d1dfe8',
+        borderWidth: 1,
+        marginLeft: 15,
+        marginRight: 15,
+        paddingLeft: 10,
         paddingRight: 5
+    },
+    radius10: {
+        borderRadius: 10
     },
     pickerbg: {
         marginLeft: 10,

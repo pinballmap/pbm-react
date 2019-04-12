@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
-    Dimensions,
     Keyboard,
     ScrollView,
     StyleSheet,
@@ -18,8 +17,6 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
-
-let deviceHeight = Dimensions.get('window').height
 
 class ResendConfirmation extends Component {
     state = {
@@ -46,7 +43,7 @@ class ResendConfirmation extends Component {
         return(
             <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                 <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
+                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
                         <ConfirmationModal visible={this.state.modalVisible}>
                             <Text style={s.confirmText}>Confirmation info resent.</Text>
                             <View>
@@ -60,7 +57,7 @@ class ResendConfirmation extends Component {
                             </View>
                         </ConfirmationModal>
                         <View>
-                            <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Resend the Confirmation Email`}</Text>                 
+                            <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
                             <Input 
                                 placeholder='Username or email...'
                                 onChangeText={identification => this.setState({identification})}
@@ -100,6 +97,12 @@ const s = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18
+    },
+    titleText: {
+        textAlign:'center',
+        marginBottom:10,
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 })
 

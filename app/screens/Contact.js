@@ -135,13 +135,13 @@ const s = StyleSheet.create({
         color: '#6a7d8a'
     },
     textInput: {
-        backgroundColor: '#ffffff', 
-        borderColor: '#97a5af', 
-        borderWidth: 2,
+        backgroundColor: '#e0ebf2', 
+        borderColor: '#d1dfe8',
+        borderWidth:1,
         marginLeft: 10,
         marginRight: 10, 
         marginTop: 20,
-        borderRadius: 5,
+        borderRadius: 10,
         paddingLeft: 5,
         paddingRight: 5,
         textAlign: 'left'
