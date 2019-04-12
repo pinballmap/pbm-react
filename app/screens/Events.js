@@ -146,8 +146,7 @@ const s = StyleSheet.create({
         marginBottom: 5
     },
     margin: {
-        marginTop: 8,
-        marginBottom: 8
+        marginTop: 10,
     }
 })
 

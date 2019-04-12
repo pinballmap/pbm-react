@@ -215,7 +215,7 @@ class LocationDetails extends Component {
                             onPress={this.updateIndex}
                             selectedIndex={this.state.buttonIndex}
                             buttons={['Machines', 'Info']}
-                            containerStyle={{ height: 35, borderWidth: 2 }}
+                            containerStyle={{ height: 35, borderWidth: 2, borderColor: '#e0ebf2' }}
                             selectedButtonStyle={s.buttonStyle}
                             selectedTextStyle={s.textStyle}
                         />
@@ -228,6 +228,7 @@ class LocationDetails extends Component {
                                         icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                         title={loggedIn ? 'Add Machine' : 'Login to add machine'}
                                         accessibilityLabel="Add Machine"
+                                        buttonStyle={s.addMachinesButton}
                                     />
                                     <Button
                                         onPress={() => loggedIn ? this.handleConfirmPress(location.id) : this.props.navigation.navigate('Login') }
@@ -240,7 +241,7 @@ class LocationDetails extends Component {
                                             fontSize:16
                                         }}
                                         style={{borderRadius: 50}}
-                                        containerStyle={[{borderRadius:50},deviceWidth > 400 ? s.margin25 : s.margin15]}
+                                        containerStyle={[{borderRadius:50},s.margin15]}
                                     />
                                 </View>
                                 {sortedMachines.map(machine => (
@@ -446,11 +447,11 @@ const s = StyleSheet.create({
         marginTop:0,
         marginBottom:10
     },
-    margin25: {
-        marginLeft:25,
-        marginRight:25,
-        marginTop:0,
-        marginBottom:10
+    addMachinesButton: {
+        backgroundColor: '#e0ebf2',
+        borderRadius: 50,
+        width: '100%',
+        elevation: 0
     },
 })
 
