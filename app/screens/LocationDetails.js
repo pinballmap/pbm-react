@@ -54,7 +54,7 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('locationName')}</Text>,
-            headerTitleStyle: {width:deviceWidth - 100},
+            headerTitleStyle: {width:deviceWidth - 150,textAlign:'center'},
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
