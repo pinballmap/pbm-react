@@ -188,7 +188,7 @@ class EditLocationDetails extends Component {
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
-                                style={[{height: 40},s.textInput,s.radius50]}
+                                style={[{height: 40},s.textInput,s.s.radius10]}
                                 keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
@@ -198,7 +198,7 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Website</Text>
                             <TextInput
-                                style={[{height: 40},s.textInput,s.radius50]}
+                                style={[{height: 40},s.textInput,s.s.radius10]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={website => this.setState({ website })}
                                 value={website}
@@ -280,9 +280,6 @@ const s = StyleSheet.create({
         marginRight: 15,
         paddingLeft: 10,
         paddingRight: 5
-    },
-    radius50: {
-        borderRadius: 50
     },
     radius10: {
         borderRadius: 10
