@@ -99,7 +99,7 @@ class Events extends Component {
                                         return (
                                             <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
                                                 <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{item.start_date}</Text>
+                                        <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date == item.end_date) ? <Text>{item.start_date}</Text> : <Text>{item.start_date} - {item.end_date}</Text>}</Text>
                                                 <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
                                                 <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                             </Card>
