@@ -188,7 +188,7 @@ class EditLocationDetails extends Component {
                         <View style={{marginLeft:10,marginRight:10}}>
                             <Text style={s.title}>Phone</Text>
                             <TextInput 
-                                style={[{height: 40},s.textInput,s.s.radius10]}
+                                style={[{height: 40},s.textInput,s.radius10]}
                                 keyboardType='numeric'
                                 underlineColorAndroid='transparent'
                                 onChangeText={phone => this.setState({ phone })}
@@ -198,7 +198,7 @@ class EditLocationDetails extends Component {
                             />
                             <Text style={s.title}>Website</Text>
                             <TextInput
-                                style={[{height: 40},s.textInput,s.s.radius10]}
+                                style={[{height: 40},s.textInput,s.radius10]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={website => this.setState({ website })}
                                 value={website}
