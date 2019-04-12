@@ -259,7 +259,7 @@ class MachineDetails extends Component {
                         }}
                         iconRight
                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                        containerStyle={deviceWidth > 400 ? s.margin25 : s.margin15}
+                        containerStyle={s.margin15}
                     />
                     <WarningButton 
                         title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
@@ -288,12 +288,6 @@ const s = StyleSheet.create({
     margin15: {
         marginLeft:15,
         marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
-    margin25: {
-        marginLeft:25,
-        marginRight:25,
         marginTop:15,
         marginBottom:15
     },

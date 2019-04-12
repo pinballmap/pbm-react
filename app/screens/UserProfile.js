@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator, 
-    Dimensions,
     ScrollView, 
     StyleSheet, 
     View, 
@@ -21,9 +20,6 @@ import {
 } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
-
-
-let deviceWidth = Dimensions.get('window').width
 
 const moment = require('moment')
 
@@ -148,7 +144,7 @@ class UserProfile extends Component {
                             }}
                             iconLeft
                             icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                            containerStyle={deviceWidth > 400 ? s.margin25 : s.margin15}
+                            containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
                         <View style={{paddingTop:8,paddingBottom:8}}>
@@ -209,12 +205,6 @@ const s = StyleSheet.create({
     margin15: {
         marginLeft:15,
         marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
-    margin25: {
-        marginLeft:25,
-        marginRight:25,
         marginTop:15,
         marginBottom:15
     },
