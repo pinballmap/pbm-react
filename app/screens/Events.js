@@ -85,7 +85,7 @@ class Events extends Component {
                 {gettingEvents ? 
                     <ActivityIndicator /> :
                     error ? 
-                        <Text>Oops. Something went wrong.</Text> :
+                        <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
                         events.length > 0 ?
                             <ScrollView>
                                 <View style={s.header}>
@@ -98,10 +98,10 @@ class Events extends Component {
                                     renderItem={({ item }) => {
                                         return (
                                             <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
-                                                <Text>{item.start_date}</Text>
-                                                <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                <Text>{item.address1}, {item.city}, {item.state}</Text>
+                                                <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{item.start_date}</Text>
+                                                <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                             </Card>
                                         )
                                     }}
@@ -137,15 +137,18 @@ const s = StyleSheet.create({
         color: '#6a7d8a'
     },
     textLink: {
-        textDecorationLine: 'underline',
-        fontSize: 12,
+        fontSize: 14,
         textAlign: 'center',
-        marginTop: 5,
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "#D3ECFF",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 5
     },
+    margin: {
+        marginTop: 8,
+        marginBottom: 8
+    }
 })
 
 Events.propTypes = {
