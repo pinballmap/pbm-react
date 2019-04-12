@@ -155,7 +155,7 @@ class MachineDetails extends Component {
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 
-                                    style={[{height: 40,textAlign:'center'},s.textInput,s.s.radius10]}
+                                    style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
                                     keyboardType='numeric'
                                     underlineColorAndroid='transparent'
                                     onChangeText={score => this.setState({ score })}
