@@ -48,7 +48,7 @@ class Map extends Component {
             headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            containerStyle={{width:40}}
+            containerStyle={Platform.OS === "ios" ? {width:40} : {width:45}}
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
