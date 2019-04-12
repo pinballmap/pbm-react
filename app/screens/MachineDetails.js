@@ -7,6 +7,7 @@ import {
     Keyboard,
     Linking, 
     Modal, 
+    Platform,
     ScrollView, 
     StyleSheet, 
     TextInput, 
@@ -49,7 +50,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
-            headerTitleStyle: {width:deviceWidth - 90},
+            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {width:deviceWidth - 160,textAlign:'center'},
             headerRight: <RemoveMachine />,
             headerStyle: {
                 backgroundColor:'#f5fbff',
@@ -91,7 +92,7 @@ class MachineDetails extends Component {
         
         if (!curLmx) {
             return (
-                <View style={{ flex: 1, padding: 20 }}>
+                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
                     <ActivityIndicator />
                 </View>
             )   
@@ -127,7 +128,7 @@ class MachineDetails extends Component {
                                     underlineColorAndroid='transparent'
                                     onChangeText={conditionText => this.setState({ conditionText })}
                                     value={this.state.conditionText}
-                                    style={[{padding:5,height:100},s.textInput]}
+                                    style={[{padding:5,height:100},s.textInput,s.radius10]}
                                     placeholder={'Enter machine condition...'}
                                     textAlignVertical='top'
                                 />
@@ -155,7 +156,7 @@ class MachineDetails extends Component {
                             <View style={s.verticalAlign}>
                                 <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 
-                                    style={[{height: 40,textAlign:'center'},s.textInput]}
+                                    style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
                                     keyboardType='numeric'
                                     underlineColorAndroid='transparent'
                                     onChangeText={score => this.setState({ score })}
@@ -184,9 +185,10 @@ class MachineDetails extends Component {
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
+                        buttonStyle={s.addButton}
                     />
                     <Text style={s.sectionTitle}>Machine Comments</Text>
-                    <View>
+                    <View style={s.border}>
                         {mostRecentComments ? 
                             mostRecentComments.map(commentObj => {
                                 const { comment, created_at, username } = commentObj
@@ -207,6 +209,7 @@ class MachineDetails extends Component {
                             () => this.setState({ showAddScoreModal: true }) :
                             () => this.props.navigation.navigate('Login')
                         }
+                        buttonStyle={s.addButton}
                     />
                     {userHighScore ? 
                         <View>
@@ -216,9 +219,9 @@ class MachineDetails extends Component {
                         : null
                     }
                     <Text style={s.sectionTitle}>Top Scores</Text>
-                    {scores.length > 0 ? 
-                        <View style={{paddingBottom:5}}>                                  
-                            {scores.map(scoreObj => {
+                    <View style={s.border}>
+                        {scores.length > 0 ?                                              
+                            scores.map(scoreObj => {
                                 const {id, score, created_at, username} = scoreObj
         
                                 return (
@@ -230,10 +233,10 @@ class MachineDetails extends Component {
                                         titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
                                         subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
                                     />)
-                            })}
-                        </View> : 
-                        <Text style={s.noneYet}>No scores yet!</Text>
-                    }
+                            }) 
+                         : <Text style={s.noneYet}>No scores yet!</Text> 
+                        }
+                    </View>
                     {pintipsUrl ?
                         <Button
                             title={'View playing tips on PinTips'}
@@ -259,7 +262,7 @@ class MachineDetails extends Component {
                         }}
                         iconRight
                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                        containerStyle={deviceWidth > 400 ? s.margin25 : s.margin15}
+                        containerStyle={s.margin15}
                     />
                     <WarningButton 
                         title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
@@ -279,7 +282,7 @@ const s = StyleSheet.create({
         backgroundColor:'#ffffff',
         borderWidth: 1,
         borderColor: '#97a5af',
-        borderRadius: 5,
+        borderRadius: 50,
         elevation: 0
     },
     externalIcon: {
@@ -288,12 +291,6 @@ const s = StyleSheet.create({
     margin15: {
         marginLeft:15,
         marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
-    margin25: {
-        marginLeft:25,
-        marginRight:25,
         marginTop:15,
         marginBottom:15
     },
@@ -313,12 +310,15 @@ const s = StyleSheet.create({
         backgroundColor:'#ffffff',
     },
     textInput: {
-        backgroundColor: '#ffffff', 
-        borderColor: '#97a5af',
-        borderWidth: 2,
-        marginLeft: 20,
-        marginRight: 20,
-        borderRadius: 5
+        backgroundColor: '#e0ebf2', 
+        borderColor: '#d1dfe8',
+        borderWidth: 1,
+        marginBottom: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
+    radius10: {
+        borderRadius: 10
     },
     sectionTitle: {
         fontSize: 16,
@@ -342,7 +342,19 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height:deviceHeight
-    }
+    },
+    border: {
+        borderBottomColor: '#e0ebf2',
+        borderBottomWidth: 1,
+        borderTopColor: '#e0ebf2',
+        borderTopWidth: 1,
+    },
+    addButton: {
+        backgroundColor: '#e0ebf2',
+        borderRadius: 50,
+        width: '100%',
+        elevation: 0
+    },
 })
 
 MachineDetails.propTypes = {

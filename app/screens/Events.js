@@ -34,7 +34,7 @@ class Events extends Component {
             drawerLabel: 'Events',
             drawerIcon: () => <MaterialIcons name='event-note' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Events',
+            title: 'Nearby Events',
             headerStyle: {
                 backgroundColor:'#f5fbff',
                 ...ifIphoneX({
@@ -85,19 +85,23 @@ class Events extends Component {
                 {gettingEvents ? 
                     <ActivityIndicator /> :
                     error ? 
-                        <Text>Oops. Something went wrong.</Text> :
+                        <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
                         events.length > 0 ?
                             <ScrollView>
+                                <View style={s.header}>
+                                    <Text style={[s.title,s.headerText]}>Upcoming Events</Text> 
+                                    <Text style={[s.paren,s.headerText]}>(within 50 miles)</Text>
+                                </View>
                                 <FlatList
                                     data={events}
                                     extraData={this.state}
                                     renderItem={({ item }) => {
                                         return (
                                             <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
-                                                <Text>{item.start_date}</Text>
-                                                <Text  style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                <Text>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                <Text>{item.address1}, {item.city}, {item.state}</Text>
+                                                <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date == item.end_date) ? <Text>{item.start_date}</Text> : <Text>{item.start_date} - {item.end_date}</Text>}</Text>
+                                                <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                             </Card>
                                         )
                                     }}
@@ -111,20 +115,39 @@ class Events extends Component {
 }
 
 const s = StyleSheet.create({ 
+    header: {
+        backgroundColor: "#6a7d8a",
+        paddingTop: 10,
+        paddingBottom: 10,        
+    },
+    headerText: {
+        color: "#f5fbff",
+        textAlign: "center"
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    paren: {
+        fontSize: 12,
+        fontStyle: "italic"
+    },
     drawerIcon: {
         fontSize: 24,
         color: '#6a7d8a'
     },
     textLink: {
-        textDecorationLine: 'underline',
-        fontSize: 12,
+        fontSize: 14,
         textAlign: 'center',
-        marginTop: 5,
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "#D3ECFF",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 5
     },
+    margin: {
+        marginTop: 10,
+    }
 })
 
 Events.propTypes = {

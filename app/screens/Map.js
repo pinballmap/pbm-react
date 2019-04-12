@@ -48,7 +48,7 @@ class Map extends Component {
             headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            containerStyle={{width:50}}
+            containerStyle={Platform.OS === "ios" ? {width:40} : {width:45}}
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
@@ -180,7 +180,7 @@ class Map extends Component {
     
         if (isFetchingLocations || !this.state.region.latitude) {
             return(
-                <View style={{flex: 1, padding: 20}}>
+                <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
                     <ActivityIndicator/>
                 </View>
             )

@@ -186,7 +186,7 @@ class FilterMap extends Component {
                   onPress={this.updateNumMachinesSelected}
                   selectedIndex={this.getIdx(numMachines)}
                   buttons={['All', '2+', '3+', '4+', '5+']}
-                  containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
+                  containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
                   selectedButtonStyle={s.buttonStyle}
                   selectedTextStyle={s.textStyle}
               />
