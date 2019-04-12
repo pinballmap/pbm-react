@@ -7,6 +7,7 @@ import Geocode from 'react-geocode'
 import { 
     Dimensions, 
     Modal,
+    Platform,
     ScrollView,
     StyleSheet, 
     Text, 
@@ -105,7 +106,7 @@ class Search extends Component {
                                 }}
                                 name='clear' 
                                 size={30} 
-                                style={{color:'#6a7d8a',marginLeft:5,marginRight:5,marginTop:6}}
+                                style={s.clear}
                             />
                             <Input
                                 placeholder='City, Address, Location'
@@ -185,7 +186,7 @@ const s = StyleSheet.create({
         })
     },
     searchMap: {
-        width: deviceWidth - 100,
+        width: Platform.OS === 'ios' ? deviceWidth - 100 : deviceWidth - 115,             
         backgroundColor: '#e0ebf2',
         height: 35,
         borderRadius: 10,
@@ -193,7 +194,7 @@ const s = StyleSheet.create({
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft:-15
+        marginLeft: Platform.OS === 'ios' ? -15 : 0,     
     },
     searchIcon: {
         paddingTop: 5,
@@ -208,8 +209,15 @@ const s = StyleSheet.create({
         height: 35,
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft:0
+        paddingLeft:0,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,             
     },
+    clear: {
+        color:'#6a7d8a',
+        marginLeft:5,
+        marginRight:5,
+        marginTop: Platform.OS === 'ios' ? 6 : -5,                     
+    }
 })
 
 Search.propTypes = {
