@@ -105,7 +105,7 @@ class Search extends Component {
                                 }}
                                 name='clear' 
                                 size={30} 
-                                style={{color:'#6a7d8a',marginLeft:5,marginRight:10,marginTop:6}}
+                                style={{color:'#6a7d8a',marginLeft:5,marginRight:5,marginTop:6}}
                             />
                             <Input
                                 placeholder='City, Address, Location'
@@ -121,7 +121,7 @@ class Search extends Component {
                                 autoFocus
                             />
                         </View>
-                        <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled">
+                        <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                             {foundCities ? 
                                 foundCities.map(location => 
                                     (<TouchableOpacity 
@@ -164,7 +164,7 @@ class Search extends Component {
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
                     <View style={s.searchMap}>
                         <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
-                        <Text></Text>
+                        <Text style={{fontSize:16,color:'#c1c9cf',marginTop:6}}>City, Address, Location</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -185,24 +185,27 @@ const s = StyleSheet.create({
         })
     },
     searchMap: {
-        width: deviceWidth - 115,
+        width: deviceWidth - 100,
         backgroundColor: '#e0ebf2',
-        height: 36,
-        borderRadius: 50,
+        height: 35,
+        borderRadius: 10,
+        borderColor: '#c1c9cf',
+        borderWidth: 1,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft:-15
     },
     searchIcon: {
         paddingTop: 5,
         paddingLeft: 5
     },
     input: {
-        borderWidth: 0,
-        borderColor: '#e0ebf2',
-        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: '#c1c9cf',
+        borderRadius: 10,
         width: deviceWidth - 60,
         backgroundColor: '#e0ebf2',
-        height: 36,
+        height: 35,
         display: 'flex',
         flexDirection: 'row',
         paddingLeft:0
