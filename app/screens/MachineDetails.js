@@ -7,6 +7,7 @@ import {
     Keyboard,
     Linking, 
     Modal, 
+    Platform,
     ScrollView, 
     StyleSheet, 
     TextInput, 
@@ -49,7 +50,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
-            headerTitleStyle: {width:deviceWidth - 90},
+            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {width:deviceWidth - 160,textAlign:'center'},
             headerRight: <RemoveMachine />,
             headerStyle: {
                 backgroundColor:'#f5fbff',
