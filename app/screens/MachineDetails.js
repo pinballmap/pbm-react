@@ -185,6 +185,7 @@ class MachineDetails extends Component {
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
+                        buttonStyle={s.addButton}
                     />
                     <Text style={s.sectionTitle}>Machine Comments</Text>
                     <View style={s.border}>
@@ -208,6 +209,7 @@ class MachineDetails extends Component {
                             () => this.setState({ showAddScoreModal: true }) :
                             () => this.props.navigation.navigate('Login')
                         }
+                        buttonStyle={s.addButton}
                     />
                     {userHighScore ? 
                         <View>
@@ -346,7 +348,13 @@ const s = StyleSheet.create({
         borderBottomWidth: 1,
         borderTopColor: '#e0ebf2',
         borderTopWidth: 1,
-    }
+    },
+    addButton: {
+        backgroundColor: '#e0ebf2',
+        borderRadius: 50,
+        width: '100%',
+        elevation: 0
+    },
 })
 
 MachineDetails.propTypes = {
