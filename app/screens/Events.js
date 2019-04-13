@@ -20,6 +20,8 @@ import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
 import { IFPA_API_KEY, GOOGLE_MAPS_KEY } from '../config/keys'
 
+const moment = require('moment')
+
 Geocode.setApiKey(GOOGLE_MAPS_KEY)
 
 class Events extends Component {
@@ -96,10 +98,12 @@ class Events extends Component {
                                     data={events}
                                     extraData={this.state}
                                     renderItem={({ item }) => {
+                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
                                         return (
                                             <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
                                                 <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date == item.end_date) ? <Text>{item.start_date}</Text> : <Text>{item.start_date} - {item.end_date}</Text>}</Text>
+                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
                                                 <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
                                                 <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                             </Card>
