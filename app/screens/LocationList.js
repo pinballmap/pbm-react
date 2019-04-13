@@ -83,6 +83,7 @@ export class LocationList extends Component {
 
     render() {
         const { lat, lon, locationTrackingServicesEnabled } = this.props.user
+        const { locations = [] } = this.state
 
         return (
             <View style={{ flex: 1, backgroundColor:'#f5fbff' }}>
@@ -97,7 +98,7 @@ export class LocationList extends Component {
                 />
                 <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
                     <FlatList
-                        data={this.state.locations}
+                        data={locations}
                         extraData={this.state}
                         renderItem={({ item }) =>
                             <LocationCard

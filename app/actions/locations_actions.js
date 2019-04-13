@@ -54,7 +54,7 @@ export const getLocationsByCity = (city) => dispatch => {
 export const getLocationsSuccess = (data) => {
     return {
         type: FETCHING_LOCATIONS_SUCCESS,
-        locations: data.locations,
+        locations: data.locations ? data.locations : [],
     }
 }
 
