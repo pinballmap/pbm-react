@@ -54,8 +54,8 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text>{navigation.getParam('locationName')}</Text>,
-            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {width:deviceWidth - 160,textAlign:'center'},            
+            title: navigation.getParam('locationName'),
+            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {},            
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
