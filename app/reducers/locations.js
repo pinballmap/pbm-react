@@ -65,6 +65,7 @@ export default (state = initialState, action) => {
             ...state,
             isFetchingLocations: false,
             isRefetchingLocations: false,
+            mapLocations: [],
         }
     case REFETCHING_LOCATIONS:
         return {
