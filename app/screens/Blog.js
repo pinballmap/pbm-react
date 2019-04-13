@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
-    Button,
-    StyleSheet, 
-    Text, 
+    StyleSheet,  
     View, 
     WebView,
 } from 'react-native'
@@ -12,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 
 class Blog extends Component {
+    state = { loading: true }
   
     static navigationOptions = ({ navigation }) => {
         return {
@@ -25,31 +24,22 @@ class Blog extends Component {
             headerTintColor: '#4b5862'
         }
     }
-
-    constructor(props) {
-        super(props);
-        this.state = { visible: true };
-    }
-    
-    hideSpinner() {
-        this.setState({ visible: false });
-    }
     
     render() {
         return (
             <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
+                {this.state.loading && (
+                    <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
+                        <ActivityIndicator/>
+                    </View>
+                )}
                 <WebView
-                    onLoad={() => this.hideSpinner()}
+                    onLoad={() => this.setState({loading: false})}
                     style={{ flex: 1 }}
                     source={{uri: 'http://blog.pinballmap.com/'}}
                 />
-                {this.state.visible && (
-                <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
-                    <ActivityIndicator/>
-                </View>
-                )}
             </View>
-        );
+        )
     }
      
 }
