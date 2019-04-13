@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
+    ActivityIndicator,
     Button,
     StyleSheet, 
     Text, 
@@ -24,15 +25,33 @@ class Blog extends Component {
             headerTintColor: '#4b5862'
         }
     }
-     
-    render(){
-        return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+
+    constructor(props) {
+        super(props);
+        this.state = { visible: true };
+    }
+    
+    hideSpinner() {
+        this.setState({ visible: false });
+    }
+    
+    render() {
+        return (
+            <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
                 <WebView
+                    onLoad={() => this.hideSpinner()}
+                    style={{ flex: 1 }}
                     source={{uri: 'http://blog.pinballmap.com/'}}
                 />
-            </View>)
+                {this.state.visible && (
+                <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
+                    <ActivityIndicator/>
+                </View>
+                )}
+            </View>
+        );
     }
+     
 }
 
 const s = StyleSheet.create({ 
