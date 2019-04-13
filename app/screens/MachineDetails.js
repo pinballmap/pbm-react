@@ -49,8 +49,8 @@ class MachineDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text>{`${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`}</Text>,
-            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {width:deviceWidth - 160,textAlign:'center'},
+            title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
+            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {},
             headerRight: <RemoveMachine />,
             headerStyle: {
                 backgroundColor:'#f5fbff',
@@ -234,7 +234,7 @@ class MachineDetails extends Component {
                                         subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
                                     />)
                             }) 
-                         : <Text style={s.noneYet}>No scores yet!</Text> 
+                            : <Text style={s.noneYet}>No scores yet!</Text> 
                         }
                     </View>
                     {pintipsUrl ?
