@@ -121,7 +121,7 @@ class MachineDetails extends Component {
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
                         <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
-                                <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Comment on ${machineName} at ${location.name}!`}</Text>
+                                <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                                 <TextInput
                                     multiline={true}
                                     numberOfLines={4}
@@ -154,7 +154,7 @@ class MachineDetails extends Component {
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                         <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
-                                <Text style={{textAlign:'center',marginBottom:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
+                                <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 
                                     style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
                                     keyboardType='numeric'
@@ -195,7 +195,7 @@ class MachineDetails extends Component {
                                 return <ListItem
                                     key={commentObj.id}
                                     titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
-                                    title={`"${comment}"`}
+                                    title={`${comment}`}
                                     subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
                                     subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15,fontSize:14}}
                                 /> 
@@ -355,6 +355,13 @@ const s = StyleSheet.create({
         width: '100%',
         elevation: 0
     },
+    modalTitle: {
+        textAlign:'center',
+        marginBottom:10,
+        marginLeft:15,
+        marginRight:15,
+        fontSize: 18
+    }
 })
 
 MachineDetails.propTypes = {
