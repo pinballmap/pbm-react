@@ -262,7 +262,7 @@ class LocationDetails extends Component {
                                             title={this.getTitle(machine)}
                                             subtitle={
                                                 <View style={s.condition}>
-                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text> : null}
+                                                    {machine.condition ? <Text style={s.conditionText}>{`${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}`}</Text> : null}
                                                     {machine.condition_date ? <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
                                                 </View>
                                             }
