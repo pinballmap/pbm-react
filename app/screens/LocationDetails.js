@@ -13,7 +13,6 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -192,7 +191,7 @@ class LocationDetails extends Component {
                 <View style={{ flex: 1, position: 'relative' }}>
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
-                    <MapView
+                    {/* <MapView
                         region={{
                             latitude: Number(location.lat),
                             longitude: Number(location.lon),
@@ -210,7 +209,7 @@ class LocationDetails extends Component {
                                 longitudeDelta: 0.03,
                             }}
                         />
-                    </MapView>
+                    </MapView> */}
                     <View style={{ flex: 3,backgroundColor: "#f5fbff" }}>
                         <ButtonGroup
                             onPress={this.updateIndex}
