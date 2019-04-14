@@ -162,7 +162,9 @@ class Search extends Component {
                         </ScrollView>
                     </View>
                 </Modal>
-                <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
+                <TouchableOpacity onPress={() => {
+                    console.log('heeeeey')
+                    this.setState({searchModalVisible: true})}}>
                     <View style={s.searchMap}>
                         <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
                         <Text style={{fontSize:16,color:'#c1c9cf',marginTop:6}}>City, Address, Location</Text>

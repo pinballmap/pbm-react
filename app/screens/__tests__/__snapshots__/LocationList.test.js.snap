@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing LocationList screen renders the locationList properly when there are no locations in the search area 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "marginTop": 5,
+        "textAlign": "center",
+      }
+    }
+  >
+    SORT BY:
+  </Text>
+  <ButtonGroup
+    buttons={
+      Array [
+        "Distance",
+        "Alphabetically",
+        "Last Updated",
+      ]
+    }
+    component={[Function]}
+    containerBorderRadius={3}
+    containerStyle={
+      Object {
+        "height": 30,
+      }
+    }
+    onPress={[Function]}
+    selectMultiple={false}
+    selectedIndex={0}
+    selectedIndexes={Array []}
+  />
+  <View
+    style={
+      Object {
+        "bottom": 0,
+        "flex": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 65,
+      }
+    }
+  >
+    <FlatList
+      disableVirtualization={false}
+      extraData={
+        Object {
+          "buttonIndex": 0,
+          "locations": undefined,
+        }
+      }
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onEndReachedThreshold={2}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      updateCellsBatchingPeriod={50}
+      windowSize={21}
+    />
+  </View>
+</View>
+`;

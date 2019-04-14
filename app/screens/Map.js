@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
+import MapboxGL from '@mapbox/react-native-mapbox-gl'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -20,6 +21,15 @@ import {
 } from '../actions'
 import { Ionicons } from '@expo/vector-icons'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { MAPBOX_API_KEY } from '../config/keys'
+
+const styles = MapboxGL.StyleSheet.create({
+    icon: {
+      iconImage: '{icon}',
+    },
+  })
+
+MapboxGL.setAccessToken(MAPBOX_API_KEY)
 
 class Map extends Component {
     constructor(props){
@@ -47,7 +57,7 @@ class Map extends Component {
             headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            containerStyle={Platform.OS === "ios" ? {width:40} : {width:45}}
+            containerStyle={{width:45}}
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
@@ -116,6 +126,30 @@ class Map extends Component {
         }
     }
 
+    getFeaturesCollection = (locations) => {
+        const features = locations.map(l => ({
+            type: 'Feature',
+            id: l.id.toString(),
+            properties: {
+                icon: 'circle-15',
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [Number(l.lon), Number(l.lat)],
+              },
+        }))
+
+        return {
+            type: 'FeatureCollection',
+            features,
+        }
+    }
+
+    selectedLocation = (feature) => {
+        const locationName = this.state.locations.find(l => feature.nativeEvent.payload.id == l.id).name
+        this.props.navigation.navigate('LocationDetails', {id: feature.nativeEvent.payload.id, locationName})
+    }
+
     async componentDidMount(){
         this.props.getCurrentLocation()
         await Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
@@ -171,11 +205,12 @@ class Map extends Component {
 
     render(){
         const { isFetchingLocations, isRefetchingLocations } = this.props.locations
-        const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
+        const { fontAwesomeLoaded, showNoLocationTrackingModal, region, locations } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
+        const featureCollection = this.getFeaturesCollection(locations)
     
         if (isFetchingLocations || !this.state.region.latitude) {
             return(
@@ -237,33 +272,19 @@ class Map extends Component {
                 </View>
                 {isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
-                    {/* <MapView
-                        ref={this.mapRef}
-                        region={this.state.region}
-                        provider={ PROVIDER_GOOGLE }
-                        style={s.map}
-                        onRegionChange={this.onRegionChange}
+                <MapboxGL.MapView
+                    zoomLevel={12}
+                    centerCoordinate={[Number(region.longitude), Number(region.latitude)]}
+                    style={{flex: 1}}
+                >
+                    <MapboxGL.ShapeSource
+                        id="exampleShapeSource"
+                        shape={featureCollection}
+                        onPress={this.selectedLocation}
                     >
-                        {this.state.locations ? this.state.locations.map(l => (
-                            <MapView.Marker
-                                coordinate={{
-                                    latitude: Number(l.lat), 
-                                    longitude: Number(l.lon), 
-                                    latitudeDelta: this.state.region.latitudeDelta, 
-                                    longitudeDelta: this.state.region.longitudeDelta,
-                                }}
-                                title={l.name}
-                                key={l.id}
-                            >
-                                <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
-                                    <View style={s.calloutStyle}>
-                                        <Text>{l.name}</Text>
-                                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
-                                    </View>
-                                </MapView.Callout>
-                            </MapView.Marker>
-                        )) : null}
-                    </MapView> */}
+                        <MapboxGL.SymbolLayer id="exampleIconName" style={styles.icon} />
+                    </MapboxGL.ShapeSource>
+                </MapboxGL.MapView>
                 </View>
             </View>
         )
@@ -279,6 +300,7 @@ const s = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         alignContent: 'space-around',
+        backgroundColor: 'white',
     },
     iconStyle: {
         marginLeft: 15,
