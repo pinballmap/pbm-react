@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/bethpoore/repos/pbm-react/android/app/build/intermediates/incremental/mergeDevKernelDebugResources/merged.dir/values-bs-rBA/values-bs-rBA.xml",
+            "map": [
+                {
+                    "source": "/Users/bethpoore/.gradle/caches/transforms-1/files-1.1/exoplayer-ui-2.6.1.aar/0f7c744b2a3d2e75c453ea30ef587634/res/values-bs-rBA/values-bs-rBA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,129,205,275,348,429,508,588,669,740,813",
+                        "endColumns": "73,75,69,72,80,78,79,80,70,72,68",
+                        "endOffsets": "124,200,270,343,424,503,583,664,735,808,877"
+                    }
+                }
+            ]
+        }
+    ]
+}

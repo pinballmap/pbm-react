@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: host.exp.exponent:expoview:32.0.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expoview-32.0.0.aar/53e8a0badaa3c18a5f25e1eed10312b7/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expoview-32.0.0.aar/53e8a0badaa3c18a5f25e1eed10312b7/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expoview-32.0.0.aar/53e8a0badaa3c18a5f25e1eed10312b7/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../node_modules/expokit/maven/host/exp/exponent/expoview/32.0.0/expoview-32.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

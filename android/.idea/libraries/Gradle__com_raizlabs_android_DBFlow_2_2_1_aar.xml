@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.raizlabs.android:DBFlow:2.2.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DBFlow-2.2.1.aar/9f3263c472372eafad1acdfc768f7809/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/DBFlow-2.2.1.aar/9f3263c472372eafad1acdfc768f7809/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.raizlabs.android/DBFlow/2.2.1/eef786749b82a983fba82f4a0144d3b84efa2ffd/DBFlow-2.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

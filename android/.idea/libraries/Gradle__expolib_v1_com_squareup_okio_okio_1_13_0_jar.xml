@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: expolib_v1.com.squareup.okio:okio:1.13.0@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../node_modules/expokit/maven/expolib_v1/com/squareup/okio/okio/1.13.0/okio-1.13.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

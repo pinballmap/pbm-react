@@ -104,6 +104,11 @@ apply from: 'expo.gradle'
 // WHEN_PREPARING_SHELL_REMOVE_TO_HERE
 
 dependencies {
+  compile (project(':@mapbox_react-native-mapbox-gl')) {
+        compile ('com.squareup.okhttp3:okhttp:3.6.0') {
+            force = true
+        }
+    }
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation 'com.android.support:multidex:1.0.1'

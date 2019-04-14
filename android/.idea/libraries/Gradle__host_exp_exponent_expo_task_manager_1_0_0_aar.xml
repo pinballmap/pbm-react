@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: host.exp.exponent:expo-task-manager:1.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expo-task-manager-1.0.0.aar/3fc91d373b0e37fdc7142b195a31a78e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expo-task-manager-1.0.0.aar/3fc91d373b0e37fdc7142b195a31a78e/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../node_modules/expokit/maven/host/exp/exponent/expo-task-manager/1.0.0/expo-task-manager-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

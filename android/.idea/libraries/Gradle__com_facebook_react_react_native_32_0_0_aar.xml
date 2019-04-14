@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.facebook.react:react-native:32.0.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/react-native-32.0.0.aar/d03f431ea08ec41c03e583d0a12b2752/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/react-native-32.0.0.aar/d03f431ea08ec41c03e583d0a12b2752/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/react-native-32.0.0.aar/d03f431ea08ec41c03e583d0a12b2752/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../node_modules/expokit/maven/com/facebook/react/react-native/32.0.0/react-native-32.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../node_modules/expokit/maven/com/facebook/react/react-native/32.0.0/react-native-32.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
