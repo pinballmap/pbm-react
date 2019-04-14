@@ -9,7 +9,6 @@ import {
     View,
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -238,7 +237,7 @@ class Map extends Component {
                 </View>
                 {isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
-                    <MapView
+                    {/* <MapView
                         ref={this.mapRef}
                         region={this.state.region}
                         provider={ PROVIDER_GOOGLE }
@@ -264,7 +263,7 @@ class Map extends Component {
                                 </MapView.Callout>
                             </MapView.Marker>
                         )) : null}
-                    </MapView>
+                    </MapView> */}
                 </View>
             </View>
         )
