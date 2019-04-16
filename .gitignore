@@ -1,9 +1,13 @@
-node_modules/**/*
-.expo/*
-npm-debug.*
-*.jks
-*.p12
-*.key
-*.mobileprovision
-
 app/config/keys.js
+
+.DS_Store 
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+android/**/build
+android/**/local.properties
+
+ios/Pods

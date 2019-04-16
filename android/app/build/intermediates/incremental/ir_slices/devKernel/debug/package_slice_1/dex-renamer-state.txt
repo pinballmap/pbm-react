@@ -1,4 +1,0 @@
-#Sun Apr 14 16:17:20 PDT 2019
-base.0=/Users/bethpoore/repos/pbm-react/android/app/build/intermediates/transforms/dexMerger/devKernel/debug/1
-path.0=classes.dex
-renamed.0=classes.dex
