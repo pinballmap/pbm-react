@@ -13,7 +13,8 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { UrlTile } from 'react-native-maps'
+import markerDot from '../assets/images/markerdot.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -193,6 +194,7 @@ class LocationDetails extends Component {
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
                     <MapView
+                        mapType={'none'}
                         region={{
                             latitude: Number(location.lat),
                             longitude: Number(location.lon),
@@ -200,8 +202,12 @@ class LocationDetails extends Component {
                             longitudeDelta: 0.03
                         }}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
-                        provider={PROVIDER_GOOGLE}
                     >
+                        <UrlTile
+                            urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
+                            //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
+                            maximumZ={20}
+                        />
                         <MapView.Marker
                             coordinate={{
                                 latitude: Number(location.lat),
@@ -209,6 +215,7 @@ class LocationDetails extends Component {
                                 latitudeDelta: 0.03,
                                 longitudeDelta: 0.03,
                             }}
+                            image={markerDot}
                         />
                     </MapView>
                     <View style={{ flex: 3,backgroundColor: "#f5fbff" }}>
