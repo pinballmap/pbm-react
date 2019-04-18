@@ -9,7 +9,7 @@ import {
     View,
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { UrlTile } from 'react-native-maps'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -241,10 +241,13 @@ class Map extends Component {
                     <MapView
                         ref={this.mapRef}
                         region={this.state.region}
-                        provider={ PROVIDER_GOOGLE }
                         style={s.map}
                         onRegionChange={this.onRegionChange}
                     >
+                        <UrlTile
+                            urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
+                            maximumZ={20}
+                        />
                         {this.state.locations ? this.state.locations.map(l => (
                             <MapView.Marker
                                 coordinate={{
