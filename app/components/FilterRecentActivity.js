@@ -82,7 +82,7 @@ class FilterRecentActivity extends Component {
                         containerStyle={{width:60}}
                         title="Filter"
                         accessibilityLabel="Filter"
-                        titleStyle={{color: "#6a7d8a", fontSize: 16, fontWeight: 'bold'}}
+                        titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: 'bold'}}
                         clear={true}
                     /> : null
                 }
