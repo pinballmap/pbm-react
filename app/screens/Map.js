@@ -216,7 +216,7 @@ class Map extends Component {
                             raised
                             name='location-arrow'
                             type='font-awesome'
-                            color='#4b5862'
+                            color='#1e9dff'
                             containerStyle={Platform.OS === "ios" ? {position:'absolute'} : {}}
                             size={20}
                             onPress={() => {
@@ -294,9 +294,8 @@ const s = StyleSheet.create({
         color: '#97a5af',
     },
     titleStyle: {
-        color: "#6a7d8a",
+        color: "#1e9dff",
         fontSize: 16,
-        fontWeight: 'bold'
     }, 
     loading: {
         textAlign: 'center',

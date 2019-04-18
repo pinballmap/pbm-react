@@ -63,7 +63,7 @@ class LocationDetails extends Component {
                     containerStyle={{width:50}}
                     title="Edit"
                     accessibilityLabel="Edit"
-                    titleStyle={{color: "#F53240", fontSize: 18}}
+                    titleStyle={{color: "#1e9dff", fontSize: 18}}
                     clear={true}
                 /> : null,
             headerStyle: {
