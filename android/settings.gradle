@@ -1,3 +1,0 @@
-rootProject.name = 'pbm-react'
-
-include ':app'
