@@ -136,10 +136,6 @@ class Map extends Component {
             })
             this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.user.lat + ';lon=' + props.user.lon + ';send_all_within_distance=1;max_distance=5')
         }
-        
-        if (!this.props.user.id && props.user.id) {
-            this.props.getFavoriteLocations(props.user.id)
-        }
 
         if (locationId !== this.props.query.locationId) {
             this.props.navigation.navigate('LocationDetails', {id: locationId.toString(), locationName})

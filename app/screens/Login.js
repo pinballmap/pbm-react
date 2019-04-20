@@ -13,7 +13,11 @@ import {
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { login, loginLater } from '../actions/user_actions'
+import { 
+    getFavoriteLocations,
+    login, 
+    loginLater 
+} from '../actions/user_actions'
 import { getData } from '../config/request'
 
 let deviceHeight = Dimensions.get('window').height
@@ -61,6 +65,7 @@ class Login extends Component {
                 }
                 if (data.user) {      
                     this.props.login(data.user)
+                    this.props.getFavoriteLocations(data.user.id)
                     this.props.navigation.navigate('Map')
                 }
             })
@@ -224,6 +229,7 @@ const mapStateToProps = () => ({ })
 const mapDispatchToProps = (dispatch) => ({
     login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),
+    getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

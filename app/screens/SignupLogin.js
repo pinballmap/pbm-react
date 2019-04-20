@@ -6,7 +6,6 @@ import {
     Dimensions,
     Image, 
     ImageBackground, 
-    ScrollView,
     StyleSheet, 
     Text, 
     View, 
@@ -19,6 +18,7 @@ import {
     fetchLocationTypes,
     fetchMachines,
     fetchOperators,
+    getFavoriteLocations,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
@@ -67,6 +67,7 @@ export class SignupLogin extends Component {
             if (auth) {
                 if (auth.id) {
                     this.props.login(auth)
+                    this.props.getFavoriteLocations(auth.id)
                 }
                 this.props.navigation.navigate('Map')
             }
@@ -225,6 +226,7 @@ const mapDispatchToProps = (dispatch) => ({
     getOperators: (url) => dispatch(fetchOperators(url)),
     loginLater: () => dispatch(loginLater()),
     login: (auth) => dispatch(login(auth)),
+    getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
