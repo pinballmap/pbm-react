@@ -124,6 +124,11 @@ export const MapStack = StackNavigator({
     EditLocationDetails: { screen: EditLocationDetails },
     PasswordReset: { screen: PasswordReset },
     ResendConfirmation: { screen: ResendConfirmation },
+},  
+{
+    navigationOptions: {
+        gesturesEnabled: false
+    }
 })
 
 export const PbmStack = DrawerNavigator({
