@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     FlatList,
-    Platform,
     StyleSheet, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { ButtonGroup } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import { 
@@ -18,6 +16,7 @@ import {
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
+import { headerStyle } from '../styles'
 
 
 const moment = require('moment')
@@ -35,11 +34,7 @@ export class LocationList extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,          
             title: 'Saved',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

@@ -13,7 +13,6 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import MapView, { UrlTile } from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
@@ -35,6 +34,7 @@ import {
     removeFavoriteLocation,
     setCurrentMachine, 
 } from '../actions'
+import { headerStyle } from '../styles'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -66,11 +66,7 @@ class LocationDetails extends Component {
                     titleStyle={{color: "#1e9dff", fontSize: 18}}
                     clear={true}
                 /> : null,
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

@@ -8,8 +8,8 @@ import {
     StyleSheet, 
     View,
 } from 'react-native'
-import { Constants } from 'expo'
 import { Button, Icon } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons'
 import MapView, { UrlTile } from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
@@ -21,7 +21,7 @@ import {
     clearFilters,
     clearError,
 } from '../actions'
-import { Ionicons } from '@expo/vector-icons'
+import { headerStyle } from '../styles'
 
 class Map extends Component {
     constructor(props){
@@ -68,11 +68,7 @@ class Map extends Component {
             titleStyle={s.titleStyle}
             clear={true}
         />,
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     };

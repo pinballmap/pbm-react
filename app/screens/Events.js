@@ -6,13 +6,11 @@ import {
     ActivityIndicator,
     FlatList,
     Linking,
-    Platform,
     ScrollView,
     StyleSheet,
     Text,
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import {
     Card,
 } from 'react-native-elements'
@@ -20,6 +18,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
 import { IFPA_API_KEY, GOOGLE_MAPS_KEY } from '../config/keys'
+import { headerStyle } from '../styles'
 
 const moment = require('moment')
 
@@ -38,11 +37,7 @@ class Events extends Component {
             drawerIcon: () => <MaterialIcons name='event-note' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

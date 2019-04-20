@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator,
-    Platform, 
     ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { FontAwesome } from '@expo/vector-icons'
 import { Button, ListItem } from 'react-native-elements'
 import { 
@@ -21,6 +19,7 @@ import {
 } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
+import { headerStyle } from '../styles'
 
 const moment = require('moment')
 
@@ -35,11 +34,7 @@ class UserProfile extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Profile',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     };

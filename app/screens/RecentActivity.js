@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator,
-    Platform,  
     ScrollView,
     StyleSheet,
     View,  
 } from 'react-native'
-import { Constants } from 'expo'
 import { ListItem } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -18,6 +16,7 @@ import {
     Text
 } from '../components'
 import { clearActivityFilter } from '../actions'
+import { headerStyle } from '../styles'
 
 const moment = require('moment')
 
@@ -32,11 +31,7 @@ class RecentActivity extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
             headerTintColor: '#4b5862',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerRight: <FilterRecentActivity />
         }
     }

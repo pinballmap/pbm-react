@@ -3,13 +3,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
-    Platform,
     ScrollView,
     StyleSheet, 
     TextInput, 
     View,
 } from 'react-native'
-import { Constants } from 'expo'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal,
@@ -21,6 +19,7 @@ import {
     submitMessage, 
     clearMessage,
 } from '../actions'
+import { headerStyle } from '../styles'
 
 class Contact extends Component {
     state = {
@@ -35,11 +34,7 @@ class Contact extends Component {
             drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Contact',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }
