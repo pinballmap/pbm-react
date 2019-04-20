@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
+    Platform,
     ScrollView,
     StyleSheet, 
     TextInput, 
     View,
 } from 'react-native'
+import { Constants } from 'expo'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     ConfirmationModal,
     HeaderBackButton,
@@ -36,12 +37,8 @@ class Contact extends Component {
             title: 'Contact',
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })               
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }

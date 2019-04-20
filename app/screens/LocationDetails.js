@@ -13,6 +13,7 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import MapView, { UrlTile } from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
@@ -34,7 +35,6 @@ import {
     removeFavoriteLocation,
     setCurrentMachine, 
 } from '../actions'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -68,12 +68,8 @@ class LocationDetails extends Component {
                 /> : null,
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })               
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }

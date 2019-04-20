@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     ActivityIndicator, 
     Keyboard,
@@ -15,6 +14,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { 
     ConfirmationModal, 
     DropDownButton, 
@@ -55,12 +55,8 @@ class EditLocationDetails extends Component {
             title: <Text>{navigation.getParam('name')}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })            
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }

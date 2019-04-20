@@ -8,8 +8,8 @@ import {
     StyleSheet,
     View,     
 } from 'react-native'
+import { Constants } from 'expo'
 import { ButtonGroup } from 'react-native-elements'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     ConfirmationModal, 
     DropDownButton, 
@@ -53,13 +53,9 @@ class FilterMap extends Component {
           headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
           title: 'Filter Results',
           headerStyle: {
-              backgroundColor:'#f5fbff',
-              ...ifIphoneX({
-                  paddingTop: 30,
-                  height: 60
-              }, {
-                  paddingTop: 0
-              })            
+            backgroundColor:'#f5fbff',
+            height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+            paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
           },
           headerTintColor: '#4b5862'
       }

@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { 
     Dimensions,
     Image, 
-    Linking, 
+    Linking,
+    Platform, 
     StyleSheet, 
     ScrollView, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'
 
 let deviceWidth = Dimensions.get('window').width
@@ -31,12 +32,8 @@ class About extends Component {
             title: 'About',
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }
