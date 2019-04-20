@@ -14,7 +14,6 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -34,6 +33,7 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
+import { headerStyle } from '../styles'
 
 class SuggestLocation extends Component {
     constructor(props) {
@@ -72,11 +72,7 @@ class SuggestLocation extends Component {
             drawerIcon: () => <MaterialIcons name='add-location' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Suggest Location',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

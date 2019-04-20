@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {     
-    Platform,
     SafeAreaView,
     ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { MaterialIcons } from '@expo/vector-icons'
 import { 
     HeaderBackButton,
     Text, 
 } from '../components'
+import { headerStyle } from '../styles'
 
 class FAQ extends Component {
   
@@ -22,11 +21,7 @@ class FAQ extends Component {
             drawerIcon: () => <MaterialIcons name='question-answer' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'FAQ',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },              
+            headerStyle,      
             headerTintColor: '#4b5862'
         }
     }

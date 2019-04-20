@@ -8,7 +8,6 @@ import {
     StyleSheet,
     View,     
 } from 'react-native'
-import { Constants } from 'expo'
 import { ButtonGroup } from 'react-native-elements'
 import { 
     ConfirmationModal, 
@@ -32,6 +31,7 @@ import {
     getOperatorName,
     filterSelected,
 } from '../selectors'
+import { headerStyle } from '../styles'
 
 class FilterMap extends Component {
     constructor(props){
@@ -52,11 +52,7 @@ class FilterMap extends Component {
       return {
           headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
           title: 'Filter Results',
-          headerStyle: {
-            backgroundColor:'#f5fbff',
-            height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-            paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-          },
+          headerStyle,
           headerTintColor: '#4b5862'
       }
   };

@@ -14,7 +14,6 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { 
     ConfirmationModal, 
     DropDownButton, 
@@ -24,6 +23,7 @@ import {
     Text 
 } from '../components'
 import { clearError, updateLocationDetails } from '../actions'
+import { headerStyle } from '../styles'
 
 class EditLocationDetails extends Component {
     constructor(props) {
@@ -53,11 +53,7 @@ class EditLocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('name')}</Text>,
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

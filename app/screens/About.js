@@ -4,16 +4,15 @@ import {
     Dimensions,
     Image, 
     Linking,
-    Platform, 
     StyleSheet, 
     ScrollView, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
+import { headerStyle } from '../styles'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -30,11 +29,7 @@ class About extends Component {
             drawerIcon: () => <MaterialIcons name='info-outline' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'About',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

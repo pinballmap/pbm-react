@@ -4,17 +4,16 @@ import {
     Dimensions,
     Image, 
     Linking, 
-    Platform,
     ScrollView,
     StyleSheet, 
     View,
 } from 'react-native'
-import { Constants } from 'expo'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { 
     HeaderBackButton,
     Text 
 } from '../components'
+import { headerStyle } from '../styles'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -26,11 +25,7 @@ class Podcast extends Component {
             drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Podcast',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }

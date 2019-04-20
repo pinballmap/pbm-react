@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
-    Platform,
     StyleSheet,  
     View, 
     WebView,
 } from 'react-native'
-import { Constants } from 'expo'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
+import { headerStyle } from '../styles'
 
 class Blog extends Component {
     state = { loading: true }
@@ -20,11 +19,7 @@ class Blog extends Component {
             drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Blog',
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }
