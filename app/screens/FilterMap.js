@@ -55,7 +55,7 @@ class FilterMap extends Component {
           headerStyle,
           headerTintColor: '#4b5862'
       }
-  };
+  }
 
   getIdx = (value) => {
       switch (value) {
