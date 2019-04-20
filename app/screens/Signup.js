@@ -5,12 +5,14 @@ import {
     Dimensions, 
     ImageBackground, 
     Keyboard,
+    Platform,
     ScrollView, 
     StyleSheet, 
     Text, 
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { Button, Input } from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'

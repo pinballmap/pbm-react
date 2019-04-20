@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
     Keyboard,
+    Platform,
     Modal, 
     ScrollView, 
     StyleSheet, 
@@ -11,10 +12,10 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { SearchBar } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { FlatList } from 'react-native-gesture-handler'
 import { 
     addMachineToLocation,
@@ -85,12 +86,8 @@ class FindMachine extends React.PureComponent {
             title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })               
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862',
             headerRight: 

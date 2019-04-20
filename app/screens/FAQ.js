@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {     
+    Platform,
     SafeAreaView,
     ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { 
     HeaderBackButton,
     Text, 
@@ -23,13 +24,9 @@ class FAQ extends Component {
             title: 'FAQ',
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })
-            },
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
+            },              
             headerTintColor: '#4b5862'
         }
     }

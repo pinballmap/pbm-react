@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
     Keyboard,
+    Platform,
     ScrollView,
     StyleSheet,
     TouchableWithoutFeedback,
     View 
 } from 'react-native'
+import { Constants } from 'expo'
 import {
     Input,
 } from 'react-native-elements'
@@ -28,6 +30,11 @@ class ResendConfirmation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
+            headerStyle: {
+                backgroundColor:'#f5fbff',
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
+            },
         }
     }
      

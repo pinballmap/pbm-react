@@ -6,16 +6,17 @@ import {
     ActivityIndicator,
     FlatList,
     Linking,
+    Platform,
     ScrollView,
     StyleSheet,
     Text,
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import {
     Card,
 } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
 import { IFPA_API_KEY, GOOGLE_MAPS_KEY } from '../config/keys'
@@ -39,12 +40,8 @@ class Events extends Component {
             title: 'Nearby Events',
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })               
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }

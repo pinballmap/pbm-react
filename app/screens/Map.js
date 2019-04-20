@@ -8,6 +8,7 @@ import {
     StyleSheet, 
     View,
 } from 'react-native'
+import { Constants } from 'expo'
 import { Button, Icon } from 'react-native-elements'
 import MapView, { UrlTile } from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
@@ -21,7 +22,6 @@ import {
     clearError,
 } from '../actions'
 import { Ionicons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class Map extends Component {
     constructor(props){
@@ -70,12 +70,8 @@ class Map extends Component {
         />,
             headerStyle: {
                 backgroundColor:'#f5fbff',
-                ...ifIphoneX({
-                    paddingTop: 30,
-                    height: 60
-                }, {
-                    paddingTop: 0
-                })             
+                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
+                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
             },
             headerTintColor: '#4b5862'
         }
