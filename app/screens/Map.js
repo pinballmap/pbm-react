@@ -38,7 +38,6 @@ class Map extends Component {
                 longitudeDelta: 0.1,
             },
             address: '', 
-            locations: this.props.locations.mapLocations ? this.props.locations.mapLocations : [],
             fontAwesomeLoaded: false,
             showNoLocationTrackingModal: false,
         }
@@ -117,7 +116,7 @@ class Map extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, latDelta, lonDelta, locationId, locationName } = props.query
+        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, latDelta, lonDelta } = props.query
         if (!this.props.user.lat && props.user.lat) {
             this.setState({
                 region: {
@@ -129,14 +128,6 @@ class Map extends Component {
             this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.user.lat + ';lon=' + props.user.lon + ';send_all_within_distance=1;max_distance=5')
         }
 
-        if (locationId !== this.props.query.locationId) {
-            this.props.navigation.navigate('LocationDetails', {id: locationId.toString(), locationName})
-        }
-
-        if (props.locations.mapLocations !== this.props.locations.mapLocations) {
-            this.setState({ locations: props.locations.mapLocations })
-        }
-
         if (curLat !== this.props.query.curLat || curLon !== this.props.query.curLon ) {
             this.setState({
                 region: {
@@ -144,7 +135,6 @@ class Map extends Component {
                     longitude: curLon,
                     latitudeDelta: latDelta,
                     longitudeDelta: lonDelta,
-
                 }
             })
         }
@@ -160,7 +150,7 @@ class Map extends Component {
     }
 
     render(){
-        const { isFetchingLocations, isRefetchingLocations } = this.props.locations
+        const { isFetchingLocations, isRefetchingLocations, mapLocations = [] } = this.props.locations
         const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
@@ -239,7 +229,7 @@ class Map extends Component {
                             //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
                             maximumZ={20}
                         />
-                        {this.state.locations ? this.state.locations.map(l => (
+                        {mapLocations.map(l => (
                             <MapView.Marker
                                 coordinate={{
                                     latitude: Number(l.lat), 
@@ -258,7 +248,7 @@ class Map extends Component {
                                     </View>
                                 </MapView.Callout>
                             </MapView.Marker>
-                        )) : null}
+                        ))}
                     </MapView>
                 </View>
             </View>
