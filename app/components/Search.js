@@ -14,10 +14,10 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
+import { Constants } from 'expo'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { getData } from '../config/request'
 import { 
     displayError,
@@ -97,7 +97,7 @@ class Search extends Component {
                     visible={searchModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={[s.ifX,{flex:1,backgroundColor:'rgba(255,255,255,1.0)'}]}>
+                    <View style={[s.ifX,{flex:1,backgroundColor:'#f5fbff'}]}>
                         <View style={{display: 'flex', flexDirection: 'row'}}>
                             <MaterialIcons 
                                 onPress={() => {
@@ -179,11 +179,7 @@ Search.propTypes = {
 
 const s = StyleSheet.create({
     ifX: {
-        ...ifIphoneX({
-            paddingTop: 33,
-        }, {
-            paddingTop: 20
-        })
+        paddingTop: Constants.statusBarHeight > 40 ? 33 : 20,         
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 100 : deviceWidth - 115,             
