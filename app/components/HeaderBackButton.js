@@ -5,7 +5,7 @@ import { HeaderBackButton as HeaderBackButtonReactNavigation } from 'react-navig
 
 const HeaderBackButton = ({navigation, title}) => 
     <HeaderBackButtonReactNavigation 
-        tintColor="#4b5862"     
+        tintColor="#1e9dff"     
         onPress={() => {
             navigation.goBack(null)
             Keyboard.dismiss()

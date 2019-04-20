@@ -92,7 +92,7 @@ export class LocationList extends Component {
                     onPress={this.updateIndex}
                     selectedIndex={this.props.locations.selectedLocationListFilter}
                     buttons={['Distance', 'Alphabetically', 'Last Updated']}
-                    containerStyle={{ height: 40, borderColor:'#97a5af', borderWidth: 2 }}
+                    containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
                     selectedButtonStyle={s.buttonStyle}
                     selectedTextStyle={s.textStyle}
                 />

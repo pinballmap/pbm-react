@@ -9,7 +9,8 @@ import {
     View,
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { UrlTile } from 'react-native-maps'
+import markerDot from '../assets/images/markerdot.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -215,7 +216,7 @@ class Map extends Component {
                             raised
                             name='location-arrow'
                             type='font-awesome'
-                            color='#4b5862'
+                            color='#1e9dff'
                             containerStyle={Platform.OS === "ios" ? {position:'absolute'} : {}}
                             size={20}
                             onPress={() => {
@@ -241,10 +242,15 @@ class Map extends Component {
                     <MapView
                         ref={this.mapRef}
                         region={this.state.region}
-                        provider={ PROVIDER_GOOGLE }
                         style={s.map}
                         onRegionChange={this.onRegionChange}
+                        mapType={'none'}
                     >
+                        <UrlTile
+                            urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
+                            //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
+                            maximumZ={20}
+                        />
                         {this.state.locations ? this.state.locations.map(l => (
                             <MapView.Marker
                                 coordinate={{
@@ -255,6 +261,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}
+                                image={markerDot}
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
@@ -287,9 +294,8 @@ const s = StyleSheet.create({
         color: '#97a5af',
     },
     titleStyle: {
-        color: "#6a7d8a",
+        color: "#1e9dff",
         fontSize: 16,
-        fontWeight: 'bold'
     }, 
     loading: {
         textAlign: 'center',
