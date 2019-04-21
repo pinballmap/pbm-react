@@ -128,7 +128,7 @@ class Search extends Component {
                                     (<TouchableOpacity 
                                         key={location.value} 
                                         onPress={() => {
-                                            this.props.getLocationsByCity(location.value, this.props.navigate)
+                                            this.props.getLocationsByCity(location.value)
                                             this.changeQuery('')
                                             this.setState({searchModalVisible: false})
                                         }}>
@@ -147,7 +147,7 @@ class Search extends Component {
                                     (<TouchableOpacity 
                                         key={location.id} 
                                         onPress={() => {
-                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label})
+                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label, updateMap: true})
                                             this.changeQuery('')
                                             this.setState({searchModalVisible: false})
                                         }}>
@@ -227,7 +227,7 @@ Search.propTypes = {
 const mapStateToProps = ({ query, user }) => ({ query, user})
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
-    getLocationsByCity: (city, navigate) => dispatch(getLocationsByCity(city, navigate)),
+    getLocationsByCity: (city) => dispatch(getLocationsByCity(city)),
     getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })
