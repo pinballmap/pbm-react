@@ -2,6 +2,11 @@
   "expo": {
     "sdkVersion": "30.0.0",
     "orientation": "portrait",
-    "ios.icon": "app/assets/images/ios-icon.png"
+    "ios.icon": "app/assets/images/ios-icon.png",
+    "android.icon": "app/assets/images/android-icon.png",
+    "splash": {
+      "image": "app/assets/images/android-icon.png",
+      "backgroundColor": "#f5fbff"
+    }
   }
 }
