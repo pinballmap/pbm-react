@@ -1,6 +1,7 @@
 {
   "expo": {
     "sdkVersion": "30.0.0",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "ios.icon": "app/assets/images/ios-icon.png"
   }
 }
