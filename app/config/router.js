@@ -1,8 +1,8 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { StyleSheet, Text } from 'react-native'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { Platform, StyleSheet, Text } from 'react-native'
+import { Constants } from 'expo'
 
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
@@ -84,12 +84,8 @@ const TabNav = TabNavigator({
         showIcon: true,
         style: {
             backgroundColor:'#f5fbff',
-            ...ifIphoneX({
-                paddingBottom: 20,
-                height: 60
-            }, {
-                paddingBottom: 0
-            })
+            paddingBottom: Constants.statusBarHeight > 40 ? 20 : 5,
+            height: Constants.statusBarHeight > 40 ? 65 : 55,
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
@@ -151,11 +147,7 @@ export const PbmStack = DrawerNavigator({
         inactiveTintColor: '#6a7d8a',
         activeBackgroundColor: '#f5fbff',
         itemsContainerStyle: {
-            ...ifIphoneX({
-                paddingTop: 20,
-            }, {
-                paddingTop: 0
-            })
+            paddingTop: Constants.statusBarHeight > 40 ? 20 : 0,
         }
     },
 })
@@ -163,10 +155,12 @@ export const PbmStack = DrawerNavigator({
 const s = StyleSheet.create({ 
     activeTabText: {
         fontWeight: "bold",
-        fontSize: 11
+        fontSize: 11,
+        color: '#000e18'
     },
     inactiveTabText: {
         fontWeight: "normal",
-        fontSize: 11
+        fontSize: 11,
+        color: '#6a7d8a'
     }
 })
