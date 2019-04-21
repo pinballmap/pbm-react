@@ -31,6 +31,7 @@ import {
     Text,
     WarningButton, 
 }  from '../components'
+import { headerStyle } from '../styles'
 
 const moment = require('moment')
 
@@ -52,11 +53,7 @@ class MachineDetails extends Component {
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
             headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {},
             headerRight: <RemoveMachine />,
-            headerStyle: {
-                backgroundColor:'#f5fbff',
-                height: Expo.Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
-                paddingTop: Expo.Constants.statusBarHeight > 40 ? 30 : '',                
-            },
+            headerStyle,
             headerTintColor: '#4b5862'
         }
     }
