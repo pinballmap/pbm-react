@@ -110,7 +110,7 @@ export class SignupLogin extends Component {
                             }
                         </View>
                     </View>
-                    <View style={{padding:15}}>
+                    <View style={{paddingTop:5,paddingBottom:10,paddingLeft:15,paddingRight:15}}>
                         <Button
                             onPress={() => this.props.navigation.navigate('Login')}
                             raised
@@ -128,7 +128,7 @@ export class SignupLogin extends Component {
                             titleStyle={s.titleStyle}
                             title="New User? Sign Up"
                             accessibilityLabel="Sign Up"
-                            containerStyle={{borderRadius:50,marginTop:15,marginBottom:25}}
+                            containerStyle={{borderRadius:50,marginTop:15,marginBottom:20}}
                             style={{borderRadius: 50}}
                         />
                         <Button                            
@@ -163,7 +163,10 @@ const s = StyleSheet.create({
         fontWeight:"bold",
     },
     outerBorder: {
-        margin:20,
+        marginTop: 10,
+        marginBottom: 10,
+        marginRight: 20,
+        marginLeft: 20,
         borderRadius:10,
         borderWidth:4,
         borderColor:'rgba(0,0,0,.4)',
