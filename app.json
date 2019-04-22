@@ -7,6 +7,14 @@
     "splash": {
       "image": "app/assets/images/android-icon.png",
       "backgroundColor": "#f5fbff"
+    },
+    "version": "1.0.0",
+    "slug": "pbm-app",
+    "ios": {
+      "bundleIdentifier": "pbm.app"
+    },
+    "android": {
+      "package": "pbm.app"
     }
   }
 }
