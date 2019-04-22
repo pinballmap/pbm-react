@@ -77,10 +77,7 @@ export default (state = initialState, action) => {
         }
     case FETCHING_LOCATIONS_BY_CITY_SUCCESS: {
         const { locations } = action
-        // Precaution if no locations in result. We are getting lat/lon from first result in array of locations.
-        if (locations.length === 0 || !locations[0].lat || !locations[0].lon)
-            return state
-
+ 
         return {
             ...state,
             curLat: Number(locations[0].lat),
