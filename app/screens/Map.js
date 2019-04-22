@@ -274,7 +274,7 @@ const s = StyleSheet.create({
     titleStyle: {
         color: "#1e9dff",
         fontSize: 16,
-        fontWeight: "600"
+        fontWeight: Platform.OS === 'ios' ? "600" : "400"
     }, 
     loading: {
         textAlign: 'center',
