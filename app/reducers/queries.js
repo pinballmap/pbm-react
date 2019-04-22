@@ -29,10 +29,10 @@ export default (state = initialState, action) => {
     case UPDATE_COORDINATES: 
         return {
             ...state,
-            curLat: action.lat,
-            curLon: action.lon,
-            latDelta: action.latDelta,
-            lonDelta: action.lonDelta,
+            curLat: Number(action.lat),
+            curLon: Number(action.lon),
+            latDelta: Number(action.latDelta),
+            lonDelta: Number(action.lonDelta),
         }
     case SET_MACHINE_FILTER: {
         return {
