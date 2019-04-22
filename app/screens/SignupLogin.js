@@ -101,16 +101,16 @@ export class SignupLogin extends Component {
                                     <Text style={s.bold}> {this.state.num_lmxes} </Text>
                                     <Text>machines.</Text>
                                     {"\n"}{"\n"}
-                                    <Text>You can use it without being logged in. But to help keep it up to date you gotta log in!</Text>
+                                    <Text>Please log in to help keep it up to date!</Text>
                                     {"\n"}{"\n"}
                                     <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
-                                        You’ll be prompted to enable location services, so that we can display pinball machines near you!
+                                        When prompted, enable locations services to see pinball machines near you!
                                     </Text>
                                 </Text>
                             }
                         </View>
                     </View>
-                    <View style={{paddingTop:5,paddingBottom:10,paddingLeft:15,paddingRight:15}}>
+                    <View style={{paddingTop:10,paddingBottom:10,paddingLeft:15,paddingRight:15}}>
                         <Button
                             onPress={() => this.props.navigation.navigate('Login')}
                             raised
