@@ -84,8 +84,8 @@ const TabNav = TabNavigator({
         showIcon: true,
         style: {
             backgroundColor:'#f5fbff',
-            paddingBottom: Constants.statusBarHeight > 40 ? 20 : 5,
-            height: Constants.statusBarHeight > 40 ? 65 : 55,
+            paddingBottom: Constants.statusBarHeight > 40 ? 20 : 3,
+            height: Constants.statusBarHeight > 40 ? 65 : 50,
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
