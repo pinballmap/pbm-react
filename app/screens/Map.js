@@ -280,7 +280,7 @@ const s = StyleSheet.create({
         textAlign: 'center',
         zIndex: 10, 
         fontSize: 14,
-        marginTop: 5
+        marginTop: Platform.OS === 'ios' ? 5 : -45,
     },
     confirmText: {
         textAlign: 'center',
