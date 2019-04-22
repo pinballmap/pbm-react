@@ -238,8 +238,8 @@ class Map extends Component {
                                     longitudeDelta: this.state.region.longitudeDelta,
                                 }}
                                 title={l.name}
-                                key={l.id}
-                                image={markerDot}
+                                key={l.id}  
+                                image={markerDot}                            
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
@@ -274,13 +274,13 @@ const s = StyleSheet.create({
     titleStyle: {
         color: "#1e9dff",
         fontSize: 16,
-        fontWeight: "600"
+        fontWeight: Platform.OS === 'ios' ? "600" : "400"
     }, 
     loading: {
         textAlign: 'center',
         zIndex: 10, 
         fontSize: 14,
-        marginTop: 5
+        marginTop: Platform.OS === 'ios' ? 5 : -45,
     },
     confirmText: {
         textAlign: 'center',
