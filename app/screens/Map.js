@@ -240,6 +240,7 @@ class Map extends Component {
                                 title={l.name}
                                 key={l.id}
                                 image={markerDot}
+                                style={{width: 39, height: 39}}
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
