@@ -31,8 +31,10 @@ import {
     closeFavoriteLocationModal, 
     confirmLocationIsUpToDate, 
     fetchLocation,
+    fetchLocations,
     removeFavoriteLocation,
     setCurrentMachine, 
+    updateCurrCoordinates,
 } from '../actions'
 import { headerStyle } from '../styles'
 
@@ -95,10 +97,11 @@ class LocationDetails extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.location.addingMachineToLocation && !props.location.addingMachineToLocation)
             this.props.fetchLocation(this.state.id)
-
-        // If the location name isn't known before arriving on this screen, this will populate the header with the location name once it comes back
-        if (!this.props.navigation.getParam('locationName') && !this.props.location.location.name && props.location.location.name)
-            this.props.navigation.setParams({ locationName: props.location.location.name })
+        
+        if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
+            this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.location.location.lat + ';lon=' + props.location.location.lon + ';send_all_within_distance=1;max_distance=5')
+            this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
+        }
     }
             
     componentDidMount() {
@@ -349,9 +352,6 @@ const s = StyleSheet.create({
     font18: {
         fontSize: 18
     },
-    font16: {
-        fontSize: 16
-    },
     marginB8: {
         marginBottom: 8
     },
@@ -471,6 +471,8 @@ LocationDetails.propTypes = {
     closeFavoriteLocationModal: PropTypes.func,
     removeFavoriteLocation: PropTypes.func,
     addFavoriteLocation: PropTypes.func,
+    getLocations: PropTypes.func,
+    updateCurrCoordinates: PropTypes.func,
 }
 
 const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user})
@@ -483,5 +485,7 @@ const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
     closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
+    getLocations: (url) => dispatch(fetchLocations(url)),
+    updateCurrCoordinates: (lat, lon) => dispatch(updateCurrCoordinates(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
