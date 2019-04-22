@@ -238,9 +238,8 @@ class Map extends Component {
                                     longitudeDelta: this.state.region.longitudeDelta,
                                 }}
                                 title={l.name}
-                                key={l.id}
-                                image={markerDot}
-                                style={{width: 39, height: 39}}
+                                key={l.id}  
+                                image={markerDot}                            
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
