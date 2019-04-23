@@ -145,7 +145,7 @@ class UserProfile extends Component {
                             containerStyle={s.margin15}
                         />
                         <Text style={s.bold}>Locations Edited:</Text>
-                        <View style={{paddingTop:8,paddingBottom:8}}>
+                        <View style={{paddingVertical:8}}>
                             {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
                                     containerStyle={{backgroundColor:'#f5fbff'}}
@@ -183,10 +183,8 @@ const s = StyleSheet.create({
     bold: {
         fontWeight: 'bold',
         fontSize: 16,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         color: "#000e18",
         backgroundColor: "#D3ECFF"
     },

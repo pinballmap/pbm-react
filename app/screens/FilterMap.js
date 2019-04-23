@@ -224,8 +224,7 @@ class FilterMap extends Component {
 
 const s = StyleSheet.create({
     pageTitle: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingVertical: 10,
         backgroundColor: "#6a7d8a"
     },
     pageTitleText: {
@@ -250,8 +249,7 @@ const s = StyleSheet.create({
     paddingBottom5: {
         paddingBottom: 5,
         paddingTop: 10,
-        paddingRight: 10,
-        paddingLeft: 10
+        paddingHoriontal: 10,
     },
     whitebg: {
         backgroundColor: "#FFFFFF",

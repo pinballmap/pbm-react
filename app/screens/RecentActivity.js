@@ -151,8 +151,7 @@ class RecentActivity extends Component {
 const s = StyleSheet.create({
     header: {
         backgroundColor: "#6a7d8a",
-        paddingTop: 10,
-        paddingBottom: 10,        
+        paddingVertical: 10,
     },
     headerText: {
         color: "#f5fbff",
@@ -178,8 +177,7 @@ const s = StyleSheet.create({
         textAlign: "center",
         color: '#000e18',
         fontWeight: 'bold',
-        paddingTop: 8,
-        paddingBottom: 8
+        paddingVertical: 8,
     },
     list: {
         borderRadius: 5,

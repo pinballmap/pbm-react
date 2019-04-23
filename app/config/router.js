@@ -89,7 +89,7 @@ const TabNav = TabNavigator({
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
-        }
+        },
     },
     tabBarPosition: 'bottom',
     swipeEnabled: true,

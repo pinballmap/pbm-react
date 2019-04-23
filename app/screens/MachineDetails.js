@@ -297,12 +297,10 @@ const s = StyleSheet.create({
     },
     noneYet: {
         textAlign:'center',
-        paddingLeft:15,
-        paddingRight:15,
+        paddingHorizontal:15,
         fontStyle:'italic',
         color:'#97a5af',
-        paddingTop:5,
-        paddingBottom:5,
+        paddingVertical:5,
         backgroundColor:'#ffffff',
     },
     textInput: {
