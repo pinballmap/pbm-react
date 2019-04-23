@@ -101,6 +101,10 @@ class LocationDetails extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.location.addingMachineToLocation && !props.location.addingMachineToLocation)
             this.props.fetchLocation(this.state.id)
+
+        // If the location name isn't known before arriving on this screen, this will populate the header with the location name once it comes back
+        if (!this.props.navigation.getParam('locationName') && !this.props.location.location.name && props.location.location.name || (this.props.location.location.name !== props.location.location.name))
+            this.props.navigation.setParams({ locationName: props.location.location.name })
         
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
             this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.location.location.lat + ';lon=' + props.location.location.lon + ';send_all_within_distance=1;max_distance=5')
