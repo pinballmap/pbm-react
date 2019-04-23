@@ -46,7 +46,7 @@ export const fetchLocations = (url) => dispatch => {
 
 export const getLocationsByCity = (city) => dispatch => {
     dispatch({ type: FETCHING_LOCATIONS_BY_CITY })
-
+    // Include filters
     return getData(`/locations/closest_by_address.json?address=${city};max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`)
         .then(data => {
             if (data.locations.length > 0) {
