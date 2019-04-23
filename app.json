@@ -2,7 +2,6 @@
   "expo": {
     "sdkVersion": "30.0.0",
     "orientation": "portrait",
-    "icon": "app/assets/images/ios-icon.png",
     "splash": {
       "image": "app/assets/images/t-shirt-logo.png",
       "backgroundColor": "#4b5862",
@@ -11,10 +10,12 @@
     "version": "1.0.0",
     "slug": "pbm-app",
     "ios": {
-      "bundleIdentifier": "pbm.app"
+      "bundleIdentifier": "pbm.app",
+      "icon": "app/assets/images/ios-icon.png"
     },
     "android": {
-      "package": "pbm.app"
+      "package": "pbm.app",
+      "icon": "app/assets/images/android-icon.png"
     }
   }
 }
