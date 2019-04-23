@@ -105,7 +105,7 @@ class LocationDetails extends Component {
             this.props.navigation.setParams({ locationName: props.location.location.name })
         
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
-            this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.location.location.lat + ';lon=' + props.location.location.lon + ';send_all_within_distance=1;max_distance=5')
+            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${props.location.location.lat};lon=${props.location.location.lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`)
             this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
         }
     }
