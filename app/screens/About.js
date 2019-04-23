@@ -61,7 +61,7 @@ class About extends Component {
         return(
             <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <View style={s.container}>
-                    <View style={[s.logoWrapper,s.child]}>
+                    <View style={[s.logoWrapper]}>
                         <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo}/>
                     </View>
                     <View style={s.child}>
@@ -94,7 +94,10 @@ const s = StyleSheet.create({
     },
     logoWrapper: {
         padding: 5,
-        flex: 2
+        flex: 2,
+        margin: "auto",
+        paddingTop: 10,
+        paddingHorizontal: 10
     },
     logo: {
         flex:1,  
@@ -106,6 +109,7 @@ const s = StyleSheet.create({
     },
     text: {
         fontSize: 16,
+        lineHeight: 22,
         marginBottom: 10
     },
     bold: {
