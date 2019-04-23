@@ -51,7 +51,12 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
-            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {},
+            headerRight:<View style={{padding:6}}></View>,
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerRight: <RemoveMachine />,
             headerStyle,
             headerTintColor: '#4b5862'

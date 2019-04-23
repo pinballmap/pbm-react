@@ -37,6 +37,12 @@ class Events extends Component {
             drawerIcon: () => <MaterialIcons name='event-note' style={[s.drawerIcon]} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
+            headerRight:<View style={{padding:6}}></View>,
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerStyle,
             headerTintColor: '#4b5862'
         }
