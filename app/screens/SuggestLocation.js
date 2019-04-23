@@ -388,14 +388,15 @@ class SuggestLocation extends Component {
                                         title={country}
                                         onPress={() => this.setState({ showSelectCountryModal: true })}
                                     /> :
-                                    <Picker 
-                                        style={s.pickerbg}
-                                        selectedValue={country}
-                                        onValueChange={country => this.setState({ country })}>
-                                        {countries.map(m => (
-                                            <Picker.Item label={m.name} value={m.name} key={m.name} />
-                                        ))}
-                                    </Picker>    
+                                    <View style={s.viewPicker}>
+                                        <Picker 
+                                            selectedValue={country}
+                                            onValueChange={country => this.setState({ country })}>
+                                            {countries.map(m => (
+                                                <Picker.Item label={m.name} value={m.name} key={m.name} />
+                                            ))}
+                                        </Picker> 
+                                    </View>   
                                 }   
                                 <Text style={s.title}>Phone</Text>
                                 <TextInput 
@@ -432,14 +433,15 @@ class SuggestLocation extends Component {
                                         title={locationTypeName}
                                         onPress={() => this.selectingLocationType()}
                                     /> : 
-                                    <Picker 
-                                        style={s.pickerbg}
-                                        selectedValue={locationType}
-                                        onValueChange={itemValue => this.setState({ locationType: itemValue })}>
-                                        {locationTypes.map(m => (
-                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                        ))}
-                                    </Picker>
+                                    <View style={s.viewPicker}>
+                                        <Picker 
+                                            selectedValue={locationType}
+                                            onValueChange={itemValue => this.setState({ locationType: itemValue })}>
+                                            {locationTypes.map(m => (
+                                                <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                            ))}
+                                        </Picker>
+                                    </View>
                                 }
                                 <Text style={s.title}>Operator</Text>
                                 {Platform.OS === "ios" ? 
@@ -447,14 +449,15 @@ class SuggestLocation extends Component {
                                         title={operatorName}
                                         onPress={() => this.selectingOperator()}
                                     /> :
-                                    <Picker 
-                                        style={s.pickerbg}
-                                        selectedValue={operator}
-                                        onValueChange={itemValue => this.setState({ operator: itemValue })}>
-                                        {operators.map(m => (
-                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                        ))}
-                                    </Picker>    
+                                    <View style={s.viewPicker}>
+                                        <Picker 
+                                            selectedValue={operator}
+                                            onValueChange={itemValue => this.setState({ operator: itemValue })}>
+                                            {operators.map(m => (
+                                                <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                            ))}
+                                        </Picker>    
+                                    </View>
                                 }    
                                 <PbmButton
                                     title={'Select Machines to Add'}
@@ -520,9 +523,13 @@ const s = StyleSheet.create({
     radius10: {
         borderRadius: 10,
     },
-    pickerbg: {
-        marginLeft: 10,
-        marginRight: 10,
+    viewPicker: {
+        backgroundColor:"#e0ebf2",
+        borderColor: '#d1dfe8',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15
     },
     hr: {
         marginLeft:25,

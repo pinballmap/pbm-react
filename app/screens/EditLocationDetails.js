@@ -214,14 +214,16 @@ class EditLocationDetails extends Component {
                                     title={locationTypeName}
                                     onPress={() => this.selectingLocationType()}
                                 /> : 
-                                <Picker 
-                                    style={s.pickerbg}
-                                    selectedValue={selectedLocationType}
-                                    onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
-                                    {locationTypes.map(m => (
-                                        <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                    ))}
-                                </Picker>
+                                <View style={s.viewPicker}>
+                                    <Picker 
+                                        style={s.pickerbg}
+                                        selectedValue={selectedLocationType}
+                                        onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
+                                        {locationTypes.map(m => (
+                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                        ))}
+                                    </Picker>
+                                </View>
                             }
                             <Text style={s.title}>Operator</Text>
                             {Platform.OS === "ios" ? 
@@ -229,14 +231,16 @@ class EditLocationDetails extends Component {
                                     title={operatorName}
                                     onPress={() => this.selectingOperator()}
                                 /> :
-                                <Picker 
-                                    style={s.pickerbg}
-                                    selectedValue={selectedOperatorId}
-                                    onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
-                                    {operators.map(m => (
-                                        <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                    ))}
-                                </Picker>    
+                                <View style={s.viewPicker}>
+                                    <Picker 
+                                        style={s.pickerbg}
+                                        selectedValue={selectedOperatorId}
+                                        onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
+                                        {operators.map(m => (
+                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                                        ))}
+                                    </Picker> 
+                                </View>   
                             }                        
                             <PbmButton
                                 title={'Submit Location Details'}
@@ -286,6 +290,14 @@ const s = StyleSheet.create({
         height:2,
         marginTop: 10,
         backgroundColor:"#D3ECFF"
+    },
+    viewPicker: {
+        backgroundColor:"#e0ebf2",
+        borderColor: '#d1dfe8',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15
     },
 })
 

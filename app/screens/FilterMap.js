@@ -188,13 +188,15 @@ class FilterMap extends Component {
                       title={locationTypeName}
                       onPress={() => this.selectingLocationType()}
                   /> : 
-                  <Picker style={[s.border,s.whitebg]}
-                      selectedValue={locationType}
-                      onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
-                      {locationTypes.map(m => (
-                          <Picker.Item label={m.name} value={m.id} key={m.id} />
-                      ))}
-                  </Picker>
+                  <View style={s.viewPicker}>
+                    <Picker
+                        selectedValue={locationType}
+                        onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
+                        {locationTypes.map(m => (
+                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                        ))}
+                    </Picker>
+                  </View>
               }
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
               {Platform.OS === "ios" ? 
@@ -202,14 +204,15 @@ class FilterMap extends Component {
                       title={operatorName}
                       onPress={() => this.selectingOperator()}
                   /> : 
-                  <Picker 
-                      style={[s.border,s.whitebg]}
-                      selectedValue={selectedOperator}
-                      onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
-                      {operators.map(m => (
-                          <Picker.Item label={m.name} value={m.id} key={m.id} />
-                      ))}
-                  </Picker> 
+                  <View style={s.viewPicker}>
+                    <Picker 
+                        selectedValue={selectedOperator}
+                        onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
+                        {operators.map(m => (
+                            <Picker.Item label={m.name} value={m.id} key={m.id} />
+                        ))}
+                    </Picker> 
+                  </View>
               }   
               {hasFilterSelected ? 
                   <WarningButton
@@ -262,6 +265,14 @@ const s = StyleSheet.create({
     textStyle: {
         color: '#000e18',
         fontWeight: 'bold',
+    },
+    viewPicker: {
+        backgroundColor:"#e0ebf2",
+        borderColor: '#d1dfe8',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15
     },
 })
 
