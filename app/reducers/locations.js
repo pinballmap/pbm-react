@@ -22,7 +22,6 @@ export const initialState = {
     isFetchingLocationTypes: false,
     locationTypes: [],
     isFetchingLocations: false,
-    isRefetchingLocations: false,
     mapLocations: [], 
     selectedLocationListFilter: 0,
 }
@@ -57,20 +56,13 @@ export default (state = initialState, action) => {
         return {
             ...state,
             isFetchingLocations: false,
-            isRefetchingLocations: false,
             mapLocations: action.locations,
         }
     case FETCHING_LOCATIONS_FAILURE:
         return {
             ...state,
             isFetchingLocations: false,
-            isRefetchingLocations: false,
             mapLocations: [],
-        }
-    case REFETCHING_LOCATIONS:
-        return {
-            ...state,
-            isRefetchingLocations: true,
         }
     case SELECT_LOCATION_LIST_FILTER_BY: 
         return {
