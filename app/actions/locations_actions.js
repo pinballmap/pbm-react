@@ -36,11 +36,8 @@ export const getLocationTypeSuccess = (data) => {
   
 export const getLocationTypeFailure = () => ({ type: FETCHING_LOCATION_TYPES_FAILURE })
 
-export const fetchLocations = (url, isRefetch) => dispatch => {
-    if (isRefetch)
-        dispatch({type: REFETCHING_LOCATIONS})
-    else 
-        dispatch({type: FETCHING_LOCATIONS})
+export const fetchLocations = (url) => dispatch => {
+    dispatch({type: FETCHING_LOCATIONS})
 
     return getData(url)
         .then(data => dispatch(getLocationsSuccess(data)))
