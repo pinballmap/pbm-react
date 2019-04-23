@@ -78,7 +78,7 @@ class Map extends Component {
         const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
         const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
         const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=5;send_all_within_distance=1`, true)  
+        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`, true)  
     }
 
     onRegionChange = (region) => {
@@ -99,7 +99,7 @@ class Map extends Component {
 
     updateCurrentLocation = () => {
         const { lat, lon } = this.props.user
-        this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lon + ';send_all_within_distance=1;max_distance=5', true)
+        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`, true)
         this.props.updateCoordinates(lat, lon)
     }
 
@@ -125,7 +125,7 @@ class Map extends Component {
                     longitude: props.user.lon, 
                 }
             })
-            this.props.getLocations('/locations/closest_by_lat_lon.json?lat=' + props.user.lat + ';lon=' + props.user.lon + ';send_all_within_distance=1;max_distance=5')
+            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${props.user.lat};lon=${props.user.lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`)
         }
 
         if (curLat !== this.props.query.curLat || curLon !== this.props.query.curLon ) {
@@ -144,7 +144,7 @@ class Map extends Component {
             const byLocationType = locationType ? `by_type_id=${locationType};` : ''
             const byNumMachines = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
             const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=5;send_all_within_distance=1`, true)
+            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`, true)
         }
 
     }
