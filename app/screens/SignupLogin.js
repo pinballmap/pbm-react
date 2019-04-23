@@ -110,7 +110,7 @@ export class SignupLogin extends Component {
                             }
                         </View>
                     </View>
-                    <View style={{paddingTop:10,paddingBottom:10,paddingLeft:15,paddingRight:15}}>
+                    <View style={{paddingVertical:10,paddingHorizontal:15}}>
                         <Button
                             onPress={() => this.props.navigation.navigate('Login')}
                             raised
@@ -177,10 +177,8 @@ const s = StyleSheet.create({
         backgroundColor:'rgba(255,255,255,.6)',
     },
     logoWrapper: {
-        paddingRight: 15,
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 15
+        paddingHorizontal: 15,
+        paddingVertical: 5,
     },
     logo: {
         width: '100%',

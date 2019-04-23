@@ -497,8 +497,7 @@ const s = StyleSheet.create({
         marginLeft: 25
     },
     pageTitle: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingVertical: 10,
         backgroundColor: "#6a7d8a"
     },
     pageTitleText: {

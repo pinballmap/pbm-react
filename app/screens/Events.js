@@ -119,8 +119,7 @@ class Events extends Component {
 const s = StyleSheet.create({ 
     header: {
         backgroundColor: "#6a7d8a",
-        paddingTop: 10,
-        paddingBottom: 10,        
+        paddingVertical: 10,
     },
     headerText: {
         color: "#f5fbff",
@@ -141,8 +140,7 @@ const s = StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: 'center',
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingVertical: 10,
         backgroundColor: "#D3ECFF",
         fontWeight: 'bold',
         marginBottom: 5

@@ -99,8 +99,7 @@ const s = StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         height: 40,
-        paddingTop: 10,
-        paddingBottom: 10
+        paddingVertical: 10,
     },
     filterTitle: {
         color: "#f5fbff",

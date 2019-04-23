@@ -140,8 +140,7 @@ const s = StyleSheet.create({
         marginRight: 10, 
         marginTop: 20,
         borderRadius: 10,
-        paddingLeft: 5,
-        paddingRight: 5,
+        paddingHorizontal: 5,
         textAlign: 'left'
     },
     confirmText: {

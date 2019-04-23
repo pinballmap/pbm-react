@@ -43,8 +43,7 @@ const s = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderRadius: 15,
         width: '80%',
-        paddingTop: 15,
-        paddingBottom: 15
+        paddingVertical: 15,
     }
 })
 

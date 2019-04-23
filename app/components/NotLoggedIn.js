@@ -33,8 +33,7 @@ const s = StyleSheet.create({
     },
     hiya: {
         fontStyle: 'italic',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingHorizontal: 15,
         paddingBottom: 10,
         color: '#4b5862',
         textAlign: 'center'
