@@ -69,6 +69,7 @@ const s = StyleSheet.create({
     },
     text: {
         fontSize: 16,
+        lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
         marginRight: 15,
