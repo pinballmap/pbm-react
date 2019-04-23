@@ -8,14 +8,16 @@ import {
     SET_NUM_MACHINES_FILTER,
     SET_LOCATION_TYPE_FILTER,
     SET_OPERATOR_FILTER,
+    FETCHING_LOCATION_TRACKING_SUCCESS,
+    FETCHING_LOCATION_TRACKING_FAILURE,
 } from '../actions/types'
 
 export const initialState = {
     locationName: '',
-    curLat: null,
-    curLon: null,
-    latDelta: null,
-    lonDelta: null,
+    curLat: '',
+    curLon: '',
+    latDelta: '',
+    lonDelta: '',
     machineId: '',
     locationType: '',
     numMachines: 0,
@@ -27,12 +29,14 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
     case UPDATE_COORDINATES: 
+    case FETCHING_LOCATION_TRACKING_SUCCESS:
+    case FETCHING_LOCATION_TRACKING_FAILURE:
         return {
             ...state,
             curLat: Number(action.lat),
             curLon: Number(action.lon),
-            latDelta: Number(action.latDelta),
-            lonDelta: Number(action.lonDelta),
+            latDelta: Number(action.latDelta ? action.latDelta : 0.1),
+            lonDelta: Number(action.lonDelta ? action.lonDelta : 0.1),
         }
     case SET_MACHINE_FILTER: {
         return {

@@ -42,6 +42,8 @@ export const getLocationTrackingEnabledSuccess = (data) => {
 export const getLocationTrackingEnabledFailure = () => {
     return {
         type: FETCHING_LOCATION_TRACKING_FAILURE,
+        lat: 45.51322,
+        lon: -122.6587,
     }
 }
 
