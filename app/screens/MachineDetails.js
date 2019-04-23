@@ -14,7 +14,6 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
 import { Button, ListItem } from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
 import { 
@@ -51,7 +50,6 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
-            headerRight:<View style={{padding:6}}></View>,
             headerTitleStyle: {
                 textAlign: 'center',
                 flexGrow: 1,

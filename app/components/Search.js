@@ -193,7 +193,7 @@ const s = StyleSheet.create({
         marginLeft: Platform.OS === 'ios' ? -15 : 0,     
     },
     searchIcon: {
-        paddingTop: 5,
+        paddingTop: Platform.OS === 'ios' ? 5 : 3,
         paddingLeft: 5
     },
     input: {

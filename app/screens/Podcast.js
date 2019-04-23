@@ -8,6 +8,8 @@ import {
     StyleSheet, 
     View,
 } from 'react-native'
+import { Button } from 'react-native-elements'
+import { EvilIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { 
     HeaderBackButton,
@@ -25,6 +27,12 @@ class Podcast extends Component {
             drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />, 
             headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Podcast',
+            headerRight:<View style={{padding:6}}></View>,
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerStyle,
             headerTintColor: '#4b5862'
         }
@@ -34,14 +42,23 @@ class Podcast extends Component {
         return(
             <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
                 <View style={s.container}>
-                    <View style={[s.logoWrapper,s.child]}>
+                    <View style={[s.logoWrapper]}>
                         <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
                     </View>
                     <View style={s.child}>
-                        <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode once a month. Check it out!</Text>
-                        <Text style={s.textLink}
+                        <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode about once a month. Check it out!</Text>
+                        <Button
+                            title={'pod.pinballmap.com'}
                             onPress={() => Linking.openURL('http://pod.pinballmap.com')}
-                        >pod.pinballmap.com</Text>
+                            buttonStyle={s.externalLink}
+                            titleStyle={{
+                                color:"#000e18", 
+                                fontSize:16
+                            }}
+                            iconRight
+                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                            containerStyle={s.margin15}
+                        />
                     </View>  
                 </View>
             </ScrollView>
@@ -58,7 +75,10 @@ const s = StyleSheet.create({
     },
     logoWrapper: {
         padding: 5,
-        flex: 2
+        flex: 2,
+        margin: "auto",
+        paddingTop: 10,
+        paddingHorizontal: 10
     },
     logo: {
         width: deviceWidth - 20,
@@ -70,20 +90,27 @@ const s = StyleSheet.create({
         padding: 10,
     },
     text: {
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 22
     },
     bold: {
         fontWeight: 'bold',
     },
-    textLink: {
-        textDecorationLine: 'underline',
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: 5,
-        paddingTop: 10,
-        paddingBottom: 10,
-        backgroundColor: "#D3ECFF",
-        fontWeight: 'bold'
+    externalLink: {
+        backgroundColor:'#ffffff',
+        borderWidth: 1,
+        borderColor: '#97a5af',
+        borderRadius: 50,
+        elevation: 0
+    },
+    externalIcon: {
+        fontSize: 24
+    },
+    margin15: {
+        marginLeft:15,
+        marginRight:15,
+        marginTop:15,
+        marginBottom:15
     },
     drawerIcon: {
         fontSize: 24,
