@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
+    Platform,
     StyleSheet,
     Text, 
     View, 
@@ -82,7 +83,7 @@ class FilterRecentActivity extends Component {
                         containerStyle={{width:60}}
                         title="Filter"
                         accessibilityLabel="Filter"
-                        titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: 'bold'}}
+                        titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
                         clear={true}
                     /> : null
                 }
