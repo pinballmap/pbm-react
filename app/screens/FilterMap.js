@@ -249,7 +249,7 @@ const s = StyleSheet.create({
     paddingBottom5: {
         paddingBottom: 5,
         paddingTop: 10,
-        paddingHoriontal: 10,
+        paddingHorizontal: 10,
     },
     whitebg: {
         backgroundColor: "#FFFFFF",
