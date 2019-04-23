@@ -58,7 +58,11 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('locationName'),
-            headerTitleStyle: Platform.OS === "ios" ? {width:deviceWidth - 90} : {},            
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
@@ -67,7 +71,7 @@ class LocationDetails extends Component {
                     accessibilityLabel="Edit"
                     titleStyle={{color: "#1e9dff", fontSize: 18}}
                     clear={true}
-                /> : null,
+                /> : <View style={{padding:6}}></View>,
             headerStyle,
             headerTintColor: '#4b5862'
         }

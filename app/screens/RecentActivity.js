@@ -30,6 +30,11 @@ class RecentActivity extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerTintColor: '#4b5862',
             headerStyle,
             headerRight: <FilterRecentActivity />

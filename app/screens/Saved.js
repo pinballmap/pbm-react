@@ -34,6 +34,12 @@ export class LocationList extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,          
             title: 'Saved',
+            headerRight:<View style={{padding:6}}></View>,
+            headerTitleStyle: {
+                textAlign: 'center',
+                flexGrow: 1,
+                alignSelf:'center',
+            },
             headerStyle,
             headerTintColor: '#4b5862'
         }
