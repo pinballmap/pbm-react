@@ -22,6 +22,7 @@ import {
     clearError,
 } from '../actions'
 import { headerStyle } from '../styles'
+import { getDistance } from '../utils/utilityFunctions'
 
 class Map extends Component {
     constructor(props){
@@ -31,13 +32,6 @@ class Map extends Component {
         this.prevRegion = null,
 
         this.state ={ 
-            region: {
-                latitude: this.props.user.lat, 
-                longitude: this.props.user.lon, 
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1,
-            },
-            address: '', 
             fontAwesomeLoaded: false,
             showNoLocationTrackingModal: false,
         }
@@ -73,21 +67,18 @@ class Map extends Component {
     };
 
     reloadMap() { 
-        const { machineId, locationType, numMachines, selectedOperator } = this.props.query
+        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon } = this.props.query
         const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
         const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
         const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
         const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`, true)  
+        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${curLat};lon=${curLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`)  
     }
 
     onRegionChange = (region) => {
         //Only reload map if the location hasn't moved in 0.5sec
         const compareRegion = (region) => {
             if (region === this.prevRegion) {
-                this.setState({ 
-                    region, 
-                })
                 this.props.updateCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
                 this.reloadMap()
             }
@@ -99,8 +90,9 @@ class Map extends Component {
 
     updateCurrentLocation = () => {
         const { lat, lon } = this.props.user
-        this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`, true)
+        //this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`)
         this.props.updateCoordinates(lat, lon)
+        this.reloadMap()
     }
 
     componentDidUpdate(){
@@ -116,48 +108,30 @@ class Map extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, latDelta, lonDelta } = props.query
-        if (!this.props.user.lat && props.user.lat) {
-            this.setState({
-                region: {
-                    ...this.state.region,
-                    latitude: props.user.lat, 
-                    longitude: props.user.lon, 
-                }
-            })
-            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${props.user.lat};lon=${props.user.lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`)
-        }
+        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon } = props.query
 
-        if (curLat !== this.props.query.curLat || curLon !== this.props.query.curLon ) {
-            this.setState({
-                region: {
-                    latitude: curLat,
-                    longitude: curLon,
-                    latitudeDelta: latDelta,
-                    longitudeDelta: lonDelta,
-                }
-            })
-        }
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator) {
             const machine = machineId ? `by_machine_id=${machineId};` : ''
             const byLocationType = locationType ? `by_type_id=${locationType};` : ''
             const byNumMachines = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
             const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${this.state.region.latitude};lon=${this.state.region.longitude};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`, true)
+            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${curLat};lon=${curLon};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`)
         }
 
     }
 
     render(){
-        const { isFetchingLocations, isRefetchingLocations, mapLocations = [] } = this.props.locations
+        const { isFetchingLocations, mapLocations = [] } = this.props.locations
         const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
-        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false } = this.props.query
+        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
+        // console.log(getDistance(this.state.region.latitude - 0.5*this.state.region.latitudeDelta, this.state.region.longitude, this.state.region.latitude + 0.5*this.state.region.latitudeDelta, this.state.region.longitude))
+        // console.log(getDistance(this.state.region.latitude, this.state.region.longitude - 0.5*this.state.region.longitudeDelta, this.state.region.latitude, this.state.region.longitude + 0.5*this.state.region.longitudeDelta))
     
-        if (isFetchingLocations || !this.state.region.latitude) {
+        if (!latitude) {
             return(
                 <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
                     <ActivityIndicator/>
@@ -215,11 +189,16 @@ class Map extends Component {
                         }
                     </View>
                 </View>
-                {isRefetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
+                {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
                     <MapView
                         ref={this.mapRef}
-                        region={this.state.region}
+                        region={{
+                            latitude,
+                            longitude,
+                            latitudeDelta,
+                            longitudeDelta,
+                        }}
                         style={s.map}
                         onRegionChange={this.onRegionChange}
                         mapType={'none'}
@@ -234,8 +213,6 @@ class Map extends Component {
                                 coordinate={{
                                     latitude: Number(l.lat), 
                                     longitude: Number(l.lon), 
-                                    latitudeDelta: this.state.region.latitudeDelta, 
-                                    longitudeDelta: this.state.region.longitudeDelta,
                                 }}
                                 title={l.name}
                                 key={l.id}  
