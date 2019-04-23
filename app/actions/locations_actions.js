@@ -50,7 +50,7 @@ export const fetchLocations = (url, isRefetch) => dispatch => {
 export const getLocationsByCity = (city) => dispatch => {
     dispatch({ type: FETCHING_LOCATIONS_BY_CITY })
 
-    return getData(`/locations/closest_by_address.json?address=${city};max_distance=5;send_all_within_distance=1`)
+    return getData(`/locations/closest_by_address.json?address=${city};max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`)
         .then(data => {
             if (data.locations.length > 0) {
                 dispatch(getLocationsByCitySuccess(data))
@@ -59,7 +59,7 @@ export const getLocationsByCity = (city) => dispatch => {
                 Geocode.fromAddress(city)
                     .then(response => {
                         const { lat, lng } = response.results[0].geometry.location
-                        dispatch(fetchLocations('/locations/closest_by_lat_lon.json?lat=' + lat + ';lon=' + lng + ';send_all_within_distance=1;max_distance=5', true))
+                        dispatch(fetchLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lng};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`, true))
                         dispatch(updateCurrCoordinates(lat, lng))
                     },
                     error => {
