@@ -9,7 +9,6 @@ import {
     FETCHING_LOCATIONS_FAILURE,
     FETCHING_LOCATIONS_BY_CITY, 
     FETCHING_LOCATIONS_BY_CITY_SUCCESS,
-    REFETCHING_LOCATIONS,
     SELECT_LOCATION_LIST_FILTER_BY,
     DISPLAY_ERROR
 } from './types'
@@ -36,18 +35,30 @@ export const getLocationTypeSuccess = (data) => {
   
 export const getLocationTypeFailure = () => ({ type: FETCHING_LOCATION_TYPES_FAILURE })
 
-export const fetchLocations = (url) => dispatch => {
+export const getLocations = (lat = '', lon = '', distance = global.STANDARD_DISTANCE) => (dispatch, getState) => {
     dispatch({type: FETCHING_LOCATIONS})
+
+    const { machineId, locationType, numMachines, selectedOperator, curLat, curLon } = getState().query
+    const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
+    const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
+    const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
+    const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
+    const url = `/locations/closest_by_lat_lon.json?lat=${lat ? lat : curLat};lon=${lon ? lon : curLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${distance};send_all_within_distance=1`
 
     return getData(url)
         .then(data => dispatch(getLocationsSuccess(data)))
         .catch(err => dispatch(getLocationsFailure(err)))
 }
 
-export const getLocationsByCity = (city) => dispatch => {
+export const getLocationsByCity = (city) => (dispatch, getState) => {
     dispatch({ type: FETCHING_LOCATIONS_BY_CITY })
-    // Include filters
-    return getData(`/locations/closest_by_address.json?address=${city};max_distance=${global.MAX_DISTANCE};send_all_within_distance=1`)
+   
+    const { machineId, locationType, numMachines, selectedOperator } = getState().query
+    const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
+    const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
+    const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
+    const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''  
+    return getData(`/locations/closest_by_address.json?address=${city};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${global.STANDARD_DISTANCE};send_all_within_distance=1`)
         .then(data => {
             if (data.locations.length > 0) {
                 dispatch(getLocationsByCitySuccess(data))
@@ -56,7 +67,6 @@ export const getLocationsByCity = (city) => dispatch => {
                 Geocode.fromAddress(city)
                     .then(response => {
                         const { lat, lng } = response.results[0].geometry.location
-                        dispatch(fetchLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lng};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`, true))
                         dispatch(updateCurrCoordinates(lat, lng))
                     },
                     error => {

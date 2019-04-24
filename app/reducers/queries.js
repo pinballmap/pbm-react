@@ -24,6 +24,7 @@ export const initialState = {
     selectedOperator: '',
     selectedActivity: '',
     machine: {},
+    maxZoom: false,
 }
 
 export default (state = initialState, action) => {
@@ -37,6 +38,7 @@ export default (state = initialState, action) => {
             curLon: Number(action.lon),
             latDelta: Number(action.latDelta ? action.latDelta : 0.1),
             lonDelta: Number(action.lonDelta ? action.lonDelta : 0.1),
+            maxZoom: action.maxZoom || false,
         }
     case SET_MACHINE_FILTER: {
         return {
@@ -88,6 +90,7 @@ export default (state = initialState, action) => {
             curLon: Number(locations[0].lon),
             latDelta: 0.1,
             lonDelta: 0.1,
+            maxZoom: false,
         }
     }
     default:
