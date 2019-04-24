@@ -16,7 +16,10 @@ import {
     Text
 } from '../components'
 import { clearActivityFilter } from '../actions'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 const moment = require('moment')
 
@@ -30,11 +33,7 @@ class RecentActivity extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerTintColor: '#4b5862',
             headerStyle,
             headerRight: <FilterRecentActivity />

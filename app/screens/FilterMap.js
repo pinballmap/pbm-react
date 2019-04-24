@@ -31,7 +31,10 @@ import {
     getOperatorName,
     filterSelected,
 } from '../selectors'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 class FilterMap extends Component {
     constructor(props){
@@ -52,6 +55,7 @@ class FilterMap extends Component {
       return {
           headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
           title: 'Filter Results',
+          headerTitleStyle,
           headerStyle,
           headerTintColor: '#4b5862'
       }
@@ -189,13 +193,13 @@ class FilterMap extends Component {
                       onPress={() => this.selectingLocationType()}
                   /> : 
                   <View style={s.viewPicker}>
-                    <Picker
-                        selectedValue={locationType}
-                        onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
-                        {locationTypes.map(m => (
-                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                        ))}
-                    </Picker>
+                      <Picker
+                          selectedValue={locationType}
+                          onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
+                          {locationTypes.map(m => (
+                              <Picker.Item label={m.name} value={m.id} key={m.id} />
+                          ))}
+                      </Picker>
                   </View>
               }
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
@@ -205,13 +209,13 @@ class FilterMap extends Component {
                       onPress={() => this.selectingOperator()}
                   /> : 
                   <View style={s.viewPicker}>
-                    <Picker 
-                        selectedValue={selectedOperator}
-                        onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
-                        {operators.map(m => (
-                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                        ))}
-                    </Picker> 
+                      <Picker 
+                          selectedValue={selectedOperator}
+                          onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
+                          {operators.map(m => (
+                              <Picker.Item label={m.name} value={m.id} key={m.id} />
+                          ))}
+                      </Picker> 
                   </View>
               }   
               {hasFilterSelected ? 

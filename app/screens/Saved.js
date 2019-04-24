@@ -16,7 +16,10 @@ import {
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 
 const moment = require('moment')
@@ -35,11 +38,7 @@ export class LocationList extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,          
             title: 'Saved',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }

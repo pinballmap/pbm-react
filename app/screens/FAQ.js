@@ -11,7 +11,10 @@ import {
     HeaderBackButton,
     Text, 
 } from '../components'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 class FAQ extends Component {
   
@@ -22,11 +25,7 @@ class FAQ extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'FAQ',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,    
             headerTintColor: '#4b5862'
         }

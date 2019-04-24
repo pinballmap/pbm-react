@@ -21,7 +21,10 @@ import {
     clearFilters,
     clearError,
 } from '../actions'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle, 
+} from '../styles'
 
 class Map extends Component {
     constructor(props){
@@ -67,6 +70,7 @@ class Map extends Component {
             titleStyle={s.titleStyle}
             clear={true}
         />,
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }

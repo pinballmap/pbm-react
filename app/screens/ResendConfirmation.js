@@ -17,7 +17,10 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 class ResendConfirmation extends Component {
     state = {
@@ -30,6 +33,7 @@ class ResendConfirmation extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             headerStyle,
+            headerTitleStyle,
         }
     }
      

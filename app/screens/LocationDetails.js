@@ -36,13 +36,15 @@ import {
     setCurrentMachine, 
     updateCurrCoordinates,
 } from '../actions'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle, 
+} from '../styles'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
 
-let deviceWidth = Dimensions.get('window').width
 let deviceHeight = Dimensions.get('window').height
 
 class LocationDetails extends Component {
@@ -58,11 +60,7 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('locationName'),
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}

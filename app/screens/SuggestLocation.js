@@ -33,7 +33,10 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle, 
+} from '../styles'
 
 class SuggestLocation extends Component {
     constructor(props) {
@@ -73,11 +76,7 @@ class SuggestLocation extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Suggest Location',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }
