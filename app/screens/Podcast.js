@@ -1,26 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { 
-    Dimensions,
-    Image, 
-    Linking, 
-    ScrollView,
+import {
+    ActivityIndicator,
     StyleSheet, 
     View,
+    WebView,
 } from 'react-native'
-import { Button } from 'react-native-elements'
-import { EvilIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { 
-    HeaderBackButton,
-    Text 
-} from '../components'
+import { HeaderBackButton } from '../components'
 import { headerStyle } from '../styles'
 
-let deviceWidth = Dimensions.get('window').width
-
 class Podcast extends Component {
-     
+    state = { loading: true }
+
     static navigationOptions = ({ navigation }) => {
         return {
             drawerLabel: 'Podcast',
@@ -40,78 +32,23 @@ class Podcast extends Component {
 
     render(){
         return(
-            <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
-                <View style={s.container}>
-                    <View style={[s.logoWrapper]}>
-                        <Image source={require('../assets/images/mappin-logo-600.png')} style={s.logo}/>
+            <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
+                {this.state.loading && (
+                    <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
+                        <ActivityIndicator/>
                     </View>
-                    <View style={s.child}>
-                        <Text style={s.text}>In Summer 2018 we started a podcast, <Text style={s.bold}>Mappin’ Around w/ Scott and Ryan</Text>! We talk about site news, site tech, stats, and we interview operators and friends. We release a new episode about once a month. Check it out!</Text>
-                        <Button
-                            title={'pod.pinballmap.com'}
-                            onPress={() => Linking.openURL('http://pod.pinballmap.com')}
-                            buttonStyle={s.externalLink}
-                            titleStyle={{
-                                color:"#000e18", 
-                                fontSize:16
-                            }}
-                            iconRight
-                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                            containerStyle={s.margin15}
-                        />
-                    </View>  
-                </View>
-            </ScrollView>
+                )}
+                <WebView
+                    onLoad={() => this.setState({loading: false})}
+                    style={{ flex: 1 }}
+                    source={{uri: 'http://pod.pinballmap.com/'}}
+                />
+            </View>
         )
     }
 }
 
 const s = StyleSheet.create({
-    container: {
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        flex: 1,
-    },
-    logoWrapper: {
-        padding: 5,
-        flex: 2,
-        margin: "auto",
-        paddingTop: 10,
-        paddingHorizontal: 10
-    },
-    logo: {
-        width: deviceWidth - 20,
-        height: deviceWidth - 20,
-        justifyContent: 'center',
-    },
-    child: {
-        margin: "auto",
-        padding: 10,
-    },
-    text: {
-        fontSize: 16,
-        lineHeight: 22
-    },
-    bold: {
-        fontWeight: 'bold',
-    },
-    externalLink: {
-        backgroundColor:'#ffffff',
-        borderWidth: 1,
-        borderColor: '#97a5af',
-        borderRadius: 50,
-        elevation: 0
-    },
-    externalIcon: {
-        fontSize: 24
-    },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
-    },
     drawerIcon: {
         fontSize: 24,
         color: '#6a7d8a'
@@ -122,5 +59,4 @@ Podcast.propTypes = {
     navigation: PropTypes.object,
 }
 
-    
 export default Podcast
