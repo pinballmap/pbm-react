@@ -23,7 +23,6 @@ class FilterRecentActivity extends Component {
     render(){
         const { showModal } = this.state
         const { selectedActivity } = this.props.query
-        const { locationTrackingServicesEnabled } = this.props.user
 
         return(
             <View>
@@ -77,16 +76,14 @@ class FilterRecentActivity extends Component {
                         </View>
                     </ConfirmationModal>
                 }
-                {locationTrackingServicesEnabled ? 
-                    <Button
-                        onPress={ () => this.setState({ showModal: true })}
-                        containerStyle={{width:60}}
-                        title="Filter"
-                        accessibilityLabel="Filter"
-                        titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
-                        clear={true}
-                    /> : null
-                }
+                <Button
+                    onPress={ () => this.setState({ showModal: true })}
+                    containerStyle={{width:60}}
+                    title="Filter"
+                    accessibilityLabel="Filter"
+                    titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
+                    clear={true}
+                /> 
             </View>
         )
     }
@@ -120,10 +117,9 @@ const s = StyleSheet.create({
 FilterRecentActivity.propTypes = {
     query: PropTypes.object,
     setSelectedActivityFilter: PropTypes.func,
-    user: PropTypes.object, 
 }
 
-const mapStateToProps = ({ user, query }) => ({ user, query })
+const mapStateToProps = ({ query }) => ({ query })
 const mapDispatchToProps = (dispatch) => ({
     setSelectedActivityFilter: activity => dispatch(setSelectedActivityFilter(activity))
 })

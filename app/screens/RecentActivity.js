@@ -25,7 +25,7 @@ const moment = require('moment')
 
 class RecentActivity extends Component {
     state = {
-        fetchingRecentActivity: this.props.user.locationTrackingServicesEnabled ? true : false,
+        fetchingRecentActivity: true,
         recentActivity: [],
     }
     
@@ -74,25 +74,22 @@ class RecentActivity extends Component {
     }
 
     componentDidMount() {
-        const { locationTrackingServicesEnabled, lat, lon } = this.props.user
         //The listener will refetch recent activity data every time this screen is navigated to
         this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
-            if (locationTrackingServicesEnabled) {
-                getData(`/user_submissions/list_within_range.json?lat=${lat};lon=${lon}`)
-                    .then(data => {
-                        this.setState({
-                            fetchingRecentActivity: false,
-                            recentActivity: data.user_submissions.reverse(),
-                        })
+            const { curLat, curLon } = this.props.query
+            getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon}`)
+                .then(data => {
+                    this.setState({
+                        fetchingRecentActivity: false,
+                        recentActivity: data.user_submissions.reverse(),
                     })
-            }
+                })
         })
     }
       
 
     render(){
         const { recentActivity, fetchingRecentActivity } = this.state
-        const { locationTrackingServicesEnabled } = this.props.user
         const { selectedActivity } = this.props.query
 
         return(
@@ -114,33 +111,31 @@ class RecentActivity extends Component {
                 }
                 {fetchingRecentActivity ? 
                     <ActivityIndicator /> :
-                    !locationTrackingServicesEnabled ? 
-                        <Text style={s.problem}>Enable location services to view recent nearby activity</Text> :
-                        recentActivity.length === 0 ?
-                            <Text style={s.problem}>No recent activity</Text> :
-                            recentActivity.filter(activity => {
-                                const submissionTypeIcon = this.getIcon(activity.submission_type)
-                                const showType = selectedActivity ? 
-                                    selectedActivity === activity.submission_type ? true : false 
-                                    : true 
+                    recentActivity.length === 0 ?
+                        <Text style={s.problem}>No recent activity</Text> :
+                        recentActivity.filter(activity => {
+                            const submissionTypeIcon = this.getIcon(activity.submission_type)
+                            const showType = selectedActivity ? 
+                                selectedActivity === activity.submission_type ? true : false 
+                                : true 
 
-                                if (submissionTypeIcon && showType) {
-                                    activity.submissionTypeIcon = submissionTypeIcon
-                                    return activity
-                                }
-                            }).map(activity => (                               
-                                <View key={activity.id}>
-                                    <ListItem
-                                        title={activity.submission}
-                                        titleStyle={{color:'#000e18'}}
-                                        subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
-                                        subtitle={`${moment(activity.updated_at).format('LL')}`}
-                                        containerStyle={s.list}
-                                        leftAvatar={activity.submissionTypeIcon}
-                                        onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
-                                    />
-                                </View>
-                            ))
+                            if (submissionTypeIcon && showType) {
+                                activity.submissionTypeIcon = submissionTypeIcon
+                                return activity
+                            }
+                        }).map(activity => (                               
+                            <View key={activity.id}>
+                                <ListItem
+                                    title={activity.submission}
+                                    titleStyle={{color:'#000e18'}}
+                                    subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                    subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                    containerStyle={s.list}
+                                    leftAvatar={activity.submissionTypeIcon}
+                                    onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
+                                />
+                            </View>
+                        ))
                 }
             </ScrollView>
         )
@@ -207,7 +202,7 @@ RecentActivity.propTypes = {
     clearActivityFilter: PropTypes.func,
 }
 
-const mapStateToProps = ({ query, user }) => ({ query, user })
+const mapStateToProps = ({ query }) => ({ query })
 const mapDispatchToProps = (dispatch) => ({
     clearActivityFilter: () => dispatch(clearActivityFilter())
 })

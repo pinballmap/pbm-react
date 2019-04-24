@@ -73,14 +73,14 @@ class Map extends Component {
 
 
     onRegionChange = (region) => {
-        //Only reload map if the location hasn't moved in 0.5sec
+        //Only reload map if the location hasn't moved in 0.2sec
         const compareRegion = (region) => {
             if (region === this.prevRegion) {
                 this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
             }
         }
 
-        setTimeout(compareRegion, 500, region)
+        setTimeout(compareRegion, 200, region)
         this.prevRegion = region
     }
 
