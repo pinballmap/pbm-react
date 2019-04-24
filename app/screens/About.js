@@ -66,19 +66,20 @@ class About extends Component {
                     </View>
                     <View style={s.child}>
                         <Text style={s.text}>Pinball Map was founded in 2008. It is a crowdsourced map listing all the public pinball machines in North America and beyond.</Text>
-                        <Text style={s.text}>We are currently listing {this.state.num_locations} locations and {this.state.num_lmxes} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>.</Text>
+                        <Text style={s.text}>We are currently listing {this.state.num_locations} locations and {this.state.num_lmxes} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
                         <Text style={s.text}>We are currently supplying the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>.</Text>
-                        <Text style={s.text}><Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{`Contact Us`}</Text>. <Text onPress={ () => this.props.navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>, or <Text onPress={ () => this.props.navigation.navigate('FAQ') } style={s.textLink}>{`read the FAQ`}</Text>.</Text>
-                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan!`}</Text></Text>
+                        <Text style={s.text}><Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{`Contact Us`}</Text>. <Text onPress={ () => this.props.navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={ () => this.props.navigation.navigate('FAQ') } style={s.textLink}>{`Read the FAQ`}</Text>.</Text>
+                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
-                        <Text style={s.text}>Support us via the <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Pinball Map Patreon</Text>.</Text>
-                        <Text style={s.text}><Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/></Text>
                         <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
                         <Text style={s.text}>Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>this app's code</Text>.</Text>
                         <Text style={s.bold}>App Credits:</Text>
                         <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text>
                         <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text>
-                        <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text>
+                        <Text style={[s.textLink,s.text]} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text>
+                        <Text style={s.text}>Thanks to everyone who beta tested the app!</Text>
+                        <Text style={s.text}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text>. supporters!</Text>
+                        <Text style={s.text}><Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/></Text>
                     </View>  
                 </View>
             </ScrollView>
