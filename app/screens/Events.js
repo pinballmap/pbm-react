@@ -18,7 +18,10 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
 import { IFPA_API_KEY, GOOGLE_MAPS_KEY } from '../config/keys'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle, 
+} from '../styles'
 
 const moment = require('moment')
 
@@ -38,11 +41,7 @@ class Events extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }

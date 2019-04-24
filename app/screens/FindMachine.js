@@ -27,7 +27,10 @@ import {
     Text,
     WarningButton, 
 } from '../components'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 const getDisplayText = machine => (
     <Text style={{fontSize: 18}}>
@@ -83,11 +86,7 @@ class FindMachine extends React.PureComponent {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862',
             headerRight: 

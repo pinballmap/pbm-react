@@ -19,7 +19,10 @@ import {
     submitMessage, 
     clearMessage,
 } from '../actions'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 class Contact extends Component {
     state = {
@@ -35,11 +38,7 @@ class Contact extends Component {
             headerLeft: <HeaderBackButton navigation={navigation}/>,
             title: 'Contact',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }

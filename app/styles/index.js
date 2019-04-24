@@ -6,3 +6,9 @@ export const headerStyle = {
     height: Constants.statusBarHeight > 40 ? 60 : Platform.OS === 'android' ? 56 : Platform.OS === 'ios' ? 44 : null, 
     paddingTop: Constants.statusBarHeight > 40 ? 30 : '',                
 }
+
+export const headerTitleStyle = {
+    textAlign: 'center',
+    flexGrow: 1,
+    alignSelf:'center',
+}

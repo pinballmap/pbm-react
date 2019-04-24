@@ -30,11 +30,13 @@ import {
     Text,
     WarningButton, 
 }  from '../components'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 const moment = require('moment')
 
-let deviceWidth = Dimensions.get('window').width
 let deviceHeight = Dimensions.get('window').height
 
 class MachineDetails extends Component {
@@ -50,11 +52,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerRight: <RemoveMachine />,
             headerStyle,
             headerTintColor: '#4b5862'

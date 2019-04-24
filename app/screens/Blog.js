@@ -8,7 +8,10 @@ import {
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
-import { headerStyle } from '../styles'
+import { 
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 class Blog extends Component {
     state = { loading: true }
@@ -20,11 +23,7 @@ class Blog extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Blog',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }

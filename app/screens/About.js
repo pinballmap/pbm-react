@@ -12,7 +12,10 @@ import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
-import { headerStyle } from '../styles'
+import {
+    headerStyle,
+    headerTitleStyle,
+} from '../styles'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -30,11 +33,7 @@ class About extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'About',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle: {
-                textAlign: 'center',
-                flexGrow: 1,
-                alignSelf:'center',
-            },
+            headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
         }
