@@ -31,7 +31,7 @@ import {
     closeFavoriteLocationModal, 
     confirmLocationIsUpToDate, 
     fetchLocation,
-    fetchLocations,
+    getLocations,
     removeFavoriteLocation,
     setCurrentMachine, 
     updateCurrCoordinates,
@@ -99,7 +99,7 @@ class LocationDetails extends Component {
             this.props.fetchLocation(this.state.id)
         
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
-            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${props.location.location.lat};lon=${props.location.location.lon};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`)
+            this.props.getLocations(props.location.location.lat, props.location.location.lon)
             this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
         }
     }
@@ -485,7 +485,7 @@ const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
     closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
-    getLocations: (url) => dispatch(fetchLocations(url)),
+    getLocations: (lat, lon) => dispatch(getLocations(lat, lon)),
     updateCurrCoordinates: (lat, lon) => dispatch(updateCurrCoordinates(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
