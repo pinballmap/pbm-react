@@ -182,10 +182,10 @@ const s = StyleSheet.create({
         paddingTop: Constants.statusBarHeight > 40 ? 33 : 20,         
     },
     searchMap: {
-        width: Platform.OS === 'ios' ? deviceWidth - 100 : deviceWidth - 115,             
+        width: Platform.OS === 'ios' ? deviceWidth - 110 : deviceWidth - 115,             
         backgroundColor: '#e0ebf2',
         height: 35,
-        borderRadius: 10,
+        borderRadius: 5,
         borderColor: '#d1dfe8',
         borderWidth: 1,
         display: 'flex',
@@ -199,7 +199,7 @@ const s = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: '#d1dfe8',
-        borderRadius: 10,
+        borderRadius: 5,
         width: deviceWidth - 60,
         backgroundColor: '#e0ebf2',
         height: 35,
