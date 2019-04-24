@@ -35,7 +35,7 @@ class FilterRecentActivity extends Component {
                                 name='close-circle' 
                                 size={34} 
                                 onPress={() => this.setState({ showModal: false })}
-                                style={{position:'absolute',right:-15,top:-15,color:'white'}}
+                                style={s.xButton}
                             />
                         </View>
                         <View>
@@ -107,6 +107,12 @@ const s = StyleSheet.create({
         textAlign: "center",
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    xButton: {
+        position:'absolute',
+        right: Platform.OS === 'ios' ? -15 : 0,
+        top: Platform.OS === 'ios' ? -15 : 0,
+        color:'white',
     }
 
 })

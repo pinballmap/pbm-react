@@ -109,7 +109,7 @@ class RecentActivity extends Component {
                             name='close-circle' 
                             size={24} 
                             onPress={() => this.props.clearActivityFilter()}
-                            style={{color:'#f53240',marginLeft:8}}
+                            style={s.xButton}
                         />
                     </View> : null
                 }
@@ -194,6 +194,10 @@ const s = StyleSheet.create({
         color: '#000e18',
         fontWeight: 'bold',
         marginTop: 20
+    },
+    xButton: {
+        color:'#f53240',
+        marginLeft:8,
     }
 })
 
