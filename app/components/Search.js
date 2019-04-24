@@ -21,7 +21,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import { 
     displayError,
-    fetchLocations,
     getLocationsByCity,
     updateCurrCoordinates,
 } from '../actions'
@@ -73,7 +72,6 @@ class Search extends Component {
         Geocode.fromAddress(query)
             .then(response => {
                 const { lat, lng } = response.results[0].geometry.location
-                this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${lat};lon=${lng};send_all_within_distance=1;max_distance=${global.MAX_DISTANCE}`, true)
                 this.props.updateCoordinates(lat, lng)
             },
             error => {
@@ -219,7 +217,6 @@ const s = StyleSheet.create({
 Search.propTypes = {
     displayError: PropTypes.func,
     navigate: PropTypes.func,
-    getLocations: PropTypes.func,
     updateCoordinates: PropTypes.func,
     getLocationsByCity: PropTypes.func,
 }
@@ -228,7 +225,6 @@ const mapStateToProps = ({ query, user }) => ({ query, user})
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
     getLocationsByCity: (city) => dispatch(getLocationsByCity(city)),
-    getLocations: (url, isRefetch) => dispatch(fetchLocations(url, isRefetch)),
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
