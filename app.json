@@ -15,6 +15,10 @@
     },
     "android": {
       "package": "pbm.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#d5adcf",
+        "foregroundImage": "app/assets/images/adaptive-foreground.png"
+      },
       "icon": "app/assets/images/android-icon.png"
     }
   }
