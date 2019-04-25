@@ -75,7 +75,8 @@ class About extends Component {
                         <Text style={s.bold}>App Credits:</Text>
                         <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text>
                         <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text>
-                        <Text style={[s.textLink,s.text]} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text>
+                        <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text>
+                        <Text style={[s.textLink,s.text]}>Elijah St Clair</Text>
                         <Text style={s.text}>Thanks to everyone who beta tested the app!</Text>
                         <Text style={s.text}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text>. supporters!</Text>
                         <Text style={s.text}><Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/></Text>
