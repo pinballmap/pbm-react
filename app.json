@@ -24,6 +24,11 @@
         "backgroundColor": "#d5adcf",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
       },
+      "versionCode": "5.0.0",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"],
       "icon": "app/assets/images/android-icon.png"
     }
   }
