@@ -28,7 +28,7 @@ import {
 } from '../components'
 import { 
     clearError,
-    clearMachineList, 
+    clearSelectedState, 
     removeMachineFromList,
     setSelectedOperator,
     suggestLocation,
@@ -125,7 +125,7 @@ class SuggestLocation extends Component {
     }
 
     componentWillUnmount() {
-        this.props.clearMachineList()
+        this.props.clearSelectedState()
     }
      
     render(){
@@ -536,7 +536,7 @@ SuggestLocation.propTypes = {
     location: PropTypes.object,
     clearError: PropTypes.func, 
     removeMachineFromList: PropTypes.func,
-    clearMachineList: PropTypes.func,
+    clearSelectedState: PropTypes.func,
     suggestLocation: PropTypes.func,
     setSelectedOperator: PropTypes.func,
 }
@@ -545,7 +545,7 @@ const mapStateToProps = ({ error, location, locations, operators, user }) => ({ 
 const mapDispatchToProps = (dispatch) => ({
     clearError: () => dispatch(clearError()),
     removeMachineFromList: machine => dispatch(removeMachineFromList(machine)),
-    clearMachineList: () => dispatch(clearMachineList()),
+    clearSelectedState: () => dispatch(clearSelectedState()),
     suggestLocation: (goBack, locationDetails) => dispatch(suggestLocation(goBack, locationDetails)),
     setSelectedOperator: id => dispatch(setSelectedOperator(id)),
 })

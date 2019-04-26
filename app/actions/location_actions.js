@@ -17,7 +17,7 @@ import {
     FAILED_LOCATION_DETAILS_UPDATE,
     ADD_MACHINE_TO_LIST,
     REMOVE_MACHINE_FROM_LIST,
-    CLEAR_MACHINE_LIST,
+    CLEAR_SELECTED_STATE,
     SUGGESTING_LOCATION,
     LOCATION_SUGGESTED,
     FAILED_SUGGEST_LOCATION,
@@ -213,7 +213,7 @@ export const updateLocationDetailsFailure = (err) => dispatch => {
 
 export const addMachineToList = machine => ({ type: ADD_MACHINE_TO_LIST, machine })
 export const removeMachineFromList = machine => ({ type: REMOVE_MACHINE_FROM_LIST, machine })
-export const clearMachineList = () => ({ type: CLEAR_MACHINE_LIST })
+export const clearSelectedState = () => ({ type: CLEAR_SELECTED_STATE })
 
 export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     dispatch({ type: SUGGESTING_LOCATION }) 

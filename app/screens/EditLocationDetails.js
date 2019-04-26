@@ -23,7 +23,8 @@ import {
     Text 
 } from '../components'
 import { 
-    clearError, 
+    clearError,
+    clearSelectedState,
     setSelectedOperator,
     updateLocationDetails, 
 } from '../actions'
@@ -72,6 +73,10 @@ class EditLocationDetails extends Component {
     acceptError = () => {
         this.props.clearError()
         this.setState({ showEditLocationDetailsModal: false })
+    }
+
+    componentWillUnmount() {
+        this.props.clearSelectedState()
     }
 
     render(){
@@ -278,12 +283,14 @@ EditLocationDetails.propTypes = {
     clearError: PropTypes.func,
     navigation: PropTypes.object,
     setSelectedOperator: PropTypes.func,
+    clearSelectedState: PropTypes.func,
 }
 
 const mapStateToProps = ({ error, locations, location, operators }) => ({ error, locations, location, operators })
 const mapDispatchToProps = dispatch => ({
     updateLocationDetails: (goBack, phone, website, description, selectedLocationType, selectedOperatorId) => dispatch(updateLocationDetails(goBack, phone, website, description, selectedLocationType, selectedOperatorId)),
     clearError: () => dispatch(clearError()),
-    setSelectedOperator: id => dispatch(setSelectedOperator(id))
+    setSelectedOperator: id => dispatch(setSelectedOperator(id)),
+    clearSelectedState: () => dispatch(clearSelectedState()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(EditLocationDetails)
