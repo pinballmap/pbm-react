@@ -44,8 +44,6 @@ class FilterMap extends Component {
             isLoading: true,
             showSelectMachineModal: false,
             showSelectLocationTypeModal: false,
-            showSelectOperatorModal: false, 
-            originalOperator: null,
             selectedLocationType: null,
             originalMachine: null,
         }
@@ -99,27 +97,21 @@ class FilterMap extends Component {
       this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.props.query.locationType})
   }
 
-  selectingOperator = () => {
-      this.setState({ showSelectOperatorModal: true, originalOperator: this.props.query.selectedOperator})
-  }
-
   render(){
       const { 
           showSelectLocationTypeModal, 
-          showSelectOperatorModal,
           originalLocationType,
-          originalOperator,
       } = this.state
       
       const { 
           locationTypes,
           locationTypeName,
-          operators,
           operatorName,
           hasFilterSelected,
       } = this.props
 
-      const { machine, numMachines, locationType, selectedOperator } = this.props.query
+      const { machine, numMachines, locationType } = this.props.query
+      const { navigate } = this.props.navigation
     
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
@@ -144,30 +136,6 @@ class FilterMap extends Component {
                       onPress={() => {
                           this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })
                           this.props.selectedLocationTypeFilter(originalLocationType)
-                      }}
-                  />
-              </ConfirmationModal>
-              <ConfirmationModal 
-                  visible={showSelectOperatorModal}
-              >
-                  <ScrollView>
-                      <Picker 
-                          selectedValue={selectedOperator}
-                          onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
-                          {operators.map(m => (
-                              <Picker.Item label={m.name} value={m.id} key={m.id} />
-                          ))}
-                      </Picker>
-                  </ScrollView>
-                  <PbmButton
-                      title={'OK'}
-                      onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
-                  />
-                  <WarningButton 
-                      title={'Cancel'}
-                      onPress={() => {
-                          this.setState({ showSelectOperatorModal: false, originalOperator: null })
-                          this.props.selectedOperatorTypeFilter(originalOperator)
                       }}
                   />
               </ConfirmationModal>
@@ -203,21 +171,10 @@ class FilterMap extends Component {
                   </View>
               }
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
-              {Platform.OS === "ios" ? 
-                  <DropDownButton
-                      title={operatorName}
-                      onPress={() => this.selectingOperator()}
-                  /> : 
-                  <View style={s.viewPicker}>
-                      <Picker 
-                          selectedValue={selectedOperator}
-                          onValueChange={operator => this.props.selectedOperatorTypeFilter(operator)}>
-                          {operators.map(m => (
-                              <Picker.Item label={m.name} value={m.id} key={m.id} />
-                          ))}
-                      </Picker> 
-                  </View>
-              }   
+              <DropDownButton
+                  title={operatorName}
+                  onPress={() => navigate('FindOperator', {type: 'filter', setSelected: (id) => this.props.selectedOperatorTypeFilter(id)})}
+              /> 
               {hasFilterSelected ? 
                   <WarningButton
                       title={'Clear Filters'}
@@ -282,7 +239,6 @@ const s = StyleSheet.create({
 
 FilterMap.propTypes = {
     query: PropTypes.object,
-    operators: PropTypes.array,
     operatorName: PropTypes.string,
     updateNumMachinesSelected: PropTypes.func,
     clearFilters: PropTypes.func,
@@ -298,7 +254,6 @@ const mapStateToProps = (state) => {
     const { query } = state
     const locationTypes = sortedLocationTypes(state)
     const locationTypeName = getLocationTypeName(state)
-    const operators = sortedOperators(state)
     const operatorName = getOperatorName(state)
     const hasFilterSelected = filterSelected(state)
     
@@ -306,7 +261,6 @@ const mapStateToProps = (state) => {
         locationTypes,
         locationTypeName,
         query, 
-        operators,
         operatorName, 
         hasFilterSelected,
     }

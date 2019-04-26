@@ -22,7 +22,11 @@ import {
     WarningButton, 
     Text 
 } from '../components'
-import { clearError, updateLocationDetails } from '../actions'
+import { 
+    clearError, 
+    setSelectedOperator,
+    updateLocationDetails, 
+} from '../actions'
 import { 
     headerStyle,
     headerTitleStyle,
@@ -32,23 +36,17 @@ class EditLocationDetails extends Component {
     constructor(props) {
         super(props)
         const { locationTypes }  = this.props.locations
-        const { operators } = this.props.operators
         locationTypes.unshift({name: 'None Selected', id: '' })
-        operators.unshift({name: 'None Selected', id: '' })
 
         this.state = {
             phone: props.location.location.phone,
             website: props.location.location.website, 
             description: props.location.location.description,
             selectedLocationType: props.location.location.location_type_id,
-            selectedOperatorId: props.location.location.operator_id,
             locationTypes,
-            operators,
             showEditLocationDetailsModal: false,
             showSelectLocationTypeModal: false,
-            showSelectOperatorModal: false, 
             originalLocationType: null,
-            originalOperator: null,
         }
     }
 
@@ -63,16 +61,12 @@ class EditLocationDetails extends Component {
     }
 
     confirmEditLocationDetails = () => {
-        const { phone, website, description, selectedLocationType, selectedOperatorId } = this.state
-        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, selectedOperatorId)
+        const { phone, website, description, selectedLocationType } = this.state
+        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, this.props.location.operator)
     }
 
     selectingLocationType = () => {
         this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType })
-    }
-
-    selectingOperator = () => {
-        this.setState({ showSelectOperatorModal: true, originalOperator: this.state.selectedOperatorId})
     }
 
     acceptError = () => {
@@ -81,14 +75,17 @@ class EditLocationDetails extends Component {
     }
 
     render(){
-        const { phone, website, description, selectedLocationType, selectedOperatorId, locationTypes, operators } = this.state
+        const { phone, website, description, selectedLocationType, locationTypes } = this.state
+        const { operator } = this.props.location
+        const { operators } = this.props.operators
         const { updatingLocationDetails } = this.props.location.location
+        const { navigate } = this.props.navigation
         const { errorText } = this.props.error
 
         const locationTypeObj = locationTypes.find(type => type.id === selectedLocationType) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
 
-        const operatorObj = operators.find(operator => operator.id === selectedOperatorId) || {}
+        const operatorObj = operators.find(op=> op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
@@ -112,27 +109,6 @@ class EditLocationDetails extends Component {
                     <WarningButton 
                         title={'Cancel'}
                         onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: this.state.originalLocationType, originalLocationType: null })}
-                    />
-                </ConfirmationModal>
-                <ConfirmationModal 
-                    visible={this.state.showSelectOperatorModal}
-                >
-                    <ScrollView>
-                        <Picker 
-                            selectedValue={selectedOperatorId}
-                            onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
-                            {operators.map(m => (
-                                <Picker.Item label={m.name} value={m.id} key={m.id} />
-                            ))}
-                        </Picker>
-                    </ScrollView>
-                    <PbmButton
-                        title={'OK'}
-                        onPress={() => this.setState({ showSelectOperatorModal: false, originalOperator: null })}
-                    />
-                    <WarningButton 
-                        title={'Cancel'}
-                        onPress={() => this.setState({ showSelectOperatorModal: false, selectedOperatorId: this.state.originalOperator, originalOperator: null })}
                     />
                 </ConfirmationModal>
                 <Modal
@@ -165,7 +141,7 @@ class EditLocationDetails extends Component {
                                 <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
                                 <View style={s.hr}></View>
                                 <Text style={s.title}>Operator</Text>
-                                <Text style={s.preview}>{typeof selectedOperatorId === 'number' ? operators.filter(operator => operator.id === selectedOperatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op => op.id === operator).map(operator => operator.name) : 'None Selected'}</Text>
                                 <PbmButton
                                     title={'Confirm Details'}
                                     onPress={() => this.confirmEditLocationDetails()}
@@ -230,22 +206,10 @@ class EditLocationDetails extends Component {
                                 </View>
                             }
                             <Text style={s.title}>Operator</Text>
-                            {Platform.OS === "ios" ? 
-                                <DropDownButton
-                                    title={operatorName}
-                                    onPress={() => this.selectingOperator()}
-                                /> :
-                                <View style={s.viewPicker}>
-                                    <Picker 
-                                        style={s.pickerbg}
-                                        selectedValue={selectedOperatorId}
-                                        onValueChange={itemValue => this.setState({ selectedOperatorId: itemValue })}>
-                                        {operators.map(m => (
-                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                        ))}
-                                    </Picker> 
-                                </View>   
-                            }                        
+                            <DropDownButton
+                                title={operatorName}
+                                onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
+                            />                        
                             <PbmButton
                                 title={'Submit Location Details'}
                                 onPress={() => this.setState({ showEditLocationDetailsModal: true })}
@@ -313,11 +277,13 @@ EditLocationDetails.propTypes = {
     updateLocationDetails: PropTypes.func,
     clearError: PropTypes.func,
     navigation: PropTypes.object,
+    setSelectedOperator: PropTypes.func,
 }
 
 const mapStateToProps = ({ error, locations, location, operators }) => ({ error, locations, location, operators })
 const mapDispatchToProps = dispatch => ({
     updateLocationDetails: (goBack, phone, website, description, selectedLocationType, selectedOperatorId) => dispatch(updateLocationDetails(goBack, phone, website, description, selectedLocationType, selectedOperatorId)),
     clearError: () => dispatch(clearError()),
+    setSelectedOperator: id => dispatch(setSelectedOperator(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(EditLocationDetails)
