@@ -183,7 +183,7 @@ class Map extends Component {
                     </View>
                 </View>
                 {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
-                {maxZoom ? <Text style={s.loading}>Zoom in to an area to update results</Text> : null}
+                {maxZoom ? <Text style={s.loading}>Oops! Zoom in for updated results</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
                     <MapView
                         ref={this.mapRef}
@@ -248,8 +248,10 @@ const s = StyleSheet.create({
         fontWeight: Platform.OS === 'ios' ? "600" : "400"
     }, 
     loading: {
-        textAlign: 'center',
         zIndex: 10, 
+        alignSelf : "center",
+        padding: 5,
+        backgroundColor:'rgba(255,255,255,0.5)',
         fontSize: 14,
         marginTop: Platform.OS === 'ios' ? 5 : -45,
     },
