@@ -21,6 +21,7 @@ import {
     SUGGESTING_LOCATION,
     LOCATION_SUGGESTED,
     FAILED_SUGGEST_LOCATION,
+    SET_SELECTED_OPERATOR,
 } from './types'
 
 import { getData, postData, putData, deleteData } from '../config/request'
@@ -274,4 +275,11 @@ export const locationSuggested = () => dispatch => {
 export const suggestLocationFailure = (err) => dispatch => {
     dispatch({type: DISPLAY_ERROR, err})
     dispatch({type: FAILED_SUGGEST_LOCATION})
+}
+
+export const setSelectedOperator = id => {
+    return {
+        type: SET_SELECTED_OPERATOR,
+        id
+    }
 }

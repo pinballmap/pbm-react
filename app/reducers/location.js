@@ -19,6 +19,7 @@ import {
     SUGGESTING_LOCATION,
     LOCATION_SUGGESTED,
     FAILED_SUGGEST_LOCATION,
+    SET_SELECTED_OPERATOR,
 } from '../actions/types'
 
 const moment = require('moment')
@@ -32,6 +33,7 @@ export const initialState = {
     addingMachineToLocation: false,
     updatingLocationDetails: false,
     machineList: [],
+    operator: null,
     isSuggestingLocation: false,
     locationSuggested: false,
 }
@@ -208,6 +210,11 @@ export default (state = initialState, action) => {
             ...state,
             isSuggestingLocation: false,
             locationSuggested: false,
+        }
+    case SET_SELECTED_OPERATOR:
+        return {
+            ...state,
+            operator: action.id,
         }
     default:
         return state
