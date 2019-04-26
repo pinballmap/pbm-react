@@ -15,7 +15,7 @@ import {
     LOCATION_DETAILS_UPDATED,
     ADD_MACHINE_TO_LIST,
     REMOVE_MACHINE_FROM_LIST,
-    CLEAR_MACHINE_LIST,
+    CLEAR_SELECTED_STATE,
     SUGGESTING_LOCATION,
     LOCATION_SUGGESTED,
     FAILED_SUGGEST_LOCATION,
@@ -188,10 +188,11 @@ export default (state = initialState, action) => {
             machineList,
         }
     }
-    case CLEAR_MACHINE_LIST: 
+    case CLEAR_SELECTED_STATE: 
         return {
             ...state,
             machineList: [],
+            operator: null,
         }
     case SUGGESTING_LOCATION:
         return {
