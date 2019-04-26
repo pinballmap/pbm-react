@@ -26,9 +26,6 @@
       },
       "versionCode": 5,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
-      "permissions": [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"],
       "icon": "app/assets/images/android-icon.png"
     }
   }
