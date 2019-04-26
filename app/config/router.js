@@ -138,8 +138,8 @@ export const PbmStack = DrawerNavigator({
     Events: { screen: Events },
     Contact: { screen: Contact },
     About: { screen: About },
-    Podcast: { screen: Podcast },
     FAQ: { screen: FAQ },
+    Podcast: { screen: Podcast },
     Blog: { screen: Blog },
 },
 {
