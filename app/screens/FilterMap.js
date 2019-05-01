@@ -2,18 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    Picker, 
-    Platform,
     ScrollView, 
     StyleSheet,
     View,     
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { 
-    ConfirmationModal, 
     DropDownButton, 
-    HeaderBackButton,
-    PbmButton, 
+    HeaderBackButton, 
     Text,
     WarningButton, 
 } from '../components'
@@ -26,8 +22,6 @@ import {
 } from '../actions'
 import {
     getLocationTypeName,
-    sortedLocationTypes,
-    sortedOperators,
     getOperatorName,
     filterSelected,
 } from '../selectors'
@@ -37,18 +31,6 @@ import {
 } from '../styles'
 
 class FilterMap extends Component {
-    constructor(props){
-        super(props)
-
-        this.state ={ 
-            isLoading: true,
-            showSelectMachineModal: false,
-            showSelectLocationTypeModal: false,
-            selectedLocationType: null,
-            originalMachine: null,
-        }
-    }
-
   static navigationOptions = ({ navigation }) => {
       return {
           headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
@@ -93,52 +75,18 @@ class FilterMap extends Component {
       this.props.updateNumMachinesSelected(this.getNumMachines(idx))
   }
 
-  selectingLocationType = () => {
-      this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.props.query.locationType})
-  }
-
-  render(){
+  render(){      
       const { 
-          showSelectLocationTypeModal, 
-          originalLocationType,
-      } = this.state
-      
-      const { 
-          locationTypes,
           locationTypeName,
           operatorName,
           hasFilterSelected,
       } = this.props
 
-      const { machine, numMachines, locationType } = this.props.query
+      const { machine, numMachines } = this.props.query
       const { navigate } = this.props.navigation
     
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
-              <ConfirmationModal 
-                  visible={showSelectLocationTypeModal}
-              >
-                  <ScrollView>
-                      <Picker 
-                          selectedValue={locationType}
-                          onValueChange={selectedLocationType => this.props.selectedLocationTypeFilter(selectedLocationType)}>
-                          {locationTypes.map(m => (
-                              <Picker.Item label={m.name} value={m.id} key={m.id} />
-                          ))}
-                      </Picker>
-                  </ScrollView>
-                  <PbmButton
-                      title={'OK'}
-                      onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
-                  />
-                  <WarningButton 
-                      title={'Cancel'}
-                      onPress={() => {
-                          this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })
-                          this.props.selectedLocationTypeFilter(originalLocationType)
-                      }}
-                  />
-              </ConfirmationModal>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
               <DropDownButton
@@ -155,21 +103,10 @@ class FilterMap extends Component {
                   selectedTextStyle={s.textStyle}
               />
               <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
-              {Platform.OS === "ios" ? 
-                  <DropDownButton
-                      title={locationTypeName}
-                      onPress={() => this.selectingLocationType()}
-                  /> : 
-                  <View style={s.viewPicker}>
-                      <Picker
-                          selectedValue={locationType}
-                          onValueChange={itemValue => this.props.selectedLocationTypeFilter(itemValue)}>
-                          {locationTypes.map(m => (
-                              <Picker.Item label={m.name} value={m.id} key={m.id} />
-                          ))}
-                      </Picker>
-                  </View>
-              }
+              <DropDownButton
+                  title={locationTypeName}
+                  onPress={() => navigate('FindLocationType', {type: 'filter', setSelected: (id) => this.props.selectedLocationTypeFilter(id)})}
+              /> 
               <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
               <DropDownButton
                   title={operatorName}
@@ -215,25 +152,12 @@ const s = StyleSheet.create({
         paddingTop: 10,
         paddingHorizontal: 10,
     },
-    whitebg: {
-        backgroundColor: "#FFFFFF",
-        marginLeft: 10,
-        marginRight: 10
-    },
     buttonStyle: {
         backgroundColor: '#D3ECFF',
     },
     textStyle: {
         color: '#000e18',
         fontWeight: 'bold',
-    },
-    viewPicker: {
-        backgroundColor:"#e0ebf2",
-        borderColor: '#d1dfe8',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginRight: 15
     },
 })
 
@@ -245,20 +169,17 @@ FilterMap.propTypes = {
     navigation: PropTypes.object,
     selectedOperatorTypeFilter: PropTypes.func,
     selectedLocationTypeFilter: PropTypes.func,
-    locationTypes: PropTypes.array,
     locationTypeName: PropTypes.string,
     hasFilterSelected: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => {
     const { query } = state
-    const locationTypes = sortedLocationTypes(state)
     const locationTypeName = getLocationTypeName(state)
     const operatorName = getOperatorName(state)
     const hasFilterSelected = filterSelected(state)
     
     return { 
-        locationTypes,
         locationTypeName,
         query, 
         operatorName, 

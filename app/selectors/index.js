@@ -2,15 +2,6 @@ import { createSelector } from 'reselect'
 
 const locationTypes = ({locations}) => locations.locationTypes
 
-export const sortedLocationTypes = createSelector(
-    locationTypes, 
-    (locationTypes) => {
-        return [{name: 'All', id: ''}].concat(locationTypes.sort((locationA, locationB) => {
-            return locationA.name < locationB.name ? -1 : locationA.name === locationB.name ? 0 : 1
-        }))
-    }
-)
-
 const locationType = ({query}) => query.locationType
 
 export const getLocationTypeName = createSelector(
@@ -25,13 +16,6 @@ export const getLocationTypeName = createSelector(
 )
 
 const operators = ({operators}) => operators.operators
-
-export const sortedOperators = createSelector(
-    operators,
-    (operators) => {
-        return [{name: 'All', id: ''}].concat(operators)
-    }
-)
 
 const selectedOperator = ({query}) => query.selectedOperator
 

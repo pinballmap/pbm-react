@@ -30,6 +30,7 @@ import {
     clearError,
     clearSelectedState, 
     removeMachineFromList,
+    setSelectedLocationType,
     setSelectedOperator,
     suggestLocation,
 } from '../actions'
@@ -42,8 +43,6 @@ import {
 class SuggestLocation extends Component {
     constructor(props) {
         super(props)
-        const { locationTypes }  = this.props.locations
-        locationTypes.unshift({name: 'N/A', id: '' })
 
         this.state = {
             locationName: '',
@@ -55,11 +54,7 @@ class SuggestLocation extends Component {
             phone: '',
             website: '', 
             description: '',
-            locationType: null,
-            showSelectLocationTypeModal: false,
-            originalLocationType: '',
             showSelectCountryModal: false,
-            locationTypes,
             showSuggestLocationModal: false,
         }
     }
@@ -77,10 +72,6 @@ class SuggestLocation extends Component {
         }
     }
 
-    selectingLocationType = () => {
-        this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.locationType })
-    }
-
     confirmSuggestLocationDetails = () => {
         const { 
             locationName,
@@ -92,7 +83,6 @@ class SuggestLocation extends Component {
             phone, 
             website, 
             description, 
-            locationType, 
         } = this.state
 
         const locationDetails = {
@@ -105,7 +95,7 @@ class SuggestLocation extends Component {
             phone, 
             website, 
             description, 
-            locationType, 
+            locationType: this.props.location.locationType, 
             operator: this. props.location.operator, 
             machineList: this.props.location.machineList,
         }
@@ -139,21 +129,21 @@ class SuggestLocation extends Component {
             phone, 
             website, 
             description, 
-            locationType, 
-            showSelectLocationTypeModal, 
             showSelectCountryModal,
-            locationTypes,
+            showSuggestLocationModal,
         } = this.state
         const { loggedIn } = this.props.user
         const { errorText } = this.props.error
         const { navigate } = this.props.navigation
+        const { locationTypes } = this.props.locations
+        const { operators } = this.props.operators
 
-        const { isSuggestingLocation, locationSuggested, machineList = [], operator } = this.props.location
+        const { isSuggestingLocation, locationSuggested, machineList = [], operator, locationType } = this.props.location
 
         const locationTypeObj = locationTypes.find(type => type.id === locationType) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
 
-        const operatorObj = this.props.operators.operators.find(op => op.id === operator) || {}
+        const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
@@ -165,27 +155,6 @@ class SuggestLocation extends Component {
                         onPress={() => navigate('Login')}
                     /> :
                     <View>
-                        <ConfirmationModal 
-                            visible={showSelectLocationTypeModal}
-                        >
-                            <ScrollView>
-                                <Picker 
-                                    selectedValue={locationType}
-                                    onValueChange={itemValue => this.setState({ locationType: itemValue })}>
-                                    {locationTypes.map(m => (
-                                        <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                    ))}
-                                </Picker>
-                            </ScrollView>
-                            <PbmButton
-                                title={'OK'}
-                                onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
-                            />
-                            <WarningButton 
-                                title={'Cancel'}
-                                onPress={() => this.setState({ showSelectLocationTypeModal: false, locationType: this.state.originalLocationType, originalLocationType: null })}
-                            />
-                        </ConfirmationModal>
                         <ConfirmationModal 
                             visible={showSelectCountryModal}
                         >
@@ -210,7 +179,7 @@ class SuggestLocation extends Component {
                         <Modal
                             animationType="slide"
                             transparent={false}
-                            visible={this.state.showSuggestLocationModal}
+                            visible={showSuggestLocationModal}
                             onRequestClose={()=>{}}
                         >
                             {isSuggestingLocation ? 
@@ -277,7 +246,7 @@ class SuggestLocation extends Component {
                                                 <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
                                                 <View style={s.hr}></View>
                                                 <Text style={s.title}>Operator</Text>
-                                                <Text style={s.preview}>{typeof operator === 'number' ? this.props.operators.operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                                <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                                 <View style={s.hr}></View>
                                                 <Text style={s.title}>Machine List</Text>
                                                 {machineList.length === 0 ? 
@@ -392,22 +361,11 @@ class SuggestLocation extends Component {
                                     placeholder={'Location description...'}
                                     textAlignVertical='top'
                                 />
-                                <Text style={s.title}>Location Type</Text>
-                                {Platform.OS === "ios" ? 
-                                    <DropDownButton
-                                        title={locationTypeName}
-                                        onPress={() => this.selectingLocationType()}
-                                    /> : 
-                                    <View style={s.viewPicker}>
-                                        <Picker 
-                                            selectedValue={locationType}
-                                            onValueChange={itemValue => this.setState({ locationType: itemValue })}>
-                                            {locationTypes.map(m => (
-                                                <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                            ))}
-                                        </Picker>
-                                    </View>
-                                }
+                                <Text style={s.title}>Location Type</Text>                              
+                                <DropDownButton
+                                    title={locationTypeName}
+                                    onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
+                                /> 
                                 <Text style={s.title}>Operator</Text>                 
                                 <DropDownButton
                                     title={operatorName}
@@ -539,6 +497,7 @@ SuggestLocation.propTypes = {
     clearSelectedState: PropTypes.func,
     suggestLocation: PropTypes.func,
     setSelectedOperator: PropTypes.func,
+    setSelectedLocationType: PropTypes.func,
 }
 
 const mapStateToProps = ({ error, location, locations, operators, user }) => ({ error, location, locations, operators, user })
@@ -548,5 +507,6 @@ const mapDispatchToProps = (dispatch) => ({
     clearSelectedState: () => dispatch(clearSelectedState()),
     suggestLocation: (goBack, locationDetails) => dispatch(suggestLocation(goBack, locationDetails)),
     setSelectedOperator: id => dispatch(setSelectedOperator(id)),
+    setSelectedLocationType: id => dispatch(setSelectedLocationType(id)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuggestLocation)

@@ -27,6 +27,7 @@ import EditLocationDetails from '../screens/EditLocationDetails'
 import PasswordReset from '../screens/PasswordReset'
 import ResendConfirmation from '../screens/ResendConfirmation'
 import FindOperator from '../screens/FindOperator'
+import FindLocationType from '../screens/FindLocationType'
 
 import { DrawerMenu } from '../components'
 
@@ -127,6 +128,7 @@ export const MapStack = StackNavigator({
     PasswordReset: { screen: PasswordReset },
     ResendConfirmation: { screen: ResendConfirmation },
     FindOperator: { screen: FindOperator },
+    FindLocationType: { screen: FindLocationType },
 },
 {
     navigationOptions: {
