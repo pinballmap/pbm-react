@@ -5,8 +5,6 @@ import {
     ActivityIndicator, 
     Keyboard,
     Modal, 
-    Picker, 
-    Platform, 
     SafeAreaView, 
     ScrollView, 
     StyleSheet, 
@@ -15,7 +13,6 @@ import {
     View, 
 } from 'react-native'
 import { 
-    ConfirmationModal, 
     DropDownButton, 
     HeaderBackButton,
     PbmButton, 
@@ -26,6 +23,7 @@ import {
     clearError,
     clearSelectedState,
     setSelectedOperator,
+    setSelectedLocationType,
     updateLocationDetails, 
 } from '../actions'
 import { 
@@ -36,18 +34,13 @@ import {
 class EditLocationDetails extends Component {
     constructor(props) {
         super(props)
-        const { locationTypes }  = this.props.locations
-        locationTypes.unshift({name: 'None Selected', id: '' })
 
         this.state = {
             phone: props.location.location.phone,
             website: props.location.location.website, 
             description: props.location.location.description,
             selectedLocationType: props.location.location.location_type_id,
-            locationTypes,
             showEditLocationDetailsModal: false,
-            showSelectLocationTypeModal: false,
-            originalLocationType: null,
         }
     }
 
@@ -62,12 +55,11 @@ class EditLocationDetails extends Component {
     }
 
     confirmEditLocationDetails = () => {
-        const { phone, website, description, selectedLocationType } = this.state
-        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, selectedLocationType, this.props.location.operator)
-    }
-
-    selectingLocationType = () => {
-        this.setState({ showSelectLocationTypeModal: true, originalLocationType: this.state.selectedLocationType })
+        const { phone, website, description } = this.state
+        const { operator, locationType, location } = this.props.location
+        const locationTypeId = locationType ? locationType : location.location_type_id
+        const operatorId = operator ? operator : location.operator_id
+        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, locationTypeId, operatorId)
     }
 
     acceptError = () => {
@@ -80,42 +72,24 @@ class EditLocationDetails extends Component {
     }
 
     render(){
-        const { phone, website, description, selectedLocationType, locationTypes } = this.state
-        const { operator } = this.props.location
+        const { phone, website, description } = this.state
+        const { operator, locationType, location } = this.props.location
+        const { locationTypes } = this.props.locations
         const { operators } = this.props.operators
         const { updatingLocationDetails } = this.props.location.location
         const { navigate } = this.props.navigation
         const { errorText } = this.props.error
+        const locationTypeId = locationType ? locationType : location.location_type_id
+        const operatorId = operator ? operator : location.operator_id
 
-        const locationTypeObj = locationTypes.find(type => type.id === selectedLocationType) || {}
+        const locationTypeObj = locationTypes.find(type => type.id === locationTypeId) || {}
         const { name: locationTypeName = 'Select location type' } = locationTypeObj
 
-        const operatorObj = operators.find(op=> op.id === operator) || {}
+        const operatorObj = operators.find(op=> op.id === operatorId) || {}
         const { name: operatorName = "Select operator" } = operatorObj
 
         return(
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-                <ConfirmationModal 
-                    visible={this.state.showSelectLocationTypeModal}
-                >
-                    <ScrollView>
-                        <Picker 
-                            selectedValue={selectedLocationType}
-                            onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
-                            {locationTypes.map(m => (
-                                <Picker.Item label={m.name} value={m.id} key={m.id} />
-                            ))}
-                        </Picker>
-                    </ScrollView>
-                    <PbmButton
-                        title={'OK'}
-                        onPress={() => this.setState({ showSelectLocationTypeModal: false, originalLocationType: null })}
-                    />
-                    <WarningButton 
-                        title={'Cancel'}
-                        onPress={() => this.setState({ showSelectLocationTypeModal: false, selectedLocationType: this.state.originalLocationType, originalLocationType: null })}
-                    />
-                </ConfirmationModal>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -143,10 +117,10 @@ class EditLocationDetails extends Component {
                                 <Text style={s.preview}>{description}</Text>
                                 <View style={s.hr}></View>
                                 <Text style={s.title}>Location Type</Text>
-                                <Text style={s.preview}>{typeof selectedLocationType === 'number' ? locationTypes.filter(type => type.id === selectedLocationType).map(type => type.name) : 'None Selected'}</Text>
+                                <Text style={s.preview}>{typeof locationTypeId === 'number' ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
                                 <View style={s.hr}></View>
                                 <Text style={s.title}>Operator</Text>
-                                <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op => op.id === operator).map(operator => operator.name) : 'None Selected'}</Text>
+                                <Text style={s.preview}>{typeof operatorId === 'number' ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
                                 <PbmButton
                                     title={'Confirm Details'}
                                     onPress={() => this.confirmEditLocationDetails()}
@@ -194,22 +168,10 @@ class EditLocationDetails extends Component {
                                 textAlignVertical='top'
                             />
                             <Text style={s.title}>Location Type</Text>
-                            {Platform.OS === "ios" ? 
-                                <DropDownButton
-                                    title={locationTypeName}
-                                    onPress={() => this.selectingLocationType()}
-                                /> : 
-                                <View style={s.viewPicker}>
-                                    <Picker 
-                                        style={s.pickerbg}
-                                        selectedValue={selectedLocationType}
-                                        onValueChange={itemValue => this.setState({ selectedLocationType: itemValue })}>
-                                        {locationTypes.map(m => (
-                                            <Picker.Item label={m.name} value={m.id} key={m.id} />
-                                        ))}
-                                    </Picker>
-                                </View>
-                            }
+                            <DropDownButton
+                                title={locationTypeName}
+                                onPress={() => navigate('FindLocationType', {type: 'Search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
+                            /> 
                             <Text style={s.title}>Operator</Text>
                             <DropDownButton
                                 title={operatorName}
@@ -253,24 +215,12 @@ const s = StyleSheet.create({
     radius10: {
         borderRadius: 10
     },
-    pickerbg: {
-        marginLeft: 10,
-        marginRight: 10,
-    },
     hr: {
         marginLeft:25,
         marginRight:25,
         height:2,
         marginTop: 10,
         backgroundColor:"#D3ECFF"
-    },
-    viewPicker: {
-        backgroundColor:"#e0ebf2",
-        borderColor: '#d1dfe8',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginRight: 15
     },
 })
 
@@ -283,6 +233,7 @@ EditLocationDetails.propTypes = {
     clearError: PropTypes.func,
     navigation: PropTypes.object,
     setSelectedOperator: PropTypes.func,
+    setSelectedLocationType: PropTypes.func,
     clearSelectedState: PropTypes.func,
 }
 
@@ -291,6 +242,7 @@ const mapDispatchToProps = dispatch => ({
     updateLocationDetails: (goBack, phone, website, description, selectedLocationType, selectedOperatorId) => dispatch(updateLocationDetails(goBack, phone, website, description, selectedLocationType, selectedOperatorId)),
     clearError: () => dispatch(clearError()),
     setSelectedOperator: id => dispatch(setSelectedOperator(id)),
+    setSelectedLocationType: id => dispatch(setSelectedLocationType(id)),
     clearSelectedState: () => dispatch(clearSelectedState()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(EditLocationDetails)
