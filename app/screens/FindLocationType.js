@@ -30,8 +30,8 @@ class FindLocationType extends React.PureComponent {
         const { locationTypes } = this.props.locations
 
         this.state = {
-            locationTypes: [{name: defaultText, id: null }, ...locationTypes],
-            allLocationTypes: [{name: defaultText, id: null }, ...locationTypes],
+            locationTypes: [{name: defaultText, id: -1 }, ...locationTypes],
+            allLocationTypes: [{name: defaultText, id: -1 }, ...locationTypes],
             query: '',
         }   
     }
@@ -108,6 +108,7 @@ const s = StyleSheet.create({
 
 FindLocationType.propTypes = {
     locationTypes: PropTypes.object,
+    locations: PropTypes.object,
     navigation: PropTypes.object,
 }
 

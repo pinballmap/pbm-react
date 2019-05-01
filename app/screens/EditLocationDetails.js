@@ -56,10 +56,7 @@ class EditLocationDetails extends Component {
 
     confirmEditLocationDetails = () => {
         const { phone, website, description } = this.state
-        const { operator, locationType, location } = this.props.location
-        const locationTypeId = locationType ? locationType : location.location_type_id
-        const operatorId = operator ? operator : location.operator_id
-        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description, locationTypeId, operatorId)
+        this.props.updateLocationDetails(this.props.navigation.goBack, phone, website, description)
     }
 
     acceptError = () => {
@@ -83,10 +80,10 @@ class EditLocationDetails extends Component {
         const operatorId = operator ? operator : location.operator_id
 
         const locationTypeObj = locationTypes.find(type => type.id === locationTypeId) || {}
-        const { name: locationTypeName = 'Select location type' } = locationTypeObj
+        const { name: locationTypeName = locationTypeId === -1 ? 'N/A' : 'Select location type' } = locationTypeObj
 
         const operatorObj = operators.find(op=> op.id === operatorId) || {}
-        const { name: operatorName = "Select operator" } = operatorObj
+        const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
 
         return(
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" style={{ flex: 1,backgroundColor:'#f5fbff' }}>
@@ -117,10 +114,10 @@ class EditLocationDetails extends Component {
                                 <Text style={s.preview}>{description}</Text>
                                 <View style={s.hr}></View>
                                 <Text style={s.title}>Location Type</Text>
-                                <Text style={s.preview}>{typeof locationTypeId === 'number' ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
+                                <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
                                 <View style={s.hr}></View>
                                 <Text style={s.title}>Operator</Text>
-                                <Text style={s.preview}>{typeof operatorId === 'number' ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                <Text style={s.preview}>{typeof operatorId  === 'number' && operator > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
                                 <PbmButton
                                     title={'Confirm Details'}
                                     onPress={() => this.confirmEditLocationDetails()}
@@ -239,7 +236,7 @@ EditLocationDetails.propTypes = {
 
 const mapStateToProps = ({ error, locations, location, operators }) => ({ error, locations, location, operators })
 const mapDispatchToProps = dispatch => ({
-    updateLocationDetails: (goBack, phone, website, description, selectedLocationType, selectedOperatorId) => dispatch(updateLocationDetails(goBack, phone, website, description, selectedLocationType, selectedOperatorId)),
+    updateLocationDetails: (goBack, phone, website, description) => dispatch(updateLocationDetails(goBack, phone, website, description)),
     clearError: () => dispatch(clearError()),
     setSelectedOperator: id => dispatch(setSelectedOperator(id)),
     setSelectedLocationType: id => dispatch(setSelectedLocationType(id)),

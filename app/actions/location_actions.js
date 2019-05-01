@@ -182,11 +182,15 @@ export const addMachineToLocationFailure = (err) => dispatch => {
     dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
 } 
 
-export const updateLocationDetails = (goBack, phone, website, description, location_type, operator_id) => (dispatch, getState) => {
+export const updateLocationDetails = (goBack, phone, website, description) => (dispatch, getState) => {
     dispatch({ type: UPDATING_LOCATION_DETAILS })
 
     const { email, authentication_token, username } = getState().user
-    const { id } = getState().location.location
+    const { locationType, operator, location } = getState().location
+    const location_type = locationType === -1 ? null : locationType ? locationType : location.location_type_id
+    const operator_id = operator === -1 ? null : operator ? operator : location.operator_id
+    
+    const { id } = location
     const body = {
         user_email: email,
         user_token: authentication_token,
@@ -220,6 +224,8 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     dispatch({ type: SUGGESTING_LOCATION }) 
 
     const { email, authentication_token, lat, lon, locationTrackingServicesEnabled  } = getState().user
+    const { machineList, operator, locationType } = getState().location
+
     const {
         locationName: location_name,
         street: location_street, 
@@ -229,12 +235,11 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
         country: location_country,
         phone: location_phone,
         website: location_website,
-        description: location_comments,
-        locationType: location_type, 
-        operator: location_operator,
-        machineList,
+        description: location_comments, 
     } = locationDetails
     
+    const location_type = locationType > -1 ? locationType : null
+    const location_operator = operator > -1 ? operator : null
     const location_machines = `${machineList.map(m => m.nameManYear).join(', ')},`
     
     const body = {

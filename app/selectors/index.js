@@ -7,7 +7,7 @@ const locationType = ({query}) => query.locationType
 export const getLocationTypeName = createSelector(
     [locationTypes, locationType],
     (locationTypes, locationType) => {
-        const type = locationTypes.find(location => location.id === locationType)
+        const type = locationType > -1 ? locationTypes.find(location => location.id === locationType) : false
         if (type)
             return type.name
          
@@ -22,8 +22,7 @@ const selectedOperator = ({query}) => query.selectedOperator
 export const getOperatorName = createSelector(
     [operators, selectedOperator],
     (operators, selectedOperator) => {
-        const operatorName = operators.find(operator => operator.id === selectedOperator)
-
+        const operatorName = selectedOperator > -1 ? operators.find(operator => operator.id === selectedOperator) : false
         if (operatorName) 
             return operatorName.name
         
