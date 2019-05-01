@@ -55,12 +55,12 @@ export default (state = initialState, action) => {
     case SET_LOCATION_TYPE_FILTER:
         return {
             ...state,
-            locationType: action.locationType,
+            locationType: action.locationType > -1 ? action.locationType : '',
         }
     case SET_OPERATOR_FILTER: 
         return {
             ...state,
-            selectedOperator: action.selectedOperator,
+            selectedOperator: action.selectedOperator > -1 ? action.selectedOperator : '',
         }
     case CLEAR_FILTERS:
         return {

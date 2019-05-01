@@ -30,8 +30,8 @@ class FindOperator extends React.PureComponent {
         const { operators } = this.props.operators
 
         this.state = {
-            operators: [{name: defaultText, id: null }, ...operators],
-            allOperators: [{name: defaultText, id: null }, ...operators],
+            operators: [{name: defaultText, id: -1 }, ...operators],
+            allOperators: [{name: defaultText, id: -1 }, ...operators],
             query: '',
         }   
     }

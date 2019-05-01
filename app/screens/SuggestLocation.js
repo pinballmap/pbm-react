@@ -95,9 +95,6 @@ class SuggestLocation extends Component {
             phone, 
             website, 
             description, 
-            locationType: this.props.location.locationType, 
-            operator: this. props.location.operator, 
-            machineList: this.props.location.machineList,
         }
         this.props.suggestLocation(locationDetails)
     } 
@@ -145,7 +142,7 @@ class SuggestLocation extends Component {
 
         const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
-
+       
         return(
             <ScrollView keyboardDismissMode="on-drag" style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 {!loggedIn ? 
@@ -243,10 +240,10 @@ class SuggestLocation extends Component {
                                                 <Text style={s.preview}>{description}</Text>
                                                 <View style={s.hr}></View>
                                                 <Text style={s.title}>Location Type</Text>
-                                                <Text style={s.preview}>{typeof locationType === 'number' ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                                                <Text style={s.preview}>{typeof locationType === 'number' && locationType > -1 ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
                                                 <View style={s.hr}></View>
                                                 <Text style={s.title}>Operator</Text>
-                                                <Text style={s.preview}>{typeof operator === 'number' ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                                <Text style={s.preview}>{typeof operator === 'number' && operator > -1 ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                                 <View style={s.hr}></View>
                                                 <Text style={s.title}>Machine List</Text>
                                                 {machineList.length === 0 ? 
