@@ -127,7 +127,7 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
-        const { loggedIn, faveLocations, favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled } = this.props.user
+        const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
