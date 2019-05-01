@@ -170,7 +170,7 @@ class EditLocationDetails extends Component {
                             <Text style={s.title}>Location Type</Text>
                             <DropDownButton
                                 title={locationTypeName}
-                                onPress={() => navigate('FindLocationType', {type: 'Search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
+                                onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
                             /> 
                             <Text style={s.title}>Operator</Text>
                             <DropDownButton
