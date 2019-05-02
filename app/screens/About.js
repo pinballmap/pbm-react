@@ -4,6 +4,7 @@ import {
     Dimensions,
     Image, 
     Linking,
+    Platform,
     StyleSheet, 
     ScrollView, 
     View, 
@@ -73,10 +74,18 @@ class About extends Component {
                         <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
                         <Text style={s.text}>Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>this app's code</Text>.</Text>
                         <Text style={s.bold}>App Credits:</Text>
-                        <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text>
-                        <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text>
-                        <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text>
-                        <Text style={[s.textLink,s.text]}>Elijah St Clair</Text>
+                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
+                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
+                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
+                        <Text style={s.text}><Text style={[s.textLink]}>Elijah St Clair</Text> (DevOps)</Text>
+                        <Text style={s.text}>If you like the app,&nbsp; 
+                            {Platform.OS === "ios" ? 
+                                <Text style={s.textLink}        
+                                onPress={() => Linking.openURL('itms-apps://itunes.apple.com/us/app/pinball-map/id359275713?mt=8')}>please rate and review it</Text>
+                                : <Text style={s.textLink}        
+                                onPress={() => Linking.openURL('market://details?id=com.pbm')}>please rate and review it</Text> 
+                            }
+                                !</Text>
                         <Text style={s.text}>Thanks to everyone who beta tested the app!</Text>
                         <Text style={s.text}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text>. supporters!</Text>
                         <Text style={s.text}><Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/></Text>
