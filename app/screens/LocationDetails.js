@@ -7,13 +7,12 @@ import {
     Image, 
     Linking,
     Modal, 
-    Platform,
     ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import MapView, { UrlTile } from 'react-native-maps'
+import { MapView } from 'expo'
 import markerDot from '../assets/images/markerdot.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
@@ -204,7 +203,7 @@ class LocationDetails extends Component {
                         }}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
                     >
-                        <UrlTile
+                        <MapView.UrlTile
                             urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
                             //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
                             maximumZ={20}
