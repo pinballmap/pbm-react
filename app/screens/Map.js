@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
-import MapView, { UrlTile } from 'react-native-maps'
+import { MapView } from 'expo'
 import markerDot from '../assets/images/markerdot.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
@@ -197,7 +197,7 @@ class Map extends Component {
                         onRegionChange={this.onRegionChange}
                         mapType={'none'}
                     >
-                        <UrlTile
+                        <MapView.UrlTile
                             urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
                             //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
                             maximumZ={20}
