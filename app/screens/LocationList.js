@@ -93,7 +93,7 @@ export class LocationList extends Component {
                     selectedButtonStyle={s.buttonStyle}
                     selectedTextStyle={s.textStyle}
                 />
-                <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
+                <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 10, right: 0 }}>
                     <FlatList
                         data={locations}
                         extraData={this.state}

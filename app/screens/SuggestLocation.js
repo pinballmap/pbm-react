@@ -267,7 +267,7 @@ class SuggestLocation extends Component {
                         </Modal>
                         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
-                                <Text>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
+                                <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                 <Text style={s.title}>Location Name</Text>
                                 <TextInput
                                     style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
@@ -395,6 +395,10 @@ class SuggestLocation extends Component {
 }
 
 const s = StyleSheet.create({ 
+    text: {
+        fontSize: 16,
+        lineHeight: 22,
+    },
     title: {
         textAlign:'center',
         marginBottom: 5,

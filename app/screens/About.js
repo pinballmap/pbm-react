@@ -13,6 +13,7 @@ import { getData } from '../config/request'
 import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
+import { formatNumWithCommas } from '../utils/utilityFunctions'
 import {
     headerStyle,
     headerTitleStyle,
@@ -66,8 +67,8 @@ class About extends Component {
                     </View>
                     <View style={s.child}>
                         <Text style={s.text}>Pinball Map was founded in 2008, and is a crowdsourced map listing the public pinball machines in... wherever!</Text>
-                        <Text style={s.text}>We currently have {this.state.num_locations} locations and {this.state.num_lmxes} machines listed. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
-                        <Text style={s.text}>We are supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>.</Text>
+                        <Text style={s.text}>We currently have {formatNumWithCommas(this.state.num_locations)} locations and {formatNumWithCommas(this.state.num_lmxes)} machines listed. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>                        
+                        <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>.</Text>
                         <Text style={s.text}><Text onPress={ () => this.props.navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. <Text onPress={ () => this.props.navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={ () => this.props.navigation.navigate('FAQ') } style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
                         <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
@@ -87,9 +88,11 @@ class About extends Component {
                             }
                                 !</Text>
                         <Text style={s.text}>Thanks to everyone who beta tested the app!</Text>
-                        <Text style={s.text}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text>. supporters!</Text>
-                        <Text style={s.text}><Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/></Text>
+                        <Text style={{fontSize:16}}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text> supporters!</Text>
                     </View>  
+                    <View style={[s.logoWrapper]}>
+                        <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/>
+                    </View>
                 </View>
             </ScrollView>
         )
