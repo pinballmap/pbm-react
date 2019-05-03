@@ -21,6 +21,7 @@ import {
     getFavoriteLocations,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
+import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { getData } from '../config/request'
 import "../config/globals.js"
 
@@ -96,9 +97,9 @@ export class SignupLogin extends Component {
                                 <Text>Oops. Something went wrong!</Text> :
                                 <Text style={{fontSize:18,textAlign:"center"}}>
                                     <Text>Pinball Map is a user-updated map listing</Text>
-                                    <Text style={s.bold}> {this.state.num_locations} </Text> 
+                                    <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text> 
                                     <Text>locations and</Text>
-                                    <Text style={s.bold}> {this.state.num_lmxes} </Text>
+                                    <Text style={s.bold}> {formatNumWithCommas(this.state.num_lmxes)} </Text>
                                     <Text>machines.</Text>
                                     {"\n"}{"\n"}
                                     <Text>Please log in to help keep it up to date!</Text>

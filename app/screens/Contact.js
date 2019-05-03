@@ -84,7 +84,7 @@ class Contact extends Component {
                 {submittingMessage ? 
                     <ActivityIndicator /> :
                     <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
-                        <Text>{`Have a question, comment, or tip? We are here for you.`}</Text>
+                        <Text style={s.text}>{`Have a question, comment, or tip? We are here for you.`}</Text>
                         {!loggedIn ?
                             <View>
                                 <TextInput
@@ -127,6 +127,10 @@ class Contact extends Component {
 }
 
 const s = StyleSheet.create({ 
+    text: {
+        fontSize: 16,
+        lineHeight: 22,
+    },
     drawerIcon: {
         fontSize: 24,
         color: '#6a7d8a'
