@@ -20,11 +20,34 @@
     },
     "android": {
       "package": "com.pbm",
+      "config": {
+        "googleMaps": {
+          "apiKey": "key"
+        },
+        "googleSignIn": {
+          "apiKey": "key"
+        }
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE",
+        "com.google.android.providers.gsf.permission.READ_GSERVICES"
+      ],
+      "versionCode": 34,
       "adaptiveIcon": {
         "backgroundColor": "#d5adcf",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
       },
-      "versionCode": 5,
+      "splash": {
+        "mdpi": "app/assets/images/res/drawable-mdpi/t-shirt-logo.png",
+        "hdpi": "app/assets/images/res/drawable-hdpi/t-shirt-logo.png",
+        "xhdpi": "app/assets/images/res/drawable-xhdpi/t-shirt-logo.png",
+        "xxhdpi": "app/assets/images/res/drawable-xxhdpi/t-shirt-logo.png",
+        "xxxhdpi": "app/assets/images/res/drawable-xxxhdpi/t-shirt-logo.png",
+        "backgroundColor": "#4b5862",
+        "resizeMode": "contain"
+      },
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
       "icon": "app/assets/images/android-icon.png"
     }
