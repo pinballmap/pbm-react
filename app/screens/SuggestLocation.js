@@ -398,6 +398,12 @@ const s = StyleSheet.create({
     text: {
         fontSize: 16,
         lineHeight: 22,
+        marginBottom: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        fontWeight: '600',
+        color: '#4b5862',
+        textAlign: 'center'
     },
     title: {
         textAlign:'center',
