@@ -109,7 +109,7 @@ class Events extends Component {
                                     keyExtractor={event => `${event.calendar_id}`}
                                 />
                             </ScrollView> : 
-                            <Text>No Events Found</Text>
+                            <Text style={s.problem}>No IFPA-sanctioned events found within 50 miles of current map location.</Text>
                 }
             </View>)
     }
@@ -146,7 +146,13 @@ const s = StyleSheet.create({
     },
     margin: {
         marginTop: 10,
-    }
+    },    
+    problem: {
+        textAlign: "center",
+        color: '#000e18',
+        fontWeight: 'bold',
+        marginTop: 20
+    },
 })
 
 Events.propTypes = {
