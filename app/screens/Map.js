@@ -155,33 +155,6 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', zIndex: 10}}>
-                    <View>
-                        {fontAwesomeLoaded ? <Icon
-                            raised
-                            name='location-arrow'
-                            type='font-awesome'
-                            color='#1e9dff'
-                            containerStyle={Platform.OS === "ios" ? {position:'absolute'} : {}}
-                            size={20}
-                            onPress={() => {
-                                locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
-                            }}
-                        /> : null}
-                    </View>                
-                    <View>
-                        {filterApplied ?     
-                            <Button 
-                                title={'Clear Filter'} 
-                                onPress={() => this.props.clearFilters()}
-                                clear={true}
-                                titleStyle={{fontSize:14,color:"#F53240"}}
-                                containerStyle={Platform.OS === "ios" ? {width:100,position:'absolute',right:0} : {}}
-                            />
-                            : null                                    
-                        }
-                    </View>
-                </View>
                 {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 {maxZoom ? <Text style={s.loading}>Oops! Zoom in for updated results</Text> : null}
                 <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
@@ -221,6 +194,27 @@ class Map extends Component {
                             </MapView.Marker>
                         ))}
                     </MapView>
+                    {fontAwesomeLoaded ? <Icon
+                            raised
+                            name='location-arrow'
+                            type='font-awesome'
+                            color='#1e9dff'
+                            containerStyle={{position:'absolute',bottom:0,right:0}}
+                            size={24}
+                            onPress={() => {
+                                locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
+                            }}
+                        /> : null}
+                        {filterApplied ?     
+                            <Button 
+                                title={'Clear Filter'} 
+                                onPress={() => this.props.clearFilters()}
+                                clear={true}
+                                titleStyle={{fontSize:14,color:"#F53240",padding: 5,backgroundColor:'rgba(255,255,255,0.5)'}}
+                                containerStyle={{width:100,position:'absolute',top:0,right:0}}
+                            />
+                            : null                                    
+                        }
                 </View>
             </View>
         )
@@ -253,7 +247,7 @@ const s = StyleSheet.create({
         padding: 5,
         backgroundColor:'rgba(255,255,255,0.5)',
         fontSize: 14,
-        marginTop: Platform.OS === 'ios' ? 5 : -45,
+        marginTop: 5,
     },
     confirmText: {
         textAlign: 'center',
