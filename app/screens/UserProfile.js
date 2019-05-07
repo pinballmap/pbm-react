@@ -143,7 +143,7 @@ class UserProfile extends Component {
                             icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
                             containerStyle={s.margin15}
                         />
-                        <Text style={s.bold}>Locations Edited:</Text>
+                        <Text style={s.bold}>Locations Edited (up to 50):</Text>
                         <View style={{paddingVertical:8}}>
                             {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                 return <ListItem
