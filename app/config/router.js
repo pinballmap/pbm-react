@@ -81,7 +81,7 @@ const TabNav = TabNavigator({
         }
     }), 
     tabBarOptions: {
-        activeTintColor: '#000e18',
+        activeTintColor: '#1e9dff',
         inactiveTintColor: '#6a7d8a',
         showIcon: true,
         style: {
@@ -165,11 +165,11 @@ const s = StyleSheet.create({
     activeTabText: {
         fontWeight: "bold",
         fontSize: 11,
-        color: '#000e18'
+        color: '#1e9dff'
     },
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: '#6a7d8a'
+        color: '#4b5862'
     }
 })
