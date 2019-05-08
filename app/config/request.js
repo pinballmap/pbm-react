@@ -1,4 +1,5 @@
 import "../config/globals.js" 
+import { IFPA_API_KEY } from '../config/keys'
 
 export const postData = (uri, body) => {
     return fetch(global.api_url + uri, {
@@ -81,8 +82,8 @@ export const getData = uri => {
         .catch(err => err)
 }
 
-export const getIfpaData = address => {
-    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=a3be4f0cde21806308b466b7a6babdf5&address=${address}&m=50`)
+export const getIfpaData = (address, radius) => {
+    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}&m=${radius}`)
         .then(response => {
             if(response.status === 200)
                 return response.json()

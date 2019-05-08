@@ -12,12 +12,13 @@ import {
     View, 
 } from 'react-native'
 import {
+    ButtonGroup,
     Card,
 } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
-import { IFPA_API_KEY, GOOGLE_MAPS_KEY } from '../config/keys'
+import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { 
     headerStyle,
     headerTitleStyle, 
@@ -30,8 +31,12 @@ Geocode.setApiKey(GOOGLE_MAPS_KEY)
 class Events extends Component {
     state = {
         gettingEvents: true,
+        refetchingEvents: false,
         events: [],
         error: false,
+        address: '',
+        selectedIdx: 0,
+        radius: 50, 
     }
   
     static navigationOptions = ({ navigation }) => {
@@ -44,6 +49,23 @@ class Events extends Component {
             headerTitleStyle,
             headerStyle,
             headerTintColor: '#4b5862'
+        }
+    }
+
+    updateIdx = (selectedIdx) => {   
+        const radiusArray = [50, 100, 150, 200, 250]
+        const radius = radiusArray[selectedIdx]
+        this.setState({ selectedIdx, radius, refetchingEvents: true })
+        this.fetchEvents(radius)
+    }
+
+    fetchEvents = async (radius) => {
+        try {
+            const data = await getIfpaData(this.state.address, radius)
+            this.setState({ events: data.calendar ? data.calendar : [], gettingEvents: false, refetchingEvents: false })
+        }
+        catch(e) {
+            throw e
         }
     }
 
@@ -64,20 +86,15 @@ class Events extends Component {
         }
 
         promise()
-            .then(async address => {
-                try {
-                    const data = await getIfpaData(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}`)
-                    this.setState({ events: data.calendar ? data.calendar : [], gettingEvents: false})
-                }
-                catch(e) {
-                    throw e
-                }
+            .then(address => {
+                this.setState({ address })
+                this.fetchEvents(50)
             })
             .catch(e => this.setState({ error: true, gettingEvents: false}))
     }
      
     render(){
-        const { events, gettingEvents, error } = this.state
+        const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
         return(
             <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
@@ -85,31 +102,42 @@ class Events extends Component {
                     <ActivityIndicator /> :
                     error ? 
                         <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
-                        events.length > 0 ?
-                            <ScrollView>
-                                <View style={s.header}>
-                                    <Text style={[s.title,s.headerText]}>Upcoming Events</Text> 
-                                    <Text style={[s.paren,s.headerText]}>(within 50 miles)</Text>
-                                </View>
-                                <FlatList
-                                    data={events}
-                                    extraData={this.state}
-                                    renderItem={({ item }) => {
-                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
-                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
-                                        return (
-                                            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
-                                                <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
-                                            </Card>
-                                        )
-                                    }}
-                                    keyExtractor={event => `${event.calendar_id}`}
+                        <ScrollView>
+                            <View style={s.header}>
+                                <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text> 
+                                <ButtonGroup
+                                    onPress={this.updateIdx}
+                                    selectedIndex={selectedIdx}
+                                    buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
+                                    containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
+                                    selectedButtonStyle={s.buttonStyle}
+                                    selectedTextStyle={s.textStyle}
                                 />
-                            </ScrollView> : 
-                            <Text style={s.problem}>No IFPA-sanctioned events found within 50 miles of current map location.</Text>
+                            </View>
+                            {refetchingEvents ?
+                                <ActivityIndicator /> :
+                                events.length > 0 ?
+                                    <FlatList
+                                        data={events}
+                                        extraData={this.state}
+                                        renderItem={({ item }) => {
+                                            const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                            const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                            return (
+                                                <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
+                                                    <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                    <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                    <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                    <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                </Card>
+                                            )
+                                        }}
+                                        keyExtractor={event => `${event.calendar_id}`}
+                                    />  : 
+                                    <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
+                            }
+                        </ScrollView>
+                            
                 }
             </View>)
     }
@@ -128,9 +156,12 @@ const s = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
-    paren: {
-        fontSize: 12,
-        fontStyle: "italic"
+    buttonStyle: {
+        backgroundColor: '#D3ECFF',
+    },
+    textStyle: {
+        color: '#000e18',
+        fontWeight: 'bold',
     },
     drawerIcon: {
         fontSize: 24,
