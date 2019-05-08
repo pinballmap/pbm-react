@@ -130,6 +130,12 @@ const s = StyleSheet.create({
     text: {
         fontSize: 16,
         lineHeight: 22,
+        marginTop: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        fontWeight: '600',
+        color: '#4b5862',
+        textAlign: 'center'
     },
     drawerIcon: {
         fontSize: 24,

@@ -178,6 +178,7 @@ const s = StyleSheet.create({
     errorText: {
         color: 'red', 
         fontWeight: 'bold',
+        textAlign: 'center'
     },
     bold: {
         fontWeight: 'bold',

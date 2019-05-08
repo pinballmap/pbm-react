@@ -112,7 +112,7 @@ class RecentActivity extends Component {
                 {fetchingRecentActivity ? 
                     <ActivityIndicator /> :
                     recentActivity.length === 0 ?
-                        <Text style={s.problem}>No recent activity</Text> :
+                        <Text style={s.problem}>No map edits in the last 30 days within 30 miles of the map's current location</Text> :
                         recentActivity.filter(activity => {
                             const submissionTypeIcon = this.getIcon(activity.submission_type)
                             const showType = selectedActivity ? 
