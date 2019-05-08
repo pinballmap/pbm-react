@@ -19,6 +19,7 @@ import {
     fetchMachines,
     fetchOperators,
     getFavoriteLocations,
+    getRegions,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -63,6 +64,7 @@ export class SignupLogin extends Component {
         this.props.getLocationTypes('/location_types.json')
         this.props.getMachines('/machines.json')
         this.props.getOperators('/operators.json')
+        this.props.getRegions('/regions.json')
 
         retrieveItem('auth').then((auth) => {
             if (auth) {
@@ -218,6 +220,7 @@ SignupLogin.propTypes = {
     getLocationTypes: PropTypes.func,
     getMachines: PropTypes.func,
     getOperators: PropTypes.func,
+    getRegions: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
@@ -229,6 +232,7 @@ const mapDispatchToProps = (dispatch) => ({
     loginLater: () => dispatch(loginLater()),
     login: (auth) => dispatch(login(auth)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
+    getRegions: (url) => dispatch(getRegions(url)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
