@@ -36,7 +36,7 @@
       ],
       "versionCode": 35,
       "adaptiveIcon": {
-        "backgroundColor": "#d5adcf",
+        "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
       },
       "splash": {
