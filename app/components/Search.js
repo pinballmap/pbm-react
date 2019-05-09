@@ -144,6 +144,22 @@ class Search extends Component {
                             />
                         </View>
                         <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                            {foundRegions ?
+                                foundRegions.map(region =>
+                                    (<TouchableOpacity
+                                        key={region.id}
+                                        onPress={() => this.getLocationsByRegion(region)}
+                                    >
+                                        <ListItem
+                                            title={region.full_name}
+                                            rightTitle={'Region'}
+                                            rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                        /> 
+                                    </TouchableOpacity>
+                                    )) : null
+                            }
                             {foundCities ? 
                                 foundCities.map(location => 
                                     (<TouchableOpacity 
@@ -173,22 +189,7 @@ class Search extends Component {
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
-                            }  
-                            {foundRegions ?
-                                foundRegions.map(region =>
-                                    (<TouchableOpacity
-                                        key={region.id}
-                                        onPress={() => this.getLocationsByRegion(region)}
-                                    >
-                                        <ListItem
-                                            title={region.full_name}
-                                            rightTitle={'Region'}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
-                                        /> 
-                                    </TouchableOpacity>
-                                    )) : null
-                            }                      
+                            }                        
                         </ScrollView>
                     </View>
                 </Modal>
