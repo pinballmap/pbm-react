@@ -22,6 +22,7 @@ import { getData } from '../config/request'
 import { 
     displayError,
     getLocationsByCity,
+    getLocationsByRegion,
     updateCurrCoordinates,
 } from '../actions'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
@@ -37,6 +38,7 @@ class Search extends Component {
             q: '',
             foundLocations: [],
             foundCities: [],
+            foundRegions: [],
             searchModalVisible: false,
             showSubmitButton: false,
         }
@@ -58,12 +60,13 @@ class Search extends Component {
     _fetch = async (query) => {        
         this.waitingFor = query
         if (query === '') {
-            await this.setState({ foundLocations: [], foundCities: []})
+            await this.setState({ foundLocations: [], foundCities: [], foundRegions: []})
         } else {
+            const foundRegions = this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
             const foundLocations = await getData(`/locations/autocomplete?name=${query}`)
             let foundCities = await getData(`/locations/autocomplete_city.json?name=${query}`)
             if (query === this.waitingFor) {
-                this.setState({ foundLocations, foundCities, showSubmitButton: true })
+                this.setState({ foundLocations, foundCities, foundRegions, showSubmitButton: true })
             }
         }
     }
@@ -85,7 +88,7 @@ class Search extends Component {
     }
 
     render(){
-        const { q, foundLocations = [], foundCities = [], searchModalVisible, showSubmitButton } = this.state
+        const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
 
         return(
@@ -156,7 +159,26 @@ class Search extends Component {
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
-                            }                        
+                            }  
+                            {foundRegions ?
+                                foundRegions.map(region =>
+                                    (<TouchableOpacity
+                                        key={region.id}
+                                        onPress={() => {
+                                            this.props.getLocationsByRegion(region)
+                                            this.changeQuery('')
+                                            this.setState({searchModalVisible: false})
+                                        }}
+                                    >
+                                        <ListItem
+                                            title={region.full_name}
+                                            rightTitle={'Region'}
+                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                        /> 
+                                    </TouchableOpacity>
+                                    )) : null
+                            }                      
                         </ScrollView>
                     </View>
                 </Modal>
@@ -217,14 +239,17 @@ const s = StyleSheet.create({
 Search.propTypes = {
     displayError: PropTypes.func,
     navigate: PropTypes.func,
+    regions: PropTypes.object,
     updateCoordinates: PropTypes.func,
     getLocationsByCity: PropTypes.func,
+    getLocationsByRegion: PropTypes.func,
 }
 
-const mapStateToProps = ({ query, user }) => ({ query, user})
+const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user})
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
     getLocationsByCity: (city) => dispatch(getLocationsByCity(city)),
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
+    getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

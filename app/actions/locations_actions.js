@@ -12,7 +12,10 @@ import {
     SELECT_LOCATION_LIST_FILTER_BY,
     DISPLAY_ERROR
 } from './types'
-import { updateCurrCoordinates } from './query_actions'
+import { 
+    updateCurrCoordinates,
+    updateMapCoordinates,
+} from './query_actions'
 import { getData } from '../config/request'
 
 Geocode.setApiKey(GOOGLE_MAPS_KEY)
@@ -76,6 +79,39 @@ export const getLocationsByCity = (city) => (dispatch, getState) => {
             }
         })
         .catch(err => dispatch(getLocationsFailure(err)))
+}
+
+export const getLocationsByRegion = region => (dispatch) => {
+    const { lat, lon, effective_radius } = region
+    
+    const getDelta = () => {
+        // Approximate hacks for an appropriate zoom depending on region's effective radius
+        switch(true) {
+        case effective_radius > 301:
+            return 14
+        case effective_radius >= 300:
+            return 8
+        case effective_radius >= 250:
+            return 7
+        case effective_radius >= 200:
+            return 5.5
+        case effective_radius >= 150:
+            return 4.5
+        case effective_radius >= 125:
+            return 4
+        case effective_radius >= 100:
+            return 3
+        case effective_radius >= 50:
+            return 1.25
+        case effective_radius > 25:
+            return 0.8
+        default:
+            return 0.5
+        }
+    }
+
+    const delta = getDelta()
+    dispatch(updateMapCoordinates(lat, lon, delta, delta, effective_radius))
 }
   
 export const getLocationsSuccess = (data) => {

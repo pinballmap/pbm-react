@@ -11,14 +11,14 @@ import {
 import { getLocations } from './locations_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
-export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>  (dispatch) => {
+export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>  (dispatch) => {
     const viewableLat = getDistance(lat - 0.5*latDelta, lon, lat + 0.5*latDelta, lon) 
     const viewableLon = getDistance(lat, lon - 0.5*lonDelta, lat, lon + 0.5*lonDelta)
     const maxZoom = viewableLat > 90 || viewableLon > 90
     
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta, maxZoom })
-    if (!maxZoom) {
-        dispatch(getLocations(lat, lon, viewableLat * 1.1 / 2))
+    if (distance || !maxZoom) {
+        dispatch(getLocations(lat, lon, distance ? distance : viewableLat * 1.1 / 2))
     }
 }
 
@@ -26,7 +26,6 @@ export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) 
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta })
     dispatch(getLocations(lat, lon))
 }
-
 
 export const clearFilters = () => ({ type: CLEAR_FILTERS })
 
