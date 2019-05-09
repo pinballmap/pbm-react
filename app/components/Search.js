@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
 import { 
+    ActivityIndicator,
     Dimensions, 
     Modal,
     Platform,
@@ -41,6 +42,7 @@ class Search extends Component {
             foundRegions: [],
             searchModalVisible: false,
             showSubmitButton: false,
+            searching: false,
         }
 
         this.autocompleteSearchDebounced = debounce(500, this.autocompleteSearch)
@@ -59,19 +61,21 @@ class Search extends Component {
 
     _fetch = async (query) => {        
         this.waitingFor = query
+        this.setState({ searching: true })
         if (query === '') {
-            await this.setState({ foundLocations: [], foundCities: [], foundRegions: []})
+            await this.setState({ foundLocations: [], foundCities: [], foundRegions: [], searching: false})
         } else {
             const foundRegions = this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
             const foundLocations = await getData(`/locations/autocomplete?name=${query}`)
             let foundCities = await getData(`/locations/autocomplete_city.json?name=${query}`)
             if (query === this.waitingFor) {
-                this.setState({ foundLocations, foundCities, foundRegions, showSubmitButton: true })
+                this.setState({ foundLocations, foundCities, foundRegions, showSubmitButton: true, searching: false })
             }
         }
     }
 
     geocodeSearch = (query) => {
+        this.setState({ searching: true })
         Geocode.fromAddress(query)
             .then(response => {
                 const { lat, lng } = response.results[0].geometry.location
@@ -108,7 +112,7 @@ class Search extends Component {
     }
 
     render(){
-        const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton } = this.state
+        const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
 
         return(
@@ -144,6 +148,7 @@ class Search extends Component {
                             />
                         </View>
                         <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                            {searching ? <ActivityIndicator /> : null}
                             {foundRegions ?
                                 foundRegions.map(region =>
                                     (<TouchableOpacity
