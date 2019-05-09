@@ -87,6 +87,26 @@ class Search extends Component {
             })
     }
 
+    getLocationsByCity = (location) => {
+        this.props.getLocationsByCity(location.value)
+        this.clearSearchState()
+    }
+    
+    goToLocation = (location) => {
+        this.props.navigate('LocationDetails', {id: location.id, locationName: location.label, updateMap: true})
+        this.clearSearchState()
+    }
+
+    getLocationsByRegion = (region) => {
+        this.props.getLocationsByRegion(region)
+        this.clearSearchState()
+    }
+  
+    clearSearchState = () => {
+        this.changeQuery('')
+        this.setState({searchModalVisible: false})
+    }
+
     render(){
         const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
@@ -128,11 +148,8 @@ class Search extends Component {
                                 foundCities.map(location => 
                                     (<TouchableOpacity 
                                         key={location.value} 
-                                        onPress={() => {
-                                            this.props.getLocationsByCity(location.value)
-                                            this.changeQuery('')
-                                            this.setState({searchModalVisible: false})
-                                        }}>
+                                        onPress={() => this.getLocationsByCity(location)}
+                                    >
                                         <ListItem
                                             title={location.value}
                                             rightTitle={'City'}
@@ -147,11 +164,8 @@ class Search extends Component {
                                 foundLocations.map(location => 
                                     (<TouchableOpacity 
                                         key={location.id} 
-                                        onPress={() => {
-                                            this.props.navigate('LocationDetails', {id: location.id, locationName: location.label, updateMap: true})
-                                            this.changeQuery('')
-                                            this.setState({searchModalVisible: false})
-                                        }}>
+                                        onPress={() => this.goToLocation(location)}
+                                    >
                                         <ListItem
                                             title={location.label}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
@@ -164,11 +178,7 @@ class Search extends Component {
                                 foundRegions.map(region =>
                                     (<TouchableOpacity
                                         key={region.id}
-                                        onPress={() => {
-                                            this.props.getLocationsByRegion(region)
-                                            this.changeQuery('')
-                                            this.setState({searchModalVisible: false})
-                                        }}
+                                        onPress={() => this.getLocationsByRegion(region)}
                                     >
                                         <ListItem
                                             title={region.full_name}
