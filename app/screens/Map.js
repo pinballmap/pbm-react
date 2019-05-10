@@ -15,8 +15,8 @@ import markerDot from '../assets/images/markerdot.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
-    getLocations,
     updateCurrCoordinates,
+    updateFilterLocations,
     getFavoriteLocations,
     clearFilters,
     clearError,
@@ -107,11 +107,7 @@ class Map extends Component {
             this.props.updateCoordinates(curLat, curLon)
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator) {
-            const machine = machineId ? `by_machine_id=${machineId};` : ''
-            const byLocationType = locationType ? `by_type_id=${locationType};` : ''
-            const byNumMachines = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
-            const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-            this.props.getLocations(`/locations/closest_by_lat_lon.json?lat=${curLat};lon=${curLon};${machine}${byLocationType}${byNumMachines}${byOperator}max_distance=${global.STANDARD_DISTANCE};send_all_within_distance=1`)
+            this.props.updateFilterLocations()
         }
 
     }
@@ -269,7 +265,7 @@ Map.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
-    getLocations: PropTypes.func,
+    updateFilterLocations: PropTypes.func,
     updateCoordinates: PropTypes.func,
     updateMapCoordinates: PropTypes.func,
     navigation: PropTypes.object,
@@ -282,7 +278,7 @@ Map.propTypes = {
 const mapStateToProps = ({ error, locations, query, user }) => ({ error, locations, query, user })
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
-    getLocations: () => dispatch(getLocations()),
+    updateFilterLocations: () => dispatch(updateFilterLocations()),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordinates(lat, lon, latDelta, lonDelta)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),

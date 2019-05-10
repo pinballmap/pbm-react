@@ -14,11 +14,12 @@ import { getDistance } from '../utils/utilityFunctions'
 export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>  (dispatch) => {
     const viewableLat = getDistance(lat - 0.5*latDelta, lon, lat + 0.5*latDelta, lon) 
     const viewableLon = getDistance(lat, lon - 0.5*lonDelta, lat, lon + 0.5*lonDelta)
+    const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon
     const maxZoom = viewableLat > 90 || viewableLon > 90
     
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta, maxZoom })
     if (distance || !maxZoom) {
-        dispatch(getLocations(lat, lon, distance ? distance : viewableLat * 1.1 / 2))
+        dispatch(getLocations(lat, lon, distance ? distance : viewableDist * 1.1 / 2))
     }
 }
 
