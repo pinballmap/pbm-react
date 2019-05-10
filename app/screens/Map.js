@@ -187,7 +187,13 @@ class Map extends Component {
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
-                                        <Text>{l.name}</Text>
+                                        <View>
+                                            <Text>{l.name}</Text>
+                                            {l.machine_names.length === 1 ? 
+                                                <Text>1 machine</Text> :
+                                                <Text>{`${l.machine_names.length} machines`}</Text>
+                                            }
+                                        </View>
                                         <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
                                     </View>
                                 </MapView.Callout>
