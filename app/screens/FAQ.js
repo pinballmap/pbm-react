@@ -42,11 +42,13 @@ class FAQ extends Component {
                             <Text style={s.bold}>{`When I filter for "Cool Machine (Pro)", I also see results for "Cool Machine (LE). What's up?`}</Text>
                             <Text style={s.text}>{`This is by design. We've found that most users want to see all versions, and don't want to conduct 3 separate searches for the same title.`}</Text>
                             <Text style={s.bold}>{`How do I add a new location?`}</Text>
-                            <Text style={s.text}>{`Click the menu icon in the lower right, and choose "Add Location". Then fill out the form! We moderate the submissions, so it will a few days for the location you submitted to be added to the map. The more accurate and thorough your submission, the quicker it will get added! Make sure to include at least one machine with your submission.`}</Text>
+                            <Text style={s.text}>{`Click the menu icon in the lower right, and choose "Submit Location". Then fill out the form! Our administrators moderate submissions, and it can take a few days. The more accurate and thorough your submission, the quicker it will get added!`}</Text>
                             <Text style={s.bold}>{`How do I remove a machine from a location?`}</Text>
                             <Text style={s.text}>{`Click on the machine name, and then look for a "remove" button.`}</Text>
                             <Text style={s.bold}>{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
                             <Text style={s.text}>{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+                            <Text style={s.bold}>{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled).`}</Text>
+                            <Text style={s.text}>{`This is usually a data entry mistake. Please `}<Text onPress={ () => this.props.navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"contact us"}</Text>{` so we can fix it.`}</Text>
                             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
                             <Text style={s.text}>{<Text onPress={ () => this.props.navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"Contact us"}</Text>}{ ` and we'll add you.`}</Text>
                             <Text style={s.bold}>{`What is your privacy policy?`}</Text>
