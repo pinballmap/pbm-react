@@ -18,7 +18,7 @@ class LocationCard extends Component {
         const numMachines = machines.length
 
         return(
-            <Card containerStyle={{borderRadius: 5,marginBottom:8,marginTop:8,borderColor: "#D3ECFF"}}>
+            <Card containerStyle={{borderRadius:5,marginBottom:8,marginTop:8,borderColor: "#D3ECFF"}}>
                 <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
                     <View style={s.flexi}>
                         <View style={{width: '100%',zIndex: 10}}>
@@ -63,7 +63,7 @@ const s = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         alignContent: 'space-around',
-        marginBottom: -10
+        marginBottom: -5
     },
     mName: {
         marginBottom: Platform.OS === 'ios' ? -10 : 0,
