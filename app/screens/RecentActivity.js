@@ -81,7 +81,7 @@ class RecentActivity extends Component {
                 .then(data => {
                     this.setState({
                         fetchingRecentActivity: false,
-                        recentActivity: data.user_submissions.reverse(),
+                        recentActivity: data.user_submissions,
                     })
                 })
         })
