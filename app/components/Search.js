@@ -160,7 +160,7 @@ class Search extends Component {
                                             rightTitle={'Region'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
                                         /> 
                                     </TouchableOpacity>
                                     )) : null
@@ -176,7 +176,7 @@ class Search extends Component {
                                             rightTitle={'City'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
