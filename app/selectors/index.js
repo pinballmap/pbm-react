@@ -36,3 +36,16 @@ export const filterSelected = createSelector(
     queryState,
     (query) => query.machineId !== '' || query.locationType !== '' || query.selectedOperator !== '' || query.numMachines !== 0 ? true : false
 )
+
+const mapLocations = ({locations}) => locations.mapLocations
+
+const faveLocations = ({user}) => user.faveLocations
+
+export const getMapLocations = createSelector(
+    [mapLocations, faveLocations],
+    (locations = [], faveLocations) => {
+        return locations.map(loc => ({
+            ...loc, 
+            icon: faveLocations.findIndex(fave => fave.location_id === loc.id) > -1 ? 'heart' : 'dot'
+        }))}
+)
