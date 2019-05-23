@@ -12,6 +12,7 @@ import { Button, Icon } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import { MapView } from 'expo'
 import markerDot from '../assets/images/markerdot.png'
+import heart from '../assets/images/heart.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -26,6 +27,9 @@ import {
     headerStyle,
     headerTitleStyle, 
 } from '../styles'
+import {
+    getMapLocations
+} from '../selectors'
 
 class Map extends Component {
     constructor(props){
@@ -113,8 +117,16 @@ class Map extends Component {
     }
 
     render(){
-        const { isFetchingLocations, mapLocations = [] } = this.props.locations
-        const { fontAwesomeLoaded, showNoLocationTrackingModal } = this.state
+        const { 
+            isFetchingLocations, 
+            mapLocations,
+        } = this.props
+        
+        const { 
+            fontAwesomeLoaded, 
+            showNoLocationTrackingModal 
+        } = this.state
+        
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
@@ -179,7 +191,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={markerDot}                            
+                                image={l.icon === 'dot' ? markerDot : heart}                            
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
@@ -261,7 +273,8 @@ const s = StyleSheet.create({
 })
 
 Map.propTypes = {
-    locations: PropTypes.object,
+    isFetchingLocations: PropTypes.bool,
+    mapLocations: PropTypes.array, 
     query: PropTypes.object,
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
@@ -275,7 +288,18 @@ Map.propTypes = {
     error: PropTypes.object,
 }
 
-const mapStateToProps = ({ error, locations, query, user }) => ({ error, locations, query, user })
+const mapStateToProps = (state) => {
+    const { error, locations, query, user } = state
+    const mapLocations = getMapLocations(state)
+
+    return { 
+        error, 
+        query, 
+        user,
+        mapLocations,
+        isFetchingLocations: locations.isFetchingLocations,
+    }
+}
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     updateFilterLocations: () => dispatch(updateFilterLocations()),
