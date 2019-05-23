@@ -160,7 +160,7 @@ class Search extends Component {
                                             rightTitle={'Region'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
                                         /> 
                                     </TouchableOpacity>
                                     )) : null
@@ -176,7 +176,7 @@ class Search extends Component {
                                             rightTitle={'City'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f2f4f5'}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
@@ -190,7 +190,7 @@ class Search extends Component {
                                         <ListItem
                                             title={location.label}
                                             titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1}}
+                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
@@ -201,7 +201,7 @@ class Search extends Component {
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
                     <View style={s.searchMap}>
                         <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
-                        <Text style={{fontSize:16,color:'#c1c9cf',marginTop:6}}>City, Address, Location</Text>
+                        <Text style={{fontSize:16,color:'#97a5af',marginTop:6}}>City, Address, Location</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -219,10 +219,10 @@ const s = StyleSheet.create({
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 110 : deviceWidth - 115,             
-        backgroundColor: '#e0ebf2',
+        backgroundColor: '#f2f4f5',
         height: 35,
         borderRadius: 5,
-        borderColor: '#d1dfe8',
+        borderColor: '#e0ebf2',
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
@@ -234,10 +234,10 @@ const s = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#d1dfe8',
+        backgroundColor: '#f2f4f5',
         borderRadius: 5,
         width: deviceWidth - 60,
-        backgroundColor: '#e0ebf2',
+        borderColor: '#e0ebf2',
         height: 35,
         display: 'flex',
         flexDirection: 'row',
