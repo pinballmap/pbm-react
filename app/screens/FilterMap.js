@@ -93,7 +93,7 @@ class FilterMap extends Component {
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
-              <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this Machine:</Text>
+              <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this machine:</Text>
               <DropDownButton
                   title={machine && machine.name ? machine.name : 'All'}
                   onPress={() => this.props.navigation.navigate('FindMachine', {machineFilter: true})}
@@ -116,7 +116,8 @@ class FilterMap extends Component {
               <DropDownButton
                   title={operatorName}
                   onPress={() => navigate('FindOperator', {type: 'filter', setSelected: (id) => this.props.selectedOperatorTypeFilter(id)})}
-              /> 
+              />
+              <Text style={[s.sectionTitle,s.padding10]}>Only show my Saved Locations:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateViewFavorites}
                   selectedIndex={viewByFavoriteLocations ? 1 : 0}
