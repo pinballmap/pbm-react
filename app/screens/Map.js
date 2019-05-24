@@ -106,11 +106,11 @@ class Map extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon } = props.query
+        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, viewByFavoriteLocations } = props.query
         if (!this.props.query.curLat && curLat)
             this.props.updateCoordinates(curLat, curLon)
 
-        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator) {
+        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
             this.props.updateFilterLocations()
         }
 
@@ -129,8 +129,8 @@ class Map extends Component {
         
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
-        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
-        const filterApplied = machineId || locationType || numMachines || selectedOperator ? true : false
+        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
+        const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
         if (!latitude) {
             return(
