@@ -201,7 +201,7 @@ class Search extends Component {
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
                     <View style={s.searchMap}>
                         <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
-                        <Text style={{fontSize:16,color:'#97a5af',marginTop:6}}>City, Address, Location</Text>
+                        <Text style={s.inputPlaceholder}>City, Address, Location</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -218,7 +218,7 @@ const s = StyleSheet.create({
         paddingTop: Constants.statusBarHeight > 40 ? 33 : 20,         
     },
     searchMap: {
-        width: Platform.OS === 'ios' ? deviceWidth - 110 : deviceWidth - 115,             
+        width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
         backgroundColor: '#f2f4f5',
         height: 35,
         borderRadius: 5,
@@ -226,11 +226,16 @@ const s = StyleSheet.create({
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: Platform.OS === 'ios' ? -15 : 0,     
+        marginLeft: Platform.OS === 'ios' ? -10 : 0,     
     },
     searchIcon: {
         paddingTop: Platform.OS === 'ios' ? 5 : 3,
         paddingLeft: 5
+    },
+    inputPlaceholder: {
+        fontSize:16,
+        color:'#97a5af',
+        marginTop: Platform.OS === 'ios' ? 6 : 4,
     },
     input: {
         borderWidth: 1,
