@@ -16,6 +16,7 @@ import {
 import { 
     setFilters,
     updateNumMachinesSelected,
+    updateViewFavoriteLocations,
     selectedLocationTypeFilter,
     selectedOperatorTypeFilter,
     clearFilters,
@@ -75,6 +76,10 @@ class FilterMap extends Component {
       this.props.updateNumMachinesSelected(this.getNumMachines(idx))
   }
 
+  updateViewFavorites = idx => {
+      this.props.updateViewFavoriteLocations(idx)
+  }
+
   render(){      
       const { 
           locationTypeName,
@@ -82,7 +87,7 @@ class FilterMap extends Component {
           hasFilterSelected,
       } = this.props
 
-      const { machine, numMachines } = this.props.query
+      const { machine, numMachines, viewByFavoriteLocations } = this.props.query
       const { navigate } = this.props.navigation
     
       return(
@@ -112,6 +117,14 @@ class FilterMap extends Component {
                   title={operatorName}
                   onPress={() => navigate('FindOperator', {type: 'filter', setSelected: (id) => this.props.selectedOperatorTypeFilter(id)})}
               /> 
+              <ButtonGroup style={s.border}
+                  onPress={this.updateViewFavorites}
+                  selectedIndex={viewByFavoriteLocations ? 1 : 0}
+                  buttons={['All', 'My Favorites']}
+                  containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
+                  selectedButtonStyle={s.buttonStyle}
+                  selectedTextStyle={s.textStyle}
+              />
               {hasFilterSelected ? 
                   <WarningButton
                       title={'Clear Filters'}
@@ -165,6 +178,7 @@ FilterMap.propTypes = {
     query: PropTypes.object,
     operatorName: PropTypes.string,
     updateNumMachinesSelected: PropTypes.func,
+    updateViewFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
     navigation: PropTypes.object,
     selectedOperatorTypeFilter: PropTypes.func,
@@ -193,6 +207,7 @@ const mapDispatchToProps = (dispatch) => ({
     selectedLocationTypeFilter: type => dispatch(selectedLocationTypeFilter(type)),
     selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
     clearFilters: () => dispatch(clearFilters()), 
+    updateViewFavoriteLocations: idx => dispatch(updateViewFavoriteLocations(idx))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
 
