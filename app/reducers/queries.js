@@ -6,6 +6,7 @@ import {
     FETCHING_LOCATIONS_BY_CITY_SUCCESS,
     SET_MACHINE_FILTER,
     SET_NUM_MACHINES_FILTER,
+    SET_VIEW_FAVORITE_LOCATIONS_FILTER,
     SET_LOCATION_TYPE_FILTER,
     SET_OPERATOR_FILTER,
     FETCHING_LOCATION_TRACKING_SUCCESS,
@@ -25,6 +26,7 @@ export const initialState = {
     selectedActivity: '',
     machine: {},
     maxZoom: false,
+    viewByFavoriteLocations: false,
 }
 
 export default (state = initialState, action) => {
@@ -52,6 +54,11 @@ export default (state = initialState, action) => {
             ...state,
             numMachines: action.numMachines,
         }
+    case SET_VIEW_FAVORITE_LOCATIONS_FILTER: 
+        return {
+            ...state,
+            viewByFavoriteLocations: action.viewByFavoriteLocations,
+        }
     case SET_LOCATION_TYPE_FILTER:
         return {
             ...state,
@@ -70,6 +77,7 @@ export default (state = initialState, action) => {
             numMachines: 0,
             selectedOperator: '',
             machine: {},
+            viewByFavoriteLocations: false,
         }
     case SET_SELECTED_ACTIVITY_FILTER:
         return {
