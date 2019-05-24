@@ -183,7 +183,10 @@ const s = StyleSheet.create({
     bold: {
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 22,
+        textShadowColor: '#ffffff',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 2,
     },
     inputBox: {
         width: '100%',
@@ -198,10 +201,13 @@ const s = StyleSheet.create({
         color: '#000e18',
     },
     textLink: {
-        fontSize: 14,
+        fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
         color: '#4b5862',
+        textShadowColor: '#ffffff',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 2,
     },
     iconStyle: {
         fontSize: 24,
