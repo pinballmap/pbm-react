@@ -151,7 +151,7 @@ class Login extends Component {
                                     }} 
                                     titleStyle={s.textLink}
                                     buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="skip logging in for now"
+                                    title="Skip logging in for now"
                                 />
                             </View>
                         </TouchableWithoutFeedback>          
