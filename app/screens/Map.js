@@ -50,7 +50,7 @@ class Map extends Component {
             headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
-            containerStyle={{width:45}}
+            containerStyle={{width:50}}
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
