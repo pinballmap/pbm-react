@@ -53,7 +53,7 @@ class FAQ extends Component {
                             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
                             <Text style={s.text}>{<Text onPress={ () => this.props.navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"Contact us"}</Text>}{ ` and we'll add you.`}</Text>
                             <Text style={s.bold}>{`What is your privacy policy?`}</Text>
-                            <Text style={s.text}>We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics - however, we built the app using Expo, and they collect <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('https://expo.io/privacy')}>anonymous usage statistics</Text>. This site is not monetized. We keep a log of map edits that users make.</Text>
+                            <Text style={s.text}>Please see our <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('http://pinballmap.com/privacy')}>detailed privacy policy</Text>. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.</Text>
                             <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
                         </View>  
                     </View>
