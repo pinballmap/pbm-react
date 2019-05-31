@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { MapView } from 'expo'
 import markerDot from '../assets/images/markerdot.png'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
+import myLocation from '../assets/images/marker-mylocation.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -127,7 +128,7 @@ class Map extends Component {
             showNoLocationTrackingModal 
         } = this.state
         
-        const { locationTrackingServicesEnabled } = this.props.user
+        const { locationTrackingServicesEnabled, lat: userLat, lon: userLon } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
@@ -191,7 +192,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={l.icon === 'dot' ? markerDot : markerDotHeart}                            
+                                image={l.icon === 'dot' ? markerDot : markerDotHeart}               
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
@@ -207,6 +208,15 @@ class Map extends Component {
                                 </MapView.Callout>
                             </MapView.Marker>
                         ))}
+                        {locationTrackingServicesEnabled ?
+                            <MapView.Marker
+                                coordinate={{
+                                    latitude: userLat,
+                                    longitude: userLon,
+                                }}
+                                image={myLocation}
+                            /> : null
+                        }
                     </MapView>
                     {fontAwesomeLoaded ? <Icon
                         raised
