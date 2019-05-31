@@ -127,7 +127,7 @@ class Map extends Component {
             showNoLocationTrackingModal 
         } = this.state
         
-        const { locationTrackingServicesEnabled, lat: userLat, lon: userLon } = this.props.user
+        const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
