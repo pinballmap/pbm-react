@@ -15,8 +15,18 @@
     "githubUrl": "https://github.com/bpoore/pbm-react/",
     "primaryColor": "#d3ecff",
     "ios": {
-      "bundleIdentifier": "pbm.app",
-      "icon": "app/assets/images/ios-icon.png"
+      "bundleIdentifier": "net.isaacruiz.ppm",
+      "icon": "app/assets/images/ios-icon.png",
+      "buildNumber": "48",
+      "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
+      "config": {
+        "googleMapsApiKey": "key"
+      },
+      "splash": {
+        "image": "app/assets/images/t-shirt-logo.png",
+        "backgroundColor": "#4b5862",
+        "resizeMode": "contain"
+      }
     },
     "android": {
       "package": "com.pbm",
@@ -34,7 +44,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 35,
+      "versionCode": 37,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
