@@ -177,6 +177,7 @@ class Map extends Component {
                         style={s.map}
                         onRegionChange={this.onRegionChange}
                         mapType={'none'}
+                        showsUserLocation={true}
                     >
                         <MapView.UrlTile
                             urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
@@ -191,7 +192,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={l.icon === 'dot' ? markerDot : markerDotHeart}                            
+                                image={l.icon === 'dot' ? markerDot : markerDotHeart}               
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
