@@ -1,4 +1,5 @@
 import Expo from 'expo'
+import { registerRootComponent } from 'expo';
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
@@ -15,6 +16,4 @@ class App extends Component {
     }
 }
 
-Expo.registerRootComponent(App)
-
-export default App
+export default registerRootComponent(App)
