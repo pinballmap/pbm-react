@@ -1,7 +1,10 @@
 {
   "expo": {
-    "sdkVersion": "30.0.0",
+    "sdkVersion": "32.0.0",
     "orientation": "portrait",
+    "assetBundlePatterns": [
+      "app/assets/images/*"
+    ],
     "splash": {
       "image": "app/assets/images/t-shirt-logo.png",
       "backgroundColor": "#4b5862",
