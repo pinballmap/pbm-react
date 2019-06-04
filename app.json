@@ -6,7 +6,7 @@
       "app/assets/images/*"
     ],
     "splash": {
-      "image": "app/assets/images/t-shirt-logo.png",
+      "image": "app/assets/images/t-shirt-logo@1x.png",
       "backgroundColor": "#4b5862",
       "resizeMode": "contain"
     },
@@ -20,13 +20,14 @@
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "48",
+      "buildNumber": "49",
+      "supportsTablet": true,
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
         "googleMapsApiKey": "key"
       },
       "splash": {
-        "image": "app/assets/images/t-shirt-logo.png",
+        "image": "app/assets/images/t-shirt-logo@1x.png",
         "backgroundColor": "#4b5862",
         "resizeMode": "contain"
       }
