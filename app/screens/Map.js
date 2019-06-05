@@ -101,7 +101,7 @@ class Map extends Component {
 
     async componentDidMount(){
         this.props.getCurrentLocation()
-        await Font.loadAsync({'FontAwesome': require('@expo/vector-icons/fonts/FontAwesome.ttf')})
+        await Font.loadAsync({'MaterialIcons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
         this.setState({ fontAwesomeLoaded: true })
     }
 
@@ -211,8 +211,8 @@ class Map extends Component {
                     </MapView>
                     {fontAwesomeLoaded ? <Icon
                         raised
-                        name='location-arrow'
-                        type='font-awesome'
+                        name='gps-fixed'
+                        type='material'
                         color='#1e9dff'
                         containerStyle={{position:'absolute',bottom:0,right:0}}
                         size={24}
