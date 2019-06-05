@@ -194,6 +194,7 @@ class LocationDetails extends Component {
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
                     <MapView
+                        provider = { "google" }
                         mapType={'none'}
                         region={{
                             latitude: Number(location.lat),
