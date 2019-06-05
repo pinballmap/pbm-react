@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Font } from 'expo'
 import { 
     ActivityIndicator,
+    Image,
     Platform,
     StyleSheet, 
     View,
@@ -176,16 +177,9 @@ class Map extends Component {
                             longitudeDelta,
                         }}
                         style={s.map}
-                        provider = { "google" }
                         onRegionChange={this.onRegionChange}
-                        mapType={'none'}
                         showsUserLocation={true}
                     >
-                        <MapView.UrlTile
-                            urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
-                            //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
-                            maximumZ={20}
-                        />
                         {mapLocations.map(l => (
                             <MapView.Marker
                                 coordinate={{
@@ -194,8 +188,10 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={l.icon === 'dot' ? markerDot : markerDotHeart}
                             >
+                                <View>
+                                    {l.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}}/> : <Image source={markerDotHeart} style={{height:24,width:28}}/>}
+                                </View>
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
                                         <View>
@@ -243,13 +239,15 @@ const s = StyleSheet.create({
         flex: 1
     },
     calloutStyle: {
+        minWidth: 100, 
+        maxWidth: 400,
         display: 'flex', 
         flexDirection: 'row',
         alignItems: 'center', 
         alignContent: 'space-around',
     },
     iconStyle: {
-        marginLeft: 15,
+        marginLeft: 10,
         fontSize: 22,
         color: '#97a5af',
     },
