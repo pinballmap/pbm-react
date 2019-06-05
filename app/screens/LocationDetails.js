@@ -209,7 +209,6 @@ class LocationDetails extends Component {
                                 latitudeDelta: 0.03,
                                 longitudeDelta: 0.03,
                             }}
-                            image={markerDot}
                             >
                             <View>
                                 <Image source={markerDot} style={{height:20,width:20}}/>
@@ -267,8 +266,8 @@ class LocationDetails extends Component {
                                             title={this.getTitle(machine)}
                                             subtitle={
                                                 <View style={s.condition}>
-                                                    {machine.condition ? <Text style={s.conditionText}>{`${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}`}</Text> : null}
-                                                    {machine.condition_date ? <Text>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                    {machine.condition ? <Text style={s.conditionText}>"{`${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}`}"</Text> : null}
+                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
                                                 </View>
                                             }
                                             rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -402,7 +401,12 @@ const s = StyleSheet.create({
     },
     lastUpdated: {
         textAlign: 'center',
-        marginTop: 5
+        marginTop: 5,
+        color: '#4b5862'
+    },
+    commentUpdated: {
+        color: '#4b5862',
+        marginLeft: 2
     },
     plusButton: {
         color: "#f53240",
