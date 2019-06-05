@@ -194,8 +194,6 @@ class LocationDetails extends Component {
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
                     <MapView
-                        provider = { "google" }
-                        mapType={'none'}
                         region={{
                             latitude: Number(location.lat),
                             longitude: Number(location.lon),
@@ -204,11 +202,6 @@ class LocationDetails extends Component {
                         }}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
                     >
-                        <MapView.UrlTile
-                            urlTemplate={`http://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
-                            //urlTemplate={`https://mapserver.pinballmap.com/styles/osm-bright/{z}/{x}/{y}.png`}
-                            maximumZ={20}
-                        />
                         <MapView.Marker
                             coordinate={{
                                 latitude: Number(location.lat),
@@ -217,7 +210,11 @@ class LocationDetails extends Component {
                                 longitudeDelta: 0.03,
                             }}
                             image={markerDot}
-                        />
+                            >
+                            <View>
+                                <Image source={markerDot} style={{height:20,width:20}}/>
+                            </View>
+                        </MapView.Marker>
                     </MapView>
                     <View style={{ flex: 3,backgroundColor: "#f5fbff" }}>
                         <ButtonGroup
