@@ -11,8 +11,8 @@ import {
 import { Button, Icon } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import { MapView } from 'expo'
-import markerDot from '../assets/images/markerdot-ios.png'
-import markerDotHeart from '../assets/images/markerdot-heart-ios.png'
+import markerDot from '../assets/images/markerdot.png'
+import markerDotHeart from '../assets/images/markerdot-heart.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
@@ -193,7 +193,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={l.icon === 'dot' ? markerDot : markerDotHeart}               
+                                image={l.icon === 'dot' ? markerDot : markerDotHeart}
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>

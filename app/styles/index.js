@@ -13,5 +13,5 @@ export const headerTitleStyle = {
     textAlign: 'center',
     flexGrow: 1,
     alignSelf:'center',
-    width: deviceWidth - 100
+    width: Platform.OS === 'ios' ? deviceWidth - 100 : null
 }
