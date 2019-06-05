@@ -13,7 +13,7 @@ import {
     View, 
 } from 'react-native'
 import { MapView } from 'expo'
-import markerDot from '../assets/images/markerdot.png'
+import markerDot from '../assets/images/markerdot-ios.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -194,6 +194,7 @@ class LocationDetails extends Component {
                     {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
                     {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
                     <MapView
+                        provider = { "google" }
                         mapType={'none'}
                         region={{
                             latitude: Number(location.lat),

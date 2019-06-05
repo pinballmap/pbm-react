@@ -20,7 +20,8 @@
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "48",
+      "buildNumber": "52",
+      "supportsTablet": true,
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
         "googleMapsApiKey": "key"
