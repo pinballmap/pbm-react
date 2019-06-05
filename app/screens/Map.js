@@ -39,7 +39,7 @@ class Map extends Component {
         this.prevRegion = {}
 
         this.state ={ 
-            fontMaterialLoaded: false,
+            materialIconsLoaded: false,
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
         }
@@ -102,7 +102,7 @@ class Map extends Component {
     async componentDidMount(){
         this.props.getCurrentLocation()
         await Font.loadAsync({'MaterialIcons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
-        this.setState({ fontMaterialLoaded: true })
+        this.setState({ materialIconsLoaded: true })
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -123,7 +123,7 @@ class Map extends Component {
         } = this.props
         
         const { 
-            fontMaterialLoaded, 
+            materialIconsLoaded, 
             showNoLocationTrackingModal 
         } = this.state
         
@@ -209,7 +209,7 @@ class Map extends Component {
                             </MapView.Marker>
                         ))}
                     </MapView>
-                    {fontMaterialLoaded ? <Icon
+                    {materialIconsLoaded ? <Icon
                         raised
                         name='gps-fixed'
                         type='material'
