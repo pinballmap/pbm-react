@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Font } from 'expo'
+import openMap from 'react-native-open-maps';
 import { 
     ActivityIndicator,
     Platform,
@@ -102,6 +103,7 @@ class Map extends Component {
     async componentDidMount(){
         this.props.getCurrentLocation()
         await Font.loadAsync({'MaterialIcons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
+        await Font.loadAsync({'Material Icons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
         this.setState({ materialIconsLoaded: true })
     }
 
