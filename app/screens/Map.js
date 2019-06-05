@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Font } from 'expo'
-import openMap from 'react-native-open-maps';
 import { 
     ActivityIndicator,
     Platform,
