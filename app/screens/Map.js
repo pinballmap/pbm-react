@@ -176,6 +176,7 @@ class Map extends Component {
                             longitudeDelta,
                         }}
                         style={s.map}
+                        provider = { "google" }
                         onRegionChange={this.onRegionChange}
                         mapType={'none'}
                         showsUserLocation={true}
@@ -193,7 +194,7 @@ class Map extends Component {
                                 }}
                                 title={l.name}
                                 key={l.id}  
-                                image={l.icon === 'dot' ? markerDot : markerDotHeart}               
+                                image={l.icon === 'dot' ? markerDot : markerDotHeart}
                             >
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
