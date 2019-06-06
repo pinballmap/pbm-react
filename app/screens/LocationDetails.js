@@ -13,9 +13,10 @@ import {
     View, 
 } from 'react-native'
 import { MapView } from 'expo'
-import markerDot from '../assets/images/markerdot-ios.png'
-import { Button, ButtonGroup, ListItem } from 'react-native-elements'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import markerDot from '../assets/images/markerdot.png'
+import openMap from 'react-native-open-maps';
+import { Button, ButtonGroup, ListItem, Icon } from 'react-native-elements'
+import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal, 
@@ -278,7 +279,20 @@ class LocationDetails extends Component {
                             <View style={s.locationMeta}>
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
+                                 <Icon
+                                    raised
+                                    reverse
+                                    name='directions'
+                                    type='material'
+                                    color='#1e9dff'
+                                    size={20}
+                                    containerStyle={{position:'absolute',top:0,right:15}}
+                                    onPress={() => {
+                                        openMap({end: location.name + " " + location.city + " " + location.state + " " + location.zip})
+                                    }}
+                                />
                                 
+
                                 {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
                                 {location.location_type_id || locationTrackingServicesEnabled ? 
@@ -459,6 +473,13 @@ const s = StyleSheet.create({
         borderRadius: 50,
         width: '100%',
         elevation: 0
+    },
+    navigateButton: {
+        marginLeft:25,
+        marginRight:25,
+        height:2,
+        marginBottom:5,
+        backgroundColor:"#D3ECFF"
     },
 })
 
