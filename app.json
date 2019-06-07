@@ -10,7 +10,7 @@
       "backgroundColor": "#f5fbff"
     },
     "splash": {
-      "image": "app/assets/images/t-shirt-logo.png",
+      "image": "app/assets/images/t-shirt-logo@3x.png",
       "backgroundColor": "#4b5862",
       "resizeMode": "contain"
     },
@@ -31,7 +31,7 @@
         "googleMapsApiKey": "key"
       },
       "splash": {
-        "image": "app/assets/images/t-shirt-logo.png",
+        "image": "app/assets/images/t-shirt-logo@3x.png",
         "backgroundColor": "#4b5862",
         "resizeMode": "contain"
       }
