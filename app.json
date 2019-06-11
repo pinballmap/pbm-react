@@ -5,8 +5,12 @@
     "assetBundlePatterns": [
       "app/assets/images/*"
     ],
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#f5fbff"
+    },
     "splash": {
-      "image": "app/assets/images/t-shirt-logo.png",
+      "image": "app/assets/images/t-shirt-logo@3x.png",
       "backgroundColor": "#4b5862",
       "resizeMode": "contain"
     },
@@ -27,7 +31,7 @@
         "googleMapsApiKey": "key"
       },
       "splash": {
-        "image": "app/assets/images/t-shirt-logo.png",
+        "image": "app/assets/images/t-shirt-logo@3x.png",
         "backgroundColor": "#4b5862",
         "resizeMode": "contain"
       }
@@ -48,7 +52,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 37,
+      "versionCode": 38,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"

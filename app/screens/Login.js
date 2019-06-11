@@ -75,7 +75,7 @@ class Login extends Component {
     render() {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-                <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>     
+                <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
                     <View style={s.mask}>
                         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={s.justify}>
@@ -114,7 +114,8 @@ class Login extends Component {
                                     buttonStyle={s.buttonStyle}
                                     titleStyle={{
                                         color:"#4b5862", 
-                                        fontSize:18
+                                        fontSize:16,
+                                        fontWeight: '500'
                                     }}
                                     containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
                                     style={{borderRadius: 50}}

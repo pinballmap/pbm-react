@@ -199,7 +199,8 @@ const s = StyleSheet.create({
     },
     titleStyle: {
         color:"#4b5862",
-        fontSize:18
+        fontSize:16,
+        fontWeight: '500'
     },
     justify: {
         flexDirection: 'column',

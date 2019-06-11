@@ -467,7 +467,7 @@ const s = StyleSheet.create({
         marginBottom:10
     },
     addMachinesButton: {
-        backgroundColor: '#e0ebf2',
+        backgroundColor: '#e0f1fb',
         borderRadius: 50,
         width: '100%',
         elevation: 0

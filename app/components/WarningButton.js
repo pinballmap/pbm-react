@@ -14,7 +14,7 @@ class WarningButton extends Component {
                 accessibilityLabel={this.props.accessibilityLabel}
                 raised
                 buttonStyle={s.redButton}
-                titleStyle={{fontSize:18,color:'#f53240'}}    
+                titleStyle={{fontSize:16,color:'#f53240',fontWeight:'500'}}    
                 style={{borderRadius: 50}}
                 containerViewStyle={{alignSelf: 'stretch'}}
                 containerStyle={[{borderRadius:50},s.margin15]}
