@@ -75,7 +75,7 @@ class Login extends Component {
     render() {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-                <ImageBackground source={require('../assets/images/pbm-fade.png')} style={s.backgroundImage}>     
+                <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
                     <View style={s.mask}>
                         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                             <View style={s.justify}>
