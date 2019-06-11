@@ -135,7 +135,7 @@ class Search extends Component {
                             />
                             <Input
                                 placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color="#6a7d8a" style={{marginLeft:-10,marginRight:-8}}/>}
+                                leftIcon={<MaterialIcons name='search' size={25} color="#97a5af" style={{marginLeft:-10,marginRight:-8}}/>}
                                 rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
@@ -226,16 +226,15 @@ const s = StyleSheet.create({
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: Platform.OS === 'ios' ? -10 : 0,     
+        marginLeft: Platform.OS === 'ios' ? -10 : 0,  
+        alignItems: 'center'  
     },
     searchIcon: {
-        paddingTop: Platform.OS === 'ios' ? 5 : 3,
         paddingLeft: 5
     },
     inputPlaceholder: {
         fontSize:16,
-        color:'#97a5af',
-        marginTop: Platform.OS === 'ios' ? 6 : 4,
+        color:'#97a5af',        
     },
     input: {
         borderWidth: 1,
