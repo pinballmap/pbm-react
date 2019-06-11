@@ -193,9 +193,9 @@ class Map extends Component {
                                     {l.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}}/> : <Image source={markerDotHeart} style={{height:24,width:28}}/>}
                                 </View>
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
-                                    <View style={s.calloutStyle}>
-                                        <View>
-                                            <Text>{l.name}</Text>
+                                    <View>
+                                        <View style={s.calloutStyle}>
+                                            <Text style={{marginRight:20}}>{l.name}</Text>
                                             {l.machine_names.length === 1 ? 
                                                 <Text>1 machine</Text> :
                                                 <Text>{`${l.machine_names.length} machines`}</Text>
@@ -239,17 +239,22 @@ const s = StyleSheet.create({
         flex: 1
     },
     calloutStyle: {
-        minWidth: 100, 
-        maxWidth: 400,
+        minWidth: 50, 
+        width: '100%',
+        maxWidth: 300,
+        height: 45,
         display: 'flex', 
-        flexDirection: 'row',
-        alignItems: 'center', 
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignContent: 'space-around',
     },
     iconStyle: {
-        marginLeft: 10,
         fontSize: 22,
         color: '#97a5af',
+        position: "absolute",
+        top: 14,
+        right: -5,
+        zIndex: 5
     },
     titleStyle: {
         color: "#1e9dff",

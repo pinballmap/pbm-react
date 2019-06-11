@@ -86,7 +86,7 @@ const TabNav = TabNavigator({
         showIcon: true,
         style: {
             backgroundColor:'#f5fbff',
-            paddingBottom: Constants.statusBarHeight > 40 ? 20 : 3,
+            paddingBottom: Platform.OS === 'ios' && Constants.statusBarHeight > 40 ? 20 : 3,
             height: Constants.statusBarHeight > 40 ? 65 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null, 
         },
         iconStyle: {

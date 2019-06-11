@@ -479,7 +479,7 @@ const s = StyleSheet.create({
         color: '#6a7d8a'
     },
     addMachinesButton: {
-        backgroundColor: '#e0ebf2',
+        backgroundColor: '#e0f1fb',
         borderRadius: 50,
         width: '100%',
         elevation: 0
