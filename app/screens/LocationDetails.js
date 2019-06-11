@@ -13,7 +13,7 @@ import {
     View, 
 } from 'react-native'
 import { MapView } from 'expo'
-import markerDot from '../assets/images/markerdot-ios.png'
+import markerDot from '../assets/images/markerdot.png'
 import { Button, ButtonGroup, ListItem } from 'react-native-elements'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
