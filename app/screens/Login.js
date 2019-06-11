@@ -114,7 +114,8 @@ class Login extends Component {
                                     buttonStyle={s.buttonStyle}
                                     titleStyle={{
                                         color:"#4b5862", 
-                                        fontSize:18
+                                        fontSize:16,
+                                        fontWeight: '500'
                                     }}
                                     containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
                                     style={{borderRadius: 50}}

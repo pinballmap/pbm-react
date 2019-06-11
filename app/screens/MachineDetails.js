@@ -175,7 +175,7 @@ class MachineDetails extends Component {
                 <ScrollView>
                     <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
                     <PbmButton
-                        title={loggedIn ? 'Add a New Condition' : 'Login to add a machine comment'}
+                        title={loggedIn ? 'Add a New Condition' : 'Log in to add a machine comment'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddConditionModal: true }) :
                             () => this.props.navigation.navigate('Login')}
@@ -198,7 +198,7 @@ class MachineDetails extends Component {
                         }
                     </View>
                     <PbmButton 
-                        title={loggedIn ? 'Add Your Score' : 'Login to add your high score'}
+                        title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
                         onPress={loggedIn ? 
                             () => this.setState({ showAddScoreModal: true }) :
                             () => this.props.navigation.navigate('Login')
@@ -342,7 +342,7 @@ const s = StyleSheet.create({
         borderTopWidth: 1,
     },
     addButton: {
-        backgroundColor: '#e0ebf2',
+        backgroundColor: '#e0f1fb',
         borderRadius: 50,
         width: '100%',
         elevation: 0

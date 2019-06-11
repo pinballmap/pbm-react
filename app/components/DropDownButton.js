@@ -34,7 +34,7 @@ DropDownButton.propTypes = {
 
 const s = StyleSheet.create({
     dropdown: {
-        backgroundColor:"#e0ebf2",
+        backgroundColor:"#e0f1fb",
         width: '100%',
         elevation: 0,
         borderColor: '#d1dfe8',
