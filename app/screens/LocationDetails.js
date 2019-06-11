@@ -14,9 +14,9 @@ import {
 } from 'react-native'
 import { MapView } from 'expo'
 import markerDot from '../assets/images/markerdot.png'
-import openMap from 'react-native-open-maps';
+import openMap from 'react-native-open-maps'
 import { Button, ButtonGroup, ListItem, Icon } from 'react-native-elements'
-import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal, 
@@ -210,7 +210,7 @@ class LocationDetails extends Component {
                                 latitudeDelta: 0.03,
                                 longitudeDelta: 0.03,
                             }}
-                            >
+                        >
                             <View>
                                 <Image source={markerDot} style={{height:20,width:20}}/>
                             </View>
@@ -267,7 +267,7 @@ class LocationDetails extends Component {
                                             title={this.getTitle(machine)}
                                             subtitle={
                                                 <View style={s.condition}>
-                                                    {machine.condition ? <Text style={s.conditionText}>"{`${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}`}"</Text> : null}
+                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text> : null}
                                                     {machine.condition_date ? <Text style={s.commentUpdated}>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
                                                 </View>
                                             }
@@ -279,7 +279,7 @@ class LocationDetails extends Component {
                             <View style={s.locationMeta}>
                                 <Text style={[s.street,s.font18]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
-                                 <Icon
+                                <Icon
                                     raised
                                     reverse
                                     name='directions'
@@ -288,11 +288,9 @@ class LocationDetails extends Component {
                                     size={20}
                                     containerStyle={{position:'absolute',top:0,right:15}}
                                     onPress={() => {
-                                        openMap({end: location.name + " " + location.city + " " + location.state + " " + location.zip})
+                                        openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
                                     }}
                                 />
-                                
-
                                 {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
                                 {location.location_type_id || locationTrackingServicesEnabled ? 
@@ -473,13 +471,6 @@ const s = StyleSheet.create({
         borderRadius: 50,
         width: '100%',
         elevation: 0
-    },
-    navigateButton: {
-        marginLeft:25,
-        marginRight:25,
-        height:2,
-        marginBottom:5,
-        backgroundColor:"#D3ECFF"
     },
 })
 
