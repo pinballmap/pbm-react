@@ -194,14 +194,11 @@ class Map extends Component {
                                 </View>
                                 <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
                                     <View style={s.calloutStyle}>
-                                        <View>
-                                            <Text>{l.name}</Text>
-                                            {l.machine_names.length === 1 ? 
-                                                <Text>1 machine</Text> :
-                                                <Text>{`${l.machine_names.length} machines`}</Text>
-                                            }
-                                        </View>
-                                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                                        <Text>{l.name}</Text>
+                                        {l.machine_names.length === 1 ? 
+                                            <Text>1 machine</Text> :
+                                            <Text>{`${l.machine_names.length} machines`}</Text>
+                                        }
                                     </View>
                                 </MapView.Callout>
                             </MapView.Marker>
@@ -239,17 +236,14 @@ const s = StyleSheet.create({
         flex: 1
     },
     calloutStyle: {
-        minWidth: 100, 
-        maxWidth: 400,
+        minWidth: 50, 
+        width: '100%',
+        maxWidth: 300,
+        height: 45,
         display: 'flex', 
-        flexDirection: 'row',
-        alignItems: 'center', 
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignContent: 'space-around',
-    },
-    iconStyle: {
-        marginLeft: 10,
-        fontSize: 22,
-        color: '#97a5af',
     },
     titleStyle: {
         color: "#1e9dff",

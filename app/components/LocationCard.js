@@ -95,7 +95,7 @@ const s = StyleSheet.create({
     },
     iconStyle: {
         fontSize: 32,
-        color: '#eeeeee',
+        color: '#97a5af',
         marginRight: 0,
         position: "absolute",
         right: 0,
