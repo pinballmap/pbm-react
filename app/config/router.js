@@ -84,15 +84,18 @@ const TabNav = TabNavigator({
         activeTintColor: '#1e9dff',
         inactiveTintColor: '#6a7d8a',
         showIcon: true,
+        adaptive: false,
         style: {
             backgroundColor:'#f5fbff',
-            paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) || (Platform.isPad) ? 20 : 3,
-            height: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) || (Platform.isPad) ? 65 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null, 
+            paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
+            paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
+            height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null, 
         },
         iconStyle: {
             height: 30,
             width: 30,
             marginTop: Platform.OS === 'android' ? -5 : 0
+
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
