@@ -215,7 +215,7 @@ Search.propTypes = {
 
 const s = StyleSheet.create({
     ifX: {
-        paddingTop: Constants.statusBarHeight > 40 ? 33 : 20,         
+        paddingTop: Constants.statusBarHeight > 40 ? 45 : 20,         
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
@@ -227,7 +227,7 @@ const s = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginLeft: Platform.OS === 'ios' ? -10 : 0,  
-        alignItems: 'center'  
+        alignItems: 'center',
     },
     searchIcon: {
         paddingLeft: 5
