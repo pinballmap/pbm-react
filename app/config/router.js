@@ -95,7 +95,6 @@ const TabNav = TabNavigator({
             height: 30,
             width: 30,
             marginTop: Platform.OS === 'android' ? -5 : 0
-
         },
         indicatorStyle: { 
             backgroundColor: 'transparent'
