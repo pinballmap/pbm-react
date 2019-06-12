@@ -277,8 +277,8 @@ class LocationDetails extends Component {
                                 ))}
                             </View> :            
                             <View style={s.locationMeta}>
-                                <Text style={[s.street,s.font18]}>{location.street}</Text>
-                                <Text style={[s.city,s.font18,s.marginB8]}>{location.city}, {location.state} {location.zip}</Text>
+                                <Text style={[s.street,s.font18,s.marginRight]}>{location.street}</Text>
+                                <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
                                 <Icon
                                     raised
                                     reverse
@@ -286,7 +286,7 @@ class LocationDetails extends Component {
                                     type='material'
                                     color='#1e9dff'
                                     size={20}
-                                    containerStyle={{position:'absolute',top:0,right:15}}
+                                    containerStyle={{position:'absolute',top:0,right:0}}
                                     onPress={() => {
                                         openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
                                     }}
@@ -368,6 +368,9 @@ const s = StyleSheet.create({
     },
     marginB8: {
         marginBottom: 8
+    },
+    marginRight: {
+        marginRight: 60
     },
     street: {
         fontWeight: 'bold'
