@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { RemoveMachineModal } from './'
+import RemoveMachineModal from './RemoveMachineModal'
 
 class RemoveMachine extends Component {
     state = { showModal: false }

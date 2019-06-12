@@ -8,11 +8,11 @@ import store from './store'
 
 class App extends Component {
     componentDidMount() {
-        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBarStyle('dark-content')
         
         if (Platform.OS === 'android') {
-          StatusBar.setTranslucent(true);
-          StatusBar.setBackgroundColor('transparent');
+            StatusBar.setTranslucent(true)
+            StatusBar.setBackgroundColor('transparent')
         }
     }
     render() {

@@ -5,7 +5,7 @@ import {
     Text, 
     View,
 } from 'react-native'
-import { PbmButton } from './'
+import PbmButton from './PbmButton'
 
 class NotLoggedIn extends Component {
     render(){

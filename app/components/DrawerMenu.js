@@ -10,11 +10,9 @@ import {
     StyleSheet
 } from 'react-native'
 import { logout } from '../actions'
-import { 
-    ConfirmationModal, 
-    PbmButton, 
-    WarningButton 
-} from './'
+import ConfirmationModal from './ConfirmationModal'
+import PbmButton from './PbmButton'
+import WarningButton from './WarningButton'
 
 class DrawerMenu extends Component {
     state = {

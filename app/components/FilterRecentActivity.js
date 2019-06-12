@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ConfirmationModal } from './'
+import ConfirmationModal from './ConfirmationModal'
 import { setSelectedActivityFilter } from '../actions'
 
 class FilterRecentActivity extends Component {
