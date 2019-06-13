@@ -21,13 +21,15 @@ import {
 } from './types'
 
 import { getCurrentLocation, getData, postData } from '../config/request'
+import { updateCurrCoordinates } from './query_actions'
 
 export const fetchCurrentLocation = () => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
 
     return getCurrentLocation()
-        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)))
-        .catch(err => dispatch(getLocationTrackingEnabledFailure(err)))
+        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), err => dispatch(getLocationTrackingEnabledFailure(err)))
+        .then(({lat, lon}) => dispatch(updateCurrCoordinates(lat, lon)))
+        .catch(err => console.log(err))
 }
   
   
