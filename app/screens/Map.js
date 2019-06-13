@@ -17,7 +17,6 @@ import markerDotHeart from '../assets/images/markerdot-heart.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
-    updateCurrCoordinates,
     updateFilterLocations,
     getFavoriteLocations,
     clearFilters,
@@ -90,8 +89,7 @@ class Map extends Component {
     }
 
     updateCurrentLocation = () => {
-        const { lat, lon } = this.props.user
-        this.props.updateCoordinates(lat, lon)
+        this.props.getCurrentLocation()
     }
 
     componentDidUpdate(){
@@ -101,16 +99,15 @@ class Map extends Component {
     }
 
     async componentDidMount(){
-        this.props.getCurrentLocation()
+        await this.props.getCurrentLocation()
+        console.log('der')
         await Font.loadAsync({'MaterialIcons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
         await Font.loadAsync({'Material Icons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
         this.setState({ materialIconsLoaded: true })
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, viewByFavoriteLocations } = props.query
-        if (!this.props.query.curLat && curLat)
-            this.props.updateCoordinates(curLat, curLon)
+        const { machineId, locationType, numMachines, selectedOperator, viewByFavoriteLocations } = props.query
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
             this.props.updateFilterLocations()
@@ -285,7 +282,6 @@ Map.propTypes = {
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
     updateFilterLocations: PropTypes.func,
-    updateCoordinates: PropTypes.func,
     updateMapCoordinates: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
@@ -309,7 +305,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     updateFilterLocations: () => dispatch(updateFilterLocations()),
-    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCurrCoordinates(lat, lon, latDelta, lonDelta)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
