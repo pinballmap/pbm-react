@@ -36,6 +36,7 @@ class FilterMap extends Component {
       return {
           headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
           title: 'Filter Results',
+          headerRight:<View style={{padding:6}}></View>,
           headerTitleStyle,
           headerStyle,
           headerTintColor: '#4b5862'
