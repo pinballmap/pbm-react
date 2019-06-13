@@ -11,7 +11,7 @@ import {
     View, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
-import { Feather } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { 
     loginLater,
     login, 
@@ -41,7 +41,7 @@ export class SignupLogin extends Component {
 
     static navigationOptions = { 
         drawerLabel: 'Map',
-        drawerIcon: () => <Feather name='map' style={[s.drawerIcon]} />,
+        drawerIcon: () => <MaterialIcons name='search' style={[s.drawerIcon]} />,
         header: null 
     }
 

@@ -78,7 +78,6 @@ class About extends Component {
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
-                        <Text style={s.text}><Text style={[s.textLink]}>Elijah St Clair</Text> (DevOps)</Text>
                         <Text style={s.text}>If you like the app,&nbsp; 
                             {Platform.OS === "ios" ? 
                                 <Text style={s.textLink}        
@@ -87,7 +86,7 @@ class About extends Component {
                                 onPress={() => Linking.openURL('market://details?id=com.pbm')}>please rate and review it</Text> 
                             }
                                 !</Text>
-                        <Text style={s.text}>Thanks to everyone who beta tested the app!</Text>
+                        <Text style={s.text}>Thanks to our beta testers!</Text>
                         <Text style={{fontSize:16}}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text> supporters!</Text>
                     </View>  
                     <View style={[s.logoWrapper]}>
