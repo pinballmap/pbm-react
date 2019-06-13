@@ -433,8 +433,8 @@ const s = StyleSheet.create({
         backgroundColor: '#e0ebf2', 
         borderColor: '#d1dfe8',
         borderWidth: 1,
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 10,
+        marginRight: 10,
         paddingLeft: 10,
         paddingRight: 5
     },
@@ -447,8 +447,8 @@ const s = StyleSheet.create({
         borderColor: '#d1dfe8',
         borderWidth: 1,
         borderRadius: 10,
-        marginLeft: 15,
-        marginRight: 15
+        marginLeft: 10,
+        marginRight: 10
     },
     hr: {
         marginLeft:25,
