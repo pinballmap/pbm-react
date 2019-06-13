@@ -248,14 +248,16 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignContent: 'space-around',
+        zIndex: 5,
+        marginRight: 7
     },
     iconStyle: {
         fontSize: 22,
-        color: '#97a5af',
+        color: '#c1c9cf',
         position: "absolute",
-        top: 14,
-        right: -5,
-        zIndex: 5
+        top: Platform.OS === 'ios' ? 13 : 12,
+        right: Platform.OS === 'ios' ? -5 : 2,
+        zIndex: 0
     },
     titleStyle: {
         color: "#1e9dff",
