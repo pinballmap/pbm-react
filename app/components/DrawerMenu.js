@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { DrawerItems } from 'react-navigation'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { 
+    Platform,
     Text, 
     TouchableOpacity, 
     View,
@@ -73,7 +74,7 @@ const s = StyleSheet.create({
         fontSize: 24,
         color: '#97a5af',
         position: 'absolute',
-        paddingLeft: 20
+        paddingLeft: Platform.OS === 'ios' ? 20 : 15
     },
     text: {
         color: '#6a7d8a',
