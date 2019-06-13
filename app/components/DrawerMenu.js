@@ -67,6 +67,7 @@ class DrawerMenu extends Component {
 const s = StyleSheet.create({
     container: {
         marginTop: 8,
+        height: 55,
     },
     icon: {
         fontSize: 24,
