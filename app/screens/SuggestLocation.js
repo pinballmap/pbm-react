@@ -14,6 +14,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -144,7 +145,7 @@ class SuggestLocation extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
        
         return(
-            <ScrollView keyboardDismissMode="on-drag" style={{flex: 1,backgroundColor:'#f5fbff'}}>
+            <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={{flex: 1,backgroundColor:'#f5fbff'}}>
                 {!loggedIn ? 
                     <NotLoggedIn
                         title={'Suggest a New Location'}
@@ -355,7 +356,7 @@ class SuggestLocation extends Component {
                                     onChangeText={description => this.setState({ description })}
                                     underlineColorAndroid='transparent'
                                     value={description}
-                                    placeholder={'Location description...'}
+                                    placeholder={'Location description, hours, etc...'}
                                     textAlignVertical='top'
                                 />
                                 <Text style={s.title}>Location Type</Text>                              
@@ -390,7 +391,7 @@ class SuggestLocation extends Component {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>}
-            </ScrollView>)
+            </KeyboardAwareScrollView>)
     }
 }
 
@@ -433,8 +434,8 @@ const s = StyleSheet.create({
         backgroundColor: '#e0ebf2', 
         borderColor: '#d1dfe8',
         borderWidth: 1,
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 10,
+        marginRight: 10,
         paddingLeft: 10,
         paddingRight: 5
     },
@@ -447,8 +448,8 @@ const s = StyleSheet.create({
         borderColor: '#d1dfe8',
         borderWidth: 1,
         borderRadius: 10,
-        marginLeft: 15,
-        marginRight: 15
+        marginLeft: 10,
+        marginRight: 10
     },
     hr: {
         marginLeft:25,
