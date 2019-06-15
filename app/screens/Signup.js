@@ -11,6 +11,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, Input } from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
@@ -146,7 +147,7 @@ class Signup extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+            <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                 <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                     <View style={s.mask}>
                         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
@@ -240,7 +241,7 @@ class Signup extends Component {
                         </TouchableWithoutFeedback>
                     </View>
                 </ImageBackground>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         )
     }
 }
