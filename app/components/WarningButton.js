@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
+    Platform,
     StyleSheet, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
@@ -14,7 +15,7 @@ class WarningButton extends Component {
                 accessibilityLabel={this.props.accessibilityLabel}
                 raised
                 buttonStyle={s.redButton}
-                titleStyle={{fontSize:16,color:'#f53240',fontWeight:'500'}}    
+                titleStyle={s.titleStyle}    
                 style={{borderRadius: 50}}
                 containerViewStyle={{alignSelf: 'stretch'}}
                 containerStyle={[{borderRadius:50},s.margin15]}
@@ -35,6 +36,11 @@ const s = StyleSheet.create({
         marginRight:15,
         marginTop:15,
         marginBottom:15
+    },
+    titleStyle: {
+        fontSize:16,
+        color:'#f53240',
+        fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     redButton: {
         backgroundColor: "#fdd4d7",
