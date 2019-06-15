@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { 
+    Platform,
     StyleSheet, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
@@ -43,7 +44,7 @@ const s = StyleSheet.create({
     titleStyle: {
         color:"#4b5862",
         fontSize:16,
-        fontWeight: '500'
+        fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     margin15: {
         marginLeft:15,
