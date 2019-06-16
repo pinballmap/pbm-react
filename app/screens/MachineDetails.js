@@ -14,6 +14,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, ListItem } from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
 import { 
@@ -113,7 +114,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
-                        <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                                 <TextInput
@@ -136,7 +137,7 @@ class MachineDetails extends Component {
                                     onPress={this.cancelAddCondition}
                                 />
                             </View>
-                        </ScrollView>          
+                        </KeyboardAwareScrollView>          
                     </TouchableWithoutFeedback>
                 </Modal>
                 <Modal
@@ -146,7 +147,7 @@ class MachineDetails extends Component {
                     onRequestClose={()=>{}}
                 >
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                        <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
                             <View style={s.verticalAlign}>
                                 <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                 <TextInput 
@@ -168,7 +169,7 @@ class MachineDetails extends Component {
                                     onPress={this.cancelAddScore}
                                 />
                             </View>
-                        </ScrollView>
+                        </KeyboardAwareScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
                 {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
