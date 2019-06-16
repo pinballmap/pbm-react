@@ -31,6 +31,52 @@ import {
     getMapLocations
 } from '../selectors'
 
+class CustomMarker extends Component
+{
+
+    state = {
+        tracksViewChanges: true,
+    }
+
+    stopRendering = () => {
+        this.setState({ tracksViewChanges: false })
+    }
+
+    render()
+    {
+        const { marker, navigation } = this.props
+
+        return (
+            <MapView.Marker
+                key={marker.id}
+                coordinate={{
+                    latitude: Number(marker.lat), 
+                    longitude: Number(marker.lon)
+                }}
+                title={marker.title}
+                tracksViewChanges={this.state.tracksViewChanges}
+            >
+                <View>
+                    {marker.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}} onLoad={this.stopRendering} /> : <Image source={markerDotHeart} style={{height:24,width:28}} onLoad={this.stopRendering} />}
+                </View>
+                <MapView.Callout onPress={() => navigation.navigate('LocationDetails', {id: marker.id, locationName: marker.name})}>
+                    <View>
+                        <View style={s.calloutStyle}>
+                            <Text style={{marginRight:20}}>{marker.name}</Text>
+                            {marker.machine_names.length === 1 ? 
+                                <Text>1 machine</Text> :
+                                <Text>{`${marker.machine_names.length} machines`}</Text>
+                            }
+                        </View>
+                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                    </View>
+                </MapView.Callout>
+            </MapView.Marker>
+        )
+    }
+
+}
+
 class Map extends Component {
     constructor(props){
         super(props)
@@ -178,32 +224,7 @@ class Map extends Component {
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
                     >
-                        {mapLocations.map(l => (
-                            <MapView.Marker
-                                coordinate={{
-                                    latitude: Number(l.lat), 
-                                    longitude: Number(l.lon), 
-                                }}
-                                title={l.name}
-                                key={l.id}  
-                            >
-                                <View>
-                                    {l.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}}/> : <Image source={markerDotHeart} style={{height:24,width:28}}/>}
-                                </View>
-                                <MapView.Callout onPress={() => this.props.navigation.navigate('LocationDetails', {id: l.id, locationName: l.name})}>
-                                    <View>
-                                        <View style={s.calloutStyle}>
-                                            <Text style={{marginRight:20}}>{l.name}</Text>
-                                            {l.machine_names.length === 1 ? 
-                                                <Text>1 machine</Text> :
-                                                <Text>{`${l.machine_names.length} machines`}</Text>
-                                            }
-                                        </View>
-                                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
-                                    </View>
-                                </MapView.Callout>
-                            </MapView.Marker>
-                        ))}
+                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} /> )}
                     </MapView>
                     {materialIconsLoaded ? <Icon
                         raised
