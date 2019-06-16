@@ -226,6 +226,7 @@ class FindMachine extends React.PureComponent {
                 }
                 <ScrollView keyboardDismissMode="on-drag">
                     <FlatList
+                        keyboardShouldPersistTaps="always"
                         data={this.state.machines}
                         renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
                         keyExtractor={this.keyExtractor}
