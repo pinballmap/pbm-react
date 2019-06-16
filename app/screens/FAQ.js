@@ -40,7 +40,7 @@ class FAQ extends Component {
                         <View style={s.child}>
                             <Text style={s.bold}>{`How do I search for a particular machine?`}</Text>
                             <Text style={s.text}>{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}</Text>
-                            <Text style={s.bold}>{`When I filter for "Cool Machine (Pro)", I also see results for "Cool Machine (LE). What's up?`}</Text>
+                            <Text style={s.bold}>{`When I filter for "Cool Machine (Pro)", I also see results for "Cool Machine (LE)". What's up?`}</Text>
                             <Text style={s.text}>{`This is by design. We've found that most users want to see all versions, and don't want to conduct 3 separate searches for the same title.`}</Text>
                             <Text style={s.bold}>{`How do I add a new location?`}</Text>
                             <Text style={s.text}>{`Click the menu icon in the lower right, and choose "Submit Location". Then fill out the form! Our administrators moderate submissions, and it can take a few days. The more accurate and thorough your submission, the quicker it will get added!`}</Text>
