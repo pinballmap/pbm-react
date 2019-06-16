@@ -165,6 +165,7 @@ class Map extends Component {
         const { 
             isFetchingLocations, 
             mapLocations,
+            navigation,
         } = this.props
         
         const { 
@@ -224,7 +225,7 @@ class Map extends Component {
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
                     >
-                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} /> )}
+                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} /> )}
                     </MapView>
                     {materialIconsLoaded ? <Icon
                         raised
