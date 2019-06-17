@@ -17,14 +17,14 @@
     "version": "5.0.0",
     "slug": "pbm-app",
     "name": "Pinball Map",
-    "description": "Find public places to play pinball! Pinball Map is kept up to date users and lists over 20,000 pinball machines.",
+    "description": "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
     "privacy": "public",
     "githubUrl": "https://github.com/bpoore/pbm-react/",
     "primaryColor": "#d3ecff",
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "57",
+      "buildNumber": "59",
       "supportsTablet": true,
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
@@ -52,7 +52,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 39,
+      "versionCode": 42,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"

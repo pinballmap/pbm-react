@@ -233,7 +233,7 @@ const s = StyleSheet.create({
         paddingLeft: 5
     },
     inputPlaceholder: {
-        fontSize:16,
+        fontSize: deviceWidth < 321 ? 14 : 16,
         color:'#97a5af',        
     },
     input: {
