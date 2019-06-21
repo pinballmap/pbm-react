@@ -202,6 +202,7 @@ class LocationDetails extends Component {
                             longitudeDelta: 0.03
                         }}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
+                        provider={"google"}
                     >
                         <MapView.Marker
                             coordinate={{
@@ -329,7 +330,7 @@ class LocationDetails extends Component {
 const s = StyleSheet.create({
     mapTall: {
         zIndex: -1,
-        height: 160
+        height: 140
     },
     mapShort: {
         height: 100,

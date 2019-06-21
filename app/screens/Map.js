@@ -220,6 +220,7 @@ class Map extends Component {
                             latitudeDelta,
                             longitudeDelta,
                         }}
+                        provider={"google"}
                         style={s.map}
                         onRegionChange={this.onRegionChange}
                         showsUserLocation={true}
@@ -258,6 +259,11 @@ const s = StyleSheet.create({
     map: {
         flex: 1
     },
+    calloutBG: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10
+    },
     calloutStyle: {
         minWidth: 50, 
         width: '100%',
@@ -268,7 +274,7 @@ const s = StyleSheet.create({
         justifyContent: 'space-between',
         alignContent: 'space-around',
         zIndex: 5,
-        marginRight: 7
+        marginRight: 7,
     },
     iconStyle: {
         fontSize: 22,
