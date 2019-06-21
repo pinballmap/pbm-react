@@ -134,7 +134,7 @@ export const MapStack = StackNavigator({
 },
 {
     navigationOptions: {
-        gesturesEnabled: false
+        gesturesEnabled: true
     }
 })
 
