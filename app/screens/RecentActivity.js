@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     ScrollView,
     StyleSheet,
+    TouchableOpacity,
     View,  
 } from 'react-native'
 import { ListItem } from 'react-native-elements'
@@ -126,6 +127,7 @@ class RecentActivity extends Component {
                         }).map(activity => (                               
                             <View key={activity.id}>
                                 <ListItem
+                                    component={TouchableOpacity}
                                     title={activity.submission}
                                     titleStyle={{color:'#000e18'}}
                                     subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
