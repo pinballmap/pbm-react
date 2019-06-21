@@ -259,11 +259,6 @@ const s = StyleSheet.create({
     map: {
         flex: 1
     },
-    calloutBG: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 10
-    },
     calloutStyle: {
         minWidth: 50, 
         width: '100%',
