@@ -11,6 +11,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, Input } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { 
@@ -74,7 +75,7 @@ class Login extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+            <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                 <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
                     <View style={s.mask}>
                         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
@@ -158,7 +159,7 @@ class Login extends Component {
                         </TouchableWithoutFeedback>          
                     </View>
                 </ImageBackground>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         )
     }
 }
