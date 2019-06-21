@@ -202,7 +202,6 @@ class LocationDetails extends Component {
                             longitudeDelta: 0.03
                         }}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
-                        provider={"google"}
                     >
                         <MapView.Marker
                             coordinate={{

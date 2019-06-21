@@ -55,6 +55,7 @@ class CustomMarker extends Component
                 }}
                 title={marker.title}
                 tracksViewChanges={this.state.tracksViewChanges}
+                pointerEvents="auto"
             >
                 <View>
                     {marker.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}} onLoad={this.stopRendering} /> : <Image source={markerDotHeart} style={{height:24,width:28}} onLoad={this.stopRendering} />}
@@ -220,7 +221,6 @@ class Map extends Component {
                             latitudeDelta,
                             longitudeDelta,
                         }}
-                        provider={"google"}
                         style={s.map}
                         onRegionChange={this.onRegionChange}
                         showsUserLocation={true}
