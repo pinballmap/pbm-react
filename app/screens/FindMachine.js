@@ -190,8 +190,8 @@ class FindMachine extends React.PureComponent {
                                 <TextInput
                                     multiline={true}
                                     placeholder={'You can also include a machine comment...'}
-                                    numberOfLines={4}
-                                    style={[{padding:5,height: 100},s.textInput]}
+                                    numberOfLines={2}
+                                    style={[{padding:5,height: 50},s.textInput]}
                                     value={this.state.condition}
                                     onChangeText={condition => this.setState({ condition })}
                                     textAlignVertical='top'
