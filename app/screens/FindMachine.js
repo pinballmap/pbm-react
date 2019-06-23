@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
+    Dimensions,
     Keyboard,
     Modal, 
     ScrollView, 
@@ -11,6 +12,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SearchBar } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -31,6 +33,8 @@ import {
     headerStyle,
     headerTitleStyle,
 } from '../styles'
+
+let deviceHeight = Dimensions.get('window').height
 
 const getDisplayText = machine => (
     <Text style={{fontSize: 18}}>
@@ -180,27 +184,29 @@ class FindMachine extends React.PureComponent {
                     transparent={false}
                 >
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                        <ScrollView style={{paddingTop: 50,backgroundColor:'#f5fbff'}}>
-                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
-                            <PbmButton 
-                                title={'Add'}
-                                onPress={this.addMachine}
-                            />
-                            <WarningButton
-                                title={'Cancel'}
-                                onPress={this.cancelAddMachine}                      
-                            />
-                            <TextInput
-                                multiline={true}
-                                placeholder={'You can also include a machine comment...'}
-                                numberOfLines={4}
-                                style={[{padding:5,height: 100},s.textInput]}
-                                value={this.state.condition}
-                                onChangeText={condition => this.setState({ condition })}
-                                textAlignVertical='top'
-                                underlineColorAndroid='transparent'
-                            />
-                        </ScrollView>
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                            <View style={s.verticalAlign}>
+                                <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
+                                <TextInput
+                                    multiline={true}
+                                    placeholder={'You can also include a machine comment...'}
+                                    numberOfLines={4}
+                                    style={[{padding:5,height: 100},s.textInput]}
+                                    value={this.state.condition}
+                                    onChangeText={condition => this.setState({ condition })}
+                                    textAlignVertical='top'
+                                    underlineColorAndroid='transparent'
+                                />
+                                <PbmButton 
+                                    title={'Add'}
+                                    onPress={this.addMachine}
+                                />
+                                <WarningButton
+                                    title={'Cancel'}
+                                    onPress={this.cancelAddMachine}                      
+                                />
+                            </View>
+                        </KeyboardAwareScrollView>
                     </TouchableWithoutFeedback>
                 </Modal> 
                 <SearchBar
@@ -248,7 +254,6 @@ const s = StyleSheet.create({
         backgroundColor: '#e0ebf2', 
         borderColor: '#d1dfe8',
         borderWidth: 1,
-        height: 80,
         marginLeft:20,
         marginRight:20, 
         marginTop: 20,
@@ -259,7 +264,12 @@ const s = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginRight: 10
-    }, 
+    },
+    verticalAlign: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height:deviceHeight
+    },
 })
 
 FindMachine.propTypes = {
