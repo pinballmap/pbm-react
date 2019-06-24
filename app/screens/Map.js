@@ -225,6 +225,7 @@ class Map extends Component {
                         onRegionChange={this.onRegionChange}
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
+                        showsMyLocationButton={false}
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} /> )}
                     </MapView>
