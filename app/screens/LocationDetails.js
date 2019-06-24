@@ -201,6 +201,7 @@ class LocationDetails extends Component {
                             latitudeDelta: 0.03,
                             longitudeDelta: 0.03
                         }}
+                        showsMyLocationButton={false}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
                     >
                         <MapView.Marker
