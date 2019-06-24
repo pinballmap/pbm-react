@@ -14,7 +14,7 @@ const NUM_MACHINES_TO_SHOW = 5
 
 class LocationCard extends Component {
     render(){
-        const { distance, id, machines = [], name: locationName, navigation, state, street, type, zip } = this.props
+        const { distance, id, machines = [], name: locationName, navigation, state, street, city, type, zip } = this.props
         const numMachines = machines.length
 
         return(
@@ -25,7 +25,7 @@ class LocationCard extends Component {
                             <View style={s.locationNameContainer}>
                                 <Text style={s.locationName}>{locationName}</Text>
                             </View>
-                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${state} ${zip}`}</Text>                           
+                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>                           
                             {type || distance ? 
                                 <Text style={s.marginS}>
                                     {type ? <Text style={s.gray}>{type}</Text> : null}
@@ -112,6 +112,7 @@ LocationCard.propTypes = {
     name: PropTypes.string,
     id: PropTypes.number,
     street: PropTypes.string,
+    city: PropTypes.string,
     navigation: PropTypes.object,
 }
 
