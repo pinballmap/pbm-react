@@ -102,6 +102,7 @@ export class LocationList extends Component {
                                 name={item.name}
                                 distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
                                 street={item.street}
+                                city={item.city}
                                 state={item.state}
                                 zip={item.zip}
                                 machines={item.machine_names} 
