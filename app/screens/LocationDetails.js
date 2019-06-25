@@ -201,6 +201,7 @@ class LocationDetails extends Component {
                             latitudeDelta: 0.03,
                             longitudeDelta: 0.03
                         }}
+                        showsMyLocationButton={false}
                         style={deviceHeight > 800 ? s.mapTall : s.mapShort}
                     >
                         <MapView.Marker
@@ -277,7 +278,7 @@ class LocationDetails extends Component {
                                 ))}
                             </View> :            
                             <View style={s.locationMeta}>
-                                <Text style={[s.street,s.font18,s.marginRight]}>{location.street}</Text>
+                                <Text selectable style={[s.street,s.font18,s.marginRight]}>{location.street}</Text>
                                 <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
                                 <Icon
                                     raised
@@ -329,7 +330,7 @@ class LocationDetails extends Component {
 const s = StyleSheet.create({
     mapTall: {
         zIndex: -1,
-        height: 160
+        height: 140
     },
     mapShort: {
         height: 100,

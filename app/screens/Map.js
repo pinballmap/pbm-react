@@ -55,6 +55,7 @@ class CustomMarker extends Component
                 }}
                 title={marker.title}
                 tracksViewChanges={this.state.tracksViewChanges}
+                pointerEvents="auto"
             >
                 <View>
                     {marker.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}} onLoad={this.stopRendering} /> : <Image source={markerDotHeart} style={{height:24,width:28}} onLoad={this.stopRendering} />}
@@ -224,6 +225,7 @@ class Map extends Component {
                         onRegionChange={this.onRegionChange}
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
+                        showsMyLocationButton={false}
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} /> )}
                     </MapView>
@@ -268,7 +270,7 @@ const s = StyleSheet.create({
         justifyContent: 'space-between',
         alignContent: 'space-around',
         zIndex: 5,
-        marginRight: 7
+        marginRight: 7,
     },
     iconStyle: {
         fontSize: 22,

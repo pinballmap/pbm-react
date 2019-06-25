@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     ScrollView,
     StyleSheet,
+    TouchableOpacity,
     View,  
 } from 'react-native'
 import { ListItem } from 'react-native-elements'
@@ -43,15 +44,15 @@ class RecentActivity extends Component {
     getIcon(type) {
         switch(type) {
         case 'new_lmx':
-            return <MaterialCommunityIcons name='plus-box' size={28} color='#4e7b57' />
+            return <MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />
         case 'new_condition':
-            return <MaterialCommunityIcons name='comment-text' size={28} color='#458284' />
+            return <MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />
         case 'remove_machine':
-            return <MaterialCommunityIcons name='minus-box' size={28} color='#973232' />
+            return <MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />
         case 'new_msx':
-            return <MaterialCommunityIcons name='numeric' size={28} color='#986c31' />
+            return <MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />
         case 'confirm_location':
-            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#874278' />
+            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />
         default:
             return null
         }
@@ -126,6 +127,7 @@ class RecentActivity extends Component {
                         }).map(activity => (                               
                             <View key={activity.id}>
                                 <ListItem
+                                    component={TouchableOpacity}
                                     title={activity.submission}
                                     titleStyle={{color:'#000e18'}}
                                     subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}

@@ -41,35 +41,35 @@ class FilterRecentActivity extends Component {
                             <ListItem
                                 title={'New Machines'}
                                 titleStyle={{color:'#000e18'}}
-                                leftAvatar={<MaterialCommunityIcons name='plus-box' size={28} color='#4e7b57' />}
+                                leftAvatar={<MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />}
                                 containerStyle={selectedActivity === 'new_lmx' ? {backgroundColor: '#D3ECFF'} : {}}
                                 onPress={() => this.setRecentActivityFilter('new_lmx')}
                             />
                             <ListItem
                                 title={'New Conditions'}
                                 titleStyle={{color:'#000e18'}}
-                                leftAvatar={<MaterialCommunityIcons name='comment-text' size={28} color='#458284' />}
+                                leftAvatar={<MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />}
                                 containerStyle={selectedActivity === 'new_condition' ? {backgroundColor: '#D3ECFF'} : {}}
                                 onPress={() => this.setRecentActivityFilter('new_condition')}
                             />
                             <ListItem
                                 title={'Removed Machines'}
                                 titleStyle={{color:'#000e18'}}
-                                leftAvatar={<MaterialCommunityIcons name='minus-box' size={28} color='#854444' />}
+                                leftAvatar={<MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />}
                                 containerStyle={selectedActivity === 'remove_machine' ? {backgroundColor: '#D3ECFF'} : {}}
                                 onPress={() => this.setRecentActivityFilter('remove_machine')}
                             />
                             <ListItem
                                 title={'Scores'}
                                 titleStyle={{color:'#000e18'}}
-                                leftAvatar={<MaterialCommunityIcons name='numeric' size={28} color='#986c31' />}
+                                leftAvatar={<MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />}
                                 containerStyle={selectedActivity === 'new_msx' ? {backgroundColor: '#D3ECFF'} : {}}
                                 onPress={() => this.setRecentActivityFilter('new_msx')}
                             />
                             <ListItem
                                 title={'Confirmed Locations'}
                                 titleStyle={{color:'#000e18'}}
-                                leftAvatar={<MaterialCommunityIcons name='clipboard-check' size={28} color='#7a4f71' />}
+                                leftAvatar={<MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />}
                                 containerStyle={selectedActivity === 'confirm_location' ? {backgroundColor: '#D3ECFF'} : {}}
                                 onPress={() => this.setRecentActivityFilter('confirm_location')}
                             />

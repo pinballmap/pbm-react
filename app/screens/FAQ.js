@@ -40,7 +40,9 @@ class FAQ extends Component {
                         <View style={s.child}>
                             <Text style={s.bold}>{`How do I search for a particular machine?`}</Text>
                             <Text style={s.text}>{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}</Text>
-                            <Text style={s.bold}>{`When I filter for "Cool Machine (Pro)", I also see results for "Cool Machine (LE). What's up?`}</Text>
+                            <Text style={s.bold}>{`The Location List isn't showing a location that I think it should.`}</Text>
+                            <Text style={s.text}>{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
+                            <Text style={s.bold}>{`When I filter for "Cool Machine (Pro)", I also see results for "Cool Machine (LE)". What's up?`}</Text>
                             <Text style={s.text}>{`This is by design. We've found that most users want to see all versions, and don't want to conduct 3 separate searches for the same title.`}</Text>
                             <Text style={s.bold}>{`How do I add a new location?`}</Text>
                             <Text style={s.text}>{`Click the menu icon in the lower right, and choose "Submit Location". Then fill out the form! Our administrators moderate submissions, and it can take a few days. The more accurate and thorough your submission, the quicker it will get added!`}</Text>
@@ -52,6 +54,8 @@ class FAQ extends Component {
                             <Text style={s.text}>{`These are data entry mistakes. Please `}<Text onPress={ () => this.props.navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"contact us"}</Text>{` so we can fix them.`}</Text>
                             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
                             <Text style={s.text}>{<Text onPress={ () => this.props.navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"Contact us"}</Text>}{ ` and we'll add you.`}</Text>
+                            <Text style={s.bold}>{`I can't remember my password. How do I reset it?`}</Text>
+                            <Text style={s.text}>You can reset it via <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('https://pinballmap.com/users/password/new')}>this link</Text>.</Text>
                             <Text style={s.bold}>{`What is your privacy policy?`}</Text>
                             <Text style={s.text}>Please see our <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('http://pinballmap.com/privacy')}>detailed privacy policy</Text>. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.</Text>
                             <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
