@@ -220,6 +220,7 @@ class FindMachine extends React.PureComponent {
                     value={this.state.query}
                     inputContainerStyle={s.filterInput}
                     containerStyle={{backgroundColor:'#f5fbff'}}
+                    autoCorrect={false}
                 />
                 {multiSelect ? 
                     <View style={{alignItems:'center',padding:5,backgroundColor: "#6a7d8a"}}>

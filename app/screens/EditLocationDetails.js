@@ -143,6 +143,8 @@ class EditLocationDetails extends Component {
                                 value={phone}
                                 returnKeyType="done"
                                 placeholder={phone || '(503) xxx-xxxx'}
+                                autoCapitalize="none"
+                                autoCorrect={false}
                             />
                             <Text style={s.title}>Website</Text>
                             <TextInput
@@ -152,6 +154,8 @@ class EditLocationDetails extends Component {
                                 value={website}
                                 returnKeyType="done"
                                 placeholder={website || 'http://...'}
+                                autoCapitalize="none"
+                                autoCorrect={false}
                             />
                             <Text style={s.title}>Location Notes</Text>
                             <TextInput
