@@ -167,7 +167,8 @@ class Signup extends Component {
                                     errorMessage={this.state.usernameError}
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
-                                    spellCheck = {false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <Input 
                                     placeholder="Email Address" 
@@ -178,7 +179,9 @@ class Signup extends Component {
                                     errorMessage={this.state.emailError}
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
-                                    spellCheck = {false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    keyboardType="email-address"
                                 />
                                 <Input 
                                     placeholder="Password"
@@ -190,7 +193,8 @@ class Signup extends Component {
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
                                     secureTextEntry = {true}
-                                    spellCheck = {false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <Input 
                                     placeholder="Confirm Password"
@@ -202,7 +206,8 @@ class Signup extends Component {
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
                                     secureTextEntry = {true}
-                                    spellCheck = {false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <Button
                                     onPress={() => this.submit()}

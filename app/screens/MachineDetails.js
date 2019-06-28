@@ -158,6 +158,8 @@ class MachineDetails extends Component {
                                     value={this.state.score}
                                     returnKeyType="done"
                                     placeholder={'123...'}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <PbmButton 
                                     title={'Add Score'}

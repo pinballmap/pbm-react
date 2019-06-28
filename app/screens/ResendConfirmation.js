@@ -72,6 +72,8 @@ class ResendConfirmation extends Component {
                                 errorMessage={this.state.identificationError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
+                                autoCapitalize="none"
+                                autoCorrect={false}
                             />
                             <PbmButton 
                                 title={'Submit'}
