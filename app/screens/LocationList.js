@@ -61,6 +61,10 @@ export class LocationList extends Component {
             return this.setState({
                 locations: locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
             })
+        case 3: 
+            return this.setState({
+                locations: locations.sort((a, b) => b.machine_names.length - a.machine_names.length)
+            })
         }
     }
 
@@ -88,7 +92,7 @@ export class LocationList extends Component {
                 <ButtonGroup
                     onPress={this.updateIndex}
                     selectedIndex={this.props.locations.selectedLocationListFilter}
-                    buttons={['Distance', 'Alphabetically', 'Last Updated']}
+                    buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
                     containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
                     selectedButtonStyle={s.buttonStyle}
                     selectedTextStyle={s.textStyle}
