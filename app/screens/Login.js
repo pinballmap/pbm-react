@@ -94,7 +94,8 @@ class Login extends Component {
                                     errorMessage={this.state.loginError}
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
-                                    spellCheck={false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <Input 
                                     placeholder='Password'
@@ -106,7 +107,8 @@ class Login extends Component {
                                     inputContainerStyle={s.inputBox}
                                     inputStyle={s.inputText}
                                     secureTextEntry={true}
-                                    spellCheck={false}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
                                 />
                                 <Button
                                     onPress={() => this.submit()}

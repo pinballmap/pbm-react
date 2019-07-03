@@ -94,6 +94,7 @@ class Contact extends Component {
                                     value={this.state.name}
                                     returnKeyType="done"
                                     placeholder={'Your name...'}
+                                    autoCorrect={false}
                                 /> 
                                 <TextInput
                                     style={[{height: 40},s.textInput]}
@@ -102,6 +103,8 @@ class Contact extends Component {
                                     value={this.state.email}
                                     returnKeyType="done"
                                     placeholder={'Your email...'}
+                                    keyboardType="email-address"
+                                    autoCorrect={false}
                                 /> 
                             </View>
                             : null}

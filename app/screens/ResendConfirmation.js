@@ -16,6 +16,7 @@ import {
     PbmButton,
     Text,
 } from '../components'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { postData } from '../config/request'
 import { 
     headerStyle,
@@ -49,7 +50,7 @@ class ResendConfirmation extends Component {
         return(
             <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                 <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
+                    <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                         <ConfirmationModal visible={this.state.modalVisible}>
                             <Text style={s.confirmText}>Confirmation info resent.</Text>
                             <View>
@@ -72,6 +73,8 @@ class ResendConfirmation extends Component {
                                 errorMessage={this.state.identificationError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
+                                autoCapitalize="none"
+                                autoCorrect={false}
                             />
                             <PbmButton 
                                 title={'Submit'}
@@ -79,7 +82,7 @@ class ResendConfirmation extends Component {
                                 disabled={this.state.identification.length === 0}
                             />
                         </View>
-                    </ScrollView>    
+                    </KeyboardAwareScrollView>    
                 </View>
             </TouchableWithoutFeedback>)
     }
