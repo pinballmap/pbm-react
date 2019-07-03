@@ -50,7 +50,7 @@ class Login extends Component {
             loginError: null,
             passwordError: null,
         })
-        getData(`/users/auth_details.json?login=${this.state.login}&password=${this.state.password}`)
+        getData(`/users/auth_details.json?login=${encodeURIComponent(this.state.login)}&password=${encodeURIComponent(this.state.password)}`)
             .then(data => {
                 if (data.errors) {
                     this.setState({ errors: true })
