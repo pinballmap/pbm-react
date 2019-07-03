@@ -145,6 +145,7 @@ class Search extends Component {
                                 onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
                                 inputContainerStyle={s.input}
                                 autoFocus
+                                autoCorrect={false}
                             />
                         </View>
                         <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">

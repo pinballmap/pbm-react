@@ -277,6 +277,8 @@ class SuggestLocation extends Component {
                                     value={locationName}
                                     returnKeyType="done"
                                     placeholder={"ex. Giovanni's Pizza"}
+                                    textContentType="organizationName"
+                                    autoCapitalize="words"
                                 />
                                 <Text style={s.title}>Street</Text>
                                 <TextInput
@@ -286,6 +288,8 @@ class SuggestLocation extends Component {
                                     value={street}
                                     returnKeyType="done"
                                     placeholder={'ex. 123 Coast Village Road'}
+                                    textContentType="streetAddressLine1"
+                                    autoCapitalize="words"
                                 />
                                 <Text style={s.title}>City</Text>
                                 <TextInput
@@ -295,6 +299,8 @@ class SuggestLocation extends Component {
                                     value={city}
                                     returnKeyType="done"
                                     placeholder={'ex. Montecito'}
+                                    textContentType="addressCity"
+                                    autoCapitalize="words"
                                 />
                                 <Text style={s.title}>State</Text>
                                 <TextInput
@@ -304,6 +310,8 @@ class SuggestLocation extends Component {
                                     value={state}
                                     returnKeyType="done"
                                     placeholder={'ex. CA'}
+                                    textContentType="addressState"
+                                    autoCapitalize="characters"
                                 />
                                 <Text style={s.title}>Zip Code</Text>
                                 <TextInput
@@ -313,6 +321,7 @@ class SuggestLocation extends Component {
                                     value={zip}
                                     returnKeyType="done"
                                     placeholder={'ex. 93108'}
+                                    textContentType="postalCode"
                                 />
                                 <Text style={s.title}>Country</Text>
                                 {Platform.OS === "ios" ? 
@@ -338,6 +347,8 @@ class SuggestLocation extends Component {
                                     value={phone}
                                     returnKeyType="done"
                                     placeholder={phone || '(503) xxx-xxxx'}
+                                    textContentType="telephoneNumber"
+                                    autoCapitalize="none"
                                 />
                                 <Text style={s.title}>Website</Text>
                                 <TextInput
@@ -347,6 +358,8 @@ class SuggestLocation extends Component {
                                     value={website}
                                     returnKeyType="done"
                                     placeholder={'http://...'}
+                                    textContentType="URL"
+                                    autoCapitalize="none"
                                 />
                                 <Text style={s.title}>Location Notes</Text>
                                 <TextInput
