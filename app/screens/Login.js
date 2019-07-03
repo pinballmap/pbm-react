@@ -5,7 +5,6 @@ import {
     Dimensions, 
     ImageBackground,
     Keyboard,
-    ScrollView, 
     StyleSheet, 
     Text, 
     TouchableWithoutFeedback, 
@@ -232,6 +231,7 @@ Login.propTypes = {
     login: PropTypes.func,
     loginLater: PropTypes.func,
     navigation: PropTypes.object,
+    getFavoriteLocations: PropTypes.func,
 }
 
 const mapStateToProps = () => ({ })

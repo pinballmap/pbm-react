@@ -5,7 +5,6 @@ import {
     Dimensions, 
     ImageBackground, 
     Keyboard,
-    ScrollView, 
     StyleSheet, 
     Text, 
     TouchableWithoutFeedback, 
@@ -268,9 +267,6 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 18,
-    },
-    padding_5: {
-        padding: 5,
     },
     inputBox: {
         width: '100%',
