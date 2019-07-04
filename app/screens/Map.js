@@ -78,6 +78,11 @@ class CustomMarker extends Component
 
 }
 
+CustomMarker.propTypes = {
+    marker: PropTypes.object,
+    navigation: PropTypes.object,
+}
+
 class Map extends Component {
     constructor(props){
         super(props)
