@@ -65,7 +65,7 @@ class Search extends Component {
         if (query === '') {
             await this.setState({ foundLocations: [], foundCities: [], foundRegions: [], searching: false})
         } else {
-            const foundRegions = this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
+            const foundRegions = query.toLowerCase() === 'region' ? this.props.regions.regions : this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
             const foundLocations = await getData(`/locations/autocomplete?name=${query}`)
             let foundCities = await getData(`/locations/autocomplete_city.json?name=${query}`)
             if (query === this.waitingFor) {
