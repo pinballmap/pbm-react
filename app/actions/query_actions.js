@@ -16,7 +16,7 @@ export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, d
     const viewableLat = getDistance(lat - 0.5*latDelta, lon, lat + 0.5*latDelta, lon) 
     const viewableLon = getDistance(lat, lon - 0.5*lonDelta, lat, lon + 0.5*lonDelta)
     const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon
-    const maxZoom = viewableLat > 90 || viewableLon > 90
+    const maxZoom = viewableLat > 200 || viewableLon > 200
     
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta, maxZoom })
     if (distance || !maxZoom) {
