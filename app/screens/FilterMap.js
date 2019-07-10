@@ -96,7 +96,7 @@ class FilterMap extends Component {
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this machine:</Text>
               <DropDownButton
-                  title={machine && machine.name ? machine.name : 'All'}
+                  title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
                   onPress={() => this.props.navigation.navigate('FindMachine', {machineFilter: true})}
               /> 
               <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
