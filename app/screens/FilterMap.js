@@ -94,12 +94,12 @@ class FilterMap extends Component {
       return(
           <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
-              <Text style={[s.sectionTitle,s.padding10]}>Only show locations with this machine:</Text>
+              <Text style={[s.sectionTitle,s.paddingFirst]}>Only show locations with this machine:</Text>
               <DropDownButton
                   title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
                   onPress={() => this.props.navigation.navigate('FindMachine', {machineFilter: true})}
               /> 
-              <Text style={[s.sectionTitle,s.paddingBottom5]}>Limit by number of machines per location:</Text>
+              <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Limit by number of machines per location:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateNumMachinesSelected}
                   selectedIndex={this.getIdx(numMachines)}
@@ -108,17 +108,17 @@ class FilterMap extends Component {
                   selectedButtonStyle={s.buttonStyle}
                   selectedTextStyle={s.textStyle}
               />
-              <Text style={[s.sectionTitle,s.padding10]}>Filter by location type:</Text>
+              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Filter by location type:</Text>
               <DropDownButton
                   title={locationTypeName}
                   onPress={() => navigate('FindLocationType', {type: 'filter', setSelected: (id) => this.props.selectedLocationTypeFilter(id)})}
               /> 
-              <Text style={[s.sectionTitle,s.padding10]}>Filter by operator:</Text>
+              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Filter by operator:</Text>
               <DropDownButton
                   title={operatorName}
                   onPress={() => navigate('FindOperator', {type: 'filter', setSelected: (id) => this.props.selectedOperatorTypeFilter(id)})}
               />
-              <Text style={[s.sectionTitle,s.padding10]}>Only show my Saved Locations:</Text>
+              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Only show my Saved Locations:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateViewFavorites}
                   selectedIndex={viewByFavoriteLocations ? 1 : 0}
@@ -157,13 +157,15 @@ const s = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: "bold",
-        color: "#000e18"
+        color: "#000e18",
     },
-    padding10: {
-        padding: 10
+    marginTop25: {
+        marginTop: 25
     },
-    paddingBottom5: {
-        paddingBottom: 5,
+    paddingRL10: {
+        paddingHorizontal: 10
+    },
+    paddingFirst: {
         paddingTop: 10,
         paddingHorizontal: 10,
     },
