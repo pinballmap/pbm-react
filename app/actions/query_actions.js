@@ -12,11 +12,20 @@ import {
 import { getLocations } from './locations_actions'
 import { getDistance } from '../utils/utilityFunctions'
 
-export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>  (dispatch) => {
+export const getFilterState = (filterState) => {
+    const { machineId, locationType, numMachines, selectedOperator, viewByFavoriteLocations } = filterState
+    const filtersNoMachines = !machineId || !locationType || !selectedOperator || !viewByFavoriteLocations
+    const filteringByTwoMachines = !filterApplied && numMachines === 2
+    const filterApplied = filtersNoMachines && numMachines > 0
+    return filteringByTwoMachines ? 300 : filterApplied ? 500 : 200
+}
+
+export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>  (dispatch, getState) => {
+    const viewableMax  = getFilterState(getState().query)
     const viewableLat = getDistance(lat - 0.5*latDelta, lon, lat + 0.5*latDelta, lon) 
     const viewableLon = getDistance(lat, lon - 0.5*lonDelta, lat, lon + 0.5*lonDelta)
     const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon
-    const maxZoom = viewableLat > 200 || viewableLon > 200
+    const maxZoom = viewableLat > viewableMax || viewableLon > viewableMax
     
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta, maxZoom })
     if (distance || !maxZoom) {
