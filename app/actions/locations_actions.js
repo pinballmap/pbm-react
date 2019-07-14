@@ -17,7 +17,6 @@ import {
     updateMapCoordinates,
 } from './query_actions'
 import { getData } from '../config/request'
-import { getDistance } from '../utils/utilityFunctions'
 
 Geocode.setApiKey(GOOGLE_MAPS_KEY)
 
@@ -113,14 +112,6 @@ export const getLocationsByRegion = region => (dispatch) => {
 
     const delta = getDelta()
     dispatch(updateMapCoordinates(lat, lon, delta, delta, effective_radius))
-}
-
-export const updateFilterLocations = () => (dispatch, getState) => {
-    const { curLat: lat, curLon: lon, latDelta, lonDelta } = getState().query
-    const viewableLat = getDistance(lat - 0.5*latDelta, lon, lat + 0.5*latDelta, lon) 
-    const viewableLon = getDistance(lat, lon - 0.5*lonDelta, lat, lon + 0.5*lonDelta)
-    const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon
-    dispatch(getLocations(lat, lon, viewableDist * 1.1 / 2))
 }
   
 export const getLocationsSuccess = (data) => {
