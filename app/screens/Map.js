@@ -136,7 +136,7 @@ class Map extends Component {
             }
         }
 
-        setTimeout(compareRegion, 200, region)
+        setTimeout(compareRegion, 800, region)
         this.prevRegion = region
     }
 
