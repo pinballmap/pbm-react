@@ -17,7 +17,6 @@ import markerDotHeart from '../assets/images/markerdot-heart.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'
 import { 
     fetchCurrentLocation, 
-    updateFilterLocations,
     getFavoriteLocations,
     clearFilters,
     clearError,
@@ -159,10 +158,20 @@ class Map extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        const { machineId, locationType, numMachines, selectedOperator, viewByFavoriteLocations } = props.query
+        const { 
+            curLat,
+            curLon,
+            latDelta,
+            lonDelta,
+            machineId,
+            locationType, 
+            numMachines,
+            selectedOperator,
+            viewByFavoriteLocations,
+        } = props.query
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
-            this.props.updateFilterLocations()
+            this.props.updateMapCoordinates(curLat, curLon, latDelta, lonDelta)
         }
 
     }
@@ -313,7 +322,6 @@ Map.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
-    updateFilterLocations: PropTypes.func,
     updateMapCoordinates: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
@@ -336,7 +344,6 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
-    updateFilterLocations: () => dispatch(updateFilterLocations()),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
