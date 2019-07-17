@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import PropTypes from 'prop-types'
 import { DrawerItems } from 'react-navigation'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { 
     Platform,
     Text, 
@@ -10,6 +9,7 @@ import {
     View,
     StyleSheet
 } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { logout } from '../actions'
 import ConfirmationModal from './ConfirmationModal'
 import PbmButton from './PbmButton'

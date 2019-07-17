@@ -8,7 +8,7 @@ import {
     View, 
 } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+// import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ConfirmationModal from './ConfirmationModal'
 import { setSelectedActivityFilter } from '../actions'
 
