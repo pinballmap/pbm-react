@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Font } from 'expo'
 import { 
     ActivityIndicator,
     Image,
@@ -148,7 +147,7 @@ class Map extends Component {
         }
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         this.props.getCurrentLocation()
     }
 
