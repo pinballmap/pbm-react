@@ -46,6 +46,8 @@ class FAQ extends Component {
                             <Text style={s.text}>{`This is by design. We've found that most users want to see all versions, and don't want to conduct 3+ separate searches for the same title.`}</Text>
                             <Text style={s.bold}>{`How do I add a new location?`}</Text>
                             <Text style={s.text}>{`Fill out`} <Text onPress={ () => this.props.navigation.navigate('SuggestLocation') } style={{textDecorationLine: 'underline'}}>{"this form"}</Text>! {`You can also reach the submission form by clicking the menu icon in the lower right, and choosing "Submit Location". Our administrators moderate submissions, and that can take a few days. The more accurate and thorough your submission, the quicker it will get added!`}</Text>
+                            <Text style={s.bold}>{`How do I add my private collection to the map?`}</Text>
+                            <Text style={s.text}>{`No. Pinball Map only lists publicly-accessible locations. The definition of 'public' varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So pleaes don't submit your house or a private club that excludes people from becoming members.`}</Text>
                             <Text style={s.bold}>{`How do I remove a machine from a location?`}</Text>
                             <Text style={s.text}>{`Click on the machine name, and then look for a "remove" button.`}</Text>
                             <Text style={s.bold}>{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
