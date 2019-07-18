@@ -15,7 +15,7 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { Constants } from 'expo'
+import Constants from 'expo-constants'
 import { Input, ListItem } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'

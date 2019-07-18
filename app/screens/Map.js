@@ -90,7 +90,6 @@ class Map extends Component {
         this.prevRegion = {}
 
         this.state ={ 
-            materialIconsLoaded: false,
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
         }
@@ -151,10 +150,6 @@ class Map extends Component {
 
     async componentDidMount(){
         this.props.getCurrentLocation()
-        
-        await Font.loadAsync({'MaterialIcons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
-        await Font.loadAsync({'Material Icons': require('@expo/vector-icons/fonts/MaterialIcons.ttf')})
-        this.setState({ materialIconsLoaded: true })
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -184,7 +179,6 @@ class Map extends Component {
         } = this.props
         
         const { 
-            materialIconsLoaded, 
             showNoLocationTrackingModal 
         } = this.state
         
@@ -243,7 +237,7 @@ class Map extends Component {
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} /> )}
                     </MapView>
-                    {materialIconsLoaded ? <Icon
+                    <Icon
                         raised
                         name='gps-fixed'
                         type='material'
@@ -253,7 +247,7 @@ class Map extends Component {
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
-                    /> : null}
+                    />
                     {filterApplied ?     
                         <Button 
                             title={'Clear Filter'} 
