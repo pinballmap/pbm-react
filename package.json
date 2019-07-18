@@ -42,10 +42,7 @@
     "react-test-renderer": "16.5.0"
   },
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
+    "start": "expo start -c",
     "test": "jest --watch --coverage",
     "lint": "eslint \"**/*.js\"",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
