@@ -15,7 +15,7 @@ import { getDistance } from '../utils/utilityFunctions'
 export const getFilterState = (filterState) => {
     const { machineId, locationType, numMachines, selectedOperator, viewByFavoriteLocations } = filterState
     const filtersNoMachines = !!machineId || !!locationType || !!selectedOperator || !!viewByFavoriteLocations
-    const filteringByTwoMachines = !filtersNoMachines && numMachines === 2
+    const filteringByTwoMachines = !filtersNoMachines && numMachines === '2'
     const filterApplied = filtersNoMachines || numMachines > 0
     return filteringByTwoMachines ? 200 : filterApplied ? 300 : 150
 }
