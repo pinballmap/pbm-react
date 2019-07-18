@@ -1,8 +1,8 @@
 import React from 'react'
 import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Platform, StyleSheet, Text } from 'react-native'
-import { Constants } from 'expo'
+import Constants from 'expo-constants'
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
