@@ -17,7 +17,7 @@ export const getFilterState = (filterState) => {
     const filtersNoMachines = !!machineId || !!locationType || !!selectedOperator || !!viewByFavoriteLocations
     const filteringByTwoMachines = !filtersNoMachines && numMachines === '2'
     const filterApplied = filtersNoMachines || numMachines > 0
-    return filteringByTwoMachines ? 200 : filterApplied ? 300 : 150
+    return filteringByTwoMachines ? 300 : filterApplied ? 500 : 200
 }
 
 export const updateMapCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>  (dispatch, getState) => {
