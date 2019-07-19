@@ -28,7 +28,8 @@
       "supportsTablet": true,
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
-        "googleMapsApiKey": "key"
+        "googleMapsApiKey": "key",
+        "usesNonExemptEncryption": false
       },
       "splash": {
         "image": "app/assets/images/t-shirt-logo@3x.png",
@@ -52,7 +53,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 43,
+      "versionCode": 44,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
