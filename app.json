@@ -24,8 +24,11 @@
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "60",
+      "buildNumber": "61",
       "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
+      },
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
         "googleMapsApiKey": "key",
