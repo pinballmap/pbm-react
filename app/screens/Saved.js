@@ -112,6 +112,7 @@ export class LocationList extends Component {
                                               name={item.location.name}
                                               distance={getDistance(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon)}
                                               street={item.location.street}
+                                              city={item.location.city}
                                               state={item.location.state}
                                               zip={item.location.zip}
                                               machines={item.location.machines} 
