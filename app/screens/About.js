@@ -89,11 +89,18 @@ class About extends Component {
                             }
                                 !</Text>
                         <Text style={s.text}>Thanks to our beta testers!</Text>
-                        <Text style={{fontSize:16}}>And thanks to all our <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}>Patreon</Text> supporters!</Text>
+                        <Text style={{fontSize:16}}>And thanks to all our 
+                            {Platform.OS === "ios" ? 
+                                <Text style={{fontSize:16}}> Patreon </Text>
+                                : <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}> Patreon </Text>
+                            }
+                                supporters!</Text>
                     </View>  
-                    <View style={[s.logoWrapper]}>
-                        <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/>
-                    </View>
+                    {Platform.OS === "android" ?
+                        <View style={[s.logoWrapper]}>
+                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/>
+                        </View>: null
+                    }
                 </View>
             </ScrollView>
         )
