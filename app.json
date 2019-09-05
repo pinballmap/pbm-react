@@ -24,7 +24,7 @@
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "65",
+      "buildNumber": "66",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
