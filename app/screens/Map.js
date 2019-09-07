@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
-import { MapView } from 'expo'
+import MapView from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 import { PbmButton, ConfirmationModal, Search, Text } from '../components'

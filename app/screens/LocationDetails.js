@@ -12,7 +12,7 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { MapView } from 'expo'
+import MapView from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import openMap from 'react-native-open-maps'
 import { Button, ButtonGroup, ListItem, Icon } from 'react-native-elements'
