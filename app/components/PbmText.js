@@ -15,10 +15,14 @@ class PbmText extends Component {
     }
 }
 
-PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-])
+PbmText.propTypes = {
+    style: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+    ]),
+    onPress: PropTypes.func, 
+    children: PropTypes.node,
+}
 
 const s = StyleSheet.create({
     text: {

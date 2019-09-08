@@ -1,5 +1,4 @@
 import { Platform, Dimensions } from 'react-native'
-import Constants from 'expo-constants'
 
 let deviceWidth = Dimensions.get('window').width
 

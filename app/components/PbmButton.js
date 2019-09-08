@@ -32,6 +32,8 @@ PbmButton.propTypes = {
     accessibilityLabel: PropTypes.string,
     icon: PropTypes.node,
     disabled: PropTypes.bool,
+    buttonStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
 }
 
 const s = StyleSheet.create({

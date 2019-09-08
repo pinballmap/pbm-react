@@ -108,17 +108,17 @@ class FilterMap extends Component {
                   selectedButtonStyle={s.buttonStyle}
                   selectedTextStyle={s.textStyle}
               />
-              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Filter by location type:</Text>
+              <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Filter by location type:</Text>
               <DropDownButton
                   title={locationTypeName}
                   onPress={() => navigate('FindLocationType', {type: 'filter', setSelected: (id) => this.props.selectedLocationTypeFilter(id)})}
               /> 
-              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Filter by operator:</Text>
+              <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Filter by operator:</Text>
               <DropDownButton
                   title={operatorName}
                   onPress={() => navigate('FindOperator', {type: 'filter', setSelected: (id) => this.props.selectedOperatorTypeFilter(id)})}
               />
-              <Text style={[s.sectionTitle,,s.marginTop25,s.paddingRL10]}>Only show my Saved Locations:</Text>
+              <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Only show my Saved Locations:</Text>
               <ButtonGroup style={s.border}
                   onPress={this.updateViewFavorites}
                   selectedIndex={viewByFavoriteLocations ? 1 : 0}

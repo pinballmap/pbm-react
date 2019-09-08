@@ -40,7 +40,7 @@ const TabNav = TabNavigator({
 },
 {
     navigationOptions: ({ navigation }) => ({
-        tabBarIcon: ({focused, tintColor}) => {
+        tabBarIcon: ({focused, tintColor}) => {  // eslint-disable-line 
             const { routeName } = navigation.state
             switch(routeName) {
             case 'Map':
@@ -55,7 +55,7 @@ const TabNav = TabNavigator({
                 return <MaterialIcons name='more-horiz' size={(focused) ? 30 : 28} color={tintColor} />
             }
         },
-        tabBarLabel: ({ focused, tintColor }) => {
+        tabBarLabel: ({ focused }) => {
             const { routeName } = navigation.state
             let label
             switch(routeName) {

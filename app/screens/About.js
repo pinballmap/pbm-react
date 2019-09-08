@@ -73,7 +73,7 @@ class About extends Component {
                         <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
                         <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
-                        <Text style={s.text}>Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>this app's code</Text>.</Text>
+                        <Text style={s.text}>Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>{`this app's code`}</Text>.</Text>
                         <Text style={s.bold}>App Credits:</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
@@ -83,9 +83,9 @@ class About extends Component {
                         <Text style={s.text}>If you like the app,&nbsp; 
                             {Platform.OS === "ios" ? 
                                 <Text style={s.textLink}        
-                                onPress={() => Linking.openURL('itms-apps://itunes.apple.com/us/app/pinball-map/id359275713?mt=8')}>please rate and review it</Text>
+                                    onPress={() => Linking.openURL('itms-apps://itunes.apple.com/us/app/pinball-map/id359275713?mt=8')}>please rate and review it</Text>
                                 : <Text style={s.textLink}        
-                                onPress={() => Linking.openURL('market://details?id=com.pbm')}>please rate and review it</Text> 
+                                    onPress={() => Linking.openURL('market://details?id=com.pbm')}>please rate and review it</Text> 
                             }
                                 !</Text>
                         <Text style={s.text}>Thanks to our beta testers!</Text>
