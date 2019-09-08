@@ -34,8 +34,8 @@
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "eslint-watch": "^3.1.4",
-    "jest": "^22.4.3",
-    "jest-expo": "^34.0.0",
+    "jest": "^24.9.0",
+    "jest-expo": "^34.0.1",
     "jest-fetch-mock": "^1.5.0",
     "metro-react-native-babel-preset": "^0.45.0",
     "react-addons-test-utils": "^15.6.2",
@@ -46,7 +46,7 @@
   },
   "scripts": {
     "start": "expo start -c",
-    "test": "jest --watch --coverage",
+    "test": "jest",
     "lint": "eslint \"**/*.js\"",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
