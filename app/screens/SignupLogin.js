@@ -222,6 +222,7 @@ SignupLogin.propTypes = {
     getMachines: PropTypes.func,
     getOperators: PropTypes.func,
     getRegions: PropTypes.func,
+    getFavoriteLocations: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })

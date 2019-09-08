@@ -50,7 +50,7 @@ class Signup extends Component {
                 usernameError: 'Username is too long (maximum is 15 characters',
                 errors: true,
             })
-        } else if (!(/^[a-zA-Z0-9_\.]*$/).test(this.state.username)) {
+        } else if (!(/^[a-zA-Z0-9_.]*$/).test(this.state.username)) {
             this.setState({
                 usernameError: 'Username must be alphanumeric',
                 errors: true,

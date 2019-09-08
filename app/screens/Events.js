@@ -90,7 +90,7 @@ class Events extends Component {
                 this.setState({ address })
                 this.fetchEvents(50)
             })
-            .catch(e => this.setState({ error: true, gettingEvents: false}))
+            .catch(() => this.setState({ error: true, gettingEvents: false}))
     }
      
     render(){

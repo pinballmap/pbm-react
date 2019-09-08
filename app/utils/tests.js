@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 export function createStoreForTest() {
     return createStore(
         combineReducers({
-            ...indexReducer,
+        //    ...indexReducer,
         }),
         compose(
             applyMiddleware(thunkMiddleware),
