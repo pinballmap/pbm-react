@@ -5,6 +5,7 @@ cache:
   directories:
     - node_modules
 script:
-  - npm test
+  #- npm test
+  - npm run lint
 on:
   branch: master
