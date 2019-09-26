@@ -103,7 +103,7 @@ class Map extends Component {
             title="List"
             accessibilityLabel="List"
             titleStyle={s.titleStyle}
-            clear={true}
+            type="clear"
         />,
             headerTitle:
         <Search 
@@ -116,7 +116,7 @@ class Map extends Component {
             title="Filter"
             accessibilityLabel="Filter"
             titleStyle={s.titleStyle}
-            clear={true}
+            type="clear"
         />,
             headerTitleStyle,
             headerStyle,
@@ -251,7 +251,7 @@ class Map extends Component {
                         <Button 
                             title={'Clear Filter'} 
                             onPress={() => this.props.clearFilters()}
-                            clear={true}
+                            type="clear"
                             titleStyle={{fontSize:14,color:"#F53240",padding: 5,backgroundColor:'rgba(255,255,255,0.5)'}}
                             containerStyle={{width:100,position:'absolute',top:0,right:0}}
                         />
