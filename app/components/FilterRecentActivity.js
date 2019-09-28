@@ -82,7 +82,7 @@ class FilterRecentActivity extends Component {
                     title="Filter"
                     accessibilityLabel="Filter"
                     titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
-                    clear={true}
+                    type="clear"
                 /> 
             </View>
         )

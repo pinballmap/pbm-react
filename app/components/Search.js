@@ -135,7 +135,7 @@ class Search extends Component {
                             />
                             <Input
                                 placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color="#97a5af" style={{marginLeft:-10,marginRight:-8}}/>}
+                                leftIcon={<MaterialIcons name='search' size={25} color="#97a5af" style={{marginLeft:-10,marginRight:0}}/>}
                                 rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}

@@ -68,7 +68,7 @@ class LocationDetails extends Component {
                     title="Edit"
                     accessibilityLabel="Edit"
                     titleStyle={{color: "#1e9dff", fontSize: 18}}
-                    clear={true}
+                    type="clear"
                 /> : <View style={{padding:6}}></View>,
             headerStyle,
             headerTintColor: '#4b5862'
