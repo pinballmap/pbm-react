@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo'
+import { AppearanceProvider } from 'react-native-appearance'
 import React, { Component } from 'react'
 import { StatusBar, Platform } from 'react-native'
 import { Provider } from 'react-redux'
@@ -17,9 +18,11 @@ class App extends Component {
     }
     render() {
         return (
-            <Provider store={store}>
-                <PbmStack />
-            </Provider>
+            <AppearanceProvider>
+                <Provider store={store}>
+                    <PbmStack />
+                </Provider>
+            </AppearanceProvider>
         )
     }
 }

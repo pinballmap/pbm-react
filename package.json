@@ -13,6 +13,7 @@
     "react": "16.8.3",
     "react-geocode": "^0.1.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native-appearance": "^0.1.0",
     "react-native-elements": "^1.0.0-beta7",
     "react-native-gesture-handler": "^1.2.2",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",

@@ -23,6 +23,7 @@
     "primaryColor": "#d3ecff",
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
+      "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
       "buildNumber": "70",
       "supportsTablet": true,
