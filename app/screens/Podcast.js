@@ -5,7 +5,7 @@ import {
     StyleSheet, 
     View
 } from 'react-native'
-import { WebView } from 'react-native-webview';
+import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { 
