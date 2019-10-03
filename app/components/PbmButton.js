@@ -1,16 +1,14 @@
-import React from 'react'
+/* eslint-disable react-native/no-unused-styles */
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { Appearance, useColorScheme } from 'react-native-appearance'
 import { 
     Platform,
     StyleSheet, 
 } from 'react-native'
-import { Button } from 'react-native-elements'
-
-Appearance.getColorScheme()
+import { Button, ThemeContext } from 'react-native-elements'
 
 const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPress, icon, disabled}) => {
-    let colorScheme = useColorScheme()
+    const { theme } = useContext(ThemeContext)
 
     return (
         <Button
@@ -20,11 +18,11 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             icon={icon}
             disabled={disabled}
             raised
-            buttonStyle={buttonStyle ? buttonStyle : colorScheme === 'dark' ? s.darkButton : s.blueButton}
-            titleStyle={colorScheme === 'dark' ? s.darkTitleStyle : s.titleStyle}
+            buttonStyle={buttonStyle ? buttonStyle : styles(theme).blueButton}
+            titleStyle={styles(theme).titleStyle}
             style={{borderRadius: 50}}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{borderRadius:50}, containerStyle ? containerStyle : s.margin15]}
+            containerStyle={[{borderRadius:50}, containerStyle ? containerStyle : styles(theme).margin15]}
         />
     )
 }
@@ -39,26 +37,15 @@ PbmButton.propTypes = {
     containerStyle: PropTypes.object,
 }
 
-const s = StyleSheet.create({
+const styles = theme => StyleSheet.create({
     blueButton: {
-        backgroundColor:"#D3ECFF",
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
-    darkButton: {
-        backgroundColor:"#000",
+        backgroundColor: theme.buttonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
     titleStyle: {
-        color:"#4b5862",
-        fontSize:16,
-        fontWeight: Platform.OS === 'ios' ? "500" : "400"
-    },
-    darkTitleStyle: {
-        color:"#FFF",
+        color: theme.textColor,
         fontSize:16,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
