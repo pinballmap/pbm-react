@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import {
     ActivityIndicator,
     StyleSheet, 
-    View,
-    WebView,
+    View
 } from 'react-native'
+import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { 
