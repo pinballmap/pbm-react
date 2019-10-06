@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import PropTypes from 'prop-types'
-import { DrawerItems } from 'react-navigation'
+import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { 
     Platform,
     Text, 
@@ -46,7 +46,7 @@ class DrawerMenu extends Component {
                     />
                 </ConfirmationModal>
                 <View style={{marginTop: 50}}>
-                    <DrawerItems 
+                    <DrawerNavigatorItems 
                         {...this.props} 
                         onItemPress={(item) => navigation.navigate(item.route.key)}
                     />

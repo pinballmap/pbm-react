@@ -1,5 +1,8 @@
 import React from 'react'
-import { DrawerNavigator, TabNavigator, StackNavigator } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer'
 import { Platform, StyleSheet, Text } from 'react-native'
 import Constants from 'expo-constants'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -31,15 +34,50 @@ import FindLocationType from '../screens/FindLocationType'
 
 import { DrawerMenu } from '../components'
 
-const TabNav = TabNavigator({
-    Map: { screen: Map },
-    Saved: { screen: Saved },
-    Activity: { screen: RecentActivity },
-    Profile: { screen: UserProfile },
-    Menu: { screen: Map },
+const map = createStackNavigator({
+    Map
+})
+
+const saved = createStackNavigator(
+    { Saved }, 
+    {
+        navigationOptions: {
+            tabBarVisible: false
+        }
+    }
+)
+
+const activity = createStackNavigator(
+    { RecentActivity },
+    {
+        navigationOptions: {
+            tabBarVisible: false
+        }
+    }
+)
+
+const profile = createStackNavigator(
+    { UserProfile },
+    {
+        navigationOptions: {
+            tabBarVisible: false
+        }
+    }
+)
+
+const Menu = createStackNavigator({
+    Map
+})
+
+const TabNav = createBottomTabNavigator({
+    Map: map,
+    Saved: saved,
+    Activity: activity,
+    Profile: profile,
+    Menu,
 },
 {
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
         tabBarIcon: ({focused, tintColor}) => {  // eslint-disable-line 
             const { routeName } = navigation.state
             switch(routeName) {
@@ -73,10 +111,11 @@ const TabNav = TabNavigator({
             return label
         },
         tabBarOnPress: (e) => {
-            if (navigation.state.key === "Menu")
-                navigation.navigate('DrawerToggle')
+            if (e.navigation.state.key === "Menu") {
+                navigation.dispatch(DrawerActions.toggleDrawer())
+            }
             else {
-                e.jumpToIndex(e.scene.index)
+                navigation.navigate(e.navigation.state.key)
             }
         }
     }), 
@@ -104,7 +143,11 @@ const TabNav = TabNavigator({
     swipeEnabled: true,
 })
 
-export const MapStack = StackNavigator({
+TabNav.navigationOptions = {
+    header: null,
+}
+  
+export const MapStack = createStackNavigator({
     SignupLogin: { screen: SignupLogin, },
     Map: { screen: TabNav },
     LocationList: {
@@ -134,12 +177,14 @@ export const MapStack = StackNavigator({
 },
 {
     navigationOptions: {
-        gesturesEnabled: true
+        gesturesEnabled: true,
+        drawerLabel: 'Map',
+        drawerIcon: <MaterialIcons name='search' style={{fontSize: 24,color: '#6a7d8a'}} />,
     }
 })
 
-export const PbmStack = DrawerNavigator({
-    Map: { screen: MapStack },
+export const drawerNavigator = createDrawerNavigator({
+    Map: MapStack,
     SuggestLocation: { screen: SuggestLocation },
     Events: { screen: Events },
     Contact: { screen: Contact },
@@ -163,6 +208,8 @@ export const PbmStack = DrawerNavigator({
     },
 })
 
+export const PbmStack = createAppContainer(drawerNavigator)
+
 const s = StyleSheet.create({ 
     activeTabText: {
         fontWeight: "bold",
@@ -173,5 +220,5 @@ const s = StyleSheet.create({
         fontWeight: "normal",
         fontSize: 11,
         color: '#4b5862'
-    }
+    },
 })

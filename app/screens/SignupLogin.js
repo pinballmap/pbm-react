@@ -11,7 +11,6 @@ import {
     View, 
 } from 'react-native'
 import { Button } from 'react-native-elements'
-import { MaterialIcons } from '@expo/vector-icons'
 import { 
     loginLater,
     login, 
@@ -37,12 +36,6 @@ export class SignupLogin extends Component {
             num_lmxes: 0, 
             apiError: '',
         }
-    }
-
-    static navigationOptions = { 
-        drawerLabel: 'Map',
-        drawerIcon: () => <MaterialIcons name='search' style={[s.drawerIcon]} />,
-        header: null 
     }
 
     componentDidMount(){
@@ -206,10 +199,6 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height:deviceHeight
-    },
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
     },
 })
 

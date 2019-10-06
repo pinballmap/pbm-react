@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Keyboard } from 'react-native'
-import { HeaderBackButton as HeaderBackButtonReactNavigation } from 'react-navigation'
+import { HeaderBackButton as HeaderBackButtonReactNavigation } from 'react-navigation-stack'
 
 const HeaderBackButton = ({navigation, title}) => 
     <HeaderBackButtonReactNavigation 
