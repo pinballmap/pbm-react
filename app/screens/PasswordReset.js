@@ -17,10 +17,6 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
-import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
 
 class PasswordReset extends Component {
     state = {
@@ -32,8 +28,6 @@ class PasswordReset extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            headerStyle,
-            headerTitleStyle,
         }
     }
      

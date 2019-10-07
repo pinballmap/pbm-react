@@ -29,10 +29,6 @@ import {
     Text,
     WarningButton, 
 } from '../components'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 let deviceHeight = Dimensions.get('window').height
 
@@ -90,9 +86,6 @@ class FindMachine extends React.PureComponent {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862',
             headerRight: 
                 navigation.getParam('showDone') ? 
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Done</Text></TouchableOpacity> 

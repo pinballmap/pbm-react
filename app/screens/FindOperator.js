@@ -15,12 +15,6 @@ import {
     HeaderBackButton,
     Text,
 } from '../components'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
-
-
 
 class FindOperator extends React.PureComponent {
     constructor(props) {
@@ -40,9 +34,6 @@ class FindOperator extends React.PureComponent {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text style={{color:'#000e18'}}>{`Select Operator`}</Text>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862',
         }
     }
 

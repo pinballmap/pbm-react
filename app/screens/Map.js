@@ -21,10 +21,6 @@ import {
     clearError,
     updateMapCoordinates,
 } from '../actions'
-import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
 import {
     getMapLocations
 } from '../selectors'
@@ -94,9 +90,8 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => {  
-        return {
-            headerLeft:
+    static navigationOptions = ({ navigation }) => ({
+        headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
             containerStyle={{width:50}}
@@ -105,11 +100,11 @@ class Map extends Component {
             titleStyle={s.titleStyle}
             type="clear"
         />,
-            headerTitle:
+        headerTitle:
         <Search 
             navigate={ navigation.navigate }
         />,
-            headerRight:
+        headerRight:
         <Button
             onPress={ () => navigation.navigate('FilterMap')}
             containerStyle={{width:60}}
@@ -118,11 +113,7 @@ class Map extends Component {
             titleStyle={s.titleStyle}
             type="clear"
         />,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
-        }
-    };
+    })
 
 
     onRegionChange = (region) => {

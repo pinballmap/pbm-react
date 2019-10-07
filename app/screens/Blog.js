@@ -8,10 +8,6 @@ import {
 import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 class Blog extends Component {
     state = { loading: true }
@@ -23,9 +19,6 @@ class Blog extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Blog',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
     

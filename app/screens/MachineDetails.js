@@ -30,10 +30,6 @@ import {
     Text,
     WarningButton, 
 }  from '../components'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 const moment = require('moment')
 
@@ -52,10 +48,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
-            headerTitleStyle,
             headerRight: <RemoveMachine />,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
 

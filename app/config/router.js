@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer'
-import { Platform, StyleSheet, Text } from 'react-native'
+import { Platform, StyleSheet, Text, Dimensions } from 'react-native'
 import Constants from 'expo-constants'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -33,6 +33,8 @@ import FindOperator from '../screens/FindOperator'
 import FindLocationType from '../screens/FindLocationType'
 
 import { DrawerMenu } from '../components'
+
+let deviceWidth = Dimensions.get('window').width
 
 const map = createStackNavigator({
     Map
@@ -77,7 +79,7 @@ const TabNav = createBottomTabNavigator({
     Menu,
 },
 {
-    defaultNavigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation, theme }) => ({
         tabBarIcon: ({focused, tintColor}) => {  // eslint-disable-line 
             const { routeName } = navigation.state
             switch(routeName) {
@@ -117,30 +119,36 @@ const TabNav = createBottomTabNavigator({
             else {
                 navigation.navigate(e.navigation.state.key)
             }
-        }
-    }), 
-    tabBarOptions: {
-        activeTintColor: '#1e9dff',
-        inactiveTintColor: '#6a7d8a',
-        showIcon: true,
-        adaptive: false,
-        style: {
-            backgroundColor:'#f5fbff',
-            paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
-            paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
-            height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null, 
         },
-        iconStyle: {
-            height: 30,
-            width: 30,
-            marginTop: Platform.OS === 'android' ? -5 : 0
+        tabBarOptions: {
+            activeTintColor: {
+                light: '#1e9dff',
+                dark: '#fff',
+            },
+            inactiveTintColor: {
+                light: '#6a7d8a',
+                dark: '#fff',
+            },
+            showIcon: true,
+            adaptive: false,
+            style: {
+                backgroundColor: theme === 'dark' ? '#000' : '#f5fbff',
+                paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
+                paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
+                height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null,
+            },
+            iconStyle: {
+                height: 30,
+                width: 30,
+                marginTop: Platform.OS === 'android' ? -5 : 0
+            },
+            indicatorStyle: {
+                backgroundColor: 'transparent'
+            },
         },
-        indicatorStyle: { 
-            backgroundColor: 'transparent'
-        },
-    },
-    tabBarPosition: 'bottom',
-    swipeEnabled: true,
+        tabBarPosition: 'bottom',
+        swipeEnabled: true,
+    })
 })
 
 TabNav.navigationOptions = {
@@ -176,11 +184,22 @@ export const MapStack = createStackNavigator({
     FindLocationType: { screen: FindLocationType },
 },
 {
-    navigationOptions: {
+    navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
         drawerLabel: 'Map',
         drawerIcon: <MaterialIcons name='search' style={{fontSize: 24,color: '#6a7d8a'}} />,
-    }
+        headerStyle: {
+            backgroundColor: theme === 'dark' ? '#000' : '#f5fbff',
+            height: Platform.OS === 'ios' ? 44 : 56,
+        },
+        headerTitleStyle: {
+            textAlign: 'center',
+            flexGrow: 1,
+            alignSelf:'center',
+            width: Platform.OS === 'ios' ? deviceWidth - 100 : null
+        },
+        headerTintColor: '#4b5862'
+    })
 })
 
 export const drawerNavigator = createDrawerNavigator({

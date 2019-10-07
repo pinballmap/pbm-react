@@ -36,10 +36,6 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
-import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
 
 class SuggestLocation extends Component {
     constructor(props) {
@@ -67,9 +63,6 @@ class SuggestLocation extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Submit Location',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
 

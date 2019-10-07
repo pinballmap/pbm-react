@@ -26,10 +26,6 @@ import {
     setSelectedLocationType,
     updateLocationDetails, 
 } from '../actions'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 class EditLocationDetails extends Component {
     constructor(props) {
@@ -48,9 +44,6 @@ class EditLocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: <Text>{navigation.getParam('name')}</Text>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
 
