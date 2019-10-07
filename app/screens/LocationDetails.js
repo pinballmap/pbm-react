@@ -36,10 +36,6 @@ import {
     setCurrentMachine, 
     updateCurrCoordinates,
 } from '../actions'
-import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -60,7 +56,6 @@ class LocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('locationName'),
-            headerTitleStyle,
             headerRight: navigation.getParam('loggedIn') && navigation.getParam('buttonIndex') === 1 ?
                 <Button
                     onPress={() => navigation.navigate('EditLocationDetails', {name: navigation.getParam('locationName')})}
@@ -70,8 +65,6 @@ class LocationDetails extends Component {
                     titleStyle={{color: "#1e9dff", fontSize: 18}}
                     type="clear"
                 /> : <View style={{padding:6}}></View>,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
 

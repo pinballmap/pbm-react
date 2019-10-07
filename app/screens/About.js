@@ -14,10 +14,6 @@ import { Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
-import {
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -35,9 +31,6 @@ class About extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'About',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
         }
     }
 

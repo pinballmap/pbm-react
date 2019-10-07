@@ -13,12 +13,14 @@ const theme = Appearance.getColorScheme()
 
 const dark = {
     buttonColor: '#000',
+    backgroundColor: '#000',
     textColor: '#FFF'
 }
 
 const standard = {
     buttonColor: '#D3ECFF',
-    textColor: '#4b5862'
+    textColor: '#4b5862',
+    backgroundColor: '#f5fbff'
 }
 
 class App extends Component {
@@ -34,7 +36,7 @@ class App extends Component {
         return (
             <ThemeProvider theme={theme === 'dark' ? dark : standard}>
                 <Provider store={store}>
-                    <PbmStack />
+                    <PbmStack theme={theme} />
                 </Provider>
             </ThemeProvider>
         )

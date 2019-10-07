@@ -17,10 +17,6 @@ import {
 } from '../components'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { postData } from '../config/request'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 class ResendConfirmation extends Component {
     state = {
@@ -32,8 +28,6 @@ class ResendConfirmation extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            headerStyle,
-            headerTitleStyle,
         }
     }
      
