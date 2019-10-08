@@ -73,6 +73,7 @@ class ResendConfirmation extends Component {
                                 title={'Submit'}
                                 onPress={() => this.submit()}
                                 disabled={this.state.identification.length === 0}
+                                containerStyle={s.container}
                             />
                         </View>
                     </KeyboardAwareScrollView>    
@@ -82,6 +83,10 @@ class ResendConfirmation extends Component {
 }
 
 const s = StyleSheet.create({
+    container: {
+        marginLeft:25,
+        marginRight:25
+    },
     inputBox: {
         borderRadius: 30,
         borderWidth: 1,
