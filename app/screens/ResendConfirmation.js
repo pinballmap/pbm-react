@@ -88,7 +88,8 @@ const s = StyleSheet.create({
         borderColor: '#97a5af',
         backgroundColor: "#ffffff",
         margin: 15,
-        width: '100%'
+        width: '100%',
+        paddingLeft: 10
     },
     inputText: {
         color: '#000e18',

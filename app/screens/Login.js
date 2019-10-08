@@ -119,7 +119,7 @@ class Login extends Component {
                                         fontSize:16,
                                         fontWeight: '500'
                                     }}
-                                    containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
+                                    containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50}}
                                     style={{borderRadius: 50}}
                                     title="Log In"
                                     accessibilityLabel="Log In"
