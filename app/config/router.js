@@ -124,18 +124,18 @@ const TabNav = createBottomTabNavigator({
             activeTintColor: {
                 light: '#1e9dff',
                 // Ryan to update
-                dark: '#fff',
+                dark: '#bdae9d',
             },
             inactiveTintColor: {
                 light: '#6a7d8a',
                 // Ryan to update
-                dark: '#fff',
+                dark: '#bdae9d',
             },
             showIcon: true,
             adaptive: false,
             style: {
                 // Ryan to update
-                backgroundColor: theme === 'dark' ? '#000' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
                 paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
                 paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
                 height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null,
@@ -193,7 +193,7 @@ export const MapStack = createStackNavigator({
         drawerIcon: <MaterialIcons name='search' style={{fontSize: 24,color: '#6a7d8a'}} />,
         headerStyle: {
             // Ryan to update
-            backgroundColor: theme === 'dark' ? '#000' : '#f5fbff',
+            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
             height: Platform.OS === 'ios' ? 44 : 56,
         },
         headerTitleStyle: {
@@ -203,7 +203,7 @@ export const MapStack = createStackNavigator({
             width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
         // Ryan to update
-        headerTintColor: '#4b5862'
+        headerTintColor: '#bdae9d'
     })
 })
 
@@ -224,23 +224,23 @@ export const drawerNavigator = createDrawerNavigator({
     drawerBackgroundColor: {
         light: '#f5fbff',
         // Ryan to update
-        dark: '#000',
+        dark: '#2a211c',
     },
     contentOptions: {
         activeTintColor: {
             light: '#6a7d8a',
             // Ryan to update
-            dark: '#6a7d8a'
+            dark: '#bdae9d'
         },
         inactiveTintColor: {
             light: '#6a7d8a',
             // Ryan to update
-            dark: '#6a7d8a'
+            dark: '#bdae9d'
         },
         activeBackgroundColor: {
             light: '#f5fbff',
             // Ryan to update
-            dark: '#6a7d8a'
+            dark: '#2a211c'
         },
         itemsContainerStyle: {
             paddingTop: Constants.statusBarHeight > 40 ? 20 : 0,
@@ -250,7 +250,7 @@ export const drawerNavigator = createDrawerNavigator({
 
 export const PbmStack = createAppContainer(drawerNavigator)
 
-const s = StyleSheet.create({ 
+const s = theme => StyleSheet.create({ 
     // Ryan to update with dark mode vals
     activeTabText: {
         fontWeight: "bold",
@@ -260,6 +260,6 @@ const s = StyleSheet.create({
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: '#4b5862'
+        color: theme === 'dark' ? '#bdae9d' : '#4b5862'
     },
 })
