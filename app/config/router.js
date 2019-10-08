@@ -100,15 +100,15 @@ const TabNav = createBottomTabNavigator({
             let label
             switch(routeName) {
             case 'Map':
-                return label = focused ? <Text style={s.activeTabText}>Map</Text> : <Text style={s.inactiveTabText}>Map</Text>
+                return label = focused ? <Text style={s(theme).activeTabText}>Map</Text> : <Text style={s(theme).inactiveTabText}>Map</Text>
             case 'Saved':
-                return label = focused ? <Text style={s.activeTabText}>Saved</Text> : <Text style={s.inactiveTabText}>Saved</Text>
+                return label = focused ? <Text style={s(theme).activeTabText}>Saved</Text> : <Text style={s(theme).inactiveTabText}>Saved</Text>
             case 'Activity':
-                return label = focused ? <Text style={s.activeTabText}>Activity</Text> : <Text style={s.inactiveTabText}>Activity</Text>
+                return label = focused ? <Text style={s(theme).activeTabText}>Activity</Text> : <Text style={s(theme).inactiveTabText}>Activity</Text>
             case 'Profile':
-                return label = focused ? <Text style={s.activeTabText}>Profile</Text> : <Text style={s.inactiveTabText}>Profile</Text>
+                return label = focused ? <Text style={s(theme).activeTabText}>Profile</Text> : <Text style={s(theme).inactiveTabText}>Profile</Text>
             case 'Menu':
-                return label = focused ? <Text style={s.activeTabText}>More</Text> : <Text style={s.inactiveTabText}>More</Text>         
+                return label = focused ? <Text style={s(theme).activeTabText}>More</Text> : <Text style={s(theme).inactiveTabText}>More</Text>         
             }
             return label
         },
