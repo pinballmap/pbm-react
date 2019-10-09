@@ -43,7 +43,7 @@ class EditLocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text>{navigation.getParam('name')}</Text>,
+            title: navigation.getParam('name'),
         }
     }
 

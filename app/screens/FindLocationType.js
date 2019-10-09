@@ -33,7 +33,7 @@ class FindLocationType extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Location Type`}</Text>,
+            title: 'Select Location Type'
         }
     }
 
