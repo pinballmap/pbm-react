@@ -29,7 +29,7 @@ export class LocationList extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
-            title: 'LocationList',
+            title: 'Location List',
             headerRight:<View style={{padding:6}}></View>,
         }
     }

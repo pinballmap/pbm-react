@@ -85,7 +85,7 @@ class FindMachine extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
+            title: 'Select Machine to Add',
             headerRight: 
                 navigation.getParam('showDone') ? 
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Done</Text></TouchableOpacity> 

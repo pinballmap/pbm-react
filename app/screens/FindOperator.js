@@ -33,7 +33,7 @@ class FindOperator extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Operator`}</Text>,
+            title: 'Select Operator',
         }
     }
 
