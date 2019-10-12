@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useContext  } from 'react'
 import PropTypes from 'prop-types'
 import { 
     Platform,
@@ -7,57 +7,65 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { Card } from 'react-native-elements'
+import { Card, ThemeContext } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 
 const NUM_MACHINES_TO_SHOW = 5
 
-class LocationCard extends Component {
-    render(){
-        const { distance, id, machines = [], name: locationName, navigation, state, street, city, type, zip } = this.props
-        const numMachines = machines.length
+const LocationCard = ({ distance, id, machines = [], name: locationName, navigation, state, street, city, type, zip }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
 
-        return(
-            <Card containerStyle={{borderRadius:5,marginBottom:8,marginTop:8,borderColor: "#D3ECFF"}}>
-                <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
-                    <View style={s.flexi}>
-                        <View style={{width: '100%',zIndex: 10}}>
-                            <View style={s.locationNameContainer}>
-                                <Text style={s.locationName}>{locationName}</Text>
-                            </View>
-                            <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>                           
-                            {type || distance ? 
-                                <Text style={s.marginS}>
-                                    {type ? <Text style={s.gray}>{type}</Text> : null}
-                                    {type && distance ? <Text> • </Text> : null }
-                                    {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
-                                </Text> : null
-                            }
-                            <View style={s.margin}>
-                                {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
-                                    const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
-                                    const title = typeof m === 'string' ? m.slice(0, idx) : m.name
-                                    const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
-                                    const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
-                                    return (
-                                        <Text key={key} style={s.mName}>
-                                            <Text style={{fontWeight: 'bold',fontSize: 15}}>{title}</Text>
-                                            <Text>{`${info}\n`}</Text>
-                                        </Text>
-                                    )})
-                                }
-                                {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
-                            </View>
+    const numMachines = machines.length
+
+    return(
+        <Card containerStyle={s.containerStyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
+                <View style={s.flexi}>
+                    <View style={{width: '100%',zIndex: 10}}>
+                        <View style={s.locationNameContainer}>
+                            <Text style={s.locationName}>{locationName}</Text>
                         </View>
-                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
+                        <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>                           
+                        {type || distance ? 
+                            <Text style={s.marginS}>
+                                {type ? <Text style={s.gray}>{type}</Text> : null}
+                                {type && distance ? <Text> • </Text> : null }
+                                {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
+                            </Text> : null
+                        }
+                        <View style={s.margin}>
+                            {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
+                                const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
+                                const title = typeof m === 'string' ? m.slice(0, idx) : m.name
+                                const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
+                                const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
+                                return (
+                                    <Text key={key} style={s.mName}>
+                                        <Text style={{fontWeight: 'bold',fontSize: 15}}>{title}</Text>
+                                        <Text>{`${info}\n`}</Text>
+                                    </Text>
+                                )})
+                            }
+                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
+                        </View>
                     </View>
-                </TouchableOpacity>
-            </Card>
-        )
-    }
+                    <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
+                </View>
+            </TouchableOpacity>
+        </Card>
+    )
+
 }
 
-const s = StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
+    containerStyle: {
+        borderRadius:5,
+        marginBottom:8,
+        marginTop:8,
+        borderColor: "#D3ECFF",
+        backgroundColor: '#FFF'
+    },
     flexi: {
         flex: 1, 
         flexDirection: 'row', 
@@ -77,7 +85,7 @@ const s = StyleSheet.create({
     locationName: {
         fontWeight: 'bold',
         fontSize: 16,
-        color: "#000e18"
+        color: '#000e18'
     },
     margin: {
         marginTop: 5,
