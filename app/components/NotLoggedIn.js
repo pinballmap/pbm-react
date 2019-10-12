@@ -10,11 +10,12 @@ import PbmButton from './PbmButton'
 
 const NotLoggedIn = ({ onPress, text, title }) => {
     const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
 
     return (
-        <View style={s(theme).container}>
-            <Text style={s(theme).pageTitle}>{title}</Text>
-            <Text style={s(theme).hiya}>{text}</Text>
+        <View style={s.container}>
+            <Text style={s.pageTitle}>{title}</Text>
+            <Text style={s.hiya}>{text}</Text>
             <PbmButton
                 title={"Log In"} 
                 onPress={onPress}
@@ -24,8 +25,7 @@ const NotLoggedIn = ({ onPress, text, title }) => {
     )
 }
 
-
-const s = theme => StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.backgroundColor,
