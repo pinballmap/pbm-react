@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator,
-    ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
