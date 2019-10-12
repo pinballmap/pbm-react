@@ -92,7 +92,9 @@ class Events extends Component {
         return(
             <Screen>
                 {gettingEvents ? 
-                    <ActivityIndicator /> :
+                    <View style={{padding: 30}}>
+                        <ActivityIndicator />
+                    </View> :
                     error ? 
                         <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
                         <ScrollView>
