@@ -14,13 +14,13 @@ const theme = Appearance.getColorScheme()
 const dark = {
     buttonColor: '#000',
     backgroundColor: '#000',
-    textColor: '#FFF'
+    textColor: '#FFF',
 }
 
 const standard = {
     buttonColor: '#D3ECFF',
+    backgroundColor: '#f5fbff',
     textColor: '#4b5862',
-    backgroundColor: '#f5fbff'
 }
 
 class App extends Component {

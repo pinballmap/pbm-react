@@ -9,7 +9,8 @@ import {
 import { ButtonGroup } from 'react-native-elements'
 import { 
     HeaderBackButton,
-    LocationCard, 
+    LocationCard,
+    Screen,
     Text 
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
@@ -80,7 +81,7 @@ export class LocationList extends Component {
         const { locations = [] } = this.state
 
         return (
-            <View style={{ flex: 1, backgroundColor:'#f5fbff' }}>
+            <Screen>
                 <Text style={s.sort}>SORT BY:</Text>
                 <ButtonGroup
                     onPress={this.updateIndex}
@@ -90,28 +91,26 @@ export class LocationList extends Component {
                     selectedButtonStyle={s.buttonStyle}
                     selectedTextStyle={s.textStyle}
                 />
-                <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
-                    <FlatList
-                        data={locations}
-                        extraData={this.state}
-                        renderItem={({ item }) =>
-                            <LocationCard
-                                name={item.name}
-                                distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
-                                street={item.street}
-                                city={item.city}
-                                state={item.state}
-                                zip={item.zip}
-                                machines={item.machine_names} 
-                                type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
-                                navigation={this.props.navigation}
-                                id={item.id}
-                            />
-                        }
-                        keyExtractor={(item, index) => `list-item-${index}`}
-                    />
-                </View>
-            </View>
+                <FlatList
+                    data={locations}
+                    extraData={this.state}
+                    renderItem={({ item }) =>
+                        <LocationCard
+                            name={item.name}
+                            distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
+                            street={item.street}
+                            city={item.city}
+                            state={item.state}
+                            zip={item.zip}
+                            machines={item.machine_names} 
+                            type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                            navigation={this.props.navigation}
+                            id={item.id}
+                        />
+                    }
+                    keyExtractor={(item, index) => `list-item-${index}`}
+                />
+            </Screen>
         )
     }
 }

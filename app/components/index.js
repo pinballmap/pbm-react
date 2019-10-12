@@ -11,6 +11,7 @@ import FilterRecentActivity from './FilterRecentActivity'
 import Search from './Search'
 import DrawerMenu from './DrawerMenu'
 import HeaderBackButton from './HeaderBackButton'
+import Screen from './Screen'
 
 export {
     LocationCard,
@@ -26,4 +27,5 @@ export {
     Search,
     DrawerMenu,
     HeaderBackButton,
+    Screen,
 }

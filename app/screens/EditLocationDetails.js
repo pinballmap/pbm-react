@@ -16,8 +16,9 @@ import {
     DropDownButton, 
     HeaderBackButton,
     PbmButton, 
-    WarningButton, 
-    Text 
+    Screen,
+    Text,
+    WarningButton,
 } from '../components'
 import { 
     clearError,
@@ -79,7 +80,7 @@ class EditLocationDetails extends Component {
         const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
 
         return(
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" style={{ flex: 1,backgroundColor:'#f5fbff' }}>
+            <Screen keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -178,7 +179,7 @@ class EditLocationDetails extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 }
-            </ScrollView>
+            </Screen>
         )
     }
 }

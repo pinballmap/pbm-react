@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator,
-    ScrollView,
     StyleSheet,
     TouchableOpacity,
     View,  
@@ -14,7 +13,8 @@ import { getData } from '../config/request'
 import { 
     FilterRecentActivity,
     HeaderBackButton,
-    Text
+    Screen,
+    Text,
 } from '../components'
 import { clearActivityFilter } from '../actions'
 
@@ -87,7 +87,7 @@ class RecentActivity extends Component {
         const { selectedActivity } = this.props.query
 
         return(
-            <ScrollView style={{backgroundColor:'#f5fbff',height:30}}>
+            <Screen>
                 <View style={s.header}>
                     <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
                     <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
@@ -132,7 +132,7 @@ class RecentActivity extends Component {
                             </View>
                         ))
                 }
-            </ScrollView>
+            </Screen>
         )
     }
 }

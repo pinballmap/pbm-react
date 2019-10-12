@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ScrollView, 
     StyleSheet,
     View,     
 } from 'react-native'
@@ -10,6 +9,7 @@ import { ButtonGroup } from 'react-native-elements'
 import { 
     DropDownButton, 
     HeaderBackButton, 
+    Screen,
     Text,
     WarningButton, 
 } from '../components'
@@ -85,7 +85,7 @@ class FilterMap extends Component {
       const { navigate } = this.props.navigation
     
       return(
-          <ScrollView style={{flex: 1,backgroundColor:'#f5fbff'}}>
+          <Screen>
               <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
               <Text style={[s.sectionTitle,s.paddingFirst]}>Only show locations with this machine:</Text>
               <DropDownButton
@@ -126,7 +126,7 @@ class FilterMap extends Component {
                       onPress={() => this.props.clearFilters()}
                   /> : null
               }  
-          </ScrollView>
+          </Screen>
       )
   }
 }

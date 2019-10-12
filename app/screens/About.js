@@ -6,11 +6,10 @@ import {
     Linking,
     Platform,
     StyleSheet, 
-    ScrollView, 
     View, 
 } from 'react-native'
 import { getData } from '../config/request'
-import { Text } from '../components'
+import { Screen, Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -53,7 +52,7 @@ class About extends Component {
      
     render(){
         return(
-            <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
+            <Screen>
                 <View style={s.container}>
                     <View style={[s.logoWrapper]}>
                         <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo}/>
@@ -95,7 +94,7 @@ class About extends Component {
                         </View>: null
                     }
                 </View>
-            </ScrollView>
+            </Screen>
         )
     }
 }
