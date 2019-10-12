@@ -6,30 +6,23 @@ import { Ionicons } from '@expo/vector-icons'
 
 const DropDownButton = ({ title, onPress, }) => {
     const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
 
     return(
         <Button
             title={title}
             onPress={onPress}
-            buttonStyle={s(theme).dropdown}
-            titleStyle={s(theme).titleStyle}
+            buttonStyle={s.dropdown}
+            titleStyle={s.titleStyle}
             style={{borderRadius: 10}}
-            icon={<Ionicons name='md-arrow-dropdown' style={s(theme).dropdownIcon} />}
+            icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
             iconRight
             containerStyle={{marginTop:5,marginRight:10,marginLeft:10}}
         />
     )
 }
 
-DropDownButton.propTypes = {
-    onPress: PropTypes.func,
-    title: PropTypes.string,
-    accessibilityLabel: PropTypes.string,
-    icon: PropTypes.node,
-    disabled: PropTypes.bool,
-}
-
-const s = theme => StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     dropdown: {
         backgroundColor:"#e0ebf2",
         width: '100%',
@@ -47,5 +40,13 @@ const s = theme => StyleSheet.create({
         fontSize:16
     }
 })
+
+DropDownButton.propTypes = {
+    onPress: PropTypes.func,
+    title: PropTypes.string,
+    accessibilityLabel: PropTypes.string,
+    icon: PropTypes.node,
+    disabled: PropTypes.bool,
+}
 
 export default DropDownButton

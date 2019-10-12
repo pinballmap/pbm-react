@@ -10,6 +10,8 @@ import { ThemeContext } from 'react-native-elements'
 const ConfirmationModal = ({children, visible}) => {
     const { theme } = useContext(ThemeContext)
 
+    const s = getStyles(theme)
+
     return(
         <Modal
             animationType="slide"
@@ -17,8 +19,8 @@ const ConfirmationModal = ({children, visible}) => {
             onRequestClose={()=>{}}
             visible={visible}
         >
-            <View style={s(theme).modalBg}>
-                <View style= {s(theme).modal}>
+            <View style={s.modalBg}>
+                <View style= {s.modal}>
                     {children}
                 </View>
             </View>
@@ -27,12 +29,7 @@ const ConfirmationModal = ({children, visible}) => {
     )
 }
 
-ConfirmationModal.propTypes = {
-    visible: PropTypes.bool,
-    children: PropTypes.node,
-}
-
-const s = (theme) => StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     modalBg: {
         flex: 1,
         flexDirection: 'column',
@@ -47,5 +44,10 @@ const s = (theme) => StyleSheet.create({
         paddingVertical: 15,
     }
 })
+
+ConfirmationModal.propTypes = {
+    visible: PropTypes.bool,
+    children: PropTypes.node,
+}
 
 export default ConfirmationModal
