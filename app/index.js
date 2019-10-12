@@ -15,12 +15,16 @@ const dark = {
     buttonColor: '#000',
     backgroundColor: '#000',
     textColor: '#FFF',
+    modalBg: '#000',
+    backButton: '#FFF'
 }
 
 const standard = {
     buttonColor: '#D3ECFF',
     backgroundColor: '#f5fbff',
     textColor: '#4b5862',
+    modalBg: '#FFF',
+    backButton: '#1e9dff'
 }
 
 class App extends Component {
