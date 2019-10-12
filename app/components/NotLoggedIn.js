@@ -1,29 +1,36 @@
-import React, { Component } from 'react'
+/* eslint-disable react-native/no-unused-styles */
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
     StyleSheet, 
     Text, 
     View,
 } from 'react-native'
+import { ThemeContext } from 'react-native-elements'
 import PbmButton from './PbmButton'
 
-class NotLoggedIn extends Component {
-    render(){
-        return(
-            <View style={{flex: 1, backgroundColor:'#f5fbff'}}>
-                <Text style={s.pageTitle}>{this.props.title}</Text>
-                <Text style={s.hiya}>{this.props.text}</Text>
-                <PbmButton
-                    title={"Log In"} 
-                    onPress={() => this.props.onPress()}
-                    accessibilityLabel="Log In"
-                />
-            </View>
-        )
-    }
+const NotLoggedIn = ({ onPress, text, title }) => {
+    const { theme } = useContext(ThemeContext)
+
+    return (
+        <View style={s(theme).container}>
+            <Text style={s(theme).pageTitle}>{title}</Text>
+            <Text style={s(theme).hiya}>{text}</Text>
+            <PbmButton
+                title={"Log In"} 
+                onPress={onPress}
+                accessibilityLabel="Log In"
+            />
+        </View>
+    )
 }
 
-const s = StyleSheet.create({
+
+const s = theme => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor,
+    },
     pageTitle: {
         fontSize: 14,
         textAlign: "center",

@@ -14,6 +14,7 @@ import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
+    Screen,
     Text,
 } from '../components'
 import { postData } from '../config/request'
@@ -42,7 +43,7 @@ class PasswordReset extends Component {
     render(){
         return(
             <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }> 
-                <View style={{flex:1,backgroundColor:'#f5fbff'}}>
+                <Screen>
                     <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                         <ConfirmationModal visible={this.state.modalVisible}>
                             <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
@@ -76,7 +77,7 @@ class PasswordReset extends Component {
                             />
                         </View>
                     </KeyboardAwareScrollView>
-                </View>
+                </Screen>
             </TouchableWithoutFeedback>)
     }
 }

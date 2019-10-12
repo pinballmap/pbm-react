@@ -7,7 +7,6 @@ import {
     Image, 
     Linking,
     Modal, 
-    ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
     View, 
@@ -22,6 +21,7 @@ import {
     ConfirmationModal, 
     HeaderBackButton,
     PbmButton,
+    Screen,
     Text,
 } from '../components'
 import { 
@@ -128,7 +128,7 @@ class LocationDetails extends Component {
         }))
 
         return (
-            <ScrollView style={{ flex: 1, backgroundColor:'#f5fbff' }}>
+            <Screen>
                 <ConfirmationModal visible={favoriteModalVisible}>
                     {addingFavoriteLocation || removingFavoriteLocation ?
                         <ActivityIndicator /> : 
@@ -315,7 +315,7 @@ class LocationDetails extends Component {
                         }
                     </View>
                 </View>
-            </ScrollView>
+            </Screen>
         )
     }
 }

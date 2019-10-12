@@ -16,7 +16,7 @@ import {
     Card,
 } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
+import { HeaderBackButton, Screen } from '../components'
 import { getIfpaData } from '../config/request'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 
@@ -90,7 +90,7 @@ class Events extends Component {
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
         return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+            <Screen>
                 {gettingEvents ? 
                     <ActivityIndicator /> :
                     error ? 
@@ -132,7 +132,7 @@ class Events extends Component {
                         </ScrollView>
                             
                 }
-            </View>)
+            </Screen>)
     }
 }
 

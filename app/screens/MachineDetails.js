@@ -98,7 +98,7 @@ class MachineDetails extends Component {
         const { name: machineName } = this.props.machineDetails
 
         return (
-            <View style={{flex:1,backgroundColor:'#f5fbff'}}>
+            <Screen>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -261,7 +261,7 @@ class MachineDetails extends Component {
                         } 
                     />
                 </ScrollView>
-            </View>
+            </Screen>
         )
     }
 }

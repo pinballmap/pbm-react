@@ -26,6 +26,7 @@ import {
 import { 
     HeaderBackButton,
     PbmButton, 
+    Screen,
     Text,
     WarningButton, 
 } from '../components'
@@ -170,7 +171,7 @@ class FindMachine extends React.PureComponent {
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
         
         return (
-            <View style={{flex:1,backgroundColor:'#f5fbff'}}>
+            <Screen>
                 <Modal
                     visible={this.state.showModal}
                     onRequestClose={()=>{}}
@@ -232,7 +233,7 @@ class FindMachine extends React.PureComponent {
                         keyExtractor={this.keyExtractor}
                     />
                 </ScrollView>
-            </View>)
+            </Screen>)
     }
 }
 
