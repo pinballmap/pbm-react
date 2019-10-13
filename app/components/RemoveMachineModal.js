@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Text, StyleSheet } from 'react-native'
@@ -7,29 +7,27 @@ import ConfirmationModal from './ConfirmationModal'
 import PbmButton from './PbmButton'
 import WarningButton from './WarningButton'
 
-class RemoveMachineModal extends Component {
-    removeLmx = (curLmx, location_id) => {
-        this.props.removeMachineFromLocation(curLmx, location_id)
-        this.props.closeModal()
+const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: loc, machineName }) => {
+    const removeLmx = (curLmx, location_id) => {
+        removeMachineFromLocation(curLmx, location_id)
+        closeModal()
     }
 
-    render(){
-        const { curLmx, location } = this.props.location
+    const { curLmx, location } = loc
     
-        return(
-            <ConfirmationModal>
-                {this.props.machineName && <Text style={s.confirmText}>{`Remove ${this.props.machineName} from ${location.name}?`}</Text>}
-                <PbmButton 
-                    title={'Yes, Remove It'}
-                    onPress={() => this.removeLmx(curLmx, location.id)}
-                />
-                <WarningButton 
-                    title={'Cancel'}
-                    onPress={() => this.props.closeModal()}
-                />
-            </ConfirmationModal>    
-        )
-    }
+    return(
+        <ConfirmationModal>
+            {machineName && <Text style={s.confirmText}>{`Remove ${machineName} from ${location.name}?`}</Text>}
+            <PbmButton 
+                title={'Yes, Remove It'}
+                onPress={() => removeLmx(curLmx, location.id)}
+            />
+            <WarningButton 
+                title={'Cancel'}
+                onPress={() => closeModal()}
+            />
+        </ConfirmationModal>    
+    )
 }
 
 const s = StyleSheet.create({ 

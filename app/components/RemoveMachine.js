@@ -1,29 +1,27 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import RemoveMachineModal from './RemoveMachineModal'
 
-class RemoveMachine extends Component {
-    state = { showModal: false }
+const RemoveMachine = ({ user }) => {
+    const [showModal, setShowModal] = useState(false)
 
-    render(){
-        return(
-            <View>
-                {this.state.showModal && <RemoveMachineModal closeModal={() => this.setState({showModal: false})}/>}
-                {this.props.user.loggedIn && 
+    return(
+        <View>
+            {showModal && <RemoveMachineModal closeModal={() => setShowModal(false)}/>}
+            {user.loggedIn && 
                     <FontAwesome 
                         name='trash' 
                         size={30}
                         color={'red'}
                         style={{ marginRight: 10 }}
-                        onPress={() => this.setState({showModal: true})}
+                        onPress={() => setShowModal(true)}
                     />
-                }
-            </View>
-        )
-    }
+            }
+        </View>
+    )
 }
 
 RemoveMachine.propTypes = {

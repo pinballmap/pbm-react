@@ -27,6 +27,7 @@ import {
     PbmButton, 
     RemoveMachine, 
     RemoveMachineModal, 
+    Screen,
     Text,
     WarningButton, 
 }  from '../components'
