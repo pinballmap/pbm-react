@@ -14,7 +14,8 @@ const theme = Appearance.getColorScheme()
 const dark = {
     buttonColor: '#000',
     backgroundColor: '#000',
-    textColor: '#FFF',
+    pbmText: '#FFF',
+    buttonTextColor: '#FFF',
     modalBg: '#000',
     backButton: '#FFF'
 }
@@ -22,7 +23,8 @@ const dark = {
 const standard = {
     buttonColor: '#D3ECFF',
     backgroundColor: '#f5fbff',
-    textColor: '#4b5862',
+    pbmText: '#000e18', 
+    buttonTextColor: '#4b5862',
     modalBg: '#FFF',
     backButton: '#1e9dff'
 }
