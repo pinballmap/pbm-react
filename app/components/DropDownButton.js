@@ -36,7 +36,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontSize: 32
     },
     titleStyle: {
-        color:"#000e18",
+        color: theme.buttonTextColor,
         fontSize:16
     }
 })

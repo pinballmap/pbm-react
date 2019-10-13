@@ -35,7 +35,7 @@ const getStyles = (theme) => StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color: theme.textColor,
+        color: theme.buttonTextColor,
         fontSize:16,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },

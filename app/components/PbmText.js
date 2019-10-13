@@ -28,7 +28,7 @@ PbmText.propTypes = {
 
 const getStyles = (theme) => StyleSheet.create({
     text: {
-        color: "#000e18"
+        color: theme.pbmText
     },
 })
 
