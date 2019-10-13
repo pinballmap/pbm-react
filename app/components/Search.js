@@ -26,6 +26,7 @@ import {
     getLocationsByRegion,
     updateCurrCoordinates,
 } from '../actions'
+import { withThemeHOC } from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 
 let deviceWidth = Dimensions.get('window').width
@@ -114,13 +115,13 @@ class Search extends Component {
     render(){
         const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
-        const { theme } = this.props
+        const { theme } = this.props.theme
         const s = getStyles(theme)
-
+    
         return(
             <View>
                 <Modal
-                    transparent
+                    transparent={false}
                     visible={searchModalVisible}
                     onRequestClose={()=>{}}
                 >
@@ -137,8 +138,8 @@ class Search extends Component {
                             />
                             <Input
                                 placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color={theme === 'dark' ? '#FFF' : '#97a5af'} style={{marginLeft:-10,marginRight:0}}/>}
-                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme === 'dark' ? '#FFF' : '#97a5af'} style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
+                                leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{marginLeft:-10,marginRight:0}}/>}
+                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
                                 containerStyle={{paddingTop:4}}
@@ -220,14 +221,14 @@ Search.propTypes = {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',
+        backgroundColor: theme._f2f4f5,
     },
     ifX: {
         paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,         
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
-        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',
+        backgroundColor: theme._f2f4f5,
         height: 35,
         borderRadius: 5,
         borderColor: '#e0ebf2',
@@ -239,18 +240,18 @@ const getStyles = theme => StyleSheet.create({
     },
     searchIcon: {
         paddingLeft: 5,
-        color: theme === 'dark' ? '#FFF' : '#97a5af',  
+        color: theme._97a5af,  
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color: theme === 'dark' ? '#FFF' : '#97a5af',        
+        color: theme._97a5af,       
     },
     inputStyle: {
-        color: theme === 'dark' ? '#FFF' : '#97a5af',
+        color: theme._97a5af,
     },
     inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',  
+        backgroundColor: theme._f2f4f5,  
         borderRadius: 5,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
@@ -261,7 +262,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 0 : -12,             
     },
     clear: {
-        color: theme === 'dark' ? '#FFF' :'#6a7d8a',
+        color: theme._6a7d8a,
         marginLeft:5,
         marginRight:5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,                     
@@ -284,4 +285,4 @@ const mapDispatchToProps = (dispatch) => ({
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

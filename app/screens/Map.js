@@ -103,7 +103,6 @@ class Map extends Component {
         headerTitle:
         <Search 
             navigate={ navigation.navigate }
-            theme={theme}
         />,
         headerRight:
         <Button
