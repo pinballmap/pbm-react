@@ -17,7 +17,10 @@ const dark = {
     pbmText: '#FFF',
     buttonTextColor: '#FFF',
     modalBg: '#000',
-    backButton: '#FFF'
+    backButton: '#FFF',
+    _f2f4f5: '#000',
+    _6a7d8a: '#FFF',
+    _97a5af: '#FFF',
 }
 
 const standard = {
@@ -26,7 +29,10 @@ const standard = {
     pbmText: '#000e18', 
     buttonTextColor: '#4b5862',
     modalBg: '#FFF',
-    backButton: '#1e9dff'
+    backButton: '#1e9dff',
+    _f2f4f5: '#f2f4f5',
+    _6a7d8a: '#6a7d8a',
+    _97a5af: '#97a5af',
 }
 
 class App extends Component {
