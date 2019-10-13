@@ -114,15 +114,17 @@ class Search extends Component {
     render(){
         const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
+        const { theme } = this.props
+        const s = getStyles(theme)
 
         return(
             <View>
                 <Modal
-                    transparent={true}
+                    transparent
                     visible={searchModalVisible}
                     onRequestClose={()=>{}}
                 >
-                    <View style={[s.ifX,{flex:1,backgroundColor:'#f5fbff'}]}>
+                    <View style={[{flex: 1},s.ifX,s.background]}>
                         <View style={{display: 'flex', flexDirection: 'row'}}>
                             <MaterialIcons 
                                 onPress={() => {
@@ -135,15 +137,16 @@ class Search extends Component {
                             />
                             <Input
                                 placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color="#97a5af" style={{marginLeft:-10,marginRight:0}}/>}
-                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
+                                leftIcon={<MaterialIcons name='search' size={25} color={theme === 'dark' ? '#FFF' : '#97a5af'} style={{marginLeft:-10,marginRight:0}}/>}
+                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme === 'dark' ? '#FFF' : '#97a5af'} style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
                                 onChangeText={query => this.changeQuery(query)}
                                 value={q}
                                 containerStyle={{paddingTop:4}}
                                 key={submitButton ? 'search' : 'none'}
                                 returnKeyType={submitButton ? 'search' : 'none'}
                                 onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
-                                inputContainerStyle={s.input}
+                                inputContainerStyle={s.inputContainerStyle}
+                                inputStyle={s.inputStyle}
                                 autoFocus
                                 autoCorrect={false}
                             />
@@ -201,7 +204,7 @@ class Search extends Component {
                 </Modal>
                 <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
                     <View style={s.searchMap}>
-                        <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
+                        <MaterialIcons name='search' size={25} style={s.searchIcon} />
                         <Text style={s.inputPlaceholder}>City, Address, Location</Text>
                     </View>
                 </TouchableOpacity>
@@ -212,15 +215,19 @@ class Search extends Component {
 
 Search.propTypes = {
     getLocationsByCity: PropTypes.func,
+    theme: PropTypes.string,
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',
+    },
     ifX: {
         paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,         
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
-        backgroundColor: '#f2f4f5',
+        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',
         height: 35,
         borderRadius: 5,
         borderColor: '#e0ebf2',
@@ -231,15 +238,19 @@ const s = StyleSheet.create({
         alignItems: 'center'
     },
     searchIcon: {
-        paddingLeft: 5
+        paddingLeft: 5,
+        color: theme === 'dark' ? '#FFF' : '#97a5af',  
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color:'#97a5af',        
+        color: theme === 'dark' ? '#FFF' : '#97a5af',        
     },
-    input: {
+    inputStyle: {
+        color: theme === 'dark' ? '#FFF' : '#97a5af',
+    },
+    inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: '#f2f4f5',
+        backgroundColor: theme === 'dark' ? '#000' : '#f2f4f5',  
         borderRadius: 5,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
@@ -250,7 +261,7 @@ const s = StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 0 : -12,             
     },
     clear: {
-        color:'#6a7d8a',
+        color: theme === 'dark' ? '#FFF' :'#6a7d8a',
         marginLeft:5,
         marginRight:5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,                     
