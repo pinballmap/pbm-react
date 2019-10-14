@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import {     
     Linking,
     SafeAreaView,
-    ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { 
     HeaderBackButton,
+    Screen,
     Text, 
 } from '../components'
 
@@ -28,7 +28,7 @@ class FAQ extends Component {
     render(){
         return(
             <SafeAreaView style={{flex:1,backgroundColor:'#f5fbff'}}>
-                <ScrollView style={{flex:1,backgroundColor:'#f5fbff'}}>
+                <Screen>
                     <View style={s.container}>
                         <View style={s.child}>
                             <Text style={s.bold}>{`How do I search for a particular machine?`}</Text>
@@ -56,7 +56,7 @@ class FAQ extends Component {
                             <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={ () => this.props.navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
                         </View>  
                     </View>
-                </ScrollView>
+                </Screen>
             </SafeAreaView>
         )
     }

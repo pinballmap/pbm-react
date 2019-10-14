@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-unused-styles */
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
@@ -9,6 +8,7 @@ import { Button, ThemeContext } from 'react-native-elements'
 
 const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPress, icon, disabled}) => {
     const { theme } = useContext(ThemeContext)
+    const styles = getStyles(theme)
 
     return (
         <Button
@@ -18,26 +18,16 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             icon={icon}
             disabled={disabled}
             raised
-            buttonStyle={buttonStyle ? buttonStyle : styles(theme).blueButton}
-            titleStyle={styles(theme).titleStyle}
+            buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
+            titleStyle={styles.titleStyle}
             style={{borderRadius: 50}}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{borderRadius:50}, containerStyle ? containerStyle : styles(theme).margin15]}
+            containerStyle={[{borderRadius:50}, containerStyle ? containerStyle : styles.margin15]}
         />
     )
 }
 
-PbmButton.propTypes = {
-    onPress: PropTypes.func,
-    title: PropTypes.string,
-    accessibilityLabel: PropTypes.string,
-    icon: PropTypes.node,
-    disabled: PropTypes.bool,
-    buttonStyle: PropTypes.object,
-    containerStyle: PropTypes.object,
-}
-
-const styles = theme => StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     blueButton: {
         backgroundColor: theme.buttonColor,
         borderRadius: 50,
@@ -45,7 +35,7 @@ const styles = theme => StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color: theme.textColor,
+        color: theme.buttonTextColor,
         fontSize:16,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
@@ -56,5 +46,15 @@ const styles = theme => StyleSheet.create({
         marginBottom:15
     },
 })
+
+PbmButton.propTypes = {
+    onPress: PropTypes.func,
+    title: PropTypes.string,
+    accessibilityLabel: PropTypes.string,
+    icon: PropTypes.node,
+    disabled: PropTypes.bool,
+    buttonStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
+}
 
 export default PbmButton
