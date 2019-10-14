@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
@@ -6,40 +6,37 @@ import {
     View
 } from 'react-native'
 import { WebView } from 'react-native-webview'
+import { ThemeContext } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 
-class Blog extends Component {
-    state = { loading: true }
-  
-    static navigationOptions = ({ navigation }) => {
-        return {
-            drawerLabel: 'Blog',
-            drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />,
-            headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Blog',
-            headerRight:<View style={{padding:6}}></View>,
-        }
-    }
+const Blog = () => {
+    const [loading, setLoading] = useState(true)
+    const { theme } = useContext(ThemeContext)
     
-    render() {
-        return (
-            <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-                {this.state.loading && (
-                    <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
-                        <ActivityIndicator/>
-                    </View>
-                )}
-                <WebView
-                    onLoad={() => this.setState({loading: false})}
-                    style={{ flex: 1 }}
-                    source={{uri: 'http://blog.pinballmap.com/'}}
-                />
-            </View>
-        )
-    }
-     
+    return (
+        <Fragment>
+            {loading && (
+                <View style={{height: '100%', padding: 30, backgroundColor:theme.backgroundColor}}>
+                    <ActivityIndicator/>
+                </View>
+            )}
+            <WebView
+                onLoad={() => setLoading(false)}
+                style={{ flex: 1 }}
+                source={{uri: 'http://blog.pinballmap.com/'}}
+            />
+        </Fragment>
+    )   
 }
+
+Blog.navigationOptions = ({ navigation }) => ({
+    drawerLabel: 'Blog',
+    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />,
+    headerLeft: <HeaderBackButton navigation={navigation} />,
+    title: 'Blog',
+    headerRight:<View style={{padding:6}}></View>,
+})
 
 const s = StyleSheet.create({ 
     drawerIcon: {

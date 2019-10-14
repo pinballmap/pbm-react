@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { 
     ActivityIndicator,
-    ScrollView,
     StyleSheet, 
     TextInput, 
     View,
@@ -13,6 +12,7 @@ import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
+    Screen,
     Text, 
 } from '../components'
 import {
@@ -64,7 +64,7 @@ class Contact extends Component {
         const { loggedIn, submittingMessage, confirmationMessage } = this.props.user
 
         return(
-            <ScrollView keyboardDismissMode="on-drag" style={{flex: 1,backgroundColor:'#f5fbff'}}>
+            <Screen keyboardDismissMode="on-drag">
                 <ConfirmationModal visible={confirmationMessage.length > 0}>
                     <Text style={s.confirmText}>{confirmationMessage}</Text>
                     <View> 
@@ -118,7 +118,7 @@ class Contact extends Component {
                         />
                     </View>
                 }
-            </ScrollView>)
+            </Screen>)
     }
 }
 

@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
 import { 
     HeaderBackButton,
+    Screen,
     Text,
 } from '../components'
 
@@ -33,7 +34,7 @@ class FindLocationType extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Location Type`}</Text>,
+            title: 'Select Location Type'
         }
     }
 
@@ -63,7 +64,7 @@ class FindLocationType extends React.PureComponent {
     render() {
         
         return (
-            <View style={{flex:1,backgroundColor:'#f5fbff'}}> 
+            <Screen>
                 <SearchBar
                     lightTheme
                     placeholder='Filter location types...'
@@ -83,7 +84,7 @@ class FindLocationType extends React.PureComponent {
                         keyExtractor={this._keyExtractor}
                     />
                 </ScrollView>
-            </View>)
+            </Screen>)
     }
 }
 

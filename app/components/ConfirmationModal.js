@@ -1,37 +1,35 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
     Modal,
     StyleSheet, 
     View, 
 } from 'react-native'
+import { ThemeContext } from 'react-native-elements'
 
-class ConfirmationModal extends Component {
-    render(){
-        return(
-            <Modal
-                animationType="slide"
-                transparent={true}
-                onRequestClose={()=>{}}
-                visible={this.props.visible}
-            >
-                <View style={s.modalBg}>
-                    <View style= {s.modal}>
-                        {this.props.children}
-                    </View>
+const ConfirmationModal = ({children, visible}) => {
+    const { theme } = useContext(ThemeContext)
+
+    const s = getStyles(theme)
+
+    return(
+        <Modal
+            animationType="slide"
+            transparent={true}
+            onRequestClose={()=>{}}
+            visible={visible}
+        >
+            <View style={s.modalBg}>
+                <View style= {s.modal}>
+                    {children}
                 </View>
-            </Modal>    
+            </View>
+        </Modal>    
 
-        )
-    }
+    )
 }
 
-ConfirmationModal.propTypes = {
-    visible: PropTypes.bool,
-    children: PropTypes.node,
-}
-
-const s = StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     modalBg: {
         flex: 1,
         flexDirection: 'column',
@@ -40,11 +38,16 @@ const s = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     modal: {
-        backgroundColor: '#ffffff',
+        backgroundColor: theme.modalBg,
         borderRadius: 15,
         width: '80%',
         paddingVertical: 15,
     }
 })
+
+ConfirmationModal.propTypes = {
+    visible: PropTypes.bool,
+    children: PropTypes.node,
+}
 
 export default ConfirmationModal

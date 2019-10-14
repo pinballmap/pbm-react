@@ -90,7 +90,7 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({ navigation, theme }) => ({
         headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }

@@ -26,6 +26,7 @@ import {
 import { 
     HeaderBackButton,
     PbmButton, 
+    Screen,
     Text,
     WarningButton, 
 } from '../components'
@@ -85,7 +86,7 @@ class FindMachine extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Machine to Add`}</Text>,
+            title: 'Select Machine to Add',
             headerRight: 
                 navigation.getParam('showDone') ? 
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Done</Text></TouchableOpacity> 
@@ -170,7 +171,7 @@ class FindMachine extends React.PureComponent {
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
         
         return (
-            <View style={{flex:1,backgroundColor:'#f5fbff'}}>
+            <Screen>
                 <Modal
                     visible={this.state.showModal}
                     onRequestClose={()=>{}}
@@ -232,7 +233,7 @@ class FindMachine extends React.PureComponent {
                         keyExtractor={this.keyExtractor}
                     />
                 </ScrollView>
-            </View>)
+            </Screen>)
     }
 }
 

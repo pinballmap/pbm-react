@@ -13,6 +13,7 @@ import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
+    Screen,
     Text,
 } from '../components'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -42,7 +43,7 @@ class ResendConfirmation extends Component {
     render(){
         return(
             <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+                <Screen>
                     <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                         <ConfirmationModal visible={this.state.modalVisible}>
                             <Text style={s.confirmText}>Confirmation info resent.</Text>
@@ -77,7 +78,7 @@ class ResendConfirmation extends Component {
                             />
                         </View>
                     </KeyboardAwareScrollView>    
-                </View>
+                </Screen>
             </TouchableWithoutFeedback>)
     }
 }

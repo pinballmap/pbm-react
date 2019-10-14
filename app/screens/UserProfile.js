@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
     ActivityIndicator,
-    ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
@@ -14,6 +13,7 @@ import {
     HeaderBackButton,
     NotLoggedIn, 
     PbmButton, 
+    Screen,
     Text,
     WarningButton
 } from '../components'
@@ -78,7 +78,7 @@ class UserProfile extends Component {
         } = profileInfo
 
         return (
-            <ScrollView style={{backgroundColor:'#f5fbff'}}>
+            <Screen>
                 {!user.loggedIn ? 
                     <NotLoggedIn 
                         text={`Hi, you're not logged in, so you don't have a profile!`}
@@ -166,7 +166,7 @@ class UserProfile extends Component {
                         /> 
                     </View>
                 }                      
-            </ScrollView>
+            </Screen>
         )
     }
 }
