@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useContext, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { 
@@ -7,6 +7,7 @@ import {
     TextInput, 
     View,
 } from 'react-native'
+import { ThemeContext } from 'react-native-elements'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal,
@@ -20,35 +21,25 @@ import {
     clearMessage,
 } from '../actions'
 
-class Contact extends Component {
-    state = {
-        name: '', 
-        email: '', 
-        message: '',
-    }
-  
-    static navigationOptions = ({ navigation }) => {
-        return {
-            drawerLabel: 'Contact',
-            drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={[s.drawerIcon]} />, 
-            headerLeft: <HeaderBackButton navigation={navigation}/>,
-            title: 'Contact',
-            headerRight:<View style={{padding:6}}></View>,
-        }
+const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
+    const theme = useContext(ThemeContext)
+    const s = getStyles(theme)
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [message, setMessage] = useState('')
+
+    const submit = () => {
+        submitMessage({ name, email, message })
     }
 
-    submit = () => {
-        this.props.submitMessage(this.state)
+    const acknowledgeConfirmation = () => {
+        clearMessage()
+        navigation.goBack()
     }
 
-    acknowledgeConfirmation = () => {
-        this.props.clearMessage()
-        this.props.navigation.goBack()
-    }
-
-    _disabled = () => {
-        const {name, email, message} = this.state
-        if (this.props.user.loggedIn) {
+    const _disabled = () => {
+        if (user.loggedIn) {
             if (message) 
                 return false
         } 
@@ -60,69 +51,75 @@ class Contact extends Component {
         return true
     }
      
-    render(){
-        const { loggedIn, submittingMessage, confirmationMessage } = this.props.user
+    const { loggedIn, submittingMessage, confirmationMessage } = user
 
-        return(
-            <Screen keyboardDismissMode="on-drag">
-                <ConfirmationModal visible={confirmationMessage.length > 0}>
-                    <Text style={s.confirmText}>{confirmationMessage}</Text>
-                    <View> 
-                        <PbmButton
-                            title={"You bet!"}
-                            onPress={() => this.acknowledgeConfirmation()}
-                        />
-                    </View>
-                </ConfirmationModal>
-                {submittingMessage ? 
-                    <ActivityIndicator /> :
-                    <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
-                        <Text style={s.text}>{`Have a question, comment, or tip? We are here for you.`}</Text>
-                        {!loggedIn ?
-                            <View>
-                                <TextInput
-                                    style={[{height: 40},s.textInput]}
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={name => this.setState({ name })}
-                                    value={this.state.name}
-                                    returnKeyType="done"
-                                    placeholder={'Your name...'}
-                                    autoCorrect={false}
-                                /> 
-                                <TextInput
-                                    style={[{height: 40},s.textInput]}
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={email => this.setState({ email })}
-                                    value={this.state.email}
-                                    returnKeyType="done"
-                                    placeholder={'Your email...'}
-                                    keyboardType="email-address"
-                                    autoCorrect={false}
-                                /> 
-                            </View>
-                            : null}
-                        <TextInput
-                            multiline={true}
-                            placeholder={'Tell us about it...'}
-                            numberOfLines={10}
-                            style={[{padding:5,height: 200},s.textInput]}
-                            value={this.state.message}
-                            onChangeText={message => this.setState({ message })}
-                            textAlignVertical='top'
-                            underlineColorAndroid='transparent'
-                        />
-                        <PbmButton 
-                            title={'Submit'}
-                            disabled={this._disabled()}
-                            onPress={() => this.submit()}
-                        />
-                    </View>
-                }
-            </Screen>)
-    }
+    return(
+        <Screen keyboardDismissMode="on-drag">
+            <ConfirmationModal visible={confirmationMessage.length > 0}>
+                <Text style={s.confirmText}>{confirmationMessage}</Text>
+                <View> 
+                    <PbmButton
+                        title={"You bet!"}
+                        onPress={acknowledgeConfirmation}
+                    />
+                </View>
+            </ConfirmationModal>
+            {submittingMessage ? 
+                <ActivityIndicator /> :
+                <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                    <Text style={s.text}>{`Have a question, comment, or tip? We are here for you.`}</Text>
+                    {!loggedIn ?
+                        <View>
+                            <TextInput
+                                style={[{height: 40},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={name => setName(name)}
+                                value={name}
+                                returnKeyType="done"
+                                placeholder={'Your name...'}
+                                autoCorrect={false}
+                            /> 
+                            <TextInput
+                                style={[{height: 40},s.textInput]}
+                                underlineColorAndroid='transparent'
+                                onChangeText={email => setEmail(email)}
+                                value={email}
+                                returnKeyType="done"
+                                placeholder={'Your email...'}
+                                keyboardType="email-address"
+                                autoCorrect={false}
+                            /> 
+                        </View>
+                        : null}
+                    <TextInput
+                        multiline={true}
+                        placeholder={'Tell us about it...'}
+                        numberOfLines={10}
+                        style={[{padding:5,height: 200},s.textInput]}
+                        value={message}
+                        onChangeText={message => setMessage(message)}
+                        textAlignVertical='top'
+                        underlineColorAndroid='transparent'
+                    />
+                    <PbmButton 
+                        title={'Submit'}
+                        disabled={_disabled()}
+                        onPress={submit}
+                    />
+                </View>
+            }
+        </Screen>)
 }
+  
+Contact.navigationOptions = ({ navigation }) => ({
+    drawerLabel: 'Contact',
+    drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={{ fontSize: 24, color: '#6a7d8a'}} />, 
+    headerLeft: <HeaderBackButton navigation={navigation}/>,
+    title: 'Contact',
+    headerRight:<View style={{padding:6}}></View>,
+})
 
-const s = StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({ 
     text: {
         fontSize: 16,
         lineHeight: 22,
@@ -132,10 +129,6 @@ const s = StyleSheet.create({
         fontWeight: '600',
         color: '#4b5862',
         textAlign: 'center'
-    },
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
     },
     textInput: {
         backgroundColor: '#e0ebf2', 
