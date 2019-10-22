@@ -12,7 +12,18 @@ import { Ionicons } from '@expo/vector-icons'
 
 const NUM_MACHINES_TO_SHOW = 5
 
-const LocationCard = ({ distance, id, machines = [], name: locationName, navigation, state, street, city, type, zip }) => {
+const LocationCard = ({ 
+    distance, 
+    id, 
+    machines = [], 
+    name: locationName, 
+    navigation, 
+    state, 
+    street, 
+    city, 
+    type, 
+    zip 
+}) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
