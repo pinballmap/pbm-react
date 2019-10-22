@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
@@ -25,51 +25,39 @@ import {
     getMapLocations
 } from '../selectors'
 
-class CustomMarker extends Component
-{
+const CustomMarker = ({ marker, navigation }) => {
+    const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
-    state = {
-        tracksViewChanges: true,
-    }
+    const stopRendering = () => setTracksViewChanges(false)
 
-    stopRendering = () => {
-        this.setState({ tracksViewChanges: false })
-    }
-
-    render()
-    {
-        const { marker, navigation } = this.props
-
-        return (
-            <MapView.Marker
-                key={marker.id}
-                coordinate={{
-                    latitude: Number(marker.lat), 
-                    longitude: Number(marker.lon)
-                }}
-                title={marker.title}
-                tracksViewChanges={this.state.tracksViewChanges}
-                pointerEvents="auto"
-            >
+    return (
+        <MapView.Marker
+            key={marker.id}
+            coordinate={{
+                latitude: Number(marker.lat), 
+                longitude: Number(marker.lon)
+            }}
+            title={marker.title}
+            tracksViewChanges={tracksViewChanges}
+            pointerEvents="auto"
+        >
+            <View>
+                {marker.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}} onLoad={stopRendering} /> : <Image source={markerDotHeart} style={{height:24,width:28}} onLoad={stopRendering} />}
+            </View>
+            <MapView.Callout onPress={() => navigation.navigate('LocationDetails', {id: marker.id, locationName: marker.name})}>
                 <View>
-                    {marker.icon === 'dot' ? <Image source={markerDot} style={{height:20,width:20}} onLoad={this.stopRendering} /> : <Image source={markerDotHeart} style={{height:24,width:28}} onLoad={this.stopRendering} />}
-                </View>
-                <MapView.Callout onPress={() => navigation.navigate('LocationDetails', {id: marker.id, locationName: marker.name})}>
-                    <View>
-                        <View style={s.calloutStyle}>
-                            <Text style={{marginRight:20}}>{marker.name}</Text>
-                            {marker.machine_names.length === 1 ? 
-                                <Text>1 machine</Text> :
-                                <Text>{`${marker.machine_names.length} machines`}</Text>
-                            }
-                        </View>
-                        <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                    <View style={s.calloutStyle}>
+                        <Text style={{marginRight:20}}>{marker.name}</Text>
+                        {marker.machine_names.length === 1 ? 
+                            <Text>1 machine</Text> :
+                            <Text>{`${marker.machine_names.length} machines`}</Text>
+                        }
                     </View>
-                </MapView.Callout>
-            </MapView.Marker>
-        )
-    }
-
+                    <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>
+                </View>
+            </MapView.Callout>
+        </MapView.Marker>
+    )
 }
 
 CustomMarker.propTypes = {
