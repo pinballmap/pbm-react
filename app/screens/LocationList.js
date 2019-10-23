@@ -6,7 +6,7 @@ import {
     StyleSheet,
     View, 
 } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
 import { 
     HeaderBackButton,
     LocationCard,
@@ -81,41 +81,48 @@ export class LocationList extends Component {
         const { locations = [] } = this.state
 
         return (
-            <Screen>
-                <Text style={s.sort}>SORT BY:</Text>
-                <ButtonGroup
-                    onPress={this.updateIndex}
-                    selectedIndex={this.props.locations.selectedLocationListFilter}
-                    buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
-                    containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
-                    selectedButtonStyle={s.buttonStyle}
-                    selectedTextStyle={s.textStyle}
-                />
-                <FlatList
-                    data={locations}
-                    extraData={this.state}
-                    renderItem={({ item }) =>
-                        <LocationCard
-                            name={item.name}
-                            distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
-                            street={item.street}
-                            city={item.city}
-                            state={item.state}
-                            zip={item.zip}
-                            machines={item.machine_names} 
-                            type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
-                            navigation={this.props.navigation}
-                            id={item.id}
-                        />
-                    }
-                    keyExtractor={(item, index) => `list-item-${index}`}
-                />
-            </Screen>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            <Text style={s.sort}>SORT BY:</Text>
+                            <ButtonGroup
+                                onPress={this.updateIndex}
+                                selectedIndex={this.props.locations.selectedLocationListFilter}
+                                buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
+                                containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
+                                selectedButtonStyle={s.buttonStyle}
+                                selectedTextStyle={s.textStyle}
+                            />
+                            <FlatList
+                                data={locations}
+                                extraData={this.state}
+                                renderItem={({ item }) =>
+                                    <LocationCard
+                                        name={item.name}
+                                        distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
+                                        street={item.street}
+                                        city={item.city}
+                                        state={item.state}
+                                        zip={item.zip}
+                                        machines={item.machine_names} 
+                                        type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
+                                        navigation={this.props.navigation}
+                                        id={item.id}
+                                    />
+                                }
+                                keyExtractor={(item, index) => `list-item-${index}`}
+                            />
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     sort: {
         textAlign: 'center',
         marginTop: 5,
