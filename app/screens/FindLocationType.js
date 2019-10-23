@@ -73,12 +73,10 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
         </Screen>)
 }
 
-FindLocationType.navigationOptions = ({ navigation }) => {
-    return {
-        headerLeft: <HeaderBackButton navigation={navigation} />,
-        title: 'Select Location Type'
-    }
-}
+FindLocationType.navigationOptions = ({ navigation }) => ({
+    headerLeft: <HeaderBackButton navigation={navigation} />,
+    title: 'Select Location Type'
+})
 
 const getStyles = theme => StyleSheet.create({
     filterInput: {

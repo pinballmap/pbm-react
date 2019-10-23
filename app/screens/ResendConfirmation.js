@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { 
     Keyboard,
@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import {
     Input,
+    ThemeContext,
 } from 'react-native-elements'
 import { 
     ConfirmationModal,
@@ -19,74 +20,74 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { postData } from '../config/request'
 
-class ResendConfirmation extends Component {
-    state = {
-        identification: '',
-        identificationError: '',
-        modalVisible: false,
-    }
+const ResendConfirmation = ({ navigation }) => {
+    const theme = useContext(ThemeContext)
+    const s = getStyles(theme)
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerLeft: <HeaderBackButton navigation={navigation} />,
-        }
-    }
+    const [identification, setIdentification] = useState('')
+    const [identificationError, setIdentificationError] = useState('')
+    const [modalVisible, setModalVisible] = useState(false)
      
-    submit = () => {
-        this.setState({ identificationError: '' })
-        postData('/users/resend_confirmation.json', { identification: this.state.identification })
-            .then(() => this.setState({ modalVisible: true }), 
+    const submit = () => {
+        setIdentificationError('')
+        postData('/users/resend_confirmation.json', { identification })
+            .then(() => setModalVisible(true), 
                 (err) => { throw err})
-            .catch(identificationError => this.setState({ identificationError }))
+            .catch(identificationError => setIdentificationError(identificationError))
     }
 
-    render(){
-        return(
-            <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                <Screen>
-                    <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
-                        <ConfirmationModal visible={this.state.modalVisible}>
-                            <Text style={s.confirmText}>Confirmation info resent.</Text>
-                            <View>
-                                <PbmButton
-                                    title={"Great!"}
-                                    onPress={() => {
-                                        this.setState({ modalVisible: false})
-                                        this.props.navigation.navigate('Login')
-                                    }}
-                                />
-                            </View>
-                        </ConfirmationModal>
+    return(
+        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+            <Screen>
+                <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
+                    <ConfirmationModal visible={modalVisible}>
+                        <Text style={s.confirmText}>Confirmation info resent.</Text>
                         <View>
-                            <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
-                            <Input 
-                                placeholder='Username or email...'
-                                onChangeText={identification => this.setState({identification})}
-                                value={this.state.identification}
-                                errorStyle={{ color: 'red' }}
-                                errorMessage={this.state.identificationError}
-                                inputContainerStyle={s.inputBox}
-                                inputStyle={s.inputText}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                            />
-                            <PbmButton 
-                                title={'Submit'}
-                                onPress={() => this.submit()}
-                                disabled={this.state.identification.length === 0}
-                                containerStyle={s.container}
+                            <PbmButton
+                                title={"Great!"}
+                                onPress={() => {
+                                    setModalVisible(false)
+                                    navigation.navigate('Login')
+                                }}
                             />
                         </View>
-                    </KeyboardAwareScrollView>    
-                </Screen>
-            </TouchableWithoutFeedback>)
-    }
+                    </ConfirmationModal>
+                    <View>
+                        <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
+                        <Input 
+                            placeholder='Username or email...'
+                            onChangeText={identification => setIdentification(identification)}
+                            value={identification}
+                            errorStyle={{ color: 'red' }}
+                            errorMessage={identificationError}
+                            inputContainerStyle={s.inputBox}
+                            inputStyle={s.inputText}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <PbmButton 
+                            title={'Submit'}
+                            onPress={submit}
+                            disabled={identification.length === 0}
+                            containerStyle={s.container}
+                        />
+                    </View>
+                </KeyboardAwareScrollView>    
+            </Screen>
+        </TouchableWithoutFeedback>)
 }
 
-const s = StyleSheet.create({
+ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
+    headerLeft: <HeaderBackButton navigation={navigation} />,
+    headerStyle: {
+        backgroundColor: theme.backgroundColor,
+    },
+})
+
+const getStyles = theme => StyleSheet.create({
     container: {
-        marginLeft:25,
-        marginRight:25
+        marginLeft: 25,
+        marginRight: 25
     },
     inputBox: {
         borderRadius: 30,
