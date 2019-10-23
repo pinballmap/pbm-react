@@ -12,9 +12,10 @@ const theme = Appearance.getColorScheme()
 
 const dark = {
     buttonColor: '#7c6152',
+    buttonTextColor: '#bdae9d',
+    warningButtonColor: '#67050c',
     backgroundColor: '#2a211c',
     pbmText: '#bdae9d',
-    buttonTextColor: '#bdae9d',
     modalBg: '#2a211c',
     backButton: '#bdae9d',
     _f2f4f5: '#2a211c',
@@ -26,9 +27,10 @@ const dark = {
 
 const standard = {
     buttonColor: '#D3ECFF',
+    buttonTextColor: '#4b5862',
+    warningButtonColor: '#fdd4d7',
     backgroundColor: '#f5fbff',
     pbmText: '#000e18', 
-    buttonTextColor: '#4b5862',
     modalBg: '#FFF',
     backButton: '#1e9dff',
     _f2f4f5: '#f2f4f5',
