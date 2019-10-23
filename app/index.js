@@ -1,5 +1,4 @@
 import { registerRootComponent } from 'expo'
-//import { AppearanceProvider } from 'react-native-appearance'
 import { Appearance } from 'react-native-appearance'
 import React, { Component } from 'react'
 import { Platform, StatusBar } from 'react-native'
