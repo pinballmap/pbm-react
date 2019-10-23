@@ -26,7 +26,7 @@ import {
     getLocationsByRegion,
     updateCurrCoordinates,
 } from '../actions'
-import { withThemeHOC } from './withThemeHOC'
+import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 
 let deviceWidth = Dimensions.get('window').width

@@ -12,6 +12,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
+import { ThemeConsumer } from 'react-native-elements'
 import { 
     DropDownButton, 
     HeaderBackButton,
@@ -80,111 +81,118 @@ class EditLocationDetails extends Component {
         const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
 
         return(
-            <Screen keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showEditLocationDetailsModal}
-                    onRequestClose={()=>{}}
-                >
-                    {errorText ? 
-                        <View style={{marginTop: 100}}>
-                            <Text>{errorText}</Text>
-                            <PbmButton 
-                                title={"OK"}
-                                onPress={() => this.acceptError()}
-                            />
-                        </View>
-                        :              
-                        <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>         
-                            <ScrollView style={{backgroundColor:'#f5fbff'}}>
-                                <Text style={s.title}>Phone</Text>
-                                <Text style={s.preview}>{phone}</Text>
-                                <View style={s.hr}></View>
-                                <Text style={s.title}>Website</Text>
-                                <Text style={s.preview}>{website}</Text>
-                                <View style={s.hr}></View>
-                                <Text style={s.title}>Location Notes</Text>
-                                <Text style={s.preview}>{description}</Text>
-                                <View style={s.hr}></View>
-                                <Text style={s.title}>Location Type</Text>
-                                <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
-                                <View style={s.hr}></View>
-                                <Text style={s.title}>Operator</Text>
-                                <Text style={s.preview}>{typeof operatorId  === 'number' && operator > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
-                                <PbmButton
-                                    title={'Confirm Details'}
-                                    onPress={() => this.confirmEditLocationDetails()}
-                                />
-                                <WarningButton
-                                    title={'Cancel'}
-                                    onPress={() => this.setState({ showEditLocationDetailsModal: false})}
-                                />
-                            </ScrollView>
-                        </SafeAreaView>
-                    }
-                </Modal>
-                {updatingLocationDetails ?  
-                    <ActivityIndicator /> :
-                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                        <View style={{marginLeft:10,marginRight:10}}>
-                            <Text style={s.title}>Phone</Text>
-                            <TextInput 
-                                style={[{height: 40},s.textInput,s.radius10]}
-                                keyboardType='numeric'
-                                underlineColorAndroid='transparent'
-                                onChangeText={phone => this.setState({ phone })}
-                                value={phone}
-                                returnKeyType="done"
-                                placeholder={phone || '(503) xxx-xxxx'}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                            />
-                            <Text style={s.title}>Website</Text>
-                            <TextInput
-                                style={[{height: 40},s.textInput,s.radius10]}
-                                underlineColorAndroid='transparent'
-                                onChangeText={website => this.setState({ website })}
-                                value={website}
-                                returnKeyType="done"
-                                placeholder={website || 'http://...'}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                            />
-                            <Text style={s.title}>Location Notes</Text>
-                            <TextInput
-                                multiline={true}
-                                numberOfLines={4}
-                                style={[{height: 100},s.textInput,s.radius10]}
-                                onChangeText={description => this.setState({ description })}
-                                underlineColorAndroid='transparent'
-                                value={description}
-                                placeholder={description || 'Location description...'}
-                                textAlignVertical='top'
-                            />
-                            <Text style={s.title}>Location Type</Text>
-                            <DropDownButton
-                                title={locationTypeName}
-                                onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
-                            /> 
-                            <Text style={s.title}>Operator</Text>
-                            <DropDownButton
-                                title={operatorName}
-                                onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
-                            />                        
-                            <PbmButton
-                                title={'Submit Location Details'}
-                                onPress={() => this.setState({ showEditLocationDetailsModal: true })}
-                            />
-                        </View>
-                    </TouchableWithoutFeedback>
-                }
-            </Screen>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                            <Modal
+                                animationType="slide"
+                                transparent={false}
+                                visible={this.state.showEditLocationDetailsModal}
+                                onRequestClose={()=>{}}
+                            >
+                                {errorText ? 
+                                    <View style={{marginTop: 100}}>
+                                        <Text>{errorText}</Text>
+                                        <PbmButton 
+                                            title={"OK"}
+                                            onPress={() => this.acceptError()}
+                                        />
+                                    </View>
+                                    :              
+                                    <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>         
+                                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                                            <Text style={s.title}>Phone</Text>
+                                            <Text style={s.preview}>{phone}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Website</Text>
+                                            <Text style={s.preview}>{website}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Location Notes</Text>
+                                            <Text style={s.preview}>{description}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Location Type</Text>
+                                            <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
+                                            <View style={s.hr}></View>
+                                            <Text style={s.title}>Operator</Text>
+                                            <Text style={s.preview}>{typeof operatorId  === 'number' && operator > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                            <PbmButton
+                                                title={'Confirm Details'}
+                                                onPress={() => this.confirmEditLocationDetails()}
+                                            />
+                                            <WarningButton
+                                                title={'Cancel'}
+                                                onPress={() => this.setState({ showEditLocationDetailsModal: false})}
+                                            />
+                                        </ScrollView>
+                                    </SafeAreaView>
+                                }
+                            </Modal>
+                            {updatingLocationDetails ?  
+                                <ActivityIndicator /> :
+                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                    <View style={{marginLeft:10,marginRight:10}}>
+                                        <Text style={s.title}>Phone</Text>
+                                        <TextInput 
+                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            keyboardType='numeric'
+                                            underlineColorAndroid='transparent'
+                                            onChangeText={phone => this.setState({ phone })}
+                                            value={phone}
+                                            returnKeyType="done"
+                                            placeholder={phone || '(503) xxx-xxxx'}
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+                                        <Text style={s.title}>Website</Text>
+                                        <TextInput
+                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            underlineColorAndroid='transparent'
+                                            onChangeText={website => this.setState({ website })}
+                                            value={website}
+                                            returnKeyType="done"
+                                            placeholder={website || 'http://...'}
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+                                        <Text style={s.title}>Location Notes</Text>
+                                        <TextInput
+                                            multiline={true}
+                                            numberOfLines={4}
+                                            style={[{height: 100},s.textInput,s.radius10]}
+                                            onChangeText={description => this.setState({ description })}
+                                            underlineColorAndroid='transparent'
+                                            value={description}
+                                            placeholder={description || 'Location description...'}
+                                            textAlignVertical='top'
+                                        />
+                                        <Text style={s.title}>Location Type</Text>
+                                        <DropDownButton
+                                            title={locationTypeName}
+                                            onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
+                                        /> 
+                                        <Text style={s.title}>Operator</Text>
+                                        <DropDownButton
+                                            title={operatorName}
+                                            onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
+                                        />                        
+                                        <PbmButton
+                                            title={'Submit Location Details'}
+                                            onPress={() => this.setState({ showEditLocationDetailsModal: true })}
+                                        />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            }
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({ 
     title: {
         textAlign:'center',
         marginBottom: 5,

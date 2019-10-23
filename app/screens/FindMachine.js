@@ -13,7 +13,7 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, ThemeConsumer } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
@@ -89,7 +89,7 @@ class FindMachine extends React.PureComponent {
             title: 'Select Machine to Add',
             headerRight: 
                 navigation.getParam('showDone') ? 
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={s.titleStyle}>Done</Text></TouchableOpacity> 
+                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{color:"#6a7d8a",fontSize:16,fontWeight:'bold',marginRight:10}}>Done</Text></TouchableOpacity> 
                     : <View style={{padding:6}}></View>,
         }
     }
@@ -171,73 +171,81 @@ class FindMachine extends React.PureComponent {
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
         
         return (
-            <Screen>
-                <Modal
-                    visible={this.state.showModal}
-                    onRequestClose={()=>{}}
-                    transparent={false}
-                >
-                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
-                            <View style={s.verticalAlign}>
-                                <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
-                                <TextInput
-                                    multiline={true}
-                                    placeholder={'You can also include a machine comment...'}
-                                    numberOfLines={2}
-                                    style={[{padding:5,height: 50},s.textInput]}
-                                    value={this.state.condition}
-                                    onChangeText={condition => this.setState({ condition })}
-                                    textAlignVertical='top'
-                                    underlineColorAndroid='transparent'
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            <Modal
+                                visible={this.state.showModal}
+                                onRequestClose={()=>{}}
+                                transparent={false}
+                            >
+                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                        <View style={s.verticalAlign}>
+                                            <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
+                                            <TextInput
+                                                multiline={true}
+                                                placeholder={'You can also include a machine comment...'}
+                                                numberOfLines={2}
+                                                style={[{padding:5,height: 50},s.textInput]}
+                                                value={this.state.condition}
+                                                onChangeText={condition => this.setState({ condition })}
+                                                textAlignVertical='top'
+                                                underlineColorAndroid='transparent'
+                                            />
+                                            <PbmButton 
+                                                title={'Add'}
+                                                onPress={this.addMachine}
+                                            />
+                                            <WarningButton
+                                                title={'Cancel'}
+                                                onPress={this.cancelAddMachine}                      
+                                            />
+                                        </View>
+                                    </KeyboardAwareScrollView>
+                                </TouchableWithoutFeedback>
+                            </Modal> 
+                            <SearchBar
+                                lightTheme
+                                placeholder='Filter machines...'
+                                platform='default'
+                                searchIcon={<MaterialIcons name='search' size={25} color="#97a5af" />}
+                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" onPress={() => this.handleSearch('')} />}
+                                onChangeText={this.handleSearch}
+                                inputStyle={{color:'#000e18'}}
+                                value={this.state.query}
+                                inputContainerStyle={s.filterInput}
+                                containerStyle={{backgroundColor:'#f5fbff'}}
+                                autoCorrect={false}
+                            />
+                            {multiSelect ? 
+                                <View style={{alignItems:'center',padding:5,backgroundColor: "#6a7d8a"}}>
+                                    {machineList.length === 0 ? <Text style={{color: "#f5fbff"}}>0 machines selected</Text> :
+                                        <View style={{display: 'flex', flexDirection: 'row'}}>
+                                            <Text style={{color: "#f5fbff"}}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                                        </View>
+                                    }
+                                </View> : null
+                            }
+                            <ScrollView keyboardDismissMode="on-drag">
+                                <FlatList
+                                    keyboardShouldPersistTaps="always"
+                                    data={this.state.machines}
+                                    renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
+                                    keyExtractor={this.keyExtractor}
                                 />
-                                <PbmButton 
-                                    title={'Add'}
-                                    onPress={this.addMachine}
-                                />
-                                <WarningButton
-                                    title={'Cancel'}
-                                    onPress={this.cancelAddMachine}                      
-                                />
-                            </View>
-                        </KeyboardAwareScrollView>
-                    </TouchableWithoutFeedback>
-                </Modal> 
-                <SearchBar
-                    lightTheme
-                    placeholder='Filter machines...'
-                    platform='default'
-                    searchIcon={<MaterialIcons name='search' size={25} color="#97a5af" />}
-                    clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" onPress={() => this.handleSearch('')} />}
-                    onChangeText={this.handleSearch}
-                    inputStyle={{color:'#000e18'}}
-                    value={this.state.query}
-                    inputContainerStyle={s.filterInput}
-                    containerStyle={{backgroundColor:'#f5fbff'}}
-                    autoCorrect={false}
-                />
-                {multiSelect ? 
-                    <View style={{alignItems:'center',padding:5,backgroundColor: "#6a7d8a"}}>
-                        {machineList.length === 0 ? <Text style={{color: "#f5fbff"}}>0 machines selected</Text> :
-                            <View style={{display: 'flex', flexDirection: 'row'}}>
-                                <Text style={{color: "#f5fbff"}}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
-                            </View>
-                        }
-                    </View> : null
-                }
-                <ScrollView keyboardDismissMode="on-drag">
-                    <FlatList
-                        keyboardShouldPersistTaps="always"
-                        data={this.state.machines}
-                        renderItem={multiSelect ? this.renderMultiSelectRow: this.renderRow}
-                        keyExtractor={this.keyExtractor}
-                    />
-                </ScrollView>
-            </Screen>)
+                            </ScrollView>
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
+        )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     filterInput: {
         height:35,
         backgroundColor:'#e0ebf2',
@@ -253,12 +261,6 @@ const s = StyleSheet.create({
         marginRight:20, 
         marginTop: 20,
         borderRadius: 10,
-    },
-    titleStyle: {
-        color: "#6a7d8a",
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginRight: 10
     },
     verticalAlign: {
         flexDirection: 'column',
