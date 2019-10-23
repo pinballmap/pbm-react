@@ -12,6 +12,7 @@ import Search from './Search'
 import DrawerMenu from './DrawerMenu'
 import HeaderBackButton from './HeaderBackButton'
 import Screen from './Screen'
+import withThemeHOC from './withThemeHOC'
 
 export {
     LocationCard,
@@ -28,4 +29,5 @@ export {
     DrawerMenu,
     HeaderBackButton,
     Screen,
+    withThemeHOC,
 }
