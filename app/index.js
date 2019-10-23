@@ -12,15 +12,17 @@ import store from './store'
 const theme = Appearance.getColorScheme()
 
 const dark = {
-    buttonColor: '#000',
-    backgroundColor: '#000',
-    pbmText: '#FFF',
-    buttonTextColor: '#FFF',
-    modalBg: '#000',
-    backButton: '#FFF',
-    _f2f4f5: '#000',
-    _6a7d8a: '#FFF',
-    _97a5af: '#FFF',
+    buttonColor: '#7c6152',
+    backgroundColor: '#2a211c',
+    pbmText: '#bdae9d',
+    buttonTextColor: '#bdae9d',
+    modalBg: '#2a211c',
+    backButton: '#bdae9d',
+    _f2f4f5: '#2a211c',
+    _6a7d8a: '#bdae9d',
+    _97a5af: '#bdae9d',
+    _e0ebf2: '#7c6152',
+    hr: '#7c6152',
 }
 
 const standard = {
@@ -33,6 +35,8 @@ const standard = {
     _f2f4f5: '#f2f4f5',
     _6a7d8a: '#6a7d8a',
     _97a5af: '#97a5af',
+    _e0ebf2: '#e0ebf2',
+    hr: '#97a5af',
 }
 
 class App extends Component {
