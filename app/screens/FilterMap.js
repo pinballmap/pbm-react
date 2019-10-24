@@ -99,7 +99,7 @@ const FilterMap = ({
                 onPress={setNumMachinesSelected}
                 selectedIndex={getIdx(numMachines)}
                 buttons={['All', '2+', '3+', '4+', '5+']}
-                containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
+                containerStyle={s.buttonGroupContainer}
                 selectedButtonStyle={s.buttonStyle}
                 selectedTextStyle={s.textStyle}
             />
@@ -118,7 +118,7 @@ const FilterMap = ({
                 onPress={updateViewFavorites}
                 selectedIndex={viewByFavoriteLocations ? 1 : 0}
                 buttons={['All', 'My Favorites']}
-                containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
+                containerStyle={s.buttonGroupContainer}
                 selectedButtonStyle={s.buttonStyle}
                 selectedTextStyle={s.textStyle}
             />
@@ -133,10 +133,13 @@ const FilterMap = ({
 
 }
 
-FilterMap.navigationOptions = ({ navigation }) => ({
+FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
     title: 'Filter Results',
     headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
 })
 
 
@@ -153,7 +156,7 @@ const getStyles = theme => StyleSheet.create({
     },
     border: {
         borderWidth: 2,
-        borderColor: "#97a5af",
+        borderColor: theme.borderColor,
     },
     sectionTitle: {
         textAlign: 'center',
@@ -171,12 +174,18 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
     },
     buttonStyle: {
-        backgroundColor: '#e0f1fb',
+        backgroundColor: theme._e0f1fb,
     },
     textStyle: {
         color: theme.pbmText,
         fontWeight: 'bold',
     },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2
+    }
 })
 
 FilterMap.propTypes = {

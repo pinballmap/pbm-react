@@ -80,7 +80,7 @@ const ResendConfirmation = ({ navigation }) => {
 ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
     },
 })
 

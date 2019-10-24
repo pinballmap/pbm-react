@@ -102,7 +102,7 @@ class Map extends Component {
             type="clear"
         />,
         headerStyle: {
-            backgroundColor: theme.backgroundColor,
+            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
         },
     })
 
