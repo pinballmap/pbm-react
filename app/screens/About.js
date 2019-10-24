@@ -92,12 +92,15 @@ const About = () => {
 
 }
 
-About.navigationOptions = ({ navigation }) => ({
+About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
     drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#6a7d8a' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'About',
     headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
 })
 
 const getStyles = theme => StyleSheet.create({
