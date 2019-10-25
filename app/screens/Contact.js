@@ -23,7 +23,7 @@ import {
 
 const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     const theme = useContext(ThemeContext)
-    const s = getStyles(theme)
+    const s = getStyles(theme.theme)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -77,6 +77,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 value={name}
                                 returnKeyType="done"
                                 placeholder={'Your name...'}
+                                placeholderTextColor={theme._97a5af}
                                 autoCorrect={false}
                             /> 
                             <TextInput
@@ -86,6 +87,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 value={email}
                                 returnKeyType="done"
                                 placeholder={'Your email...'}
+                                placeholderTextColor={theme._97a5af}
                                 keyboardType="email-address"
                                 autoCorrect={false}
                             /> 
@@ -94,6 +96,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                     <TextInput
                         multiline={true}
                         placeholder={'Tell us about it...'}
+                        placeholderTextColor={theme._97a5af}
                         numberOfLines={10}
                         style={[{padding:5,height: 200},s.textInput]}
                         value={message}
@@ -119,7 +122,8 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
-    }
+    },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
 })
 
 const getStyles = theme => StyleSheet.create({ 
@@ -130,12 +134,13 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontWeight: '600',
-        color: theme.test,
+        color: theme.pbmText,
         textAlign: 'center'
     },
     textInput: {
-        backgroundColor: theme.test, 
-        borderColor: theme.test,
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
+        color: theme.pbmText,
         borderWidth:1,
         marginLeft: 10,
         marginRight: 10, 
