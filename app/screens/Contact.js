@@ -111,12 +111,15 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
         </Screen>)
 }
   
-Contact.navigationOptions = ({ navigation }) => ({
+Contact.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Contact',
     drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={{ fontSize: 24, color: '#6a7d8a'}} />, 
     headerLeft: <HeaderBackButton navigation={navigation}/>,
     title: 'Contact',
     headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    }
 })
 
 const getStyles = theme => StyleSheet.create({ 
@@ -127,12 +130,12 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontWeight: '600',
-        color: '#4b5862',
+        color: theme.test,
         textAlign: 'center'
     },
     textInput: {
-        backgroundColor: '#e0ebf2', 
-        borderColor: '#d1dfe8',
+        backgroundColor: theme.test, 
+        borderColor: theme.test,
         borderWidth:1,
         marginLeft: 10,
         marginRight: 10, 

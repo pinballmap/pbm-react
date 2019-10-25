@@ -69,26 +69,34 @@ const PasswordReset = ({ navigation }) => {
                             title={'Submit'}
                             onPress={submit}
                             disabled={identification.length === 0}
+                            containerStyle={s.container}
                         />
                     </View>
                 </KeyboardAwareScrollView>
             </Screen>
         </TouchableWithoutFeedback>)
-
 }
 
-PasswordReset.navigationOptions = ({ navigation }) => ({
+PasswordReset.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
 })
 
 const getStyles = theme => StyleSheet.create({
+    container: {
+        marginLeft: 25,
+        marginRight: 25
+    },
     inputBox: {
         borderRadius: 30,
         borderWidth: 1,
         borderColor: '#97a5af',
         backgroundColor: "#ffffff",
         width: '100%',
-        margin:15,
+        margin: 15,
+        paddingLeft: 10
     },
     inputText: {
         color: '#000e18',
