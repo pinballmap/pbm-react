@@ -164,8 +164,8 @@ class Search extends Component {
                                             title={region.full_name}
                                             rightTitle={'Region'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
+                                            titleStyle={s.listItemTitle}
+                                            containerStyle={s.listContainerStyle}
                                         /> 
                                     </TouchableOpacity>
                                     )) : null
@@ -180,8 +180,8 @@ class Search extends Component {
                                             title={location.value}
                                             rightTitle={'City'}
                                             rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
+                                            titleStyle={s.listItemTitle}
+                                            containerStyle={s.listContainerStyle}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
@@ -194,8 +194,8 @@ class Search extends Component {
                                     >
                                         <ListItem
                                             title={location.label}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
+                                            titleStyle={s.listItemTitle}
+                                            containerStyle={s.listContainerStyle}
                                         /> 
                                     </TouchableOpacity>)
                                 ) : null
@@ -231,7 +231,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme._f2f4f5,
         height: 35,
         borderRadius: 5,
-        borderColor: '#e0ebf2',
+        borderColor: theme._e0ebf2,
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
@@ -260,6 +260,16 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: 'row',
         paddingLeft:0,
         marginTop: Platform.OS === 'ios' ? 0 : -12,             
+    },
+    listContainerStyle: {
+        borderBottomColor: theme.hr,
+        borderBottomWidth: 1,
+        backgroundColor: theme.backgroundColor
+    },
+    listItemTitle: {
+      color: theme.buttonTextColor,
+      marginBottom: -2,
+      marginTop: -2  
     },
     clear: {
         color: theme._6a7d8a,

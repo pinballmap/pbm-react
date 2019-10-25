@@ -101,6 +101,9 @@ class Map extends Component {
             titleStyle={s.titleStyle}
             type="clear"
         />,
+        headerStyle: {
+            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        },
     })
 
 

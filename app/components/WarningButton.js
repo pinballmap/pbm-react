@@ -33,18 +33,18 @@ WarningButton.propTypes = {
 
 const getStyles = (theme) => StyleSheet.create({
     margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 15,
+        marginBottom: 15
     },
     titleStyle: {
-        fontSize:16,
-        color:'#f53240',
+        fontSize: 16,
+        color: theme.buttonTextColor,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     redButton: {
-        backgroundColor: "#fdd4d7",
+        backgroundColor: theme.warningButtonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0

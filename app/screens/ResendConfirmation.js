@@ -69,6 +69,7 @@ const ResendConfirmation = ({ navigation }) => {
                             title={'Submit'}
                             onPress={submit}
                             disabled={identification.length === 0}
+                            containerStyle={s.container}
                         />
                     </View>
                 </KeyboardAwareScrollView>    
@@ -76,18 +77,26 @@ const ResendConfirmation = ({ navigation }) => {
         </TouchableWithoutFeedback>)
 }
 
-ResendConfirmation.navigationOptions = ({ navigation }) => ({
+ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
 })
 
 const getStyles = theme => StyleSheet.create({
+    container: {
+        marginLeft: 25,
+        marginRight: 25
+    },
     inputBox: {
         borderRadius: 30,
         borderWidth: 1,
         borderColor: '#97a5af',
         backgroundColor: "#ffffff",
         margin: 15,
-        width: '100%'
+        width: '100%',
+        paddingLeft: 10
     },
     inputText: {
         color: '#000e18',
