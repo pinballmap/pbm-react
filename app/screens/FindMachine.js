@@ -83,7 +83,7 @@ class FindMachine extends React.PureComponent {
         }   
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Select Machine to Add',
@@ -91,6 +91,10 @@ class FindMachine extends React.PureComponent {
                 navigation.getParam('showDone') ? 
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{color:"#6a7d8a",fontSize:16,fontWeight:'bold',marginRight:10}}>Done</Text></TouchableOpacity> 
                     : <View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
         }
     }
 
@@ -188,6 +192,7 @@ class FindMachine extends React.PureComponent {
                                             <TextInput
                                                 multiline={true}
                                                 placeholder={'You can also include a machine comment...'}
+                                                placeholderTextColor={theme._97a5af}
                                                 numberOfLines={2}
                                                 style={[{padding:5,height: 50},s.textInput]}
                                                 value={this.state.condition}
@@ -208,16 +213,16 @@ class FindMachine extends React.PureComponent {
                                 </TouchableWithoutFeedback>
                             </Modal> 
                             <SearchBar
-                                lightTheme
                                 placeholder='Filter machines...'
+                                placeholderTextColor={theme._97a5af}
                                 platform='default'
-                                searchIcon={<MaterialIcons name='search' size={25} color="#97a5af" />}
-                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" onPress={() => this.handleSearch('')} />}
+                                searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
+                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => this.handleSearch('')} />}
                                 onChangeText={this.handleSearch}
-                                inputStyle={{color:'#000e18'}}
+                                inputStyle={{color:theme.pbmText}}
                                 value={this.state.query}
                                 inputContainerStyle={s.filterInput}
-                                containerStyle={{backgroundColor:'#f5fbff'}}
+                                containerStyle={{backgroundColor:theme.d_493931}}
                                 autoCorrect={false}
                             />
                             {multiSelect ? 
@@ -247,25 +252,25 @@ class FindMachine extends React.PureComponent {
 
 const getStyles = theme => StyleSheet.create({
     filterInput: {
-        height:35,
-        backgroundColor:'#e0ebf2',
-        borderRadius:10,
-        borderColor: '#d1dfe8',
-        borderWidth:1
+        height: 35,
+        backgroundColor: theme._e0ebf2,
+        borderRadius: 10,
+        borderColor: theme.borderColor,
+        borderWidth: 1
     },
     textInput: {
-        backgroundColor: '#e0ebf2', 
-        borderColor: '#d1dfe8',
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
         borderWidth: 1,
-        marginLeft:20,
-        marginRight:20, 
+        marginLeft: 20,
+        marginRight: 20, 
         marginTop: 20,
         borderRadius: 10,
     },
     verticalAlign: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
+        height: deviceHeight
     },
 })
 
