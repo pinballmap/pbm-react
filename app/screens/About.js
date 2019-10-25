@@ -18,7 +18,7 @@ import { formatNumWithCommas } from '../utils/utilityFunctions'
 let deviceWidth = Dimensions.get('window').width
 
 const About = () => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
     
     const [stats, setStats] = useState({
