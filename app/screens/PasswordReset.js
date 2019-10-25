@@ -21,7 +21,7 @@ import {
 import { postData } from '../config/request'
 
 const PasswordReset = ({ navigation }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
     const [identification, setIdentification] = useState('')

@@ -21,7 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { postData } from '../config/request'
 
 const ResendConfirmation = ({ navigation }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
     const [identification, setIdentification] = useState('')

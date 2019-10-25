@@ -18,8 +18,8 @@ import {
 } from '../components'
 
 const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => {
-    const theme = useContext(ThemeContext)
-    const s = getStyles(theme.theme)
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
     
     const allLocationTypes = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...locationTypes]
     const [selectedLocationTypes, setLocationTypes] = useState(allLocationTypes)
