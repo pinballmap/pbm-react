@@ -22,8 +22,8 @@ import {
 } from '../actions'
 
 const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
-    const theme = useContext(ThemeContext)
-    const s = getStyles(theme.theme)
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
