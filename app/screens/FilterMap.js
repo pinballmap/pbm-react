@@ -42,8 +42,8 @@ const FilterMap = ({
     selectedOperatorTypeFilter,
     clearFilters,
 }) => {
-    const theme = useContext(ThemeContext)
-    const s = getStyles(theme.theme)
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
     
     const { machine, numMachines, viewByFavoriteLocations } = query
     const { navigate } = navigation
