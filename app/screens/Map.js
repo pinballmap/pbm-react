@@ -1,19 +1,28 @@
-import React, { Component, useContext, useState } from 'react'
+import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator,
     Image,
     Platform,
     StyleSheet, 
     View,
 } from 'react-native'
-import { Button, Icon } from 'react-native-elements'
+import { 
+    Button, 
+    Icon,
+    ThemeConsumer,
+} from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDot from '../assets/images/markerdot.png'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
-import { PbmButton, ConfirmationModal, Search, Text } from '../components'
+import { 
+    ActivityIndicator,
+    PbmButton, 
+    ConfirmationModal, 
+    Search, 
+    Text,
+} from '../components'
 import { 
     fetchCurrentLocation, 
     getFavoriteLocations,
@@ -25,7 +34,7 @@ import {
     getMapLocations
 } from '../selectors'
 
-const CustomMarker = ({ marker, navigation }) => {
+const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
     const stopRendering = () => setTracksViewChanges(false)
@@ -78,33 +87,41 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation, theme }) => ({
-        headerLeft:
+    static navigationOptions = ({ navigation, theme }) => {
+        const titleStyle = {
+            color: "#1e9dff",
+            fontSize: 16,
+            fontWeight: Platform.OS === 'ios' ? "600" : "400"
+        }
+
+        return {
+            headerLeft:
         <Button
             onPress={ () => navigation.navigate('LocationList') }
             containerStyle={{width:50}}
             title="List"
             accessibilityLabel="List"
-            titleStyle={s.titleStyle}
+            titleStyle={titleStyle}
             type="clear"
         />,
-        headerTitle:
+            headerTitle:
         <Search 
             navigate={ navigation.navigate }
         />,
-        headerRight:
+            headerRight:
         <Button
             onPress={ () => navigation.navigate('FilterMap')}
             containerStyle={{width:60}}
             title="Filter"
             accessibilityLabel="Filter"
-            titleStyle={s.titleStyle}
+            titleStyle={titleStyle}
             type="clear"
         />,
-        headerStyle: {
-            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
-        },
-    })
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+        }
+    }
 
 
     onRegionChange = (region) => {
@@ -170,82 +187,87 @@ class Map extends Component {
 
         if (!latitude) {
             return(
-                <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
-                    <ActivityIndicator/>
-                </View>
+                <ActivityIndicator/>
             )
         }
 
         return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                <ConfirmationModal 
-                    visible={showNoLocationTrackingModal}>
-                    <View> 
-                        <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
-                        <PbmButton
-                            title={"OK"}
-                            onPress={() => this.setState({ showNoLocationTrackingModal: false })}
-                            accessibilityLabel="Great!"
-                        />
-                    </View>
-                </ConfirmationModal>
-                <ConfirmationModal 
-                    visible={errorText ? true : false}>
-                    <View> 
-                        <Text style={s.confirmText}>{errorText}</Text>
-                        <PbmButton
-                            title={"OK"}
-                            onPress={() => this.props.clearError()}
-                        />
-                    </View>
-                </ConfirmationModal>
-                {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
-                {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
-                <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
-                    <MapView
-                        ref={this.mapRef}
-                        region={{
-                            latitude,
-                            longitude,
-                            latitudeDelta,
-                            longitudeDelta,
-                        }}
-                        style={s.map}
-                        onRegionChange={this.onRegionChange}
-                        showsUserLocation={true}
-                        moveOnMarkerPress={false}
-                        showsMyLocationButton={false}
-                    >
-                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} /> )}
-                    </MapView>
-                    <Icon
-                        raised
-                        name='gps-fixed'
-                        type='material'
-                        color='#1e9dff'
-                        containerStyle={{position:'absolute',bottom:0,right:0}}
-                        size={24}
-                        onPress={() => {
-                            locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
-                        }}
-                    />
-                    {filterApplied ?     
-                        <Button 
-                            title={'Clear Filter'} 
-                            onPress={() => this.props.clearFilters()}
-                            type="clear"
-                            titleStyle={{fontSize:14,color:"#F53240",padding: 5,backgroundColor:'rgba(255,255,255,0.5)'}}
-                            containerStyle={{width:100,position:'absolute',top:0,right:0}}
-                        />
-                        : null                                    
-                    }
-                </View>
-            </View>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
+                            <ConfirmationModal 
+                                visible={showNoLocationTrackingModal}>
+                                <View> 
+                                    <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
+                                    <PbmButton
+                                        title={"OK"}
+                                        onPress={() => this.setState({ showNoLocationTrackingModal: false })}
+                                        accessibilityLabel="Great!"
+                                    />
+                                </View>
+                            </ConfirmationModal>
+                            <ConfirmationModal 
+                                visible={errorText ? true : false}>
+                                <View> 
+                                    <Text style={s.confirmText}>{errorText}</Text>
+                                    <PbmButton
+                                        title={"OK"}
+                                        onPress={() => this.props.clearError()}
+                                    />
+                                </View>
+                            </ConfirmationModal>
+                            {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
+                            {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
+                            <View style ={{flex:1, position: 'absolute',left: 0, top: 0, bottom: 0, right: 0}}>
+                                <MapView
+                                    ref={this.mapRef}
+                                    region={{
+                                        latitude,
+                                        longitude,
+                                        latitudeDelta,
+                                        longitudeDelta,
+                                    }}
+                                    style={s.map}
+                                    onRegionChange={this.onRegionChange}
+                                    showsUserLocation={true}
+                                    moveOnMarkerPress={false}
+                                    showsMyLocationButton={false}
+                                >
+                                    {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} /> )}
+                                </MapView>
+                                <Icon
+                                    raised
+                                    name='gps-fixed'
+                                    type='material'
+                                    color='#1e9dff'
+                                    containerStyle={{position:'absolute',bottom:0,right:0}}
+                                    size={24}
+                                    onPress={() => {
+                                        locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
+                                    }}
+                                />
+                                {filterApplied ?     
+                                    <Button 
+                                        title={'Clear Filter'} 
+                                        onPress={() => this.props.clearFilters()}
+                                        type="clear"
+                                        titleStyle={{fontSize:14,color:"#F53240",padding: 5,backgroundColor:'rgba(255,255,255,0.5)'}}
+                                        containerStyle={{width:100,position:'absolute',top:0,right:0}}
+                                    />
+                                    : null                                    
+                                }
+                            </View>
+                        </View>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     map: {
         flex: 1
     },
@@ -269,11 +291,6 @@ const s = StyleSheet.create({
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },
-    titleStyle: {
-        color: "#1e9dff",
-        fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? "600" : "400"
-    }, 
     loading: {
         zIndex: 10, 
         alignSelf : "center",
