@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
-    ActivityIndicator, 
     Dimensions, 
     Keyboard,
     Linking, 
@@ -14,7 +13,11 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, ListItem } from 'react-native-elements'
+import { 
+    Button, 
+    ListItem,
+    ThemeConsumer,
+} from 'react-native-elements'
 import { EvilIcons } from '@expo/vector-icons'
 import { 
     addMachineCondition, 
@@ -23,6 +26,7 @@ import {
 } from '../actions/location_actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { 
+    ActivityIndicator,
     HeaderBackButton,
     PbmButton, 
     RemoveMachine, 
@@ -80,9 +84,7 @@ class MachineDetails extends Component {
         
         if (!curLmx) {
             return (
-                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
-                    <ActivityIndicator />
-                </View>
+                <ActivityIndicator />
             )   
         }
 
@@ -99,175 +101,182 @@ class MachineDetails extends Component {
         const { name: machineName } = this.props.machineDetails
 
         return (
-            <Screen>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showAddConditionModal}
-                    onRequestClose={()=>{}}
-                >
-                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
-                            <View style={s.verticalAlign}>
-                                <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
-                                <TextInput
-                                    multiline={true}
-                                    numberOfLines={4}
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={conditionText => this.setState({ conditionText })}
-                                    value={this.state.conditionText}
-                                    style={[{padding:5,height:100},s.textInput,s.radius10]}
-                                    placeholder={'Enter machine condition...'}
-                                    textAlignVertical='top'
-                                />
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            <Modal
+                                animationType="slide"
+                                transparent={false}
+                                visible={this.state.showAddConditionModal}
+                                onRequestClose={()=>{}}
+                            >
+                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                        <View style={s.verticalAlign}>
+                                            <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
+                                            <TextInput
+                                                multiline={true}
+                                                numberOfLines={4}
+                                                underlineColorAndroid='transparent'
+                                                onChangeText={conditionText => this.setState({ conditionText })}
+                                                value={this.state.conditionText}
+                                                style={[{padding:5,height:100},s.textInput,s.radius10]}
+                                                placeholder={'Enter machine condition...'}
+                                                textAlignVertical='top'
+                                            />
+                                            <PbmButton
+                                                title={'Add Condition'}
+                                                disabled={this.state.conditionText.length === 0}
+                                                onPress={() => this.addCondition(curLmx.id)}
+                                            />
+                                            <WarningButton
+                                                title={'Cancel'}
+                                                onPress={this.cancelAddCondition}
+                                            />
+                                        </View>
+                                    </KeyboardAwareScrollView>          
+                                </TouchableWithoutFeedback>
+                            </Modal>
+                            <Modal
+                                animationType="slide"
+                                transparent={false}
+                                visible={this.state.showAddScoreModal}
+                                onRequestClose={()=>{}}
+                            >
+                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                        <View style={s.verticalAlign}>
+                                            <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
+                                            <TextInput 
+                                                style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
+                                                keyboardType='numeric'
+                                                underlineColorAndroid='transparent'
+                                                onChangeText={score => this.setState({ score })}
+                                                value={this.state.score}
+                                                returnKeyType="done"
+                                                placeholder={'123...'}
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                            <PbmButton 
+                                                title={'Add Score'}
+                                                disabled={this.state.score.length === 0}
+                                                onPress={() => this.addScore(curLmx.id)}
+                                            />
+                                            <WarningButton 
+                                                title={'Cancel'}
+                                                onPress={this.cancelAddScore}
+                                            />
+                                        </View>
+                                    </KeyboardAwareScrollView>
+                                </TouchableWithoutFeedback>
+                            </Modal>
+                            {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
+                            <ScrollView>
+                                <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
                                 <PbmButton
-                                    title={'Add Condition'}
-                                    disabled={this.state.conditionText.length === 0}
-                                    onPress={() => this.addCondition(curLmx.id)}
+                                    title={loggedIn ? 'Add a New Condition' : 'Log in to add a machine comment'}
+                                    onPress={loggedIn ? 
+                                        () => this.setState({ showAddConditionModal: true }) :
+                                        () => this.props.navigation.navigate('Login')}
+                                    buttonStyle={s.addButton}
                                 />
-                                <WarningButton
-                                    title={'Cancel'}
-                                    onPress={this.cancelAddCondition}
-                                />
-                            </View>
-                        </KeyboardAwareScrollView>          
-                    </TouchableWithoutFeedback>
-                </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.showAddScoreModal}
-                    onRequestClose={()=>{}}
-                >
-                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
-                            <View style={s.verticalAlign}>
-                                <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
-                                <TextInput 
-                                    style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
-                                    keyboardType='numeric'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={score => this.setState({ score })}
-                                    value={this.state.score}
-                                    returnKeyType="done"
-                                    placeholder={'123...'}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
+                                <Text style={s.sectionTitle}>Machine Comments</Text>
+                                <View style={s.border}>
+                                    {mostRecentComments ? 
+                                        mostRecentComments.map(commentObj => {
+                                            const { comment, created_at, username } = commentObj
+                                            return <ListItem
+                                                key={commentObj.id}
+                                                titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
+                                                title={`${comment}`}
+                                                subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
+                                                subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15,fontSize:14}}
+                                            /> 
+                                        }) :
+                                        <Text style={s.noneYet}>No machine condition added yet</Text>
+                                    }
+                                </View>
                                 <PbmButton 
-                                    title={'Add Score'}
-                                    disabled={this.state.score.length === 0}
-                                    onPress={() => this.addScore(curLmx.id)}
+                                    title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
+                                    onPress={loggedIn ? 
+                                        () => this.setState({ showAddScoreModal: true }) :
+                                        () => this.props.navigation.navigate('Login')
+                                    }
+                                    buttonStyle={s.addButton}
+                                />
+                                {userHighScore ? 
+                                    <View>
+                                        <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                                        <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
+                                    </View>                       
+                                    : null
+                                }
+                                <Text style={s.sectionTitle}>Top Scores</Text>
+                                <View style={s.border}>
+                                    {scores.length > 0 ?                                              
+                                        scores.map(scoreObj => {
+                                            const {id, score, created_at, username} = scoreObj
+        
+                                            return (
+                                                <ListItem
+                                                    containerStyle={{paddingLeft:30, paddingTop:5}}
+                                                    key={id}
+                                                    title={formatNumWithCommas(score)}
+                                                    subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
+                                                    titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
+                                                    subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
+                                                />)
+                                        }) 
+                                        : <Text style={s.noneYet}>No scores yet!</Text> 
+                                    }
+                                </View>
+                                {pintipsUrl ?
+                                    <Button
+                                        title={'View playing tips on PinTips'}
+                                        onPress={() => Linking.openURL(pintipsUrl)}
+                                        buttonStyle={s.externalLink}
+                                        titleStyle={{
+                                            color:"#000e18", 
+                                            fontSize:16
+                                        }}
+                                        iconRight
+                                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                                        containerStyle={s.margin15}
+                                    /> :
+                                    null
+                                }
+                                <Button
+                                    title={'View on IPDB'}
+                                    onPress={() => Linking.openURL(ipdb_link)}
+                                    buttonStyle={s.externalLink}
+                                    titleStyle={{
+                                        color:"#000e18", 
+                                        fontSize:16
+                                    }}
+                                    iconRight
+                                    icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                                    containerStyle={s.margin15}
                                 />
                                 <WarningButton 
-                                    title={'Cancel'}
-                                    onPress={this.cancelAddScore}
+                                    title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
+                                    onPress={loggedIn ? 
+                                        () => this.setState({ showRemoveMachineModal: true }) :
+                                        () => this.props.navigation.navigate('Login')
+                                    } 
                                 />
-                            </View>
-                        </KeyboardAwareScrollView>
-                    </TouchableWithoutFeedback>
-                </Modal>
-                {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
-                <ScrollView>
-                    <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
-                    <PbmButton
-                        title={loggedIn ? 'Add a New Condition' : 'Log in to add a machine comment'}
-                        onPress={loggedIn ? 
-                            () => this.setState({ showAddConditionModal: true }) :
-                            () => this.props.navigation.navigate('Login')}
-                        buttonStyle={s.addButton}
-                    />
-                    <Text style={s.sectionTitle}>Machine Comments</Text>
-                    <View style={s.border}>
-                        {mostRecentComments ? 
-                            mostRecentComments.map(commentObj => {
-                                const { comment, created_at, username } = commentObj
-                                return <ListItem
-                                    key={commentObj.id}
-                                    titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
-                                    title={`${comment}`}
-                                    subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
-                                    subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15,fontSize:14}}
-                                /> 
-                            }) :
-                            <Text style={s.noneYet}>No machine condition added yet</Text>
-                        }
-                    </View>
-                    <PbmButton 
-                        title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
-                        onPress={loggedIn ? 
-                            () => this.setState({ showAddScoreModal: true }) :
-                            () => this.props.navigation.navigate('Login')
-                        }
-                        buttonStyle={s.addButton}
-                    />
-                    {userHighScore ? 
-                        <View>
-                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
-                        </View>                       
-                        : null
-                    }
-                    <Text style={s.sectionTitle}>Top Scores</Text>
-                    <View style={s.border}>
-                        {scores.length > 0 ?                                              
-                            scores.map(scoreObj => {
-                                const {id, score, created_at, username} = scoreObj
-        
-                                return (
-                                    <ListItem
-                                        containerStyle={{paddingLeft:30, paddingTop:5}}
-                                        key={id}
-                                        title={formatNumWithCommas(score)}
-                                        subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
-                                        titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
-                                        subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
-                                    />)
-                            }) 
-                            : <Text style={s.noneYet}>No scores yet!</Text> 
-                        }
-                    </View>
-                    {pintipsUrl ?
-                        <Button
-                            title={'View playing tips on PinTips'}
-                            onPress={() => Linking.openURL(pintipsUrl)}
-                            buttonStyle={s.externalLink}
-                            titleStyle={{
-                                color:"#000e18", 
-                                fontSize:16
-                            }}
-                            iconRight
-                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                            containerStyle={s.margin15}
-                        /> :
-                        null
-                    }
-                    <Button
-                        title={'View on IPDB'}
-                        onPress={() => Linking.openURL(ipdb_link)}
-                        buttonStyle={s.externalLink}
-                        titleStyle={{
-                            color:"#000e18", 
-                            fontSize:16
-                        }}
-                        iconRight
-                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                        containerStyle={s.margin15}
-                    />
-                    <WarningButton 
-                        title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
-                        onPress={loggedIn ? 
-                            () => this.setState({ showRemoveMachineModal: true }) :
-                            () => this.props.navigation.navigate('Login')
-                        } 
-                    />
-                </ScrollView>
-            </Screen>
+                            </ScrollView>
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     externalLink: {
         backgroundColor:'#ffffff',
         borderWidth: 1,
