@@ -19,10 +19,12 @@ const dark = {
     modalBg: '#2a211c',
     backButton: '#bdae9d',
     _f2f4f5: '#2a211c',
-    _6a7d8a: '#bdae9d',
+    _6a7d8a: '#493931',
     _97a5af: '#bdae9d',
     _e0ebf2: '#7c6152',
-    _e0f1fb: '#915b3d',
+    _e0f1fb: '#493931',
+    _f5fbff: '#bdae9d',
+    d_493931: '#493931',
     hr: '#7c6152',
     borderColor: '#7c6152',
 }
@@ -40,6 +42,8 @@ const standard = {
     _97a5af: '#97a5af',
     _e0ebf2: '#e0ebf2',
     _e0f1fb: '#e0f1fb',
+    _f5fbff: '#f5fbff',
+    d_493931: '#e0f1fb',
     hr: '#97a5af',
     borderColor: '#d1dfe8',
 }

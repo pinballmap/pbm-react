@@ -18,7 +18,7 @@ import {
 } from '../components'
 
 const FindOperator = ({ navigation, operators: { operators = [] } }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
     const allOperators = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...operators]
@@ -52,16 +52,16 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     return (
         <Screen> 
             <SearchBar
-                lightTheme
                 placeholder='Filter operators...'
+                placeholderTextColor={theme._97a5af}
                 platform='default'
-                searchIcon={<MaterialIcons name='search' size={25} color="#97a5af" />}
-                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" onPress={handleSearch} />}
+                searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={handleSearch} />}
                 onChangeText={handleSearch}
-                inputStyle={{color:'#000e18'}}
+                inputStyle={{color:theme.pbmText}}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:'#f5fbff'}}
+                containerStyle={{backgroundColor:theme.d_493931}}
             />
             <ScrollView keyboardDismissMode="on-drag">
                 <FlatList
@@ -75,17 +75,21 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
 
 const getStyles = theme => StyleSheet.create({
     filterInput: {
-        height:35,
-        backgroundColor:'#e0ebf2',
-        borderRadius:10,
-        borderColor: '#d1dfe8',
-        borderWidth:1
+        height: 35,
+        backgroundColor: theme._e0ebf2,
+        borderRadius: 10,
+        borderColor: theme.borderColor,
+        borderWidth: 1
     },
 })
 
-FindOperator.navigationOptions = ({ navigation }) => ({
+FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Select Operator',
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
 })
 
 FindOperator.propTypes = {
