@@ -42,7 +42,7 @@ const FilterMap = ({
     selectedOperatorTypeFilter,
     clearFilters,
 }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
     
     const { machine, numMachines, viewByFavoriteLocations } = query
@@ -100,8 +100,9 @@ const FilterMap = ({
                 selectedIndex={getIdx(numMachines)}
                 buttons={['All', '2+', '3+', '4+', '5+']}
                 containerStyle={s.buttonGroupContainer}
-                selectedButtonStyle={s.buttonStyle}
-                selectedTextStyle={s.textStyle}
+                textStyle={s.textStyle}
+                selectedButtonStyle={s.selButtonStyle}
+                selectedTextStyle={s.selTextStyle}
             />
             <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Filter by location type:</Text>
             <DropDownButton
@@ -119,8 +120,9 @@ const FilterMap = ({
                 selectedIndex={viewByFavoriteLocations ? 1 : 0}
                 buttons={['All', 'My Favorites']}
                 containerStyle={s.buttonGroupContainer}
-                selectedButtonStyle={s.buttonStyle}
-                selectedTextStyle={s.textStyle}
+                textStyle={s.textStyle}
+                selectedButtonStyle={s.selButtonStyle}
+                selectedTextStyle={s.selTextStyle}
             />
             {hasFilterSelected ? 
                 <WarningButton
@@ -140,19 +142,20 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
     },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
 })
 
 
 const getStyles = theme => StyleSheet.create({
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: "#6a7d8a"
+        backgroundColor: theme._6a7d8a
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: "bold",
-        color: "#f5fbff"
+        color: theme._f5fbff
     },
     border: {
         borderWidth: 2,
@@ -173,10 +176,13 @@ const getStyles = theme => StyleSheet.create({
         paddingTop: 10,
         paddingHorizontal: 10,
     },
-    buttonStyle: {
+    textStyle: {
+        color: theme.pbmText
+    },
+    selButtonStyle: {
         backgroundColor: theme._e0f1fb,
     },
-    textStyle: {
+    selTextStyle: {
         color: theme.pbmText,
         fontWeight: 'bold',
     },
@@ -184,7 +190,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40, 
         borderColor: theme.borderColor, 
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2
+        backgroundColor: theme._e0ebf2,
     }
 })
 

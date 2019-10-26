@@ -15,7 +15,7 @@ import {
 } from '../components'
 
 const FAQ = ({ navigation, }) => {
-    const theme = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
     return(
