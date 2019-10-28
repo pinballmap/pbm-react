@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator,
     StyleSheet,
     TouchableOpacity,
     View,  
 } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { 
+    ListItem,
+    ThemeConsumer,
+} from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import { 
+    ActivityIndicator,
     FilterRecentActivity,
     HeaderBackButton,
     Screen,
@@ -87,57 +90,64 @@ class RecentActivity extends Component {
         const { selectedActivity } = this.props.query
 
         return(
-            <Screen>
-                <View style={s.header}>
-                    <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
-                    <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
-                </View>
-                {selectedActivity ? 
-                    <View style={s.filterView}>
-                        <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
-                        <MaterialCommunityIcons 
-                            name='close-circle' 
-                            size={24} 
-                            onPress={() => this.props.clearActivityFilter()}
-                            style={s.xButton}
-                        />
-                    </View> : null
-                }
-                {fetchingRecentActivity ? 
-                    <ActivityIndicator /> :
-                    recentActivity.length === 0 ?
-                        <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
-                        recentActivity.filter(activity => {
-                            const submissionTypeIcon = this.getIcon(activity.submission_type)
-                            const showType = selectedActivity ? 
-                                selectedActivity === activity.submission_type ? true : false 
-                                : true 
-
-                            if (submissionTypeIcon && showType) {
-                                activity.submissionTypeIcon = submissionTypeIcon
-                                return activity
-                            }
-                        }).map(activity => (                               
-                            <View key={activity.id}>
-                                <ListItem
-                                    component={TouchableOpacity}
-                                    title={activity.submission}
-                                    titleStyle={{color:'#000e18'}}
-                                    subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
-                                    subtitle={`${moment(activity.updated_at).format('LL')}`}
-                                    containerStyle={s.list}
-                                    leftAvatar={activity.submissionTypeIcon}
-                                    onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
-                                />
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            <View style={s.header}>
+                                <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
+                                <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
                             </View>
-                        ))
-                }
-            </Screen>
+                            {selectedActivity ? 
+                                <View style={s.filterView}>
+                                    <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
+                                    <MaterialCommunityIcons 
+                                        name='close-circle' 
+                                        size={24} 
+                                        onPress={() => this.props.clearActivityFilter()}
+                                        style={s.xButton}
+                                    />
+                                </View> : null
+                            }
+                            {fetchingRecentActivity ? 
+                                <ActivityIndicator /> :
+                                recentActivity.length === 0 ?
+                                    <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
+                                    recentActivity.filter(activity => {
+                                        const submissionTypeIcon = this.getIcon(activity.submission_type)
+                                        const showType = selectedActivity ? 
+                                            selectedActivity === activity.submission_type ? true : false 
+                                            : true 
+
+                                        if (submissionTypeIcon && showType) {
+                                            activity.submissionTypeIcon = submissionTypeIcon
+                                            return activity
+                                        }
+                                    }).map(activity => (                               
+                                        <View key={activity.id}>
+                                            <ListItem
+                                                component={TouchableOpacity}
+                                                title={activity.submission}
+                                                titleStyle={{color:'#000e18'}}
+                                                subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                                subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                                containerStyle={s.list}
+                                                leftAvatar={activity.submissionTypeIcon}
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
+                                            />
+                                        </View>
+                                    ))
+                            }
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     header: {
         backgroundColor: "#6a7d8a",
         paddingVertical: 10,

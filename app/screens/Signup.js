@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
@@ -11,7 +11,11 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Input } from 'react-native-elements'
+import { 
+    Button, 
+    Input,
+    ThemeContext,
+} from 'react-native-elements'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -19,238 +23,218 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 let deviceHeight = Dimensions.get('window').height
 
-class Signup extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            username: null,
-            email: null,
-            password: null,
-            confirm_password: null,
-            usernameError: null,
-            emailError: null,
-            passwordError: null,
-            confirm_passwordError: null,
-            errors: false,
-            user: {},
-            apiErrorMsg: null,
+const Signup = ({ login, loginLater, navigation }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+
+    const [username, setUsername] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [confirm_password, setConfirmPassword] = useState(null)
+    const [usernameError, setUsernameError] = useState(null)
+    const [emailError, setEmailError] = useState(null)
+    const [passwordError, setPasswordError] = useState(null)
+    const [confirm_passwordError, setConfirmPasswordError] = useState(null)
+    const [errors, setErrors] = useState(false)
+    const [apiErrorMsg, setApiErrorMsg] = useState(null)
+
+    const validateFields = () => {
+        if (!username) {
+            setUsernameError('EMPTY USERNAME')
+            setErrors(true)
+        } else if (username.length > 15) {
+            setUsernameError('Username is too long (maximum is 15 characters')
+            setErrors(true)
+        } else if (!(/^[a-zA-Z0-9_.]*$/).test(username)) {
+            setErrors(true)
+            setUsernameError('Username must be alphanumeric')
+        }
+
+        if (!email) {
+            setEmailError('EMPTY EMAIL')
+            setErrors(true)
+        } else if (!email.includes('@')) {
+            setEmailError('Email is invalid')
+            setErrors(true)
+        }
+
+        if (!password) {
+            setPasswordError('EMPTY PASSWORD')
+            setErrors(true)
+        } else if (password.length < 6) {
+            setPasswordError('Password is too short (minimum is 6 characters)')
+            setErrors(true)
+        }
+
+        if (password !== confirm_password) {
+            setConfirmPasswordError("DOESN'T MATCH PASSWORD")
+            setErrors(true) 
         }
     }
 
-    static navigationOptions = { header: null };
-
-    validateFields = () => {
-        if (!this.state.username) {
-            this.setState({ 
-                usernameError: 'EMPTY USERNAME',
-                errors: true,
-            })
-        } else if (this.state.username.length > 15) {
-            this.setState({
-                usernameError: 'Username is too long (maximum is 15 characters',
-                errors: true,
-            })
-        } else if (!(/^[a-zA-Z0-9_.]*$/).test(this.state.username)) {
-            this.setState({
-                usernameError: 'Username must be alphanumeric',
-                errors: true,
-            })
-        }
-
-        if (!this.state.email) {
-            this.setState({ 
-                emailError: 'EMPTY EMAIL', 
-                errors: true, 
-            })
-        } else if (!this.state.email.includes('@')) {
-            this.setState({ 
-                emailError: 'Email is invalid',
-                errors: true,
-            })
-        }
-
-        if (!this.state.password) {
-            this.setState({ 
-                passwordError: 'EMPTY PASSWORD',
-                errors: true,
-            })
-        } else if (this.state.password.length < 6) {
-            this.setState({ 
-                passwordError: 'Password is too short (minimum is 6 characters)',
-                errors: true,
-            })
-        }
-
-        if (this.state.password !== this.state.confirm_password) {
-            this.setState({ 
-                confirm_passwordError: "DOESN'T MATCH PASSWORD",
-                errors: true,
-            })    
-        }
-    }
-
-    submit = () => {
+    const submit = () => {
         // Reset error states upon a submission / resubmission
-        this.setState({
-            usernameError: null,
-            emailError: null,
-            passwordError: null,
-            confirm_passwordError: null,
-            apiErrorMsg: null,
-            errors: false,
-        })
+        setUsernameError(null)
+        setEmailError(null)
+        setPasswordError(null)
+        setConfirmPasswordError(null)
+        setApiErrorMsg(null)
+        setErrors(false)
 
-        this.validateFields()
+        validateFields()
 
-        if(!this.state.errors) {
+        if(!errors) {
             const body = {
-                username: this.state.username,
-                email: this.state.email,
-                password: this.state.password,
-                confirm_password: this.state.confirm_password
+                username,
+                email,
+                password,
+                confirm_password,
             }
 
             postData('/users/signup.json', body)
                 .then(data => {
                     // Something goes wrong with the API request
                     if (data.message) {
-                        this.setState({ apiErrorMsg: data.message})
-                        this.setState({ errors: true })
+                        setApiErrorMsg(data.message)
+                        setErrors(true)
                     }
         
                     if (data.errors) {
-                        this.setState({ errors: true })
+                        setErrors(true)
                         const errors = data.errors.split(",")
 
                         if (errors.indexOf('Username is invalid') > -1) {
-                            this.setState({ usernameError: 'Username is invalid' })
+                            setUsernameError('Username is invalid')
                         }
 
                         if (errors.indexOf('Username has already been taken') > -1) {
-                            this.setState({ usernameError: 'Username has already been taken'})
+                            setUsernameError('Username has already been taken')
                         }
 
                         if (errors.indexOf('Email is invalid') > -1) {
-                            this.setState({ emailError: 'Email is invalid' })
+                            setEmailError('Email is invalid')
                         }
                     }
 
                     if (data.user) {      
-                        this.props.login(data.user)
-                        this.props.navigation.navigate('Map')
+                        login(data.user)
+                        navigation.navigate('Map')
                     }
                 })
-                .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
+                .catch(err => {
+                    setErrors(true)
+                    setApiErrorMsg(err)
+                })
         }
     }
 
-    render() {
-        return (
-            <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
-                <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
-                    <View style={s.mask}>
-                        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                            <View style={s.justify}>
-                                {this.state.errors && 
+    return (
+        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
+            <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
+                <View style={s.mask}>
+                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                        <View style={s.justify}>
+                            {errors && 
                                 <Text style={s.errorText}>
-                                    {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                                    {apiErrorMsg ? apiErrorMsg : 'There were errors trying to process your submission'}
                                 </Text>
-                                }
-                                <Text style={s.bold}>Sign Up</Text>
-                                <Input 
-                                    placeholder='Username'
-                                    leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                                    onChangeText={username => this.setState({username})}
-                                    value={this.state.username}
-                                    errorStyle={{ color : 'red' }}
-                                    errorMessage={this.state.usernameError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <Input 
-                                    placeholder="Email Address" 
-                                    leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
-                                    onChangeText={email => this.setState({email})}
-                                    value={this.state.value}
-                                    errorStyle={{ color : 'red' }}
-                                    errorMessage={this.state.emailError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    keyboardType="email-address"
-                                />
-                                <Input 
-                                    placeholder="Password"
-                                    leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                                    onChangeText={password => this.setState({password})}
-                                    value={this.state.password}
-                                    errorStyle={{ color : 'red' }}
-                                    errorMessage={this.state.passwordError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    secureTextEntry = {true}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <Input 
-                                    placeholder="Confirm Password"
-                                    leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                                    onChangeText={confirm_password => this.setState({confirm_password})}
-                                    value={this.state.confirm_password}
-                                    errorStyle={{ color : 'red' }}
-                                    errorMessage={this.state.confirm_passwordError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    secureTextEntry = {true}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <Button
-                                    onPress={() => this.submit()}
-                                    raised
-                                    buttonStyle={s.buttonStyle}
-                                    titleStyle={{
-                                        color:"#4b5862", 
-                                        fontSize:16,
-                                        fontWeight: '500'
-                                    }}
-                                    containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50}}
-                                    style={{borderRadius: 50}}
-                                    rounded
-                                    title="Sign Up"
-                                    accessibilityLabel="Sign Up"
-                                    disabled={!this.state.username || !this.state.email || !this.state.password || !this.state.confirm_password}
-                                    disabledStyle={{borderRadius:50}}
-                                />
-                                <Button
-                                    onPress={() => this.props.navigation.navigate('Login')}
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 15}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="Already a user? LOG IN!"
-                                />
-                                <Button
-                                    onPress={() => {
-                                        this.props.loginLater()
-                                        this.props.navigation.navigate('Map')
-                                    }} 
-                                    titleStyle={s.textLink}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="skip signing up for now"
-                                />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
-                </ImageBackground>
-            </KeyboardAwareScrollView>
-        )
-    }
+                            }
+                            <Text style={s.bold}>Sign Up</Text>
+                            <Input 
+                                placeholder='Username'
+                                leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                                onChangeText={username => setUsername(username)}
+                                value={username}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={usernameError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                            <Input 
+                                placeholder="Email Address" 
+                                leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
+                                onChangeText={email => setEmail(email)}
+                                value={email}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={emailError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keyboardType="email-address"
+                            />
+                            <Input 
+                                placeholder="Password"
+                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                onChangeText={password => setPassword(password)}
+                                value={password}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={passwordError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                secureTextEntry = {true}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                            <Input 
+                                placeholder="Confirm Password"
+                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                onChangeText={confirm_password => setConfirmPassword(confirm_password)}
+                                value={confirm_password}
+                                errorStyle={{ color : 'red' }}
+                                errorMessage={confirm_passwordError}
+                                inputContainerStyle={s.inputBox}
+                                inputStyle={s.inputText}
+                                secureTextEntry = {true}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                            <Button
+                                onPress={submit}
+                                raised
+                                buttonStyle={s.buttonStyle}
+                                titleStyle={{
+                                    color:"#4b5862", 
+                                    fontSize:16,
+                                    fontWeight: '500'
+                                }}
+                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50}}
+                                style={{borderRadius: 50}}
+                                rounded
+                                title="Sign Up"
+                                accessibilityLabel="Sign Up"
+                                disabled={!username || !email || !password || !confirm_password}
+                                disabledStyle={{borderRadius:50}}
+                            />
+                            <Button
+                                onPress={() => navigation.navigate('Login')}
+                                titleStyle={s.textLink}
+                                containerStyle={{marginBottom: 15}}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="Already a user? LOG IN!"
+                            />
+                            <Button
+                                onPress={() => {
+                                    loginLater()
+                                    navigation.navigate('Map')
+                                }} 
+                                titleStyle={s.textLink}
+                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                title="skip signing up for now"
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+            </ImageBackground>
+        </KeyboardAwareScrollView>
+    )
 }
 
-const s = StyleSheet.create({
+Signup.navigationOptions = { header: null }
+
+const getStyles = theme => StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: null,
