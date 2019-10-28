@@ -18,7 +18,7 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             icon={icon}
             disabled={disabled}
             disabledStyle={styles.disabledStyle}
-            disabledTitleStyle={styles  .disabledTitleStyle}
+            disabledTitleStyle={styles.disabledTitleStyle}
             raised
             buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
             titleStyle={styles.titleStyle}

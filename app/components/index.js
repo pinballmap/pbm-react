@@ -13,6 +13,7 @@ import DrawerMenu from './DrawerMenu'
 import HeaderBackButton from './HeaderBackButton'
 import Screen from './Screen'
 import withThemeHOC from './withThemeHOC'
+import ActivityIndicator from './ActivityIndicator'
 
 export {
     LocationCard,
@@ -30,4 +31,5 @@ export {
     HeaderBackButton,
     Screen,
     withThemeHOC,
+    ActivityIndicator
 }
