@@ -27,6 +27,9 @@ const dark = {
     d_493931: '#493931',
     hr: '#7c6152',
     borderColor: '#7c6152',
+    loading: '#493931',
+    _fff: '#493931',
+    _eee: '#2a211c'
 }
 
 const standard = {
@@ -46,6 +49,9 @@ const standard = {
     d_493931: '#e0f1fb',
     hr: '#97a5af',
     borderColor: '#d1dfe8',
+    loading: '#d3ecff',
+    _fff: '#ffffff',
+    _eee: '#eeeeee'
 }
 
 class App extends Component {
