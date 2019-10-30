@@ -55,7 +55,7 @@ class LocationDetails extends Component {
         buttonIndex: 0,
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('locationName'),
@@ -68,6 +68,10 @@ class LocationDetails extends Component {
                     titleStyle={{color: "#1e9dff", fontSize: 18}}
                     type="clear"
                 /> : <View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
         }
     }
 
@@ -168,7 +172,7 @@ class LocationDetails extends Component {
                                 visible={errorModalVisible}
                                 onRequestClose={()=>{}}
                             >
-                                <View style={{marginTop: 100,backgroundColor:'#f5fbff'}}>
+                                <View style={{marginTop: 100}}>
                                     <Text>{errorText}</Text>
                                     <Button 
                                         title={"OK"}
@@ -215,17 +219,18 @@ class LocationDetails extends Component {
                                         </View>
                                     </MapView.Marker>
                                 </MapView>
-                                <View style={{ flex: 3,backgroundColor: "#f5fbff" }}>
+                                <View style={s.buttonGroupView}>
                                     <ButtonGroup
                                         onPress={this.updateIndex}
                                         selectedIndex={this.state.buttonIndex}
                                         buttons={['Machines', 'Info']}
-                                        containerStyle={{ height: 35, borderWidth: 2, borderColor: '#e0ebf2' }}
-                                        selectedButtonStyle={s.buttonStyle}
-                                        selectedTextStyle={s.textStyle}
+                                        containerStyle={s.buttonGroupContainer}
+                                        textStyle={s.textStyle}
+                                        selectedButtonStyle={s.selButtonStyle}
+                                        selectedTextStyle={s.selTextStyle}
                                     />
                                     {this.state.buttonIndex === 0 ?
-                                        <View>
+                                        <View style={s.backgroundColor}>
                                             {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                             <View>
                                                 <PbmButton
@@ -241,10 +246,7 @@ class LocationDetails extends Component {
                                                     accessibilityLabel="Confirm machine list is up to date"
                                                     raised
                                                     buttonStyle={s.confirmButton}
-                                                    titleStyle={{
-                                                        color:"#4b5862",
-                                                        fontSize:16
-                                                    }}
+                                                    titleStyle={s.buttonTitleStyle}
                                                     style={{borderRadius: 50}}
                                                     containerStyle={[{borderRadius:50},s.margin15]}
                                                 />
@@ -257,12 +259,10 @@ class LocationDetails extends Component {
                                                         this.props.setCurrentMachine(machine.id)
                                                     }}>
                                                     <View
-                                                        style={{
-                                                            borderBottomColor: '#D3ECFF',
-                                                            borderBottomWidth: 1,
-                                                        }}
+                                                        style={s.borderBottom}
                                                     />
                                                     <ListItem
+                                                        containerStyle={s.listContainerStyle}
                                                         title={this.getTitle(machine, s)}
                                                         subtitle={
                                                             <View style={s.condition}>
@@ -337,15 +337,42 @@ const getStyles = theme => StyleSheet.create({
         height: 100,
         zIndex: -1
     },
+    backgroundColor: {
+        backgroundColor: theme.backgroundColor
+    },
+    buttonGroupView: {
+        flex: 3,
+        backgroundColor: theme.backgroundColor
+    },
     buttonStyle: {
-        backgroundColor: '#D3ECFF',
+        backgroundColor: theme.buttonColor,
+    },
+    buttonTitleStyle: {
+        color: theme.buttonTextColor,
+        fontSize: 16
     },
     textStyle: {
-        color: '#000e18',
+        color: theme.buttonTextColor,
         fontWeight: 'bold',
     },
+    selButtonStyle: {
+        backgroundColor: theme._e0f1fb,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
+        fontWeight: 'bold',
+    },
+    buttonGroupContainer: {
+        height: 35, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
+    },
+    listContainerStyle: {
+        backgroundColor: theme._fff
+    },
     machineName: {
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         fontSize: 18,
     },
@@ -357,13 +384,14 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
         paddingTop: 5,
         marginTop: 5,
+        backgroundColor: 'red'
     },
     hr: {
-        marginLeft:25,
-        marginRight:25,
-        height:2,
-        marginBottom:5,
-        backgroundColor:"#D3ECFF"
+        marginLeft: 25,
+        marginRight: 25,
+        height: 2,
+        marginBottom: 5,
+        backgroundColor: theme.hr
     },
     font18: {
         fontSize: 18
@@ -379,38 +407,38 @@ const getStyles = theme => StyleSheet.create({
     },
     link: {
         textDecorationLine: 'underline',
-        color: '#000e18',
+        color: theme.pbmText,
         fontSize: 16
     },
     italic: {
         fontStyle: 'italic',
-        color: '#4b5862'
+        color: theme.d_9a836a
     },
     notItalic: {
         fontStyle: 'normal',
-        color: '#6a7d8a'
+        color: theme.meta
     },
     meta: {
         fontSize: 16,
-        color: '#6a7d8a'
+        color: theme.meta
     },
     iconStyle: {
         fontSize: 32,
         color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor:"#ffffff",
+        backgroundColor: theme._fff,
         width: '100%',
         elevation: 0,
         borderRadius: 50,
         borderWidth: 1,
-        borderColor: '#f2f4f5'
+        borderColor: theme._f2f4f5
     },
     condition: {
         marginTop: 10
     },
     conditionText: {
-        color: '#6a7d8a',
+        color: theme.meta,
         fontSize: 14,
         fontStyle: 'italic',
         marginLeft: 5,
@@ -419,10 +447,10 @@ const getStyles = theme => StyleSheet.create({
     lastUpdated: {
         textAlign: 'center',
         marginTop: 5,
-        color: '#4b5862'
+        color: theme.buttonTextColor
     },
     commentUpdated: {
-        color: '#4b5862',
+        color: theme.buttonTextColor,
         marginLeft: 2
     },
     plusButton: {
@@ -459,24 +487,28 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24
     },
     savedLink: {
-        backgroundColor:'#f5fbff',
+        backgroundColor: theme.backgroundColor,
         borderWidth: 1,
         borderColor: '#4b5862',
         borderRadius: 50,
         elevation: 0
     },
     margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:0,
-        marginBottom:10
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 0,
+        marginBottom: 10
     },
     addMachinesButton: {
-        backgroundColor: '#e0f1fb',
+        backgroundColor: theme._e0f1fb,
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
+    borderBottom: {
+        borderBottomColor: theme.borderColor,
+        borderBottomWidth: 1,
+    }
 })
 
 LocationDetails.propTypes = {
