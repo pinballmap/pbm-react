@@ -31,7 +31,9 @@ const dark = {
     borderColor: '#7c6152',
     loading: '#493931',
     _fff: '#493931',
-    _eee: '#2a211c'
+    _eee: '#2a211c',
+    addBtnBorderW: 1,
+    addBtnBorderColor: '#bdae9d'
 }
 
 const standard = {
@@ -55,7 +57,9 @@ const standard = {
     borderColor: '#d1dfe8',
     loading: '#d3ecff',
     _fff: '#ffffff',
-    _eee: '#eeeeee'
+    _eee: '#eeeeee',
+    addBtnBorderW: 0,
+    addBtnBorderColor: 'transparent'
 }
 
 class App extends Component {

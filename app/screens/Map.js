@@ -56,10 +56,10 @@ const CustomMarker = ({ marker, navigation, s }) => {
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', {id: marker.id, locationName: marker.name})}>
                 <View>
                     <View style={s.calloutStyle}>
-                        <Text style={{marginRight:20}}>{marker.name}</Text>
+                        <Text style={{marginRight:20,color:'#000e18'}}>{marker.name}</Text>
                         {marker.machine_names.length === 1 ? 
                             <Text>1 machine</Text> :
-                            <Text>{`${marker.machine_names.length} machines`}</Text>
+                            <Text style={{color:'#000e18'}}>{`${marker.machine_names.length} machines`}</Text>
                         }
                     </View>
                     <Ionicons style={s.iconStyle} name="ios-arrow-dropright"/>

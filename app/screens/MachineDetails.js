@@ -49,11 +49,15 @@ class MachineDetails extends Component {
         showRemoveMachineModal: false,
     }
     
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
             headerRight: <RemoveMachine />,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
         }
     }
 
@@ -113,7 +117,7 @@ class MachineDetails extends Component {
                                 onRequestClose={()=>{}}
                             >
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
                                             <TextInput
@@ -146,7 +150,7 @@ class MachineDetails extends Component {
                                 onRequestClose={()=>{}}
                             >
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
                                             <TextInput 
@@ -184,7 +188,7 @@ class MachineDetails extends Component {
                                     buttonStyle={s.addButton}
                                 />
                                 <Text style={s.sectionTitle}>Machine Comments</Text>
-                                <View style={s.border}>
+                                <View style={[s.border,s.backgroundColor]}>
                                     {mostRecentComments ? 
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
@@ -193,7 +197,8 @@ class MachineDetails extends Component {
                                                 titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
                                                 title={`${comment}`}
                                                 subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
-                                                subtitleStyle={{marginTop:5,marginLeft:15,marginRight:15,fontSize:14}}
+                                                subtitleStyle={[s.subtitleStyle,s.subtitleMargin]}
+                                                containerStyle={s.listContainerStyle}
                                             /> 
                                         }) :
                                         <Text style={s.noneYet}>No machine condition added yet</Text>
@@ -215,7 +220,7 @@ class MachineDetails extends Component {
                                     : null
                                 }
                                 <Text style={s.sectionTitle}>Top Scores</Text>
-                                <View style={s.border}>
+                                <View style={[s.border,s.backgroundColor]}>
                                     {scores.length > 0 ?                                              
                                         scores.map(scoreObj => {
                                             const {id, score, created_at, username} = scoreObj
@@ -227,7 +232,8 @@ class MachineDetails extends Component {
                                                     title={formatNumWithCommas(score)}
                                                     subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
                                                     titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
-                                                    subtitleStyle={{ paddingTop:3,fontSize:14,color:'#6a7d8a' }}
+                                                    subtitleStyle={s.subtitleStyle}
+                                                    containerStyle={s.listContainerStyle}
                                                 />)
                                         }) 
                                         : <Text style={s.noneYet}>No scores yet!</Text> 
@@ -238,10 +244,7 @@ class MachineDetails extends Component {
                                         title={'View playing tips on PinTips'}
                                         onPress={() => Linking.openURL(pintipsUrl)}
                                         buttonStyle={s.externalLink}
-                                        titleStyle={{
-                                            color:"#000e18", 
-                                            fontSize:16
-                                        }}
+                                        titleStyle={s.externalLinkTitle}
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                                         containerStyle={s.margin15}
@@ -252,10 +255,7 @@ class MachineDetails extends Component {
                                     title={'View on IPDB'}
                                     onPress={() => Linking.openURL(ipdb_link)}
                                     buttonStyle={s.externalLink}
-                                    titleStyle={{
-                                        color:"#000e18", 
-                                        fontSize:16
-                                    }}
+                                    titleStyle={s.externalLinkTitle}
                                     iconRight
                                     icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                                     containerStyle={s.margin15}
@@ -277,38 +277,46 @@ class MachineDetails extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
+    backgroundColor: {
+        backgroundColor: theme.backgroundColor
+    },
     externalLink: {
-        backgroundColor:'#ffffff',
+        backgroundColor: theme._fff,
         borderWidth: 1,
-        borderColor: '#97a5af',
+        borderColor: theme._97a5af,
         borderRadius: 50,
         elevation: 0
     },
     externalIcon: {
         fontSize: 24
     },
+    externalLinkTitle: {
+        color: theme.pbmText, 
+        fontSize: 16
+    },
     margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 15,
+        marginBottom: 15
     },
     conditionText: {
-        color: '#6a7d8a',
+        color: theme.meta,
         fontStyle: 'italic',
         fontSize: 14,
     },
     noneYet: {
-        textAlign:'center',
-        paddingHorizontal:15,
-        fontStyle:'italic',
-        color:'#97a5af',
-        paddingVertical:5,
-        backgroundColor:'#ffffff',
+        textAlign: 'center',
+        paddingHorizontal: 15,
+        fontStyle: 'italic',
+        color: theme.meta,
+        paddingVertical: 5,
+        backgroundColor: theme._fff,
     },
     textInput: {
-        backgroundColor: '#e0ebf2', 
-        borderColor: '#d1dfe8',
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
+        color: theme.pbmText,
         borderWidth: 1,
         marginBottom: 10,
         marginLeft: 15,
@@ -327,38 +335,54 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: '#6a7d8a'
+        color: theme._6a7d8a
     },
     userHighScore: {
         textAlign:'center',
         fontSize: 24,
         paddingBottom: 15,
-        color: '#4b5862'
+        color: theme.d_9a836a
     },
     verticalAlign: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
+        height: deviceHeight
     },
     border: {
-        borderBottomColor: '#e0ebf2',
+        borderBottomColor: theme._e0ebf2,
         borderBottomWidth: 1,
-        borderTopColor: '#e0ebf2',
+        borderTopColor: theme._e0ebf2,
         borderTopWidth: 1,
     },
     addButton: {
-        backgroundColor: '#e0f1fb',
+        backgroundColor: theme._e0f1fb,
+        borderColor: theme.addBtnBorderColor,
+        borderWidth: theme.addBtnBorderW,
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
     modalTitle: {
-        textAlign:'center',
-        marginBottom:10,
-        marginLeft:15,
-        marginRight:15,
+        textAlign: 'center',
+        marginBottom: 10,
+        marginLeft: 15,
+        marginRight: 15,
         fontSize: 18
-    }
+    },
+    subtitleStyle: {
+        paddingTop: 3,
+        fontSize: 14,
+        color: theme.meta
+    },
+    subtitleMargin: {
+        marginTop: 5,
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 14
+    },
+    listContainerStyle: {
+        backgroundColor: theme._fff
+    },
 })
 
 MachineDetails.propTypes = {
