@@ -384,7 +384,6 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
         paddingTop: 5,
         marginTop: 5,
-        backgroundColor: 'red'
     },
     hr: {
         marginLeft: 25,
