@@ -36,13 +36,17 @@ class Events extends Component {
         radius: 50, 
     }
   
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Events',
             drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#6a7d8a'}} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
         }
     }
 
@@ -97,7 +101,7 @@ class Events extends Component {
                     return (
                         <Screen>
                             {gettingEvents ? 
-                                <View style={{padding: 30}}>
+                                <View style={s.background}>
                                     <ActivityIndicator />
                                 </View> :
                                 error ? 
@@ -109,9 +113,10 @@ class Events extends Component {
                                                 onPress={this.updateIdx}
                                                 selectedIndex={selectedIdx}
                                                 buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
-                                                containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
-                                                selectedButtonStyle={s.buttonStyle}
-                                                selectedTextStyle={s.textStyle}
+                                                containerStyle={s.buttonGroupContainer}
+                                                textStyle={s.textStyle}
+                                                selectedButtonStyle={s.selButtonStyle}
+                                                selectedTextStyle={s.selTextStyle}
                                             />
                                         </View>
                                         {refetchingEvents ?
@@ -124,11 +129,11 @@ class Events extends Component {
                                                         const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
                                                         const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
                                                         return (
-                                                            <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
+                                                            <Card containerStyle={s.cardContainer}>
                                                                 <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                                <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                                <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                                <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                                <Text style={[s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                <Text style={[s.cardTextStyle,s.margin]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                                <Text style={[s.address,s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                                             </Card>
                                                         )
                                                     }}
@@ -148,12 +153,16 @@ class Events extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({ 
+    background: {
+        padding: 30,
+        backgroundColor: theme.backgroundColor
+    },
     header: {
-        backgroundColor: "#6a7d8a",
+        backgroundColor: theme._6a7d8a,
         paddingVertical: 10,
     },
     headerText: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center"
     },
     title: {
@@ -161,17 +170,31 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonStyle: {
-        backgroundColor: '#D3ECFF',
+        backgroundColor: theme.buttonColor,
+    },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
     },
     textStyle: {
-        color: '#000e18',
+        color: theme.buttonTextColor,
+        fontWeight: 'bold',
+    },
+    selButtonStyle: {
+        backgroundColor: theme._e0f1fb,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
         fontWeight: 'bold',
     },
     textLink: {
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: "#D3ECFF",
+        backgroundColor: theme.buttonColor,
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginBottom: 5
     },
@@ -180,10 +203,24 @@ const getStyles = theme => StyleSheet.create({
     },    
     problem: {
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginTop: 20
     },
+    cardContainer: {
+        borderRadius: 5,
+        borderColor: theme.borderColor,
+        backgroundColor: theme._fff
+    },
+    cardTextStyle: {
+        textAlign: 'center',
+        fontSize: 16,
+        color: theme.meta
+    },
+    address: {
+        fontSize: 12,
+        color: theme.d_9a836a
+    }
 })
 
 Events.propTypes = {
