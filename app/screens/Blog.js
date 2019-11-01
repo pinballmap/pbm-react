@@ -25,12 +25,16 @@ const Blog = () => {
     )   
 }
 
-Blog.navigationOptions = ({ navigation }) => ({
+Blog.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Blog',
     drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#6a7d8a'}} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Blog',
     headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
 })
 
 Blog.propTypes = {
