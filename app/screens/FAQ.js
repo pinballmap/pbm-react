@@ -19,7 +19,7 @@ const FAQ = ({ navigation, }) => {
     const s = getStyles(theme)
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'#f5fbff'}}>
+        <SafeAreaView style={s.background}>
             <Screen>
                 <View style={s.container}>
                     <View style={s.child}>
@@ -53,15 +53,23 @@ const FAQ = ({ navigation, }) => {
     )
 }
 
-FAQ.navigationOptions = ({ navigation }) => ({
+FAQ.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'FAQ',
     drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#6a7d8a'}} />, 
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'FAQ',
     headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
 })
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor
+    },
     container: {
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -73,6 +81,7 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         fontSize: 16,
+        color: theme.pbmText,
         lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
@@ -83,12 +92,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: "#f5fbff",
-        backgroundColor: "#6a7d8a"
+        color: theme._f5fbff,
+        backgroundColor: theme.loading
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: "#D3ECFF",
+        color: theme.buttonColor,
     },
 })
 
