@@ -32,9 +32,12 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
 const getStyles = (theme) => StyleSheet.create({
     blueButton: {
         backgroundColor: theme.buttonColor,
+        borderColor: theme.addBtnBorderColor,
+        borderWidth: theme.addBtnBorderW,
         borderRadius: 50,
         width: '100%',
-        elevation: 0
+        elevation: 0,
+        
     },
     titleStyle: {
         color: theme.buttonTextColor,
