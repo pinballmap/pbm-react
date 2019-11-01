@@ -27,11 +27,15 @@ export class Saved extends Component {
         locations: this.props.user.faveLocations,
     }
   
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,          
             title: 'Saved',
             headerRight:<View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
         }
     }
   
@@ -80,7 +84,7 @@ export class Saved extends Component {
               {({ theme }) => {
                   const s = getStyles(theme)
                   return (
-                      <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
+                      <View style={s.background}>
                           {!loggedIn ? 
                               <NotLoggedIn 
                                   text={`Please log in to start saving your favorite locations.`}
@@ -95,9 +99,10 @@ export class Saved extends Component {
                                               onPress={this.updateIndex}
                                               selectedIndex={this.props.user.selectedFavoriteLocationFilter}
                                               buttons={['Distance', 'Alphabetically', 'Last Added']}
-                                              containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
-                                              selectedButtonStyle={s.buttonStyle}
-                                              selectedTextStyle={s.textStyle}
+                                              containerStyle={s.buttonGroupContainer}
+                                              textStyle={s.textStyle}
+                                              selectedButtonStyle={s.selButtonStyle}
+                                              selectedTextStyle={s.selTextStyle}
                                           />
                                           <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
                                               <FlatList
@@ -122,7 +127,7 @@ export class Saved extends Component {
                                           </View>
                                       </View> : 
                                       <View style={{margin:15}}>
-                                          <Text style={{fontSize:18,textAlign:'center',color:'#4b5862'}}>{`You have no saved locations.`}</Text>
+                                          <Text style={s.noSaved}>{`You have no saved locations.`}</Text>
                                           <FontAwesome name="heart-o" style={s.savedIcon} />
                                           <Text style={{fontSize:18,textAlign:'center'}}>{`To save your favorite locations, lookup a location then click the heart icon.`}</Text>
                                       </View> 
@@ -138,15 +143,32 @@ export class Saved extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor
+    },
     sort: {
         textAlign: 'center',
         marginTop: 5,
     },
     buttonStyle: {
-        backgroundColor: '#D3ECFF',
+        backgroundColor: theme.buttonColor,
+    },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
     },
     textStyle: {
-        color: '#000e18',
+        color: theme.buttonTextColor,
+        fontWeight: 'bold',
+    },
+    selButtonStyle: {
+        backgroundColor: theme._e0f1fb,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
         fontWeight: 'bold',
     },
     savedIcon: {
@@ -156,6 +178,11 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         color: '#F53240'
     },
+    noSaved: {
+        fontSize: 18,
+        textAlign: 'center',
+        color: theme.d_9a836a
+    }
 })
 
 Saved.propTypes = {
