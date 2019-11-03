@@ -47,35 +47,35 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 title={'New Machines'}
                                 titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />}
-                                containerStyle={selectedActivity === 'new_lmx' ? s.containerBg : {}}
+                                containerStyle={selectedActivity === 'new_lmx' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_lmx')}
                             />
                             <ListItem
                                 title={'New Conditions'}
                                 titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />}
-                                containerStyle={selectedActivity === 'new_condition' ? s.containerBg : {}}
+                                containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_condition')}
                             />
                             <ListItem
                                 title={'Removed Machines'}
                                 titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />}
-                                containerStyle={selectedActivity === 'remove_machine' ? s.containerBg : {}}
+                                containerStyle={selectedActivity === 'remove_machine' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('remove_machine')}
                             />
                             <ListItem
                                 title={'Scores'}
                                 titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />}
-                                containerStyle={selectedActivity === 'new_msx' ? s.containerBg : {}}
+                                containerStyle={selectedActivity === 'new_msx' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_msx')}
                             />
                             <ListItem
                                 title={'Confirmed Locations'}
                                 titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />}
-                                containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : {}}
+                                containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('confirm_location')}
                             />
                         </View>
@@ -95,8 +95,11 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
 }
 
 const getStyles = (theme) => StyleSheet.create({
+    containerNotSelected: {
+        backgroundColor: theme.backgroundColor,
+    },
     header: {
-        backgroundColor: "#6a7d8a", 
+        backgroundColor: theme._6a7d8a, 
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -104,7 +107,7 @@ const getStyles = (theme) => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center",
         fontSize: 14,
         fontWeight: 'bold'
@@ -116,10 +119,10 @@ const getStyles = (theme) => StyleSheet.create({
         color:'white',
     },
     titleStyle: {
-        color:'#000e18'
+        color: theme.pbmText
     },
     containerBg: {
-        backgroundColor: '#D3ECFF'
+        backgroundColor: theme.buttonColor
     }
 })
 
