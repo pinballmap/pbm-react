@@ -192,7 +192,7 @@ class FindMachine extends React.PureComponent {
                                             <TextInput
                                                 multiline={true}
                                                 placeholder={'You can also include a machine comment...'}
-                                                placeholderTextColor={theme._97a5af}
+                                                placeholderTextColor={theme.placeholder}
                                                 numberOfLines={2}
                                                 style={[{padding:5,height: 50},s.textInput]}
                                                 value={this.state.condition}
@@ -214,7 +214,7 @@ class FindMachine extends React.PureComponent {
                             </Modal> 
                             <SearchBar
                                 placeholder='Filter machines...'
-                                placeholderTextColor={theme._97a5af}
+                                placeholderTextColor={theme.placeholder}
                                 platform='default'
                                 searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
                                 clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => this.handleSearch('')} />}
