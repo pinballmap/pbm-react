@@ -53,7 +53,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
         <Screen> 
             <SearchBar
                 placeholder='Filter operators...'
-                placeholderTextColor={theme._97a5af}
+                placeholderTextColor={theme.placeholder}
                 platform='default'
                 searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
                 clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={handleSearch} />}
