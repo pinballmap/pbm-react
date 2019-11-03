@@ -226,7 +226,7 @@ class FindMachine extends React.PureComponent {
                                 autoCorrect={false}
                             />
                             {multiSelect ? 
-                                <View style={{alignItems:'center',padding:5,backgroundColor: "#6a7d8a"}}>
+                                <View style={s.multiSelect}>
                                     {machineList.length === 0 ? <Text style={{color: "#f5fbff"}}>0 machines selected</Text> :
                                         <View style={{display: 'flex', flexDirection: 'row'}}>
                                             <Text style={{color: "#f5fbff"}}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
@@ -272,6 +272,11 @@ const getStyles = theme => StyleSheet.create({
         justifyContent: 'center',
         height: deviceHeight
     },
+    multiSelect: {
+        alignItems: 'center',
+        padding: 5,
+        backgroundColor: theme._6a7d8a
+    }
 })
 
 FindMachine.propTypes = {

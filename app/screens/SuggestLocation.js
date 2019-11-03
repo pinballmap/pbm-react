@@ -272,7 +272,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={locationName => this.setState({ locationName })}
                                                 value={locationName}
@@ -284,7 +284,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Street</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={street => this.setState({ street })}
                                                 value={street}
@@ -296,7 +296,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>City</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={city => this.setState({ city })}
                                                 value={city}
@@ -308,7 +308,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>State</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={state => this.setState({ state })}
                                                 value={state}
@@ -320,7 +320,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Zip Code</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={zip => this.setState({ zip })}
                                                 value={zip}
@@ -347,7 +347,7 @@ class SuggestLocation extends Component {
                                             }   
                                             <Text style={s.title}>Phone</Text>
                                             <TextInput 
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={phone => this.setState({ phone })}
                                                 value={phone}
@@ -359,7 +359,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Website</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                                 value={website}
@@ -373,7 +373,7 @@ class SuggestLocation extends Component {
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
-                                                style={[{padding:5,height: 100},s.textInput,s.radius10]}
+                                                style={[{padding:5,height: 100},s.textInput,s.radius5]}
                                                 onChangeText={description => this.setState({ description })}
                                                 underlineColorAndroid='transparent'
                                                 value={description}
@@ -471,8 +471,8 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 5
     },
 
-    radius10: {
-        borderRadius: 10,
+    radius5: {
+        borderRadius: 5,
     },
     viewPicker: {
         backgroundColor: theme._e0ebf2, 
