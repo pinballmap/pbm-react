@@ -34,7 +34,9 @@ const dark = {
     _fff: '#493931',
     _eee: '#2a211c',
     addBtnBorderW: 1,
-    addBtnBorderColor: '#bdae9d'
+    addBtnBorderColor: '#bdae9d',
+    drawerText: '#bdae9d',
+    drawerIcon: '#6a7d8a'
 }
 
 const standard = {
@@ -61,7 +63,9 @@ const standard = {
     _fff: '#ffffff',
     _eee: '#eeeeee',
     addBtnBorderW: 0,
-    addBtnBorderColor: 'transparent'
+    addBtnBorderColor: 'transparent',
+    drawerText: '#6a7d8a',
+    drawerIcon: '#97a5af'
 }
 
 class App extends Component {

@@ -139,7 +139,7 @@ class EditLocationDetails extends Component {
                                     <View style={{marginLeft:10,marginRight:10}}>
                                         <Text style={s.title}>Phone</Text>
                                         <TextInput 
-                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            style={[{height: 40},s.textInput,s.radius5]}
                                             keyboardType='numeric'
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => this.setState({ phone })}
@@ -151,7 +151,7 @@ class EditLocationDetails extends Component {
                                         />
                                         <Text style={s.title}>Website</Text>
                                         <TextInput
-                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            style={[{height: 40},s.textInput,s.radius5]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={website => this.setState({ website })}
                                             value={website}
@@ -164,7 +164,7 @@ class EditLocationDetails extends Component {
                                         <TextInput
                                             multiline={true}
                                             numberOfLines={4}
-                                            style={[{height: 100},s.textInput,s.radius10]}
+                                            style={[{height: 100},s.textInput,s.radius5]}
                                             onChangeText={description => this.setState({ description })}
                                             underlineColorAndroid='transparent'
                                             value={description}
@@ -224,8 +224,8 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 5
     },
-    radius10: {
-        borderRadius: 10
+    radius5: {
+        borderRadius: 5
     },
     hr: {
         marginLeft:25,

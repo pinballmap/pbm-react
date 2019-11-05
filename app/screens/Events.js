@@ -183,7 +183,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme._e0f1fb,
+        backgroundColor: theme.loading,
     },
     selTextStyle: {
         color: theme.pbmText,

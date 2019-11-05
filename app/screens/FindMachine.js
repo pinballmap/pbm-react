@@ -186,7 +186,7 @@ class FindMachine extends React.PureComponent {
                                 transparent={false}
                             >
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
                                         <View style={s.verticalAlign}>
                                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
                                             <TextInput
@@ -213,6 +213,7 @@ class FindMachine extends React.PureComponent {
                                 </TouchableWithoutFeedback>
                             </Modal> 
                             <SearchBar
+                                lightTheme
                                 placeholder='Filter machines...'
                                 placeholderTextColor={theme.placeholder}
                                 platform='default'
@@ -251,6 +252,9 @@ class FindMachine extends React.PureComponent {
 }
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme.backgroundColor
+    },
     filterInput: {
         height: 35,
         backgroundColor: theme._e0ebf2,

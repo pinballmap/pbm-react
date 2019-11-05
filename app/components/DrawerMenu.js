@@ -66,12 +66,12 @@ const getStyles = theme => StyleSheet.create({
     },
     icon: {
         fontSize: 24,
-        color: '#97a5af',
+        color: theme.drawerIcon,
         position: 'absolute',
         paddingLeft: Platform.OS === 'ios' ? 20 : 15
     },
     text: {
-        color: '#6a7d8a',
+        color: theme.drawerText,
         fontWeight: 'bold',
         position: 'absolute',
         paddingLeft: 72,

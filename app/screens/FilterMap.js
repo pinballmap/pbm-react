@@ -180,7 +180,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme._e0f1fb,
+        backgroundColor: theme.loading,
     },
     selTextStyle: {
         color: theme.pbmText,
