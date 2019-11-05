@@ -227,7 +227,6 @@ class MachineDetails extends Component {
         
                                             return (
                                                 <ListItem
-                                                    containerStyle={{paddingLeft:30, paddingTop:5}}
                                                     key={id}
                                                     title={formatNumWithCommas(score)}
                                                     subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
@@ -381,7 +380,9 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14
     },
     listContainerStyle: {
-        backgroundColor: theme._fff
+        backgroundColor: theme._fff,
+        paddingLeft: 30, 
+        paddingTop: 5
     },
 })
 
