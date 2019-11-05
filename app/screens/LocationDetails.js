@@ -156,13 +156,10 @@ class LocationDetails extends Component {
                                                     this.props.navigation.navigate('Saved')
                                                 }}
                                                 buttonStyle={s.savedLink}
-                                                titleStyle={{
-                                                    color:"#000e18", 
-                                                    fontSize:16
-                                                }}
+                                                titleStyle={s.buttonTitleStyle}
                                                 iconLeft
                                                 icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:20,marginLeft:20}}
+                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15}}
                                             />
                                         </View>
                                     </View>
@@ -356,7 +353,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme._e0f1fb,
+        backgroundColor: theme.loading,
     },
     selTextStyle: {
         color: theme.pbmText,
@@ -483,12 +480,13 @@ const getStyles = theme => StyleSheet.create({
         padding: 10
     },
     savedIcon: {
-        fontSize: 24
+        fontSize: 24,
+        marginRight: 5
     },
     savedLink: {
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.buttonColor,
         borderWidth: 1,
-        borderColor: '#4b5862',
+        borderColor: theme.addBtnBorderColor,
         borderRadius: 50,
         elevation: 0
     },

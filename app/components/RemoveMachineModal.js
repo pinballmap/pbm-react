@@ -36,7 +36,7 @@ const s = StyleSheet.create({
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
     }
 })
 

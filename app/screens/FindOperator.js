@@ -52,6 +52,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     return (
         <Screen> 
             <SearchBar
+                lightTheme
                 placeholder='Filter operators...'
                 placeholderTextColor={theme.placeholder}
                 platform='default'
@@ -61,7 +62,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
                 inputStyle={{color:theme.pbmText}}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:theme.d_493931}}
+                containerStyle={s.containerStyle}
             />
             <ScrollView keyboardDismissMode="on-drag">
                 <FlatList
@@ -81,6 +82,9 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor,
         borderWidth: 1
     },
+    containerStyle: {
+        backgroundColor: theme.d_493931,
+    }
 })
 
 FindOperator.navigationOptions = ({ navigation, theme }) => ({

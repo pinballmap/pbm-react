@@ -52,6 +52,7 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
     return (
         <Screen>
             <SearchBar
+                lightTheme
                 placeholder='Filter location types...'
                 placeholderTextColor={theme.placeholder}
                 platform='default'
