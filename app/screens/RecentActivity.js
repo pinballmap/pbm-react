@@ -29,11 +29,15 @@ class RecentActivity extends Component {
         recentActivity: [],
     }
     
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
-            headerRight: <FilterRecentActivity />
+            headerRight: <FilterRecentActivity />,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
         }
     }
 
@@ -129,8 +133,8 @@ class RecentActivity extends Component {
                                             <ListItem
                                                 component={TouchableOpacity}
                                                 title={activity.submission}
-                                                titleStyle={{color:'#000e18'}}
-                                                subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
+                                                titleStyle={s.pbmText}
+                                                subtitleStyle={s.subtitleStyle}
                                                 subtitle={`${moment(activity.updated_at).format('LL')}`}
                                                 containerStyle={s.list}
                                                 leftAvatar={activity.submissionTypeIcon}
@@ -148,24 +152,32 @@ class RecentActivity extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
+    pbmText: {
+        color: theme.pbmText
+    },
     header: {
-        backgroundColor: "#6a7d8a",
+        backgroundColor: theme._6a7d8a,
         paddingVertical: 10,
     },
     headerText: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center"
     },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
     },
+    subtitleStyle: {
+        paddingTop: 3,
+        fontSize: 14,
+        color: theme.meta
+    },
     paren: {
         fontSize: 12,
         fontStyle: "italic"
     },
     filterView: {
-        backgroundColor:'#fdd4d7',
+        backgroundColor: theme.warningButtonColor,
         display: 'flex', 
         flexDirection: 'row',
         alignItems: 'center',
@@ -174,14 +186,15 @@ const getStyles = theme => StyleSheet.create({
     filter: {
         fontSize: 14,
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         paddingVertical: 8,
     },
     list: {
         borderRadius: 5,
         borderWidth: 2,
-        borderColor: '#D3ECFF',
+        backgroundColor: theme._fff,
+        borderColor: theme.borderColor,
         padding: 8,
         marginTop: 5,
         marginBottom: 5,
@@ -190,13 +203,13 @@ const getStyles = theme => StyleSheet.create({
     },
     problem: {
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginTop: 20
     },
     xButton: {
-        color:'#f53240',
-        marginLeft:8,
+        color: '#f53240',
+        marginLeft: 8,
     }
 })
 

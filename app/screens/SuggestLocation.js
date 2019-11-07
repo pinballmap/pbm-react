@@ -55,13 +55,17 @@ class SuggestLocation extends Component {
         showSuggestLocationModal: false,
     }
   
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Submit Location',
             drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#6a7d8a'}} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Submit Location',
             headerRight:<View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
         }
     }
 
@@ -141,7 +145,7 @@ class SuggestLocation extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={{flex: 1,backgroundColor:'#f5fbff'}}>
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={s.background}>
                             {!loggedIn ? 
                                 <NotLoggedIn
                                     title={'Suggest a New Location'}
@@ -267,56 +271,61 @@ class SuggestLocation extends Component {
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={locationName => this.setState({ locationName })}
                                                 value={locationName}
                                                 returnKeyType="done"
                                                 placeholder={"ex. Giovanni's Pizza"}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="organizationName"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>Street</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={street => this.setState({ street })}
                                                 value={street}
                                                 returnKeyType="done"
                                                 placeholder={'ex. 123 Coast Village Road'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="streetAddressLine1"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>City</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={city => this.setState({ city })}
                                                 value={city}
                                                 returnKeyType="done"
                                                 placeholder={'ex. Montecito'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="addressCity"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>State</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={state => this.setState({ state })}
                                                 value={state}
                                                 returnKeyType="done"
                                                 placeholder={'ex. CA'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="addressState"
                                                 autoCapitalize="characters"
                                             />
                                             <Text style={s.title}>Zip Code</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={zip => this.setState({ zip })}
                                                 value={zip}
                                                 returnKeyType="done"
                                                 placeholder={'ex. 93108'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="postalCode"
                                             />
                                             <Text style={s.title}>Country</Text>
@@ -337,23 +346,25 @@ class SuggestLocation extends Component {
                                             }   
                                             <Text style={s.title}>Phone</Text>
                                             <TextInput 
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={phone => this.setState({ phone })}
                                                 value={phone}
                                                 returnKeyType="done"
                                                 placeholder={phone || '(503) xxx-xxxx'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="telephoneNumber"
                                                 autoCapitalize="none"
                                             />
                                             <Text style={s.title}>Website</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                                 value={website}
                                                 returnKeyType="done"
                                                 placeholder={'http://...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textContentType="URL"
                                                 autoCapitalize="none"
                                             />
@@ -361,11 +372,12 @@ class SuggestLocation extends Component {
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
-                                                style={[{padding:5,height: 100},s.textInput,s.radius10]}
+                                                style={[{padding:5,height: 100},s.textInput,s.radius5]}
                                                 onChangeText={description => this.setState({ description })}
                                                 underlineColorAndroid='transparent'
                                                 value={description}
                                                 placeholder={'Location description, hours, etc...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textAlignVertical='top'
                                             />
                                             <Text style={s.title}>Location Type</Text>                              
@@ -409,6 +421,10 @@ class SuggestLocation extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({ 
+    background: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor
+    },
     text: {
         fontSize: 16,
         lineHeight: 22,
@@ -416,7 +432,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontWeight: '600',
-        color: '#4b5862',
+        color: theme.buttonTextColor,
         textAlign: 'center'
     },
     title: {
@@ -425,7 +441,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontWeight: "bold",
-        color: "#6a7d8a"
+        color: theme.meta
     },
     preview: {
         fontSize: 15,
@@ -434,18 +450,19 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: "#6a7d8a"
+        backgroundColor: theme.meta
     },
     pageTitleText: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontStyle: 'italic',
         fontSize: 18,
-        color: '#f5fbff'
+        color: theme._f5fbff
     },
     textInput: {
-        backgroundColor: '#e0ebf2', 
-        borderColor: '#d1dfe8',
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
+        color: theme.pbmText,
         borderWidth: 1,
         marginLeft: 10,
         marginRight: 10,
@@ -453,12 +470,13 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 5
     },
 
-    radius10: {
-        borderRadius: 10,
+    radius5: {
+        borderRadius: 5,
     },
     viewPicker: {
-        backgroundColor:"#e0ebf2",
-        borderColor: '#d1dfe8',
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
+        color: theme.pbmText,
         borderWidth: 1,
         borderRadius: 10,
         marginLeft: 10,
@@ -469,7 +487,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight:25,
         height:2,
         marginTop: 10,
-        backgroundColor:"#D3ECFF"
+        backgroundColor: theme.hr
     },
     success: {
         textAlign: 'center',
@@ -489,7 +507,9 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24
     },
     addMachinesButton: {
-        backgroundColor: '#e0f1fb',
+        backgroundColor: theme._e0f1fb,
+        borderColor: theme.addBtnBorderColor,
+        borderWidth: theme.addBtnBorderW,
         borderRadius: 50,
         width: '100%',
         elevation: 0

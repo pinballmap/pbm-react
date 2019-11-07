@@ -27,11 +27,15 @@ export class LocationList extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
             title: 'Location List',
             headerRight:<View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
         }
     }
 
@@ -91,9 +95,10 @@ export class LocationList extends Component {
                                 onPress={this.updateIndex}
                                 selectedIndex={this.props.locations.selectedLocationListFilter}
                                 buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
-                                containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
-                                selectedButtonStyle={s.buttonStyle}
-                                selectedTextStyle={s.textStyle}
+                                containerStyle={s.buttonGroupContainer}
+                                textStyle={s.textStyle}
+                                selectedButtonStyle={s.selButtonStyle}
+                                selectedTextStyle={s.selTextStyle}
                             />
                             <FlatList
                                 data={locations}
@@ -127,13 +132,22 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
     },
-    buttonStyle: {
-        backgroundColor: '#D3ECFF',
-    },
     textStyle: {
-        color: '#000e18',
+        color: theme.pbmText
+    },
+    selButtonStyle: {
+        backgroundColor: theme.loading,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
         fontWeight: 'bold',
     },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
+    }
 })
 
 LocationList.propTypes = {

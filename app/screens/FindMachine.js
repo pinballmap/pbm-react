@@ -186,13 +186,13 @@ class FindMachine extends React.PureComponent {
                                 transparent={false}
                             >
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={{backgroundColor:'#f5fbff'}}>
+                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
                                         <View style={s.verticalAlign}>
                                             <Text style={{textAlign:'center',marginTop:10,marginLeft:15,marginRight:15,fontSize: 18}}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>                
                                             <TextInput
                                                 multiline={true}
                                                 placeholder={'You can also include a machine comment...'}
-                                                placeholderTextColor={theme._97a5af}
+                                                placeholderTextColor={theme.placeholder}
                                                 numberOfLines={2}
                                                 style={[{padding:5,height: 50},s.textInput]}
                                                 value={this.state.condition}
@@ -213,8 +213,9 @@ class FindMachine extends React.PureComponent {
                                 </TouchableWithoutFeedback>
                             </Modal> 
                             <SearchBar
+                                lightTheme={theme.theme !== 'dark'}
                                 placeholder='Filter machines...'
-                                placeholderTextColor={theme._97a5af}
+                                placeholderTextColor={theme.placeholder}
                                 platform='default'
                                 searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
                                 clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => this.handleSearch('')} />}
@@ -226,7 +227,7 @@ class FindMachine extends React.PureComponent {
                                 autoCorrect={false}
                             />
                             {multiSelect ? 
-                                <View style={{alignItems:'center',padding:5,backgroundColor: "#6a7d8a"}}>
+                                <View style={s.multiSelect}>
                                     {machineList.length === 0 ? <Text style={{color: "#f5fbff"}}>0 machines selected</Text> :
                                         <View style={{display: 'flex', flexDirection: 'row'}}>
                                             <Text style={{color: "#f5fbff"}}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
@@ -251,6 +252,9 @@ class FindMachine extends React.PureComponent {
 }
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme.backgroundColor
+    },
     filterInput: {
         height: 35,
         backgroundColor: theme._e0ebf2,
@@ -272,6 +276,11 @@ const getStyles = theme => StyleSheet.create({
         justifyContent: 'center',
         height: deviceHeight
     },
+    multiSelect: {
+        alignItems: 'center',
+        padding: 5,
+        backgroundColor: theme._6a7d8a
+    }
 })
 
 FindMachine.propTypes = {
