@@ -11,6 +11,7 @@ import store from './store'
 const theme = Appearance.getColorScheme()
 
 const dark = {
+    theme: 'dark',
     buttonColor: '#7c6152',
     buttonTextColor: '#bdae9d',
     warningButtonColor: '#67050c',
@@ -40,6 +41,7 @@ const dark = {
 }
 
 const standard = {
+    theme: 'standard',
     buttonColor: '#D3ECFF',
     buttonTextColor: '#4b5862',
     warningButtonColor: '#fdd4d7',
