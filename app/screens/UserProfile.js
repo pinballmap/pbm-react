@@ -33,11 +33,15 @@ class UserProfile extends Component {
         profile_info: {},
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Profile',
             headerRight:<View style={{padding:6}}></View>,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',           
         }
     };
 
@@ -134,10 +138,7 @@ class UserProfile extends Component {
                                         title={'Saved Locations'}
                                         onPress={() => this.props.navigation.navigate('Saved')}
                                         buttonStyle={s.savedLink}
-                                        titleStyle={{
-                                            color:"#000e18", 
-                                            fontSize:16
-                                        }}
+                                        titleStyle={s.titleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
                                         containerStyle={s.margin15}
@@ -146,9 +147,9 @@ class UserProfile extends Component {
                                     <View style={{paddingVertical:8}}>
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                             return <ListItem
-                                                containerStyle={{backgroundColor:'#f5fbff'}}
+                                                containerStyle={s.background}
                                                 key={location[0]}
-                                                titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-8,marginTop:-8}}
+                                                titleStyle={s.listTitleStyle}
                                                 title={location[1]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
                                             /> 
@@ -158,9 +159,9 @@ class UserProfile extends Component {
                                     <View style={{paddingTop:0,paddingBottom:15}}>
                                         {profile_list_of_high_scores.map((score, idx) => {
                                             return <ListItem
-                                                containerStyle={{backgroundColor:'#f5fbff'}}
+                                                containerStyle={s.background}
                                                 key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                                                titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
+                                                titleStyle={s.listTitleStyle}
                                                 title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                             /> 
                                         })}
@@ -181,21 +182,26 @@ class UserProfile extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme.backgroundColor
+    },
     bold: {
         fontWeight: 'bold',
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        color: "#000e18",
-        backgroundColor: "#D3ECFF"
+        color: theme.pbmText,
+        backgroundColor: theme.buttonColor
     },
     savedIcon: {
-        fontSize: 24
+        fontSize: 24,
+        color: theme.pbmText,
+        marginRight: 5
     },
     savedLink: {
-        backgroundColor:'#ffffff',
+        backgroundColor: theme._fff,
         borderWidth: 1,
-        borderColor: '#97a5af',
+        borderColor: theme._97a5af,
         borderRadius: 50,
         elevation: 0
     },
@@ -205,34 +211,46 @@ const getStyles = theme => StyleSheet.create({
         marginTop:15,
         marginBottom:15
     },
+    titleStyle: {
+        color: theme.pbmText, 
+        fontSize: 16
+    },
+    listTitleStyle: {
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 16,
+        marginBottom: -8,
+        marginTop: -8,
+        color: theme.pbmText
+    },
     username: {
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: "#f5fbff",
-        backgroundColor: "#6a7d8a",
+        color: theme.pbmText,
+        backgroundColor: theme._6a7d8a,
         textAlign: "center"
     },
     stat: {
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: "#4b5862",
+        color: theme.buttonTextColor,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: "#000e18",
-        backgroundColor: "#D3ECFF",
+        color: theme.pbmText,
+        backgroundColor: theme.buttonColor,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10
     },
     member: {
-        textAlign:"center",
-        marginBottom:10,
-        fontWeight:"bold",
+        textAlign: "center",
+        marginBottom: 10,
+        fontWeight: "bold",
         fontSize: 16,
         marginTop: 5
     },

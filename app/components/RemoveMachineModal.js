@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Text, StyleSheet } from 'react-native'
+import { ThemeContext } from 'react-native-elements'
 import { removeMachineFromLocation } from '../actions/location_actions'
 import ConfirmationModal from './ConfirmationModal'
 import PbmButton from './PbmButton'
 import WarningButton from './WarningButton'
 
 const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: loc, machineName }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+
     const removeLmx = (curLmx, location_id) => {
         removeMachineFromLocation(curLmx, location_id)
         closeModal()
@@ -30,13 +34,14 @@ const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: l
     )
 }
 
-const s = StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({ 
     confirmText: {
         textAlign: 'center',
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
+        color: theme.pbmText,
     }
 })
 

@@ -41,7 +41,7 @@ const LocationCard = ({
                         {type || distance ? 
                             <Text style={s.marginS}>
                                 {type ? <Text style={s.gray}>{type}</Text> : null}
-                                {type && distance ? <Text> • </Text> : null }
+                                {type && distance ? <Text style={s.gray}> • </Text> : null }
                                 {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
                             </Text> : null
                         }
@@ -58,7 +58,7 @@ const LocationCard = ({
                                     </Text>
                                 )})
                             }
-                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[{marginBottom:10},s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
+                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus,s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                         </View>
                     </View>
                     <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
@@ -71,11 +71,11 @@ const LocationCard = ({
 
 const getStyles = (theme) => StyleSheet.create({
     containerStyle: {
-        borderRadius:5,
-        marginBottom:8,
-        marginTop:8,
-        borderColor: "#D3ECFF",
-        backgroundColor: '#FFF'
+        borderRadius: 5,
+        marginBottom: 8,
+        marginTop: 8,
+        borderColor: theme.borderColor,
+        backgroundColor: theme._fff
     },
     flexi: {
         flex: 1, 
@@ -86,20 +86,25 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: Platform.OS === 'ios' ? -10 : 0,
+        color: theme.pbmText
+    },
+    plus: {
+        marginBottom: 10,
+        color: theme.pbmText
     },
     locationNameContainer: {
         width: '100%',
-        backgroundColor: "#D3ECFF",
+        backgroundColor: theme.buttonColor,
         marginBottom: 5,
         padding: 5,
     },
     locationName: {
         fontWeight: 'bold',
         fontSize: 16,
-        color: '#000e18'
+        color: theme.pbmText
     },
     margin: {
-        marginTop: 5,
+        marginTop: 10,
         marginLeft: 5,
     },
     marginS: {
@@ -107,14 +112,14 @@ const getStyles = (theme) => StyleSheet.create({
         marginLeft: 5
     },
     gray: {
-        color: "#4b5862",
+        color: theme.buttonTextColor,
     },
     italic: {
         fontStyle: 'italic',
     },
     iconStyle: {
         fontSize: 32,
-        color: '#eeeeee',
+        color: theme._eee,
         marginRight: 0,
         position: "absolute",
         right: 0,

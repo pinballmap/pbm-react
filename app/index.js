@@ -11,6 +11,7 @@ import store from './store'
 const theme = Appearance.getColorScheme()
 
 const dark = {
+    theme: 'dark',
     buttonColor: '#7c6152',
     buttonTextColor: '#bdae9d',
     warningButtonColor: '#67050c',
@@ -25,11 +26,22 @@ const dark = {
     _e0f1fb: '#493931',
     _f5fbff: '#bdae9d',
     d_493931: '#493931',
+    d_9a836a: '#9a836a',
     hr: '#7c6152',
+    placeholder: '#9a836a',
+    meta: '#9a836a',
     borderColor: '#7c6152',
+    loading: '#493931',
+    _fff: '#493931',
+    _eee: '#2a211c',
+    addBtnBorderW: 1,
+    addBtnBorderColor: '#bdae9d',
+    drawerText: '#bdae9d',
+    drawerIcon: '#6a7d8a'
 }
 
 const standard = {
+    theme: 'standard',
     buttonColor: '#D3ECFF',
     buttonTextColor: '#4b5862',
     warningButtonColor: '#fdd4d7',
@@ -44,8 +56,18 @@ const standard = {
     _e0f1fb: '#e0f1fb',
     _f5fbff: '#f5fbff',
     d_493931: '#e0f1fb',
+    d_9a836a: '#4b5862',
     hr: '#97a5af',
+    placeholder: '#97a5af',
+    meta: '#6a7d8a',
     borderColor: '#d1dfe8',
+    loading: '#d3ecff',
+    _fff: '#ffffff',
+    _eee: '#eeeeee',
+    addBtnBorderW: 0,
+    addBtnBorderColor: 'transparent',
+    drawerText: '#6a7d8a',
+    drawerIcon: '#97a5af'
 }
 
 class App extends Component {

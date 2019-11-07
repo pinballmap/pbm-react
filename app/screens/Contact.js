@@ -77,7 +77,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 value={name}
                                 returnKeyType="done"
                                 placeholder={'Your name...'}
-                                placeholderTextColor={theme._97a5af}
+                                placeholderTextColor={theme.placeholder}
                                 autoCorrect={false}
                             /> 
                             <TextInput
@@ -87,7 +87,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 value={email}
                                 returnKeyType="done"
                                 placeholder={'Your email...'}
-                                placeholderTextColor={theme._97a5af}
+                                placeholderTextColor={theme.placeholder}
                                 keyboardType="email-address"
                                 autoCorrect={false}
                             /> 
@@ -96,7 +96,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                     <TextInput
                         multiline={true}
                         placeholder={'Tell us about it...'}
-                        placeholderTextColor={theme._97a5af}
+                        placeholderTextColor={theme.placeholder}
                         numberOfLines={10}
                         style={[{padding:5,height: 200},s.textInput]}
                         value={message}

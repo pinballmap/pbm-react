@@ -42,10 +42,14 @@ class EditLocationDetails extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('name'),
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
         }
     }
 
@@ -101,7 +105,7 @@ class EditLocationDetails extends Component {
                                         />
                                     </View>
                                     :              
-                                    <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>         
+                                    <SafeAreaView style={s.background}>         
                                         <ScrollView style={{backgroundColor:'#f5fbff'}}>
                                             <Text style={s.title}>Phone</Text>
                                             <Text style={s.preview}>{phone}</Text>
@@ -135,7 +139,7 @@ class EditLocationDetails extends Component {
                                     <View style={{marginLeft:10,marginRight:10}}>
                                         <Text style={s.title}>Phone</Text>
                                         <TextInput 
-                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            style={[{height: 40},s.textInput,s.radius5]}
                                             keyboardType='numeric'
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => this.setState({ phone })}
@@ -147,7 +151,7 @@ class EditLocationDetails extends Component {
                                         />
                                         <Text style={s.title}>Website</Text>
                                         <TextInput
-                                            style={[{height: 40},s.textInput,s.radius10]}
+                                            style={[{height: 40},s.textInput,s.radius5]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={website => this.setState({ website })}
                                             value={website}
@@ -160,7 +164,7 @@ class EditLocationDetails extends Component {
                                         <TextInput
                                             multiline={true}
                                             numberOfLines={4}
-                                            style={[{height: 100},s.textInput,s.radius10]}
+                                            style={[{height: 100},s.textInput,s.radius5]}
                                             onChangeText={description => this.setState({ description })}
                                             underlineColorAndroid='transparent'
                                             value={description}
@@ -193,13 +197,17 @@ class EditLocationDetails extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({ 
+    background: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor
+    },
     title: {
         textAlign:'center',
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
         fontWeight: "bold",
-        color: "#6a7d8a"
+        color: theme.meta
     },
     preview: {
         fontSize: 14,
@@ -207,24 +215,26 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: '#e0ebf2', 
-        borderColor: '#d1dfe8',
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
+        color: theme.pbmText,
         borderWidth: 1,
         marginLeft: 15,
         marginRight: 15,
         paddingLeft: 10,
         paddingRight: 5
     },
-    radius10: {
-        borderRadius: 10
+    radius5: {
+        borderRadius: 5
     },
     hr: {
         marginLeft:25,
         marginRight:25,
         height:2,
         marginTop: 10,
-        backgroundColor:"#D3ECFF"
+        backgroundColor: theme.hr
     },
+    
 })
 
 EditLocationDetails.propTypes = {
