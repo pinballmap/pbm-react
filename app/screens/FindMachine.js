@@ -213,7 +213,7 @@ class FindMachine extends React.PureComponent {
                                 </TouchableWithoutFeedback>
                             </Modal> 
                             <SearchBar
-                                lightTheme
+                                lightTheme={theme.theme !== 'dark'}
                                 placeholder='Filter machines...'
                                 placeholderTextColor={theme.placeholder}
                                 platform='default'

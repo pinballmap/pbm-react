@@ -20,7 +20,7 @@ import {
 const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
-
+    
     const allOperators = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...operators]
     const [selectedOperators, setSelectedOperators] = useState(allOperators)
     const [query, setQuery] = useState('')
@@ -52,7 +52,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     return (
         <Screen> 
             <SearchBar
-                lightTheme
+                lightTheme={theme.theme !== 'dark'}
                 placeholder='Filter operators...'
                 placeholderTextColor={theme.placeholder}
                 platform='default'
