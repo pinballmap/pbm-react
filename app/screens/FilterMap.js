@@ -196,7 +196,7 @@ const getStyles = theme => StyleSheet.create({
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.d_9a836a
+        color: theme.placeholder
     },
 })
 
