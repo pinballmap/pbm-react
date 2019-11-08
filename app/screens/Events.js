@@ -117,6 +117,7 @@ class Events extends Component {
                                                 textStyle={s.textStyle}
                                                 selectedButtonStyle={s.selButtonStyle}
                                                 selectedTextStyle={s.selTextStyle}
+                                                innerBorderStyle={s.innerBorderStyle}
                                             />
                                         </View>
                                         {refetchingEvents ?
@@ -177,6 +178,10 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor, 
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.d_9a836a
     },
     textStyle: {
         color: theme.buttonTextColor,
