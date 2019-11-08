@@ -25,23 +25,25 @@ const About = () => {
         num_locations: 0,
         num_lmxes: 0,
     })
-    const [apiError, setApiError] = useState('')
 
     useEffect(() => {
+        let isCancelled = false;
+
         getData('/regions/location_and_machine_counts.json')
-            .then(data => {
-                if (data && data.num_lmxes && data.num_locations) {
-                    setStats({
-                        num_lmxes: data.num_lmxes,
-                        num_locations: data.num_locations,
-                    })
-                } else {
-                    setApiError({
-                        apiError: data
-                    })
+            .then(data => {                
+                if (!isCancelled) {
+                    if (data && data.num_lmxes && data.num_locations) {
+                        setStats({
+                            num_lmxes: data.num_lmxes,
+                            num_locations: data.num_locations,
+                        })
+                    } 
                 }
             })
-            .catch(apiError => setApiError( apiError ))
+
+        return () => {
+            isCancelled = true;
+        }
     })
      
     return(
