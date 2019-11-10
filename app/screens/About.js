@@ -27,7 +27,7 @@ const About = () => {
     })
 
     useEffect(() => {
-        let isCancelled = false;
+        let isCancelled = false
 
         getData('/regions/location_and_machine_counts.json')
             .then(data => {                
@@ -42,7 +42,7 @@ const About = () => {
             })
 
         return () => {
-            isCancelled = true;
+            isCancelled = true
         }
     })
      
@@ -140,12 +140,8 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: "#F53240",
+        color: theme.red,
         fontSize: 16,
-    },
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
     },
 })
 

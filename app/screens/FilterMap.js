@@ -103,6 +103,7 @@ const FilterMap = ({
                 textStyle={s.textStyle}
                 selectedButtonStyle={s.selButtonStyle}
                 selectedTextStyle={s.selTextStyle}
+                innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Filter by location type:</Text>
             <DropDownButton
@@ -123,6 +124,7 @@ const FilterMap = ({
                 textStyle={s.textStyle}
                 selectedButtonStyle={s.selButtonStyle}
                 selectedTextStyle={s.selTextStyle}
+                innerBorderStyle={s.innerBorderStyle}
             />
             {hasFilterSelected ? 
                 <WarningButton
@@ -191,7 +193,11 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor, 
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
-    }
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.placeholder
+    },
 })
 
 FilterMap.propTypes = {

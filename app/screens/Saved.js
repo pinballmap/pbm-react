@@ -103,6 +103,7 @@ export class Saved extends Component {
                                               textStyle={s.textStyle}
                                               selectedButtonStyle={s.selButtonStyle}
                                               selectedTextStyle={s.selTextStyle}
+                                              innerBorderStyle={s.innerBorderStyle}
                                           />
                                           <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
                                               <FlatList
@@ -159,6 +160,10 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor, 
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.placeholder
     },
     textStyle: {
         color: theme.buttonTextColor,

@@ -14,7 +14,7 @@
       "backgroundColor": "#4b5862",
       "resizeMode": "contain"
     },
-    "version": "5.0.6",
+    "version": "5.1.0",
     "slug": "pbm-app",
     "name": "Pinball Map",
     "description": "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
@@ -25,7 +25,7 @@
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "70",
+      "buildNumber": "71",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
