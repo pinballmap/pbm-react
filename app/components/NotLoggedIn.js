@@ -35,13 +35,14 @@ const getStyles = (theme) => StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
         paddingBottom: 15,
-        paddingTop: 10
+        paddingTop: 10,
+        color: theme.pbmText
     },
     hiya: {
         fontStyle: 'italic',
         paddingHorizontal: 15,
         paddingBottom: 10,
-        color: '#4b5862',
+        color: theme.buttonTextColor,
         textAlign: 'center'
     },
 })
