@@ -17,7 +17,6 @@ import {
     Screen,
     Text,
 } from '../components'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { postData } from '../config/request'
 
 const ResendConfirmation = ({ navigation }) => {
@@ -39,40 +38,39 @@ const ResendConfirmation = ({ navigation }) => {
     return(
         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
             <Screen>
-                <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
-                    <ConfirmationModal visible={modalVisible}>
-                        <Text style={s.confirmText}>Confirmation info resent.</Text>
-                        <View>
-                            <PbmButton
-                                title={"Great!"}
-                                onPress={() => {
-                                    setModalVisible(false)
-                                    navigation.navigate('Login')
-                                }}
-                            />
-                        </View>
-                    </ConfirmationModal>
+                <ConfirmationModal visible={modalVisible}>
+                    <Text style={s.confirmText}>Confirmation info resent.</Text>
                     <View>
-                        <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
-                        <Input 
-                            placeholder='Username or email...'
-                            onChangeText={identification => setIdentification(identification)}
-                            value={identification}
-                            errorStyle={{ color: 'red' }}
-                            errorMessage={identificationError}
-                            inputContainerStyle={s.inputBox}
-                            inputStyle={s.inputText}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <PbmButton 
-                            title={'Submit'}
-                            onPress={submit}
-                            disabled={identification.length === 0}
-                            containerStyle={s.container}
+                        <PbmButton
+                            title={"Great!"}
+                            onPress={() => {
+                                setModalVisible(false)
+                                navigation.navigate('Login')
+                            }}
                         />
                     </View>
-                </KeyboardAwareScrollView>    
+                </ConfirmationModal>
+                <View style={{marginTop:10}}>
+                    <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
+                    <Input 
+                        placeholder='Username or email...'
+                        placeholderTextColor={theme.placeholder}
+                        onChangeText={identification => setIdentification(identification)}
+                        value={identification}
+                        errorStyle={{ color: 'red' }}
+                        errorMessage={identificationError}
+                        inputContainerStyle={s.inputBox}
+                        inputStyle={s.inputText}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <PbmButton 
+                        title={'Submit'}
+                        onPress={submit}
+                        disabled={identification.length === 0}
+                        containerStyle={s.container}
+                    />
+                </View>
             </Screen>
         </TouchableWithoutFeedback>)
 }
@@ -81,6 +79,10 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
+    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
     },
 })
 
@@ -92,14 +94,13 @@ const getStyles = theme => StyleSheet.create({
     inputBox: {
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#97a5af',
-        backgroundColor: "#ffffff",
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
         margin: 15,
-        width: '100%',
         paddingLeft: 10
     },
     inputText: {
-        color: '#000e18',
+        color: theme.pbmText,
     },
     confirmText: {
         textAlign: 'center',
