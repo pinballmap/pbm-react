@@ -38,7 +38,9 @@ const dark = {
     addBtnBorderColor: '#bdae9d',
     drawerText: '#bdae9d',
     drawerIcon: '#6a7d8a',
-    red: '#1e9dff'
+    red: '#1e9dff',
+    mask: 'rgba(0,0,0,.8)',
+    buttonMask: 'rgba(0,0,0,.2)'
 }
 
 const standard = {
@@ -69,7 +71,9 @@ const standard = {
     addBtnBorderColor: 'transparent',
     drawerText: '#6a7d8a',
     drawerIcon: '#97a5af',
-    red: '#F53240'
+    red: '#F53240',
+    mask: 'rgba(255,255,255,.8)',
+    buttonMask: 'rgba(255,255,255,.2)'
 }
 
 class App extends Component {
