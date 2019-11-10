@@ -152,7 +152,7 @@ export class SignupLogin extends Component {
 const getStyles = theme => StyleSheet.create({
     mask: {
         flex: 1,
-        backgroundColor:'rgba(255,255,255,.8)',
+        backgroundColor: theme.mask,
         flexDirection: 'column',
         justifyContent: 'center',
     },
@@ -169,14 +169,14 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         marginRight: 20,
         marginLeft: 20,
-        borderRadius:10,
-        borderWidth:4,
-        borderColor:'rgba(0,0,0,.4)',
+        borderRadius: 10,
+        borderWidth: 4,
+        borderColor: 'rgba(0,0,0,.4)',
     },
     textBg: {
         padding:10,
         borderRadius:10,
-        backgroundColor:'rgba(255,255,255,.6)',
+        backgroundColor: 'rgba(255,255,255,.6)',
     },
     logoWrapper: {
         paddingHorizontal: 15,
@@ -187,24 +187,24 @@ const getStyles = theme => StyleSheet.create({
         resizeMode: 'contain',
     },
     buttonPink: {
-        backgroundColor:"#fdd4d7",
+        backgroundColor: "#fdd4d7",
         borderRadius: 50,
         elevation: 0
     },
     buttonBlue: {
-        backgroundColor:"#D3ECFF",
+        backgroundColor: "#D3ECFF",
         borderRadius: 50,
         elevation: 0
     },
     titleStyle: {
-        color:"#4b5862",
-        fontSize:16,
+        color: "#4b5862",
+        fontSize: 16,
         fontWeight: '500'
     },
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
+        height: deviceHeight
     },
 })
 

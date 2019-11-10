@@ -225,6 +225,7 @@ class LocationDetails extends Component {
                                         textStyle={s.textStyle}
                                         selectedButtonStyle={s.selButtonStyle}
                                         selectedTextStyle={s.selTextStyle}
+                                        innerBorderStyle={s.innerBorderStyle}
                                     />
                                     {this.state.buttonIndex === 0 ?
                                         <View style={s.backgroundColor}>
@@ -364,6 +365,10 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor, 
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.placeholder
     },
     listContainerStyle: {
         backgroundColor: theme._fff
