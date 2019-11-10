@@ -79,9 +79,6 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
-    },
     headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
     },
 })
