@@ -31,6 +31,8 @@ import {
     WarningButton, 
 } from '../components'
 
+import { alphaSortNameObj } from '../utils/utilityFunctions'
+
 let deviceHeight = Dimensions.get('window').height
 
 const getDisplayText = machine => (
@@ -66,11 +68,11 @@ MultiSelectRow.propTypes = {
 class FindMachine extends React.PureComponent {
     constructor(props) {
         super(props)
-        const sortedMachines =  this.props.machines.machines.sort((a, b) => {
+        const sortedMachines =  alphaSortNameObj(this.props.machines.machines.sort((a, b) => {
             const machA = a.name.toUpperCase()  
             const machB = b.name.toUpperCase()
             return machA < machB ? -1 : machA === machB ? 0 : 1
-        })
+        }))
 
         this.state = {
             machines: sortedMachines,
