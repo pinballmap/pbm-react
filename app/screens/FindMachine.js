@@ -68,11 +68,7 @@ MultiSelectRow.propTypes = {
 class FindMachine extends React.PureComponent {
     constructor(props) {
         super(props)
-        const sortedMachines =  alphaSortNameObj(this.props.machines.machines.sort((a, b) => {
-            const machA = a.name.toUpperCase()  
-            const machB = b.name.toUpperCase()
-            return machA < machB ? -1 : machA === machB ? 0 : 1
-        }))
+        const sortedMachines =  alphaSortNameObj(this.props.machines.machines)
 
         this.state = {
             machines: sortedMachines,
