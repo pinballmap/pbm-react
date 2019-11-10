@@ -142,6 +142,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             <Text style={s.bold}>Sign Up</Text>
                             <Input 
                                 placeholder='Username'
+                                placeholderTextColor={theme.placeholder}
                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
                                 onChangeText={username => setUsername(username)}
                                 value={username}
@@ -153,7 +154,8 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 autoCorrect={false}
                             />
                             <Input 
-                                placeholder="Email Address" 
+                                placeholder="Email Address"
+                                placeholderTextColor={theme.placeholder}
                                 leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
                                 onChangeText={email => setEmail(email)}
                                 value={email}
@@ -167,6 +169,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             />
                             <Input 
                                 placeholder="Password"
+                                placeholderTextColor={theme.placeholder}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={password => setPassword(password)}
                                 value={password}
@@ -180,6 +183,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             />
                             <Input 
                                 placeholder="Confirm Password"
+                                placeholderTextColor={theme.placeholder}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={confirm_password => setConfirmPassword(confirm_password)}
                                 value={confirm_password}
@@ -195,24 +199,21 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 onPress={submit}
                                 raised
                                 buttonStyle={s.buttonStyle}
-                                titleStyle={{
-                                    color:"#4b5862", 
-                                    fontSize:16,
-                                    fontWeight: '500'
-                                }}
+                                titleStyle={s.buttonTitle}
                                 containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50}}
                                 style={{borderRadius: 50}}
                                 rounded
                                 title="Sign Up"
                                 accessibilityLabel="Sign Up"
                                 disabled={!username || !email || !password || !confirm_password}
-                                disabledStyle={{borderRadius:50}}
+                                disabledStyle={s.disabledStyle}
+                                disabledTitleStyle={s.disabledTitleStyle}
                             />
                             <Button
                                 onPress={() => navigation.navigate('Login')}
                                 titleStyle={s.textLink}
                                 containerStyle={{marginBottom: 15}}
-                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                buttonStyle={s.buttonMask}
                                 title="Already a user? LOG IN!"
                             />
                             <Button
@@ -221,7 +222,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                     navigation.navigate('Map')
                                 }} 
                                 titleStyle={s.textLink}
-                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                buttonStyle={s.buttonMask}
                                 title="skip signing up for now"
                             />
                         </View>
@@ -242,10 +243,14 @@ const getStyles = theme => StyleSheet.create({
     },
     mask: {
         flex: 1,
-        backgroundColor:'rgba(255,255,255,.8)',
+        backgroundColor: theme.mask,
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    buttonMask: {
+        backgroundColor: theme.buttonMask,
+        elevation: 0
     },
     errorText: {
         color: 'red', 
@@ -261,35 +266,48 @@ const getStyles = theme => StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#97a5af',
-        backgroundColor: "#f5fbff",
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
         marginTop: 15,
         marginBottom: 15,
     },
     inputText: {
-        color: '#000e18',
+        color: theme.pbmText,
     },
     textLink: {
         fontSize: 14,
         textAlign: "center",
         fontWeight: "bold",
-        color: '#4b5862',
+        color: theme.buttonTextColor,
     },
     iconStyle: {
         fontSize: 24,
-        color: '#97a5af',
+        color: theme.placeholder,
+        marginRight: 5
     },
     buttonStyle: {
-        backgroundColor:"#fdd4d7",
+        backgroundColor: theme.warningButtonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
+    buttonTitle: {
+        color: theme.buttonTextColor, 
+        fontSize: 16,
+        fontWeight: '500'
+    },
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
-    }
+        height: deviceHeight
+    },
+    disabledStyle: {
+        backgroundColor: theme._e0f1fb,
+        borderRadius: 50
+    },
+    disabledTitleStyle: {
+        color: theme._f2f4f5
+    },
 })
 
 Signup.propTypes = {
