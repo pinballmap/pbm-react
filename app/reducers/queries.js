@@ -43,10 +43,18 @@ export default (state = initialState, action) => {
             maxZoom: action.maxZoom || false,
         }
     case SET_MACHINE_FILTER: {
-        return {
-            ...state,
-            machineId: action.machine.id,
-            machine: action.machine,
+        if (!action.machine) {
+            return {
+                ...state,
+                machineId: '',
+                machine: {},
+            }
+        } else {
+            return {
+                ...state,
+                machineId: action.machine.id,
+                machine: action.machine,
+            }
         }
     }
     case SET_NUM_MACHINES_FILTER: 
