@@ -97,7 +97,11 @@ class FindMachine extends React.PureComponent {
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862'
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center', 
+                flex: 1
+            }
         }
     }
 
