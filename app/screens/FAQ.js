@@ -92,7 +92,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: theme._f5fbff,
+        color: theme.machineName,
         backgroundColor: theme.loading
     },
     textLink: {

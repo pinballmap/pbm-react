@@ -132,7 +132,7 @@ class Events extends Component {
                                                         return (
                                                             <Card containerStyle={s.cardContainer}>
                                                                 <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                                <Text style={[s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
                                                                 <Text style={[s.cardTextStyle,s.margin]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
                                                                 <Text style={[s.address,s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                                             </Card>
@@ -217,8 +217,10 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.borderColor,
         backgroundColor: theme._fff
     },
+    center: {
+        textAlign: 'center'
+    },
     cardTextStyle: {
-        textAlign: 'center',
         fontSize: 16,
         color: theme.meta
     },

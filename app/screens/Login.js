@@ -122,11 +122,7 @@ class Login extends Component {
                                                 onPress={() => this.submit()}
                                                 raised
                                                 buttonStyle={s.buttonStyle}
-                                                titleStyle={{
-                                                    color:"#4b5862", 
-                                                    fontSize:16,
-                                                    fontWeight: '500'
-                                                }}
+                                                titleStyle={s.buttonTitle}
                                                 containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50}}
                                                 style={{borderRadius: 50}}
                                                 title="Log In"
@@ -235,10 +231,15 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 5
     },
     buttonStyle: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.buttonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
+    },
+    buttonTitle: {
+        color: theme.buttonTextColor, 
+        fontSize: 16,
+        fontWeight: '500'
     },
     justify: {
         flexDirection: 'column',
@@ -250,7 +251,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 50
     },
     disabledTitleStyle: {
-        color: theme._f2f4f5
+        color: theme.disabledText
     },
 })
 
