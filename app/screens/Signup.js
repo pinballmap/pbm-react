@@ -286,7 +286,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 5
     },
     buttonStyle: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.buttonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
@@ -306,7 +306,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 50
     },
     disabledTitleStyle: {
-        color: theme._f2f4f5
+        color: theme.disabledText
     },
 })
 

@@ -301,7 +301,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterInput: {
         height: 35,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.findInput,
         borderRadius: 10,
         borderColor: theme.borderColor,
         borderWidth: 1
