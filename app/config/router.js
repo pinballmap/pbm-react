@@ -145,6 +145,9 @@ const TabNav = createBottomTabNavigator({
             indicatorStyle: {
                 backgroundColor: 'transparent'
             },
+            tabStyle: {
+                alignItems: 'center',
+            },
         },
         tabBarPosition: 'bottom',
         swipeEnabled: true,
