@@ -117,7 +117,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="Current User? Log In"
                                         accessibilityLabel="Log In"
-                                        containerStyle={{borderRadius:50}}
+                                        containerStyle={{borderRadius:50,overflow:'hidden'}}
                                         style={{borderRadius: 50}}
                                     />
                                     <Button
@@ -127,7 +127,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="New User? Sign Up"
                                         accessibilityLabel="Sign Up"
-                                        containerStyle={{borderRadius:50,marginTop:15,marginBottom:20}}
+                                        containerStyle={{borderRadius:50,marginTop:15,marginBottom:20,overflow:'hidden'}}
                                         style={{borderRadius: 50}}
                                     />
                                     <Button                            

@@ -123,13 +123,14 @@ class Login extends Component {
                                                 raised
                                                 buttonStyle={s.buttonStyle}
                                                 titleStyle={s.buttonTitle}
-                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50}}
+                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50,overflow:'hidden'}}
                                                 style={{borderRadius: 50}}
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
                                                 disabledStyle={s.disabledStyle}
                                                 disabledTitleStyle={s.disabledTitleStyle}
+                                                borderRadius={50}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}

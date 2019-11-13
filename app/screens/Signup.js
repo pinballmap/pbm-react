@@ -200,7 +200,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 raised
                                 buttonStyle={s.buttonStyle}
                                 titleStyle={s.buttonTitle}
-                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50}}
+                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50,overflow:'hidden'}}
                                 style={{borderRadius: 50}}
                                 rounded
                                 title="Sign Up"
