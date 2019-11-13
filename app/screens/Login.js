@@ -132,13 +132,14 @@ class Login extends Component {
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
-                                                disabledStyle={{borderRadius:50}}
+                                                disabledStyle={s.disabledStyle}
+                                                disabledTitleStyle={s.disabledTitleStyle}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}
                                                 titleStyle={s.textLink}
                                                 containerStyle={{marginBottom: 20}}
-                                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                                buttonStyle={s.buttonMask}
                                                 title="Not a user? SIGN UP!"
                                             />              
                                             <Button
@@ -146,14 +147,14 @@ class Login extends Component {
                                                 title="I forgot my password"
                                                 titleStyle={s.textLink}
                                                 containerStyle={{marginBottom: 20}}
-                                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                                buttonStyle={s.buttonMask}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('ResendConfirmation')}
                                                 title="Resend my confirmation email"
                                                 titleStyle={s.textLink}
                                                 containerStyle={{marginBottom: 20}}
-                                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                                buttonStyle={s.buttonMask}
                                             />                       
                                             <Button 
                                                 onPress={() => {
@@ -161,7 +162,7 @@ class Login extends Component {
                                                     this.props.navigation.navigate('Map')
                                                 }} 
                                                 titleStyle={s.textLink}
-                                                buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                                buttonStyle={s.buttonMask}
                                                 title="Skip logging in for now"
                                             />
                                         </View>
@@ -184,10 +185,14 @@ const getStyles = theme => StyleSheet.create({
     },
     mask: {
         flex: 1,
-        backgroundColor:'rgba(255,255,255,.7)',
+        backgroundColor: theme.mask,
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    buttonMask: {
+        backgroundColor: theme.buttonMask,
+        elevation: 0
     },
     errorText: {
         color: 'red', 
@@ -198,7 +203,8 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 22,
-        textShadowColor: '#ffffff',
+        color: theme.pbmText,
+        textShadowColor: theme._fff,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
@@ -206,29 +212,30 @@ const getStyles = theme => StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#97a5af',
-        backgroundColor: "#f5fbff",
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
         marginTop: 15,
         marginBottom: 15,
     },
     inputText: {
-        color: '#000e18',
+        color: theme.pbmText,
     },
     textLink: {
         fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
-        color: '#4b5862',
-        textShadowColor: '#ffffff',
+        color: theme.buttonTextColor,
+        textShadowColor: theme._fff,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
     iconStyle: {
         fontSize: 24,
-        color: '#97a5af',
+        color: theme.placeholder,
+        marginRight: 5
     },
     buttonStyle: {
-        backgroundColor:"#D3ECFF",
+        backgroundColor: theme.warningButtonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
@@ -236,8 +243,15 @@ const getStyles = theme => StyleSheet.create({
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
-    }
+        height: deviceHeight
+    },
+    disabledStyle: {
+        backgroundColor: theme._e0f1fb,
+        borderRadius: 50
+    },
+    disabledTitleStyle: {
+        color: theme._f2f4f5
+    },
 })
 
 Login.propTypes = {
