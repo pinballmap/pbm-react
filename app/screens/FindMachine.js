@@ -13,7 +13,11 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { SearchBar, ThemeConsumer } from 'react-native-elements'
+import { 
+    ButtonGroup,
+    SearchBar, 
+    ThemeConsumer 
+} from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
@@ -68,7 +72,7 @@ MultiSelectRow.propTypes = {
 class FindMachine extends React.PureComponent {
     constructor(props) {
         super(props)
-        const sortedMachines =  alphaSortNameObj(this.props.machines.machines)
+        const sortedMachines =  alphaSortNameObj(props.machines.machines)
 
         this.state = {
             machines: sortedMachines,
@@ -78,6 +82,7 @@ class FindMachine extends React.PureComponent {
             machine: {}, 
             condition: '',
             machineList: props.location.machineList,
+            machinesInView: false,
         }   
     }
 
@@ -96,10 +101,38 @@ class FindMachine extends React.PureComponent {
         }
     }
 
-    handleSearch = query => { 
+    handleSearch = (query, machinesInView) => {         
         const formattedQuery = query.toLowerCase()
-        const machines = this.state.allMachines.filter(m => m.name.toLowerCase().includes(formattedQuery))
-        this.setState({ query, machines })
+        
+        if (machinesInView) {
+            const machinesInView = this.props.locations.mapLocations.reduce((machines, loc) => {   
+                loc.machine_ids && loc.machine_ids.map(machineId => {
+                    if (machines.indexOf(machineId) === -1)
+                        machines.push(machineId)
+                })
+    
+                return machines
+            }, [])
+            
+            const curMachines = this.state.allMachines.filter(mach => machinesInView.indexOf(mach.id) > -1)
+            const machines = curMachines.filter(m => m.name.toLowerCase().includes(formattedQuery))
+            this.setState({ query, machines })
+        } 
+        else {
+            const machines = this.state.allMachines.filter(m => m.name.toLowerCase().includes(formattedQuery))
+            this.setState({ query, machines })
+        }
+    }
+
+    toggleViewMachinesInMapArea = (idx) => {
+        if (idx === 0 && !!this.state.machinesInView) {
+            this.handleSearch(this.state.query, false)
+            this.setState({machinesInView: false})
+        } 
+        else if (idx === 1 && !!!this.state.machinesInView) {
+            this.handleSearch(this.state.query, true)
+            this.setState({machinesInView: true})
+        }
     }
 
     setSelected = machine => {
@@ -171,6 +204,7 @@ class FindMachine extends React.PureComponent {
     render() {
         const { machineList = [] } = this.props.location
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
+        const selectedIdx = this.state.machinesInView ? 1 : 0 
         
         return (
             <ThemeConsumer>
@@ -217,13 +251,25 @@ class FindMachine extends React.PureComponent {
                                 platform='default'
                                 searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
                                 clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => this.handleSearch('')} />}
-                                onChangeText={this.handleSearch}
+                                onChangeText={(query) => this.handleSearch(query, this.state.machinesInView)}
                                 inputStyle={{color:theme.pbmText}}
                                 value={this.state.query}
                                 inputContainerStyle={s.filterInput}
                                 containerStyle={{backgroundColor:theme.d_493931}}
                                 autoCorrect={false}
                             />
+                            {!multiSelect ? 
+                                <ButtonGroup
+                                    onPress={this.toggleViewMachinesInMapArea}
+                                    selectedIndex={selectedIdx}
+                                    buttons={['All Machines', 'Machines in Map Area']}
+                                    containerStyle={s.buttonGroupContainer}
+                                    textStyle={s.textStyle}
+                                    selectedButtonStyle={s.selButtonStyle}
+                                    selectedTextStyle={s.selTextStyle}
+                                    innerBorderStyle={s.innerBorderStyle}
+                                />: null
+                            }
                             {multiSelect ? 
                                 <View style={s.multiSelect}>
                                     {machineList.length === 0 ? <Text style={{color: "#f5fbff"}}>0 machines selected</Text> :
@@ -278,7 +324,27 @@ const getStyles = theme => StyleSheet.create({
         alignItems: 'center',
         padding: 5,
         backgroundColor: theme._6a7d8a
-    }
+    },
+    textStyle: {
+        color: theme.pbmText
+    },
+    selButtonStyle: {
+        backgroundColor: theme.loading,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
+        fontWeight: 'bold',
+    },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.placeholder
+    },
 })
 
 FindMachine.propTypes = {
@@ -292,7 +358,7 @@ FindMachine.propTypes = {
     setMachineFilter: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, machines }) => ({ location, machines })
+const mapStateToProps = ({ location, machines, locations }) => ({ location, machines, locations })
 const mapDispatchToProps = (dispatch) => ({
     addMachineToLocation: (machine, condition) => dispatch(addMachineToLocation(machine, condition)),
     addMachineToList: machine => dispatch(addMachineToList(machine)),
