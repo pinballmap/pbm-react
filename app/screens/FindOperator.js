@@ -93,7 +93,7 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
     },
-    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862'
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862'
 })
 
 FindOperator.propTypes = {

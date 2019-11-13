@@ -40,7 +40,8 @@ const dark = {
     drawerIcon: '#6a7d8a',
     red: '#1e9dff',
     mask: 'rgba(0,0,0,.8)',
-    buttonMask: 'rgba(0,0,0,.2)'
+    buttonMask: 'rgba(0,0,0,.2)',
+    machineName: '#fdd4d7'
 }
 
 const standard = {
@@ -73,7 +74,8 @@ const standard = {
     drawerIcon: '#97a5af',
     red: '#F53240',
     mask: 'rgba(255,255,255,.8)',
-    buttonMask: 'rgba(255,255,255,.2)'
+    buttonMask: 'rgba(255,255,255,.2)',
+    machineName: '#000e18'
 }
 
 class App extends Component {
