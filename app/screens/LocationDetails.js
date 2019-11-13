@@ -163,7 +163,7 @@ class LocationDetails extends Component {
                                                 titleStyle={s.buttonTitleStyle}
                                                 iconLeft
                                                 icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15}}
+                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
                                             />
                                         </View>
                                     </View>
