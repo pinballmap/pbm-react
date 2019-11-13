@@ -23,6 +23,7 @@ import {
     selectedLocationTypeFilter,
     selectedOperatorTypeFilter,
     clearFilters,
+    setMachineFilter,
 } from '../actions'
 import {
     getLocationTypeName,
@@ -41,6 +42,7 @@ const FilterMap = ({
     selectedLocationTypeFilter,
     selectedOperatorTypeFilter,
     clearFilters,
+    setMachineFilter,
 }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -92,7 +94,10 @@ const FilterMap = ({
             <Text style={[s.sectionTitle,s.paddingFirst]}>Only show locations with this machine:</Text>
             <DropDownButton
                 title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
-                onPress={() => navigate('FindMachine', {machineFilter: true})}
+                onPress={() => {
+                    navigate('FindMachine', {machineFilter: true})
+                    setMachineFilter()
+                }}
             /> 
             <Text style={[s.sectionTitle,s.marginTop25,s.paddingRL10]}>Limit by number of machines per location:</Text>
             <ButtonGroup style={s.border}
@@ -233,6 +238,7 @@ const mapDispatchToProps = (dispatch) => ({
     selectedLocationTypeFilter: type => dispatch(selectedLocationTypeFilter(type)),
     selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
     clearFilters: () => dispatch(clearFilters()), 
+    setMachineFilter: () => dispatch(setMachineFilter()),
     updateViewFavoriteLocations: idx => dispatch(updateViewFavoriteLocations(idx))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
