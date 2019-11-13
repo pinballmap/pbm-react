@@ -48,7 +48,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme._e0f1fb
     },
     disabledTitleStyle: {
-        color: theme._f2f4f5
+        color: theme.disabledText
     },
     margin15: {
         marginLeft: 15,
