@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator, 
     Dimensions,
     Image, 
     ImageBackground, 
@@ -10,8 +9,13 @@ import {
     Text, 
     View, 
 } from 'react-native'
-import { Button } from 'react-native-elements'
-import { MaterialIcons } from '@expo/vector-icons'
+import { 
+    Button,
+    ThemeConsumer,
+} from 'react-native-elements'
+import {
+    ActivityIndicator
+} from '../components'
 import { 
     loginLater,
     login, 
@@ -29,20 +33,10 @@ import "../config/globals.js"
 let deviceHeight = Dimensions.get('window').height
 
 export class SignupLogin extends Component {
-    constructor(props){
-        super(props)
-
-        this.state ={ 
-            num_locations: 0, 
-            num_lmxes: 0, 
-            apiError: '',
-        }
-    }
-
-    static navigationOptions = { 
-        drawerLabel: 'Map',
-        drawerIcon: () => <MaterialIcons name='search' style={[s.drawerIcon]} />,
-        header: null 
+    state ={ 
+        num_locations: 0, 
+        num_lmxes: 0, 
+        apiError: '',
     }
 
     componentDidMount(){
@@ -81,79 +75,84 @@ export class SignupLogin extends Component {
     render(){
         if (this.state.fetchingShowTurnOnLocationServices || (this.state.num_lmxes === 0 && !this.state.apiError)) {
             return (
-                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
-                    <ActivityIndicator />
-                </View>
+                <ActivityIndicator />
             )
         }
         
         return(
-            <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-                <View style={[s.mask,s.justify]}>
-                    <View style={s.logoWrapper}>
-                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
-                    </View>
-                    <View style={s.outerBorder}>
-                        <View style={s.textBg}>
-                            {this.state.apiError ? 
-                                <Text>Oops. Something went wrong!</Text> :
-                                <Text style={{fontSize:18,textAlign:"center"}}>
-                                    <Text>Pinball Map is a user-updated map listing</Text>
-                                    <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text> 
-                                    <Text>locations and</Text>
-                                    <Text style={s.bold}> {formatNumWithCommas(this.state.num_lmxes)} </Text>
-                                    <Text>machines.</Text>
-                                    {"\n"}{"\n"}
-                                    <Text>Please log in to help keep it up to date!</Text>
-                                    {"\n"}{"\n"}
-                                    <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
+                            <View style={[s.mask,s.justify]}>
+                                <View style={s.logoWrapper}>
+                                    <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                                </View>
+                                <View style={s.outerBorder}>
+                                    <View style={s.textBg}>
+                                        {this.state.apiError ? 
+                                            <Text>Oops. Something went wrong!</Text> :
+                                            <Text style={{fontSize:18,textAlign:"center"}}>
+                                                <Text>Pinball Map is a user-updated map listing</Text>
+                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text> 
+                                                <Text>locations and</Text>
+                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_lmxes)} </Text>
+                                                <Text>machines.</Text>
+                                                {"\n"}{"\n"}
+                                                <Text>Please log in to help keep it up to date!</Text>
+                                                {"\n"}{"\n"}
+                                                <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
                                         When prompted, enable locations services to see pinball machines near you!
-                                    </Text>
-                                </Text>
-                            }
-                        </View>
-                    </View>
-                    <View style={{paddingVertical:10,paddingHorizontal:15}}>
-                        <Button
-                            onPress={() => this.props.navigation.navigate('Login')}
-                            raised
-                            buttonStyle={s.buttonBlue}
-                            titleStyle={s.titleStyle}
-                            title="Current User? Log In"
-                            accessibilityLabel="Log In"
-                            containerStyle={{borderRadius:50}}
-                            style={{borderRadius: 50}}
-                        />
-                        <Button
-                            onPress={() => this.props.navigation.navigate('Signup')}
-                            raised
-                            buttonStyle={s.buttonPink}
-                            titleStyle={s.titleStyle}
-                            title="New User? Sign Up"
-                            accessibilityLabel="Sign Up"
-                            containerStyle={{borderRadius:50,marginTop:15,marginBottom:20}}
-                            style={{borderRadius: 50}}
-                        />
-                        <Button                            
-                            onPress={() => {
-                                this.props.loginLater()
-                                this.props.navigation.navigate('Map')}} 
-                            title="skip this for now"
-                            accessibilityLabel="skip this for now"                         
-                            titleStyle={{color:'#000e18',fontSize:14,textAlign:"center"}}
-                            buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                        />
-                    </View>
-                </View>
-            </ImageBackground>
+                                                </Text>
+                                            </Text>
+                                        }
+                                    </View>
+                                </View>
+                                <View style={{paddingVertical:10,paddingHorizontal:15}}>
+                                    <Button
+                                        onPress={() => this.props.navigation.navigate('Login')}
+                                        raised
+                                        buttonStyle={s.buttonBlue}
+                                        titleStyle={s.titleStyle}
+                                        title="Current User? Log In"
+                                        accessibilityLabel="Log In"
+                                        containerStyle={{borderRadius:50,overflow:'hidden'}}
+                                        style={{borderRadius: 50}}
+                                    />
+                                    <Button
+                                        onPress={() => this.props.navigation.navigate('Signup')}
+                                        raised
+                                        buttonStyle={s.buttonPink}
+                                        titleStyle={s.titleStyle}
+                                        title="New User? Sign Up"
+                                        accessibilityLabel="Sign Up"
+                                        containerStyle={{borderRadius:50,marginTop:15,marginBottom:20,overflow:'hidden'}}
+                                        style={{borderRadius: 50}}
+                                    />
+                                    <Button                            
+                                        onPress={() => {
+                                            this.props.loginLater()
+                                            this.props.navigation.navigate('Map')}} 
+                                        title="skip this for now"
+                                        accessibilityLabel="skip this for now"                         
+                                        titleStyle={{color:'#000e18',fontSize:14,textAlign:"center"}}
+                                        buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                                    />
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     mask: {
         flex: 1,
-        backgroundColor:'rgba(255,255,255,.8)',
+        backgroundColor: theme.mask,
         flexDirection: 'column',
         justifyContent: 'center',
     },
@@ -170,14 +169,14 @@ const s = StyleSheet.create({
         marginBottom: 10,
         marginRight: 20,
         marginLeft: 20,
-        borderRadius:10,
-        borderWidth:4,
-        borderColor:'rgba(0,0,0,.4)',
+        borderRadius: 10,
+        borderWidth: 4,
+        borderColor: 'rgba(0,0,0,.4)',
     },
     textBg: {
         padding:10,
         borderRadius:10,
-        backgroundColor:'rgba(255,255,255,.6)',
+        backgroundColor: 'rgba(255,255,255,.6)',
     },
     logoWrapper: {
         paddingHorizontal: 15,
@@ -188,28 +187,24 @@ const s = StyleSheet.create({
         resizeMode: 'contain',
     },
     buttonPink: {
-        backgroundColor:"#fdd4d7",
+        backgroundColor: "#fdd4d7",
         borderRadius: 50,
         elevation: 0
     },
     buttonBlue: {
-        backgroundColor:"#D3ECFF",
+        backgroundColor: "#D3ECFF",
         borderRadius: 50,
         elevation: 0
     },
     titleStyle: {
-        color:"#4b5862",
-        fontSize:16,
+        color: "#4b5862",
+        fontSize: 16,
         fontWeight: '500'
     },
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
-    },
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
+        height: deviceHeight
     },
 })
 

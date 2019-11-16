@@ -2,27 +2,27 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator,
-    ScrollView, 
     StyleSheet, 
     View, 
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { Button, ListItem } from 'react-native-elements'
 import { 
+    Button, 
+    ListItem,
+    ThemeConsumer,
+} from 'react-native-elements'
+import { 
+    ActivityIndicator,
     ConfirmationModal, 
     HeaderBackButton,
     NotLoggedIn, 
     PbmButton, 
+    Screen,
     Text,
     WarningButton
 } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 const moment = require('moment')
 
@@ -33,14 +33,19 @@ class UserProfile extends Component {
         profile_info: {},
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Profile',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center', 
+                flex: 1
+            }
         }
     };
 
@@ -67,9 +72,7 @@ class UserProfile extends Component {
     render(){
         if (this.state.fetchingUserInfo)
             return (
-                <View style={{ flex: 1, padding: 20,backgroundColor:'#f5fbff' }}>
-                    <ActivityIndicator />
-                </View>
+                <ActivityIndicator />
             )
         const { user } = this.props
         const profileInfo = this.state.profile_info
@@ -85,115 +88,124 @@ class UserProfile extends Component {
         } = profileInfo
 
         return (
-            <ScrollView style={{backgroundColor:'#f5fbff'}}>
-                {!user.loggedIn ? 
-                    <NotLoggedIn 
-                        text={`Hi, you're not logged in, so you don't have a profile!`}
-                        title={'User Profile'}
-                        onPress={() => this.props.navigation.navigate('Login')}
-                    /> :
-                    <View>
-                        <ConfirmationModal visible={this.state.modalVisible} >
-                            <PbmButton
-                                title={"Yes! Log Me Out"}
-                                onPress={() => {
-                                    this.setModalVisible(false)
-                                    this.props.logout()
-                                    this.props.navigation.navigate('Login')
-                                }}
-                                accessibilityLabel="Logout"
-                            />
-                            <WarningButton
-                                title={"Stay Logged In"}
-                                onPress={() => this.setModalVisible(false)}
-                                accessibilityLabel="Stay LoggedIn"
-                            />
-                        </ConfirmationModal>
-                        <Text style={s.username}>{user.username}</Text>
-                        <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM-DD-YYYY')}`}</Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={s.stat}>Machines Added:</Text>
-                            <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={s.stat}>Machines Removed:</Text>
-                            <Text style={s.statNum}>{` ${num_machines_removed} `}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={s.stat}>Machines Comments:</Text>
-                            <Text style={s.statNum}>{` ${num_lmx_comments_left} `}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={s.stat}>Locations Submitted:</Text>
-                            <Text style={s.statNum}>{` ${num_locations_suggested} `}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={s.stat}>Locations Edited:</Text>
-                            <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
-                        </View>
-                        <Button 
-                            title={'Saved Locations'}
-                            onPress={() => this.props.navigation.navigate('Saved')}
-                            buttonStyle={s.savedLink}
-                            titleStyle={{
-                                color:"#000e18", 
-                                fontSize:16
-                            }}
-                            iconLeft
-                            icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                            containerStyle={s.margin15}
-                        />
-                        <Text style={s.bold}>Locations Edited (up to 50):</Text>
-                        <View style={{paddingVertical:8}}>
-                            {profile_list_of_edited_locations.slice(0, 50).map(location => {
-                                return <ListItem
-                                    containerStyle={{backgroundColor:'#f5fbff'}}
-                                    key={location[0]}
-                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-8,marginTop:-8}}
-                                    title={location[1]}
-                                    onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
-                                /> 
-                            })}
-                        </View>
-                        <Text style={s.bold}>High Scores:</Text>
-                        <View style={{paddingTop:0,paddingBottom:15}}>
-                            {profile_list_of_high_scores.map((score, idx) => {
-                                return <ListItem
-                                    containerStyle={{backgroundColor:'#f5fbff'}}
-                                    key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                                    titleStyle={{marginLeft:15,marginRight:15,fontSize:16,marginBottom:-15}}
-                                    title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
-                                /> 
-                            })}
-                        </View>
-                        <WarningButton
-                            title={"Logout"} 
-                            onPress={() => this.setModalVisible(true)}
-                            accessibilityLabel="Logout"
-                        /> 
-                    </View>
-                }                      
-            </ScrollView>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            {!user.loggedIn ? 
+                                <NotLoggedIn 
+                                    text={`Hi, you're not logged in, so you don't have a profile!`}
+                                    title={'User Profile'}
+                                    onPress={() => this.props.navigation.navigate('Login')}
+                                /> :
+                                <View>
+                                    <ConfirmationModal visible={this.state.modalVisible} >
+                                        <PbmButton
+                                            title={"Yes! Log Me Out"}
+                                            onPress={() => {
+                                                this.setModalVisible(false)
+                                                this.props.logout()
+                                                this.props.navigation.navigate('Login')
+                                            }}
+                                            accessibilityLabel="Logout"
+                                        />
+                                        <WarningButton
+                                            title={"Stay Logged In"}
+                                            onPress={() => this.setModalVisible(false)}
+                                            accessibilityLabel="Stay LoggedIn"
+                                        />
+                                    </ConfirmationModal>
+                                    <Text style={s.username}>{user.username}</Text>
+                                    <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM-DD-YYYY')}`}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={s.stat}>Machines Added:</Text>
+                                        <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={s.stat}>Machines Removed:</Text>
+                                        <Text style={s.statNum}>{` ${num_machines_removed} `}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={s.stat}>Machines Comments:</Text>
+                                        <Text style={s.statNum}>{` ${num_lmx_comments_left} `}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={s.stat}>Locations Submitted:</Text>
+                                        <Text style={s.statNum}>{` ${num_locations_suggested} `}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={s.stat}>Locations Edited:</Text>
+                                        <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
+                                    </View>
+                                    <Button 
+                                        title={'Saved Locations'}
+                                        onPress={() => this.props.navigation.navigate('Saved')}
+                                        buttonStyle={s.savedLink}
+                                        titleStyle={s.titleStyle}
+                                        iconLeft
+                                        icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
+                                        containerStyle={[{overflow:'hidden'},s.margin15]}
+                                    />
+                                    <Text style={s.bold}>Locations Edited (up to 50):</Text>
+                                    <View style={{paddingVertical:8}}>
+                                        {profile_list_of_edited_locations.slice(0, 50).map(location => {
+                                            return <ListItem
+                                                containerStyle={s.background}
+                                                key={location[0]}
+                                                titleStyle={s.listTitleStyle}
+                                                title={location[1]}
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
+                                            /> 
+                                        })}
+                                    </View>
+                                    <Text style={s.bold}>High Scores:</Text>
+                                    <View style={{paddingTop:0,paddingBottom:15}}>
+                                        {profile_list_of_high_scores.map((score, idx) => {
+                                            return <ListItem
+                                                containerStyle={s.background}
+                                                key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
+                                                titleStyle={s.listTitleStyle}
+                                                title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
+                                            /> 
+                                        })}
+                                    </View>
+                                    <WarningButton
+                                        title={"Logout"} 
+                                        onPress={() => this.setModalVisible(true)}
+                                        accessibilityLabel="Logout"
+                                    /> 
+                                </View>
+                            }                      
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme.backgroundColor
+    },
     bold: {
         fontWeight: 'bold',
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        color: "#000e18",
-        backgroundColor: "#D3ECFF"
+        color: theme.pbmText,
+        backgroundColor: theme.buttonColor
     },
     savedIcon: {
-        fontSize: 24
+        fontSize: 24,
+        color: theme.pbmText,
+        marginRight: 5
     },
     savedLink: {
-        backgroundColor:'#ffffff',
+        backgroundColor: theme._fff,
         borderWidth: 1,
-        borderColor: '#97a5af',
+        borderColor: theme._97a5af,
         borderRadius: 50,
         elevation: 0
     },
@@ -203,34 +215,46 @@ const s = StyleSheet.create({
         marginTop:15,
         marginBottom:15
     },
+    titleStyle: {
+        color: theme.pbmText, 
+        fontSize: 16
+    },
+    listTitleStyle: {
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 16,
+        marginBottom: -8,
+        marginTop: -8,
+        color: theme.pbmText
+    },
     username: {
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: "#f5fbff",
-        backgroundColor: "#6a7d8a",
+        color: theme.pbmText,
+        backgroundColor: theme._6a7d8a,
         textAlign: "center"
     },
     stat: {
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: "#4b5862",
+        color: theme.buttonTextColor,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: "#000e18",
-        backgroundColor: "#D3ECFF",
+        color: theme.pbmText,
+        backgroundColor: theme.buttonColor,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10
     },
     member: {
-        textAlign:"center",
-        marginBottom:10,
-        fontWeight:"bold",
+        textAlign: "center",
+        marginBottom: 10,
+        fontWeight: "bold",
         fontSize: 16,
         marginTop: 5
     },

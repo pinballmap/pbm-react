@@ -1,26 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
-    ActivityIndicator,
-    ScrollView,
+import {
     StyleSheet,
     TouchableOpacity,
-    View,  
+    View,
 } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import {
+    ListItem,
+    ThemeConsumer,
+} from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
-import { 
+import {
+    ActivityIndicator,
     FilterRecentActivity,
     HeaderBackButton,
-    Text
+    Screen,
+    Text,
 } from '../components'
 import { clearActivityFilter } from '../actions'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
 const moment = require('moment')
 
@@ -29,48 +28,53 @@ class RecentActivity extends Component {
         fetchingRecentActivity: true,
         recentActivity: [],
     }
-    
-    static navigationOptions = ({ navigation }) => {
+
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Activity',
-            headerTitleStyle,
-            headerTintColor: '#4b5862',
-            headerStyle,
-            headerRight: <FilterRecentActivity />
+            headerRight: <FilterRecentActivity />,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center',
+                flex: 1
+            }
         }
     }
 
     getIcon(type) {
-        switch(type) {
-        case 'new_lmx':
-            return <MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />
-        case 'new_condition':
-            return <MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />
-        case 'remove_machine':
-            return <MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />
-        case 'new_msx':
-            return <MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />
-        case 'confirm_location':
-            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />
-        default:
-            return null
+        switch (type) {
+            case 'new_lmx':
+                return <MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />
+            case 'new_condition':
+                return <MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />
+            case 'remove_machine':
+                return <MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />
+            case 'new_msx':
+                return <MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />
+            case 'confirm_location':
+                return <MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />
+            default:
+                return null
         }
     }
 
     getText(selectedActivity) {
         const activity = 'Filtering by recently'
-        switch(selectedActivity) {
-        case 'new_lmx':
-            return `${activity} added machines`
-        case 'new_condition':
-            return `${activity} added conditions`
-        case 'remove_machine':
-            return `${activity} removed machines`
-        case 'new_msx':
-            return `${activity} added scores`
-        case 'confirm_location':
-            return `${activity} confirmed locations`
+        switch (selectedActivity) {
+            case 'new_lmx':
+                return `${activity} added machines`
+            case 'new_condition':
+                return `${activity} added conditions`
+            case 'remove_machine':
+                return `${activity} removed machines`
+            case 'new_msx':
+                return `${activity} added scores`
+            case 'confirm_location':
+                return `${activity} confirmed locations`
         }
     }
 
@@ -87,83 +91,98 @@ class RecentActivity extends Component {
                 })
         })
     }
-      
 
-    render(){
+
+    render() {
         const { recentActivity, fetchingRecentActivity } = this.state
         const { selectedActivity } = this.props.query
 
-        return(
-            <ScrollView style={{backgroundColor:'#f5fbff',height:30}}>
-                <View style={s.header}>
-                    <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
-                    <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
-                </View>
-                {selectedActivity ? 
-                    <View style={s.filterView}>
-                        <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
-                        <MaterialCommunityIcons 
-                            name='close-circle' 
-                            size={24} 
-                            onPress={() => this.props.clearActivityFilter()}
-                            style={s.xButton}
-                        />
-                    </View> : null
-                }
-                {fetchingRecentActivity ? 
-                    <ActivityIndicator /> :
-                    recentActivity.length === 0 ?
-                        <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
-                        recentActivity.filter(activity => {
-                            const submissionTypeIcon = this.getIcon(activity.submission_type)
-                            const showType = selectedActivity ? 
-                                selectedActivity === activity.submission_type ? true : false 
-                                : true 
-
-                            if (submissionTypeIcon && showType) {
-                                activity.submissionTypeIcon = submissionTypeIcon
-                                return activity
-                            }
-                        }).map(activity => (                               
-                            <View key={activity.id}>
-                                <ListItem
-                                    component={TouchableOpacity}
-                                    title={activity.submission}
-                                    titleStyle={{color:'#000e18'}}
-                                    subtitleStyle={{paddingTop:3,fontSize:14,color:'#6a7d8a'}}
-                                    subtitle={`${moment(activity.updated_at).format('LL')}`}
-                                    containerStyle={s.list}
-                                    leftAvatar={activity.submissionTypeIcon}
-                                    onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
-                                />
+        return (
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            <View style={s.header}>
+                                <Text style={[s.title, s.headerText]}>Recent Nearby Activity</Text>
+                                <Text style={[s.paren, s.headerText]}>(30 miles, 30 days)</Text>
                             </View>
-                        ))
-                }
-            </ScrollView>
+                            {selectedActivity ?
+                                <View style={s.filterView}>
+                                    <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
+                                    <MaterialCommunityIcons
+                                        name='close-circle'
+                                        size={24}
+                                        onPress={() => this.props.clearActivityFilter()}
+                                        style={s.xButton}
+                                    />
+                                </View> : null
+                            }
+                            {fetchingRecentActivity ?
+                                <ActivityIndicator /> :
+                                recentActivity.length === 0 ?
+                                    <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
+                                    recentActivity.filter(activity => {
+                                        const submissionTypeIcon = this.getIcon(activity.submission_type)
+                                        const showType = selectedActivity ?
+                                            selectedActivity === activity.submission_type ? true : false
+                                            : true
+
+                                        if (submissionTypeIcon && showType) {
+                                            activity.submissionTypeIcon = submissionTypeIcon
+                                            return activity
+                                        }
+                                    }).map(activity => (
+                                        <View key={activity.id}>
+                                            <ListItem
+                                                component={TouchableOpacity}
+                                                title={activity.submission}
+                                                titleStyle={s.pbmText}
+                                                subtitleStyle={s.subtitleStyle}
+                                                subtitle={`${moment(activity.updated_at).format('LL')}`}
+                                                containerStyle={s.list}
+                                                leftAvatar={activity.submissionTypeIcon}
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
+                                            />
+                                        </View>
+                                    ))
+                            }
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
+    pbmText: {
+        color: theme.pbmText
+    },
     header: {
-        backgroundColor: "#6a7d8a",
+        backgroundColor: theme._6a7d8a,
         paddingVertical: 10,
     },
     headerText: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center"
     },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
     },
+    subtitleStyle: {
+        paddingTop: 3,
+        fontSize: 14,
+        color: theme.meta
+    },
     paren: {
         fontSize: 12,
         fontStyle: "italic"
     },
     filterView: {
-        backgroundColor:'#fdd4d7',
-        display: 'flex', 
+        backgroundColor: theme.warningButtonColor,
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
@@ -171,14 +190,15 @@ const s = StyleSheet.create({
     filter: {
         fontSize: 14,
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         paddingVertical: 8,
     },
     list: {
         borderRadius: 5,
         borderWidth: 2,
-        borderColor: '#D3ECFF',
+        backgroundColor: theme._fff,
+        borderColor: theme.borderColor,
         padding: 8,
         marginTop: 5,
         marginBottom: 5,
@@ -187,13 +207,13 @@ const s = StyleSheet.create({
     },
     problem: {
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginTop: 20
     },
     xButton: {
-        color:'#f53240',
-        marginLeft:8,
+        color: '#f53240',
+        marginLeft: 8,
     }
 })
 

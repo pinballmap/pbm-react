@@ -1,58 +1,44 @@
-import React, { Component } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { 
-    ActivityIndicator,
-    StyleSheet,  
     View
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
 import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
+    ActivityIndicator,
+    HeaderBackButton,
+} from '../components'
 
-class Blog extends Component {
-    state = { loading: true }
-  
-    static navigationOptions = ({ navigation }) => {
-        return {
-            drawerLabel: 'Blog',
-            drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={[s.drawerIcon]} />,
-            headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Blog',
-            headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
-        }
-    }
+const Blog = () => {
+    const [loading, setLoading] = useState(true)
     
-    render() {
-        return (
-            <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-                {this.state.loading && (
-                    <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
-                        <ActivityIndicator/>
-                    </View>
-                )}
-                <WebView
-                    onLoad={() => this.setState({loading: false})}
-                    style={{ flex: 1 }}
-                    source={{uri: 'http://blog.pinballmap.com/'}}
-                />
-            </View>
-        )
-    }
-     
+    return (
+        <Fragment>
+            {loading && <ActivityIndicator/>}
+            <WebView
+                onLoad={() => setLoading(false)}
+                style={{ flex: 1 }}
+                source={{uri: 'http://blog.pinballmap.com/'}}
+            />
+        </Fragment>
+    )   
 }
 
-const s = StyleSheet.create({ 
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
+Blog.navigationOptions = ({ navigation, theme }) => ({
+    drawerLabel: 'Blog',
+    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#6a7d8a'}} />,
+    headerLeft: <HeaderBackButton navigation={navigation} />,
+    title: 'Blog',
+    headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
     },
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTitleStyle: {
+        textAlign: 'center', 
+        flex: 1
+    }
 })
 
 Blog.propTypes = {

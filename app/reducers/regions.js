@@ -11,24 +11,24 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    case FETCHING_REGIONS: 
-        return {
-            ...state,
-            isFetchingRegions: true,
-        }
-    case FETCHING_REGIONS_SUCCESS:
-        return {
-            ...state,
-            isFetchingRegions: false,
-            regions: action.regions,
-        }
-    case FETCHING_REGIONS_FAILURE:
-        return {
-            ...state,
-            isFetchingRegions: false,
-            regions: [],
-        }
-    default:
-        return state
+        case FETCHING_REGIONS:
+            return {
+                ...state,
+                isFetchingRegions: true,
+            }
+        case FETCHING_REGIONS_SUCCESS:
+            return {
+                ...state,
+                isFetchingRegions: false,
+                regions: action.regions,
+            }
+        case FETCHING_REGIONS_FAILURE:
+            return {
+                ...state,
+                isFetchingRegions: false,
+                regions: [],
+            }
+        default:
+            return state
     }
 }

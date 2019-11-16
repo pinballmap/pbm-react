@@ -1,27 +1,28 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
     Platform,
     StyleSheet, 
 } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button, ThemeContext } from 'react-native-elements'
 
-class WarningButton extends Component {
-    render(){
-        return(
-            <Button
-                title={this.props.title} 
-                onPress={() => this.props.onPress()}
-                accessibilityLabel={this.props.accessibilityLabel}
-                raised
-                buttonStyle={s.redButton}
-                titleStyle={s.titleStyle}    
-                style={{borderRadius: 50}}
-                containerViewStyle={{alignSelf: 'stretch'}}
-                containerStyle={[{borderRadius:50},s.margin15]}
-            /> 
-        )
-    }
+const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+
+    return(
+        <Button
+            title={title} 
+            onPress={onPress}
+            accessibilityLabel={accessibilityLabel}
+            raised
+            buttonStyle={s.redButton}
+            titleStyle={s.titleStyle}    
+            style={{borderRadius: 50}}
+            containerViewStyle={{alignSelf: 'stretch'}}
+            containerStyle={[{borderRadius:50,overflow:'hidden'},s.margin15]}
+        /> 
+    )
 }
 
 WarningButton.propTypes = {
@@ -30,20 +31,20 @@ WarningButton.propTypes = {
     accessibilityLabel: PropTypes.string,
 }
 
-const s = StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 15,
+        marginBottom: 15
     },
     titleStyle: {
-        fontSize:16,
-        color:'#f53240',
+        fontSize: 16,
+        color: theme.buttonTextColor,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     redButton: {
-        backgroundColor: "#fdd4d7",
+        backgroundColor: theme.warningButtonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0

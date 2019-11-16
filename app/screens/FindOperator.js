@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
@@ -7,59 +7,39 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, ThemeContext } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
 import { 
     HeaderBackButton,
+    Screen,
     Text,
 } from '../components'
-import { 
-    headerStyle,
-    headerTitleStyle,
-} from '../styles'
 
+const FindOperator = ({ navigation, operators: { operators = [] } }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+    
+    const allOperators = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...operators]
+    const [selectedOperators, setSelectedOperators] = useState(allOperators)
+    const [query, setQuery] = useState('')
 
-
-class FindOperator extends React.PureComponent {
-    constructor(props) {
-        super(props)
-
-        const defaultText = this.props.navigation.getParam('type') === 'search' ? 'N/A' : 'All'
-        const { operators } = this.props.operators
-
-        this.state = {
-            operators: [{name: defaultText, id: -1 }, ...operators],
-            allOperators: [{name: defaultText, id: -1 }, ...operators],
-            query: '',
-        }   
+    const handleSearch = (search = '') => { 
+        const formattedQuery = search.toLowerCase()
+        const operators = allOperators.filter(o => o.name.toLowerCase().includes(formattedQuery))
+        setQuery(search)
+        setSelectedOperators(operators)
     }
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: <Text style={{color:'#000e18'}}>{`Select Operator`}</Text>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862',
-        }
+    const _selectOperator = id => {
+        navigation.getParam('setSelected')(id)
+        navigation.goBack()
     }
 
-    handleSearch = query => { 
-        const formattedQuery = query.toLowerCase()
-        const operators = this.state.allOperators.filter(o => o.name.toLowerCase().includes(formattedQuery))
-        this.setState({ query, operators })
-    }
-
-    _selectOperator = id => {
-        this.props.navigation.getParam('setSelected')(id)
-        this.props.navigation.goBack()
-    }
-
-    renderRow = (operator) => (
+    const renderRow = (operator) => (
         <TouchableOpacity                           
-            onPress={() => this._selectOperator(operator.item.id)}
+            onPress={() => _selectOperator(operator.item.id)}
         >
             <View style={{padding:8}}>
                 <Text style={{fontSize:18}}>{operator.item.name}</Text>
@@ -67,43 +47,57 @@ class FindOperator extends React.PureComponent {
         </TouchableOpacity>
     )
 
-    _keyExtractor = operator => `${operator.id}`
-
-    render() {
+    const _keyExtractor = operator => `${operator.id}`
         
-        return (
-            <View style={{flex:1,backgroundColor:'#f5fbff'}}> 
-                <SearchBar
-                    lightTheme
-                    placeholder='Filter operators...'
-                    platform='default'
-                    searchIcon={<MaterialIcons name='search' size={25} color="#97a5af" />}
-                    clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" onPress={() => this.handleSearch('')} />}
-                    onChangeText={this.handleSearch}
-                    inputStyle={{color:'#000e18'}}
-                    value={this.state.query}
-                    inputContainerStyle={s.filterInput}
-                    containerStyle={{backgroundColor:'#f5fbff'}}
+    return (
+        <Screen> 
+            <SearchBar
+                lightTheme={theme.theme !== 'dark'}
+                placeholder='Filter operators...'
+                placeholderTextColor={theme.placeholder}
+                platform='default'
+                searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={handleSearch} />}
+                onChangeText={handleSearch}
+                inputStyle={{color:theme.pbmText}}
+                value={query}
+                inputContainerStyle={s.filterInput}
+                containerStyle={s.containerStyle}
+            />
+            <ScrollView keyboardDismissMode="on-drag">
+                <FlatList
+                    data={selectedOperators}
+                    renderItem={renderRow}
+                    keyExtractor={_keyExtractor}
                 />
-                <ScrollView keyboardDismissMode="on-drag">
-                    <FlatList
-                        data={this.state.operators}
-                        renderItem={this.renderRow}
-                        keyExtractor={this._keyExtractor}
-                    />
-                </ScrollView>
-            </View>)
-    }
+            </ScrollView>
+        </Screen>)
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     filterInput: {
-        height:35,
-        backgroundColor:'#e0ebf2',
-        borderRadius:10,
-        borderColor: '#d1dfe8',
-        borderWidth:1
+        height: 35,
+        backgroundColor: theme.findInput,
+        borderRadius: 10,
+        borderColor: theme.borderColor,
+        borderWidth: 1
     },
+    containerStyle: {
+        backgroundColor: theme.d_493931,
+    }
+})
+
+FindOperator.navigationOptions = ({ navigation, theme }) => ({
+    headerLeft: <HeaderBackButton navigation={navigation} />,
+    title: 'Select Operator',
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+    },
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTitleStyle: {
+        textAlign: 'center', 
+        flex: 1
+    }
 })
 
 FindOperator.propTypes = {

@@ -16,7 +16,11 @@ import {
     View, 
 } from 'react-native'
 import Constants from 'expo-constants'
-import { Input, ListItem } from 'react-native-elements'
+import { 
+    Input, 
+    ListItem,
+    ThemeConsumer,
+} from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -26,6 +30,7 @@ import {
     getLocationsByRegion,
     updateCurrCoordinates,
 } from '../actions'
+import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 
 let deviceWidth = Dimensions.get('window').width
@@ -114,116 +119,127 @@ class Search extends Component {
     render(){
         const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
-
+    
         return(
-            <View>
-                <Modal
-                    transparent={true}
-                    visible={searchModalVisible}
-                    onRequestClose={()=>{}}
-                >
-                    <View style={[s.ifX,{flex:1,backgroundColor:'#f5fbff'}]}>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <MaterialIcons 
-                                onPress={() => {
-                                    this.setState({searchModalVisible: false})
-                                    this.changeQuery('')
-                                }}
-                                name='clear' 
-                                size={30} 
-                                style={s.clear}
-                            />
-                            <Input
-                                placeholder='City, Address, Location'
-                                leftIcon={<MaterialIcons name='search' size={25} color="#97a5af" style={{marginLeft:-10,marginRight:0}}/>}
-                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color="#97a5af" style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
-                                onChangeText={query => this.changeQuery(query)}
-                                value={q}
-                                containerStyle={{paddingTop:4}}
-                                key={submitButton ? 'search' : 'none'}
-                                returnKeyType={submitButton ? 'search' : 'none'}
-                                onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
-                                inputContainerStyle={s.input}
-                                autoFocus
-                                autoCorrect={false}
-                            />
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <View>
+                            <Modal
+                                transparent={false}
+                                visible={searchModalVisible}
+                                onRequestClose={()=>{}}
+                            >
+                                <View style={[{flex: 1},s.ifX,s.background]}>
+                                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                                        <MaterialIcons 
+                                            onPress={() => {
+                                                this.setState({searchModalVisible: false})
+                                                this.changeQuery('')
+                                            }}
+                                            name='clear' 
+                                            size={30} 
+                                            style={s.clear}
+                                        />
+                                        <Input
+                                            placeholder='City, Address, Location'
+                                            leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{marginLeft:-10,marginRight:0}}/>}
+                                            rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
+                                            onChangeText={query => this.changeQuery(query)}
+                                            value={q}
+                                            containerStyle={{paddingTop:4}}
+                                            key={submitButton ? 'search' : 'none'}
+                                            returnKeyType={submitButton ? 'search' : 'none'}
+                                            onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
+                                            inputContainerStyle={s.inputContainerStyle}
+                                            inputStyle={s.inputStyle}
+                                            autoFocus
+                                            autoCorrect={false}
+                                        />
+                                    </View>
+                                    <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                                        {searching ? <ActivityIndicator /> : null}
+                                        {foundRegions ?
+                                            foundRegions.map(region =>
+                                                (<TouchableOpacity
+                                                    key={region.id}
+                                                    onPress={() => this.getLocationsByRegion(region)}
+                                                >
+                                                    <ListItem
+                                                        title={region.full_name}
+                                                        rightTitle={'Region'}
+                                                        rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                                        titleStyle={s.listItemTitle}
+                                                        containerStyle={s.listContainerStyle}
+                                                    /> 
+                                                </TouchableOpacity>
+                                                )) : null
+                                        }
+                                        {foundCities ? 
+                                            foundCities.map(location => 
+                                                (<TouchableOpacity 
+                                                    key={location.value} 
+                                                    onPress={() => this.getLocationsByCity(location)}
+                                                >
+                                                    <ListItem
+                                                        title={location.value}
+                                                        rightTitle={'City'}
+                                                        rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                                        titleStyle={s.listItemTitle}
+                                                        containerStyle={s.listContainerStyle}
+                                                    /> 
+                                                </TouchableOpacity>)
+                                            ) : null
+                                        }
+                                        {foundLocations ? 
+                                            foundLocations.map(location => 
+                                                (<TouchableOpacity 
+                                                    key={location.id} 
+                                                    onPress={() => this.goToLocation(location)}
+                                                >
+                                                    <ListItem
+                                                        title={location.label}
+                                                        titleStyle={s.listItemTitle}
+                                                        containerStyle={s.listContainerStyle}
+                                                    /> 
+                                                </TouchableOpacity>)
+                                            ) : null
+                                        }                        
+                                    </ScrollView>
+                                </View>
+                            </Modal>
+                            <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
+                                <View style={s.searchMap}>
+                                    <MaterialIcons name='search' size={25} style={s.searchIcon} />
+                                    <Text style={s.inputPlaceholder}>City, Address, Location</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                        <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-                            {searching ? <ActivityIndicator /> : null}
-                            {foundRegions ?
-                                foundRegions.map(region =>
-                                    (<TouchableOpacity
-                                        key={region.id}
-                                        onPress={() => this.getLocationsByRegion(region)}
-                                    >
-                                        <ListItem
-                                            title={region.full_name}
-                                            rightTitle={'Region'}
-                                            rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
-                                        /> 
-                                    </TouchableOpacity>
-                                    )) : null
-                            }
-                            {foundCities ? 
-                                foundCities.map(location => 
-                                    (<TouchableOpacity 
-                                        key={location.value} 
-                                        onPress={() => this.getLocationsByCity(location)}
-                                    >
-                                        <ListItem
-                                            title={location.value}
-                                            rightTitle={'City'}
-                                            rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
-                                        /> 
-                                    </TouchableOpacity>)
-                                ) : null
-                            }
-                            {foundLocations ? 
-                                foundLocations.map(location => 
-                                    (<TouchableOpacity 
-                                        key={location.id} 
-                                        onPress={() => this.goToLocation(location)}
-                                    >
-                                        <ListItem
-                                            title={location.label}
-                                            titleStyle={{color:'#4b5862',marginBottom:-2,marginTop:-2}}
-                                            containerStyle={{borderBottomColor:'#97a5af',borderBottomWidth:1,backgroundColor:'#f5fbff'}}
-                                        /> 
-                                    </TouchableOpacity>)
-                                ) : null
-                            }                        
-                        </ScrollView>
-                    </View>
-                </Modal>
-                <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
-                    <View style={s.searchMap}>
-                        <MaterialIcons name='search' size={25} color="#97a5af" style={s.searchIcon} />
-                        <Text style={s.inputPlaceholder}>City, Address, Location</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        )
-    }
+                    )
+                }}
+            </ThemeConsumer>
+        )}
 }
 
 Search.propTypes = {
     getLocationsByCity: PropTypes.func,
+    theme: PropTypes.string,
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
+    background: {
+        backgroundColor: theme._f2f4f5,
+    },
     ifX: {
         paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,         
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
-        backgroundColor: '#f2f4f5',
+        backgroundColor: theme._f2f4f5,
         height: 35,
         borderRadius: 5,
-        borderColor: '#e0ebf2',
+        borderColor: theme._e0ebf2,
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
@@ -231,15 +247,19 @@ const s = StyleSheet.create({
         alignItems: 'center'
     },
     searchIcon: {
-        paddingLeft: 5
+        paddingLeft: 5,
+        color: theme._97a5af,  
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color:'#97a5af',        
+        color: theme._97a5af,       
     },
-    input: {
+    inputStyle: {
+        color: theme._97a5af,
+    },
+    inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: '#f2f4f5',
+        backgroundColor: theme._f2f4f5,  
         borderRadius: 5,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
@@ -249,8 +269,18 @@ const s = StyleSheet.create({
         paddingLeft:0,
         marginTop: Platform.OS === 'ios' ? 0 : -12,             
     },
+    listContainerStyle: {
+        borderBottomColor: theme.hr,
+        borderBottomWidth: 1,
+        backgroundColor: theme.backgroundColor
+    },
+    listItemTitle: {
+        color: theme.buttonTextColor,
+        marginBottom: -2,
+        marginTop: -2  
+    },
     clear: {
-        color:'#6a7d8a',
+        color: theme._6a7d8a,
         marginLeft:5,
         marginRight:5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,                     
@@ -273,4 +303,4 @@ const mapDispatchToProps = (dispatch) => ({
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

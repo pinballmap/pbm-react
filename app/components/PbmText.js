@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
     StyleSheet, 
     Text 
 } from 'react-native'
+import { ThemeContext } from 'react-native-elements'
 
-class PbmText extends Component {
-    render() {
-        return (
-            <Text style={[s.text, this.props.style]} onPress={this.props.onPress}>
-                {this.props.children}
-            </Text>
-        )
-    }
+const PbmText = ({ style, onPress, children }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+
+    return (
+        <Text style={[s.text, style]} onPress={onPress}>
+            {children}
+        </Text>
+    )
 }
 
 PbmText.propTypes = {
@@ -24,9 +26,9 @@ PbmText.propTypes = {
     children: PropTypes.node,
 }
 
-const s = StyleSheet.create({
+const getStyles = (theme) => StyleSheet.create({
     text: {
-        color: "#000e18"
+        color: theme.pbmText
     },
 })
 
