@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
-    FlatList, 
+import {
+    FlatList,
     StyleSheet,
-    View, 
+    View,
 } from 'react-native'
 import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
-import { 
+import {
     HeaderBackButton,
     LocationCard,
     Screen,
-    Text 
+    Text
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
@@ -31,42 +31,42 @@ export class LocationList extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
             title: 'Location List',
-            headerRight:<View style={{padding:6}}></View>,
+            headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             }
         }
     }
 
     updateIndex = (buttonIndex) => this.props.selectLocationListFilterBy(buttonIndex)
-    
+
     sortLocations(locations, idx) {
-        switch(idx) {
-        case 0:
-            return this.setState({
-                locations: locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, b.lat, b.lon))
-            })
-        case 1:
-            return this.setState({
-                locations: locations.sort((a, b) => {
-                    const locA = a.name.toUpperCase()  
-                    const locB = b.name.toUpperCase()
-                    return locA < locB ? -1 : locA === locB ? 0 : 1
+        switch (idx) {
+            case 0:
+                return this.setState({
+                    locations: locations.sort((a, b) => getDistance(this.props.user.lat, this.props.user.lon, a.lat, a.lon) - getDistance(this.props.user.lat, this.props.user.lon, b.lat, b.lon))
                 })
-            })
-        case 2:
-            return this.setState({
-                locations: locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
-            })
-        case 3: 
-            return this.setState({
-                locations: locations.sort((a, b) => b.machine_names.length - a.machine_names.length)
-            })
+            case 1:
+                return this.setState({
+                    locations: locations.sort((a, b) => {
+                        const locA = a.name.toUpperCase()
+                        const locB = b.name.toUpperCase()
+                        return locA < locB ? -1 : locA === locB ? 0 : 1
+                    })
+                })
+            case 2:
+                return this.setState({
+                    locations: locations.sort((a, b) => moment(b.updated_at, 'YYYY-MM-DDTh:mm:ss').unix() - moment(a.updated_at, 'YYYY-MM-DDTh:mm:ss').unix())
+                })
+            case 3:
+                return this.setState({
+                    locations: locations.sort((a, b) => b.machine_names.length - a.machine_names.length)
+                })
         }
     }
 
@@ -74,12 +74,12 @@ export class LocationList extends Component {
         if (this.state.locations !== props.locations.mapLocations) {
             this.sortLocations(props.locations.mapLocations, this.props.locations.selectedLocationListFilter)
         }
-  
+
         if (this.props.locations.selectedLocationListFilter !== props.locations.selectedLocationListFilter) {
             this.sortLocations(this.state.locations, props.locations.selectedLocationListFilter)
         }
     }
-  
+
     componentDidMount() {
         this.sortLocations(this.state.locations, this.props.locations.selectedLocationListFilter)
     }
@@ -116,7 +116,7 @@ export class LocationList extends Component {
                                         city={item.city}
                                         state={item.state}
                                         zip={item.zip}
-                                        machines={item.machine_names} 
+                                        machines={item.machine_names}
                                         type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
                                         navigation={this.props.navigation}
                                         id={item.id}
@@ -148,8 +148,8 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonGroupContainer: {
-        height: 40, 
-        borderColor: theme.borderColor, 
+        height: 40,
+        borderColor: theme.borderColor,
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
     },
@@ -160,8 +160,8 @@ const getStyles = theme => StyleSheet.create({
 })
 
 LocationList.propTypes = {
-    locations: PropTypes.object, 
-    user: PropTypes.object, 
+    locations: PropTypes.object,
+    user: PropTypes.object,
     navigation: PropTypes.object,
     selectLocationListFilterBy: PropTypes.func,
 }

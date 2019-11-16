@@ -12,10 +12,10 @@
     }
   },
   "env": {
-    "es6":     true,
+    "es6": true,
     "browser": true,
-    "node":    true,
-    "jest":    true,
+    "node": true,
+    "jest": true,
     "react-native/react-native": true
   },
   "extends": [
@@ -27,9 +27,19 @@
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 0,
     "react-native/no-color-literals": 0,
-    "semi": ["error", "never"],
+    "semi": [
+      "error",
+      "never"
+    ],
     "no-console": "off",
-    "indent": ["error", 4],
-    "react/display-name": "off"
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "react/display-name": "off",
+    "no-extra-boolean-cast": "off"
   }
 }
