@@ -86,7 +86,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: Platform.OS === 'ios' ? -10 : 0,
-        color: theme.pbmText
+        color: theme.machineName
     },
     plus: {
         marginBottom: 10,

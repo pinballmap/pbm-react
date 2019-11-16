@@ -24,7 +24,7 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             titleStyle={styles.titleStyle}
             style={{borderRadius: 50}}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{borderRadius:50}, containerStyle ? containerStyle : styles.margin15]}
+            containerStyle={[{borderRadius:50,overflow:'hidden'}, containerStyle ? containerStyle : styles.margin15]}
         />
     )
 }
@@ -48,7 +48,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme._e0f1fb
     },
     disabledTitleStyle: {
-        color: theme._f2f4f5
+        color: theme.disabledText
     },
     margin15: {
         marginLeft: 15,

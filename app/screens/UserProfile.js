@@ -41,7 +41,11 @@ class UserProfile extends Component {
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
             },
-            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',           
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center', 
+                flex: 1
+            }
         }
     };
 
@@ -141,7 +145,7 @@ class UserProfile extends Component {
                                         titleStyle={s.titleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                                        containerStyle={s.margin15}
+                                        containerStyle={[{overflow:'hidden'},s.margin15]}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
