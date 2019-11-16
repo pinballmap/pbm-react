@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
+import {
     StyleSheet,
     TouchableOpacity,
-    View,  
+    View,
 } from 'react-native'
-import { 
+import {
     ListItem,
     ThemeConsumer,
 } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
-import { 
+import {
     ActivityIndicator,
     FilterRecentActivity,
     HeaderBackButton,
@@ -28,7 +28,7 @@ class RecentActivity extends Component {
         fetchingRecentActivity: true,
         recentActivity: [],
     }
-    
+
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
@@ -39,42 +39,42 @@ class RecentActivity extends Component {
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             }
         }
     }
 
     getIcon(type) {
-        switch(type) {
-        case 'new_lmx':
-            return <MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />
-        case 'new_condition':
-            return <MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />
-        case 'remove_machine':
-            return <MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />
-        case 'new_msx':
-            return <MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />
-        case 'confirm_location':
-            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />
-        default:
-            return null
+        switch (type) {
+            case 'new_lmx':
+                return <MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />
+            case 'new_condition':
+                return <MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />
+            case 'remove_machine':
+                return <MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />
+            case 'new_msx':
+                return <MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />
+            case 'confirm_location':
+                return <MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />
+            default:
+                return null
         }
     }
 
     getText(selectedActivity) {
         const activity = 'Filtering by recently'
-        switch(selectedActivity) {
-        case 'new_lmx':
-            return `${activity} added machines`
-        case 'new_condition':
-            return `${activity} added conditions`
-        case 'remove_machine':
-            return `${activity} removed machines`
-        case 'new_msx':
-            return `${activity} added scores`
-        case 'confirm_location':
-            return `${activity} confirmed locations`
+        switch (selectedActivity) {
+            case 'new_lmx':
+                return `${activity} added machines`
+            case 'new_condition':
+                return `${activity} added conditions`
+            case 'remove_machine':
+                return `${activity} removed machines`
+            case 'new_msx':
+                return `${activity} added scores`
+            case 'confirm_location':
+                return `${activity} confirmed locations`
         }
     }
 
@@ -91,48 +91,48 @@ class RecentActivity extends Component {
                 })
         })
     }
-      
 
-    render(){
+
+    render() {
         const { recentActivity, fetchingRecentActivity } = this.state
         const { selectedActivity } = this.props.query
 
-        return(
+        return (
             <ThemeConsumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
                         <Screen>
                             <View style={s.header}>
-                                <Text style={[s.title,s.headerText]}>Recent Nearby Activity</Text> 
-                                <Text style={[s.paren,s.headerText]}>(30 miles, 30 days)</Text>
+                                <Text style={[s.title, s.headerText]}>Recent Nearby Activity</Text>
+                                <Text style={[s.paren, s.headerText]}>(30 miles, 30 days)</Text>
                             </View>
-                            {selectedActivity ? 
+                            {selectedActivity ?
                                 <View style={s.filterView}>
                                     <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
-                                    <MaterialCommunityIcons 
-                                        name='close-circle' 
-                                        size={24} 
+                                    <MaterialCommunityIcons
+                                        name='close-circle'
+                                        size={24}
                                         onPress={() => this.props.clearActivityFilter()}
                                         style={s.xButton}
                                     />
                                 </View> : null
                             }
-                            {fetchingRecentActivity ? 
+                            {fetchingRecentActivity ?
                                 <ActivityIndicator /> :
                                 recentActivity.length === 0 ?
                                     <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
                                     recentActivity.filter(activity => {
                                         const submissionTypeIcon = this.getIcon(activity.submission_type)
-                                        const showType = selectedActivity ? 
-                                            selectedActivity === activity.submission_type ? true : false 
-                                            : true 
+                                        const showType = selectedActivity ?
+                                            selectedActivity === activity.submission_type ? true : false
+                                            : true
 
                                         if (submissionTypeIcon && showType) {
                                             activity.submissionTypeIcon = submissionTypeIcon
                                             return activity
                                         }
-                                    }).map(activity => (                               
+                                    }).map(activity => (
                                         <View key={activity.id}>
                                             <ListItem
                                                 component={TouchableOpacity}
@@ -142,7 +142,7 @@ class RecentActivity extends Component {
                                                 subtitle={`${moment(activity.updated_at).format('LL')}`}
                                                 containerStyle={s.list}
                                                 leftAvatar={activity.submissionTypeIcon}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', {id: activity.location_id })}
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
                                             />
                                         </View>
                                     ))
@@ -182,7 +182,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterView: {
         backgroundColor: theme.warningButtonColor,
-        display: 'flex', 
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'

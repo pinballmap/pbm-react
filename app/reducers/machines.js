@@ -11,31 +11,31 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    case FETCHING_MACHINES: 
-        return {
-            ...state,
-            isFetchingMachines: true,
-        }
-    case FETCHING_MACHINES_SUCCESS: {
-        const machines = action.machines.map(machine => {
+        case FETCHING_MACHINES:
             return {
-                ...machine,
-                nameManYear: `${machine.name} (${machine.manufacturer}, ${machine.year})`
+                ...state,
+                isFetchingMachines: true,
             }
-        })
-        return {
-            ...state,
-            isFetchingMachines: false,
-            machines,
+        case FETCHING_MACHINES_SUCCESS: {
+            const machines = action.machines.map(machine => {
+                return {
+                    ...machine,
+                    nameManYear: `${machine.name} (${machine.manufacturer}, ${machine.year})`
+                }
+            })
+            return {
+                ...state,
+                isFetchingMachines: false,
+                machines,
+            }
         }
-    }
-    case FETCHING_MACHINES_FAILURE:
-        return {
-            ...state,
-            isFetchingMachines: false,
-            machines: [],
-        }
-    default:
-        return state
+        case FETCHING_MACHINES_FAILURE:
+            return {
+                ...state,
+                isFetchingMachines: false,
+                machines: [],
+            }
+        default:
+            return state
     }
 }

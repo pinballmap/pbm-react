@@ -9,17 +9,17 @@ export const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-    case DISPLAY_ERROR: 
-        return {
-            ...state,
-            errorText: action.err,
-        }
-    case CLEAR_ERROR: 
-        return {
-            ...state,
-            errorText: undefined
-        }
-    default: 
-        return state
+        case DISPLAY_ERROR:
+            return {
+                ...state,
+                errorText: action.err,
+            }
+        case CLEAR_ERROR:
+            return {
+                ...state,
+                errorText: undefined
+            }
+        default:
+            return state
     }
 }     
