@@ -20,7 +20,7 @@ const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
             titleStyle={s.titleStyle}    
             style={{borderRadius: 50}}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{borderRadius:50},s.margin15]}
+            containerStyle={[{borderRadius:50,overflow:'hidden'},s.margin15]}
         /> 
     )
 }

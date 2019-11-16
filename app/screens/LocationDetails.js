@@ -71,7 +71,11 @@ class LocationDetails extends Component {
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
             },
-            headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center', 
+                flex: 1
+            }
         }
     }
 
@@ -159,7 +163,7 @@ class LocationDetails extends Component {
                                                 titleStyle={s.buttonTitleStyle}
                                                 iconLeft
                                                 icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15}}
+                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
                                             />
                                         </View>
                                     </View>
@@ -374,7 +378,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme._fff
     },
     machineName: {
-        color: theme.pbmText,
+        color: theme.machineName,
         fontWeight: 'bold',
         fontSize: 18,
     },

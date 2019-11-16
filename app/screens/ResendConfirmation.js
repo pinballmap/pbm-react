@@ -79,8 +79,12 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
-    headerTintColor: theme === 'dark' ? '#9a836a' : '#4b5862',
     },
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTitleStyle: {
+        textAlign: 'center', 
+        flex: 1
+    }
 })
 
 const getStyles = theme => StyleSheet.create({
@@ -111,7 +115,14 @@ const getStyles = theme => StyleSheet.create({
         marginBottom:10,
         fontSize: 18,
         fontWeight: 'bold'
-    }
+    },
+    disabledStyle: {
+        backgroundColor: theme._e0f1fb,
+        borderRadius: 50
+    },
+    disabledTitleStyle: {
+        color: theme.disabledText
+    },
 })
 
 ResendConfirmation.propTypes = {
