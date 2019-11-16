@@ -14,15 +14,12 @@ import {
 import {
     ButtonGroup,
     Card,
+    ThemeConsumer,
 } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
+import { HeaderBackButton, Screen } from '../components'
 import { getIfpaData } from '../config/request'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
-import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
 
 const moment = require('moment')
 
@@ -39,16 +36,21 @@ class Events extends Component {
         radius: 50, 
     }
   
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Events',
-            drawerIcon: () => <MaterialIcons name='event-note' style={[s.drawerIcon]} />,
+            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#6a7d8a'}} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            },
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTitleStyle: {
+                textAlign: 'center', 
+                flex: 1
+            }
         }
     }
 
@@ -97,59 +99,75 @@ class Events extends Component {
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
         return(
-            <View style={{flex: 1,backgroundColor:'#f5fbff'}}>
-                {gettingEvents ? 
-                    <ActivityIndicator /> :
-                    error ? 
-                        <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
-                        <ScrollView>
-                            <View style={s.header}>
-                                <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text> 
-                                <ButtonGroup
-                                    onPress={this.updateIdx}
-                                    selectedIndex={selectedIdx}
-                                    buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
-                                    containerStyle={{ height: 40, borderColor:'#e0ebf2', borderWidth: 2 }}
-                                    selectedButtonStyle={s.buttonStyle}
-                                    selectedTextStyle={s.textStyle}
-                                />
-                            </View>
-                            {refetchingEvents ?
-                                <ActivityIndicator /> :
-                                events.length > 0 ?
-                                    <FlatList
-                                        data={events}
-                                        extraData={this.state}
-                                        renderItem={({ item }) => {
-                                            const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
-                                            const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
-                                            return (
-                                                <Card containerStyle={{borderRadius: 5,borderColor: "#D3ECFF"}}>
-                                                    <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
-                                                    <Text style={[{textAlign:'center',fontSize:16,color:'#6a7d8a'},s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                    <Text style={s.margin}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                    <Text style={[{fontSize:12,color:'#4b5862'},s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
-                                                </Card>
-                                            )
-                                        }}
-                                        keyExtractor={event => `${event.calendar_id}`}
-                                    />  : 
-                                    <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
-                            }
-                        </ScrollView>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <Screen>
+                            {gettingEvents ? 
+                                <View style={s.background}>
+                                    <ActivityIndicator />
+                                </View> :
+                                error ? 
+                                    <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
+                                    <ScrollView>
+                                        <View style={s.header}>
+                                            <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text> 
+                                            <ButtonGroup
+                                                onPress={this.updateIdx}
+                                                selectedIndex={selectedIdx}
+                                                buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
+                                                containerStyle={s.buttonGroupContainer}
+                                                textStyle={s.textStyle}
+                                                selectedButtonStyle={s.selButtonStyle}
+                                                selectedTextStyle={s.selTextStyle}
+                                                innerBorderStyle={s.innerBorderStyle}
+                                            />
+                                        </View>
+                                        {refetchingEvents ?
+                                            <ActivityIndicator /> :
+                                            events.length > 0 ?
+                                                <FlatList
+                                                    data={events}
+                                                    extraData={this.state}
+                                                    renderItem={({ item }) => {
+                                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                                        return (
+                                                            <Card containerStyle={s.cardContainer}>
+                                                                <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                                <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                <Text style={[s.cardTextStyle,s.margin]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                                <Text style={[s.address,s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                            </Card>
+                                                        )
+                                                    }}
+                                                    keyExtractor={event => `${event.calendar_id}`}
+                                                />  : 
+                                                <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
+                                        }
+                                    </ScrollView>
                             
-                }
-            </View>)
+                            }
+                        </Screen>
+                    )
+                }}
+            </ThemeConsumer>
+        )
     }
 }
 
-const s = StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({ 
+    background: {
+        padding: 30,
+        backgroundColor: theme.backgroundColor
+    },
     header: {
-        backgroundColor: "#6a7d8a",
+        backgroundColor: theme._6a7d8a,
         paddingVertical: 10,
     },
     headerText: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center"
     },
     title: {
@@ -157,21 +175,35 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonStyle: {
-        backgroundColor: '#D3ECFF',
+        backgroundColor: theme.buttonColor,
+    },
+    buttonGroupContainer: {
+        height: 40, 
+        borderColor: theme.borderColor, 
+        borderWidth: 2,
+        backgroundColor: theme._e0ebf2,
+    },
+    innerBorderStyle: {
+        width: 1,
+        color: theme.placeholder
     },
     textStyle: {
-        color: '#000e18',
+        color: theme.buttonTextColor,
         fontWeight: 'bold',
     },
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
+    selButtonStyle: {
+        backgroundColor: theme.loading,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
+        fontWeight: 'bold',
     },
     textLink: {
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: "#D3ECFF",
+        backgroundColor: theme.buttonColor,
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginBottom: 5
     },
@@ -180,10 +212,26 @@ const s = StyleSheet.create({
     },    
     problem: {
         textAlign: "center",
-        color: '#000e18',
+        color: theme.pbmText,
         fontWeight: 'bold',
         marginTop: 20
     },
+    cardContainer: {
+        borderRadius: 5,
+        borderColor: theme.borderColor,
+        backgroundColor: theme._fff
+    },
+    center: {
+        textAlign: 'center'
+    },
+    cardTextStyle: {
+        fontSize: 16,
+        color: theme.meta
+    },
+    address: {
+        fontSize: 12,
+        color: theme.d_9a836a
+    }
 })
 
 Events.propTypes = {

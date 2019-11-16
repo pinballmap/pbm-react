@@ -11,7 +11,11 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Input } from 'react-native-elements'
+import { 
+    Button, 
+    Input,
+    ThemeConsumer,
+} from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { 
     getFavoriteLocations,
@@ -74,98 +78,103 @@ class Login extends Component {
 
     render() {
         return (
-            <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
-                <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
-                    <View style={s.mask}>
-                        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                            <View style={s.justify}>
-                                {this.state.errors && 
-                                        <Text style={s.errorText}>
-                                            {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-                                        </Text>
-                                }
-                                <Text style={s.bold}>Log In</Text>
-                                <Input
-                                    placeholder='Username or Email'
-                                    leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                                    onChangeText={login => this.setState({login})}
-                                    value={this.state.login}
-                                    errorStyle={{ color: 'red' }}
-                                    errorMessage={this.state.loginError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <Input 
-                                    placeholder='Password'
-                                    leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                                    onChangeText={password => this.setState({password})}
-                                    value={this.state.password}
-                                    errorStyle={{ color: 'red' }}
-                                    errorMessage={this.state.passwordError}
-                                    inputContainerStyle={s.inputBox}
-                                    inputStyle={s.inputText}
-                                    secureTextEntry={true}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <Button
-                                    onPress={() => this.submit()}
-                                    raised
-                                    buttonStyle={s.buttonStyle}
-                                    titleStyle={{
-                                        color:"#4b5862", 
-                                        fontSize:16,
-                                        fontWeight: '500'
-                                    }}
-                                    containerStyle={{marginTop:15,marginBottom:25,borderRadius:50}}
-                                    style={{borderRadius: 50}}
-                                    title="Log In"
-                                    accessibilityLabel="Log In"
-                                    disabled={!this.state.login || !this.state.password}
-                                    disabledStyle={{borderRadius:50}}
-                                />
-                                <Button
-                                    onPress={() => this.props.navigation.navigate('Signup')}
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="Not a user? SIGN UP!"
-                                />              
-                                <Button
-                                    onPress={() => this.props.navigation.navigate('PasswordReset')}
-                                    title="I forgot my password"
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                />
-                                <Button
-                                    onPress={() => this.props.navigation.navigate('ResendConfirmation')}
-                                    title="Resend my confirmation email"
-                                    titleStyle={s.textLink}
-                                    containerStyle={{marginBottom: 20}}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                />                       
-                                <Button 
-                                    onPress={() => {
-                                        this.props.loginLater()
-                                        this.props.navigation.navigate('Map')
-                                    }} 
-                                    titleStyle={s.textLink}
-                                    buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
-                                    title="Skip logging in for now"
-                                />
-                            </View>
-                        </TouchableWithoutFeedback>          
-                    </View>
-                </ImageBackground>
-            </KeyboardAwareScrollView>
+            <ThemeConsumer>
+                {({ theme }) => {
+                    const s = getStyles(theme)
+                    return (
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
+                            <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
+                                <View style={s.mask}>
+                                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                        <View style={s.justify}>
+                                            {this.state.errors && 
+                                                    <Text style={s.errorText}>
+                                                        {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                                                    </Text>
+                                            }
+                                            <Text style={s.bold}>Log In</Text>
+                                            <Input
+                                                placeholder='Username or Email'
+                                                leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
+                                                onChangeText={login => this.setState({login})}
+                                                value={this.state.login}
+                                                errorStyle={{ color: 'red' }}
+                                                errorMessage={this.state.loginError}
+                                                inputContainerStyle={s.inputBox}
+                                                inputStyle={s.inputText}
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                            <Input 
+                                                placeholder='Password'
+                                                leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
+                                                onChangeText={password => this.setState({password})}
+                                                value={this.state.password}
+                                                errorStyle={{ color: 'red' }}
+                                                errorMessage={this.state.passwordError}
+                                                inputContainerStyle={s.inputBox}
+                                                inputStyle={s.inputText}
+                                                secureTextEntry={true}
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                            <Button
+                                                onPress={() => this.submit()}
+                                                raised
+                                                buttonStyle={s.buttonStyle}
+                                                titleStyle={s.buttonTitle}
+                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50,overflow:'hidden'}}
+                                                style={{borderRadius: 50}}
+                                                title="Log In"
+                                                accessibilityLabel="Log In"
+                                                disabled={!this.state.login || !this.state.password}
+                                                disabledStyle={s.disabledStyle}
+                                                disabledTitleStyle={s.disabledTitleStyle}
+                                                borderRadius={50}
+                                            />
+                                            <Button
+                                                onPress={() => this.props.navigation.navigate('Signup')}
+                                                titleStyle={s.textLink}
+                                                containerStyle={{marginBottom: 20}}
+                                                buttonStyle={s.buttonMask}
+                                                title="Not a user? SIGN UP!"
+                                            />              
+                                            <Button
+                                                onPress={() => this.props.navigation.navigate('PasswordReset')}
+                                                title="I forgot my password"
+                                                titleStyle={s.textLink}
+                                                containerStyle={{marginBottom: 20}}
+                                                buttonStyle={s.buttonMask}
+                                            />
+                                            <Button
+                                                onPress={() => this.props.navigation.navigate('ResendConfirmation')}
+                                                title="Resend my confirmation email"
+                                                titleStyle={s.textLink}
+                                                containerStyle={{marginBottom: 20}}
+                                                buttonStyle={s.buttonMask}
+                                            />                       
+                                            <Button 
+                                                onPress={() => {
+                                                    this.props.loginLater()
+                                                    this.props.navigation.navigate('Map')
+                                                }} 
+                                                titleStyle={s.textLink}
+                                                buttonStyle={s.buttonMask}
+                                                title="Skip logging in for now"
+                                            />
+                                        </View>
+                                    </TouchableWithoutFeedback>          
+                                </View>
+                            </ImageBackground>
+                        </KeyboardAwareScrollView>
+                    )
+                }}
+            </ThemeConsumer>
         )
     }
 }
 
-const s = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: null,
@@ -173,10 +182,14 @@ const s = StyleSheet.create({
     },
     mask: {
         flex: 1,
-        backgroundColor:'rgba(255,255,255,.7)',
+        backgroundColor: theme.mask,
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    buttonMask: {
+        backgroundColor: theme.buttonMask,
+        elevation: 0
     },
     errorText: {
         color: 'red', 
@@ -187,7 +200,8 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 22,
-        textShadowColor: '#ffffff',
+        color: theme.pbmText,
+        textShadowColor: theme._fff,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
@@ -195,38 +209,51 @@ const s = StyleSheet.create({
         width: '100%',
         borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#97a5af',
-        backgroundColor: "#f5fbff",
+        backgroundColor: theme._e0ebf2, 
+        borderColor: theme.borderColor,
         marginTop: 15,
         marginBottom: 15,
     },
     inputText: {
-        color: '#000e18',
+        color: theme.pbmText,
     },
     textLink: {
         fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
-        color: '#4b5862',
-        textShadowColor: '#ffffff',
+        color: theme.buttonTextColor,
+        textShadowColor: theme._fff,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
     iconStyle: {
         fontSize: 24,
-        color: '#97a5af',
+        color: theme.placeholder,
+        marginRight: 5
     },
     buttonStyle: {
-        backgroundColor:"#D3ECFF",
+        backgroundColor: theme.buttonColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0
     },
+    buttonTitle: {
+        color: theme.buttonTextColor, 
+        fontSize: 16,
+        fontWeight: '500'
+    },
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height:deviceHeight
-    }
+        height: deviceHeight
+    },
+    disabledStyle: {
+        backgroundColor: theme._e0f1fb,
+        borderRadius: 50
+    },
+    disabledTitleStyle: {
+        color: theme.disabledText
+    },
 })
 
 Login.propTypes = {

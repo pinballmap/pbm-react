@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
@@ -7,92 +7,99 @@ import {
     Text, 
     View, 
 } from 'react-native'
-import { Button, ListItem } from 'react-native-elements'
+import { 
+    Button, 
+    ListItem,
+    ThemeContext,
+} from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ConfirmationModal from './ConfirmationModal'
 import { setSelectedActivityFilter } from '../actions'
 
-class FilterRecentActivity extends Component {
-    state = { showModal: false }
+const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+    
+    const [showModal, setShowModal] = useState(false)
 
-    setRecentActivityFilter(activity) {
-        this.setState({ showModal: false })
-        this.props.setSelectedActivityFilter(activity)
+    const setRecentActivityFilter = (activity) => {
+        setShowModal(false)
+        setSelectedActivityFilter(activity)
     }
 
-    render(){
-        const { showModal } = this.state
-        const { selectedActivity } = this.props.query
+    const { selectedActivity } = query
 
-        return(
-            <View>
-                {showModal && 
+    return(
+        <View>
+            {showModal && 
                     <ConfirmationModal>
                         <View style={s.header}>
                             <Text style={s.filterTitle}>Filter Recent Activity by Type</Text>
                             <MaterialCommunityIcons 
                                 name='close-circle' 
                                 size={34} 
-                                onPress={() => this.setState({ showModal: false })}
+                                onPress={() => setShowModal(false)}
                                 style={s.xButton}
                             />
                         </View>
                         <View>
                             <ListItem
                                 title={'New Machines'}
-                                titleStyle={{color:'#000e18'}}
+                                titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />}
-                                containerStyle={selectedActivity === 'new_lmx' ? {backgroundColor: '#D3ECFF'} : {}}
-                                onPress={() => this.setRecentActivityFilter('new_lmx')}
+                                containerStyle={selectedActivity === 'new_lmx' ? s.containerBg : s.containerNotSelected}
+                                onPress={() => setRecentActivityFilter('new_lmx')}
                             />
                             <ListItem
                                 title={'New Conditions'}
-                                titleStyle={{color:'#000e18'}}
+                                titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />}
-                                containerStyle={selectedActivity === 'new_condition' ? {backgroundColor: '#D3ECFF'} : {}}
-                                onPress={() => this.setRecentActivityFilter('new_condition')}
+                                containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
+                                onPress={() => setRecentActivityFilter('new_condition')}
                             />
                             <ListItem
                                 title={'Removed Machines'}
-                                titleStyle={{color:'#000e18'}}
+                                titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />}
-                                containerStyle={selectedActivity === 'remove_machine' ? {backgroundColor: '#D3ECFF'} : {}}
-                                onPress={() => this.setRecentActivityFilter('remove_machine')}
+                                containerStyle={selectedActivity === 'remove_machine' ? s.containerBg : s.containerNotSelected}
+                                onPress={() => setRecentActivityFilter('remove_machine')}
                             />
                             <ListItem
                                 title={'Scores'}
-                                titleStyle={{color:'#000e18'}}
+                                titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />}
-                                containerStyle={selectedActivity === 'new_msx' ? {backgroundColor: '#D3ECFF'} : {}}
-                                onPress={() => this.setRecentActivityFilter('new_msx')}
+                                containerStyle={selectedActivity === 'new_msx' ? s.containerBg : s.containerNotSelected}
+                                onPress={() => setRecentActivityFilter('new_msx')}
                             />
                             <ListItem
                                 title={'Confirmed Locations'}
-                                titleStyle={{color:'#000e18'}}
+                                titleStyle={s.titleStyle}
                                 leftAvatar={<MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />}
-                                containerStyle={selectedActivity === 'confirm_location' ? {backgroundColor: '#D3ECFF'} : {}}
-                                onPress={() => this.setRecentActivityFilter('confirm_location')}
+                                containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : s.containerNotSelected}
+                                onPress={() => setRecentActivityFilter('confirm_location')}
                             />
                         </View>
                     </ConfirmationModal>
-                }
-                <Button
-                    onPress={ () => this.setState({ showModal: true })}
-                    containerStyle={{width:60}}
-                    title="Filter"
-                    accessibilityLabel="Filter"
-                    titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
-                    type="clear"
-                /> 
-            </View>
-        )
-    }
+            }
+            <Button
+                onPress={ () => setShowModal(true)}
+                containerStyle={{width:60}}
+                title="Filter"
+                accessibilityLabel="Filter"
+                titleStyle={{color: "#1e9dff", fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
+                type="clear"
+            /> 
+        </View>
+    )
+
 }
 
-const s = StyleSheet.create({
-
+const getStyles = (theme) => StyleSheet.create({
+    containerNotSelected: {
+        backgroundColor: theme.backgroundColor,
+    },
     header: {
-        backgroundColor: "#6a7d8a", 
+        backgroundColor: theme._6a7d8a, 
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -100,7 +107,7 @@ const s = StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: "#f5fbff",
+        color: theme._f5fbff,
         textAlign: "center",
         fontSize: 14,
         fontWeight: 'bold'
@@ -110,8 +117,13 @@ const s = StyleSheet.create({
         right: Platform.OS === 'ios' ? -15 : 0,
         top: Platform.OS === 'ios' ? -15 : 0,
         color:'white',
+    },
+    titleStyle: {
+        color: theme.pbmText
+    },
+    containerBg: {
+        backgroundColor: theme.buttonColor
     }
-
 })
 
 FilterRecentActivity.propTypes = {

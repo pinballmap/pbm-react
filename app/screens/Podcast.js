@@ -1,57 +1,45 @@
-import React, { Component } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-    ActivityIndicator,
-    StyleSheet, 
     View
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
 import { 
-    headerStyle,
-    headerTitleStyle, 
-} from '../styles'
+    ActivityIndicator,
+    HeaderBackButton, 
+} from '../components'
 
-class Podcast extends Component {
-    state = { loading: true }
+const Podcast = () => {
+    const [loading, setLoading] = useState(true)
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            drawerLabel: 'Podcast',
-            drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={[s.drawerIcon]} />, 
-            headerLeft: <HeaderBackButton navigation={navigation}/>,
-            title: 'Podcast',
-            headerRight:<View style={{padding:6}}></View>,
-            headerTitleStyle,
-            headerStyle,
-            headerTintColor: '#4b5862'
-        }
-    }
+    return(
+        <Fragment>
+            {loading && <ActivityIndicator/>}
+            <WebView
+                onLoad={() => setLoading(false)}
+                style={{ flex: 1 }}
+                source={{uri: 'http://pod.pinballmap.com/'}}
+            />
+        </Fragment>
+    )
 
-    render(){
-        return(
-            <View style={{ flex: 1,backgroundColor:'#f5fbff' }}>
-                {this.state.loading && (
-                    <View style={{flex: 1, padding: 20,backgroundColor:'#f5fbff'}}>
-                        <ActivityIndicator/>
-                    </View>
-                )}
-                <WebView
-                    onLoad={() => this.setState({loading: false})}
-                    style={{ flex: 1 }}
-                    source={{uri: 'http://pod.pinballmap.com/'}}
-                />
-            </View>
-        )
-    }
 }
 
-const s = StyleSheet.create({
-    drawerIcon: {
-        fontSize: 24,
-        color: '#6a7d8a'
+Podcast.navigationOptions = ({ navigation, theme }) => ({
+    drawerLabel: 'Podcast',
+    drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={{fontSize: 24,color: '#6a7d8a'}} />, 
+    headerLeft: <HeaderBackButton navigation={navigation}/>,
+    title: 'Podcast',
+    headerRight:<View style={{padding:6}}></View>,
+    headerStyle: {
+        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
     },
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTitleStyle: {
+        textAlign: 'center', 
+        flex: 1
+    }
 })
 
 Podcast.propTypes = {
