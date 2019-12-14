@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [
       "app/assets/images/*"
@@ -43,6 +43,7 @@
     },
     "android": {
       "package": "com.pbm",
+      "userInterfaceStyle": "automatic",
       "config": {
         "googleMaps": {
           "apiKey": "key"
@@ -73,7 +74,10 @@
       },
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
       "icon": "app/assets/images/android-icon.png"
-    }
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
-
