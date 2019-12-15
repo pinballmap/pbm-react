@@ -41,7 +41,8 @@ class RecentActivity extends Component {
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
-            }
+            },
+            gesturesEnabled: true
         }
     }
 

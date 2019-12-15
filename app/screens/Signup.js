@@ -233,7 +233,10 @@ const Signup = ({ login, loginLater, navigation }) => {
     )
 }
 
-Signup.navigationOptions = { header: null }
+Signup.navigationOptions = { 
+    header: null,
+    gesturesEnabled: true
+}
 
 const getStyles = theme => StyleSheet.create({
     backgroundImage: {

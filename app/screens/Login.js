@@ -44,6 +44,7 @@ class Login extends Component {
         return {
             header: () => null,
             headerLeft: null,
+            gesturesEnabled: true
         } 
     }
     

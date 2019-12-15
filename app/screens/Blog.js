@@ -38,7 +38,8 @@ Blog.navigationOptions = ({ navigation, theme }) => ({
     headerTitleStyle: {
         textAlign: 'center', 
         flex: 1
-    }
+    },
+    gesturesEnabled: true
 })
 
 Blog.propTypes = {
