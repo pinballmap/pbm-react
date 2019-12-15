@@ -44,7 +44,7 @@ const saved = createStackNavigator(
     { Saved },
     {
         navigationOptions: {
-            tabBarVisible: false
+            tabBarVisible: true,
         }
     }
 )
@@ -53,7 +53,7 @@ const activity = createStackNavigator(
     { RecentActivity },
     {
         navigationOptions: {
-            tabBarVisible: false
+            tabBarVisible: true,
         }
     }
 )
@@ -62,7 +62,7 @@ const profile = createStackNavigator(
     { UserProfile },
     {
         navigationOptions: {
-            tabBarVisible: false
+            tabBarVisible: true,
         }
     }
 )
@@ -158,6 +158,7 @@ const TabNav = createBottomTabNavigator(
 
 TabNav.navigationOptions = {
     header: null,
+    gesturesEnabled: true
 }
 
 export const MapStack = createStackNavigator({
