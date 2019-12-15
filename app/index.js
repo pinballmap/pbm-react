@@ -12,7 +12,7 @@ const theme = Appearance.getColorScheme()
 
 const dark = {
     theme: 'dark',
-    buttonColor: '#7c6152',
+    buttonColor: '#493931',
     buttonTextColor: '#bdae9d',
     warningButtonColor: '#67050c',
     backgroundColor: '#2a211c',
