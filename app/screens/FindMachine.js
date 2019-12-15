@@ -101,7 +101,8 @@ class FindMachine extends React.PureComponent {
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
-            }
+            },
+            gesturesEnabled: true
         }
     }
 

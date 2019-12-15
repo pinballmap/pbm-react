@@ -97,7 +97,8 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerTitleStyle: {
         textAlign: 'center', 
         flex: 1
-    }
+    },
+    gesturesEnabled: true
 })
 
 FindOperator.propTypes = {
