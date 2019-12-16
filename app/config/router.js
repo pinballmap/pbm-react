@@ -40,32 +40,17 @@ const map = createStackNavigator({
     Map
 })
 
-const saved = createStackNavigator(
-    { Saved },
-    {
-        navigationOptions: {
-            tabBarVisible: true,
-        }
-    }
-)
+const saved = createStackNavigator({ 
+    Saved 
+})
 
-const activity = createStackNavigator(
-    { RecentActivity },
-    {
-        navigationOptions: {
-            tabBarVisible: true,
-        }
-    }
-)
+const activity = createStackNavigator({ 
+    RecentActivity 
+})
 
-const profile = createStackNavigator(
-    { UserProfile },
-    {
-        navigationOptions: {
-            tabBarVisible: true,
-        }
-    }
-)
+const profile = createStackNavigator({ 
+    UserProfile 
+})
 
 const Menu = createStackNavigator({
     Map
@@ -151,14 +136,13 @@ const TabNav = createBottomTabNavigator(
                 },
             },
             tabBarPosition: 'bottom',
-            swipeEnabled: true,
         })
     }
 )
 
 TabNav.navigationOptions = {
     header: null,
-    gesturesEnabled: true
+    gesturesEnabled: false
 }
 
 export const MapStack = createStackNavigator({
