@@ -136,7 +136,7 @@ export class SignupLogin extends Component {
                                             this.props.navigation.navigate('Map')}} 
                                         title="skip this for now"
                                         accessibilityLabel="skip this for now"                         
-                                        titleStyle={{color:'#000e18',fontSize:14,textAlign:"center"}}
+                                        titleStyle={s.skipTitle}
                                         buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
                                     />
                                 </View>
@@ -206,6 +206,12 @@ const getStyles = theme => StyleSheet.create({
         justifyContent: 'center',
         height: deviceHeight
     },
+    skipTitle: {
+        color: theme.pbmText,
+        fontSize: 14,
+        textAlign: "center"
+        
+    }
 })
 
 SignupLogin.propTypes = {
