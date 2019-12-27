@@ -44,7 +44,8 @@ class UserProfile extends Component {
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
                 textAlign: 'center', 
-                flex: 1
+                flex: 1,
+                fontWeight: 'bold'
             }
         }
     };

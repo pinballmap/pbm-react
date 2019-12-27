@@ -69,7 +69,8 @@ class SuggestLocation extends Component {
             headerTitleStyle: {
                 textAlign: 'center', 
                 flex: 1
-            }
+            },
+            gesturesEnabled: true
         }
     }
 
@@ -187,7 +188,7 @@ class SuggestLocation extends Component {
                                         {isSuggestingLocation ? 
                                             <ActivityIndicator /> :
                                             errorText ? 
-                                                <ScrollView style={{paddingTop: 100,backgroundColor:'#f5fbff'}}>
+                                                <ScrollView style={[{paddingTop: 100},s.background]}>
                                                     <Text style={[s.error,s.success]}>{errorText}</Text>
                                                     <PbmButton 
                                                         title={"OK"}
@@ -195,7 +196,7 @@ class SuggestLocation extends Component {
                                                     />
                                                 </ScrollView> :
                                                 locationSuggested ?
-                                                    <ScrollView style={{paddingTop: 100,backgroundColor:'#f5fbff'}}>
+                                                    <ScrollView style={[{paddingTop: 100},s.background]}>
                                                         <Text style={s.success}>{`Thanks for submitting that location! We'll review the submission and add it!`}</Text>
                                                         <PbmButton 
                                                             title={"OK"}
@@ -206,8 +207,8 @@ class SuggestLocation extends Component {
                                                         />
                                                     </ScrollView>
                                                     :        
-                                                    <SafeAreaView style={{flex: 1,backgroundColor:'#f5fbff'}}>               
-                                                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                                                    <SafeAreaView style={[{flex: 1},s.background]}>               
+                                                        <ScrollView style={s.background}>
                                                             <View style={s.pageTitle}>
                                                                 {machineList.length === 0 || locationName.length === 0 ? 
                                                                     <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
@@ -403,9 +404,10 @@ class SuggestLocation extends Component {
                                             />   
                                             {machineList.map(machine => 
                                                 <ListItem 
+                                                    containerStyle={s.listContainerStyle}
                                                     title={this.getDisplayText(machine)}
                                                     key={machine.id}
-                                                    checkmark={<MaterialIcons name='cancel' size={15} color="#4b5862" />}
+                                                    checkmark={<MaterialIcons name='cancel' size={15} color={theme._97a5af} />}
                                                     onPress={() => this.props.removeMachineFromList(machine)}
                                                 />
                                             )}                 
@@ -523,6 +525,9 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15,
         marginLeft: 15,
         marginRight: 15
+    },
+    listContainerStyle: {
+        backgroundColor: theme._fff
     },
 })
 

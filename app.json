@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [
       "app/assets/images/*"
@@ -43,6 +43,7 @@
     },
     "android": {
       "package": "com.pbm",
+      "userInterfaceStyle": "automatic",
       "config": {
         "googleMaps": {
           "apiKey": "key"
@@ -57,7 +58,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 48,
+      "versionCode": 49,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
@@ -73,7 +74,10 @@
       },
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
       "icon": "app/assets/images/android-icon.png"
-    }
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
-
