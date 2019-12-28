@@ -6,6 +6,8 @@ import { ThemeProvider } from 'react-native-elements'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
 
+console.disableYellowBox = true;
+
 import store from './store'
 
 const theme = Appearance.getColorScheme()
@@ -52,7 +54,7 @@ const standard = {
     buttonTextColor: '#4b5862',
     warningButtonColor: '#fdd4d7',
     backgroundColor: '#f5fbff',
-    pbmText: '#000e18', 
+    pbmText: '#000e18',
     modalBg: '#FFF',
     backButton: '#1e9dff',
     disabledText: '#c1c9cf',
@@ -85,7 +87,7 @@ const standard = {
 class App extends Component {
     componentDidMount() {
         StatusBar.setBarStyle('dark-content')
-        
+
         if (Platform.OS === 'android') {
             StatusBar.setTranslucent(true)
             StatusBar.setBackgroundColor('transparent')
