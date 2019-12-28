@@ -5,8 +5,6 @@ import {
     FETCHING_LOCATIONS,
     FETCHING_LOCATIONS_SUCCESS,
     FETCHING_LOCATIONS_FAILURE,
-    FETCHING_LOCATIONS_BY_CITY,
-    FETCHING_LOCATIONS_BY_CITY_SUCCESS,
     SELECT_LOCATION_LIST_FILTER_BY,
     LOCATION_DETAILS_CONFIRMED,
     LOCATION_MACHINE_REMOVED,
@@ -44,13 +42,11 @@ export default (state = initialState, action) => {
                 locationTypes: [],
             }
         case FETCHING_LOCATIONS:
-        case FETCHING_LOCATIONS_BY_CITY:
             return {
                 ...state,
                 isFetchingLocations: true,
             }
         case FETCHING_LOCATIONS_SUCCESS:
-        case FETCHING_LOCATIONS_BY_CITY_SUCCESS:
             return {
                 ...state,
                 isFetchingLocations: false,
