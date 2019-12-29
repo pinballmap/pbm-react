@@ -4,31 +4,31 @@ import { connect } from 'react-redux'
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
-import { 
+import {
     ActivityIndicator,
-    Dimensions, 
+    Dimensions,
     Modal,
     Platform,
     ScrollView,
-    StyleSheet, 
-    Text, 
-    TouchableOpacity, 
-    View, 
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native'
 import Constants from 'expo-constants'
-import { 
-    Input, 
+import {
+    Input,
     ListItem,
     ThemeConsumer,
 } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
-import { 
+import {
     displayError,
-    getLocationsByCity,
     getLocationsByRegion,
     updateCurrCoordinates,
+    getLocationsFailure,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
@@ -40,7 +40,7 @@ Geocode.setApiKey(GOOGLE_MAPS_KEY)
 class Search extends Component {
     constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             q: '',
             foundLocations: [],
             foundCities: [],
@@ -64,11 +64,11 @@ class Search extends Component {
         this._fetch(q)
     }
 
-    _fetch = async (query) => {        
+    _fetch = async (query) => {
         this.waitingFor = query
         this.setState({ searching: true })
         if (query === '') {
-            await this.setState({ foundLocations: [], foundCities: [], foundRegions: [], searching: false})
+            await this.setState({ foundLocations: [], foundCities: [], foundRegions: [], searching: false })
         } else {
             const foundRegions = query.toLowerCase() === 'region' ? this.props.regions.regions : this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
             const foundLocations = await getData(`/locations/autocomplete?name=${encodeURIComponent(query)}`)
@@ -85,24 +85,28 @@ class Search extends Component {
             .then(response => {
                 const { lat, lng } = response.results[0].geometry.location
                 this.props.updateCoordinates(lat, lng)
-            },
-            error => {
+            }, error => {
                 console.log(error)
                 this.props.displayError('An error occurred geocoding.')
             })
             .then(() => {
                 this.changeQuery('')
-                this.setState({searchModalVisible: false})
+                this.setState({ searchModalVisible: false })
             })
     }
 
-    getLocationsByCity = (location) => {
-        this.props.getLocationsByCity(location.value)
+    getLocationsByCity = async ({ value }) => {
+        try {
+            const { location } = await getData(`/locations/closest_by_address.json?address=${value}`)
+            this.props.updateCoordinates(location.lat, location.lon)
+        } catch (e) {
+            this.props.getLocationsFailure()
+        }
         this.clearSearchState()
     }
-    
+
     goToLocation = (location) => {
-        this.props.navigate('LocationDetails', {id: location.id, locationName: location.label, updateMap: true})
+        this.props.navigate('LocationDetails', { id: location.id, locationName: location.label, updateMap: true })
         this.clearSearchState()
     }
 
@@ -110,17 +114,17 @@ class Search extends Component {
         this.props.getLocationsByRegion(region)
         this.clearSearchState()
     }
-  
+
     clearSearchState = () => {
         this.changeQuery('')
-        this.setState({searchModalVisible: false})
+        this.setState({ searchModalVisible: false })
     }
 
-    render(){
+    render() {
         const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
-    
-        return(
+
+        return (
             <ThemeConsumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
@@ -129,36 +133,36 @@ class Search extends Component {
                             <Modal
                                 transparent={false}
                                 visible={searchModalVisible}
-                                onRequestClose={()=>{}}
+                                onRequestClose={() => { }}
                             >
-                                <View style={[{flex: 1},s.ifX,s.background]}>
-                                    <View style={{display: 'flex', flexDirection: 'row'}}>
-                                        <MaterialIcons 
+                                <View style={[{ flex: 1 }, s.ifX, s.background]}>
+                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <MaterialIcons
                                             onPress={() => {
-                                                this.setState({searchModalVisible: false})
+                                                this.setState({ searchModalVisible: false })
                                                 this.changeQuery('')
                                             }}
-                                            name='clear' 
-                                            size={30} 
+                                            name='clear'
+                                            size={30}
                                             style={s.clear}
                                         />
                                         <Input
                                             placeholder='City, Address, Location'
-                                            leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{marginLeft:-10,marginRight:0}}/>}
-                                            rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{marginRight:2}} onPress={() => this.changeQuery('')} /> : null}
+                                            leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{ marginLeft: -10, marginRight: 0 }} />}
+                                            rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
                                             onChangeText={query => this.changeQuery(query)}
                                             value={q}
-                                            containerStyle={{paddingTop:4}}
+                                            containerStyle={{ paddingTop: 4 }}
                                             key={submitButton ? 'search' : 'none'}
                                             returnKeyType={submitButton ? 'search' : 'none'}
-                                            onSubmitEditing={submitButton ? ({nativeEvent}) => this.geocodeSearch(nativeEvent.text) : () => {}}
+                                            onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
                                             inputContainerStyle={s.inputContainerStyle}
                                             inputStyle={s.inputStyle}
                                             autoFocus
                                             autoCorrect={false}
                                         />
                                     </View>
-                                    <ScrollView style={{paddingTop: 3}} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                                    <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                                         {searching ? <ActivityIndicator /> : null}
                                         {foundRegions ?
                                             foundRegions.map(region =>
@@ -169,47 +173,47 @@ class Search extends Component {
                                                     <ListItem
                                                         title={region.full_name}
                                                         rightTitle={'Region'}
-                                                        rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                                        rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
                                                         titleStyle={s.listItemTitle}
                                                         containerStyle={s.listContainerStyle}
-                                                    /> 
+                                                    />
                                                 </TouchableOpacity>
                                                 )) : null
                                         }
-                                        {foundCities ? 
-                                            foundCities.map(location => 
-                                                (<TouchableOpacity 
-                                                    key={location.value} 
+                                        {foundCities ?
+                                            foundCities.map(location =>
+                                                (<TouchableOpacity
+                                                    key={location.value}
                                                     onPress={() => this.getLocationsByCity(location)}
                                                 >
                                                     <ListItem
                                                         title={location.value}
                                                         rightTitle={'City'}
-                                                        rightTitleStyle={{fontStyle:'italic',color:'#97a5af'}}
+                                                        rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
                                                         titleStyle={s.listItemTitle}
                                                         containerStyle={s.listContainerStyle}
-                                                    /> 
+                                                    />
                                                 </TouchableOpacity>)
                                             ) : null
                                         }
-                                        {foundLocations ? 
-                                            foundLocations.map(location => 
-                                                (<TouchableOpacity 
-                                                    key={location.id} 
+                                        {foundLocations ?
+                                            foundLocations.map(location =>
+                                                (<TouchableOpacity
+                                                    key={location.id}
                                                     onPress={() => this.goToLocation(location)}
                                                 >
                                                     <ListItem
                                                         title={location.label}
                                                         titleStyle={s.listItemTitle}
                                                         containerStyle={s.listContainerStyle}
-                                                    /> 
+                                                    />
                                                 </TouchableOpacity>)
                                             ) : null
-                                        }                        
+                                        }
                                     </ScrollView>
                                 </View>
                             </Modal>
-                            <TouchableOpacity onPress={() => this.setState({searchModalVisible: true})}>
+                            <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
                                 <View style={s.searchMap}>
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
                                     <Text style={s.inputPlaceholder}>City, Address, Location</Text>
@@ -219,11 +223,11 @@ class Search extends Component {
                     )
                 }}
             </ThemeConsumer>
-        )}
+        )
+    }
 }
 
 Search.propTypes = {
-    getLocationsByCity: PropTypes.func,
     theme: PropTypes.string,
 }
 
@@ -232,10 +236,10 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme._f2f4f5,
     },
     ifX: {
-        paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,         
+        paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,
     },
     searchMap: {
-        width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,             
+        width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,
         backgroundColor: theme._f2f4f5,
         height: 35,
         borderRadius: 5,
@@ -243,31 +247,31 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: Platform.OS === 'ios' ? -10 : 0,  
+        marginLeft: Platform.OS === 'ios' ? -10 : 0,
         alignItems: 'center'
     },
     searchIcon: {
         paddingLeft: 5,
-        color: theme._97a5af,  
+        color: theme._97a5af,
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color: theme._97a5af,       
+        color: theme._97a5af,
     },
     inputStyle: {
         color: theme._97a5af,
     },
     inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: theme._f2f4f5,  
+        backgroundColor: theme._f2f4f5,
         borderRadius: 5,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
         height: 35,
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft:0,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,             
+        paddingLeft: 0,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,
     },
     listContainerStyle: {
         borderBottomColor: theme.hr,
@@ -277,13 +281,13 @@ const getStyles = theme => StyleSheet.create({
     listItemTitle: {
         color: theme.buttonTextColor,
         marginBottom: -2,
-        marginTop: -2  
+        marginTop: -2
     },
     clear: {
         color: theme._6a7d8a,
-        marginLeft:5,
-        marginRight:5,
-        marginTop: Platform.OS === 'ios' ? 6 : -5,                     
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: Platform.OS === 'ios' ? 6 : -5,
     }
 })
 
@@ -292,15 +296,15 @@ Search.propTypes = {
     navigate: PropTypes.func,
     regions: PropTypes.object,
     updateCoordinates: PropTypes.func,
-    getLocationsByCity: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
+    getLocationsFailure: PropTypes.func,
 }
 
-const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user})
+const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
-    getLocationsByCity: (city) => dispatch(getLocationsByCity(city)),
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
+    getLocationsFailure: () => dispatch(getLocationsFailure()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

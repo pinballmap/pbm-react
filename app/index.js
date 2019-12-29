@@ -6,8 +6,6 @@ import { ThemeProvider } from 'react-native-elements'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
 
-console.disableYellowBox = true;
-
 import store from './store'
 
 const theme = Appearance.getColorScheme()

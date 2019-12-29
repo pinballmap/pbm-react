@@ -3,7 +3,6 @@ import {
     CLEAR_FILTERS,
     SET_SELECTED_ACTIVITY_FILTER,
     CLEAR_ACTIVITY_FILTER,
-    FETCHING_LOCATIONS_BY_CITY_SUCCESS,
     SET_MACHINE_FILTER,
     SET_NUM_MACHINES_FILTER,
     SET_VIEW_FAVORITE_LOCATIONS_FILTER,
@@ -97,18 +96,6 @@ export default (state = initialState, action) => {
                 ...state,
                 selectedActivity: '',
             }
-        case FETCHING_LOCATIONS_BY_CITY_SUCCESS: {
-            const { locations } = action
-
-            return {
-                ...state,
-                curLat: Number(locations[0].lat),
-                curLon: Number(locations[0].lon),
-                latDelta: 0.1,
-                lonDelta: 0.1,
-                maxZoom: false,
-            }
-        }
         default:
             return state
     }
