@@ -37,7 +37,6 @@ import {
     closeFavoriteLocationModal, 
     confirmLocationIsUpToDate, 
     fetchLocation,
-    getLocations,
     removeFavoriteLocation,
     setCurrentMachine, 
     updateCurrCoordinates,
@@ -108,9 +107,8 @@ class LocationDetails extends Component {
         // If the location name isn't known before arriving on this screen, this will populate the header with the location name once it comes back
         if (!this.props.navigation.getParam('locationName') && !this.props.location.location.name && props.location.location.name || (this.props.location.location.name !== props.location.location.name))
             this.props.navigation.setParams({ locationName: props.location.location.name })
-        
+  
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
-            this.props.getLocations(props.location.location.lat, props.location.location.lon)
             this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
         }
     }
@@ -534,7 +532,6 @@ LocationDetails.propTypes = {
     closeFavoriteLocationModal: PropTypes.func,
     removeFavoriteLocation: PropTypes.func,
     addFavoriteLocation: PropTypes.func,
-    getLocations: PropTypes.func,
     updateCurrCoordinates: PropTypes.func,
 }
 
@@ -548,7 +545,6 @@ const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
     closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
-    getLocations: (lat, lon) => dispatch(getLocations(lat, lon)),
     updateCurrCoordinates: (lat, lon) => dispatch(updateCurrCoordinates(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
