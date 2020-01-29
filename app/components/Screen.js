@@ -9,7 +9,11 @@ const Screen = (props) => {
     const { theme } = useContext(ThemeContext)
     
     return (
-        <ScrollView {...props} style={{ flex: 1,backgroundColor: theme.backgroundColor }}>
+        <ScrollView 
+            {...props} 
+            scrollIndicatorInsets={{ right: 1 }}
+            style={{ flex: 1,backgroundColor: theme.backgroundColor }}
+        >
             {props.children}
         </ScrollView>
     )
