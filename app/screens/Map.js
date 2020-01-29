@@ -257,7 +257,7 @@ class Map extends Component {
                                         title={'Clear Filter'}
                                         onPress={() => this.props.clearFilters()}
                                         type="clear"
-                                        titleStyle={{ fontSize: 14, color: "#F53240", padding: 5, backgroundColor: 'rgba(255,255,255,0.5)' }}
+                                        titleStyle={s.clear}
                                         containerStyle={{ width: 100, position: 'absolute', top: 0, right: 0 }}
                                     />
                                     : null
@@ -303,6 +303,12 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText,
         fontSize: 14,
         marginTop: 5,
+    },
+    clear: {
+        fontSize: 14,
+        color: "#F53240",
+        padding: 5,
+        backgroundColor: theme.loading
     },
     confirmText: {
         textAlign: 'center',
