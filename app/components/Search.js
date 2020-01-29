@@ -6,6 +6,7 @@ import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
 import {
     ActivityIndicator,
+    AsyncStorage,
     Dimensions,
     Modal,
     Platform,
@@ -32,6 +33,7 @@ import {
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
+import { retrieveItem } from '../config/utils'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -48,6 +50,7 @@ class Search extends Component {
             searchModalVisible: false,
             showSubmitButton: false,
             searching: false,
+            recentSearchHistory: []
         }
 
         this.autocompleteSearchDebounced = debounce(500, this.autocompleteSearch)
@@ -77,7 +80,7 @@ class Search extends Component {
                 this.setState({ foundLocations, foundCities, foundRegions, showSubmitButton: true, searching: false })
             }
         }
-    }
+    }   
 
     geocodeSearch = (query) => {
         this.setState({ searching: true })
@@ -99,29 +102,133 @@ class Search extends Component {
         try {
             const { location } = await getData(`/locations/closest_by_address.json?address=${value}`)
             this.props.updateCoordinates(location.lat, location.lon)
+            this.clearSearchState({ value })
         } catch (e) {
             this.props.getLocationsFailure()
+            this.clearSearchState('')
         }
-        this.clearSearchState()
     }
 
     goToLocation = (location) => {
         this.props.navigate('LocationDetails', { id: location.id, locationName: location.label, updateMap: true })
-        this.clearSearchState()
+        this.clearSearchState(location)
     }
 
     getLocationsByRegion = (region) => {
         this.props.getLocationsByRegion(region)
-        this.clearSearchState()
+        this.clearSearchState(region)
     }
 
-    clearSearchState = () => {
+    clearSearchState = (search) => {
         this.changeQuery('')
         this.setState({ searchModalVisible: false })
+        if (search) {
+            const duplicateIndex = this.isDuplicate(search)
+            let currentSearchHistory = this.state.recentSearchHistory
+            if (duplicateIndex > -1) {
+                currentSearchHistory.splice(duplicateIndex, 1)
+            }
+            const updatedSearchHistory = [search, ...currentSearchHistory].slice(0, 10)
+            AsyncStorage.setItem('searchHistory', JSON.stringify(updatedSearchHistory))
+        }
+    }
+
+    isDuplicate = (search) => {
+        const isDuplicate = this.state.recentSearchHistory.findIndex(entry => {
+            if (entry.full_name) {
+                if (search.full_name === entry.full_name) 
+                    return true
+            }
+
+            if (entry.value) {
+                if (search.value === entry.value) 
+                    return true
+            }
+
+            return false
+        })
+
+        return isDuplicate
+    }
+
+    renderRegionRow = (region, s) => (
+        <TouchableOpacity
+            key={region.id}
+            onPress={() => this.getLocationsByRegion(region)}
+        >
+            <ListItem
+                title={region.full_name}
+                rightTitle={'Region'}
+                rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
+                titleStyle={s.listItemTitle}
+                containerStyle={s.listContainerStyle}
+            />
+        </TouchableOpacity>
+    )
+
+    renderCityRow = (location, s) => (
+        <TouchableOpacity
+            key={location.value}
+            onPress={() => this.getLocationsByCity(location)}
+        >
+            <ListItem
+                title={location.value}
+                rightTitle={'City'}
+                rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
+                titleStyle={s.listItemTitle}
+                containerStyle={s.listContainerStyle}
+            />
+        </TouchableOpacity>
+    )
+
+    renderLocationRow = (location, s) => (
+        <TouchableOpacity
+            key={location.id}
+            onPress={() => this.goToLocation(location)}
+        >
+            <ListItem
+                title={location.label}
+                titleStyle={s.listItemTitle}
+                containerStyle={s.listContainerStyle}
+            />
+        </TouchableOpacity>
+    )
+
+    renderRecentSearchHistory = (s) => (
+        <View>
+            <ListItem
+                title={'Recent Search History'}
+                titleStyle={s.searchHistoryTitle}
+                containerStyle={s.listContainerStyle}
+                contentContainerStyle={{alignItems: 'center'}}
+            />
+            {this.state.recentSearchHistory.map(search => {
+                // Determine which rows to render based on search payload
+                if (search.motd) {
+                    return this.renderRegionRow(search, s)
+                }
+
+                if (search.id) {
+                    return this.renderLocationRow(search, s)
+                }
+
+                if (search.value) {
+                    return this.renderCityRow(search, s)
+                }
+            })}
+        </View>
+    )
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.searchModalVisible && !prevState.searchModalVisible) {
+            retrieveItem('searchHistory')
+                .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHisotry : [] }))
+                .catch(() => this.setState({ recentSearchHisotry : [] }))
+        }
     }
 
     render() {
-        const { q, foundLocations = [], foundCities = [], foundRegions = [], searchModalVisible, showSubmitButton, searching } = this.state
+        const { q, foundLocations = [], foundCities = [], foundRegions = [], recentSearchHistory = [], searchModalVisible, showSubmitButton, searching } = this.state
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
 
         return (
@@ -164,52 +271,10 @@ class Search extends Component {
                                     </View>
                                     <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                                         {searching ? <ActivityIndicator /> : null}
-                                        {foundRegions ?
-                                            foundRegions.map(region =>
-                                                (<TouchableOpacity
-                                                    key={region.id}
-                                                    onPress={() => this.getLocationsByRegion(region)}
-                                                >
-                                                    <ListItem
-                                                        title={region.full_name}
-                                                        rightTitle={'Region'}
-                                                        rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
-                                                        titleStyle={s.listItemTitle}
-                                                        containerStyle={s.listContainerStyle}
-                                                    />
-                                                </TouchableOpacity>
-                                                )) : null
-                                        }
-                                        {foundCities ?
-                                            foundCities.map(location =>
-                                                (<TouchableOpacity
-                                                    key={location.value}
-                                                    onPress={() => this.getLocationsByCity(location)}
-                                                >
-                                                    <ListItem
-                                                        title={location.value}
-                                                        rightTitle={'City'}
-                                                        rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
-                                                        titleStyle={s.listItemTitle}
-                                                        containerStyle={s.listContainerStyle}
-                                                    />
-                                                </TouchableOpacity>)
-                                            ) : null
-                                        }
-                                        {foundLocations ?
-                                            foundLocations.map(location =>
-                                                (<TouchableOpacity
-                                                    key={location.id}
-                                                    onPress={() => this.goToLocation(location)}
-                                                >
-                                                    <ListItem
-                                                        title={location.label}
-                                                        titleStyle={s.listItemTitle}
-                                                        containerStyle={s.listContainerStyle}
-                                                    />
-                                                </TouchableOpacity>)
-                                            ) : null
-                                        }
+                                        {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
+                                        {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
+                                        {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
+                                        {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
                                     </ScrollView>
                                 </View>
                             </Modal>
@@ -282,6 +347,10 @@ const getStyles = theme => StyleSheet.create({
         color: theme.buttonTextColor,
         marginBottom: -2,
         marginTop: -2
+    },
+    searchHistoryTitle: {
+        color: theme.buttonTextColor,
+        fontWeight: 'bold',
     },
     clear: {
         color: theme._6a7d8a,
