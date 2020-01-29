@@ -5,7 +5,8 @@ import {
     Dimensions,
     Image, 
     Linking,
-    Modal, 
+    Modal,
+    Platform,
     StyleSheet, 
     TouchableOpacity, 
     View, 
@@ -41,6 +42,7 @@ import {
     setCurrentMachine, 
     updateCurrCoordinates,
 } from '../actions'
+import androidCustomDark from '../utils/androidCustomDark'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -205,6 +207,7 @@ class LocationDetails extends Component {
                                     }}
                                     showsMyLocationButton={false}
                                     style={deviceHeight > 800 ? s.mapTall : s.mapShort}
+                                    customMapStyle={Platform.OS === 'android' && theme.theme === 'dark' ? androidCustomDark : []}
                                 >
                                     <MapView.Marker
                                         coordinate={{
