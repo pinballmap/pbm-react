@@ -108,6 +108,7 @@ class Map extends Component {
             headerTitle:
                 <Search
                     navigate={navigation.navigate}
+                    navigation={navigation}
                 />,
             headerRight:
                 <Button
@@ -126,14 +127,16 @@ class Map extends Component {
 
 
     onRegionChange = (region) => {
-        //Only reload map if the location hasn't moved in 0.2sec
         const compareRegion = (region) => {
             if (region === this.prevRegion) {
                 this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
             }
         }
 
-        setTimeout(compareRegion, 800, region)
+        // latitudeDelta is updating when the Search modal opens. This ensures we don't unnecessarily call compareRegion
+        if (region.latitude - this.prevRegion.latitude !== 0) {
+            setTimeout(compareRegion, 800, region)
+        }
         this.prevRegion = region
     }
 
