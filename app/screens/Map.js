@@ -309,7 +309,7 @@ const getStyles = theme => StyleSheet.create({
         color: "#F53240",
         padding: 5,
         backgroundColor: theme.loading
-    }
+    },
     confirmText: {
         textAlign: 'center',
         fontSize: 20,
