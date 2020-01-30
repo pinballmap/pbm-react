@@ -33,6 +33,7 @@ import {
 import {
     getMapLocations
 } from '../selectors'
+import androidCustomDark from '../utils/androidCustomDark'
 
 const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
@@ -238,6 +239,7 @@ class Map extends Component {
                                     showsUserLocation={true}
                                     moveOnMarkerPress={false}
                                     showsMyLocationButton={false}
+                                    customMapStyle={Platform.OS === 'android' && theme.theme === 'dark' ? androidCustomDark : []}
                                 >
                                     {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                                 </MapView>
