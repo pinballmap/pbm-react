@@ -5,7 +5,6 @@ import {
     Dimensions,
     Keyboard,
     Modal,
-    ScrollView,
     StyleSheet,
     TextInput,
     TouchableOpacity,
@@ -216,7 +215,7 @@ class FindMachine extends React.PureComponent {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen>
+                        <Screen keyboardShouldPersistTaps='always'>
                             <Modal
                                 visible={this.state.showModal}
                                 onRequestClose={() => { }}
@@ -284,14 +283,12 @@ class FindMachine extends React.PureComponent {
                                     }
                                 </View> : null
                             }
-                            <ScrollView keyboardDismissMode="on-drag">
-                                <FlatList
-                                    keyboardShouldPersistTaps="always"
-                                    data={this.state.machines}
-                                    renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
-                                    keyExtractor={this.keyExtractor}
-                                />
-                            </ScrollView>
+                            <FlatList
+                                keyboardShouldPersistTaps="always"
+                                data={this.state.machines}
+                                renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
+                                keyExtractor={this.keyExtractor}
+                            />
                         </Screen>
                     )
                 }}
