@@ -7,7 +7,8 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { SearchBar, ThemeContext } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'

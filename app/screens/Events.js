@@ -14,8 +14,8 @@ import {
 import {
     ButtonGroup,
     Card,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton, Screen } from '../components'
 import { getIfpaData } from '../config/request'
@@ -100,7 +100,7 @@ class Events extends Component {
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -153,7 +153,7 @@ class Events extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

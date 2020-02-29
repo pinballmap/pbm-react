@@ -5,7 +5,7 @@ import {
     Text, 
     View,
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import PbmButton from './PbmButton'
 
 const NotLoggedIn = ({ onPress, text, title }) => {

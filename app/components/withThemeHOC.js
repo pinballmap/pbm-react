@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 
 const withThemeHOC = (Component) => {
     return (props) => {

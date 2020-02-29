@@ -15,8 +15,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
     ButtonGroup,
     SearchBar,
-    ThemeConsumer
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
@@ -211,7 +211,7 @@ class FindMachine extends React.PureComponent {
         const selectedIdx = this.state.machinesInView ? 1 : 0
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -292,7 +292,7 @@ class FindMachine extends React.PureComponent {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

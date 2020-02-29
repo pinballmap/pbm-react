@@ -14,8 +14,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { 
     Button, 
     Input,
-    ThemeContext,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'

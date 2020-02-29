@@ -16,8 +16,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { 
     Button, 
     ListItem,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { EvilIcons } from '@expo/vector-icons'
 import { 
     addMachineCondition, 
@@ -110,7 +110,7 @@ class MachineDetails extends Component {
         const { name: machineName } = this.props.machineDetails
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -275,7 +275,7 @@ class MachineDetails extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

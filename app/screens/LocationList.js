@@ -6,7 +6,8 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
+import { ButtonGroup } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import {
     HeaderBackButton,
     LocationCard,
@@ -90,7 +91,7 @@ export class LocationList extends Component {
         const { locations = [] } = this.state
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -128,7 +129,7 @@ export class LocationList extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

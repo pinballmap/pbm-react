@@ -7,7 +7,7 @@ import {
     TextInput, 
     View,
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
     ConfirmationModal,

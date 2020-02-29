@@ -8,7 +8,7 @@ import {
     StyleSheet, 
     View, 
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { getData } from '../config/request'
 import { Screen, Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'

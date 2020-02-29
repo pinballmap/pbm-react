@@ -9,7 +9,7 @@ import {
     View,
     StyleSheet
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { logout } from '../actions'
 import ConfirmationModal from './ConfirmationModal'

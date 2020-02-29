@@ -9,8 +9,8 @@ import { FontAwesome } from '@expo/vector-icons'
 import { 
     Button, 
     ListItem,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     ActivityIndicator,
     ConfirmationModal, 
@@ -89,7 +89,7 @@ class UserProfile extends Component {
         } = profileInfo
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -181,7 +181,7 @@ class UserProfile extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

@@ -6,10 +6,8 @@ import {
     TouchableWithoutFeedback,
     View 
 } from 'react-native'
-import {
-    Input,
-    ThemeContext,
-} from 'react-native-elements'
+import { Input } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     ConfirmationModal,
     HeaderBackButton,

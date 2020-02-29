@@ -19,8 +19,8 @@ import {
     ButtonGroup, 
     ListItem, 
     Icon,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
@@ -138,7 +138,7 @@ class LocationDetails extends Component {
         }))
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -327,7 +327,7 @@ class LocationDetails extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
