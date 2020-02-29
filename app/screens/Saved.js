@@ -6,11 +6,9 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import {
-    ButtonGroup,
-    ThemeConsumer
-} from 'react-native-elements'
+import { ButtonGroup } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
+import { ThemeContext } from '../theme-context'
 import {
     HeaderBackButton,
     LocationCard,
@@ -84,7 +82,7 @@ export class Saved extends Component {
         const { loggedIn } = this.props.user
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -142,7 +140,7 @@ export class Saved extends Component {
                         </View>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

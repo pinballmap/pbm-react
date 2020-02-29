@@ -5,7 +5,7 @@ import {
     StyleSheet, 
     View, 
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 
 const ConfirmationModal = ({children, visible}) => {
     const { theme } = useContext(ThemeContext)

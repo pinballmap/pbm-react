@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'react-native'
-import { Button, ThemeContext } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
+import { ThemeContext } from '../theme-context'
 
 const DropDownButton = ({ title, onPress, }) => {
     const { theme } = useContext(ThemeContext)
