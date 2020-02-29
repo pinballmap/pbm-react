@@ -4,7 +4,7 @@ import {
     StyleSheet, 
     Text 
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 
 const PbmText = ({ style, onPress, children }) => {
     const { theme } = useContext(ThemeContext)

@@ -10,11 +10,11 @@ import {
 import { 
     Button, 
     ListItem,
-    ThemeContext,
 } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ConfirmationModal from './ConfirmationModal'
 import { setSelectedActivityFilter } from '../actions'
+import { ThemeContext } from '../theme-context'
 
 const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
     const { theme } = useContext(ThemeContext)

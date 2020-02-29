@@ -31,6 +31,7 @@ import PasswordReset from '../screens/PasswordReset'
 import ResendConfirmation from '../screens/ResendConfirmation'
 import FindOperator from '../screens/FindOperator'
 import FindLocationType from '../screens/FindLocationType'
+import Settings from '../screens/Settings'
 
 import { DrawerMenu } from '../components'
 
@@ -167,6 +168,7 @@ export const MapStack = createStackNavigator({
     ResendConfirmation: { screen: ResendConfirmation },
     FindOperator: { screen: FindOperator },
     FindLocationType: { screen: FindLocationType },
+    Settings: { screen: Settings },
 }, {
     navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
@@ -196,6 +198,7 @@ export const drawerNavigator = createDrawerNavigator({
     FAQ: { screen: FAQ },
     Podcast: { screen: Podcast },
     Blog: { screen: Blog },
+    Settings: { screen: Settings },
 }, {
     contentComponent: DrawerMenu,
     drawerPosition: 'right',

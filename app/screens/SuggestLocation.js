@@ -15,10 +15,8 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
-    ListItem,
-    ThemeConsumer,
-} from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
@@ -146,7 +144,7 @@ class SuggestLocation extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
        
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -421,7 +419,7 @@ class SuggestLocation extends Component {
                         </KeyboardAwareScrollView>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
