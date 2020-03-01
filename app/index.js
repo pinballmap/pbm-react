@@ -2,7 +2,7 @@ import { registerRootComponent } from 'expo'
 import { Appearance } from 'react-native-appearance'
 import React, { Component } from 'react'
 import { Platform, StatusBar } from 'react-native'
-import { ThemeProvider } from 'react-native-elements'
+import { retrieveItem } from './config/utils'
 import { ThemeContext } from './theme-context'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
@@ -16,13 +16,19 @@ class App extends Component {
     constructor(props) {
         super(props)
 
-        this.toggleTheme = () => {
-            this.setState(state => ({
-              selectedTheme: state.selectedTheme === 'dark' ? '' : 'dark'
-            }));
-          };
+        this.toggleDefaultTheme = () => {
+            defaultTheme !== 'dark' && this.setState(state => ({
+                selectedTheme: state.selectedTheme === 'dark' ? '' : 'dark'
+            }))
+        }
+
+        this.toggleDarkTheme = () => {
+            defaultTheme === 'dark' && this.setState(state => ({
+                selectedTheme: state.selectedTheme === 'dark' ? '' : 'dark'
+            }))
+        } 
         
-        this.state={ selectedTheme: defaultTheme  }
+        this.state={ selectedTheme: defaultTheme }
     }
 
     componentDidMount() {
@@ -32,13 +38,23 @@ class App extends Component {
             StatusBar.setTranslucent(true)
             StatusBar.setBackgroundColor('transparent')
         }
+
+        retrieveItem('defaultThemeOverride')
+            .then(defaultThemeOverride => defaultTheme !== 'dark' && defaultThemeOverride && this.setState({selectedTheme: 'dark'}))
+
+        retrieveItem('darkThemeOverride')
+            .then(darkThemeOverride => defaultTheme === 'dark' && darkThemeOverride && this.setState({selectedTheme: ''}))
     }
  
     render() {
         const { selectedTheme } = this.state
      
         return (
-            <ThemeContext.Provider value={{toggleTheme: this.toggleTheme,  theme: selectedTheme === 'dark' ? dark : standard }}>
+            <ThemeContext.Provider value={{
+                toggleDefaultTheme: this.toggleDefaultTheme, 
+                toggleDarkTheme: this.toggleDarkTheme, 
+                theme: selectedTheme === 'dark' ? dark : standard 
+            }}>
                 <Provider store={store}>
                     <PbmStack theme={selectedTheme} />
                 </Provider>

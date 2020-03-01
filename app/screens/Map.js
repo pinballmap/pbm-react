@@ -199,7 +199,6 @@ class Map extends Component {
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
-                    console.log(theme)
                     return (
                         <View style={{ flex: 1, backgroundColor: '#f5fbff' }}>
                             <ConfirmationModal
