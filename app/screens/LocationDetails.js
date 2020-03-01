@@ -207,7 +207,8 @@ class LocationDetails extends Component {
                                     }}
                                     showsMyLocationButton={false}
                                     style={deviceHeight > 800 ? s.mapTall : s.mapShort}
-                                    customMapStyle={Platform.OS === 'android' && theme.theme === 'dark' ? androidCustomDark : []}
+                                    provider = { MapView.PROVIDER_GOOGLE }
+                                    customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                 >
                                     <MapView.Marker
                                         coordinate={{
