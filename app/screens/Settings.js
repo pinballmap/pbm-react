@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { 
-    Dimensions,
+    AsyncStorage,
     StyleSheet, 
     View, 
 } from 'react-native'
@@ -10,33 +10,33 @@ import { ThemeContext } from '../theme-context'
 import { Screen, Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
-
-let deviceWidth = Dimensions.get('window').width
+import { retrieveItem } from '../config/utils'
 
 const Settings = () => {
-    const { toggleTheme, theme } = useContext(ThemeContext)
+    const { toggleDefaultTheme, toggleDarkTheme, theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
+    const [selectedDefault, updateSelectedDefault] = useState(0)
+    const [selectedDark, updateSelectedDark] = useState(1)
+    
     useEffect(() => {
-        let isCancelled = false
+        retrieveItem('defaultThemeOverride')
+            .then(defaultThemeOverride => defaultThemeOverride && updateSelectedDefault(1))
 
-        // retrieveItem('themePreference')
-        //     .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHisotry : [] }))
-        //     .catch(() => this.setState({ recentSearchHisotry : [] }))
+        retrieveItem('darkThemeOverride')
+            .then(darkThemeOverride => darkThemeOverride && updateSelectedDark(0))
+    })
 
-        return () => {
-            isCancelled = true
-        }
-    }, [])
-
-    updateDefaultPref = (idx) => {
-        console.log(idx)
-        toggleTheme()
+    const updateDefaultPref = (idx) => {
+        updateSelectedDefault(idx)
+        AsyncStorage.setItem('defaultThemeOverride', JSON.stringify(idx === 1))
+        toggleDefaultTheme()
     }
 
-    updateDarkPref = (idx) => {
-        console.log(idx)
-        toggleTheme()
+    const updateDarkPref = (idx) => {
+        updateSelectedDark(idx)
+        AsyncStorage.setItem('darkThemeOverride', JSON.stringify(idx === 0))
+        toggleDarkTheme()
     }
      
     return(
@@ -44,8 +44,8 @@ const Settings = () => {
             <Text>Default OS Theme</Text>
             <Text>Select Dark to Override Default App Theme</Text>
             <ButtonGroup style={s.border}
-                onPress={this.updateDefaultPref}
-                selectedIndex={0}
+                onPress={updateDefaultPref}
+                selectedIndex={selectedDefault}
                 buttons={['Standard', 'Dark']}
                 containerStyle={s.buttonGroupContainer}
                 textStyle={s.textStyle}
@@ -56,8 +56,8 @@ const Settings = () => {
             <Text>Dark OS Theme</Text>
             <Text>Select Standard to Override Default Dark Theme</Text>
             <ButtonGroup style={s.border}
-                onPress={this.updateDarkPref}
-                selectedIndex={1}
+                onPress={updateDarkPref}
+                selectedIndex={selectedDark}
                 buttons={['Standard', 'Dark']}
                 containerStyle={s.buttonGroupContainer}
                 textStyle={s.textStyle}
