@@ -42,7 +42,7 @@ const Settings = () => {
     return(
         <Screen>
             <View style={s.background}>
-                <Text style={s.bold}>Standard Theme</Text>
+                <View style={s.pageTitle}><Text style={s.pageTitleText}>Standard Theme</Text></View>
                 <ButtonGroup style={s.border}
                     onPress={updateDefaultPref}
                     selectedIndex={selectedDefault}
@@ -54,7 +54,7 @@ const Settings = () => {
                     innerBorderStyle={s.innerBorderStyle}
                 />
                 <Text style={s.text}>When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.</Text>
-                <Text style={s.bold}>Dark Mode Theme</Text>
+                <View style={s.pageTitle}><Text style={s.pageTitleText}>Dark Mode Theme</Text></View>
                 <ButtonGroup style={s.border}
                     onPress={updateDarkPref}
                     selectedIndex={selectedDark}
@@ -93,6 +93,17 @@ const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: theme.backgroundColor
+    },
+    pageTitle: {
+        paddingVertical: 10,
+        backgroundColor: theme._6a7d8a,
+        marginBottom: 10
+    },
+    pageTitleText: {
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: "bold",
+        color: theme._f5fbff
     },
     bold: {
         fontWeight: 'bold',

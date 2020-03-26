@@ -110,11 +110,11 @@ const TabNav = createBottomTabNavigator(
             tabBarOptions: {
                 activeTintColor: {
                     light: '#1e9dff',
-                    dark: '#bdae9d',
+                    dark: '#addbff',
                 },
                 inactiveTintColor: {
                     light: '#6a7d8a',
-                    dark: '#bdae9d',
+                    dark: '#ebebeb',
                 },
                 showIcon: true,
                 adaptive: false,
@@ -184,7 +184,7 @@ export const MapStack = createStackNavigator({
             alignSelf: 'center',
             width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
-        headerTintColor: theme === 'dark' ? '#bdae9d' : '#4b5862'
+        headerTintColor: theme === 'dark' ? '#ebebeb' : '#4b5862'
     })
 }
 )
@@ -210,11 +210,11 @@ export const drawerNavigator = createDrawerNavigator({
     contentOptions: {
         activeTintColor: {
             light: '#6a7d8a',
-            dark: '#bdae9d'
+            dark: '#ebebeb'
         },
         inactiveTintColor: {
             light: '#6a7d8a',
-            dark: '#bdae9d'
+            dark: '#ebebeb'
         },
         activeBackgroundColor: {
             light: '#f5fbff',
@@ -232,11 +232,11 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontWeight: "bold",
         fontSize: 11,
-        color: '#1e9dff'
+        color: theme === 'dark' ? '#addbff' : '#1e9dff'
     },
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: theme === 'dark' ? '#bdae9d' : '#4b5862'
+        color: theme === 'dark' ? '#ebebeb' : '#4b5862'
     },
 })

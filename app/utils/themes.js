@@ -1,6 +1,6 @@
 export const dark = {
     theme: 'dark',
-    pbmText:'#e6e6ff',
+    pbmText:'#f2f2f2',
     machineName: '#D3ECFF',
     backButton: '#addbff',
     d_9a836a:'#a6a2a6',
