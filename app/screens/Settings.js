@@ -41,30 +41,32 @@ const Settings = () => {
      
     return(
         <Screen>
-            <Text>Default OS Theme</Text>
-            <Text>Select Dark to Override Default App Theme</Text>
-            <ButtonGroup style={s.border}
-                onPress={updateDefaultPref}
-                selectedIndex={selectedDefault}
-                buttons={['Standard', 'Dark']}
-                containerStyle={s.buttonGroupContainer}
-                textStyle={s.textStyle}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-            />
-            <Text>Dark OS Theme</Text>
-            <Text>Select Standard to Override Default Dark Theme</Text>
-            <ButtonGroup style={s.border}
-                onPress={updateDarkPref}
-                selectedIndex={selectedDark}
-                buttons={['Standard', 'Dark']}
-                containerStyle={s.buttonGroupContainer}
-                textStyle={s.textStyle}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-            />
+            <View style={s.background}>
+                <Text style={s.bold}>Standard Theme</Text>
+                <ButtonGroup style={s.border}
+                    onPress={updateDefaultPref}
+                    selectedIndex={selectedDefault}
+                    buttons={['Standard', 'Dark']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.textStyle}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
+                <Text style={s.text}>When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.</Text>
+                <Text style={s.bold}>Dark Mode Theme</Text>
+                <ButtonGroup style={s.border}
+                    onPress={updateDarkPref}
+                    selectedIndex={selectedDark}
+                    buttons={['Standard', 'Dark']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.textStyle}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
+                <Text style={s.text}>When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.</Text>
+            </View>
         </Screen>
     )
 
@@ -88,12 +90,38 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
 })
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: theme.backgroundColor
+    },
+    bold: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 10,
+        padding: 10,
+        color: theme.machineName,
+        backgroundColor: theme.loading,
+        textAlign: 'center'
+    },
+    text: {
+        fontSize: 14,
+        color: theme.meta,
+        fontStyle: 'italic',
+        lineHeight: 22,
+        marginBottom: 15,
+        marginLeft: 15,
+        marginRight: 15,
+    },
     border: {
         borderWidth: 2,
         borderColor: theme.borderColor,
     },
     selButtonStyle: {
         backgroundColor: theme.loading,
+    },
+    selTextStyle: {
+        color: theme.pbmText,
+        fontWeight: 'bold',
     },
     buttonGroupContainer: {
         height: 40,
