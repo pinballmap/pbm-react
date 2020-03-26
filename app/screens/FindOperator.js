@@ -91,7 +91,7 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Select Operator',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {
