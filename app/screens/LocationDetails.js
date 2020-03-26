@@ -6,7 +6,6 @@ import {
     Image, 
     Linking,
     Modal,
-    Platform,
     StyleSheet, 
     TouchableOpacity, 
     View, 
