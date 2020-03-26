@@ -94,7 +94,7 @@ class FindMachine extends React.PureComponent {
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#6a7d8a", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -331,7 +331,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.locationName,
     },
     selTextStyle: {
         color: theme.pbmText,
