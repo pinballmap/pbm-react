@@ -118,7 +118,7 @@ const TabNav = createBottomTabNavigator(
                 showIcon: true,
                 adaptive: false,
                 style: {
-                    backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
                     paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
                     paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
                     height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null,
@@ -173,7 +173,7 @@ export const MapStack = createStackNavigator({
         drawerLabel: 'Map',
         drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#6a7d8a' }} />,
         headerStyle: {
-            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             height: Platform.OS === 'ios' ? 44 : 56,
         },
         headerTitleStyle: {
@@ -202,7 +202,7 @@ export const drawerNavigator = createDrawerNavigator({
     drawerWidth: 250,
     drawerBackgroundColor: {
         light: '#f5fbff',
-        dark: '#2a211c',
+        dark: '#1d1c1d',
     },
     contentOptions: {
         activeTintColor: {
@@ -215,7 +215,7 @@ export const drawerNavigator = createDrawerNavigator({
         },
         activeBackgroundColor: {
             light: '#f5fbff',
-            dark: '#2a211c'
+            dark: '#1d1c1d'
         },
         itemsContainerStyle: {
             paddingTop: Constants.statusBarHeight > 40 ? 20 : 0,

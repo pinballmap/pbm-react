@@ -70,7 +70,7 @@ class LocationDetails extends Component {
                     type="clear"
                 /> : <View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -235,7 +235,7 @@ class LocationDetails extends Component {
                                     />
                                     {this.state.buttonIndex === 0 ?
                                         <View style={s.backgroundColor}>
-                                            {location.date_last_updated && <Text style={s.lastUpdated}>Last Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM-DD-YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                            {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                             <View>
                                                 <PbmButton
                                                     onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
@@ -270,8 +270,8 @@ class LocationDetails extends Component {
                                                         title={this.getTitle(machine, s)}
                                                         subtitle={
                                                             <View style={s.condition}>
-                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"`}</Text> : null}
-                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Last Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')} ${machine.last_updated_by_username && `by ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                             </View>
                                                         }
                                                         rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -360,7 +360,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.locationName,
     },
     selTextStyle: {
         color: theme.pbmText,
@@ -434,21 +434,21 @@ const getStyles = theme => StyleSheet.create({
         color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme._e0f1fb,
         width: '100%',
         elevation: 0,
         borderRadius: 50,
         borderWidth: 1,
-        borderColor: theme._f2f4f5
+        borderColor: theme.addBtnBorderColor
     },
     condition: {
         marginTop: 10
     },
     conditionText: {
-        color: theme.meta,
-        fontSize: 14,
+        color: theme.placeholder,
+        fontSize: 12,
         fontStyle: 'italic',
-        marginLeft: 5,
+        marginLeft: 10,
         paddingBottom: 5
     },
     lastUpdated: {
@@ -462,7 +462,7 @@ const getStyles = theme => StyleSheet.create({
     },
     plusButton: {
         color: "#f53240",
-        fontSize: 24,
+        fontSize: 20,
     },
     confirmText: {
         textAlign: 'center',
@@ -505,10 +505,12 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         marginTop: 0,
-        marginBottom: 10
+        marginBottom: 15
     },
     addMachinesButton: {
         backgroundColor: theme._e0f1fb,
+        borderWidth: theme.addBtnBorderW,
+        borderColor: theme.addBtnBorderColor,
         borderRadius: 50,
         width: '100%',
         elevation: 0

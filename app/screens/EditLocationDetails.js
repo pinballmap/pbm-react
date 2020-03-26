@@ -47,7 +47,7 @@ class EditLocationDetails extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('name'),
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -151,6 +151,7 @@ class EditLocationDetails extends Component {
                                             value={phone}
                                             returnKeyType="done"
                                             placeholder={phone || '(503) xxx-xxxx'}
+                                            placeholderTextColor={theme.placeholder}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
@@ -162,6 +163,7 @@ class EditLocationDetails extends Component {
                                             value={website}
                                             returnKeyType="done"
                                             placeholder={website || 'http://...'}
+                                            placeholderTextColor={theme.placeholder}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
@@ -174,6 +176,7 @@ class EditLocationDetails extends Component {
                                             underlineColorAndroid='transparent'
                                             value={description}
                                             placeholder={description || 'Location description...'}
+                                            placeholderTextColor={theme.placeholder}
                                             textAlignVertical='top'
                                         />
                                         <Text style={s.title}>Location Type</Text>
