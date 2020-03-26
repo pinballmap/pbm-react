@@ -5,10 +5,8 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import {
-    ButtonGroup,
-    ThemeContext,
-} from 'react-native-elements'
+import { ButtonGroup } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import {
     DropDownButton,
     HeaderBackButton,

@@ -15,12 +15,13 @@ const Podcast = () => {
 
     return(
         <Fragment>
+            <View style={loading ? {display: 'none'} : {flex: 1}}>
+                <WebView
+                    onLoad={() => setLoading(false)}
+                    source={{uri: 'http://pod.pinballmap.com/'}}
+                />
+            </View>
             {loading && <ActivityIndicator/>}
-            <WebView
-                onLoad={() => setLoading(false)}
-                style={{ flex: 1 }}
-                source={{uri: 'http://pod.pinballmap.com/'}}
-            />
         </Fragment>
     )
 

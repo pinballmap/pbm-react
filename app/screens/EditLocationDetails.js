@@ -12,7 +12,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { ThemeConsumer } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     DropDownButton, 
     HeaderBackButton,
@@ -90,7 +90,7 @@ class EditLocationDetails extends Component {
         const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
 
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -199,7 +199,7 @@ class EditLocationDetails extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
