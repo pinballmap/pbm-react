@@ -15,12 +15,13 @@ const Blog = () => {
     
     return (
         <Fragment>
+            <View style={loading ? {display: 'none'} : {flex: 1}}>
+                <WebView
+                    onLoad={() => setLoading(false)}
+                    source={{uri: 'http://blog.pinballmap.com/'}}
+                />
+            </View>
             {loading && <ActivityIndicator/>}
-            <WebView
-                onLoad={() => setLoading(false)}
-                style={{ flex: 1 }}
-                source={{uri: 'http://blog.pinballmap.com/'}}
-            />
         </Fragment>
     )   
 }
