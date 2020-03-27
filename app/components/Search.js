@@ -353,7 +353,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     clear: {
-        color: theme._6a7d8a,
+        color: theme.meta,
         marginLeft: 5,
         marginRight: 5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,

@@ -143,7 +143,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,

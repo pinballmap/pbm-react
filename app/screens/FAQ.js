@@ -98,7 +98,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: theme.machineName,
-        backgroundColor: theme.loading
+        backgroundColor: theme.buttonColor
     },
     textLink: {
         textDecorationLine: 'underline',

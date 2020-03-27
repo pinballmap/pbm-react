@@ -91,7 +91,7 @@ class FindMachine extends React.PureComponent {
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
             headerRight:
                 navigation.getParam('showDone') ?
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#6a7d8a", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#1e9dff", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
@@ -309,7 +309,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1
     },
     textInput: {
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.textInput,
         borderColor: theme.borderColor,
         borderWidth: 1,
         marginLeft: 20,
@@ -331,7 +331,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,

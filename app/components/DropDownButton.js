@@ -25,7 +25,7 @@ const DropDownButton = ({ title, onPress, }) => {
 
 const getStyles = (theme) => StyleSheet.create({
     dropdown: {
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.textInput,
         width: '100%',
         elevation: 0,
         borderColor: theme.borderColor,

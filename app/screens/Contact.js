@@ -143,7 +143,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center'
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth:1,

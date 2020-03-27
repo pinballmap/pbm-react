@@ -216,15 +216,15 @@ class MachineDetails extends Component {
                                       buttonStyle={s.addButton}
                                   />
                                 </View>
-                                {userHighScore ? 
-                                    <View>
-                                        <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                                        <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
-                                    </View>                       
-                                    : null
-                                }
                                 <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Top Scores</Text>
+                                    {userHighScore ? 
+                                        <View>
+                                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
+                                        </View>                       
+                                        : null
+                                    }
                                     {scores.length > 0 ?                                              
                                         scores.map(scoreObj => {
                                             const {id, score, created_at, username} = scoreObj
@@ -332,7 +332,7 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 5,
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
@@ -355,7 +355,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: theme._6a7d8a
+        color: theme.meta
     },
     userHighScore: {
         textAlign:'center',
