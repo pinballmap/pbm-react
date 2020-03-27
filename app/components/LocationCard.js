@@ -95,7 +95,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     locationNameContainer: {
         width: '100%',
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.buttonColor,
         marginBottom: 5,
         padding: 5,
     },

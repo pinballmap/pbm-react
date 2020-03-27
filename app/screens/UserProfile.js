@@ -233,7 +233,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: theme.pbmText,
+        color: '#D3ECFF',
         backgroundColor: theme._6a7d8a,
         textAlign: "center"
     },

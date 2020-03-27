@@ -360,7 +360,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,
