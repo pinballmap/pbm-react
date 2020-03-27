@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator, 
     Keyboard,
     Modal, 
     Picker, 
@@ -20,6 +19,7 @@ import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
+    ActivityIndicator,
     ConfirmationModal, 
     DropDownButton, 
     HeaderBackButton,
