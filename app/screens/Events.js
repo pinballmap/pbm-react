@@ -193,7 +193,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,
@@ -203,7 +203,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.buttonColor,
         color: theme.pbmText,
         fontWeight: 'bold',
         marginBottom: 5

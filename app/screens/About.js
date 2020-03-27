@@ -127,7 +127,8 @@ const getStyles = theme => StyleSheet.create({
     },
     logo: {
         flex:1,  
-        width: deviceWidth - 20,  
+        width: deviceWidth - 20,
+        backgroundColor: theme._f5fbff
     },
     child: {
         margin: "auto",
@@ -145,7 +146,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.red,
+        color: theme.backButton,
         fontSize: 16,
     },
 })

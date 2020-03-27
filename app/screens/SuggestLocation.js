@@ -454,7 +454,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.meta
+        backgroundColor: theme.pageTitle
     },
     pageTitleText: {
         textAlign: 'center',
@@ -464,7 +464,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme._f5fbff
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
@@ -473,7 +473,6 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 5
     },
-
     radius5: {
         borderRadius: 5,
     },

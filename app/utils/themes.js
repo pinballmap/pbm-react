@@ -14,11 +14,12 @@ export const dark = {
     _97a5af:'#cac6ca',
     disabledText:'#5f595f',
     d_493931:'#5f595f',
-    borderColor:'#736f73',
-    buttonColor: '#576e80',
+    borderColor:'#242226',
+    buttonColor: '#305d80',
     loading:'#a6a2a6',
     _e0ebf2:'#595759',
     _e0f1fb:'#323038',
+    textInput: '#323038',
     _eee:'#323038',
     _f2f4f5:'#242226',
     findInput:'#242226',
@@ -27,12 +28,13 @@ export const dark = {
     _f5fbff:'#cac6ca',
     warningButtonColor: '#805758',
     modalBg:'#000000',
-    _fff:'#403e40',
+    _fff:'#323038',
     buttonMask: 'rgba(0,0,0,.2)',
     mask: 'rgba(0,0,0,.8)',
     addBtnBorderColor:'#736f73',
     addBtnBorderW:1,
-    locationName: '#323038'
+    selButton: '#323038',
+    pageTitle: '#305d80'
 }
 
 export const standard = {
@@ -50,6 +52,7 @@ export const standard = {
     _97a5af: '#97a5af',
     _e0ebf2: '#e0ebf2',
     _e0f1fb: '#e0f1fb',
+    textInput: '#e0ebf2',
     _f5fbff: '#f5fbff',
     d_493931: '#c1c9cf',
     d_9a836a: '#4b5862',
@@ -69,5 +72,6 @@ export const standard = {
     mask: 'rgba(255,255,255,.8)',
     buttonMask: 'rgba(255,255,255,.2)',
     machineName: '#000e18',
-    locationName: '#d3ecff'
+    selButton: '#D3ECFF',
+    pageTitle: '#6a7d8a'
 }

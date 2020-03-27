@@ -159,7 +159,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme._6a7d8a
+        backgroundColor: theme.pageTitle
     },
     pageTitleText: {
         textAlign: 'center',
@@ -190,7 +190,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,

@@ -223,7 +223,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
