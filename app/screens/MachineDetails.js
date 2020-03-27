@@ -16,8 +16,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { 
     Button, 
     ListItem,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { EvilIcons } from '@expo/vector-icons'
 import { 
     addMachineCondition, 
@@ -59,7 +59,7 @@ class MachineDetails extends Component {
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
             headerRight: <RemoveMachine />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -114,7 +114,7 @@ class MachineDetails extends Component {
         const { name: machineName } = this.props.machineDetails
       
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -137,6 +137,7 @@ class MachineDetails extends Component {
                                                 value={this.state.conditionText}
                                                 style={[{padding:5,height:100},s.textInput,s.radius10]}
                                                 placeholder={'Enter machine condition...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textAlignVertical='top'
                                             />
                                             <PbmButton
@@ -170,6 +171,7 @@ class MachineDetails extends Component {
                                                 value={formatInputNumWithCommas(this.state.score)}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
@@ -188,48 +190,41 @@ class MachineDetails extends Component {
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                             <ScrollView>
-                                <Text style={{textAlign:'center',marginTop:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM-DD-YYYY')}`}</Text>  
-                                <PbmButton
-                                    title={loggedIn ? 'Add a New Condition' : 'Log in to add a machine comment'}
-                                    onPress={loggedIn ? 
-                                        () => this.setState({ showAddConditionModal: true }) :
-                                        () => this.props.navigation.navigate('Login')}
-                                    buttonStyle={s.addButton}
-                                />
-                                <Text style={s.sectionTitle}>Machine Comments</Text>
-                                <View style={[s.border,s.backgroundColor]}>
+                                <Text style={{textAlign:'center',marginTop:10,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>  
+                                <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
+                                    <Text style={s.sectionTitle}>Machine Comments</Text>
                                     {mostRecentComments ? 
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
                                             return <ListItem
                                                 key={commentObj.id}
-                                                titleStyle={[{marginLeft:15,marginRight:15},s.conditionText]}
-                                                title={`${comment}`}
-                                                subtitle={`Comment made ${moment(created_at).format('MMM-DD-YYYY')} ${username ? `by ${username}` : ''}`}
+                                                titleStyle={[{marginLeft:5,marginRight:5},s.conditionText]}
+                                                title={`"${comment}"`}
+                                                subtitle={`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
                                                 subtitleStyle={[s.subtitleStyle,s.subtitleMargin]}
                                                 containerStyle={s.listContainerStyle}
+                                                bottomDivider
                                             /> 
                                         }) :
-                                        <Text style={s.noneYet}>No machine condition added yet</Text>
+                                        <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
+                                    <PbmButton
+                                      title={loggedIn ? 'Add a New Comment' : 'Log in to add a machine comment'}
+                                      onPress={loggedIn ? 
+                                          () => this.setState({ showAddConditionModal: true }) :
+                                          () => this.props.navigation.navigate('Login')}
+                                      buttonStyle={s.addButton}
+                                  />
                                 </View>
-                                <PbmButton 
-                                    title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
-                                    onPress={loggedIn ? 
-                                        () => this.setState({ showAddScoreModal: true }) :
-                                        () => this.props.navigation.navigate('Login')
+                                <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
+                                    <Text style={s.sectionTitle}>Top Scores</Text>
+                                    {userHighScore ? 
+                                        <View>
+                                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
+                                        </View>                       
+                                        : null
                                     }
-                                    buttonStyle={s.addButton}
-                                />
-                                {userHighScore ? 
-                                    <View>
-                                        <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                                        <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
-                                    </View>                       
-                                    : null
-                                }
-                                <Text style={s.sectionTitle}>Top Scores</Text>
-                                <View style={[s.border,s.backgroundColor]}>
                                     {scores.length > 0 ?                                              
                                         scores.map(scoreObj => {
                                             const {id, score, created_at, username} = scoreObj
@@ -238,14 +233,23 @@ class MachineDetails extends Component {
                                                 <ListItem
                                                     key={id}
                                                     title={formatNumWithCommas(score)}
-                                                    subtitle={`Scored on ${moment(created_at).format('MMM-DD-YYYY')} by ${username}`}
-                                                    titleStyle={{ fontSize: 15, fontWeight: 'bold' }}
+                                                    subtitle={`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                    titleStyle={s.scoreText}
                                                     subtitleStyle={s.subtitleStyle}
                                                     containerStyle={s.listContainerStyle}
+                                                    bottomDivider
                                                 />)
                                         }) 
-                                        : <Text style={s.noneYet}>No scores yet!</Text> 
+                                        : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
+                                    <PbmButton 
+                                      title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
+                                      onPress={loggedIn ? 
+                                          () => this.setState({ showAddScoreModal: true }) :
+                                          () => this.props.navigation.navigate('Login')
+                                      }
+                                      buttonStyle={s.addButton}
+                                  />
                                 </View>
                                 {pintipsUrl ?
                                     <Button
@@ -279,7 +283,7 @@ class MachineDetails extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -289,9 +293,9 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.backgroundColor
     },
     externalLink: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme._e0f1fb,
         borderWidth: 1,
-        borderColor: theme._97a5af,
+        borderColor: theme.borderColor,
         borderRadius: 50,
         elevation: 0
     },
@@ -309,9 +313,16 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     conditionText: {
-        color: theme.meta,
+        color: theme.pbmText,
         fontStyle: 'italic',
-        fontSize: 14,
+        fontSize: 16,
+        marginTop: 5
+    },
+    scoreText: {
+        color: theme.pbmText,
+        fontSize: 16,
+        marginTop: 5,
+        fontWeight: 'bold',
     },
     noneYet: {
         textAlign: 'center',
@@ -319,10 +330,9 @@ const getStyles = theme => StyleSheet.create({
         fontStyle: 'italic',
         color: theme.meta,
         paddingVertical: 5,
-        backgroundColor: theme._fff,
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
@@ -337,13 +347,15 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 10,
+        color: theme.machineName
     },
     userScoreTitle: {
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: theme._6a7d8a
+        color: theme.meta
     },
     userHighScore: {
         textAlign:'center',
@@ -384,8 +396,8 @@ const getStyles = theme => StyleSheet.create({
     },
     subtitleMargin: {
         marginTop: 5,
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 0,
+        marginRight: 0,
         fontSize: 14
     },
     listContainerStyle: {

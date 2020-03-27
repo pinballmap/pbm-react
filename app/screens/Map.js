@@ -10,7 +10,6 @@ import {
 import {
     Button,
     Icon,
-    ThemeConsumer,
 } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
@@ -34,6 +33,7 @@ import {
     getMapLocations
 } from '../selectors'
 import androidCustomDark from '../utils/androidCustomDark'
+import { ThemeContext } from '../theme-context'
 
 const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
@@ -120,7 +120,7 @@ class Map extends Component {
                     type="clear"
                 />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
         }
     }
@@ -196,7 +196,7 @@ class Map extends Component {
         }
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -238,7 +238,8 @@ class Map extends Component {
                                     showsUserLocation={true}
                                     moveOnMarkerPress={false}
                                     showsMyLocationButton={false}
-                                    customMapStyle={Platform.OS === 'android' && theme.theme === 'dark' ? androidCustomDark : []}
+                                    provider = { MapView.PROVIDER_GOOGLE }
+                                    customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                 >
                                     {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                                 </MapView>
@@ -267,7 +268,7 @@ class Map extends Component {
                         </View>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

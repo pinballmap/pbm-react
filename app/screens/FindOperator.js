@@ -7,7 +7,8 @@ import {
     TouchableOpacity, 
     View, 
 } from 'react-native'
-import { SearchBar, ThemeContext } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
@@ -91,7 +92,7 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Select Operator',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {

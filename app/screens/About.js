@@ -8,7 +8,7 @@ import {
     StyleSheet, 
     View, 
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { getData } from '../config/request'
 import { Screen, Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -101,7 +101,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
     title: 'About',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {
@@ -127,7 +127,8 @@ const getStyles = theme => StyleSheet.create({
     },
     logo: {
         flex:1,  
-        width: deviceWidth - 20,  
+        width: deviceWidth - 20,
+        backgroundColor: theme._f5fbff
     },
     child: {
         margin: "auto",
@@ -145,7 +146,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.red,
+        color: theme.backButton,
         fontSize: 16,
     },
 })

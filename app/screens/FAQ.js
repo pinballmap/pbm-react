@@ -6,7 +6,7 @@ import {
     StyleSheet, 
     View, 
 } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
 import { 
     HeaderBackButton,
@@ -60,7 +60,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
     title: 'FAQ',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {
@@ -98,7 +98,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: theme.machineName,
-        backgroundColor: theme.loading
+        backgroundColor: theme.buttonColor
     },
     textLink: {
         textDecorationLine: 'underline',

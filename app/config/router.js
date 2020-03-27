@@ -31,6 +31,7 @@ import PasswordReset from '../screens/PasswordReset'
 import ResendConfirmation from '../screens/ResendConfirmation'
 import FindOperator from '../screens/FindOperator'
 import FindLocationType from '../screens/FindLocationType'
+import Settings from '../screens/Settings'
 
 import { DrawerMenu } from '../components'
 
@@ -109,16 +110,16 @@ const TabNav = createBottomTabNavigator(
             tabBarOptions: {
                 activeTintColor: {
                     light: '#1e9dff',
-                    dark: '#bdae9d',
+                    dark: '#addbff',
                 },
                 inactiveTintColor: {
                     light: '#6a7d8a',
-                    dark: '#bdae9d',
+                    dark: '#ebebeb',
                 },
                 showIcon: true,
                 adaptive: false,
                 style: {
-                    backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
                     paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
                     paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
                     height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null,
@@ -167,13 +168,14 @@ export const MapStack = createStackNavigator({
     ResendConfirmation: { screen: ResendConfirmation },
     FindOperator: { screen: FindOperator },
     FindLocationType: { screen: FindLocationType },
+    Settings: { screen: Settings },
 }, {
     navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
         drawerLabel: 'Map',
         drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#6a7d8a' }} />,
         headerStyle: {
-            backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             height: Platform.OS === 'ios' ? 44 : 56,
         },
         headerTitleStyle: {
@@ -182,7 +184,7 @@ export const MapStack = createStackNavigator({
             alignSelf: 'center',
             width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
-        headerTintColor: theme === 'dark' ? '#bdae9d' : '#4b5862'
+        headerTintColor: theme === 'dark' ? '#ebebeb' : '#4b5862'
     })
 }
 )
@@ -196,26 +198,27 @@ export const drawerNavigator = createDrawerNavigator({
     FAQ: { screen: FAQ },
     Podcast: { screen: Podcast },
     Blog: { screen: Blog },
+    Settings: { screen: Settings },
 }, {
     contentComponent: DrawerMenu,
     drawerPosition: 'right',
     drawerWidth: 250,
     drawerBackgroundColor: {
         light: '#f5fbff',
-        dark: '#2a211c',
+        dark: '#1d1c1d',
     },
     contentOptions: {
         activeTintColor: {
             light: '#6a7d8a',
-            dark: '#bdae9d'
+            dark: '#ebebeb'
         },
         inactiveTintColor: {
             light: '#6a7d8a',
-            dark: '#bdae9d'
+            dark: '#ebebeb'
         },
         activeBackgroundColor: {
             light: '#f5fbff',
-            dark: '#2a211c'
+            dark: '#1d1c1d'
         },
         itemsContainerStyle: {
             paddingTop: Constants.statusBarHeight > 40 ? 20 : 0,
@@ -229,11 +232,11 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontWeight: "bold",
         fontSize: 11,
-        color: '#1e9dff'
+        color: theme === 'dark' ? '#addbff' : '#1e9dff'
     },
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: theme === 'dark' ? '#bdae9d' : '#4b5862'
+        color: theme === 'dark' ? '#ebebeb' : '#4b5862'
     },
 })

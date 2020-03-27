@@ -9,8 +9,8 @@ import { FontAwesome } from '@expo/vector-icons'
 import { 
     Button, 
     ListItem,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     ActivityIndicator,
     ConfirmationModal, 
@@ -39,7 +39,7 @@ class UserProfile extends Component {
             title: 'Profile',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -89,7 +89,7 @@ class UserProfile extends Component {
         } = profileInfo
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -118,7 +118,7 @@ class UserProfile extends Component {
                                         />
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
-                                    <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM-DD-YYYY')}`}</Text>
+                                    <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Machines Added:</Text>
                                         <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
@@ -181,7 +181,7 @@ class UserProfile extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -206,7 +206,7 @@ const getStyles = theme => StyleSheet.create({
     savedLink: {
         backgroundColor: theme._fff,
         borderWidth: 1,
-        borderColor: theme._97a5af,
+        borderColor: theme.borderColor,
         borderRadius: 50,
         elevation: 0
     },
@@ -233,7 +233,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: theme.pbmText,
+        color: '#D3ECFF',
         backgroundColor: theme._6a7d8a,
         textAlign: "center"
     },
@@ -257,7 +257,8 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         fontWeight: "bold",
         fontSize: 16,
-        marginTop: 5
+        marginTop: 5,
+        color: theme.pbmText
     },
 })
 

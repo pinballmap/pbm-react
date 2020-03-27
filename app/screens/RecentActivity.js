@@ -6,10 +6,8 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native'
-import {
-    ListItem,
-    ThemeConsumer,
-} from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import {
@@ -35,7 +33,7 @@ class RecentActivity extends Component {
             title: 'Activity',
             headerRight: <FilterRecentActivity />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -98,7 +96,7 @@ class RecentActivity extends Component {
         const { selectedActivity } = this.props.query
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -150,7 +148,7 @@ class RecentActivity extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

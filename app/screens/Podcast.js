@@ -15,12 +15,13 @@ const Podcast = () => {
 
     return(
         <Fragment>
+            <View style={loading ? {display: 'none'} : {flex: 1}}>
+                <WebView
+                    onLoad={() => setLoading(false)}
+                    source={{uri: 'http://pod.pinballmap.com/'}}
+                />
+            </View>
             {loading && <ActivityIndicator/>}
-            <WebView
-                onLoad={() => setLoading(false)}
-                style={{ flex: 1 }}
-                source={{uri: 'http://pod.pinballmap.com/'}}
-            />
         </Fragment>
     )
 
@@ -33,7 +34,7 @@ Podcast.navigationOptions = ({ navigation, theme }) => ({
     title: 'Podcast',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {

@@ -3,6 +3,11 @@
     "react",
     "react-native"
   ],
+  "settings": {
+    "react": {
+      "version": "detect" // React version. "detect" automatically picks the version you have installed.
+    }
+  },
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,

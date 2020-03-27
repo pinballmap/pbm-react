@@ -15,8 +15,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
     ButtonGroup,
     SearchBar,
-    ThemeConsumer
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
@@ -91,10 +91,10 @@ class FindMachine extends React.PureComponent {
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
             headerRight:
                 navigation.getParam('showDone') ?
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#6a7d8a", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#1e9dff", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -211,7 +211,7 @@ class FindMachine extends React.PureComponent {
         const selectedIdx = this.state.machinesInView ? 1 : 0
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -292,7 +292,7 @@ class FindMachine extends React.PureComponent {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -309,7 +309,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1
     },
     textInput: {
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.textInput,
         borderColor: theme.borderColor,
         borderWidth: 1,
         marginLeft: 20,
@@ -331,7 +331,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,
