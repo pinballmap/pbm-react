@@ -30,7 +30,7 @@ const Settings = () => {
     const updateDefaultPref = (idx) => {
         if (idx === selectedDefault)
             return
-            
+
         updateSelectedDefault(idx)
         AsyncStorage.setItem('defaultThemeOverride', JSON.stringify(idx === 1))
         toggleDefaultTheme()
@@ -85,9 +85,9 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
     title: 'Settings',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#ebebeb' : '#4b5862',
     headerTitleStyle: {
         textAlign: 'center', 
         flex: 1
