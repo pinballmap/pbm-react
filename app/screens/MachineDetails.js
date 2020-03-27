@@ -24,7 +24,11 @@ import {
     addMachineScore, 
     removeMachineFromLocation 
 } from '../actions/location_actions'
-import { formatNumWithCommas } from '../utils/utilityFunctions'
+import {
+    formatInputNumWithCommas,
+    formatNumWithCommas,
+    removeCommasFromNum
+} from '../utils/utilityFunctions'
 import { 
     ActivityIndicator,
     HeaderBackButton,
@@ -79,8 +83,8 @@ class MachineDetails extends Component {
     }
 
     addScore = (lmx) => {
-        this.props.addMachineScore(this.state.score, lmx)
-        this.setState({ showAddScoreModal: false })
+        this.props.addMachineScore(removeCommasFromNum(this.state.score), lmx)
+        this.setState({ showAddScoreModal: false, score: '' })
     }
 
     componentDidUpdate(prevProps) {
@@ -108,7 +112,7 @@ class MachineDetails extends Component {
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) 
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
-
+      
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -164,7 +168,7 @@ class MachineDetails extends Component {
                                                 keyboardType='numeric'
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={score => this.setState({ score })}
-                                                value={this.state.score}
+                                                value={formatInputNumWithCommas(this.state.score)}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
                                                 placeholderTextColor={theme.placeholder}

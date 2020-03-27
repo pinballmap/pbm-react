@@ -22,6 +22,8 @@ function toRad(Value)
 }
 
 export const formatNumWithCommas = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+export const formatInputNumWithCommas = (num) => (parseInt(num.replace(/[^\d]+/gi, '')) || 0).toLocaleString('en-US')
+export const removeCommasFromNum = (num) =>  num.toString().replace(/,/g, '')
 
 export const alphaSortNameObj = array => {
     return array.sort((a, b) => {
