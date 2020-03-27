@@ -28,12 +28,18 @@ const Settings = () => {
     })
 
     const updateDefaultPref = (idx) => {
+        if (idx === selectedDefault)
+            return
+            
         updateSelectedDefault(idx)
         AsyncStorage.setItem('defaultThemeOverride', JSON.stringify(idx === 1))
         toggleDefaultTheme()
     }
 
     const updateDarkPref = (idx) => {
+        if (idx === selectedDark)
+            return
+
         updateSelectedDark(idx)
         AsyncStorage.setItem('darkThemeOverride', JSON.stringify(idx === 0))
         toggleDarkTheme()
