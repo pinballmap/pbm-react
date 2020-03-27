@@ -133,6 +133,7 @@ class MachineDetails extends Component {
                                                 value={this.state.conditionText}
                                                 style={[{padding:5,height:100},s.textInput,s.radius10]}
                                                 placeholder={'Enter machine condition...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 textAlignVertical='top'
                                             />
                                             <PbmButton
@@ -166,6 +167,7 @@ class MachineDetails extends Component {
                                                 value={this.state.score}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
+                                                placeholderTextColor={theme.placeholder}
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
