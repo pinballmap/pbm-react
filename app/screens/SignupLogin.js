@@ -36,6 +36,11 @@ export class SignupLogin extends Component {
         num_lmxes: 0, 
         apiError: '',
     }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: null
+        }
+    }
 
     componentDidMount(){
         getData('/regions/location_and_machine_counts.json')

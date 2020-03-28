@@ -196,7 +196,7 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         color: theme.pbmText,
-        backgroundColor: theme.buttonColor
+        backgroundColor: theme.pageTitle
     },
     savedIcon: {
         fontSize: 24,

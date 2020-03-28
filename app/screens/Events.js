@@ -203,7 +203,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.pageTitle,
         color: theme.pbmText,
         fontWeight: 'bold',
         marginBottom: 5

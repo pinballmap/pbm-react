@@ -34,7 +34,8 @@ export const dark = {
     addBtnBorderColor:'#736f73',
     addBtnBorderW:1,
     selButton: '#323038',
-    pageTitle: '#305d80'
+    pageTitle: '#595759',
+    locationName: '#736f73'
 }
 
 export const standard = {
@@ -73,5 +74,6 @@ export const standard = {
     buttonMask: 'rgba(255,255,255,.2)',
     machineName: '#000e18',
     selButton: '#D3ECFF',
-    pageTitle: '#6a7d8a'
+    pageTitle: '#6a7d8a',
+    locationName: '#D3ECFF'
 }
