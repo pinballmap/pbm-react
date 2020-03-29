@@ -209,12 +209,12 @@ class MachineDetails extends Component {
                                         <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
                                     <PbmButton
-                                      title={loggedIn ? 'Add a New Comment' : 'Log in to add a machine comment'}
-                                      onPress={loggedIn ? 
-                                          () => this.setState({ showAddConditionModal: true }) :
-                                          () => this.props.navigation.navigate('Login')}
-                                      buttonStyle={s.addButton}
-                                  />
+                                        title={loggedIn ? 'Add a New Comment' : 'Log in to add a machine comment'}
+                                        onPress={loggedIn ? 
+                                            () => this.setState({ showAddConditionModal: true }) :
+                                            () => this.props.navigation.navigate('Login')}
+                                        buttonStyle={s.addButton}
+                                    />
                                 </View>
                                 <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Top Scores</Text>
@@ -243,13 +243,13 @@ class MachineDetails extends Component {
                                         : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
                                     <PbmButton 
-                                      title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
-                                      onPress={loggedIn ? 
-                                          () => this.setState({ showAddScoreModal: true }) :
-                                          () => this.props.navigation.navigate('Login')
-                                      }
-                                      buttonStyle={s.addButton}
-                                  />
+                                        title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
+                                        onPress={loggedIn ? 
+                                            () => this.setState({ showAddScoreModal: true }) :
+                                            () => this.props.navigation.navigate('Login')
+                                        }
+                                        buttonStyle={s.addButton}
+                                    />
                                 </View>
                                 {pintipsUrl ?
                                     <Button

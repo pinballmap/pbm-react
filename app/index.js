@@ -56,7 +56,7 @@ class App extends Component {
                 theme: selectedTheme === 'dark' ? dark : standard 
             }}>
                 <Provider store={store}>
-                    <PbmStack theme={selectedTheme} />
+                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
                 </Provider>
             </ThemeContext.Provider>
         )
