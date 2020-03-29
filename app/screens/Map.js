@@ -59,7 +59,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
                     <View style={s.calloutStyle}>
                         <Text style={{ marginRight: 20, color: '#000e18' }}>{marker.name}</Text>
                         {marker.machine_names.length === 1 ?
-                            <Text>1 machine</Text> :
+                            <Text style={{ color: '#000e18' }}>1 machine</Text> :
                             <Text style={{ color: '#000e18' }}>{`${marker.machine_names.length} machines`}</Text>
                         }
                     </View>
