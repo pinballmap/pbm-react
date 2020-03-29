@@ -59,7 +59,7 @@ const Settings = () => {
                     selectedTextStyle={s.selTextStyle}
                     innerBorderStyle={s.innerBorderStyle}
                 />
-                <Text style={s.text}>When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.</Text>
+                <Text style={s.text}>{`When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.`}</Text>
                 <View style={s.pageTitle}><Text style={s.pageTitleText}>Dark Mode Theme</Text></View>
                 <ButtonGroup style={s.border}
                     onPress={updateDarkPref}
@@ -71,7 +71,7 @@ const Settings = () => {
                     selectedTextStyle={s.selTextStyle}
                     innerBorderStyle={s.innerBorderStyle}
                 />
-                <Text style={s.text}>When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.</Text>
+                <Text style={s.text}>{`When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.`}</Text>
             </View>
         </Screen>
     )
@@ -87,7 +87,7 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
-    headerTintColor: theme === 'dark' ? '#ebebeb' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {
         textAlign: 'center', 
         flex: 1
