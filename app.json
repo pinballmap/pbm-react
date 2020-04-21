@@ -35,7 +35,7 @@
       },
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
-        "googleMapsApiKey": "",
+        "googleMapsApiKey": "key",
         "usesNonExemptEncryption": false
       },
       "splash": {
@@ -49,10 +49,10 @@
       "userInterfaceStyle": "automatic",
       "config": {
         "googleMaps": {
-          "apiKey": ""
+          "apiKey": "key"
         },
         "googleSignIn": {
-          "apiKey": ""
+          "apiKey": "key"
         }
       },
       "permissions": [
