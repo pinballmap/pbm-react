@@ -5,10 +5,8 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import {
-    ButtonGroup,
-    ThemeContext,
-} from 'react-native-elements'
+import { ButtonGroup } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import {
     DropDownButton,
     HeaderBackButton,
@@ -147,7 +145,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     title: 'Filter Results',
     headerRight: <View style={{ padding: 6 }}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {
@@ -161,7 +159,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme._6a7d8a
+        backgroundColor: theme.pageTitle
     },
     pageTitleText: {
         textAlign: 'center',
@@ -192,7 +190,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,

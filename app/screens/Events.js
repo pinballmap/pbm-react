@@ -14,8 +14,8 @@ import {
 import {
     ButtonGroup,
     Card,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton, Screen } from '../components'
 import { getIfpaData } from '../config/request'
@@ -44,7 +44,7 @@ class Events extends Component {
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -100,7 +100,7 @@ class Events extends Component {
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -132,8 +132,8 @@ class Events extends Component {
                                                     data={events}
                                                     extraData={this.state}
                                                     renderItem={({ item }) => {
-                                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
-                                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM-DD-YYYY')
+                                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
+                                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
                                                         return (
                                                             <Card containerStyle={s.cardContainer}>
                                                                 <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
@@ -153,7 +153,7 @@ class Events extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -193,7 +193,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,
@@ -203,7 +203,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.pageTitle,
         color: theme.pbmText,
         fontWeight: 'bold',
         marginBottom: 5

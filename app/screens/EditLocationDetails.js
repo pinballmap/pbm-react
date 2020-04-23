@@ -12,7 +12,7 @@ import {
     TouchableWithoutFeedback, 
     View, 
 } from 'react-native'
-import { ThemeConsumer } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     DropDownButton, 
     HeaderBackButton,
@@ -47,7 +47,7 @@ class EditLocationDetails extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('name'),
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -90,7 +90,7 @@ class EditLocationDetails extends Component {
         const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
 
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -151,6 +151,7 @@ class EditLocationDetails extends Component {
                                             value={phone}
                                             returnKeyType="done"
                                             placeholder={phone || '(503) xxx-xxxx'}
+                                            placeholderTextColor={theme.placeholder}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
@@ -162,6 +163,7 @@ class EditLocationDetails extends Component {
                                             value={website}
                                             returnKeyType="done"
                                             placeholder={website || 'http://...'}
+                                            placeholderTextColor={theme.placeholder}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
@@ -174,6 +176,7 @@ class EditLocationDetails extends Component {
                                             underlineColorAndroid='transparent'
                                             value={description}
                                             placeholder={description || 'Location description...'}
+                                            placeholderTextColor={theme.placeholder}
                                             textAlignVertical='top'
                                         />
                                         <Text style={s.title}>Location Type</Text>
@@ -196,7 +199,7 @@ class EditLocationDetails extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -220,7 +223,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,

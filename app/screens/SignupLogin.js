@@ -9,10 +9,8 @@ import {
     Text, 
     View, 
 } from 'react-native'
-import { 
-    Button,
-    ThemeConsumer,
-} from 'react-native-elements'
+import { Button } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import {
     ActivityIndicator
 } from '../components'
@@ -37,6 +35,11 @@ export class SignupLogin extends Component {
         num_locations: 0, 
         num_lmxes: 0, 
         apiError: '',
+    }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: null
+        }
     }
 
     componentDidMount(){
@@ -80,7 +83,7 @@ export class SignupLogin extends Component {
         }
         
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -144,7 +147,7 @@ export class SignupLogin extends Component {
                         </ImageBackground>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
