@@ -14,8 +14,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { 
     Button, 
     Input,
-    ThemeConsumer,
 } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { 
     getFavoriteLocations,
@@ -79,7 +79,7 @@ class Login extends Component {
 
     render() {
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -170,7 +170,7 @@ class Login extends Component {
                         </KeyboardAwareScrollView>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }

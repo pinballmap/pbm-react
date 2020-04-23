@@ -20,7 +20,6 @@ import Constants from 'expo-constants'
 import {
     Input,
     ListItem,
-    ThemeConsumer,
 } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -34,6 +33,7 @@ import {
 import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
+import { ThemeContext }  from '../theme-context'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -232,7 +232,7 @@ class Search extends Component {
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -287,7 +287,7 @@ class Search extends Component {
                         </View>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -353,7 +353,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     clear: {
-        color: theme._6a7d8a,
+        color: theme.meta,
         marginLeft: 5,
         marginRight: 5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,

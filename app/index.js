@@ -2,87 +2,35 @@ import { registerRootComponent } from 'expo'
 import { Appearance } from 'react-native-appearance'
 import React, { Component } from 'react'
 import { Platform, StatusBar } from 'react-native'
-import { ThemeProvider } from 'react-native-elements'
+import { retrieveItem } from './config/utils'
+import { ThemeContext } from './theme-context'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
+import { dark, standard } from './utils/themes'
 
 import store from './store'
 
-const theme = Appearance.getColorScheme()
-
-const dark = {
-    theme: 'dark',
-    buttonColor: '#493931',
-    buttonTextColor: '#bdae9d',
-    warningButtonColor: '#67050c',
-    backgroundColor: '#2a211c',
-    pbmText: '#bdae9d',
-    modalBg: '#2a211c',
-    backButton: '#bdae9d',
-    disabledText: '#2a211c',
-    _f2f4f5: '#2a211c',
-    _6a7d8a: '#493931',
-    _97a5af: '#bdae9d',
-    _e0ebf2: '#7c6152',
-    _e0f1fb: '#493931',
-    _f5fbff: '#bdae9d',
-    d_493931: '#493931',
-    d_9a836a: '#9a836a',
-    hr: '#7c6152',
-    placeholder: '#9a836a',
-    meta: '#9a836a',
-    findInput: '#7c6152',
-    borderColor: '#7c6152',
-    loading: '#493931',
-    _fff: '#493931',
-    _eee: '#2a211c',
-    addBtnBorderW: 1,
-    addBtnBorderColor: '#bdae9d',
-    drawerText: '#bdae9d',
-    drawerIcon: '#6a7d8a',
-    red: '#1e9dff',
-    mask: 'rgba(0,0,0,.8)',
-    buttonMask: 'rgba(0,0,0,.2)',
-    machineName: '#fdd4d7'
-}
-
-const standard = {
-    theme: 'standard',
-    buttonColor: '#D3ECFF',
-    buttonTextColor: '#4b5862',
-    warningButtonColor: '#fdd4d7',
-    backgroundColor: '#f5fbff',
-    pbmText: '#000e18',
-    modalBg: '#FFF',
-    backButton: '#1e9dff',
-    disabledText: '#c1c9cf',
-    _f2f4f5: '#f2f4f5',
-    _6a7d8a: '#6a7d8a',
-    _97a5af: '#97a5af',
-    _e0ebf2: '#e0ebf2',
-    _e0f1fb: '#e0f1fb',
-    _f5fbff: '#f5fbff',
-    d_493931: '#c1c9cf',
-    d_9a836a: '#4b5862',
-    hr: '#97a5af',
-    placeholder: '#97a5af',
-    meta: '#6a7d8a',
-    findInput: '#f2f4f5',
-    borderColor: '#d1dfe8',
-    loading: '#d3ecff',
-    _fff: '#ffffff',
-    _eee: '#eeeeee',
-    addBtnBorderW: 0,
-    addBtnBorderColor: 'transparent',
-    drawerText: '#6a7d8a',
-    drawerIcon: '#97a5af',
-    red: '#F53240',
-    mask: 'rgba(255,255,255,.8)',
-    buttonMask: 'rgba(255,255,255,.2)',
-    machineName: '#000e18'
-}
+const defaultTheme = Appearance.getColorScheme()
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+
+        this.toggleDefaultTheme = () => {
+            defaultTheme !== 'dark' && this.setState(state => ({
+                selectedTheme: state.selectedTheme === 'dark' ? '' : 'dark'
+            }))
+        }
+
+        this.toggleDarkTheme = () => {
+            defaultTheme === 'dark' && this.setState(state => ({
+                selectedTheme: state.selectedTheme === 'dark' ? '' : 'dark'
+            }))
+        } 
+        
+        this.state={ selectedTheme: defaultTheme }
+    }
+
     componentDidMount() {
         StatusBar.setBarStyle('dark-content')
 
@@ -90,14 +38,27 @@ class App extends Component {
             StatusBar.setTranslucent(true)
             StatusBar.setBackgroundColor('transparent')
         }
+
+        retrieveItem('defaultThemeOverride')
+            .then(defaultThemeOverride => defaultTheme !== 'dark' && defaultThemeOverride && this.setState({selectedTheme: 'dark'}))
+
+        retrieveItem('darkThemeOverride')
+            .then(darkThemeOverride => defaultTheme === 'dark' && darkThemeOverride && this.setState({selectedTheme: ''}))
     }
+ 
     render() {
+        const { selectedTheme } = this.state
+     
         return (
-            <ThemeProvider theme={theme === 'dark' ? dark : standard}>
+            <ThemeContext.Provider value={{
+                toggleDefaultTheme: this.toggleDefaultTheme, 
+                toggleDarkTheme: this.toggleDarkTheme, 
+                theme: selectedTheme === 'dark' ? dark : standard 
+            }}>
                 <Provider store={store}>
-                    <PbmStack theme={theme} />
+                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
                 </Provider>
-            </ThemeProvider>
+            </ThemeContext.Provider>
         )
     }
 }

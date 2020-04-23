@@ -6,7 +6,8 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { ButtonGroup, ThemeConsumer } from 'react-native-elements'
+import { ButtonGroup } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import {
     HeaderBackButton,
     LocationCard,
@@ -33,7 +34,7 @@ export class LocationList extends Component {
             title: 'Location List',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -90,7 +91,7 @@ export class LocationList extends Component {
         const { locations = [] } = this.state
 
         return (
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -128,7 +129,7 @@ export class LocationList extends Component {
                         </Screen>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -142,7 +143,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText
     },
     selButtonStyle: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.selButton,
     },
     selTextStyle: {
         color: theme.pbmText,

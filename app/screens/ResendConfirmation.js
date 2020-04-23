@@ -6,10 +6,8 @@ import {
     TouchableWithoutFeedback,
     View 
 } from 'react-native'
-import {
-    Input,
-    ThemeContext,
-} from 'react-native-elements'
+import { Input } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import { 
     ConfirmationModal,
     HeaderBackButton,
@@ -78,7 +76,7 @@ const ResendConfirmation = ({ navigation }) => {
 ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
     headerTitleStyle: {

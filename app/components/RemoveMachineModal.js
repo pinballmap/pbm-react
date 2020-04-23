@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { Text, StyleSheet } from 'react-native'
-import { ThemeContext } from 'react-native-elements'
 import { removeMachineFromLocation } from '../actions/location_actions'
 import ConfirmationModal from './ConfirmationModal'
 import PbmButton from './PbmButton'
 import WarningButton from './WarningButton'
+import { ThemeContext } from '../theme-context'
 
 const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: loc, machineName }) => {
     const { theme } = useContext(ThemeContext)

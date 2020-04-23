@@ -4,7 +4,8 @@ import {
     Platform,
     StyleSheet, 
 } from 'react-native'
-import { Button, ThemeContext } from 'react-native-elements'
+import { Button } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 
 const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
     const { theme } = useContext(ThemeContext)

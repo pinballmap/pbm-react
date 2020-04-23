@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { 
-    ActivityIndicator, 
     Keyboard,
     Modal, 
     Picker, 
@@ -15,13 +14,12 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
-    ListItem,
-    ThemeConsumer,
-} from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
+import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { 
+    ActivityIndicator,
     ConfirmationModal, 
     DropDownButton, 
     HeaderBackButton,
@@ -63,7 +61,7 @@ class SuggestLocation extends Component {
             title: 'Submit Location',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#2a211c' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
@@ -146,7 +144,7 @@ class SuggestLocation extends Component {
         const { name: operatorName = "Select operator" } = operatorObj
        
         return(
-            <ThemeConsumer>
+            <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
@@ -421,7 +419,7 @@ class SuggestLocation extends Component {
                         </KeyboardAwareScrollView>
                     )
                 }}
-            </ThemeConsumer>
+            </ThemeContext.Consumer>
         )
     }
 }
@@ -456,7 +454,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.meta
+        backgroundColor: theme.pageTitle
     },
     pageTitleText: {
         textAlign: 'center',
@@ -466,7 +464,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme._f5fbff
     },
     textInput: {
-        backgroundColor: theme._e0ebf2, 
+        backgroundColor: theme.textInput, 
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
@@ -475,7 +473,6 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 5
     },
-
     radius5: {
         borderRadius: 5,
     },
