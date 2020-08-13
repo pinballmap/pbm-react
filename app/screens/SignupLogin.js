@@ -36,7 +36,7 @@ export class SignupLogin extends Component {
         num_lmxes: 0, 
         apiError: '',
     }
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = () => {
         return {
             header: null
         }
