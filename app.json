@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "36.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [
       "app/assets/images/*"
