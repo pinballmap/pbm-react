@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux' 
 import { 
-    ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
     View, 
@@ -14,7 +13,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
 import { 
     HeaderBackButton,
-    Screen,
     Text,
 } from '../components'
 
@@ -51,28 +49,26 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     const _keyExtractor = operator => `${operator.id}`
         
     return (
-        <Screen> 
+        <> 
             <SearchBar
                 lightTheme={theme.theme !== 'dark'}
                 placeholder='Filter operators...'
                 placeholderTextColor={theme.placeholder}
                 platform='default'
                 searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
-                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={handleSearch} />}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => handleSearch()} />}
                 onChangeText={handleSearch}
                 inputStyle={{color:theme.pbmText}}
                 value={query}
                 inputContainerStyle={s.filterInput}
                 containerStyle={s.containerStyle}
             />
-            <ScrollView keyboardDismissMode="on-drag">
-                <FlatList
-                    data={selectedOperators}
-                    renderItem={renderRow}
-                    keyExtractor={_keyExtractor}
-                />
-            </ScrollView>
-        </Screen>)
+            <FlatList
+                data={selectedOperators}
+                renderItem={renderRow}
+                keyExtractor={_keyExtractor}
+            />
+        </>)
 }
 
 const getStyles = theme => StyleSheet.create({
