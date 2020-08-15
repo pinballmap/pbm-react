@@ -1,7 +1,6 @@
 import { registerRootComponent } from 'expo'
-import { Appearance } from 'react-native-appearance'
 import React, { Component } from 'react'
-import { Platform, StatusBar } from 'react-native'
+import { Appearance, Platform, StatusBar } from 'react-native'
 import { retrieveItem } from './config/utils'
 import { ThemeContext } from './theme-context'
 import { Provider } from 'react-redux'
