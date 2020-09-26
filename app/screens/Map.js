@@ -13,8 +13,8 @@ import {
 } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
-import markerDot from '../assets/images/markerdot.png'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
+
 import {
     ActivityIndicator,
     PbmButton,
@@ -34,12 +34,48 @@ import {
 } from '../selectors'
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
+import Svg, { G, Circle } from "react-native-svg"
+
+const MenuIcon = (props) => {
+    const { numMachines } = props
+    let radius
+    if (numMachines === 1) {
+        radius = 2
+    } else if (numMachines === 2) {
+        radius = 2.25
+    } else if (numMachines === 3) {
+        radius = 2.5
+    } else if (numMachines === 4) {
+        radius = 2.75
+    } else if (numMachines < 10) {
+        radius = 3
+    } else if (numMachines < 20) {
+        radius = 4
+    } else {
+        radius = 4.5
+    }
+    return (
+        <Svg width={48} height={40} >
+            <G
+                transform="translate(-99.885513,-122.46734)">
+                <Circle
+                    fill='#f7545f'
+                    fillOpacity={numMachines * 0.15 + 0.4}
+                    stroke='#f5fbff'
+                    strokeWidth={1}
+                    cx="105.21638"
+                    cy="148.88647"
+                    r={radius}
+                    transform="matrix(2.9741147,0,0,2.9741147,-197.18546,-304.44272)" />
+            </G>
+        </Svg>
+    )
+}
 
 const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
     const stopRendering = () => setTracksViewChanges(false)
-
     return (
         <MapView.Marker
             key={marker.id}
@@ -52,7 +88,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             pointerEvents="auto"
         >
             <View>
-                {marker.icon === 'dot' ? <Image source={markerDot} style={{ height: 20, width: 20 }} onLoad={stopRendering} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
+                {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
             </View>
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
@@ -197,10 +233,10 @@ class Map extends Component {
         const {
             showNoLocationTrackingModal,
         } = this.state
-    
+
         const { theme } = this.context
         const s = getStyles(theme)
-        
+
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
