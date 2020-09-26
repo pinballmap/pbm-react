@@ -39,30 +39,51 @@ import Svg, { G, Circle } from "react-native-svg"
 const MenuIcon = (props) => {
     const { numMachines } = props
     let radius
-    if (numMachines === 1) {
-        radius = 2
-    } else if (numMachines === 2) {
-        radius = 2.25
-    } else if (numMachines === 3) {
-        radius = 2.5
-    } else if (numMachines === 4) {
-        radius = 2.75
+    if (numMachines === 0) {
+        radius = 1.5,
+        fillColor = '#fa959c',
+        strokeColor = '#ffffff'
+        strokeWidth = 1
+    } else if (numMachines === 1) {
+        radius = 2.25,
+        fillColor = '#f7545f',
+        strokeColor = '#ffffff'
+        strokeWidth = 1
+    } else if (numMachines === 2 || numMachines === 3) {
+        radius = 2.6,
+        fillColor = '#f53441',
+        strokeColor = '#f5fbff'
+        strokeWidth = 1
+    } else if (numMachines === 4 || numMachines === 5) {
+        radius = 2.95,
+        fillColor = '#f52331',
+        strokeColor = '#f5fbff'
+        strokeWidth = 1.1
     } else if (numMachines < 10) {
-        radius = 3
+        radius = 3.2,
+        fillColor = '#f41322',
+        strokeColor = '#e4f4ff'
+        strokeWidth = 1.2
     } else if (numMachines < 20) {
-        radius = 4
+        radius = 3.5,
+        fillColor = '#db0a18',
+        strokeColor = '#e4f4ff'
+        strokeWidth = 1.3
     } else {
-        radius = 4.5
+        radius = 3.7,
+        fillColor = '#cb0917',
+        strokeColor = '#d3edff'
+        strokeWidth = 1.3
     }
     return (
         <Svg width={48} height={40} >
             <G
                 transform="translate(-99.885513,-122.46734)">
                 <Circle
-                    fill='#f7545f'
-                    fillOpacity={numMachines * 0.15 + 0.4}
-                    stroke='#f5fbff'
-                    strokeWidth={1}
+                    fill={fillColor}
+                    fillOpacity="0.90"
+                    stroke={strokeColor}
+                    strokeWidth={strokeWidth}
                     cx="105.21638"
                     cy="148.88647"
                     r={radius}
