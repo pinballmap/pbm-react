@@ -45,35 +45,25 @@ const MenuIcon = (props) => {
         strokeColor = '#ffffff'
         strokeWidth = .5
     } else if (numMachines === 1) {
-        radius = 2.9,
-        fillColor = '#d7fdfb',
-        strokeColor = '#f64450'
-        strokeWidth = .8
-    } else if (numMachines === 2 || numMachines === 3) {
         radius = 3.2,
-        fillColor = '#b6fcf7',
-        strokeColor = '#f52331'
-        strokeWidth = .8
-    } else if (numMachines === 4 || numMachines === 5) {
-        radius = 3.5,
-        fillColor = '#96faf3',
-        strokeColor = '#db0a18'
-        strokeWidth = .8
+        fillColor = '#f8646e',
+        strokeColor = '#fff6f7'
+        strokeWidth = 1
+    } else if (numMachines < 5) {
+        radius = 3.3,
+        fillColor = '#f7545f',
+        strokeColor = '#fcb5ba'
+        strokeWidth = 1.3
     } else if (numMachines < 10) {
-        radius = 3.8,
-        fillColor = '#75f9f0',
-        strokeColor = '#ba0915'
-        strokeWidth = .8
-    } else if (numMachines < 20) {
-        radius = 4.1,
-        fillColor = '#55f7ec',
-        strokeColor = '#9a0711'
-        strokeWidth = .8
+        radius = 3.3,
+        fillColor = '#f7545f',
+        strokeColor = '#f9858d'
+        strokeWidth = 1.5
     } else {
-        radius = 4.4,
-        fillColor = '#0becdd',
-        strokeColor = '#7a060e'
-        strokeWidth = .8
+        radius = 3.3,
+        fillColor = '#f7545f',
+        strokeColor = '#db0a18'
+        strokeWidth = 1.7
     }
     return (
         <Svg width={48} height={40} >
