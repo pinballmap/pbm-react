@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
+import {
     Dimensions,
-    Image, 
-    ImageBackground, 
-    StyleSheet, 
-    Text, 
-    View, 
+    Image,
+    ImageBackground,
+    Linking,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     ActivityIndicator
 } from '../components'
-import { 
+import {
     loginLater,
-    login, 
+    login,
     fetchLocationTypes,
     fetchMachines,
     fetchOperators,
@@ -31,9 +32,9 @@ import "../config/globals.js"
 let deviceHeight = Dimensions.get('window').height
 
 export class SignupLogin extends Component {
-    state ={ 
-        num_locations: 0, 
-        num_lmxes: 0, 
+    state ={
+        num_locations: 0,
+        num_lmxes: 0,
         apiError: '',
     }
     static navigationOptions = () => {
@@ -43,6 +44,12 @@ export class SignupLogin extends Component {
     }
 
     componentDidMount(){
+        Linking.addEventListener('url', ({url}) => {
+            if (url.indexOf('location_id=') > 0) {
+                this.props.navigation.navigate('LocationDetails', { id: url.split('=')[1]})
+            }
+        })
+
         getData('/regions/location_and_machine_counts.json')
             .then(data => {
                 if (data && data.num_lmxes && data.num_locations) {
@@ -71,8 +78,13 @@ export class SignupLogin extends Component {
                 }
                 this.props.navigation.navigate('Map')
             }
-        }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
 
+            Linking.getInitialURL().then((initialUrl) => {
+                if (initialUrl.indexOf('location_id=') > 0) {
+                    this.props.navigation.navigate('LocationDetails', { id: initialUrl.split('=')[1]})
+                }
+            })
+        }).catch((error) => console.log('Promise is rejected with error: ' + error))
     }
 
     render(){
@@ -81,7 +93,7 @@ export class SignupLogin extends Component {
                 <ActivityIndicator />
             )
         }
-        
+
         return(
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -94,11 +106,11 @@ export class SignupLogin extends Component {
                                 </View>
                                 <View style={s.outerBorder}>
                                     <View style={s.textBg}>
-                                        {this.state.apiError ? 
+                                        {this.state.apiError ?
                                             <Text>Oops. Something went wrong!</Text> :
                                             <Text style={{fontSize:18,textAlign:"center"}}>
                                                 <Text>Pinball Map is a user-updated map listing</Text>
-                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text> 
+                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text>
                                                 <Text>locations and</Text>
                                                 <Text style={s.bold}> {formatNumWithCommas(this.state.num_lmxes)} </Text>
                                                 <Text>machines.</Text>
@@ -133,12 +145,12 @@ export class SignupLogin extends Component {
                                         containerStyle={{borderRadius:50,marginTop:15,marginBottom:20,overflow:'hidden'}}
                                         style={{borderRadius: 50}}
                                     />
-                                    <Button                            
+                                    <Button
                                         onPress={() => {
                                             this.props.loginLater()
-                                            this.props.navigation.navigate('Map')}} 
+                                            this.props.navigation.navigate('Map')}}
                                         title="skip this for now"
-                                        accessibilityLabel="skip this for now"                         
+                                        accessibilityLabel="skip this for now"
                                         titleStyle={s.skipTitle}
                                         buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
                                     />
@@ -213,7 +225,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText,
         fontSize: 14,
         textAlign: "center"
-        
+
     }
 })
 
@@ -221,7 +233,7 @@ SignupLogin.propTypes = {
     user: PropTypes.object,
     loginLater: PropTypes.func,
     navigation: PropTypes.object,
-    login: PropTypes.func, 
+    login: PropTypes.func,
     getLocationTypes: PropTypes.func,
     getMachines: PropTypes.func,
     getOperators: PropTypes.func,
