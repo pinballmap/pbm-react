@@ -47,6 +47,32 @@ export class SignupLogin extends Component {
         Linking.addEventListener('url', ({url}) => {
             if (url.indexOf('location_id=') > 0) {
                 this.props.navigation.navigate('LocationDetails', { id: url.split('=')[1]})
+            } else if (url.indexOf('profile') > 0) {
+                this.props.nagivation.navigate('UserProfile')
+            } else if (url.indexOf('store') > 0) {
+                this.props.nagivation.navigate('About')
+            } else if (url.indexOf('faq') > 0) {
+                this.props.nagivation.navigate('FAQ')
+            } else if (url.indexOf('about') > 0) {
+                this.props.nagivation.navigate('Contact')
+            } else if (url.indexOf('events') > 0) {
+                this.props.nagivation.navigate('Events')
+            } else if (url.indexOf('suggest') > 0) {
+                this.props.nagivation.navigate('SuggestLocation')
+            } else if (url.indexOf('saved') > 0) {
+                this.props.nagivation.navigate('Saved')
+            } else if (url.indexOf('login') > 0) {
+                this.props.nagivation.navigate('Login')
+            } else if (url.indexOf('join') > 0) {
+                this.props.nagivation.navigate('Signup')
+            } else if (url.indexOf('confirmation') > 0) {
+                this.props.nagivation.navigate('ResendConfirmation')
+            } else if (url.indexOf('password') > 0) {
+                this.props.nagivation.navigate('PasswordReset')
+            } else if (url.indexOf('privacy') > 0) {
+                this.props.nagivation.navigate('About')
+            } else {
+                this.props.nagivation.navigate('Map')
             }
         })
 
@@ -82,6 +108,32 @@ export class SignupLogin extends Component {
             Linking.getInitialURL().then((initialUrl) => {
                 if (initialUrl.indexOf('location_id=') > 0) {
                     this.props.navigation.navigate('LocationDetails', { id: initialUrl.split('=')[1]})
+                } else if (url.indexOf('profile') > 0) {
+                    this.props.nagivation.navigate('UserProfile')
+                } else if (url.indexOf('store') > 0) {
+                    this.props.nagivation.navigate('About')
+                } else if (url.indexOf('faq') > 0) {
+                    this.props.nagivation.navigate('FAQ')
+                } else if (url.indexOf('about') > 0) {
+                    this.props.nagivation.navigate('Contact')
+                } else if (url.indexOf('events') > 0) {
+                    this.props.nagivation.navigate('Events')
+                } else if (url.indexOf('suggest') > 0) {
+                    this.props.nagivation.navigate('SuggestLocation')
+                } else if (url.indexOf('saved') > 0) {
+                    this.props.nagivation.navigate('Saved')
+                } else if (url.indexOf('login') > 0) {
+                    this.props.nagivation.navigate('Login')
+                } else if (url.indexOf('join') > 0) {
+                    this.props.nagivation.navigate('Signup')
+                } else if (url.indexOf('confirmation') > 0) {
+                    this.props.nagivation.navigate('ResendConfirmation')
+                } else if (url.indexOf('password') > 0) {
+                    this.props.nagivation.navigate('PasswordReset')
+                } else if (url.indexOf('privacy') > 0) {
+                    this.props.nagivation.navigate('About')
+                } else {
+                    this.props.nagivation.navigate('Map')
                 }
             })
         }).catch((error) => console.log('Promise is rejected with error: ' + error))
