@@ -43,38 +43,48 @@ export class SignupLogin extends Component {
         }
     }
 
+    navigateToScreen = url => {
+        const { navigate } = this.props.navigation
+        if (url.indexOf('location_id=') > 0) {
+            navigate('LocationDetails', { id: url.split('=')[1]})
+        } else if (url.indexOf('region') > 0) {
+            console.log('todo....')
+        } else if (url.indexOf('profile') > 0) {
+            navigate('UserProfile')
+        } else if (url.indexOf('store') > 0) {
+            navigate('About')
+        } else if (url.indexOf('faq') > 0) {
+            navigate('FAQ')
+        } else if (url.indexOf('about') > 0) {
+           navigate('Contact')
+        } else if (url.indexOf('events') > 0) {
+            navigate('Events')
+        } else if (url.indexOf('suggest') > 0) {
+            navigate('SuggestLocation')
+        } else if (url.indexOf('saved') > 0) {
+            navigate('Saved')
+        } else if (url.indexOf('login') > 0) {
+            navigate('Login')
+        } else if (url.indexOf('join') > 0) {
+            navigate('Signup')
+        } else if (url.indexOf('confirmation') > 0) {
+            navigate('ResendConfirmation')
+        } else if (url.indexOf('password') > 0) {
+            navigate('PasswordReset')
+        } else if (url.indexOf('privacy') > 0) {
+            navigate('About')
+        } else {
+            navigate('Map')
+        }
+    }
+
     componentDidMount(){
-        Linking.addEventListener('url', ({url}) => {
-            if (url.indexOf('location_id=') > 0) {
-                this.props.navigation.navigate('LocationDetails', { id: url.split('=')[1]})
-            } else if (url.indexOf('profile') > 0) {
-                this.props.nagivation.navigate('UserProfile')
-            } else if (url.indexOf('store') > 0) {
-                this.props.nagivation.navigate('About')
-            } else if (url.indexOf('faq') > 0) {
-                this.props.nagivation.navigate('FAQ')
-            } else if (url.indexOf('about') > 0) {
-                this.props.nagivation.navigate('Contact')
-            } else if (url.indexOf('events') > 0) {
-                this.props.nagivation.navigate('Events')
-            } else if (url.indexOf('suggest') > 0) {
-                this.props.nagivation.navigate('SuggestLocation')
-            } else if (url.indexOf('saved') > 0) {
-                this.props.nagivation.navigate('Saved')
-            } else if (url.indexOf('login') > 0) {
-                this.props.nagivation.navigate('Login')
-            } else if (url.indexOf('join') > 0) {
-                this.props.nagivation.navigate('Signup')
-            } else if (url.indexOf('confirmation') > 0) {
-                this.props.nagivation.navigate('ResendConfirmation')
-            } else if (url.indexOf('password') > 0) {
-                this.props.nagivation.navigate('PasswordReset')
-            } else if (url.indexOf('privacy') > 0) {
-                this.props.nagivation.navigate('About')
-            } else {
-                this.props.nagivation.navigate('Map')
-            }
-        })
+        this.props.getLocationTypes('/location_types.json')
+        this.props.getMachines('/machines.json')
+        this.props.getOperators('/operators.json')
+        this.props.getRegions('/regions.json')
+
+        Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
 
         getData('/regions/location_and_machine_counts.json')
             .then(data => {
@@ -91,51 +101,17 @@ export class SignupLogin extends Component {
             })
             .catch(apiError => this.setState({ apiError }))
 
-        this.props.getLocationTypes('/location_types.json')
-        this.props.getMachines('/machines.json')
-        this.props.getOperators('/operators.json')
-        this.props.getRegions('/regions.json')
-
-        retrieveItem('auth').then((auth) => {
+        retrieveItem('auth').then(async auth => {
+            const initialUrl = await Linking.getInitialURL()
+            console.log(initialUrl.includes('?'))
             if (auth) {
                 if (auth.id) {
                     this.props.login(auth)
                     this.props.getFavoriteLocations(auth.id)
                 }
-                this.props.navigation.navigate('Map')
+                this.navigateToScreen(initialUrl)
             }
-
-            Linking.getInitialURL().then((initialUrl) => {
-                if (initialUrl.indexOf('location_id=') > 0) {
-                    this.props.navigation.navigate('LocationDetails', { id: initialUrl.split('=')[1]})
-                } else if (url.indexOf('profile') > 0) {
-                    this.props.nagivation.navigate('UserProfile')
-                } else if (url.indexOf('store') > 0) {
-                    this.props.nagivation.navigate('About')
-                } else if (url.indexOf('faq') > 0) {
-                    this.props.nagivation.navigate('FAQ')
-                } else if (url.indexOf('about') > 0) {
-                    this.props.nagivation.navigate('Contact')
-                } else if (url.indexOf('events') > 0) {
-                    this.props.nagivation.navigate('Events')
-                } else if (url.indexOf('suggest') > 0) {
-                    this.props.nagivation.navigate('SuggestLocation')
-                } else if (url.indexOf('saved') > 0) {
-                    this.props.nagivation.navigate('Saved')
-                } else if (url.indexOf('login') > 0) {
-                    this.props.nagivation.navigate('Login')
-                } else if (url.indexOf('join') > 0) {
-                    this.props.nagivation.navigate('Signup')
-                } else if (url.indexOf('confirmation') > 0) {
-                    this.props.nagivation.navigate('ResendConfirmation')
-                } else if (url.indexOf('password') > 0) {
-                    this.props.nagivation.navigate('PasswordReset')
-                } else if (url.indexOf('privacy') > 0) {
-                    this.props.nagivation.navigate('About')
-                } else {
-                    this.props.nagivation.navigate('Map')
-                }
-            })
+            else if (initialUrl.includes('?')) this.navigateToScreen(initialUrl)
         }).catch((error) => console.log('Promise is rejected with error: ' + error))
     }
 
