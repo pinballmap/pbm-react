@@ -34,51 +34,58 @@ import {
 } from '../selectors'
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
-import Svg, { G, Circle } from "react-native-svg"
+import Svg, { Circle } from "react-native-svg"
 
 const MenuIcon = (props) => {
     const { numMachines } = props
     let radius
     if (numMachines === 0) {
-        radius = 1.5,
+        widthHeight = 24,
+        cxcy = widthHeight / 2,
+        strokeWidth = 2,
+        radius = cxcy - strokeWidth,
         fillColor = '#fa959c',
         strokeColor = '#ffffff'
-        strokeWidth = .5
     } else if (numMachines === 1) {
-        radius = 3.2,
+        widthHeight = 26,
+        cxcy = widthHeight / 2,
+        strokeWidth = 2.5,
+        radius = cxcy - strokeWidth,
         fillColor = '#f8646e',
         strokeColor = '#fff6f7'
-        strokeWidth = 1
     } else if (numMachines < 5) {
-        radius = 3.3,
+        widthHeight = 28,
+        cxcy = widthHeight / 2,
+        strokeWidth = 3,
+        radius = cxcy - strokeWidth,
         fillColor = '#f7545f',
         strokeColor = '#fcb5ba'
-        strokeWidth = 1.3
     } else if (numMachines < 10) {
-        radius = 3.3,
+        widthHeight = 30,
+        cxcy = widthHeight / 2,
+        strokeWidth = 3.5,
+        radius = cxcy - strokeWidth,
         fillColor = '#f7545f',
         strokeColor = '#f9858d'
-        strokeWidth = 1.5
     } else {
-        radius = 3.3,
+        widthHeight = 32,
+        cxcy = widthHeight / 2,
+        strokeWidth = 4,
+        radius = cxcy - strokeWidth,
         fillColor = '#f7545f',
         strokeColor = '#db0a18'
-        strokeWidth = 1.7
     }
     return (
-        <Svg width={48} height={40} >
-            <G
-                transform="translate(-99.885513,-122.46734)">
-                <Circle
-                    fill={fillColor}
-                    fillOpacity="0.90"
-                    stroke={strokeColor}
-                    strokeWidth={strokeWidth}
-                    cx="105.21638"
-                    cy="148.88647"
-                    r={radius}
-                    transform="matrix(2.9741147,0,0,2.9741147,-197.18546,-304.44272)" />
-            </G>
+        <Svg width={widthHeight} height={widthHeight}>
+            <Circle
+                fill={fillColor}
+                fillOpacity="0.90"
+                stroke={strokeColor}
+                strokeWidth={strokeWidth}
+                cx={cxcy}
+                cy={cxcy}
+                r={radius}
+            />
         </Svg>
     )
 }
