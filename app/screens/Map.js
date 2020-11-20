@@ -91,11 +91,8 @@ const CustomMarker = ({ marker, navigation, s }) => {
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18' }}>{marker.name}</Text>
-                        {marker.machine_names.length === 1 ?
-                            <Text style={{ color: '#000e18' }}>1 machine</Text> :
-                            <Text style={{ color: '#000e18' }}>{`${marker.machine_names.length} machines`}</Text>
-                        }
+                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
+                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                     </View>
                     <Ionicons style={s.iconStyle} name="ios-arrow-dropright" />
                 </View>
@@ -332,6 +329,7 @@ const getStyles = theme => StyleSheet.create({
         alignContent: 'space-around',
         zIndex: 5,
         marginRight: 7,
+        marginBottom: 10
     },
     iconStyle: {
         fontSize: 22,
