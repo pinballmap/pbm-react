@@ -34,7 +34,6 @@ import {
 } from '../selectors'
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
-import Svg, { Circle } from "react-native-svg"
 
 const MenuIcon = (props) => {
     const { numMachines } = props
@@ -88,7 +87,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
+            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
