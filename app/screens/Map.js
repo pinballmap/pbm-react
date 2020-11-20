@@ -38,55 +38,38 @@ import Svg, { Circle } from "react-native-svg"
 
 const MenuIcon = (props) => {
     const { numMachines } = props
-    let radius
-    if (numMachines === 0) {
-        widthHeight = 24,
-        cxcy = widthHeight / 2,
-        strokeWidth = 2,
-        radius = cxcy - strokeWidth,
-        fillColor = '#fa959c',
-        strokeColor = '#ffffff'
-    } else if (numMachines === 1) {
-        widthHeight = 26,
-        cxcy = widthHeight / 2,
-        strokeWidth = 2.5,
-        radius = cxcy - strokeWidth,
-        fillColor = '#f8646e',
-        strokeColor = '#fff6f7'
-    } else if (numMachines < 5) {
-        widthHeight = 28,
-        cxcy = widthHeight / 2,
-        strokeWidth = 3,
-        radius = cxcy - strokeWidth,
-        fillColor = '#f7545f',
-        strokeColor = '#fcb5ba'
-    } else if (numMachines < 10) {
-        widthHeight = 30,
-        cxcy = widthHeight / 2,
-        strokeWidth = 3.5,
-        radius = cxcy - strokeWidth,
-        fillColor = '#f7545f',
-        strokeColor = '#f9858d'
+    if (numMachines < 10) {
+        dotFontMargin = Platform.OS === 'ios' ? 0 : -2
+        dotWidthHeight = 30
+    } else if (numMachines < 20) {
+        dotFontMargin = Platform.OS === 'ios' ? 2 : -1
+        dotWidthHeight = 34
+    } else if (numMachines < 100) {
+        dotFontMargin = Platform.OS === 'ios' ? 4 : 1
+        dotWidthHeight = 38
     } else {
-        widthHeight = 32,
-        cxcy = widthHeight / 2,
-        strokeWidth = 4,
-        radius = cxcy - strokeWidth,
-        fillColor = '#f7545f',
-        strokeColor = '#db0a18'
+        dotFontMargin = Platform.OS === 'ios' ? 5 : 3
+        dotWidthHeight = 42
     }
     return (
-        <Svg width={widthHeight} height={widthHeight}>
-            <Circle
-                fill={fillColor}
-                fillOpacity="0.90"
-                stroke={strokeColor}
-                strokeWidth={strokeWidth}
-                cx={cxcy}
-                cy={cxcy}
-                r={radius}
-            />
-        </Svg>
+        <View style={{
+            width: dotWidthHeight,
+            height: dotWidthHeight,
+            borderRadius: dotWidthHeight / 2,
+            borderWidth: 3,
+            borderColor: '#d2e5fa',
+            backgroundColor: '#78b6fb',
+            elevation: 1,
+        }}>
+            <Text style={{
+                color: 'white',
+                fontWeight:'bold',
+                textAlign:'center',
+                fontSize: 20,
+                marginTop:dotFontMargin}}>
+                {numMachines}
+            </Text>
+        </View>
     )
 }
 
@@ -105,9 +88,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            <View>
-                {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
-            </View>
+            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
