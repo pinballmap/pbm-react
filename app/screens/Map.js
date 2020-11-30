@@ -160,7 +160,11 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        this.props.getCurrentLocation()
+        if(this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
+            this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
+        } else {
+            this.props.getCurrentLocation()
+        }
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -197,10 +201,10 @@ class Map extends Component {
         const {
             showNoLocationTrackingModal,
         } = this.state
-    
+
         const { theme } = this.context
         const s = getStyles(theme)
-        
+
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query

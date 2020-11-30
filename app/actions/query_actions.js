@@ -59,6 +59,11 @@ export const setSelectedActivityFilter = (selectedActivity) => ({
 
 export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER })
 
+export const getRegion = regionName => (dispatch, getState) => {
+    const regions = getState().regions.regions
+    return regions.find(({name}) => name.toLowerCase() === regionName.toLowerCase())
+}
+
 export const getLocationsByRegion = region => (dispatch) => {
     const { lat, lon, effective_radius } = region
 
@@ -91,4 +96,3 @@ export const getLocationsByRegion = region => (dispatch) => {
     const delta = getDelta()
     dispatch(updateMapCoordinates(lat, lon, delta, delta, effective_radius))
 }
-

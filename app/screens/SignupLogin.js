@@ -23,6 +23,9 @@ import {
     fetchOperators,
     getFavoriteLocations,
     getRegions,
+    getRegion,
+    getLocationsByRegion,
+    updateCurrCoordinates,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -43,12 +46,41 @@ export class SignupLogin extends Component {
         }
     }
 
-    navigateToScreen = url => {
+    navigateToScreen = async (url, startUpApp = false) => {
         const { navigate } = this.props.navigation
         if (url.indexOf('location_id=') > 0) {
-            navigate('LocationDetails', { id: url.split('=')[1]})
-        } else if (url.indexOf('region') > 0) {
-            console.log('todo....')
+            const idSegment = url.split('location_id=')[1]
+            const id = idSegment.split('&')[0]
+            navigate('LocationDetails', { id })
+        } else if (url.indexOf('address=') > 0) {
+            const decoded = decodeURIComponent(url)
+            const address = decoded.split('address=')[1]
+            const { location } = await getData(`/locations/closest_by_address.json?address=${address}`)
+            if (location) {
+                this.props.updateCurrCoordinates(location.lat, location.lon)
+            }
+            startUpApp && location ? navigate('Map', { setMapLocation: true }) : navigate('Map')
+        } else if (url.indexOf('region=') > 0) {
+            const regionSegment = url.split('region=')[1]
+            const regionName = regionSegment.split('&')[0]
+            const region = await this.props.getRegion(regionName)
+
+            const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
+            const cityName = citySegment.split('&')[0]
+            let locations = []
+            if (cityName) {
+                const byCity = await getData(`/region/${regionName}/locations.json?by_city_id=${cityName}`)
+                locations = byCity.locations || []
+                if (locations.length > 0) {
+                    const {lat, lon} = locations[0]
+                    this.props.updateCurrCoordinates(lat, lon)
+                }
+            }
+            // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
+            if (region && locations.length === 0) {
+                this.props.getLocationsByRegion(region)
+            }
+            startUpApp && region ? navigate('Map', { setMapLocation: true }) : navigate('Map')
         } else if (url.indexOf('profile') > 0) {
             navigate('UserProfile')
         } else if (url.indexOf('store') > 0) {
@@ -56,7 +88,7 @@ export class SignupLogin extends Component {
         } else if (url.indexOf('faq') > 0) {
             navigate('FAQ')
         } else if (url.indexOf('about') > 0) {
-           navigate('Contact')
+            navigate('Contact')
         } else if (url.indexOf('events') > 0) {
             navigate('Events')
         } else if (url.indexOf('suggest') > 0) {
@@ -78,11 +110,11 @@ export class SignupLogin extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         this.props.getLocationTypes('/location_types.json')
         this.props.getMachines('/machines.json')
         this.props.getOperators('/operators.json')
-        this.props.getRegions('/regions.json')
+        await this.props.getRegions('/regions.json')
 
         Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
 
@@ -103,13 +135,13 @@ export class SignupLogin extends Component {
 
         retrieveItem('auth').then(async auth => {
             const initialUrl = await Linking.getInitialURL()
-            console.log(initialUrl.includes('?'))
+
             if (auth) {
                 if (auth.id) {
                     this.props.login(auth)
                     this.props.getFavoriteLocations(auth.id)
                 }
-                this.navigateToScreen(initialUrl)
+                this.navigateToScreen(initialUrl, true)
             }
             else if (initialUrl.includes('?')) this.navigateToScreen(initialUrl)
         }).catch((error) => console.log('Promise is rejected with error: ' + error))
@@ -265,8 +297,11 @@ SignupLogin.propTypes = {
     getLocationTypes: PropTypes.func,
     getMachines: PropTypes.func,
     getOperators: PropTypes.func,
+    getRegion: PropTypes.func,
     getRegions: PropTypes.func,
     getFavoriteLocations: PropTypes.func,
+    getLocationsByRegion: PropTypes.func,
+    updateCurrCoordinates: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
@@ -279,6 +314,9 @@ const mapDispatchToProps = (dispatch) => ({
     login: (auth) => dispatch(login(auth)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     getRegions: (url) => dispatch(getRegions(url)),
+    getRegion: (regionName) => dispatch(getRegion(regionName)),
+    getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
+    updateCurrCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
