@@ -400,7 +400,6 @@ class SuggestLocation extends Component {
                                                 title={'Select Machines to Add'}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                                buttonStyle={s.addMachinesButton}
                                                 containerStyle={s.addMachinesContainer}
                                             />   
                                             {machineList.map(machine => 
@@ -517,14 +516,6 @@ const getStyles = theme => StyleSheet.create({
     plusButton: {
         color: "#f53240",
         fontSize: 24
-    },
-    addMachinesButton: {
-        backgroundColor: theme._e0f1fb,
-        borderColor: theme.addBtnBorderColor,
-        borderWidth: theme.addBtnBorderW,
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
     },
     addMachinesContainer: {
         marginTop: 25,
