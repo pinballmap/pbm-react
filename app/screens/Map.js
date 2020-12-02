@@ -13,8 +13,8 @@ import {
 } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
-import markerDot from '../assets/images/markerdot.png'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
+
 import {
     ActivityIndicator,
     PbmButton,
@@ -35,11 +35,47 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 
+const MenuIcon = (props) => {
+    const { numMachines } = props
+    if (numMachines < 10) {
+        dotFontMargin = Platform.OS === 'ios' ? 0 : -2
+        dotWidthHeight = 30
+    } else if (numMachines < 20) {
+        dotFontMargin = Platform.OS === 'ios' ? 2 : -1
+        dotWidthHeight = 34
+    } else if (numMachines < 100) {
+        dotFontMargin = Platform.OS === 'ios' ? 4 : 1
+        dotWidthHeight = 38
+    } else {
+        dotFontMargin = Platform.OS === 'ios' ? 5 : 3
+        dotWidthHeight = 42
+    }
+    return (
+        <View style={{
+            width: dotWidthHeight,
+            height: dotWidthHeight,
+            borderRadius: dotWidthHeight / 2,
+            borderWidth: 3,
+            borderColor: '#d2e5fa',
+            backgroundColor: '#78b6fb',
+            elevation: 1,
+        }}>
+            <Text style={{
+                color: 'white',
+                fontWeight:'bold',
+                textAlign:'center',
+                fontSize: 20,
+                marginTop:dotFontMargin}}>
+                {numMachines}
+            </Text>
+        </View>
+    )
+}
+
 const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
     const stopRendering = () => setTracksViewChanges(false)
-
     return (
         <MapView.Marker
             key={marker.id}
@@ -51,17 +87,12 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            <View>
-                {marker.icon === 'dot' ? <Image source={markerDot} style={{ height: 20, width: 20 }} onLoad={stopRendering} /> : <Image source={markerDotHeart} style={{ height: 24, width: 28 }} onLoad={stopRendering} />}
-            </View>
+            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18' }}>{marker.name}</Text>
-                        {marker.machine_names.length === 1 ?
-                            <Text style={{ color: '#000e18' }}>1 machine</Text> :
-                            <Text style={{ color: '#000e18' }}>{`${marker.machine_names.length} machines`}</Text>
-                        }
+                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
+                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                     </View>
                     <Ionicons style={s.iconStyle} name="ios-arrow-dropright" />
                 </View>
@@ -302,6 +333,7 @@ const getStyles = theme => StyleSheet.create({
         alignContent: 'space-around',
         zIndex: 5,
         marginRight: 7,
+        marginBottom: 10
     },
     iconStyle: {
         fontSize: 22,

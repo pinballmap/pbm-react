@@ -12,7 +12,6 @@ import {
     View,
 } from 'react-native'
 import MapView from 'react-native-maps'
-import markerDot from '../assets/images/markerdot.png'
 import openMap from 'react-native-open-maps'
 import {
     Button,
@@ -218,9 +217,7 @@ class LocationDetails extends Component {
                                             longitudeDelta: 0.03,
                                         }}
                                     >
-                                        <View>
-                                            <Image source={markerDot} style={{height:20,width:20}}/>
-                                        </View>
+                                        <View style={s.markerDot}></View>
                                     </MapView.Marker>
                                 </MapView>
                                 <View style={s.buttonGroupView}>
@@ -535,6 +532,15 @@ const getStyles = theme => StyleSheet.create({
     borderBottom: {
         borderBottomColor: theme.borderColor,
         borderBottomWidth: 1,
+    },
+    markerDot: {
+        width: 30,
+        height: 30,
+        borderRadius: 30 / 2,
+        borderWidth: 3,
+        borderColor: '#d2e5fa',
+        backgroundColor: '#78b6fb',
+        elevation: 1
     }
 })
 
