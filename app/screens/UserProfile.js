@@ -141,6 +141,8 @@ class UserProfile extends Component {
                                     </View>
                                     <Button 
                                         title={'Saved Locations'}
+                                        type="outline"
+                                        raised
                                         onPress={() => this.props.navigation.navigate('Saved')}
                                         buttonStyle={s.savedLink}
                                         titleStyle={s.titleStyle}
@@ -154,10 +156,13 @@ class UserProfile extends Component {
                                             return <ListItem
                                                 containerStyle={s.background}
                                                 key={location[0]}
-                                                titleStyle={s.listTitleStyle}
-                                                title={location[1]}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
-                                            /> 
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={s.listTitleStyle}>
+                                                        {location[1]}
+                                                    </ListItem.Title>
+                                                </ListItem.Content>
+                                            </ListItem> 
                                         })}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
@@ -165,10 +170,13 @@ class UserProfile extends Component {
                                         {profile_list_of_high_scores.map((score, idx) => {
                                             return <ListItem
                                                 containerStyle={s.background}
-                                                key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                                                titleStyle={s.listTitleStyle}
-                                                title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
-                                            /> 
+                                                key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={s.listTitleStyle}>
+                                                        {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
+                                                    </ListItem.Title>
+                                                </ListItem.Content>
+                                            </ListItem> 
                                         })}
                                     </View>
                                     <WarningButton
@@ -200,15 +208,12 @@ const getStyles = theme => StyleSheet.create({
     },
     savedIcon: {
         fontSize: 24,
-        color: theme.pbmText,
+        color: theme.buttonTextColor,
         marginRight: 5
     },
     savedLink: {
-        backgroundColor: theme._fff,
-        borderWidth: 1,
-        borderColor: theme.borderColor,
-        borderRadius: 50,
-        elevation: 0
+        borderWidth: 2,
+        borderColor: theme.buttonColor,
     },
     margin15: {
         marginLeft:15,

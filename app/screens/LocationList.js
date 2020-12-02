@@ -11,7 +11,6 @@ import { ThemeContext } from '../theme-context'
 import {
     HeaderBackButton,
     LocationCard,
-    Screen,
     Text
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
@@ -95,7 +94,7 @@ export class LocationList extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen>
+                        <>
                             <Text style={s.sort}>SORT BY:</Text>
                             <ButtonGroup
                                 onPress={this.updateIndex}
@@ -126,7 +125,7 @@ export class LocationList extends Component {
                                 }
                                 keyExtractor={(item, index) => `list-item-${index}`}
                             />
-                        </Screen>
+                        </>
                     )
                 }}
             </ThemeContext.Consumer>

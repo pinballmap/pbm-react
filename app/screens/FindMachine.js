@@ -29,7 +29,6 @@ import {
 import {
     HeaderBackButton,
     PbmButton,
-    Screen,
     Text,
     WarningButton,
 } from '../components'
@@ -215,7 +214,7 @@ class FindMachine extends React.PureComponent {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen keyboardShouldPersistTaps='always'>
+                        <>
                             <Modal
                                 visible={this.state.showModal}
                                 onRequestClose={() => { }}
@@ -289,7 +288,7 @@ class FindMachine extends React.PureComponent {
                                 renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                                 keyExtractor={this.keyExtractor}
                             />
-                        </Screen>
+                        </>
                     )
                 }}
             </ThemeContext.Consumer>

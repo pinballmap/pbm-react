@@ -23,9 +23,8 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             raised
             buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
             titleStyle={styles.titleStyle}
-            style={{borderRadius: 50}}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{borderRadius:50,overflow:'hidden'}, containerStyle ? containerStyle : styles.margin15]}
+            containerStyle={[{overflow:'hidden'}, containerStyle ? containerStyle : styles.margin15]}
         />
     )
 }
@@ -33,12 +32,7 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
 const getStyles = (theme) => StyleSheet.create({
     blueButton: {
         backgroundColor: theme.buttonColor,
-        borderColor: theme.addBtnBorderColor,
-        borderWidth: theme.addBtnBorderW,
-        borderRadius: 50,
         width: '100%',
-        elevation: 0,
-        
     },
     titleStyle: {
         color: theme.buttonTextColor,
@@ -46,10 +40,10 @@ const getStyles = (theme) => StyleSheet.create({
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     disabledStyle: {
-        backgroundColor: theme._e0f1fb
+//         backgroundColor: theme._e0f1fb
     },
     disabledTitleStyle: {
-        color: theme.disabledText
+//         color: theme.disabledText
     },
     margin15: {
         marginLeft: 15,

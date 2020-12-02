@@ -14,7 +14,10 @@ import {
     View, 
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { ListItem } from 'react-native-elements'
+import { 
+    Icon,
+    ListItem
+} from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -397,17 +400,22 @@ class SuggestLocation extends Component {
                                                 title={'Select Machines to Add'}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                                buttonStyle={s.addMachinesButton}
                                                 containerStyle={s.addMachinesContainer}
                                             />   
                                             {machineList.map(machine => 
-                                                <ListItem 
-                                                    containerStyle={s.listContainerStyle}
-                                                    title={this.getDisplayText(machine)}
+                                                <ListItem
                                                     key={machine.id}
-                                                    checkmark={<MaterialIcons name='cancel' size={15} color={theme._97a5af} />}
-                                                    onPress={() => this.props.removeMachineFromList(machine)}
-                                                />
+                                                    containerStyle={s.listContainerStyle}
+                                                    onPress={() => this.props.removeMachineFromList(machine)}>
+                                                    <ListItem.Content>
+                                                        <Icon>
+                                                            {<MaterialIcons name='cancel' size={15} color={theme._97a5af} />}
+                                                        </Icon>
+                                                        <ListItem.Title>
+                                                            {this.getDisplayText(machine)}
+                                                        </ListItem.Title>
+                                                    </ListItem.Content>
+                                                </ListItem>
                                             )}                 
                                             <PbmButton
                                                 title={'Submit Location'}
@@ -508,14 +516,6 @@ const getStyles = theme => StyleSheet.create({
     plusButton: {
         color: "#f53240",
         fontSize: 24
-    },
-    addMachinesButton: {
-        backgroundColor: theme._e0f1fb,
-        borderColor: theme.addBtnBorderColor,
-        borderWidth: theme.addBtnBorderW,
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
     },
     addMachinesContainer: {
         marginTop: 25,

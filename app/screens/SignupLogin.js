@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
+import {
     Dimensions,
-    Image, 
-    ImageBackground, 
-    StyleSheet, 
-    Text, 
-    View, 
+    Image,
+    ImageBackground,
+    Linking,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     ActivityIndicator
 } from '../components'
-import { 
+import {
     loginLater,
-    login, 
+    login,
     fetchLocationTypes,
     fetchMachines,
     fetchOperators,
     getFavoriteLocations,
     getRegions,
+    getRegion,
+    getLocationsByRegion,
+    updateCurrCoordinates,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -31,9 +35,9 @@ import "../config/globals.js"
 let deviceHeight = Dimensions.get('window').height
 
 export class SignupLogin extends Component {
-    state ={ 
-        num_locations: 0, 
-        num_lmxes: 0, 
+    state ={
+        num_locations: 0,
+        num_lmxes: 0,
         apiError: '',
     }
     static navigationOptions = () => {
@@ -42,7 +46,78 @@ export class SignupLogin extends Component {
         }
     }
 
-    componentDidMount(){
+    navigateToScreen = async (url, startUpApp = false) => {
+        const { navigate } = this.props.navigation
+        if (url.indexOf('location_id=') > 0) {
+            const idSegment = url.split('location_id=')[1]
+            const id = idSegment.split('&')[0]
+            navigate('LocationDetails', { id })
+        } else if (url.indexOf('address=') > 0) {
+            const decoded = decodeURIComponent(url)
+            const address = decoded.split('address=')[1]
+            const { location } = await getData(`/locations/closest_by_address.json?address=${address}`)
+            if (location) {
+                this.props.updateCurrCoordinates(location.lat, location.lon)
+            }
+            startUpApp && location ? navigate('Map', { setMapLocation: true }) : navigate('Map')
+        } else if (url.indexOf('region=') > 0) {
+            const regionSegment = url.split('region=')[1]
+            const regionName = regionSegment.split('&')[0]
+            const region = await this.props.getRegion(regionName)
+
+            const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
+            const cityName = citySegment.split('&')[0]
+            let locations = []
+            if (cityName) {
+                const byCity = await getData(`/region/${regionName}/locations.json?by_city_id=${cityName}`)
+                locations = byCity.locations || []
+                if (locations.length > 0) {
+                    const {lat, lon} = locations[0]
+                    this.props.updateCurrCoordinates(lat, lon)
+                }
+            }
+            // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
+            if (region && locations.length === 0) {
+                this.props.getLocationsByRegion(region)
+            }
+            startUpApp && region ? navigate('Map', { setMapLocation: true }) : navigate('Map')
+        } else if (url.indexOf('profile') > 0) {
+            navigate('UserProfile')
+        } else if (url.indexOf('store') > 0) {
+            navigate('About')
+        } else if (url.indexOf('faq') > 0) {
+            navigate('FAQ')
+        } else if (url.indexOf('about') > 0) {
+            navigate('Contact')
+        } else if (url.indexOf('events') > 0) {
+            navigate('Events')
+        } else if (url.indexOf('suggest') > 0) {
+            navigate('SuggestLocation')
+        } else if (url.indexOf('saved') > 0) {
+            navigate('Saved')
+        } else if (url.indexOf('login') > 0) {
+            navigate('Login')
+        } else if (url.indexOf('join') > 0) {
+            navigate('Signup')
+        } else if (url.indexOf('confirmation') > 0) {
+            navigate('ResendConfirmation')
+        } else if (url.indexOf('password') > 0) {
+            navigate('PasswordReset')
+        } else if (url.indexOf('privacy') > 0) {
+            navigate('About')
+        } else {
+            navigate('Map')
+        }
+    }
+
+    async componentDidMount(){
+        this.props.getLocationTypes('/location_types.json')
+        this.props.getMachines('/machines.json')
+        this.props.getOperators('/operators.json')
+        await this.props.getRegions('/regions.json')
+
+        Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
+
         getData('/regions/location_and_machine_counts.json')
             .then(data => {
                 if (data && data.num_lmxes && data.num_locations) {
@@ -58,21 +133,18 @@ export class SignupLogin extends Component {
             })
             .catch(apiError => this.setState({ apiError }))
 
-        this.props.getLocationTypes('/location_types.json')
-        this.props.getMachines('/machines.json')
-        this.props.getOperators('/operators.json')
-        this.props.getRegions('/regions.json')
+        retrieveItem('auth').then(async auth => {
+            const initialUrl = await Linking.getInitialURL()
 
-        retrieveItem('auth').then((auth) => {
             if (auth) {
                 if (auth.id) {
                     this.props.login(auth)
                     this.props.getFavoriteLocations(auth.id)
                 }
-                this.props.navigation.navigate('Map')
+                this.navigateToScreen(initialUrl, true)
             }
-        }).catch((error) => console.log('Promise is rejected with error: ' + error)) 
-
+            else if (initialUrl.includes('?')) this.navigateToScreen(initialUrl)
+        }).catch((error) => console.log('Promise is rejected with error: ' + error))
     }
 
     render(){
@@ -81,7 +153,7 @@ export class SignupLogin extends Component {
                 <ActivityIndicator />
             )
         }
-        
+
         return(
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -94,11 +166,11 @@ export class SignupLogin extends Component {
                                 </View>
                                 <View style={s.outerBorder}>
                                     <View style={s.textBg}>
-                                        {this.state.apiError ? 
+                                        {this.state.apiError ?
                                             <Text>Oops. Something went wrong!</Text> :
                                             <Text style={{fontSize:18,textAlign:"center"}}>
                                                 <Text>Pinball Map is a user-updated map listing</Text>
-                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text> 
+                                                <Text style={s.bold}> {formatNumWithCommas(this.state.num_locations)} </Text>
                                                 <Text>locations and</Text>
                                                 <Text style={s.bold}> {formatNumWithCommas(this.state.num_lmxes)} </Text>
                                                 <Text>machines.</Text>
@@ -133,12 +205,12 @@ export class SignupLogin extends Component {
                                         containerStyle={{borderRadius:50,marginTop:15,marginBottom:20,overflow:'hidden'}}
                                         style={{borderRadius: 50}}
                                     />
-                                    <Button                            
+                                    <Button
                                         onPress={() => {
                                             this.props.loginLater()
-                                            this.props.navigation.navigate('Map')}} 
+                                            this.props.navigation.navigate('Map')}}
                                         title="skip this for now"
-                                        accessibilityLabel="skip this for now"                         
+                                        accessibilityLabel="skip this for now"
                                         titleStyle={s.skipTitle}
                                         buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
                                     />
@@ -213,7 +285,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText,
         fontSize: 14,
         textAlign: "center"
-        
+
     }
 })
 
@@ -221,12 +293,15 @@ SignupLogin.propTypes = {
     user: PropTypes.object,
     loginLater: PropTypes.func,
     navigation: PropTypes.object,
-    login: PropTypes.func, 
+    login: PropTypes.func,
     getLocationTypes: PropTypes.func,
     getMachines: PropTypes.func,
     getOperators: PropTypes.func,
+    getRegion: PropTypes.func,
     getRegions: PropTypes.func,
     getFavoriteLocations: PropTypes.func,
+    getLocationsByRegion: PropTypes.func,
+    updateCurrCoordinates: PropTypes.func,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
@@ -239,6 +314,9 @@ const mapDispatchToProps = (dispatch) => ({
     login: (auth) => dispatch(login(auth)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     getRegions: (url) => dispatch(getRegions(url)),
+    getRegion: (regionName) => dispatch(getRegion(regionName)),
+    getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
+    updateCurrCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)

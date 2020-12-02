@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "36.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [
       "app/assets/images/*"
@@ -17,9 +16,10 @@
     "updates": {
       "enabled": false
     },
-    "version": "5.1.7",
+    "version": "5.1.8",
     "slug": "pbm-app",
     "name": "Pinball Map",
+    "scheme": "pinballmap",
     "description": "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
     "privacy": "public",
     "githubUrl": "https://github.com/bpoore/pbm-react/",
@@ -28,11 +28,12 @@
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "77",
+      "buildNumber": "82",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
       },
+      "associatedDomains": ["applinks:pinballmap.com","applinks:www.pinballmap.com"],
       "appStoreUrl": "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       "config": {
         "googleMapsApiKey": "key",
@@ -61,7 +62,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 57,
+      "versionCode": 58,
       "adaptiveIcon": {
         "backgroundColor": "#f2e6f1",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
@@ -75,6 +76,22 @@
         "backgroundColor": "#4b5862",
         "resizeMode": "contain"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "pinballmap.com",
+              "pathPrefix": "/"
+            },
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ],
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.pbm&hl=en",
       "icon": "app/assets/images/android-icon.png"
     },

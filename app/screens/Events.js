@@ -6,7 +6,6 @@ import {
     ActivityIndicator,
     FlatList,
     Linking,
-    ScrollView,
     StyleSheet,
     Text,
     View, 
@@ -17,7 +16,7 @@ import {
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton, Screen } from '../components'
+import { HeaderBackButton } from '../components'
 import { getIfpaData } from '../config/request'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 
@@ -104,14 +103,14 @@ class Events extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen>
+                        <>
                             {gettingEvents ? 
                                 <View style={s.background}>
                                     <ActivityIndicator />
                                 </View> :
                                 error ? 
                                     <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
-                                    <ScrollView>
+                                    <>
                                         <View style={s.header}>
                                             <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text> 
                                             <ButtonGroup
@@ -147,10 +146,10 @@ class Events extends Component {
                                                 />  : 
                                                 <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
                                         }
-                                    </ScrollView>
+                                    </>
                             
                             }
-                        </Screen>
+                        </>
                     )
                 }}
             </ThemeContext.Consumer>

@@ -1,44 +1,44 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
-import { 
+import { connect } from 'react-redux'
+import {
     Dimensions,
-    Image, 
+    Image,
     Linking,
     Modal,
-    StyleSheet, 
-    TouchableOpacity, 
-    View, 
+    Share,
+    StyleSheet,
+    TouchableOpacity,
+    View,
 } from 'react-native'
 import MapView from 'react-native-maps'
-import markerDot from '../assets/images/markerdot.png'
 import openMap from 'react-native-open-maps'
-import { 
-    Button, 
-    ButtonGroup, 
-    ListItem, 
+import {
+    Button,
+    ButtonGroup,
+    ListItem,
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { 
+import {
     ActivityIndicator,
-    ConfirmationModal, 
+    ConfirmationModal,
     HeaderBackButton,
     PbmButton,
     Screen,
     Text,
 } from '../components'
-import { 
+import {
     addFavoriteLocation,
     clearError,
-    closeConfirmModal, 
-    closeFavoriteLocationModal, 
-    confirmLocationIsUpToDate, 
+    closeConfirmModal,
+    closeFavoriteLocationModal,
+    confirmLocationIsUpToDate,
     fetchLocation,
     removeFavoriteLocation,
-    setCurrentMachine, 
+    setCurrentMachine,
     updateCurrCoordinates,
 } from '../actions'
 import androidCustomDark from '../utils/androidCustomDark'
@@ -73,7 +73,7 @@ class LocationDetails extends Component {
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             },
             gesturesEnabled: true
@@ -108,12 +108,12 @@ class LocationDetails extends Component {
         // If the location name isn't known before arriving on this screen, this will populate the header with the location name once it comes back
         if (!this.props.navigation.getParam('locationName') && !this.props.location.location.name && props.location.location.name || (this.props.location.location.name !== props.location.location.name))
             this.props.navigation.setParams({ locationName: props.location.location.name })
-  
+
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
             this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
         }
     }
-            
+
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
         this.props.navigation.setParams({loggedIn: this.props.user.loggedIn, buttonIndex: 0})
@@ -144,16 +144,17 @@ class LocationDetails extends Component {
                         <Screen>
                             <ConfirmationModal visible={favoriteModalVisible}>
                                 {addingFavoriteLocation || removingFavoriteLocation ?
-                                    <ActivityIndicator /> : 
+                                    <ActivityIndicator /> :
                                     <View>
-                                        <Text style={s.confirmText}>{favoriteModalText}</Text> 
-                                        <View> 
+                                        <Text style={s.confirmText}>{favoriteModalText}</Text>
+                                        <View>
                                             <PbmButton
                                                 title={"Great!"}
                                                 onPress={this.props.closeFavoriteLocationModal}
                                                 accessibilityLabel="Great!"
                                             />
-                                            <Button 
+                                            <Button
+                                                type="outline"
                                                 title={'View Saved Locations'}
                                                 onPress={() => {
                                                     this.props.closeFavoriteLocationModal()
@@ -162,6 +163,7 @@ class LocationDetails extends Component {
                                                 buttonStyle={s.savedLink}
                                                 titleStyle={s.buttonTitleStyle}
                                                 iconLeft
+                                                raised
                                                 icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
                                                 containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
                                             />
@@ -169,13 +171,13 @@ class LocationDetails extends Component {
                                     </View>
                                 }
                             </ConfirmationModal>
-                            <Modal 
+                            <Modal
                                 visible={errorModalVisible}
                                 onRequestClose={()=>{}}
                             >
                                 <View style={{marginTop: 100}}>
                                     <Text>{errorText}</Text>
-                                    <Button 
+                                    <Button
                                         title={"OK"}
                                         onPress={this.props.clearError}
                                     />
@@ -183,7 +185,7 @@ class LocationDetails extends Component {
                             </Modal>
                             <ConfirmationModal visible={this.props.location.confirmModalVisible}>
                                 <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
-                                <View> 
+                                <View>
                                     <PbmButton
                                         title={"You're Welcome"}
                                         onPress={this.props.closeConfirmModal}
@@ -217,16 +219,14 @@ class LocationDetails extends Component {
                                             longitudeDelta: 0.03,
                                         }}
                                     >
-                                        <View>
-                                            <Image source={markerDot} style={{height:20,width:20}}/>
-                                        </View>
+                                        <View style={s.markerDot}></View>
                                     </MapView.Marker>
                                 </MapView>
                                 <View style={s.buttonGroupView}>
                                     <ButtonGroup
                                         onPress={this.updateIndex}
                                         selectedIndex={this.state.buttonIndex}
-                                        buttons={['Machines', 'Info']}
+                                        buttons={['Machines', 'Venue Info']}
                                         containerStyle={s.buttonGroupContainer}
                                         textStyle={s.textStyle}
                                         selectedButtonStyle={s.selButtonStyle}
@@ -242,22 +242,16 @@ class LocationDetails extends Component {
                                                     icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                     title={loggedIn ? 'Add Machine' : 'Login to add machine'}
                                                     accessibilityLabel="Add Machine"
-                                                    buttonStyle={s.addMachinesButton}
                                                 />
-                                                <Button
+                                                <PbmButton
                                                     onPress={() => loggedIn ? this.handleConfirmPress(location.id) : this.props.navigation.navigate('Login') }
                                                     title={'Confirm machine list is up to date'}
                                                     accessibilityLabel="Confirm machine list is up to date"
-                                                    raised
-                                                    buttonStyle={s.confirmButton}
-                                                    titleStyle={s.buttonTitleStyle}
-                                                    style={{borderRadius: 50}}
-                                                    containerStyle={[{borderRadius:50},s.margin15]}
                                                 />
                                             </View>
                                             {sortedMachines.map(machine => (
                                                 <TouchableOpacity
-                                                    key={machine.id} 
+                                                    key={machine.id}
                                                     onPress={() => {
                                                         this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
                                                         this.props.setCurrentMachine(machine.id)
@@ -266,19 +260,27 @@ class LocationDetails extends Component {
                                                         style={s.borderBottom}
                                                     />
                                                     <ListItem
-                                                        containerStyle={s.listContainerStyle}
-                                                        title={this.getTitle(machine, s)}
-                                                        subtitle={
-                                                            <View style={s.condition}>
-                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                            </View>
-                                                        }
-                                                        rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
-                                                    />
+                                                        containerStyle={s.listContainerStyle}>
+                                                        <ListItem.Content>
+                                                            <ListItem.Title>
+                                                                {this.getTitle(machine, s)}
+                                                            </ListItem.Title>
+                                                            {machine.condition_date || machine.condition ? <ListItem.Subtitle style={s.condition}>
+                                                                {
+                                                                    <View>
+                                                                        {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                        {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                    </View>
+                                                                } 
+                                                            </ListItem.Subtitle> : null}
+                                                        </ListItem.Content>
+                                                        <Icon>
+                                                            {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                                        </Icon>
+                                                    </ListItem>
                                                 </TouchableOpacity>
                                             ))}
-                                        </View> :            
+                                        </View> :
                                         <View style={s.locationMeta}>
                                             <Text selectable style={[s.street,s.font18,s.marginRight]}>{location.street}</Text>
                                             <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
@@ -294,31 +296,41 @@ class LocationDetails extends Component {
                                                     openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
                                                 }}
                                             />
+                                            <PbmButton
+                                                onPress={async () => {
+                                                    await Share.share({
+                                                        message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                                    })
+                                                }}
+                                                icon={<Ionicons name="ios-share" style={s.shareIcon}/>}
+                                                title={'Share Location'}
+                                                accessibilityLabel='Share Location'
+                                            />
                                             {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
-                                            {location.location_type_id || locationTrackingServicesEnabled ? 
+                                            {location.location_type_id || locationTrackingServicesEnabled ?
                                                 <Text style={[s.meta,s.marginB8]}>
                                                     {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
                                                     {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
                                                     {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
-                                                </Text>: null 
+                                                </Text>: null
                                             }
-                                
-                                            {location.phone ? <Text style={[s.link,s.marginB8]} 
+
+                                            {location.phone ? <Text style={[s.link,s.marginB8]}
                                                 onPress={() => Linking.openURL(`tel:${location.phone}`)}>
                                                 {location.phone}</Text> : null}
 
                                             {location.website ? <Text style={[s.link,s.marginB8]}
                                                 onPress={() => Linking.openURL(location.website)}
-                                            >Website</Text> : null}                               
+                                            >Website</Text> : null}
 
-                                            {location.operator_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Operated by: 
+                                            {location.operator_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Operated by:
                                                 <Text style={s.notItalic}>
                                                     {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
                                                 </Text></Text> : null}
 
                                             {location.description ? <Text style={[s.meta,s.italic]}>
-                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text> : null}                                   
+                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text> : null}
 
                                         </View>
                                     }
@@ -348,16 +360,12 @@ const getStyles = theme => StyleSheet.create({
         flex: 3,
         backgroundColor: theme.backgroundColor
     },
-    buttonStyle: {
-        backgroundColor: theme.buttonColor,
-    },
     buttonTitleStyle: {
         color: theme.buttonTextColor,
         fontSize: 16
     },
     textStyle: {
         color: theme.buttonTextColor,
-        fontWeight: 'bold',
     },
     selButtonStyle: {
         backgroundColor: theme.selButton,
@@ -367,8 +375,8 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonGroupContainer: {
-        height: 35, 
-        borderColor: theme.borderColor, 
+        height: 35,
+        borderColor: theme.borderColor,
         borderWidth: 2,
         backgroundColor: theme._e0ebf2,
     },
@@ -434,15 +442,10 @@ const getStyles = theme => StyleSheet.create({
         color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor: theme._e0f1fb,
-        width: '100%',
-        elevation: 0,
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: theme.addBtnBorderColor
+        width: '100%'
     },
     condition: {
-        marginTop: 10
+        marginTop: 5
     },
     conditionText: {
         color: theme.placeholder,
@@ -464,9 +467,14 @@ const getStyles = theme => StyleSheet.create({
         color: "#f53240",
         fontSize: 20,
     },
+    shareIcon: {
+        color: theme.buttonTextColor,
+        fontSize: 20,
+        marginRight: 10
+    },
     confirmText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
@@ -483,7 +491,7 @@ const getStyles = theme => StyleSheet.create({
     },
     saveLocation: {
         position: 'absolute',
-        zIndex: 10, 
+        zIndex: 10,
         top: 0,
         right: 5,
         fontSize: 24,
@@ -491,15 +499,13 @@ const getStyles = theme => StyleSheet.create({
         padding: 10
     },
     savedIcon: {
+        color: theme.buttonTextColor,
         fontSize: 24,
         marginRight: 5
     },
     savedLink: {
-        backgroundColor: theme.buttonColor,
-        borderWidth: 1,
-        borderColor: theme.addBtnBorderColor,
-        borderRadius: 50,
-        elevation: 0
+        borderWidth: 2,
+        borderColor: theme.buttonColor,
     },
     margin15: {
         marginLeft: 15,
@@ -507,17 +513,18 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 0,
         marginBottom: 15
     },
-    addMachinesButton: {
-        backgroundColor: theme._e0f1fb,
-        borderWidth: theme.addBtnBorderW,
-        borderColor: theme.addBtnBorderColor,
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
-    },
     borderBottom: {
         borderBottomColor: theme.borderColor,
         borderBottomWidth: 1,
+    },
+    markerDot: {
+        width: 30,
+        height: 30,
+        borderRadius: 30 / 2,
+        borderWidth: 3,
+        borderColor: '#d2e5fa',
+        backgroundColor: '#78b6fb',
+        elevation: 1
     }
 })
 

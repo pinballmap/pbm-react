@@ -6,7 +6,10 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import { 
+    Avatar,
+    ListItem 
+} from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -133,15 +136,21 @@ class RecentActivity extends Component {
                                     }).map(activity => (
                                         <View key={activity.id}>
                                             <ListItem
-                                                component={TouchableOpacity}
-                                                title={activity.submission}
-                                                titleStyle={s.pbmText}
-                                                subtitleStyle={s.subtitleStyle}
-                                                subtitle={`${moment(activity.updated_at).format('LL')}`}
                                                 containerStyle={s.list}
-                                                leftAvatar={activity.submissionTypeIcon}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
-                                            />
+                                                underlayColor="#D3ECFF">
+                                                <Avatar>
+                                                    {activity.submissionTypeIcon}
+                                                </Avatar>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={s.pbmText}>
+                                                        {activity.submission}
+                                                    </ListItem.Title>
+                                                    <ListItem.Subtitle style={s.subtitleStyle}>
+                                                        {`${moment(activity.updated_at).format('LL')}`}
+                                                    </ListItem.Subtitle>
+                                                </ListItem.Content>
+                                            </ListItem>
                                         </View>
                                     ))
                             }

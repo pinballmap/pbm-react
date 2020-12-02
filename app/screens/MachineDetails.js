@@ -197,14 +197,18 @@ class MachineDetails extends Component {
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
                                             return <ListItem
-                                                key={commentObj.id}
-                                                titleStyle={[{marginLeft:5,marginRight:5},s.conditionText]}
-                                                title={`"${comment}"`}
-                                                subtitle={`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
-                                                subtitleStyle={[s.subtitleStyle,s.subtitleMargin]}
                                                 containerStyle={s.listContainerStyle}
-                                                bottomDivider
-                                            /> 
+                                                key={commentObj.id}
+                                                bottomDivider>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={[{marginLeft:5,marginRight:5},s.conditionText]}>
+                                                        {`"${comment}"`}
+                                                    </ListItem.Title>
+                                                    <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                    </ListItem.Subtitle>
+                                                </ListItem.Content>
+                                            </ListItem>
                                         }) :
                                         <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
@@ -213,7 +217,6 @@ class MachineDetails extends Component {
                                         onPress={loggedIn ? 
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
-                                        buttonStyle={s.addButton}
                                     />
                                 </View>
                                 <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
@@ -231,14 +234,18 @@ class MachineDetails extends Component {
         
                                             return (
                                                 <ListItem
-                                                    key={id}
-                                                    title={formatNumWithCommas(score)}
-                                                    subtitle={`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
-                                                    titleStyle={s.scoreText}
-                                                    subtitleStyle={s.subtitleStyle}
                                                     containerStyle={s.listContainerStyle}
-                                                    bottomDivider
-                                                />)
+                                                    key={id}
+                                                    bottomDivider>
+                                                    <ListItem.Content>
+                                                        <ListItem.Title style={s.scoreText}>
+                                                            {formatNumWithCommas(score)}
+                                                        </ListItem.Title>
+                                                        <ListItem.Subtitle style={s.subtitleStyle}>
+                                                            {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                        </ListItem.Subtitle>
+                                                    </ListItem.Content>
+                                                </ListItem>)
                                         }) 
                                         : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
@@ -248,12 +255,12 @@ class MachineDetails extends Component {
                                             () => this.setState({ showAddScoreModal: true }) :
                                             () => this.props.navigation.navigate('Login')
                                         }
-                                        buttonStyle={s.addButton}
                                     />
                                 </View>
                                 {pintipsUrl ?
                                     <Button
                                         title={'View playing tips on PinTips'}
+                                        type="outline"
                                         onPress={() => Linking.openURL(pintipsUrl)}
                                         buttonStyle={s.externalLink}
                                         titleStyle={s.externalLinkTitle}
@@ -265,6 +272,7 @@ class MachineDetails extends Component {
                                 }
                                 <Button
                                     title={'View on IPDB'}
+                                    type="outline"
                                     onPress={() => Linking.openURL(ipdb_link)}
                                     buttonStyle={s.externalLink}
                                     titleStyle={s.externalLinkTitle}
@@ -293,11 +301,8 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.backgroundColor
     },
     externalLink: {
-        backgroundColor: theme._e0f1fb,
-        borderWidth: 1,
-        borderColor: theme.borderColor,
-        borderRadius: 50,
-        elevation: 0
+        borderWidth: 2,
+        borderColor: theme.buttonColor,
     },
     externalIcon: {
         fontSize: 24
@@ -373,14 +378,6 @@ const getStyles = theme => StyleSheet.create({
         borderBottomWidth: 1,
         borderTopColor: theme._e0ebf2,
         borderTopWidth: 1,
-    },
-    addButton: {
-        backgroundColor: theme._e0f1fb,
-        borderColor: theme.addBtnBorderColor,
-        borderWidth: theme.addBtnBorderW,
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
     },
     modalTitle: {
         textAlign: 'center',
