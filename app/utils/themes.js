@@ -45,7 +45,7 @@ export const standard = {
     warningButtonColor: '#fdd4d7',
     backgroundColor: '#f5fbff',
     pbmText: '#000e18',
-    modalBg: '#FFF',
+    modalBg: '#f5fbff',
     backButton: '#1e9dff',
     disabledText: '#c1c9cf',
     _f2f4f5: '#f2f4f5',

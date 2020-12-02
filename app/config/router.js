@@ -4,9 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer'
 import { Platform, StyleSheet, Text, Dimensions } from 'react-native'
-import Constants from 'expo-constants'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
 import LocationDetails from '../screens/LocationDetails.js'
@@ -120,9 +118,7 @@ const TabNav = createBottomTabNavigator(
                 adaptive: false,
                 style: {
                     backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
-                    paddingBottom: (Platform.OS === 'ios' && Constants.statusBarHeight < 40) ? 3 : 0,
-                    paddingTop: (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 2 : 0,
-                    height: Platform.isPad ? 55 : (Platform.OS === 'ios' && Constants.statusBarHeight > 40) ? 46 : Platform.OS === 'android' ? 54 : Platform.OS === 'ios' ? 50 : null,
+                    height: Platform.isPad ? 55 : Platform.OS === 'ios' ? 46 : 54,
                 },
                 iconStyle: {
                     height: 30,
@@ -220,9 +216,6 @@ export const drawerNavigator = createDrawerNavigator({
             light: '#f5fbff',
             dark: '#1d1c1d'
         },
-        itemsContainerStyle: {
-            paddingTop: Constants.statusBarHeight > 40 ? 20 : 0,
-        }
     },
 })
 

@@ -8,6 +8,7 @@ import {
     View, 
 } from 'react-native'
 import { 
+    Avatar,
     Button, 
     ListItem,
 } from 'react-native-elements'
@@ -44,40 +45,65 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                         </View>
                         <View>
                             <ListItem
-                                title={'New Machines'}
-                                titleStyle={s.titleStyle}
-                                leftAvatar={<MaterialCommunityIcons name='plus-box' size={28} color='#25a43e' />}
                                 containerStyle={selectedActivity === 'new_lmx' ? s.containerBg : s.containerNotSelected}
-                                onPress={() => setRecentActivityFilter('new_lmx')}
-                            />
-                            <ListItem
-                                title={'New Conditions'}
-                                titleStyle={s.titleStyle}
-                                leftAvatar={<MaterialCommunityIcons name='comment-text' size={28} color='#1e9dff' />}
+                                onPress={() => setRecentActivityFilter('new_lmx')}>
+                                <Avatar>
+                                    {<MaterialCommunityIcons name='plus-box' size={32} color='#25a43e' />}
+                                </Avatar>
+                                <ListItem.Content>
+                                    <ListItem.Title style={s.titleStyle}>
+                                        <Text>{'New Machines'}</Text>
+                                    </ListItem.Title>
+                                </ListItem.Content>
+                            </ListItem>
+                            <ListItem 
                                 containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
-                                onPress={() => setRecentActivityFilter('new_condition')}
-                            />
+                                onPress={() => setRecentActivityFilter('new_condition')}>
+                                <Avatar>
+                                    {<MaterialCommunityIcons name='comment-text' size={32} color='#1e9dff' />}
+                                </Avatar>
+                                <ListItem.Content>
+                                    <ListItem.Title style={s.titleStyle}>
+                                        <Text>{'New Conditions'}</Text>
+                                    </ListItem.Title>
+                                </ListItem.Content>
+                            </ListItem>
                             <ListItem
-                                title={'Removed Machines'}
-                                titleStyle={s.titleStyle}
-                                leftAvatar={<MaterialCommunityIcons name='minus-box' size={28} color='#f53240' />}
                                 containerStyle={selectedActivity === 'remove_machine' ? s.containerBg : s.containerNotSelected}
-                                onPress={() => setRecentActivityFilter('remove_machine')}
-                            />
+                                onPress={() => setRecentActivityFilter('remove_machine')}>
+                                <Avatar>
+                                    {<MaterialCommunityIcons name='minus-box' size={32} color='#f53240' />}
+                                </Avatar>
+                                <ListItem.Content>
+                                    <ListItem.Title style={s.titleStyle}>
+                                        <Text>{'Removed Machines'}</Text>
+                                    </ListItem.Title>
+                                </ListItem.Content>
+                            </ListItem>
                             <ListItem
-                                title={'Scores'}
-                                titleStyle={s.titleStyle}
-                                leftAvatar={<MaterialCommunityIcons name='numeric' size={28} color='#ee970e' />}
                                 containerStyle={selectedActivity === 'new_msx' ? s.containerBg : s.containerNotSelected}
-                                onPress={() => setRecentActivityFilter('new_msx')}
-                            />
-                            <ListItem
-                                title={'Confirmed Locations'}
-                                titleStyle={s.titleStyle}
-                                leftAvatar={<MaterialCommunityIcons name='clipboard-check' size={28} color='#cf4bde' />}
+                                onPress={() => setRecentActivityFilter('new_msx')}>
+                                <Avatar>
+                                    {<MaterialCommunityIcons name='numeric' size={32} color='#ee970e' />}
+                                </Avatar>
+                                <ListItem.Content>
+                                    <ListItem.Title style={s.titleStyle}>
+                                        <Text>{'Scores'}</Text>
+                                    </ListItem.Title>
+                                </ListItem.Content>
+                            </ListItem>
+                            <ListItem 
                                 containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : s.containerNotSelected}
-                                onPress={() => setRecentActivityFilter('confirm_location')}
-                            />
+                                onPress={() => setRecentActivityFilter('confirm_location')}>
+                                <Avatar>
+                                    {<MaterialCommunityIcons name='clipboard-check' size={32} color='#cf4bde' />}
+                                </Avatar>
+                                <ListItem.Content>
+                                    <ListItem.Title style={s.titleStyle}>
+                                        <Text>{'Confirmed Locations'}</Text>
+                                    </ListItem.Title>
+                                </ListItem.Content>
+                            </ListItem>
                         </View>
                     </ConfirmationModal>
             }
