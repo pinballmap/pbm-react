@@ -16,7 +16,6 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native'
-import Constants from 'expo-constants'
 import {
     Input,
     ListItem,
@@ -156,13 +155,16 @@ class Search extends Component {
             key={region.id}
             onPress={() => this.getLocationsByRegion(region)}
         >
-            <ListItem
-                title={region.full_name}
-                rightTitle={'Region'}
-                rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
-                titleStyle={s.listItemTitle}
-                containerStyle={s.listContainerStyle}
-            />
+            <ListItem containerStyle={s.listContainerStyle}>
+                <ListItem.Content>
+                    <ListItem.Title style={s.listItemTitle}>
+                        {region.full_name}
+                    </ListItem.Title>
+                    <ListItem.Title right style={{ fontStyle: 'italic', color: '#97a5af' }}>
+                        {'Region'}
+                    </ListItem.Title>
+                </ListItem.Content>
+            </ListItem>
         </TouchableOpacity>
     )
 
@@ -171,13 +173,16 @@ class Search extends Component {
             key={location.value}
             onPress={() => this.getLocationsByCity(location)}
         >
-            <ListItem
-                title={location.value}
-                rightTitle={'City'}
-                rightTitleStyle={{ fontStyle: 'italic', color: '#97a5af' }}
-                titleStyle={s.listItemTitle}
-                containerStyle={s.listContainerStyle}
-            />
+            <ListItem containerStyle={s.listContainerStyle}>
+                <ListItem.Content>
+                    <ListItem.Title style={s.listItemTitle}>
+                        {location.value}
+                    </ListItem.Title>
+                    <ListItem.Title right style={{ fontStyle: 'italic', color: '#97a5af' }}>
+                        {'City'}
+                    </ListItem.Title>
+                </ListItem.Content>
+            </ListItem>
         </TouchableOpacity>
     )
 
@@ -186,22 +191,26 @@ class Search extends Component {
             key={location.id}
             onPress={() => this.goToLocation(location)}
         >
-            <ListItem
-                title={location.label}
-                titleStyle={s.listItemTitle}
-                containerStyle={s.listContainerStyle}
-            />
+            <ListItem containerStyle={s.listContainerStyle}>
+                <ListItem.Content>
+                    <ListItem.Title style={s.listItemTitle}>
+                        {location.label}
+                    </ListItem.Title>
+                </ListItem.Content>
+            </ListItem>
         </TouchableOpacity>
     )
 
     renderRecentSearchHistory = (s) => (
         <View>
-            <ListItem
-                title={'Recent Search History'}
-                titleStyle={s.searchHistoryTitle}
-                containerStyle={s.listContainerStyle}
-                contentContainerStyle={{alignItems: 'center'}}
-            />
+            <ListItem 
+            containerStyle={[{alignItems:'center'},s.listContainerStyle]}> 
+                <ListItem.Content>
+                    <ListItem.Title style={s.searchHistoryTitle}>
+                        {'Recent Search History'}
+                    </ListItem.Title>
+                </ListItem.Content>
+            </ListItem>
             {this.state.recentSearchHistory.map(search => {
                 // Determine which rows to render based on search payload
                 if (search.motd) {
@@ -242,7 +251,7 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <View style={[{ flex: 1 }, s.ifX, s.background]}>
+                                <View style={[{ flex: 1 }, s.background]}>
                                     <View style={{ display: 'flex', flexDirection: 'row' }}>
                                         <MaterialIcons
                                             onPress={() => {
@@ -299,9 +308,6 @@ Search.propTypes = {
 const getStyles = theme => StyleSheet.create({
     background: {
         backgroundColor: theme._f2f4f5,
-    },
-    ifX: {
-        paddingTop: Constants.statusBarHeight > 40 ? 44 : 20,
     },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,

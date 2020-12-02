@@ -20,7 +20,7 @@ const ConfirmationModal = ({children, visible}) => {
             visible={visible}
         >
             <View style={s.modalBg}>
-                <View style= {s.modal}>
+                <View style={s.modal}>
                     {children}
                 </View>
             </View>
