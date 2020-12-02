@@ -264,16 +264,24 @@ class LocationDetails extends Component {
                                                         style={s.borderBottom}
                                                     />
                                                     <ListItem
-                                                        containerStyle={s.listContainerStyle}
-                                                        title={this.getTitle(machine, s)}
-                                                        subtitle={
-                                                            <View style={s.condition}>
-                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                            </View>
-                                                        }
-                                                        rightElement = {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
-                                                    />
+                                                        containerStyle={s.listContainerStyle}>
+                                                        <ListItem.Content>
+                                                            <ListItem.Title>
+                                                                {this.getTitle(machine, s)}
+                                                            </ListItem.Title>
+                                                            <ListItem.Subtitle>
+                                                                {
+                                                                    <View style={s.condition}>
+                                                                        {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                        {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                    </View>
+                                                                }
+                                                            </ListItem.Subtitle>
+                                                        </ListItem.Content>
+                                                        <Icon>
+                                                            {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                                        </Icon>
+                                                    </ListItem>
                                                 </TouchableOpacity>
                                             ))}
                                         </View> :

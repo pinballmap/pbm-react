@@ -197,14 +197,18 @@ class MachineDetails extends Component {
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
                                             return <ListItem
-                                                key={commentObj.id}
-                                                titleStyle={[{marginLeft:5,marginRight:5},s.conditionText]}
-                                                title={`"${comment}"`}
-                                                subtitle={`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
-                                                subtitleStyle={[s.subtitleStyle,s.subtitleMargin]}
                                                 containerStyle={s.listContainerStyle}
-                                                bottomDivider
-                                            /> 
+                                                key={commentObj.id}
+                                                bottomDivider>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={[{marginLeft:5,marginRight:5},s.conditionText]}>
+                                                        {`"${comment}"`}
+                                                    </ListItem.Title>
+                                                    <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                    </ListItem.Subtitle>
+                                                </ListItem.Content>
+                                            </ListItem>
                                         }) :
                                         <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
@@ -231,14 +235,18 @@ class MachineDetails extends Component {
         
                                             return (
                                                 <ListItem
-                                                    key={id}
-                                                    title={formatNumWithCommas(score)}
-                                                    subtitle={`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
-                                                    titleStyle={s.scoreText}
-                                                    subtitleStyle={s.subtitleStyle}
                                                     containerStyle={s.listContainerStyle}
-                                                    bottomDivider
-                                                />)
+                                                    key={id}
+                                                    bottomDivider>
+                                                    <ListItem.Content>
+                                                        <ListItem.Title style={s.scoreText}>
+                                                            {formatNumWithCommas(score)}
+                                                        </ListItem.Title>
+                                                        <ListItem.Subtitle style={s.subtitleStyle}>
+                                                            {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                        </ListItem.Subtitle>
+                                                    </ListItem.Content>
+                                                </ListItem>)
                                         }) 
                                         : <Text style={s.noneYet}>No scores yet!</Text>
                                     }

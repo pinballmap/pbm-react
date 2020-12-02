@@ -154,10 +154,13 @@ class UserProfile extends Component {
                                             return <ListItem
                                                 containerStyle={s.background}
                                                 key={location[0]}
-                                                titleStyle={s.listTitleStyle}
-                                                title={location[1]}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
-                                            /> 
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={s.listTitleStyle}>
+                                                        {location[1]}
+                                                    </ListItem.Title>
+                                                </ListItem.Content>
+                                            </ListItem> 
                                         })}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
@@ -165,10 +168,13 @@ class UserProfile extends Component {
                                         {profile_list_of_high_scores.map((score, idx) => {
                                             return <ListItem
                                                 containerStyle={s.background}
-                                                key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                                                titleStyle={s.listTitleStyle}
-                                                title={`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
-                                            /> 
+                                                key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={s.listTitleStyle}>
+                                                        {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
+                                                    </ListItem.Title>
+                                                </ListItem.Content>
+                                            </ListItem> 
                                         })}
                                     </View>
                                     <WarningButton
