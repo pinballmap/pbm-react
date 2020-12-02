@@ -33,6 +33,7 @@ import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -160,7 +161,7 @@ class Search extends Component {
                     <ListItem.Title style={s.listItemTitle}>
                         {region.full_name}
                     </ListItem.Title>
-                    <ListItem.Title right style={{ fontStyle: 'italic', color: '#97a5af' }}>
+                    <ListItem.Title right style={s.cityRegionRow}>
                         {'Region'}
                     </ListItem.Title>
                 </ListItem.Content>
@@ -178,7 +179,7 @@ class Search extends Component {
                     <ListItem.Title style={s.listItemTitle}>
                         {location.value}
                     </ListItem.Title>
-                    <ListItem.Title right style={{ fontStyle: 'italic', color: '#97a5af' }}>
+                    <ListItem.Title right style={s.cityRegionRow}>
                         {'City'}
                     </ListItem.Title>
                 </ListItem.Content>
@@ -251,41 +252,43 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <View style={[{ flex: 1 }, s.background]}>
-                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <MaterialIcons
-                                            onPress={() => {
-                                                this.setState({ searchModalVisible: false })
-                                                this.changeQuery('')
-                                            }}
-                                            name='clear'
-                                            size={30}
-                                            style={s.clear}
-                                        />
-                                        <Input
-                                            placeholder='City, Address, Location'
-                                            leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{ marginLeft: -10, marginRight: 0 }} />}
-                                            rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
-                                            onChangeText={query => this.changeQuery(query)}
-                                            value={q}
-                                            containerStyle={{ paddingTop: 4 }}
-                                            key={submitButton ? 'search' : 'none'}
-                                            returnKeyType={submitButton ? 'search' : 'none'}
-                                            onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
-                                            inputContainerStyle={s.inputContainerStyle}
-                                            inputStyle={s.inputStyle}
-                                            autoFocus
-                                            autoCorrect={false}
-                                        />
+                                <SafeAreaView style={{ flex: 1 }}>
+                                    <View style={{ flex: 1 }}>
+                                        <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                            <MaterialIcons
+                                                onPress={() => {
+                                                    this.setState({ searchModalVisible: false })
+                                                    this.changeQuery('')
+                                                }}
+                                                name='clear'
+                                                size={30}
+                                                style={s.clear}
+                                            />
+                                            <Input
+                                                placeholder='City, Address, Location'
+                                                leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{ marginLeft: 10, marginRight: 0 }} />}
+                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
+                                                onChangeText={query => this.changeQuery(query)}
+                                                value={q}
+                                                containerStyle={{ paddingTop: 4 }}
+                                                key={submitButton ? 'search' : 'none'}
+                                                returnKeyType={submitButton ? 'search' : 'none'}
+                                                onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
+                                                inputContainerStyle={s.inputContainerStyle}
+                                                inputStyle={s.inputStyle}
+                                                autoFocus
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+                                        <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                                            {searching ? <ActivityIndicator /> : null}
+                                            {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
+                                            {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
+                                            {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
+                                            {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
+                                        </ScrollView>
                                     </View>
-                                    <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-                                        {searching ? <ActivityIndicator /> : null}
-                                        {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
-                                        {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
-                                        {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
-                                        {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
-                                    </ScrollView>
-                                </View>
+                                </SafeAreaView>
                             </Modal>
                             <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
                                 <View style={s.searchMap}>
@@ -330,7 +333,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme._97a5af,
     },
     inputStyle: {
-        color: theme._97a5af,
+        color: theme.drawerText,
     },
     inputContainerStyle: {
         borderWidth: 1,
@@ -342,7 +345,6 @@ const getStyles = theme => StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         paddingLeft: 0,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,
     },
     listContainerStyle: {
         borderBottomColor: theme.hr,
@@ -363,6 +365,13 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginTop: Platform.OS === 'ios' ? 6 : -5,
+    },
+    cityRegionRow: {
+        position: 'absolute',
+        right: 0,
+        fontStyle:
+        'italic',
+        color: '#97a5af'
     }
 })
 

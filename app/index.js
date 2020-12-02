@@ -6,6 +6,7 @@ import { ThemeContext } from './theme-context'
 import { Provider } from 'react-redux'
 import { PbmStack } from './config/router'
 import { dark, standard } from './utils/themes'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import store from './store'
 
@@ -49,15 +50,17 @@ class App extends Component {
         const { selectedTheme } = this.state
      
         return (
-            <ThemeContext.Provider value={{
-                toggleDefaultTheme: this.toggleDefaultTheme, 
-                toggleDarkTheme: this.toggleDarkTheme, 
-                theme: selectedTheme === 'dark' ? dark : standard 
-            }}>
-                <Provider store={store}>
-                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
-                </Provider>
-            </ThemeContext.Provider>
+            <SafeAreaProvider>
+                <ThemeContext.Provider value={{
+                    toggleDefaultTheme: this.toggleDefaultTheme, 
+                    toggleDarkTheme: this.toggleDarkTheme, 
+                    theme: selectedTheme === 'dark' ? dark : standard 
+                }}>
+                    <Provider store={store}>
+                        <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                    </Provider>
+                </ThemeContext.Provider>
+            </SafeAreaProvider>
         )
     }
 }
