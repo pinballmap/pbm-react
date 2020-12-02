@@ -141,6 +141,8 @@ class UserProfile extends Component {
                                     </View>
                                     <Button 
                                         title={'Saved Locations'}
+                                        type="outline"
+                                        raised
                                         onPress={() => this.props.navigation.navigate('Saved')}
                                         buttonStyle={s.savedLink}
                                         titleStyle={s.titleStyle}
@@ -206,15 +208,12 @@ const getStyles = theme => StyleSheet.create({
     },
     savedIcon: {
         fontSize: 24,
-        color: theme.pbmText,
+        color: theme.buttonTextColor,
         marginRight: 5
     },
     savedLink: {
-        backgroundColor: theme._fff,
-        borderWidth: 1,
-        borderColor: theme.borderColor,
-        borderRadius: 50,
-        elevation: 0
+        borderWidth: 2,
+        borderColor: theme.buttonColor,
     },
     margin15: {
         marginLeft:15,

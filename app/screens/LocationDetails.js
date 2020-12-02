@@ -154,6 +154,7 @@ class LocationDetails extends Component {
                                                 accessibilityLabel="Great!"
                                             />
                                             <Button
+                                                type="outline"
                                                 title={'View Saved Locations'}
                                                 onPress={() => {
                                                     this.props.closeFavoriteLocationModal()
@@ -162,6 +163,7 @@ class LocationDetails extends Component {
                                                 buttonStyle={s.savedLink}
                                                 titleStyle={s.buttonTitleStyle}
                                                 iconLeft
+                                                raised
                                                 icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
                                                 containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
                                             />
@@ -224,7 +226,7 @@ class LocationDetails extends Component {
                                     <ButtonGroup
                                         onPress={this.updateIndex}
                                         selectedIndex={this.state.buttonIndex}
-                                        buttons={['Machines', 'Info']}
+                                        buttons={['Machines', 'Venue Info']}
                                         containerStyle={s.buttonGroupContainer}
                                         textStyle={s.textStyle}
                                         selectedButtonStyle={s.selButtonStyle}
@@ -240,17 +242,11 @@ class LocationDetails extends Component {
                                                     icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                     title={loggedIn ? 'Add Machine' : 'Login to add machine'}
                                                     accessibilityLabel="Add Machine"
-                                                    buttonStyle={s.locationDetailsButton}
                                                 />
-                                                <Button
+                                                <PbmButton
                                                     onPress={() => loggedIn ? this.handleConfirmPress(location.id) : this.props.navigation.navigate('Login') }
                                                     title={'Confirm machine list is up to date'}
                                                     accessibilityLabel="Confirm machine list is up to date"
-                                                    raised
-                                                    buttonStyle={s.confirmButton}
-                                                    titleStyle={s.buttonTitleStyle}
-                                                    style={{borderRadius: 50}}
-                                                    containerStyle={[{borderRadius:50},s.margin15]}
                                                 />
                                             </View>
                                             {sortedMachines.map(machine => (
@@ -269,14 +265,14 @@ class LocationDetails extends Component {
                                                             <ListItem.Title>
                                                                 {this.getTitle(machine, s)}
                                                             </ListItem.Title>
-                                                            <ListItem.Subtitle>
+                                                            {machine.condition_date || machine.condition ? <ListItem.Subtitle style={s.condition}>
                                                                 {
-                                                                    <View style={s.condition}>
+                                                                    <View>
                                                                         {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                         {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                     </View>
-                                                                }
-                                                            </ListItem.Subtitle>
+                                                                } 
+                                                            </ListItem.Subtitle> : null}
                                                         </ListItem.Content>
                                                         <Icon>
                                                             {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -309,7 +305,6 @@ class LocationDetails extends Component {
                                                 icon={<Ionicons name="ios-share" style={s.shareIcon}/>}
                                                 title={'Share Location'}
                                                 accessibilityLabel='Share Location'
-                                                buttonStyle={s.locationDetailsButton}
                                             />
                                             {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
@@ -365,16 +360,12 @@ const getStyles = theme => StyleSheet.create({
         flex: 3,
         backgroundColor: theme.backgroundColor
     },
-    buttonStyle: {
-        backgroundColor: theme.buttonColor,
-    },
     buttonTitleStyle: {
         color: theme.buttonTextColor,
         fontSize: 16
     },
     textStyle: {
         color: theme.buttonTextColor,
-        fontWeight: 'bold',
     },
     selButtonStyle: {
         backgroundColor: theme.selButton,
@@ -451,15 +442,10 @@ const getStyles = theme => StyleSheet.create({
         color: '#97a5af',
     },
     confirmButton: {
-        backgroundColor: theme._e0f1fb,
-        width: '100%',
-        elevation: 0,
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: theme.addBtnBorderColor
+        width: '100%'
     },
     condition: {
-        marginTop: 10
+        marginTop: 5
     },
     conditionText: {
         color: theme.placeholder,
@@ -488,7 +474,7 @@ const getStyles = theme => StyleSheet.create({
     },
     confirmText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
@@ -513,29 +499,19 @@ const getStyles = theme => StyleSheet.create({
         padding: 10
     },
     savedIcon: {
+        color: theme.buttonTextColor,
         fontSize: 24,
         marginRight: 5
     },
     savedLink: {
-        backgroundColor: theme.buttonColor,
-        borderWidth: 1,
-        borderColor: theme.addBtnBorderColor,
-        borderRadius: 50,
-        elevation: 0
+        borderWidth: 2,
+        borderColor: theme.buttonColor,
     },
     margin15: {
         marginLeft: 15,
         marginRight: 15,
         marginTop: 0,
         marginBottom: 15
-    },
-    locationDetailsButton: {
-        backgroundColor: theme._e0f1fb,
-        borderWidth: theme.addBtnBorderW,
-        borderColor: theme.addBtnBorderColor,
-        borderRadius: 50,
-        width: '100%',
-        elevation: 0
     },
     borderBottom: {
         borderBottomColor: theme.borderColor,

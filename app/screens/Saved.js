@@ -169,7 +169,6 @@ const getStyles = theme => StyleSheet.create({
     },
     textStyle: {
         color: theme.buttonTextColor,
-        fontWeight: 'bold',
     },
     selButtonStyle: {
         backgroundColor: theme.selButton,
