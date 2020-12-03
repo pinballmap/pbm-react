@@ -252,7 +252,7 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1 }}>
+                                <SafeAreaView style={{ flex: 1, backgroundColor:theme.backgroundColor }}>
                                     <View style={{ flex: 1 }}>
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                                             <MaterialIcons
@@ -352,12 +352,12 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.backgroundColor
     },
     listItemTitle: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         marginBottom: -2,
         marginTop: -2
     },
     searchHistoryTitle: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         fontWeight: 'bold',
     },
     clear: {

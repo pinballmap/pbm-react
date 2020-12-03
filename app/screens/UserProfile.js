@@ -102,8 +102,8 @@ class UserProfile extends Component {
                                 /> :
                                 <View>
                                     <ConfirmationModal visible={this.state.modalVisible} >
-                                        <PbmButton
-                                            title={"Yes! Log Me Out"}
+                                        <WarningButton
+                                            title={"Log Me Out"}
                                             onPress={() => {
                                                 this.setModalVisible(false)
                                                 this.props.logout()
@@ -111,8 +111,8 @@ class UserProfile extends Component {
                                             }}
                                             accessibilityLabel="Logout"
                                         />
-                                        <WarningButton
-                                            title={"Stay Logged In"}
+                                        <PbmButton
+                                            title={"Actually, Stay Logged In"}
                                             onPress={() => this.setModalVisible(false)}
                                             accessibilityLabel="Stay LoggedIn"
                                         />
@@ -222,7 +222,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom:15
     },
     titleStyle: {
-        color: theme.pbmText, 
+        color: theme.buttonTextColor, 
         fontSize: 16
     },
     listTitleStyle: {
@@ -246,12 +246,12 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: theme.pbmText,
+        color: theme.buttonTextColor,
         backgroundColor: theme.buttonColor,
         fontSize: 16,
         marginTop: 5,
