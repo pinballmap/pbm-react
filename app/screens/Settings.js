@@ -54,7 +54,7 @@ const Settings = () => {
                     selectedIndex={selectedDefault}
                     buttons={['Standard', 'Dark']}
                     containerStyle={s.buttonGroupContainer}
-                    textStyle={s.textStyle}
+                    textStyle={s.buttonGroupInactive}
                     selectedButtonStyle={s.selButtonStyle}
                     selectedTextStyle={s.selTextStyle}
                     innerBorderStyle={s.innerBorderStyle}
@@ -66,7 +66,7 @@ const Settings = () => {
                     selectedIndex={selectedDark}
                     buttons={['Standard', 'Dark']}
                     containerStyle={s.buttonGroupContainer}
-                    textStyle={s.textStyle}
+                    textStyle={s.buttonGroupInactive}
                     selectedButtonStyle={s.selButtonStyle}
                     selectedTextStyle={s.selTextStyle}
                     innerBorderStyle={s.innerBorderStyle}
@@ -133,25 +133,25 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         borderColor: theme.borderColor,
     },
-    selButtonStyle: {
-        backgroundColor: theme.selButton,
-    },
-    selTextStyle: {
-        color: theme.pbmText,
-        fontWeight: 'bold',
-    },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.borderColor,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73'
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
+        color: theme.buttonGBorder
     },
-    textStyle: {
-        color: theme.pbmText
+    selButtonStyle: {
+        backgroundColor: theme._fff,
+    },
+    selTextStyle: {
+        color: theme.buttonGTextColor,
+        fontWeight: 'bold',
     },
 })
 

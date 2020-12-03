@@ -192,8 +192,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="Current User? Log In"
                                         accessibilityLabel="Log In"
-                                        containerStyle={{borderRadius:50,overflow:'hidden'}}
-                                        style={{borderRadius: 50}}
+                                        containerStyle={{overflow:'hidden'}}
                                     />
                                     <Button
                                         onPress={() => this.props.navigation.navigate('Signup')}
@@ -202,8 +201,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="New User? Sign Up"
                                         accessibilityLabel="Sign Up"
-                                        containerStyle={{borderRadius:50,marginTop:15,marginBottom:20,overflow:'hidden'}}
-                                        style={{borderRadius: 50}}
+                                        containerStyle={{marginTop:15,marginBottom:20,overflow:'hidden'}}
                                     />
                                     <Button
                                         onPress={() => {
@@ -249,8 +247,8 @@ const getStyles = theme => StyleSheet.create({
         borderColor: 'rgba(0,0,0,.4)',
     },
     textBg: {
-        padding:10,
-        borderRadius:10,
+        padding: 10,
+        borderRadius: 10,
         backgroundColor: 'rgba(255,255,255,.6)',
     },
     logoWrapper: {
@@ -263,12 +261,12 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonPink: {
         backgroundColor: "#fdd4d7",
-        borderRadius: 50,
+        borderRadius: 5,
         elevation: 0
     },
     buttonBlue: {
         backgroundColor: "#D3ECFF",
-        borderRadius: 50,
+        borderRadius: 5,
         elevation: 0
     },
     titleStyle: {
@@ -279,13 +277,14 @@ const getStyles = theme => StyleSheet.create({
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height: deviceHeight
+        height: deviceHeight,
+        marginLeft: 15,
+        marginRight: 15
     },
     skipTitle: {
         color: theme.pbmText,
         fontSize: 14,
         textAlign: "center"
-
     }
 })
 

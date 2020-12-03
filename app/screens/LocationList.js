@@ -101,7 +101,7 @@ export class LocationList extends Component {
                                 selectedIndex={this.props.locations.selectedLocationListFilter}
                                 buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
                                 containerStyle={s.buttonGroupContainer}
-                                textStyle={s.textStyle}
+                                textStyle={s.buttonGroupInactive}
                                 selectedButtonStyle={s.selButtonStyle}
                                 selectedTextStyle={s.selTextStyle}
                                 innerBorderStyle={s.innerBorderStyle}
@@ -138,25 +138,26 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
     },
-    textStyle: {
-        color: theme.pbmText
-    },
-    selButtonStyle: {
-        backgroundColor: theme.selButton,
-    },
-    selTextStyle: {
-        color: theme.pbmText,
-        fontWeight: 'bold',
-    },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.borderColor,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73',
+        fontSize: 14
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
+        color: theme.buttonGBorder
+    },
+    selButtonStyle: {
+        backgroundColor: theme._fff,
+    },
+    selTextStyle: {
+        color: theme.buttonGTextColor,
+        fontWeight: 'bold',
     },
 })
 

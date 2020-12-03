@@ -48,7 +48,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 containerStyle={selectedActivity === 'new_lmx' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_lmx')}>
                                 <Avatar>
-                                    {<MaterialCommunityIcons name='plus-box' size={32} color='#25a43e' />}
+                                    {<MaterialCommunityIcons name='plus-box' size={32} color='#58a467' />}
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
@@ -60,7 +60,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_condition')}>
                                 <Avatar>
-                                    {<MaterialCommunityIcons name='comment-text' size={32} color='#1e9dff' />}
+                                    {<MaterialCommunityIcons name='comment-text' size={32} color='#6cbffe' />}
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
@@ -72,7 +72,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 containerStyle={selectedActivity === 'remove_machine' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('remove_machine')}>
                                 <Avatar>
-                                    {<MaterialCommunityIcons name='minus-box' size={32} color='#f53240' />}
+                                    {<MaterialCommunityIcons name='minus-box' size={32} color='#f56f79' />}
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
@@ -84,7 +84,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 containerStyle={selectedActivity === 'new_msx' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_msx')}>
                                 <Avatar>
-                                    {<MaterialCommunityIcons name='numeric' size={32} color='#ee970e' />}
+                                    {<MaterialCommunityIcons name='numeric' size={32} color='#eeb152' />}
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
@@ -96,7 +96,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('confirm_location')}>
                                 <Avatar>
-                                    {<MaterialCommunityIcons name='clipboard-check' size={32} color='#cf4bde' />}
+                                    {<MaterialCommunityIcons name='clipboard-check' size={32} color='#d473df' />}
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>

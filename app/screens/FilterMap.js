@@ -103,7 +103,7 @@ const FilterMap = ({
                 selectedIndex={getIdx(numMachines)}
                 buttons={['All', '2+', '3+', '4+', '5+']}
                 containerStyle={s.buttonGroupContainer}
-                textStyle={s.textStyle}
+                textStyle={s.buttonGroupInactive}
                 selectedButtonStyle={s.selButtonStyle}
                 selectedTextStyle={s.selTextStyle}
                 innerBorderStyle={s.innerBorderStyle}
@@ -124,7 +124,7 @@ const FilterMap = ({
                 selectedIndex={viewByFavoriteLocations ? 1 : 0}
                 buttons={['All', 'My Favorites']}
                 containerStyle={s.buttonGroupContainer}
-                textStyle={s.textStyle}
+                textStyle={s.buttonGroupInactive}
                 selectedButtonStyle={s.selButtonStyle}
                 selectedTextStyle={s.selTextStyle}
                 innerBorderStyle={s.innerBorderStyle}
@@ -186,25 +186,25 @@ const getStyles = theme => StyleSheet.create({
         paddingTop: 10,
         paddingHorizontal: 10,
     },
-    textStyle: {
-        color: theme.pbmText
-    },
-    selButtonStyle: {
-        backgroundColor: theme.selButton,
-    },
-    selTextStyle: {
-        color: theme.pbmText,
-        fontWeight: 'bold',
-    },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.borderColor,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73'
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
+        color: theme.buttonGBorder
+    },
+    selButtonStyle: {
+        backgroundColor: theme._fff,
+    },
+    selTextStyle: {
+        color: theme.buttonGTextColor,
+        fontWeight: 'bold',
     },
 })
 
