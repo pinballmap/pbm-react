@@ -213,7 +213,7 @@ class MachineDetails extends Component {
                                         <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
                                     <PbmButton
-                                        title={loggedIn ? 'Add a New Comment' : 'Log in to add a machine comment'}
+                                        title={'Add a New Comment'}
                                         onPress={loggedIn ? 
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
@@ -250,7 +250,7 @@ class MachineDetails extends Component {
                                         : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
                                     <PbmButton 
-                                        title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
+                                        title={'Add Your Score'}
                                         onPress={loggedIn ? 
                                             () => this.setState({ showAddScoreModal: true }) :
                                             () => this.props.navigation.navigate('Login')
@@ -281,7 +281,7 @@ class MachineDetails extends Component {
                                     containerStyle={s.margin15}
                                 />
                                 <WarningButton 
-                                    title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
+                                    title={'Remove Machine'}
                                     onPress={loggedIn ? 
                                         () => this.setState({ showRemoveMachineModal: true }) :
                                         () => this.props.navigation.navigate('Login')
