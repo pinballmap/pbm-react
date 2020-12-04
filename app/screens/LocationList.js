@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
     FlatList,
     StyleSheet,
     View,
@@ -15,6 +16,8 @@ import {
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
+
+let deviceWidth = Dimensions.get('window').width
 
 const moment = require('moment')
 
@@ -146,7 +149,7 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupInactive: {
         color: '#736f73',
-        fontSize: 14
+        fontSize: deviceWidth < 321 ? 12 : 14,
     },
     innerBorderStyle: {
         width: 1,
