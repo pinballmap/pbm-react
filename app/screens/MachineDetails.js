@@ -266,7 +266,7 @@ class MachineDetails extends Component {
                                         titleStyle={s.externalLinkTitle}
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                        containerStyle={s.margin15}
+                                        containerStyle={s.margin40}
                                     /> :
                                     null
                                 }
@@ -278,7 +278,7 @@ class MachineDetails extends Component {
                                     titleStyle={s.externalLinkTitle}
                                     iconRight
                                     icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                    containerStyle={s.margin15}
+                                    containerStyle={s.margin40}
                                 />
                                 <WarningButton 
                                     title={'Remove Machine'}
@@ -311,9 +311,9 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText, 
         fontSize: 16
     },
-    margin15: {
-        marginLeft: 15,
-        marginRight: 15,
+      margin40: {
+        marginLeft: 40,
+        marginRight: 40,
         marginTop: 15,
         marginBottom: 15
     },

@@ -33,8 +33,8 @@ WarningButton.propTypes = {
 
 const getStyles = (theme) => StyleSheet.create({
     margin15: {
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 40,
+        marginRight: 40,
         marginTop: 15,
         marginBottom: 15
     },

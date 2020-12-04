@@ -148,7 +148,7 @@ class UserProfile extends Component {
                                         titleStyle={s.titleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                                        containerStyle={[{overflow:'hidden'},s.margin15]}
+                                        containerStyle={[{overflow:'hidden'},s.margin40]}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
@@ -215,11 +215,11 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         borderColor: theme.buttonColor,
     },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
+    margin40: {
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 15,
+        marginBottom: 15
     },
     titleStyle: {
         color: theme.buttonTextColor, 

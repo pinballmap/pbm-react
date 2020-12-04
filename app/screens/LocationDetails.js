@@ -270,7 +270,7 @@ class LocationDetails extends Component {
                                                             </ListItem.Title>
                                                             {machine.condition_date || machine.condition ? <ListItem.Subtitle style={s.condition}>
                                                                 {
-                                                                    <View>
+                                                                    <View}>
                                                                         {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                         {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                     </View>
