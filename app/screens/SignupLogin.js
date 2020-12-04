@@ -184,7 +184,7 @@ export class SignupLogin extends Component {
                                         }
                                     </View>
                                 </View>
-                                <View style={{paddingVertical:10,paddingHorizontal:15}}>
+                                <View style={{paddingVertical:10,paddingHorizontal:15,marginLeft: 15,marginRight: 15}}>
                                     <Button
                                         onPress={() => this.props.navigation.navigate('Login')}
                                         raised
@@ -277,9 +277,7 @@ const getStyles = theme => StyleSheet.create({
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height: deviceHeight,
-        marginLeft: 15,
-        marginRight: 15
+        height: deviceHeight
     },
     skipTitle: {
         color: theme.pbmText,
