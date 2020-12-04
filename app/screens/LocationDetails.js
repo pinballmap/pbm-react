@@ -268,14 +268,14 @@ class LocationDetails extends Component {
                                                             <ListItem.Title>
                                                                 {this.getTitle(machine, s)}
                                                             </ListItem.Title>
-                                                            {machine.condition_date || machine.condition ? <ListItem.Subtitle style={s.condition}>
-                                                                {
-                                                                    <View}>
-                                                                        {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                                        {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                                    </View>
-                                                                } 
-                                                            </ListItem.Subtitle> : null}
+                                                            <View style={s.condition}>
+                                                                <View>
+                                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                </View>
+                                                                <View>    
+                                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                </View>
+                                                            </View>
                                                         </ListItem.Content>
                                                         <Icon>
                                                             {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -453,7 +453,8 @@ const getStyles = theme => StyleSheet.create({
         width: '100%'
     },
     condition: {
-        marginTop: 5
+        marginTop: 5,
+        flexDirection: 'column'
     },
     conditionText: {
         color: theme.placeholder,
