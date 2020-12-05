@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Platform,
-    StyleSheet, 
+    StyleSheet,
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -41,10 +41,10 @@ const getStyles = (theme) => StyleSheet.create({
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     disabledStyle: {
-         backgroundColor: theme._e0f1fb
+        backgroundColor: theme._e0f1fb
     },
     disabledTitleStyle: {
-         color: theme.disabledText
+        color: theme.disabledText
     },
     margin15: {
         marginLeft: 40,
