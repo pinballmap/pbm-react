@@ -80,7 +80,7 @@ class Search extends Component {
                 this.setState({ foundLocations, foundCities, foundRegions, showSubmitButton: true, searching: false })
             }
         }
-    }   
+    }
 
     geocodeSearch = (query) => {
         this.setState({ searching: true })
@@ -136,12 +136,12 @@ class Search extends Component {
     isDuplicate = (search) => {
         const isDuplicate = this.state.recentSearchHistory.findIndex(entry => {
             if (entry.full_name) {
-                if (search.full_name === entry.full_name) 
+                if (search.full_name === entry.full_name)
                     return true
             }
 
             if (entry.value) {
-                if (search.value === entry.value) 
+                if (search.value === entry.value)
                     return true
             }
 
@@ -204,8 +204,7 @@ class Search extends Component {
 
     renderRecentSearchHistory = (s) => (
         <View>
-            <ListItem 
-            containerStyle={[{alignItems:'center'},s.listContainerStyle]}> 
+            <ListItem containerStyle={[{alignItems:'center'},s.listContainerStyle]}>
                 <ListItem.Content>
                     <ListItem.Title style={s.searchHistoryTitle}>
                         {'Recent Search History'}
