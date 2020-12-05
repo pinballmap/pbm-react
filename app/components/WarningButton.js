@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Platform,
-    StyleSheet, 
+    StyleSheet,
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -13,15 +13,15 @@ const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
 
     return(
         <Button
-            title={title} 
+            title={title}
             onPress={onPress}
             accessibilityLabel={accessibilityLabel}
             raised
             buttonStyle={s.redButton}
-            titleStyle={s.titleStyle}    
+            titleStyle={s.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
             containerStyle={[{overflow:'hidden'},s.margin15]}
-        /> 
+        />
     )
 }
 
@@ -40,7 +40,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     titleStyle: {
         fontSize: 16,
-//         color: theme.buttonTextColor,
+        //color: theme.buttonTextColor,
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     redButton: {

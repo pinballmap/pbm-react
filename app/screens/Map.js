@@ -37,6 +37,7 @@ import { ThemeContext } from '../theme-context'
 
 const MenuIcon = (props) => {
     const { numMachines } = props
+    let dotFontMargin,  dotWidthHeight
     if (numMachines < 10) {
         dotFontMargin = Platform.OS === 'ios' ? 0 : -2
         dotWidthHeight = 30
@@ -70,6 +71,10 @@ const MenuIcon = (props) => {
             </Text>
         </View>
     )
+}
+
+MenuIcon.propTypes = {
+    numMachines: PropTypes.number,
 }
 
 const CustomMarker = ({ marker, navigation, s }) => {
