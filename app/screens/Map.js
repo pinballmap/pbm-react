@@ -37,7 +37,7 @@ import { ThemeContext } from '../theme-context'
 
 const MenuIcon = (props) => {
     const { numMachines } = props
-    let dotFontMargin,  dotWidthHeight
+    let dotFontMargin, dotWidthHeight
     if (numMachines < 10) {
         dotFontMargin = Platform.OS === 'ios' ? 0 : -2
         dotWidthHeight = 30
@@ -331,14 +331,13 @@ const getStyles = theme => StyleSheet.create({
         minWidth: 50,
         width: '100%',
         maxWidth: 300,
-        height: 45,
+        height: Platform.OS === 'ios' ? 60 : 70,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignContent: 'space-around',
         zIndex: 5,
         marginRight: 7,
-        marginBottom: 10
     },
     iconStyle: {
         fontSize: 22,

@@ -200,9 +200,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 raised
                                 buttonStyle={s.buttonStyle}
                                 titleStyle={s.buttonTitle}
-                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,borderRadius:50,overflow:'hidden'}}
-                                style={{borderRadius: 50}}
-                                rounded
+                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,overflow:'hidden'}}
                                 title="Sign Up"
                                 accessibilityLabel="Sign Up"
                                 disabled={!username || !email || !password || !confirm_password}
@@ -267,7 +265,7 @@ const getStyles = theme => StyleSheet.create({
     },
     inputBox: {
         width: '100%',
-        borderRadius: 30,
+        borderRadius: 5,
         borderWidth: 1,
         backgroundColor: theme._e0ebf2, 
         borderColor: theme.borderColor,
@@ -281,16 +279,16 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: "center",
         fontWeight: "bold",
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
     },
     iconStyle: {
         fontSize: 24,
         color: theme.placeholder,
-        marginRight: 5
+        marginRight: 5,
+        marginLeft: 5
     },
     buttonStyle: {
         backgroundColor: theme.buttonColor,
-        borderRadius: 50,
         width: '100%',
         elevation: 0
     },
@@ -302,11 +300,12 @@ const getStyles = theme => StyleSheet.create({
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height: deviceHeight
+        height: deviceHeight,
+        marginLeft: 15,
+        marginRight: 15
     },
     disabledStyle: {
         backgroundColor: theme._e0f1fb,
-        borderRadius: 50
     },
     disabledTitleStyle: {
         color: theme.disabledText

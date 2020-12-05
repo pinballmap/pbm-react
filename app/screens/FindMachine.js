@@ -267,7 +267,7 @@ class FindMachine extends React.PureComponent {
                                     selectedIndex={selectedIdx}
                                     buttons={['All Machines', 'Machines in Map Area']}
                                     containerStyle={s.buttonGroupContainer}
-                                    textStyle={s.textStyle}
+                                    textStyle={s.buttonGroupInactive}
                                     selectedButtonStyle={s.selButtonStyle}
                                     selectedTextStyle={s.selTextStyle}
                                     innerBorderStyle={s.innerBorderStyle}
@@ -326,25 +326,25 @@ const getStyles = theme => StyleSheet.create({
         padding: 5,
         backgroundColor: theme._6a7d8a
     },
-    textStyle: {
-        color: theme.pbmText
-    },
-    selButtonStyle: {
-        backgroundColor: theme.selButton,
-    },
-    selTextStyle: {
-        color: theme.pbmText,
-        fontWeight: 'bold',
-    },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.borderColor,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73'
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
+        color: theme.buttonGBorder
+    },
+    selButtonStyle: {
+        backgroundColor: theme._fff,
+    },
+    selTextStyle: {
+        color: theme.buttonGTextColor,
+        fontWeight: 'bold',
     },
 })
 

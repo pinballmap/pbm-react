@@ -118,7 +118,7 @@ class Events extends Component {
                                                 selectedIndex={selectedIdx}
                                                 buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
                                                 containerStyle={s.buttonGroupContainer}
-                                                textStyle={s.textStyle}
+                                                textStyle={s.buttonGroupInactive}
                                                 selectedButtonStyle={s.selButtonStyle}
                                                 selectedTextStyle={s.selTextStyle}
                                                 innerBorderStyle={s.innerBorderStyle}
@@ -178,24 +178,23 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.buttonColor,
     },
     buttonGroupContainer: {
-        height: 40, 
-        borderColor: theme.borderColor, 
+        height: 40,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73'
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
-    },
-    textStyle: {
-        color: theme.buttonTextColor,
-        fontWeight: 'bold',
+        color: theme.buttonGBorder
     },
     selButtonStyle: {
-        backgroundColor: theme.selButton,
+        backgroundColor: theme._fff,
     },
     selTextStyle: {
-        color: theme.pbmText,
+        color: theme.buttonGTextColor,
         fontWeight: 'bold',
     },
     textLink: {

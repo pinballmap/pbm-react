@@ -1,43 +1,43 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
-import { 
-    Dimensions, 
+import { connect } from 'react-redux'
+import {
+    Dimensions,
     Keyboard,
-    Linking, 
-    Modal, 
-    ScrollView, 
-    StyleSheet, 
-    TextInput, 
-    TouchableWithoutFeedback, 
-    View, 
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
-    Button, 
+import {
+    Button,
     ListItem,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { EvilIcons } from '@expo/vector-icons'
-import { 
-    addMachineCondition, 
-    addMachineScore, 
-    removeMachineFromLocation 
+import {
+    addMachineCondition,
+    addMachineScore,
+    removeMachineFromLocation
 } from '../actions/location_actions'
 import {
     formatInputNumWithCommas,
     formatNumWithCommas,
     removeCommasFromNum
 } from '../utils/utilityFunctions'
-import { 
+import {
     ActivityIndicator,
     HeaderBackButton,
-    PbmButton, 
-    RemoveMachine, 
-    RemoveMachineModal, 
+    PbmButton,
+    RemoveMachine,
+    RemoveMachineModal,
     Screen,
     Text,
-    WarningButton, 
+    WarningButton,
 }  from '../components'
 
 const moment = require('moment')
@@ -47,12 +47,12 @@ let deviceHeight = Dimensions.get('window').height
 class MachineDetails extends Component {
     state = {
         showAddConditionModal: false,
-        conditionText: '', 
+        conditionText: '',
         showAddScoreModal: false,
         score: '',
         showRemoveMachineModal: false,
     }
-    
+
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
@@ -63,7 +63,7 @@ class MachineDetails extends Component {
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             },
             gesturesEnabled: true
@@ -73,11 +73,11 @@ class MachineDetails extends Component {
     cancelAddCondition = () => this.setState({ showAddConditionModal: false, conditionText: '' })
 
     cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '' })
-    
+
     addCondition = (lmx) => {
         this.props.addMachineCondition(this.state.conditionText, lmx)
-        this.setState({ 
-            showAddConditionModal: false, 
+        this.setState({
+            showAddConditionModal: false,
             conditionText: '',
         })
     }
@@ -93,26 +93,26 @@ class MachineDetails extends Component {
     }
 
     render() {
-        const { curLmx, location } = this.props.location   
-        
+        const { curLmx, location } = this.props.location
+
         if (!curLmx) {
             return (
                 <ActivityIndicator />
-            )   
+            )
         }
 
         const { id: userId, loggedIn } = this.props.user
         const { ipdb_link } = this.props.machineDetails
         const { opdb_id } = this.props.machineDetails
-        const pintipsUrl = opdb_id ? 
+        const pintipsUrl = opdb_id ?
             `http://pintips.net/opdb/${opdb_id}` :
             ``
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
-        const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10) 
+        const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
-      
+
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -125,7 +125,7 @@ class MachineDetails extends Component {
                                 visible={this.state.showAddConditionModal}
                                 onRequestClose={()=>{}}
                             >
-                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>                      
+                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
@@ -150,7 +150,7 @@ class MachineDetails extends Component {
                                                 onPress={this.cancelAddCondition}
                                             />
                                         </View>
-                                    </KeyboardAwareScrollView>          
+                                    </KeyboardAwareScrollView>
                                 </TouchableWithoutFeedback>
                             </Modal>
                             <Modal
@@ -163,7 +163,7 @@ class MachineDetails extends Component {
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
-                                            <TextInput 
+                                            <TextInput
                                                 style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
                                                 keyboardType='numeric'
                                                 underlineColorAndroid='transparent'
@@ -175,12 +175,12 @@ class MachineDetails extends Component {
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
-                                            <PbmButton 
+                                            <PbmButton
                                                 title={'Add Score'}
                                                 disabled={this.state.score.length === 0}
                                                 onPress={() => this.addScore(curLmx.id)}
                                             />
-                                            <WarningButton 
+                                            <WarningButton
                                                 title={'Cancel'}
                                                 onPress={this.cancelAddScore}
                                             />
@@ -190,10 +190,10 @@ class MachineDetails extends Component {
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                             <ScrollView>
-                                <Text style={{textAlign:'center',marginTop:10,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>  
+                                <Text style={{textAlign:'center',marginTop:10,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
                                 <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Machine Comments</Text>
-                                    {mostRecentComments ? 
+                                    {mostRecentComments ?
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
                                             return <ListItem
@@ -213,25 +213,25 @@ class MachineDetails extends Component {
                                         <Text style={s.noneYet}>No machine comment added yet</Text>
                                     }
                                     <PbmButton
-                                        title={loggedIn ? 'Add a New Comment' : 'Log in to add a machine comment'}
-                                        onPress={loggedIn ? 
+                                        title={'Add a New Comment'}
+                                        onPress={loggedIn ?
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
                                     />
                                 </View>
                                 <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Top Scores</Text>
-                                    {userHighScore ? 
+                                    {userHighScore ?
                                         <View>
                                             <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
                                             <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
-                                        </View>                       
+                                        </View>
                                         : null
                                     }
-                                    {scores.length > 0 ?                                              
+                                    {scores.length > 0 ?
                                         scores.map(scoreObj => {
                                             const {id, score, created_at, username} = scoreObj
-        
+
                                             return (
                                                 <ListItem
                                                     containerStyle={s.listContainerStyle}
@@ -246,12 +246,12 @@ class MachineDetails extends Component {
                                                         </ListItem.Subtitle>
                                                     </ListItem.Content>
                                                 </ListItem>)
-                                        }) 
+                                        })
                                         : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
-                                    <PbmButton 
-                                        title={loggedIn ? 'Add Your Score' : 'Log in to add your high score'}
-                                        onPress={loggedIn ? 
+                                    <PbmButton
+                                        title={'Add Your Score'}
+                                        onPress={loggedIn ?
                                             () => this.setState({ showAddScoreModal: true }) :
                                             () => this.props.navigation.navigate('Login')
                                         }
@@ -266,7 +266,7 @@ class MachineDetails extends Component {
                                         titleStyle={s.externalLinkTitle}
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                        containerStyle={s.margin15}
+                                        containerStyle={s.margin40}
                                     /> :
                                     null
                                 }
@@ -278,14 +278,14 @@ class MachineDetails extends Component {
                                     titleStyle={s.externalLinkTitle}
                                     iconRight
                                     icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                    containerStyle={s.margin15}
+                                    containerStyle={s.margin40}
                                 />
-                                <WarningButton 
-                                    title={loggedIn ? 'REMOVE MACHINE' : 'Login to remove machine'}
-                                    onPress={loggedIn ? 
+                                <WarningButton
+                                    title={'Remove Machine'}
+                                    onPress={loggedIn ?
                                         () => this.setState({ showRemoveMachineModal: true }) :
                                         () => this.props.navigation.navigate('Login')
-                                    } 
+                                    }
                                 />
                             </ScrollView>
                         </Screen>
@@ -308,12 +308,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24
     },
     externalLinkTitle: {
-        color: theme.pbmText, 
+        color: theme.pbmText,
         fontSize: 16
     },
-    margin15: {
-        marginLeft: 15,
-        marginRight: 15,
+    margin40: {
+        marginLeft: 40,
+        marginRight: 40,
         marginTop: 15,
         marginBottom: 15
     },
@@ -337,7 +337,7 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 5,
     },
     textInput: {
-        backgroundColor: theme.textInput, 
+        backgroundColor: theme.textInput,
         borderColor: theme.borderColor,
         color: theme.pbmText,
         borderWidth: 1,
@@ -399,7 +399,7 @@ const getStyles = theme => StyleSheet.create({
     },
     listContainerStyle: {
         backgroundColor: theme._fff,
-        paddingLeft: 30, 
+        paddingLeft: 30,
         paddingTop: 5
     },
 })
