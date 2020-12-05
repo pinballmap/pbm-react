@@ -228,7 +228,7 @@ class LocationDetails extends Component {
                                         selectedIndex={this.state.buttonIndex}
                                         buttons={['Machines', 'Venue Info']}
                                         containerStyle={s.buttonGroupContainer}
-                                        textStyle={s.textStyle}
+                                        textStyle={s.buttonGroupInactive}
                                         selectedButtonStyle={s.selButtonStyle}
                                         selectedTextStyle={s.selTextStyle}
                                         innerBorderStyle={s.innerBorderStyle}
@@ -239,14 +239,17 @@ class LocationDetails extends Component {
                                             <View>
                                                 <PbmButton
                                                     onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
-                                                    icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
-                                                    title={loggedIn ? 'Add Machine' : 'Login to add machine'}
+                                                    icon={<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
+                                                    title={'Add Machine'}
                                                     accessibilityLabel="Add Machine"
+                                                    containerStyle={s.buttonContainer}
                                                 />
                                                 <PbmButton
                                                     onPress={() => loggedIn ? this.handleConfirmPress(location.id) : this.props.navigation.navigate('Login') }
-                                                    title={'Confirm machine list is up to date'}
-                                                    accessibilityLabel="Confirm machine list is up to date"
+                                                    title={'Confirm Line-Up'}
+                                                    accessibilityLabel="Confirm Line-Up"
+                                                    icon={<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
+                                                    containerStyle={s.buttonContainer}
                                                 />
                                             </View>
                                             {sortedMachines.map(machine => (
@@ -265,14 +268,14 @@ class LocationDetails extends Component {
                                                             <ListItem.Title>
                                                                 {this.getTitle(machine, s)}
                                                             </ListItem.Title>
-                                                            {machine.condition_date || machine.condition ? <ListItem.Subtitle style={s.condition}>
-                                                                {
-                                                                    <View>
-                                                                        {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                                        {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                                    </View>
-                                                                } 
-                                                            </ListItem.Subtitle> : null}
+                                                            <View style={s.condition}>
+                                                                <View>
+                                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                </View>
+                                                                <View>    
+                                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                </View>
+                                                            </View>
                                                         </ListItem.Content>
                                                         <Icon>
                                                             {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
@@ -302,9 +305,10 @@ class LocationDetails extends Component {
                                                         message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
                                                     })
                                                 }}
-                                                icon={<Ionicons name="ios-share" style={s.shareIcon}/>}
+                                                icon={<Ionicons name="ios-share" style={s.buttonIcon}/>}
                                                 title={'Share Location'}
                                                 accessibilityLabel='Share Location'
+                                                containerStyle={s.buttonContainer}
                                             />
                                             {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description) && <View style={s.hr}></View>}
 
@@ -365,24 +369,27 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     textStyle: {
-        color: theme.buttonTextColor,
-    },
-    selButtonStyle: {
-        backgroundColor: theme.selButton,
-    },
-    selTextStyle: {
-        color: theme.pbmText,
-        fontWeight: 'bold',
+        color: theme.drawerText,
     },
     buttonGroupContainer: {
         height: 35,
-        borderColor: theme.borderColor,
+        borderColor: theme.buttonColor,
         borderWidth: 2,
-        backgroundColor: theme._e0ebf2,
+        backgroundColor: theme.buttonGroup,
+    },
+    buttonGroupInactive: {
+        color: '#736f73'
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.placeholder
+        color: theme.buttonGBorder
+    },
+    selButtonStyle: {
+        backgroundColor: theme._fff,
+    },
+    selTextStyle: {
+        color: theme.buttonGTextColor,
+        fontWeight: 'bold',
     },
     listContainerStyle: {
         backgroundColor: theme._fff
@@ -405,7 +412,8 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25,
         marginRight: 25,
         height: 2,
-        marginBottom: 5,
+        marginTop: 10,
+        marginBottom: 15,
         backgroundColor: theme.hr
     },
     font18: {
@@ -445,7 +453,8 @@ const getStyles = theme => StyleSheet.create({
         width: '100%'
     },
     condition: {
-        marginTop: 5
+        marginTop: 5,
+        flexDirection: 'column'
     },
     conditionText: {
         color: theme.placeholder,
@@ -457,20 +466,22 @@ const getStyles = theme => StyleSheet.create({
     lastUpdated: {
         textAlign: 'center',
         marginTop: 5,
-        color: theme.buttonTextColor
+        color: theme.drawerText
     },
     commentUpdated: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         marginLeft: 2
     },
-    plusButton: {
-        color: "#f53240",
-        fontSize: 20,
-    },
-    shareIcon: {
-        color: theme.buttonTextColor,
-        fontSize: 20,
+    buttonIcon: {
+        color: "#878d92",
+        fontSize: 24,
         marginRight: 10
+    },
+    buttonContainer: {
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 10,
+        marginBottom: 10
     },
     confirmText: {
         textAlign: 'center',

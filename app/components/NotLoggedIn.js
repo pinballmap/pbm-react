@@ -42,7 +42,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontStyle: 'italic',
         paddingHorizontal: 15,
         paddingBottom: 10,
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         textAlign: 'center'
     },
 })

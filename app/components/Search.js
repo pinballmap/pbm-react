@@ -251,8 +251,8 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1 }}>
-                                    <View style={{ flex: 1 }}>
+                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+                                    <View style={s.modalContainer}>
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                                             <MaterialIcons
                                                 onPress={() => {
@@ -311,6 +311,10 @@ const getStyles = theme => StyleSheet.create({
     background: {
         backgroundColor: theme._f2f4f5,
     },
+    modalContainer: {
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : 10,
+    },
     searchMap: {
         width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,
         backgroundColor: theme._f2f4f5,
@@ -351,19 +355,19 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.backgroundColor
     },
     listItemTitle: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         marginBottom: -2,
         marginTop: -2
     },
     searchHistoryTitle: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         fontWeight: 'bold',
     },
     clear: {
         color: theme.meta,
         marginLeft: 5,
         marginRight: 5,
-        marginTop: Platform.OS === 'ios' ? 6 : -5,
+        marginTop: 6,
     },
     cityRegionRow: {
         position: 'absolute',

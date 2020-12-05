@@ -36,18 +36,19 @@ const getStyles = (theme) => StyleSheet.create({
     },
     titleStyle: {
         color: theme.buttonTextColor,
-        fontSize: 16,
+        fontSize: 18,
+        textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     disabledStyle: {
-        //backgroundColor: theme._e0f1fb
+        backgroundColor: theme._e0f1fb
     },
     disabledTitleStyle: {
-        //color: theme.disabledText
+        color: theme.disabledText
     },
     margin15: {
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 40,
+        marginRight: 40,
         marginTop: 15,
         marginBottom: 15
     },

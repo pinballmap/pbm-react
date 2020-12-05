@@ -96,14 +96,14 @@ class UserProfile extends Component {
                         <Screen>
                             {!user.loggedIn ? 
                                 <NotLoggedIn 
-                                    text={`Hi, you're not logged in, so you don't have a profile!`}
+                                    text={`You're not logged in, so you don't have a profile!`}
                                     title={'User Profile'}
                                     onPress={() => this.props.navigation.navigate('Login')}
                                 /> :
                                 <View>
                                     <ConfirmationModal visible={this.state.modalVisible} >
-                                        <PbmButton
-                                            title={"Yes! Log Me Out"}
+                                        <WarningButton
+                                            title={"Log Me Out"}
                                             onPress={() => {
                                                 this.setModalVisible(false)
                                                 this.props.logout()
@@ -111,8 +111,8 @@ class UserProfile extends Component {
                                             }}
                                             accessibilityLabel="Logout"
                                         />
-                                        <WarningButton
-                                            title={"Stay Logged In"}
+                                        <PbmButton
+                                            title={"Actually, Stay Logged In"}
                                             onPress={() => this.setModalVisible(false)}
                                             accessibilityLabel="Stay LoggedIn"
                                         />
@@ -148,7 +148,7 @@ class UserProfile extends Component {
                                         titleStyle={s.titleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                                        containerStyle={[{overflow:'hidden'},s.margin15]}
+                                        containerStyle={[{overflow:'hidden'},s.margin40]}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
@@ -215,14 +215,14 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         borderColor: theme.buttonColor,
     },
-    margin15: {
-        marginLeft:15,
-        marginRight:15,
-        marginTop:15,
-        marginBottom:15
+    margin40: {
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 15,
+        marginBottom: 15
     },
     titleStyle: {
-        color: theme.pbmText, 
+        color: theme.buttonTextColor, 
         fontSize: 16
     },
     listTitleStyle: {
@@ -246,12 +246,12 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: theme.pbmText,
+        color: theme.buttonTextColor,
         backgroundColor: theme.buttonColor,
         fontSize: 16,
         marginTop: 5,

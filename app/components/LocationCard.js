@@ -113,7 +113,7 @@ const getStyles = (theme) => StyleSheet.create({
         marginLeft: 5
     },
     gray: {
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
     },
     italic: {
         fontStyle: 'italic',

@@ -92,7 +92,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 25
     },
     inputBox: {
-        borderRadius: 30,
+        borderRadius: 5,
         borderWidth: 1,
         backgroundColor: theme._e0ebf2, 
         borderColor: theme.borderColor,
@@ -114,14 +114,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom:10,
         fontSize: 18,
         fontWeight: 'bold'
-    },
-    disabledStyle: {
-        backgroundColor: theme._e0f1fb,
-        borderRadius: 50
-    },
-    disabledTitleStyle: {
-        color: theme.disabledText
-    },
+    }
 })
 
 ResendConfirmation.propTypes = {

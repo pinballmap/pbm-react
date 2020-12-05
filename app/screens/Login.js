@@ -124,14 +124,12 @@ class Login extends Component {
                                                 raised
                                                 buttonStyle={s.buttonStyle}
                                                 titleStyle={s.buttonTitle}
-                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,borderRadius:50,overflow:'hidden'}}
-                                                style={{borderRadius: 50}}
+                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden'}}
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
                                                 disabledStyle={s.disabledStyle}
                                                 disabledTitleStyle={s.disabledTitleStyle}
-                                                borderRadius={50}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}
@@ -208,12 +206,12 @@ const getStyles = theme => StyleSheet.create({
     },
     inputBox: {
         width: '100%',
-        borderRadius: 30,
+        borderRadius: 5,
         borderWidth: 1,
         backgroundColor: theme._e0ebf2, 
         borderColor: theme.borderColor,
         marginTop: 15,
-        marginBottom: 15,
+        marginBottom: 15
     },
     inputText: {
         color: theme.pbmText,
@@ -222,7 +220,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         textShadowColor: theme._fff,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
@@ -230,11 +228,11 @@ const getStyles = theme => StyleSheet.create({
     iconStyle: {
         fontSize: 24,
         color: theme.placeholder,
-        marginRight: 5
+        marginRight: 5,
+        marginLeft: 5
     },
     buttonStyle: {
         backgroundColor: theme.buttonColor,
-        borderRadius: 50,
         width: '100%',
         elevation: 0
     },
@@ -246,11 +244,12 @@ const getStyles = theme => StyleSheet.create({
     justify: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height: deviceHeight
+        height: deviceHeight,
+        marginLeft: 15,
+        marginRight: 15
     },
     disabledStyle: {
         backgroundColor: theme._e0f1fb,
-        borderRadius: 50
     },
     disabledTitleStyle: {
         color: theme.disabledText

@@ -67,7 +67,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             {submittingMessage ? 
                 <ActivityIndicator /> :
                 <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
-                    <Text style={s.text}>{`Have a question, comment, or tip? We are here for you.`}</Text>
+                    <Text style={s.text}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
                     {!loggedIn ?
                         <View>
                             <TextInput

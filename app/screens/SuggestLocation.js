@@ -159,11 +159,12 @@ class SuggestLocation extends Component {
                                     onPress={() => navigate('Login')}
                                 /> :
                                 <View>
-                                    <ConfirmationModal 
+                                    <ConfirmationModal
                                         visible={showSelectCountryModal}
                                     >
                                         <ScrollView>
-                                            <Picker 
+                                            <Picker
+                                                style={s.picker}
                                                 selectedValue={country}
                                                 onValueChange={country => this.setState({ country })}>
                                                 {countries.map(m => (
@@ -444,7 +445,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontWeight: '600',
-        color: theme.buttonTextColor,
+        color: theme.drawerText,
         textAlign: 'center'
     },
     title: {
@@ -494,9 +495,9 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 10
     },
     hr: {
-        marginLeft:25,
-        marginRight:25,
-        height:2,
+        marginLeft: 25,
+        marginRight: 25,
+        height: 2,
         marginTop: 10,
         backgroundColor: theme.hr
     },
@@ -526,6 +527,9 @@ const getStyles = theme => StyleSheet.create({
     listContainerStyle: {
         backgroundColor: theme._fff
     },
+    picker: {
+        backgroundColor: '#ffffff'
+    }
 })
 
 SuggestLocation.propTypes = {
