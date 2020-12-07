@@ -45,6 +45,7 @@ const PasswordReset = ({ navigation }) => {
                                 setModalVisible(false)
                                 navigation.navigate('Login')
                             }}
+                            containerStyle={s.buttonContainer}
                         />
                     </View>
                 </ConfirmationModal>
@@ -114,7 +115,13 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         fontSize: 18,
         fontWeight: 'bold'
-    }
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
+    },
 })
 
 PasswordReset.propTypes = {

@@ -257,6 +257,7 @@ class Map extends Component {
                             title={"OK"}
                             onPress={() => this.setState({ showNoLocationTrackingModal: false })}
                             accessibilityLabel="Great!"
+                            containerStyle={s.buttonContainer}
                         />
                     </View>
                 </ConfirmationModal>
@@ -363,6 +364,12 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 
