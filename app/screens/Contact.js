@@ -61,6 +61,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                     <PbmButton
                         title={"You bet!"}
                         onPress={acknowledgeConfirmation}
+                        containerStyle={s.buttonContainer}
                     />
                 </View>
             </ConfirmationModal>
@@ -160,7 +161,13 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18
-    }
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
+    },
 })
 
 Contact.propTypes = {

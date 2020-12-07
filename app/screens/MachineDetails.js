@@ -311,7 +311,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.pbmText, 
         fontSize: 16
     },
-      margin40: {
+    margin40: {
         marginLeft: 40,
         marginRight: 40,
         marginTop: 15,
