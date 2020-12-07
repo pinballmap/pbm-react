@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     StyleSheet,
-    TouchableOpacity,
     View,
 } from 'react-native'
-import { 
+import {
     Avatar,
-    ListItem 
+    ListItem
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
