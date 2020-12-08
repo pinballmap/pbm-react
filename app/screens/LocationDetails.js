@@ -573,10 +573,10 @@ const getStyles = theme => StyleSheet.create({
         elevation: 1
     },
     xButton: {
-        position:'absolute',
+        position: 'absolute',
         right: -20,
         top: -35,
-        color:'black',
+        color: '#e4606a',
     },
 })
 
