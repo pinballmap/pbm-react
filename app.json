@@ -16,7 +16,7 @@
     "updates": {
       "enabled": false
     },
-    "version": "5.1.8",
+    "version": "5.2.0",
     "slug": "pbm-app",
     "name": "Pinball Map",
     "scheme": "pinballmap",
@@ -28,7 +28,7 @@
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "82",
+      "buildNumber": "83",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
