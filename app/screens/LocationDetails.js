@@ -282,11 +282,27 @@ class LocationDetails extends Component {
                                 </MapView>
                                 <View style={s.buttonGroupView}>
                                     {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
-                                    <View style={s.locationMeta}>
-                                        <View style={s.locationMetaInner}>
-                                            <Text style={[s.street,s.font18]}>{location.name}</Text>
-                                            <Text selectable style={[s.font18,s.marginRight]}>{location.street}</Text>
-                                            <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                    <View style={s.locationMetaContainer}>
+                                        <View style={s.locationMetaOuter}>
+                                            <View style={s.locationMetaInner}>
+                                                <Text style={[s.street,s.font18]}>{location.name}</Text>
+                                                <Text selectable style={[s.font18,s.marginRight]}>{location.street}</Text>
+                                                <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                            </View>
+                                            <View style={s.locationIcon}>
+                                                <Icon
+                                                    raised
+                                                    reverse
+                                                    name='tools'
+                                                    type='entypo'
+                                                    color='#1e9dff'
+                                                    size={25}
+                                                    containerStyle={{ overflow: 'visible' }}
+                                                    onPress={() => this.setShowLocationToolsModal(true)}
+                                                />
+                                            </View>
+                                        </View>
+                                        <View>
                                             {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description)}
 
                                             {location.location_type_id || locationTrackingServicesEnabled ?
@@ -311,19 +327,7 @@ class LocationDetails extends Component {
                                                 </Text></Text> : null}
 
                                             {location.description ? <Text style={[s.meta,s.italic]}>
-                                    Location Notes: <Text style={s.notItalic}>{location.description}</Text></Text> : null}
-                                        </View>
-                                        <View style={s.locationIcon}>
-                                            <Icon
-                                                raised
-                                                reverse
-                                                name='tools'
-                                                type='entypo'
-                                                color='#1e9dff'
-                                                size={25}
-                                                containerStyle={{ overflow: 'visible' }}
-                                                onPress={() => this.setShowLocationToolsModal(true)}
-                                            />
+                                            Location Notes: <Text style={[s.notItalic,s.metaDescription]}>{location.description}</Text></Text> : null}
                                         </View>
                                     </View>
                                     <View style={s.backgroundColor}>
@@ -423,20 +427,26 @@ const getStyles = theme => StyleSheet.create({
     machineMeta: {
         fontSize: 16
     },
-    locationMeta: {
+    locationMetaContainer: {
         marginLeft: 15,
         marginRight: 15,
         paddingTop: 5,
+        paddingBottom: 10,
         marginTop: 5,
+    },
+    locationMetaOuter: {
         justifyContent: "space-between",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: "stretch"
     },
     locationMetaInner: {
         margin: "auto",
     },
     locationIcon: {
-        margin: "auto"
+        width: 54,
+        height: 54,
+        marginRight: 10
     },
     font18: {
         fontSize: 18
@@ -445,7 +455,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 8
     },
     marginRight: {
-        marginRight: 60
+        marginRight: 10
     },
     street: {
         fontWeight: 'bold'
@@ -466,6 +476,9 @@ const getStyles = theme => StyleSheet.create({
     meta: {
         fontSize: 16,
         color: theme.meta
+    },
+    metaDescription: {
+        fontSize: 13
     },
     iconStyle: {
         fontSize: 32,
