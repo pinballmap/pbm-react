@@ -12,7 +12,7 @@ const styledActivityIndicator = () => {
 
     return (
         <View style={s.container}>
-            <ActivityIndicator />
+            <ActivityIndicator color="#1e9dff" />
         </View>
     )
 }
@@ -22,6 +22,9 @@ const getStyles = (theme) => StyleSheet.create({
         flex: 1, 
         padding: 20,
         backgroundColor:theme.backgroundColor,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
 })
 

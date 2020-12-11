@@ -33,11 +33,13 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
                         navigation.navigate('Login')
                     }}
                     accessibilityLabel="Logout"
+                    containerStyle={s.buttonContainer}
                 />
                 <PbmButton
                     title={"Actually, Stay Logged In"}
                     onPress={() => setModalVisible(false)}
                     accessibilityLabel="Stay Logged In"
+                    containerStyle={s.buttonContainer}
                 />
             </ConfirmationModal>
             <View style={{marginTop: 50}}>
@@ -77,6 +79,12 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 72,
         paddingRight: 120,
         top: 4
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 

@@ -175,10 +175,12 @@ class SuggestLocation extends Component {
                                         <PbmButton
                                             title={'OK'}
                                             onPress={() => this.setState({ showSelectCountryModal: false })}
+                                            containerStyle={s.buttonContainer}
                                         />
                                         <WarningButton 
                                             title={'Cancel'}
                                             onPress={() => this.setState({ showSelectCountryModal: false })}
+                                            containerStyle={s.buttonContainer}
                                         />
                                     </ConfirmationModal>
                                     <Modal
@@ -529,7 +531,13 @@ const getStyles = theme => StyleSheet.create({
     },
     picker: {
         backgroundColor: '#ffffff'
-    }
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
+    },
 })
 
 SuggestLocation.propTypes = {

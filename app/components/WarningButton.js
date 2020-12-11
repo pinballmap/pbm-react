@@ -7,7 +7,7 @@ import {
 import { Button } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 
-const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
+const WarningButton = ({ title, onPress, accessibilityLabel, containerStyle }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -20,7 +20,7 @@ const WarningButton = ({ title, onPress, accessibilityLabel, }) => {
             buttonStyle={s.redButton}
             titleStyle={s.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{overflow:'hidden'},s.margin15]}
+            containerStyle={[{overflow:'hidden'}, containerStyle ? containerStyle : s.margin15]}
         />
     )
 }
@@ -29,6 +29,7 @@ WarningButton.propTypes = {
     onPress: PropTypes.func,
     title: PropTypes.string,
     accessibilityLabel: PropTypes.string,
+    containerStyle: PropTypes.object,
 }
 
 const getStyles = (theme) => StyleSheet.create({
@@ -40,9 +41,9 @@ const getStyles = (theme) => StyleSheet.create({
     },
     titleStyle: {
         fontSize: 18,
-        color: theme.buttonTextColor,
+        color: 'white',
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "400"
+        fontWeight: Platform.OS === 'ios' ? "600" : "500"
     },
     redButton: {
         backgroundColor: theme.warningButtonColor,

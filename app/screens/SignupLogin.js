@@ -51,6 +51,8 @@ export class SignupLogin extends Component {
         if (url.indexOf('location_id=') > 0) {
             const idSegment = url.split('location_id=')[1]
             const id = idSegment.split('&')[0]
+            // To get the Map on the navigation stack, first navigate to map on app start
+            startUpApp && navigate('Map')
             navigate('LocationDetails', { id })
         } else if (url.indexOf('address=') > 0) {
             const decoded = decodeURIComponent(url)
@@ -82,39 +84,50 @@ export class SignupLogin extends Component {
             }
             startUpApp && region ? navigate('Map', { setMapLocation: true }) : navigate('Map')
         } else if (url.indexOf('profile') > 0) {
+            startUpApp && navigate('Map')
             navigate('UserProfile')
-        } else if (url.indexOf('store') > 0) {
+        } else if (url.indexOf('store') > 0 || url.indexOf('privacy') > 0) {
+            startUpApp && navigate('Map')
             navigate('About')
         } else if (url.indexOf('faq') > 0) {
+            startUpApp && navigate('Map')
             navigate('FAQ')
         } else if (url.indexOf('about') > 0) {
+            startUpApp && navigate('Map')
             navigate('Contact')
         } else if (url.indexOf('events') > 0) {
+            startUpApp && navigate('Map')
             navigate('Events')
         } else if (url.indexOf('suggest') > 0) {
+            startUpApp && navigate('Map')
             navigate('SuggestLocation')
         } else if (url.indexOf('saved') > 0) {
+            startUpApp && navigate('Map')
             navigate('Saved')
         } else if (url.indexOf('login') > 0) {
+            startUpApp && navigate('Map')
             navigate('Login')
         } else if (url.indexOf('join') > 0) {
+            startUpApp && navigate('Map')
             navigate('Signup')
         } else if (url.indexOf('confirmation') > 0) {
+            startUpApp && navigate('Map')
             navigate('ResendConfirmation')
         } else if (url.indexOf('password') > 0) {
+            startUpApp && navigate('Map')
             navigate('PasswordReset')
-        } else if (url.indexOf('privacy') > 0) {
-            navigate('About')
         } else {
             navigate('Map')
         }
     }
 
     async componentDidMount(){
-        this.props.getLocationTypes('/location_types.json')
-        this.props.getMachines('/machines.json')
-        this.props.getOperators('/operators.json')
-        await this.props.getRegions('/regions.json')
+        await Promise.all([
+            this.props.getRegions('/regions.json'),
+            this.props.getLocationTypes('/location_types.json'),
+            this.props.getMachines('/machines.json'),
+            this.props.getOperators('/operators.json')
+        ])
 
         Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
 
