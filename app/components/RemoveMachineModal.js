@@ -25,10 +25,12 @@ const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: l
             <PbmButton 
                 title={'Yes, Remove It'}
                 onPress={() => removeLmx(curLmx, location.id)}
+                containerStyle={s.buttonContainer}
             />
             <WarningButton 
                 title={'Cancel'}
                 onPress={() => closeModal()}
+                containerStyle={s.buttonContainer}
             />
         </ConfirmationModal>    
     )
@@ -42,7 +44,13 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
         fontSize: 18,
         color: theme.pbmText,
-    }
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
+    },
 })
 
 RemoveMachineModal.propTypes = {

@@ -110,11 +110,13 @@ class UserProfile extends Component {
                                                 this.props.navigation.navigate('Login')
                                             }}
                                             accessibilityLabel="Logout"
+                                            containerStyle={s.buttonContainer}
                                         />
                                         <PbmButton
-                                            title={"Actually, Stay Logged In"}
+                                            title={"Stay Logged In"}
                                             onPress={() => this.setModalVisible(false)}
                                             accessibilityLabel="Stay LoggedIn"
+                                            containerStyle={s.buttonContainer}
                                         />
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
@@ -264,6 +266,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         marginTop: 5,
         color: theme.pbmText
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 

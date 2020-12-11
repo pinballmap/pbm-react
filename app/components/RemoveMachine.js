@@ -15,7 +15,7 @@ const RemoveMachine = ({ user }) => {
                     <FontAwesome 
                         name='trash' 
                         size={30}
-                        color={'red'}
+                        color={'#e4606a'}
                         style={{ marginRight: 10 }}
                         onPress={() => setShowModal(true)}
                     />

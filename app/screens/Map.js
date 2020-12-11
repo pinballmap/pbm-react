@@ -40,16 +40,16 @@ const MenuIcon = (props) => {
     let dotFontMargin, dotWidthHeight
     if (numMachines < 10) {
         dotFontMargin = Platform.OS === 'ios' ? 0 : -2
-        dotWidthHeight = 30
+        dotWidthHeight = 32
     } else if (numMachines < 20) {
-        dotFontMargin = Platform.OS === 'ios' ? 2 : -1
-        dotWidthHeight = 34
+        dotFontMargin = Platform.OS === 'ios' ? 2 : 0
+        dotWidthHeight = 36
     } else if (numMachines < 100) {
-        dotFontMargin = Platform.OS === 'ios' ? 4 : 1
-        dotWidthHeight = 38
+        dotFontMargin = Platform.OS === 'ios' ? 4 : 2
+        dotWidthHeight = 40
     } else {
-        dotFontMargin = Platform.OS === 'ios' ? 5 : 3
-        dotWidthHeight = 42
+        dotFontMargin = Platform.OS === 'ios' ? 7 : 4
+        dotWidthHeight = 46
     }
     return (
         <View style={{
@@ -262,6 +262,7 @@ class Map extends Component {
                             title={"OK"}
                             onPress={() => this.setState({ showNoLocationTrackingModal: false })}
                             accessibilityLabel="Great!"
+                            containerStyle={s.buttonContainer}
                         />
                     </View>
                 </ConfirmationModal>
@@ -368,6 +369,12 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 
