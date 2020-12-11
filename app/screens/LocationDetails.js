@@ -15,7 +15,6 @@ import MapView from 'react-native-maps'
 import openMap from 'react-native-open-maps'
 import {
     Button,
-    ButtonGroup,
     ListItem,
     Icon,
 } from 'react-native-elements'
@@ -48,7 +47,6 @@ import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 const moment = require('moment')
 
 let deviceHeight = Dimensions.get('window').height
-let deviceWidth = Dimensions.get('window').width
 
 class LocationDetails extends Component {
     state = {
@@ -115,7 +113,7 @@ class LocationDetails extends Component {
             this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
         }
     }
-    
+
     setShowLocationToolsModal(visible) {
         this.setState({showLocationToolsModal: visible})
     }
@@ -150,9 +148,9 @@ class LocationDetails extends Component {
                         <Screen>
                             <ConfirmationModal visible={this.state.showLocationToolsModal}>
                                 <View>
-                                    <MaterialCommunityIcons 
-                                        name='close-circle' 
-                                        size={45} 
+                                    <MaterialCommunityIcons
+                                        name='close-circle'
+                                        size={45}
                                         onPress={() => this.setShowLocationToolsModal(false)}
                                         style={s.xButton}
                                     />
@@ -303,8 +301,6 @@ class LocationDetails extends Component {
                                             </View>
                                         </View>
                                         <View>
-                                            {(locationTrackingServicesEnabled || location.location_type_id || location.phone || location.website || location.operator_id || location.description)}
-
                                             {location.location_type_id || locationTrackingServicesEnabled ?
                                                 <Text style={[s.meta,s.marginB8]}>
                                                     {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
@@ -313,21 +309,21 @@ class LocationDetails extends Component {
                                                 </Text>: null
                                             }
 
-                                            {location.phone ? <Text style={[s.link,s.marginB8]}
-                                                onPress={() => Linking.openURL(`tel:${location.phone}`)}>
-                                                {location.phone}</Text> : null}
+                                            {location.phone ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
-                                            {location.website ? <Text style={[s.link,s.marginB8]}
-                                                onPress={() => Linking.openURL(location.website)}
-                                            >Website</Text> : null}
+                                            {location.website ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
 
-                                            {location.operator_id ? <Text style={[s.meta,s.italic,s.marginB8]}>Operated by:
-                                                <Text style={s.notItalic}>
-                                                    {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}
-                                                </Text></Text> : null}
+                                            {location.operator_id ?
+                                                <Text style={[s.meta,s.italic,s.marginB8]}>Operated by:
+                                                    <Text style={s.notItalic}>{` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
+                                                </Text> : null
+                                            }
 
-                                            {location.description ? <Text style={[s.meta,s.italic]}>
-                                            Location Notes: <Text style={[s.notItalic,s.metaDescription]}>{location.description}</Text></Text> : null}
+                                            {location.description ?
+                                                <Text style={[s.meta,s.italic]}>Location Notes:
+                                                    <Text style={[s.notItalic,s.metaDescription]}>{location.description}</Text>
+                                                </Text> : null
+                                            }
                                         </View>
                                     </View>
                                     <View style={s.backgroundColor}>
@@ -351,7 +347,7 @@ class LocationDetails extends Component {
                                                             <View>
                                                                 {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                             </View>
-                                                            <View>    
+                                                            <View>
                                                                 {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                             </View>
                                                         </View>
