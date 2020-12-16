@@ -168,15 +168,13 @@ class Map extends Component {
 
     onRegionChange = (region) => {
         const compareRegion = (region) => {
-            if (region === this.prevRegion) {
-                this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
-            }
+            this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         }
 
-        // latitudeDelta is updating when the Search modal opens. This ensures we don't unnecessarily call compareRegion
-        if (region.latitude - this.prevRegion.latitude !== 0) {
-            setTimeout(compareRegion, 800, region)
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
+            setTimeout(compareRegion, 600, region)
         }
+
         this.prevRegion = region
     }
 
@@ -288,7 +286,7 @@ class Map extends Component {
                             longitudeDelta,
                         }}
                         style={s.map}
-                        onRegionChange={this.onRegionChange}
+                        onRegionChangeComplete={this.onRegionChange}
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
                         showsMyLocationButton={false}
