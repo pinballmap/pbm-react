@@ -62,7 +62,7 @@ const LocationCard = ({
                             {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus,s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                         </View>
                     </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-dropright-circle"/>
+                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline"/>
                 </View>
             </TouchableOpacity>
         </Card>
@@ -120,7 +120,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     iconStyle: {
         fontSize: 32,
-        color: theme._eee,
+        color: theme._e0ebf2,
         marginRight: 0,
         position: "absolute",
         right: 0,

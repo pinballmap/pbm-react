@@ -181,7 +181,7 @@ class LocationDetails extends Component {
                                                 message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
                                             }) && this.setShowLocationToolsModal(false)
                                         }}
-                                        icon={<Ionicons name="ios-share" style={s.buttonIcon}/>}
+                                        icon={<Ionicons name="ios-share-outline" style={s.buttonIcon}/>}
                                         title={'Share Location'}
                                         accessibilityLabel='Share Location'
                                         containerStyle={s.buttonContainer}
@@ -353,7 +353,7 @@ class LocationDetails extends Component {
                                                         </View>
                                                     </ListItem.Content>
                                                     <Icon>
-                                                        {<Ionicons style={s.iconStyle} name="ios-arrow-dropright" />}
+                                                        {<Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />}
                                                     </Icon>
                                                 </ListItem>
                                             </TouchableOpacity>

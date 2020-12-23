@@ -99,7 +99,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
                         <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                     </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-dropright" />
+                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
                 </View>
             </MapView.Callout>
         </MapView.Marker>
@@ -329,7 +329,7 @@ const getStyles = theme => StyleSheet.create({
     calloutStyle: {
         minWidth: 50,
         width: '100%',
-        maxWidth: 300,
+        maxWidth: 275,
         height: Platform.OS === 'ios' ? 60 : 70,
         display: 'flex',
         flexDirection: 'column',
@@ -339,10 +339,10 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 7,
     },
     iconStyle: {
-        fontSize: 22,
+        fontSize: 26,
         color: '#c1c9cf',
         position: "absolute",
-        top: Platform.OS === 'ios' ? 13 : 12,
+        top: Platform.OS === 'ios' ? 14 : 12,
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },

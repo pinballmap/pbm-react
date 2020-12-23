@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
-import { Ionicons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { ThemeContext } from '../theme-context'
 
 const DropDownButton = ({ title, onPress, }) => {
@@ -16,7 +16,7 @@ const DropDownButton = ({ title, onPress, }) => {
             buttonStyle={s.dropdown}
             titleStyle={s.titleStyle}
             style={{borderRadius: 5}}
-            icon={<Ionicons name='md-arrow-dropdown' style={s.dropdownIcon} />}
+            icon={<MaterialIcons name='arrow-drop-down' style={s.dropdownIcon} />}
             iconRight
             containerStyle={{marginTop:5,marginRight:10,marginLeft:10}}
         />
