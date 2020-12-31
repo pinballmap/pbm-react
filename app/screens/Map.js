@@ -16,7 +16,7 @@ import { retrieveItem } from '../config/utils'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
-
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
     PbmButton,
@@ -268,14 +268,17 @@ class Map extends Component {
             <View style={{ flex: 1, backgroundColor: '#f5fbff' }}>
                 <ConfirmationModal
                     visible={showAppAlert}>
-                    <View>
-                        <Text style={s.confirmText}>{appAlert}</Text>
-                        <PbmButton
-                            title={"OK"}
+                    <View style={s.appAlertHeader}>
+                        <Text style={s.appAlertTitle}>Message of the Day</Text>
+                        <MaterialCommunityIcons
+                            name='close-circle'
+                            size={45}
                             onPress={() => this.setState({ showAppAlert: false })}
-                            accessibilityLabel="Great!"
-                            containerStyle={s.buttonContainer}
+                            style={s.xButton}
                         />
+                    </View>
+                    <View style={s.appAlert}>
+                        <Text>{appAlert}</Text>
                     </View>
                 </ConfirmationModal>
                 <ConfirmationModal
@@ -400,6 +403,31 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+    xButton: {
+        position: 'absolute',
+        right: Platform.OS === 'ios' ? -15 : 0,
+        top: Platform.OS === 'ios' ? -15 : 0,
+        color: 'white',
+    },
+    appAlertTitle: {
+        color: 'white',
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    appAlertHeader: {
+        backgroundColor: theme.warningButtonColor, 
+        marginTop: -15,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        height: 40,
+        paddingVertical: 10,
+    },
+    appAlert: {
+        padding: 10,
+        paddingBottom: 0,
+        fontSize: 14
+    }
 })
 
 Map.propTypes = {
