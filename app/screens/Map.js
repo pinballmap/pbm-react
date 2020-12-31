@@ -101,7 +101,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
                         <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                     </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-dropright" />
+                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
                 </View>
             </MapView.Callout>
         </MapView.Marker>
@@ -171,15 +171,13 @@ class Map extends Component {
 
     onRegionChange = (region) => {
         const compareRegion = (region) => {
-            if (region === this.prevRegion) {
-                this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
-            }
+            this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         }
 
-        // latitudeDelta is updating when the Search modal opens. This ensures we don't unnecessarily call compareRegion
-        if (region.latitude - this.prevRegion.latitude !== 0) {
-            setTimeout(compareRegion, 800, region)
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
+            setTimeout(compareRegion, 600, region)
         }
+
         this.prevRegion = region
     }
 
@@ -315,7 +313,7 @@ class Map extends Component {
                             longitudeDelta,
                         }}
                         style={s.map}
-                        onRegionChange={this.onRegionChange}
+                        onRegionChangeComplete={this.onRegionChange}
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
                         showsMyLocationButton={false}
@@ -358,7 +356,7 @@ const getStyles = theme => StyleSheet.create({
     calloutStyle: {
         minWidth: 50,
         width: '100%',
-        maxWidth: 300,
+        maxWidth: 275,
         height: Platform.OS === 'ios' ? 60 : 70,
         display: 'flex',
         flexDirection: 'column',
@@ -368,10 +366,10 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 7,
     },
     iconStyle: {
-        fontSize: 22,
+        fontSize: 26,
         color: '#c1c9cf',
         position: "absolute",
-        top: Platform.OS === 'ios' ? 13 : 12,
+        top: Platform.OS === 'ios' ? 14 : 12,
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },
