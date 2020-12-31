@@ -37,6 +37,8 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.text}>{`Click on the machine name, and then look for a "remove" button.`}</Text>
                         <Text style={s.bold}>{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
                         <Text style={s.text}>{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+                        <Text style={s.bold}>{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
+                        <Text style={s.text}>{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
                         <Text style={s.bold}>{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
                         <Text style={s.text}>{`These are data entry mistakes. Please `}<Text onPress={ () => navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"contact us"}</Text>{` so we can fix them.`}</Text>
                         <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
