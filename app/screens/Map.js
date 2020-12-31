@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    AsyncStorage,
     Image,
     Platform,
     StyleSheet,
@@ -11,6 +12,7 @@ import {
     Button,
     Icon,
 } from 'react-native-elements'
+import { retrieveItem } from '../config/utils'
 import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
@@ -123,6 +125,7 @@ class Map extends Component {
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
             themeState: '',
+            showAppAlert: false,
         }
     }
 
@@ -201,6 +204,13 @@ class Map extends Component {
         } else {
             this.props.getCurrentLocation()
         }
+
+        retrieveItem('appAlert').then(appAlert => {
+            if (appAlert !== this.props.appAlert) {
+                this.setState({ showAppAlert: true })
+                AsyncStorage.setItem('appAlert', JSON.stringify(this.props.appAlert))
+            }
+        })
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -229,6 +239,7 @@ class Map extends Component {
 
     render() {
         const {
+            appAlert,
             isFetchingLocations,
             mapLocations,
             navigation,
@@ -236,6 +247,7 @@ class Map extends Component {
 
         const {
             showNoLocationTrackingModal,
+            showAppAlert,
         } = this.state
 
         const { theme } = this.context
@@ -254,6 +266,18 @@ class Map extends Component {
 
         return (
             <View style={{ flex: 1, backgroundColor: '#f5fbff' }}>
+                <ConfirmationModal
+                    visible={showAppAlert}>
+                    <View>
+                        <Text style={s.confirmText}>{appAlert}</Text>
+                        <PbmButton
+                            title={"OK"}
+                            onPress={() => this.setState({ showAppAlert: false })}
+                            accessibilityLabel="Great!"
+                            containerStyle={s.buttonContainer}
+                        />
+                    </View>
+                </ConfirmationModal>
                 <ConfirmationModal
                     visible={showNoLocationTrackingModal}>
                     <View>
@@ -390,13 +414,16 @@ Map.propTypes = {
     clearFilters: PropTypes.func,
     clearError: PropTypes.func,
     error: PropTypes.object,
+    appAlert: PropTypes.string,
 }
 
 const mapStateToProps = (state) => {
-    const { error, locations, query, user } = state
+    const { error, locations, query, regions, user } = state
     const mapLocations = getMapLocations(state)
+    const appAlert = regions.regions.filter(region => region.id === 1)[0].motd
 
     return {
+        appAlert,
         error,
         query,
         user,
