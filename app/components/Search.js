@@ -231,8 +231,8 @@ class Search extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.searchModalVisible && !prevState.searchModalVisible) {
             retrieveItem('searchHistory')
-                .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHisotry : [] }))
-                .catch(() => this.setState({ recentSearchHisotry : [] }))
+                .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHistory : [] }))
+                .catch(() => this.setState({ recentSearchHistory : [] }))
         }
     }
 
