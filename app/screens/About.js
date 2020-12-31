@@ -54,7 +54,10 @@ const About = ({navigation, appAlert}) => {
                     <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo}/>
                 </View>
                 <View style={s.child}>
-                    <Text style={s.text}>{appAlert}</Text>
+                    <View style={s.appAlert}>
+                        <Text style={[{textAlign:'center'},s.bold]}>Message of the Day</Text>
+                        <Text style={s.text}>{appAlert}</Text>
+                    </View>
                     <Text style={s.text}>Pinball Map is a crowdsourced map of all public pinball machines. It was founded in 2008 in Portland, Oregon.</Text>
                     <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
                     <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>.</Text>
@@ -151,6 +154,17 @@ const getStyles = theme => StyleSheet.create({
         color: theme.backButton,
         fontSize: 16,
     },
+    appAlert: {
+        borderWidth: 1,
+        borderColor: theme.buttonTextColor,
+        borderRadius: 10,
+        margin: 10,
+        paddingTop: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 0,
+        backgroundColor: theme._eee
+    }
 })
 
 About.propTypes = {
