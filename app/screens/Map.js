@@ -29,6 +29,7 @@ import {
     getFavoriteLocations,
     clearFilters,
     clearError,
+    getLocationsConsideringZoom,
     updateMapCoordinates,
 } from '../actions'
 import {
@@ -171,13 +172,15 @@ class Map extends Component {
 
     onRegionChange = (region) => {
         const compareRegion = (region) => {
-            this.props.updateMapCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
+            this.props.getLocationsConsideringZoom(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         }
 
-        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001) {
             setTimeout(compareRegion, 600, region)
+            this.props.updateMapCoordinates({
+                ...region
+            })
         }
-
         this.prevRegion = region
     }
 
@@ -225,7 +228,7 @@ class Map extends Component {
         } = props.query
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
-            this.props.updateMapCoordinates(curLat, curLon, latDelta, lonDelta)
+            this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
         }
 
     }
@@ -414,7 +417,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold'
     },
     appAlertHeader: {
-        backgroundColor: theme.warningButtonColor, 
+        backgroundColor: theme.warningButtonColor,
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -441,6 +444,7 @@ Map.propTypes = {
     clearError: PropTypes.func,
     error: PropTypes.object,
     appAlert: PropTypes.string,
+    getLocationsConsideringZoom: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -462,7 +466,8 @@ const mapDispatchToProps = (dispatch) => ({
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
-    updateMapCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateMapCoordinates(lat, lon, latDelta, lonDelta)),
+    getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
+    updateMapCoordinates: ({...region}) => dispatch(updateMapCoordinates({...region})),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

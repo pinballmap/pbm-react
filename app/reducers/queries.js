@@ -10,6 +10,7 @@ import {
     SET_OPERATOR_FILTER,
     FETCHING_LOCATION_TRACKING_SUCCESS,
     FETCHING_LOCATION_TRACKING_FAILURE,
+    SET_MAX_ZOOM,
 } from '../actions/types'
 
 export const initialState = {
@@ -39,7 +40,6 @@ export default (state = initialState, action) => {
                 curLon: Number(action.lon),
                 latDelta: Number(action.latDelta ? action.latDelta : 0.1),
                 lonDelta: Number(action.lonDelta ? action.lonDelta : 0.1),
-                maxZoom: action.maxZoom || false,
             }
         case SET_MACHINE_FILTER: {
             if (!action.machine) {
@@ -95,6 +95,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 selectedActivity: '',
+            }
+        case SET_MAX_ZOOM:
+            return {
+                ...state,
+                maxZoom: action.maxZoom || false,
             }
         default:
             return state
