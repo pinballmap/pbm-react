@@ -23,7 +23,6 @@ import {
     fetchOperators,
     getFavoriteLocations,
     getRegions,
-    getRegion,
     getLocationsByRegion,
     updateCurrCoordinates,
 } from '../actions'
@@ -65,7 +64,7 @@ export class SignupLogin extends Component {
         } else if (url.indexOf('region=') > 0) {
             const regionSegment = url.split('region=')[1]
             const regionName = regionSegment.split('&')[0]
-            const region = await this.props.getRegion(regionName)
+            const region = this.props.regions.regions.find(({name}) => name.toLowerCase() === regionName.toLowerCase())
 
             const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
             const cityName = citySegment.split('&')[0]
@@ -312,9 +311,10 @@ SignupLogin.propTypes = {
     getFavoriteLocations: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
     updateCurrCoordinates: PropTypes.func,
+    regions: PropTypes.object,
 }
 
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = ({ user, regions }) => ({ user, regions })
 
 const mapDispatchToProps = (dispatch) => ({
     getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
@@ -324,7 +324,6 @@ const mapDispatchToProps = (dispatch) => ({
     login: (auth) => dispatch(login(auth)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     getRegions: (url) => dispatch(getRegions(url)),
-    getRegion: (regionName) => dispatch(getRegion(regionName)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     updateCurrCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
 })

@@ -7,7 +7,7 @@ import {
     LOGIN_LATER,
     FETCHING_FAVORITE_LOCATIONS_SUCCESS,
     ADDING_FAVORITE_LOCATION,
-    REMOVING_FAVORITE_LOCATION, 
+    REMOVING_FAVORITE_LOCATION,
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
     ACKNOWLEDGE_FAVORITE_UPDATE,
@@ -19,9 +19,8 @@ import {
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
 } from './types'
-
 import { getCurrentLocation, getData, postData } from '../config/request'
-import { updateCurrCoordinates } from './query_actions'
+import { updateCurrCoordinates } from './locations_actions'
 
 export const fetchCurrentLocation = () => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
@@ -31,8 +30,8 @@ export const fetchCurrentLocation = () => dispatch => {
         .then(({lat, lon}) => dispatch(updateCurrCoordinates(lat, lon)))
         .catch(err => console.log(err))
 }
-  
-  
+
+
 export const getLocationTrackingEnabledSuccess = (data) => {
     return {
         type: FETCHING_LOCATION_TRACKING_SUCCESS,
@@ -40,7 +39,7 @@ export const getLocationTrackingEnabledSuccess = (data) => {
         lon: data.coords.longitude,
     }
 }
-  
+
 export const getLocationTrackingEnabledFailure = () => {
     return {
         type: FETCHING_LOCATION_TRACKING_FAILURE,
@@ -140,7 +139,7 @@ export const selectFavoriteLocationFilterBy = idx => {
 
 export const submitMessage = ({name, email, message}) => (dispatch, getState) => {
     dispatch({ type: SUBMITTING_MESSAGE })
-   
+
     const { email: user_email, authentication_token, lat, lon, locationTrackingServicesEnabled } = getState().user
     const body = {
         message,
