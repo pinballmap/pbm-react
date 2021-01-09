@@ -116,7 +116,11 @@ export class SignupLogin extends Component {
             startUpApp && navigate('Map')
             navigate('PasswordReset')
         } else {
-            navigate('Map')
+            const region = this.props.regions.regions.find(({name}) => url.includes(name))
+            if (region) {
+                this.props.getLocationsByRegion(region)
+            }
+            startUpApp && region ? navigate('Map', { setMapLocation: true }) : navigate('Map')
         }
     }
 
