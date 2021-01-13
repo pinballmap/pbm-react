@@ -39,7 +39,8 @@ export const dark = {
     selButton: '#323038',
     pageTitle: '#595759',
     locationName: '#736f73',
-    xButton: '#ffffff'
+    xButton: '#ffffff',
+    dropdownText: '#cac6ca'
 }
 
 export const standard = {
@@ -83,5 +84,6 @@ export const standard = {
     selButton: '#D3ECFF',
     pageTitle: '#6a7d8a',
     locationName: '#D3ECFF',
-    xButton: '#e85e68'
+    xButton: '#e85e68',
+    dropdownText: '#2d3032'
 }
