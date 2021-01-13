@@ -134,7 +134,7 @@ class Map extends Component {
         const theme = navigation.state.params && navigation.state.params.theme || ''
 
         const titleStyle = {
-            color: "#1e9dff",
+            color: theme === 'dark' ? '#addbff' : '#1e9dff',
             fontSize: 16,
             fontWeight: Platform.OS === 'ios' ? "600" : "400"
         }
@@ -176,7 +176,7 @@ class Map extends Component {
         }
 
         if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001) {
-            setTimeout(compareRegion, 600, region)
+            setTimeout(compareRegion, 800, region)
             this.props.updateMapCoordinates({
                 ...region
             })
@@ -270,7 +270,7 @@ class Map extends Component {
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
-                        <Text style={s.appAlertTitle}>Message of the Day</Text>
+                        <Text style={s.appAlertTitle}>Message of the Day!</Text>
                         <MaterialCommunityIcons
                             name='close-circle'
                             size={45}
@@ -279,7 +279,7 @@ class Map extends Component {
                         />
                     </View>
                     <View style={s.appAlert}>
-                        <Text>{appAlert}</Text>
+                        <Text style={{fontSize: 16}}>{appAlert}</Text>
                     </View>
                 </ConfirmationModal>
                 <ConfirmationModal
@@ -328,6 +328,7 @@ class Map extends Component {
                     <Icon
                         raised
                         name='gps-fixed'
+                        underlayColor='transparent'
                         type='material'
                         color='#1e9dff'
                         containerStyle={{ position: 'absolute', bottom: 0, right: 0 }}
@@ -372,7 +373,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 26,
         color: '#c1c9cf',
         position: "absolute",
-        top: Platform.OS === 'ios' ? 14 : 12,
+        top: Platform.OS === 'ios' ? 14 : 20,
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },
@@ -406,18 +407,18 @@ const getStyles = theme => StyleSheet.create({
     },
     xButton: {
         position: 'absolute',
-        right: Platform.OS === 'ios' ? -15 : 0,
-        top: Platform.OS === 'ios' ? -15 : 0,
-        color: 'white',
+        right: -15,
+        top: -15,
+        color: theme.xButton,
     },
     appAlertTitle: {
-        color: 'white',
+        color: theme.buttonTextColor,
         textAlign: "center",
         fontSize: 18,
         fontWeight: 'bold'
     },
     appAlertHeader: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.loading,
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -427,7 +428,6 @@ const getStyles = theme => StyleSheet.create({
     appAlert: {
         padding: 10,
         paddingBottom: 0,
-        fontSize: 14
     }
 })
 

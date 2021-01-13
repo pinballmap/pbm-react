@@ -34,13 +34,13 @@ const getStyles = (theme) => StyleSheet.create({
         height: 40
     },
     dropdownIcon: {
-        color: theme._97a5af,
+        color: theme.dropdownText,
         fontSize: 32,
         marginLeft: 5,
         marginTop: -3
     },
     titleStyle: {
-        color: theme._97a5af,
+        color: theme.dropdownText,
         textTransform: 'capitalize',
         fontSize: 16
     }

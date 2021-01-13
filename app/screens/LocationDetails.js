@@ -145,223 +145,230 @@ class LocationDetails extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen>
-                            <ConfirmationModal visible={this.state.showLocationToolsModal}>
-                                <View>
-                                    <MaterialCommunityIcons
-                                        name='close-circle'
-                                        size={45}
-                                        onPress={() => this.setShowLocationToolsModal(false)}
-                                        style={s.xButton}
-                                    />
-                                    <PbmButton
-                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
-                                        icon={<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
-                                        title={'Add Machine'}
-                                        accessibilityLabel="Add Machine"
-                                        containerStyle={s.buttonContainer}
-                                    />
-                                    <PbmButton
-                                        onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
-                                        title={'Confirm Line-Up'}
-                                        accessibilityLabel="Confirm Line-Up"
-                                        icon={<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
-                                        containerStyle={s.buttonContainer}
-                                    />
-                                    <PbmButton
-                                        onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
-                                        icon={<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
-                                        title="Edit Location"
-                                        accessibilityLabel="Edit"
-                                        containerStyle={s.buttonContainer}
-                                    />
-                                    <PbmButton
-                                        onPress={async () => {
-                                            await Share.share({
-                                                message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
-                                            }) && this.setShowLocationToolsModal(false)
-                                        }}
-                                        icon={<Ionicons name="ios-share-outline" style={s.buttonIcon}/>}
-                                        title={'Share Location'}
-                                        accessibilityLabel='Share Location'
-                                        containerStyle={s.buttonContainer}
-                                    />
-                                    <PbmButton
-                                        onPress={() => {
-                                            openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
-                                            this.setShowLocationToolsModal(false)
-                                        }}
-                                        icon={<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
-                                        title={'Directions'}
-                                        accessibilityLabel='Directions'
-                                        containerStyle={s.buttonContainer}
-                                    />
-                                </View>
-                            </ConfirmationModal>
-                            <ConfirmationModal visible={favoriteModalVisible}>
-                                {addingFavoriteLocation || removingFavoriteLocation ?
-                                    <ActivityIndicator /> :
-                                    <View>
-                                        <Text style={s.confirmText}>{favoriteModalText}</Text>
-                                        <View>
-                                            <PbmButton
-                                                title={"Great!"}
-                                                onPress={this.props.closeFavoriteLocationModal}
-                                                accessibilityLabel="Great!"
-                                            />
-                                            <Button
-                                                type="outline"
-                                                title={'View Saved Locations'}
-                                                onPress={() => {
-                                                    this.props.closeFavoriteLocationModal()
-                                                    this.props.navigation.navigate('Saved')
-                                                }}
-                                                buttonStyle={s.savedLink}
-                                                titleStyle={s.buttonTitleStyle}
-                                                iconLeft
-                                                raised
-                                                icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                                containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
-                                            />
-                                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Screen>
+                                <ConfirmationModal visible={this.state.showLocationToolsModal}>
+                                    <View style={s.header}>
+                                        <Text style={s.filterTitle}>Location Editing Tools</Text>
+                                        <MaterialCommunityIcons
+                                            name='close-circle'
+                                            size={45}
+                                            onPress={() => this.setShowLocationToolsModal(false)}
+                                            style={s.xButton}
+                                        />
                                     </View>
-                                }
-                            </ConfirmationModal>
-                            <Modal
-                                visible={errorModalVisible}
-                                onRequestClose={()=>{}}
-                            >
-                                <View style={{marginTop: 100}}>
-                                    <Text>{errorText}</Text>
-                                    <Button
-                                        title={"OK"}
-                                        onPress={this.props.clearError}
-                                    />
-                                </View>
-                            </Modal>
-                            <ConfirmationModal visible={this.props.location.confirmModalVisible}>
-                                <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
-                                <View>
-                                    <PbmButton
-                                        title={"You're Welcome"}
-                                        onPress={this.props.closeConfirmModal}
-                                        accessibilityLabel="You're Welcome"
-                                    />
-                                </View>
-                                <View style={s.logoWrapper}>
-                                    <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
-                                </View>
-                            </ConfirmationModal>
-                            <View style={{ flex: 1, position: 'relative' }}>
-                                {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
-                                {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
-                                <MapView
-                                    region={{
-                                        latitude: Number(location.lat),
-                                        longitude: Number(location.lon),
-                                        latitudeDelta: 0.03,
-                                        longitudeDelta: 0.03
-                                    }}
-                                    showsMyLocationButton={false}
-                                    style={deviceHeight > 800 ? s.mapTall : s.mapShort}
-                                    provider = { MapView.PROVIDER_GOOGLE }
-                                    customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
+                                    <View>
+                                        <PbmButton
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            icon={<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
+                                            title={'Add Machine'}
+                                            accessibilityLabel="Add Machine"
+                                            containerStyle={s.buttonContainer}
+                                        />
+                                        <PbmButton
+                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            title={'Confirm Line-Up'}
+                                            accessibilityLabel="Confirm Line-Up"
+                                            icon={<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
+                                            containerStyle={s.buttonContainer}
+                                        />
+                                        <PbmButton
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            icon={<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
+                                            title="Edit Location Details"
+                                            accessibilityLabel="Edit"
+                                            containerStyle={s.buttonContainer}
+                                        />
+                                        <PbmButton
+                                            onPress={async () => {
+                                                await Share.share({
+                                                    message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                                }) && this.setShowLocationToolsModal(false)
+                                            }}
+                                            icon={<Ionicons name="ios-share-outline" style={s.buttonIcon}/>}
+                                            title={'Share Location'}
+                                            accessibilityLabel='Share Location'
+                                            containerStyle={s.buttonContainer}
+                                        />
+                                        <PbmButton
+                                            onPress={() => {
+                                                openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
+                                                this.setShowLocationToolsModal(false)
+                                            }}
+                                            icon={<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
+                                            title={'Directions'}
+                                            accessibilityLabel='Directions'
+                                            containerStyle={s.buttonContainer}
+                                        />
+                                    </View>
+                                </ConfirmationModal>
+                                <ConfirmationModal visible={favoriteModalVisible}>
+                                    {addingFavoriteLocation || removingFavoriteLocation ?
+                                        <ActivityIndicator /> :
+                                        <View>
+                                            <Text style={s.confirmText}>{favoriteModalText}</Text>
+                                            <View>
+                                                <PbmButton
+                                                    title={"Great!"}
+                                                    onPress={this.props.closeFavoriteLocationModal}
+                                                    accessibilityLabel="Great!"
+                                                />
+                                                <Button
+                                                    type="outline"
+                                                    title={'View Saved Locations'}
+                                                    onPress={() => {
+                                                        this.props.closeFavoriteLocationModal()
+                                                        this.props.navigation.navigate('Saved')
+                                                    }}
+                                                    buttonStyle={s.savedLink}
+                                                    titleStyle={s.buttonTitleStyle}
+                                                    iconLeft
+                                                    raised
+                                                    icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
+                                                    containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
+                                                />
+                                            </View>
+                                        </View>
+                                    }
+                                </ConfirmationModal>
+                                <Modal
+                                    visible={errorModalVisible}
+                                    onRequestClose={()=>{}}
                                 >
-                                    <MapView.Marker
-                                        coordinate={{
+                                    <View style={{marginTop: 100}}>
+                                        <Text>{errorText}</Text>
+                                        <Button
+                                            title={"OK"}
+                                            onPress={this.props.clearError}
+                                        />
+                                    </View>
+                                </Modal>
+                                <ConfirmationModal visible={this.props.location.confirmModalVisible}>
+                                    <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
+                                    <View>
+                                        <PbmButton
+                                            title={"You're Welcome"}
+                                            onPress={this.props.closeConfirmModal}
+                                            accessibilityLabel="You're Welcome"
+                                        />
+                                    </View>
+                                    <View style={s.logoWrapper}>
+                                        <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                                    </View>
+                                </ConfirmationModal>
+                                <View style={{ flex: 1, position: 'relative' }}>
+                                    {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
+                                    {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
+                                  
+                                    <MapView
+                                        region={{
                                             latitude: Number(location.lat),
                                             longitude: Number(location.lon),
                                             latitudeDelta: 0.03,
-                                            longitudeDelta: 0.03,
+                                            longitudeDelta: 0.03
                                         }}
+                                        showsMyLocationButton={false}
+                                        style={deviceHeight > 800 ? s.mapTall : s.mapShort}
+                                        provider = { MapView.PROVIDER_GOOGLE }
+                                        customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                     >
-                                        <View style={s.markerDot}></View>
-                                    </MapView.Marker>
-                                </MapView>
-                                <View style={s.buttonGroupView}>
-                                    {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
-                                    <View style={s.locationMetaContainer}>
-                                        <View style={s.locationMetaOuter}>
-                                            <View style={s.locationMetaInner}>
-                                                <Text style={[s.street,s.font18]}>{location.name}</Text>
-                                                <Text selectable style={[s.font18,s.marginRight]}>{location.street}</Text>
-                                                <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                        <MapView.Marker
+                                            coordinate={{
+                                                latitude: Number(location.lat),
+                                                longitude: Number(location.lon),
+                                                latitudeDelta: 0.03,
+                                                longitudeDelta: 0.03,
+                                            }}
+                                        >
+                                            <View style={s.markerDot}></View>
+                                        </MapView.Marker>
+                                    </MapView>
+                                    <View style={s.buttonGroupView}>
+                                        {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                        <View style={s.locationMetaContainer}>
+                                            <View style={s.locationMetaOuter}>
+                                                <View style={s.locationMetaInner}>
+                                                    <Text style={[s.street,s.font18]}>{location.name}</Text>
+                                                    <Text selectable style={[s.font18,s.marginRight]}>{location.street}</Text>
+                                                    <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                                </View>
                                             </View>
-                                            <View style={s.locationIcon}>
-                                                <Icon
-                                                    raised
-                                                    reverse
-                                                    name='tools'
-                                                    type='entypo'
-                                                    color='#1e9dff'
-                                                    size={25}
-                                                    containerStyle={{ overflow: 'visible' }}
-                                                    onPress={() => this.setShowLocationToolsModal(true)}
-                                                />
+                                            <View>
+                                                {location.location_type_id || locationTrackingServicesEnabled ?
+                                                    <Text style={[s.meta,s.marginB8]}>
+                                                        {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
+                                                        {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
+                                                        {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
+                                                    </Text>: null
+                                                }
+
+                                                {location.phone ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
+
+                                                {location.website ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
+
+                                                {location.operator_id ?
+                                                    <Text style={[s.metaDescription,s.italic,s.marginB8]}>Operated by:
+                                                        <Text style={s.notItalic}> {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
+                                                    </Text> : null
+                                                }
+
+                                                {location.description ?
+                                                    <Text style={[s.metaDescription,s.italic]}>Location Notes:
+                                                        <Text style={[s.notItalic,s.metaDescription]}> {location.description}</Text>
+                                                    </Text> : null
+                                                }
                                             </View>
                                         </View>
-                                        <View>
-                                            {location.location_type_id || locationTrackingServicesEnabled ?
-                                                <Text style={[s.meta,s.marginB8]}>
-                                                    {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
-                                                    {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
-                                                    {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
-                                                </Text>: null
-                                            }
-
-                                            {location.phone ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
-
-                                            {location.website ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
-
-                                            {location.operator_id ?
-                                                <Text style={[s.meta,s.italic,s.marginB8]}>Operated by:
-                                                    <Text style={s.notItalic}>{` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
-                                                </Text> : null
-                                            }
-
-                                            {location.description ?
-                                                <Text style={[s.meta,s.italic]}>Location Notes:
-                                                    <Text style={[s.notItalic,s.metaDescription]}>{location.description}</Text>
-                                                </Text> : null
-                                            }
+                                        <View style={s.backgroundColor}>
+                                            {sortedMachines.map(machine => (
+                                                <TouchableOpacity
+                                                    key={machine.id}
+                                                    onPress={() => {
+                                                        this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
+                                                        this.props.setCurrentMachine(machine.id)
+                                                    }}>
+                                                    <View
+                                                        style={s.borderBottom}
+                                                    />
+                                                    <ListItem
+                                                        containerStyle={s.listContainerStyle}>
+                                                        <ListItem.Content>
+                                                            <ListItem.Title>
+                                                                {this.getTitle(machine, s)}
+                                                            </ListItem.Title>
+                                                            <View style={s.condition}>
+                                                                <View>
+                                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                </View>
+                                                                <View>
+                                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                </View>
+                                                            </View>
+                                                        </ListItem.Content>
+                                                        <Icon>
+                                                            {<Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />}
+                                                        </Icon>
+                                                    </ListItem>
+                                                </TouchableOpacity>
+                                            ))}
                                         </View>
-                                    </View>
-                                    <View style={s.backgroundColor}>
-                                        {sortedMachines.map(machine => (
-                                            <TouchableOpacity
-                                                key={machine.id}
-                                                onPress={() => {
-                                                    this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
-                                                    this.props.setCurrentMachine(machine.id)
-                                                }}>
-                                                <View
-                                                    style={s.borderBottom}
-                                                />
-                                                <ListItem
-                                                    containerStyle={s.listContainerStyle}>
-                                                    <ListItem.Content>
-                                                        <ListItem.Title>
-                                                            {this.getTitle(machine, s)}
-                                                        </ListItem.Title>
-                                                        <View style={s.condition}>
-                                                            <View>
-                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                            </View>
-                                                            <View>
-                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                            </View>
-                                                        </View>
-                                                    </ListItem.Content>
-                                                    <Icon>
-                                                        {<Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />}
-                                                    </Icon>
-                                                </ListItem>
-                                            </TouchableOpacity>
-                                        ))}
                                     </View>
                                 </View>
+                            </Screen>
+                            <View style={s.locationIcon}>
+                                <Icon
+                                    reverse
+                                    raised
+                                    name='tools'
+                                    type='entypo'
+                                    color='#1e9dff'
+                                    reverseColor='#ffffff'
+                                    size={28}
+                                    containerStyle={{overflow: 'visible'}}
+                                    onPress={() => this.setShowLocationToolsModal(true)}
+                                />
                             </View>
-                        </Screen>
+                        </View>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -440,9 +447,10 @@ const getStyles = theme => StyleSheet.create({
         margin: "auto",
     },
     locationIcon: {
-        width: 54,
-        height: 54,
-        marginRight: 10
+        position: 'absolute',
+        bottom: 25,
+        right: 10,
+        zIndex: 100
     },
     font18: {
         fontSize: 18
@@ -491,8 +499,8 @@ const getStyles = theme => StyleSheet.create({
         color: theme.placeholder,
         fontSize: 12,
         fontStyle: 'italic',
-        marginLeft: 10,
-        paddingBottom: 5
+        marginLeft: 15,
+        paddingTop: 10,
     },
     lastUpdated: {
         textAlign: 'center',
@@ -536,7 +544,7 @@ const getStyles = theme => StyleSheet.create({
         zIndex: 10,
         top: 0,
         right: 5,
-        fontSize: 24,
+        fontSize: 28,
         color: '#F53240',
         padding: 10
     },
@@ -568,11 +576,25 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: '#78b6fb',
         elevation: 1
     },
+    header: {
+        backgroundColor: theme.loading, 
+        marginTop: -15,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        height: 40,
+        paddingVertical: 10,
+    },
+    filterTitle: {
+        color: theme.buttonTextColor,
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
     xButton: {
         position: 'absolute',
-        right: -20,
-        top: -35,
-        color: '#e4606a',
+        right: -15,
+        top: -15,
+        color: theme.xButton,
     },
 })
 

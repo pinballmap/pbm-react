@@ -13,7 +13,7 @@ export const dark = {
     drawerText:'#ebebeb',
     drawerIcon:'#cac6ca',
     hr:'#cac6ca',
-    placeholder:'#cac6ca',
+    placeholder:'#a6a2a6',
     _97a5af:'#cac6ca',
     disabledText:'#5f595f',
     d_493931:'#5f595f',
@@ -30,7 +30,7 @@ export const dark = {
     backgroundColor:'#1d1c1d',
     _f5fbff:'#cac6ca',
     warningButtonColor: '#e4606a',
-    modalBg:'#000000',
+    modalBg:'#595759',
     _fff:'#323038',
     buttonMask: 'rgba(0,0,0,.2)',
     mask: 'rgba(0,0,0,.8)',
@@ -38,7 +38,9 @@ export const dark = {
     addBtnBorderW:1,
     selButton: '#323038',
     pageTitle: '#595759',
-    locationName: '#736f73'
+    locationName: '#736f73',
+    xButton: '#ffffff',
+    dropdownText: '#cac6ca'
 }
 
 export const standard = {
@@ -81,5 +83,7 @@ export const standard = {
     machineName: '#000e18',
     selButton: '#D3ECFF',
     pageTitle: '#6a7d8a',
-    locationName: '#D3ECFF'
+    locationName: '#D3ECFF',
+    xButton: '#e85e68',
+    dropdownText: '#2d3032'
 }
