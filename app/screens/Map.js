@@ -23,6 +23,8 @@ import {
     ConfirmationModal,
     Search,
     Text,
+    IosMarker,
+    AndroidMarker,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -38,45 +40,9 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 
-const MenuIcon = (props) => {
-    const { numMachines } = props
-    let dotFontMargin, dotWidthHeight
-    if (numMachines < 10) {
-        dotFontMargin = Platform.OS === 'ios' ? 0 : -2
-        dotWidthHeight = 32
-    } else if (numMachines < 20) {
-        dotFontMargin = Platform.OS === 'ios' ? 2 : 0
-        dotWidthHeight = 36
-    } else if (numMachines < 100) {
-        dotFontMargin = Platform.OS === 'ios' ? 4 : 2
-        dotWidthHeight = 40
-    } else {
-        dotFontMargin = Platform.OS === 'ios' ? 7 : 4
-        dotWidthHeight = 46
-    }
-    return (
-        <View style={{
-            width: dotWidthHeight,
-            height: dotWidthHeight,
-            borderRadius: dotWidthHeight / 2,
-            borderWidth: 3,
-            borderColor: '#d2e5fa',
-            backgroundColor: '#78b6fb',
-            elevation: 1,
-        }}>
-            <Text style={{
-                color: 'white',
-                fontWeight:'bold',
-                textAlign:'center',
-                fontSize: 20,
-                marginTop:dotFontMargin}}>
-                {numMachines}
-            </Text>
-        </View>
-    )
-}
+const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : <AndroidMarker numMachines={numMachines}/>
 
-MenuIcon.propTypes = {
+MarkerDot.propTypes = {
     numMachines: PropTypes.number,
 }
 
@@ -95,7 +61,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
+            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
