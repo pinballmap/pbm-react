@@ -40,7 +40,7 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 
-const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : <AndroidMarker numMachines={numMachines}/>
+const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
 
 MarkerDot.propTypes = {
     numMachines: PropTypes.number,
