@@ -56,7 +56,7 @@ export class SignupLogin extends Component {
         } else if (url.indexOf('address=') > 0) {
             const decoded = decodeURIComponent(url)
             const address = decoded.split('address=')[1]
-            const { location } = await getData(`/locations/closest_by_address.json?address=${address}`)
+            const { location } = await getData(`/locations/closest_by_address.json?address=${address};no_details=1`)
             if (location) {
                 this.props.updateCurrCoordinates(location.lat, location.lon)
             }
