@@ -50,7 +50,7 @@ export const getLocations = (lat = '', lon = '', distance = global.STANDARD_DIST
     const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
     const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
     const byOperator = selectedOperator ? `by_operator_id=${selectedOperator};` : ''
-    const url = `/locations/closest_by_lat_lon.json?lat=${lat ? lat : curLat};lon=${lon ? lon : curLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${distance};send_all_within_distance=1`
+    const url = `/locations/closest_by_lat_lon.json?lat=${lat ? lat : curLat};lon=${lon ? lon : curLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${distance};send_all_within_distance=1;no_details=1`
 
     return getData(url)
         .then(data => dispatch(getLocationsSuccess(data)))

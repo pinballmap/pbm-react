@@ -100,7 +100,7 @@ class Search extends Component {
 
     getLocationsByCity = async ({ value }) => {
         try {
-            const { location } = await getData(`/locations/closest_by_address.json?address=${value}`)
+            const { location } = await getData(`/locations/closest_by_address.json?address=${value};no_details=1`)
             this.props.updateCoordinates(location.lat, location.lon)
             this.clearSearchState({ value })
         } catch (e) {
