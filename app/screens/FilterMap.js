@@ -15,7 +15,6 @@ import {
     WarningButton,
 } from '../components'
 import {
-    setFilters,
     updateNumMachinesSelected,
     updateViewFavoriteLocations,
     selectedLocationTypeFilter,
@@ -237,7 +236,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setFilters: (machine, location, numMachines, operator) => dispatch(setFilters(machine, location, numMachines, operator)),
     updateNumMachinesSelected: idx => dispatch(updateNumMachinesSelected(idx)),
     selectedLocationTypeFilter: type => dispatch(selectedLocationTypeFilter(type)),
     selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
