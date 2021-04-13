@@ -33,7 +33,6 @@ import {
     clearFilters,
     clearError,
     getLocationsConsideringZoom,
-    updateMapCoordinates,
 } from '../actions'
 import {
     getMapLocations
@@ -89,7 +88,6 @@ class Map extends Component {
     constructor(props) {
         super(props)
 
-        this.mapRef = null
         this.prevRegion = {}
 
         this.state = {
@@ -98,6 +96,12 @@ class Map extends Component {
             themeState: '',
             showAppAlert: false,
             selectedIndex: 2
+            showUpdateSearch: false,
+            latitude: null,
+            longitude: null,
+            latitudeDelta: null,
+            longitudeDelta: null,
+            mapCoordinatesUpdated: false,
         }
         this.updateIndex = this.updateIndex.bind(this)
     }
@@ -132,14 +136,11 @@ class Map extends Component {
     static contextType = ThemeContext;
 
     onRegionChange = (region) => {
-        const compareRegion = (region) => {
-            this.props.getLocationsConsideringZoom(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
-        }
-
         if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001) {
-            setTimeout(compareRegion, 800, region)
-            this.props.updateMapCoordinates({
-                ...region
+            this.setState({
+                ...region,
+                showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
+                mapCoordinatesUpdated: false
             })
         }
         this.prevRegion = region
@@ -150,10 +151,6 @@ class Map extends Component {
     }
 
     componentDidUpdate() {
-        if (this.mapRef) {
-            setTimeout(() => this.mapRef.fitToElements(true), 1000)
-        }
-
         const { theme } = this.context.theme
         if (theme !== this.state.themeState) {
             this.updateTheme(theme)
@@ -161,7 +158,7 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        if(this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
+        if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
             this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
         } else {
             this.props.getCurrentLocation()
@@ -188,8 +185,25 @@ class Map extends Component {
             viewByFavoriteLocations,
         } = props.query
 
+        const {
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
+        } = this.state
+
+        if (!this.state.latitude || this.props.query.curLat !== curLat) {
+            this.setState({
+                latitude: curLat,
+                longitude: curLon,
+                latitudeDelta: latDelta,
+                longitudeDelta: lonDelta,
+                mapCoordinatesUpdated: true,
+            })
+        }
+
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
-            this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
+            this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
         }
 
     }
@@ -214,6 +228,11 @@ class Map extends Component {
         const {
             showNoLocationTrackingModal,
             showAppAlert,
+            showUpdateSearch,
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
         } = this.state
 
         const { theme } = this.context
@@ -224,7 +243,7 @@ class Map extends Component {
 
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
-        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
+        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
         if (!latitude) {
@@ -364,6 +383,19 @@ class Map extends Component {
                         />
                         : null
                     }
+                    {showUpdateSearch ?
+                        <Button
+                            title={'Update search'}
+                            onPress={() => {
+                                this.setState({ showUpdateSearch: false })
+                                this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
+                            }}
+                            type="clear"
+                            titleStyle={s.clear}
+                            containerStyle={{ width: 125, position: 'absolute', top: 0, left: 0 }}
+                        />
+                        : null
+                    }
                 </View>
             </View>
         )
@@ -454,7 +486,6 @@ Map.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
-    updateMapCoordinates: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
@@ -484,7 +515,6 @@ const mapDispatchToProps = (dispatch) => ({
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
-    updateMapCoordinates: ({...region}) => dispatch(updateMapCoordinates({...region})),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

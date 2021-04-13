@@ -75,15 +75,6 @@ export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) 
     dispatch(getLocations(lat, lon))
 }
 
-export const updateMapCoordinates = ({...region}) => ({
-    type: UPDATE_COORDINATES,
-    lat: region.latitude,
-    lon: region.longitude,
-    latDelta: region.latitudeDelta,
-    lonDelta: region.longitudeDelta,
-})
-
-
 export const getLocationsSuccess = (data) => {
     return {
         type: FETCHING_LOCATIONS_SUCCESS,
