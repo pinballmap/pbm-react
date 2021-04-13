@@ -17,6 +17,7 @@ import {
     View,
 } from 'react-native'
 import {
+    Button,
     Input,
     ListItem,
 } from 'react-native-elements'
@@ -251,7 +252,7 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.neutral }}>
                                     <View style={s.modalContainer}>
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                                             <MaterialIcons
@@ -265,8 +266,8 @@ class Search extends Component {
                                             />
                                             <Input
                                                 placeholder='City, Address, Location'
-                                                leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{ marginLeft: 10, marginRight: 0 }} />}
-                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
+                                                leftIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} style={{ marginLeft: 10, marginRight: 0 }} />}
+                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
                                                 onChangeText={query => this.changeQuery(query)}
                                                 value={q}
                                                 containerStyle={{ paddingTop: 4 }}
@@ -295,6 +296,15 @@ class Search extends Component {
                                     <Text style={s.inputPlaceholder}>City, Address, Location</Text>
                                 </View>
                             </TouchableOpacity>
+                            <Button
+                                onPress={() => this.props.navigation.navigate('FilterMap')}
+                                containerStyle={{ position: 'absolute', top: 0, right: 0, borderBottomRightRadius: 25, borderTopRightRadius: 25 }}
+                                icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
+                                buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff',shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
+                                titleStyle={{color:'#394046',fontSize:16}}
+                                title="Filter"
+                                underlayColor='transparent'
+                            />
                         </View>
                     )
                 }}
@@ -309,65 +319,73 @@ Search.propTypes = {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme._f2f4f5,
+        backgroundColor: theme.neutral,
     },
     modalContainer: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : 10,
     },
     searchMap: {
-        width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,
-        backgroundColor: theme._f2f4f5,
-        height: 35,
-        borderRadius: 5,
-        borderColor: theme._e0ebf2,
-        borderWidth: 1,
+        width: deviceWidth - 30,
+        //width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,
+        //backgroundColor: theme.neutral,
+        backgroundColor: 'white',
+        height: 40,
+        borderRadius: 25,
+        paddingLeft: 10,
+//         marginLeft: 15,
+//         marginRight: 15,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: Platform.OS === 'ios' ? -10 : 0,
-        alignItems: 'center'
+        //marginLeft: Platform.OS === 'ios' ? -10 : 0,
+        alignItems: 'center',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     searchIcon: {
         paddingLeft: 5,
-        color: theme._97a5af,
+        color: theme.indigo4,
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color: theme._97a5af,
+        color: theme.indigo4,
     },
     inputStyle: {
-        color: theme.drawerText,
+        color: theme.orange7,
     },
     inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: theme._f2f4f5,
-        borderRadius: 5,
+        backgroundColor: theme.neutral,
+        borderRadius: 25,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
-        height: 35,
+        height: 40,
         display: 'flex',
         flexDirection: 'row',
         paddingLeft: 0,
     },
     listContainerStyle: {
-        borderBottomColor: theme.hr,
+        borderBottomColor: theme.indigo4,
         borderBottomWidth: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     listItemTitle: {
-        color: theme.drawerText,
+        color: theme.orange7,
         marginBottom: -2,
         marginTop: -2
     },
     searchHistoryTitle: {
-        color: theme.drawerText,
+        color: theme.orange7,
         fontWeight: 'bold',
     },
     clear: {
-        color: theme.meta,
+        color: theme.orange7,
         marginLeft: 5,
-        marginRight: 5,
-        marginTop: 6,
+        marginRight: -5,
+        marginTop: 8,
     },
     cityRegionRow: {
         position: 'absolute',
@@ -381,6 +399,7 @@ const getStyles = theme => StyleSheet.create({
 Search.propTypes = {
     displayError: PropTypes.func,
     navigate: PropTypes.func,
+    navigation: PropTypes.object,
     regions: PropTypes.object,
     updateCoordinates: PropTypes.func,
     getLocationsByRegion: PropTypes.func,

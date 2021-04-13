@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
-import { 
+import { connect } from 'react-redux'
+import {
     Platform,
     StyleSheet,
-    Text, 
-    View, 
+    Text,
+    View,
 } from 'react-native'
-import { 
+import {
     Avatar,
-    Button, 
+    Button,
     ListItem,
 } from 'react-native-elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -20,7 +20,7 @@ import { ThemeContext } from '../theme-context'
 const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
-    
+
     const [showModal, setShowModal] = useState(false)
 
     const setRecentActivityFilter = (activity) => {
@@ -32,13 +32,13 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
 
     return(
         <View>
-            {showModal && 
+            {showModal &&
                     <ConfirmationModal>
                         <View style={s.header}>
                             <Text style={s.filterTitle}>Filter Recent Activity</Text>
-                            <MaterialCommunityIcons 
-                                name='close-circle' 
-                                size={34} 
+                            <MaterialCommunityIcons
+                                name='close-circle'
+                                size={34}
                                 onPress={() => setShowModal(false)}
                                 style={s.xButton}
                             />
@@ -56,7 +56,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
-                            <ListItem 
+                            <ListItem
                                 containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('new_condition')}>
                                 <Avatar>
@@ -92,7 +92,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
-                            <ListItem 
+                            <ListItem
                                 containerStyle={selectedActivity === 'confirm_location' ? s.containerBg : s.containerNotSelected}
                                 onPress={() => setRecentActivityFilter('confirm_location')}>
                                 <Avatar>
@@ -112,9 +112,9 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                 containerStyle={{width:60}}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{color: theme.backButton, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
+                titleStyle={{color: theme.blue2, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
                 type="clear"
-            /> 
+            />
         </View>
     )
 
@@ -122,10 +122,10 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
 
 const getStyles = (theme) => StyleSheet.create({
     containerNotSelected: {
-        backgroundColor: theme.modalBG,
+        backgroundColor: theme.neutral,
     },
     header: {
-        backgroundColor: theme.loading, 
+        backgroundColor: theme.blue1,
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -133,7 +133,7 @@ const getStyles = (theme) => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: theme.buttonTextColor,
+        color: theme.orange8,
         textAlign: "center",
         fontSize: 16,
         fontWeight: 'bold'
@@ -142,13 +142,13 @@ const getStyles = (theme) => StyleSheet.create({
         position: 'absolute',
         right: -15,
         top: -15,
-        color: theme.xButton,
+        color: theme.red2,
     },
     titleStyle: {
-        color: theme.pbmText
+        color: theme.text
     },
     containerBg: {
-        backgroundColor: theme.buttonColor
+        backgroundColor: theme.blue2
     }
 })
 

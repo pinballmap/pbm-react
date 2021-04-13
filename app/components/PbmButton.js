@@ -24,27 +24,33 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, onPr
             buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
             titleStyle={styles.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{overflow:'hidden'}, containerStyle ? containerStyle : styles.margin15]}
+            containerStyle={[{overflow:'hidden',borderRadius: 25,}, containerStyle ? containerStyle : styles.margin15]}
         />
     )
 }
 
 const getStyles = (theme) => StyleSheet.create({
     blueButton: {
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.blue2,
         width: '100%',
+        borderRadius: 25,
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     titleStyle: {
-        color: theme.buttonTextColor,
+        color: theme.orange8,
         fontSize: 18,
         textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     disabledStyle: {
-        backgroundColor: theme._e0f1fb
+        backgroundColor: theme.white
     },
     disabledTitleStyle: {
-        color: theme.disabledText
+        color: theme.orange3
     },
     margin15: {
         marginLeft: 40,

@@ -59,9 +59,9 @@ class MachineDetails extends Component {
             title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
             headerRight: <RemoveMachine />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
@@ -137,7 +137,7 @@ class MachineDetails extends Component {
                                                 value={this.state.conditionText}
                                                 style={[{padding:5,height:100},s.textInput,s.radius10]}
                                                 placeholder={'Enter machine condition...'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
                                             />
                                             <PbmButton
@@ -171,7 +171,7 @@ class MachineDetails extends Component {
                                                 value={formatInputNumWithCommas(this.state.score)}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
@@ -191,7 +191,7 @@ class MachineDetails extends Component {
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                             <ScrollView>
                                 <Text style={{textAlign:'center',marginTop:10,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
+                                <View style={[{backgroundColor:theme.white,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Machine Comments</Text>
                                     {mostRecentComments ?
                                         mostRecentComments.map(commentObj => {
@@ -219,7 +219,7 @@ class MachineDetails extends Component {
                                             () => this.props.navigation.navigate('Login')}
                                     />
                                 </View>
-                                <View style={[{backgroundColor:theme._fff,marginBottom:15},s.border]}>
+                                <View style={[{backgroundColor:theme.white,marginBottom:15},s.border]}>
                                     <Text style={s.sectionTitle}>Top Scores</Text>
                                     {userHighScore ?
                                         <View>
@@ -298,17 +298,17 @@ class MachineDetails extends Component {
 
 const getStyles = theme => StyleSheet.create({
     backgroundColor: {
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     externalLink: {
         borderWidth: 2,
-        borderColor: theme.buttonColor,
+        borderColor: theme.blue2,
     },
     externalIcon: {
         fontSize: 24
     },
     externalLinkTitle: {
-        color: theme.pbmText,
+        color: theme.text,
         fontSize: 16
     },
     margin40: {
@@ -318,13 +318,13 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     conditionText: {
-        color: theme.pbmText,
+        color: theme.text,
         fontStyle: 'italic',
         fontSize: 16,
         marginTop: 5
     },
     scoreText: {
-        color: theme.pbmText,
+        color: theme.text,
         fontSize: 16,
         marginTop: 5,
         fontWeight: 'bold',
@@ -333,13 +333,13 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 15,
         fontStyle: 'italic',
-        color: theme.meta,
+        color: theme.orange7,
         paddingVertical: 5,
     },
     textInput: {
-        backgroundColor: theme.textInput,
-        borderColor: theme.borderColor,
-        color: theme.pbmText,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
+        color: theme.text,
         borderWidth: 1,
         marginBottom: 10,
         marginLeft: 15,
@@ -354,19 +354,19 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 10,
-        color: theme.machineName
+        color: theme.text
     },
     userScoreTitle: {
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: theme.meta
+        color: theme.orange7
     },
     userHighScore: {
         textAlign:'center',
         fontSize: 24,
         paddingBottom: 15,
-        color: theme.d_9a836a
+        color: theme.orange7
     },
     verticalAlign: {
         flexDirection: 'column',
@@ -374,9 +374,9 @@ const getStyles = theme => StyleSheet.create({
         height: deviceHeight
     },
     border: {
-        borderBottomColor: theme._e0ebf2,
+        borderBottomColor: theme.white,
         borderBottomWidth: 1,
-        borderTopColor: theme._e0ebf2,
+        borderTopColor: theme.white,
         borderTopWidth: 1,
     },
     modalTitle: {
@@ -389,7 +389,7 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.meta
+        color: theme.orange7
     },
     subtitleMargin: {
         marginTop: 5,
@@ -398,7 +398,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14
     },
     listContainerStyle: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme.white,
         paddingLeft: 30,
         paddingTop: 5
     },

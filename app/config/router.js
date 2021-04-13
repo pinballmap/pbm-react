@@ -39,16 +39,16 @@ const map = createStackNavigator({
     Map
 })
 
-const saved = createStackNavigator({ 
-    Saved 
+const saved = createStackNavigator({
+    Saved
 })
 
-const activity = createStackNavigator({ 
-    RecentActivity 
+const activity = createStackNavigator({
+    RecentActivity
 })
 
-const profile = createStackNavigator({ 
-    UserProfile 
+const profile = createStackNavigator({
+    UserProfile
 })
 
 const Menu = createStackNavigator({
@@ -65,7 +65,7 @@ const TabNav = createBottomTabNavigator(
     },
     {
         defaultNavigationOptions: ({ navigation, theme }) => ({
-            tabBarIcon: ({ focused, tintColor }) => {  // eslint-disable-line 
+            tabBarIcon: ({ focused, tintColor }) => {  // eslint-disable-line
                 const { routeName } = navigation.state
                 switch (routeName) {
                     case 'Map':
@@ -111,13 +111,13 @@ const TabNav = createBottomTabNavigator(
                     dark: '#addbff',
                 },
                 inactiveTintColor: {
-                    light: '#6a7d8a',
+                    light: '#95867c',
                     dark: '#ebebeb',
                 },
                 showIcon: true,
                 adaptive: false,
                 style: {
-                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
                     height: Platform.isPad ? 55 : Platform.OS === 'ios' ? 46 : 54,
                     marginBottom: Platform.OS === 'ios' ? 0 : 5
                 },
@@ -140,7 +140,12 @@ const TabNav = createBottomTabNavigator(
 
 TabNav.navigationOptions = {
     header: null,
-    gesturesEnabled: false
+    headerVisible: false,
+    gesturesEnabled: false,
+    headerTransparent: true
+}
+LocationDetails.navigationOptions = {
+    headerTransparent: true
 }
 
 export const MapStack = createStackNavigator({
@@ -170,9 +175,9 @@ export const MapStack = createStackNavigator({
     navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
         drawerLabel: 'Map',
-        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#6a7d8a' }} />,
+        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#95867c' }} />,
         headerStyle: {
-            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
             height: Platform.OS === 'ios' ? 44 : 56,
         },
         headerTitleStyle: {
@@ -181,7 +186,7 @@ export const MapStack = createStackNavigator({
             alignSelf: 'center',
             width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
-        headerTintColor: theme === 'dark' ? '#ebebeb' : '#4b5862'
+        headerTintColor: theme === 'dark' ? '#ebebeb' : '#766a62'
     })
 }
 )
@@ -201,20 +206,20 @@ export const drawerNavigator = createDrawerNavigator({
     drawerPosition: 'right',
     drawerWidth: 250,
     drawerBackgroundColor: {
-        light: '#f5fbff',
+        light: '#fff7eb',
         dark: '#1d1c1d',
     },
     contentOptions: {
         activeTintColor: {
-            light: '#6a7d8a',
+            light: '#95867c',
             dark: '#ebebeb'
         },
         inactiveTintColor: {
-            light: '#6a7d8a',
+            light: '#95867c',
             dark: '#ebebeb'
         },
         activeBackgroundColor: {
-            light: '#f5fbff',
+            light: '#fff7eb',
             dark: '#1d1c1d'
         },
     },
@@ -231,6 +236,6 @@ const s = theme => StyleSheet.create({
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: theme === 'dark' ? '#ebebeb' : '#4b5862'
+        color: theme === 'dark' ? '#ebebeb' : '#766a62'
     },
 })

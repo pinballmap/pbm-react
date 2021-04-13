@@ -1,18 +1,18 @@
 import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
-    Dimensions, 
-    ImageBackground, 
+import {
+    Dimensions,
+    ImageBackground,
     Keyboard,
-    StyleSheet, 
-    Text, 
-    TouchableWithoutFeedback, 
-    View, 
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
-    Button, 
+import {
+    Button,
     Input,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -68,7 +68,7 @@ const Signup = ({ login, loginLater, navigation }) => {
 
         if (password !== confirm_password) {
             setConfirmPasswordError("DOESN'T MATCH PASSWORD")
-            setErrors(true) 
+            setErrors(true)
         }
     }
 
@@ -98,7 +98,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                         setApiErrorMsg(data.message)
                         setErrors(true)
                     }
-        
+
                     if (data.errors) {
                         setErrors(true)
                         const errors = data.errors.split(",")
@@ -116,7 +116,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                         }
                     }
 
-                    if (data.user) {      
+                    if (data.user) {
                         login(data.user)
                         navigation.navigate('Map')
                     }
@@ -134,15 +134,15 @@ const Signup = ({ login, loginLater, navigation }) => {
                 <View style={s.mask}>
                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                         <View style={s.justify}>
-                            {errors && 
+                            {errors &&
                                 <Text style={s.errorText}>
                                     {apiErrorMsg ? apiErrorMsg : 'There were errors trying to process your submission'}
                                 </Text>
                             }
                             <Text style={s.bold}>Sign Up</Text>
-                            <Input 
+                            <Input
                                 placeholder='Username'
-                                placeholderTextColor={theme.placeholder}
+                                placeholderTextColor={theme.indigo4}
                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
                                 onChangeText={username => setUsername(username)}
                                 value={username}
@@ -153,9 +153,9 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
-                            <Input 
+                            <Input
                                 placeholder="Email Address"
-                                placeholderTextColor={theme.placeholder}
+                                placeholderTextColor={theme.indigo4}
                                 leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
                                 onChangeText={email => setEmail(email)}
                                 value={email}
@@ -167,9 +167,9 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 autoCorrect={false}
                                 keyboardType="email-address"
                             />
-                            <Input 
+                            <Input
                                 placeholder="Password"
-                                placeholderTextColor={theme.placeholder}
+                                placeholderTextColor={theme.indigo4}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={password => setPassword(password)}
                                 value={password}
@@ -181,9 +181,9 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
-                            <Input 
+                            <Input
                                 placeholder="Confirm Password"
-                                placeholderTextColor={theme.placeholder}
+                                placeholderTextColor={theme.indigo4}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={confirm_password => setConfirmPassword(confirm_password)}
                                 value={confirm_password}
@@ -218,7 +218,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 onPress={() => {
                                     loginLater()
                                     navigation.navigate('Map')
-                                }} 
+                                }}
                                 titleStyle={s.textLink}
                                 buttonStyle={s.buttonMask}
                                 title="skip signing up for now"
@@ -231,7 +231,7 @@ const Signup = ({ login, loginLater, navigation }) => {
     )
 }
 
-Signup.navigationOptions = { 
+Signup.navigationOptions = {
     header: null,
     gesturesEnabled: true
 }
@@ -254,7 +254,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0
     },
     errorText: {
-        color: 'red', 
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -267,33 +267,33 @@ const getStyles = theme => StyleSheet.create({
         width: '100%',
         borderRadius: 5,
         borderWidth: 1,
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         marginTop: 15,
         marginBottom: 15,
     },
     inputText: {
-        color: theme.pbmText,
+        color: theme.text,
     },
     textLink: {
         fontSize: 14,
         textAlign: "center",
         fontWeight: "bold",
-        color: theme.drawerText,
+        color: theme.orange7,
     },
     iconStyle: {
         fontSize: 24,
-        color: theme.placeholder,
+        color: theme.indigo4,
         marginRight: 5,
         marginLeft: 5
     },
     buttonStyle: {
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.blue2,
         width: '100%',
         elevation: 0
     },
     buttonTitle: {
-        color: theme.buttonTextColor, 
+        color: theme.orange8,
         fontSize: 16,
         fontWeight: '500'
     },
@@ -305,10 +305,10 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15
     },
     disabledStyle: {
-        backgroundColor: theme._e0f1fb,
+        backgroundColor: theme.white,
     },
     disabledTitleStyle: {
-        color: theme.disabledText
+        color: theme.orange3
     },
 })
 

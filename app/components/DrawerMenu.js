@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { connect } from 'react-redux' 
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
-import { 
+import {
     Platform,
-    Text, 
-    TouchableOpacity, 
+    Text,
+    TouchableOpacity,
     View,
     StyleSheet
 } from 'react-native'
@@ -43,15 +43,15 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
                 />
             </ConfirmationModal>
             <View style={{marginTop: 50}}>
-                <DrawerNavigatorItems 
-                    {...props} 
+                <DrawerNavigatorItems
+                    {...props}
                     onItemPress={(item) => navigation.navigate(item.route.key)}
                 />
-                {loggedIn ? 
+                {loggedIn ?
                     <TouchableOpacity style={s.container} onPress={() => setModalVisible(true)}>
                         <MaterialCommunityIcons name='logout' style={s.icon} />
                         <Text style={s.text}>Logout</Text>
-                    </TouchableOpacity>                    
+                    </TouchableOpacity>
                     : <TouchableOpacity style={s.container} onPress={() => navigation.navigate('Login')}>
                         <MaterialCommunityIcons name='login' style={s.icon} />
                         <Text style={s.text}>Log In</Text>
@@ -68,12 +68,12 @@ const getStyles = theme => StyleSheet.create({
     },
     icon: {
         fontSize: 24,
-        color: theme.drawerIcon,
+        color: theme.indigo4,
         position: 'absolute',
         paddingLeft: Platform.OS === 'ios' ? 20 : 15
     },
     text: {
-        color: theme.drawerText,
+        color: theme.orange7,
         fontWeight: 'bold',
         position: 'absolute',
         paddingLeft: 72,

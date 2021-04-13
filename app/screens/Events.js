@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
-import { 
+import {
     ActivityIndicator,
     FlatList,
     Linking,
     StyleSheet,
     Text,
-    View, 
+    View,
 } from 'react-native'
 import {
     ButtonGroup,
@@ -32,29 +32,29 @@ class Events extends Component {
         error: false,
         address: '',
         selectedIdx: 0,
-        radius: 50, 
+        radius: 50,
     }
-  
+
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Events',
-            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#6a7d8a'}} />,
+            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#95867c'}} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             },
             gesturesEnabled: true
         }
     }
 
-    updateIdx = (selectedIdx) => {   
+    updateIdx = (selectedIdx) => {
         const radiusArray = [50, 100, 150, 200, 250]
         const radius = radiusArray[selectedIdx]
         this.setState({ selectedIdx, radius, refetchingEvents: true })
@@ -74,17 +74,17 @@ class Events extends Component {
     componentDidMount() {
         const { lat, lon } = this.props.user
         const { curLat, curLon } = this.props.query
-        const { mapLocations = [] } = this.props.locations 
-        
+        const { mapLocations = [] } = this.props.locations
+
         let promise
         if (mapLocations.length > 0 && mapLocations[0].city && mapLocations[0].state) {
             let address = `${mapLocations[0].city}, ${mapLocations[0].state}`
             promise = () => Promise.resolve(address)
-            
-        } 
+
+        }
         else {
             promise = () => Geocode.fromLatLng(curLat !== null ? curLat : lat, curLon !== null ? curLon : lon)
-                .then(response => response.results[0].formatted_address, error => { throw error }) 
+                .then(response => response.results[0].formatted_address, error => { throw error })
         }
 
         promise()
@@ -94,7 +94,7 @@ class Events extends Component {
             })
             .catch(() => this.setState({ error: true, gettingEvents: false}))
     }
-     
+
     render(){
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
 
@@ -104,15 +104,15 @@ class Events extends Component {
                     const s = getStyles(theme)
                     return (
                         <>
-                            {gettingEvents ? 
+                            {gettingEvents ?
                                 <View style={s.background}>
                                     <ActivityIndicator />
                                 </View> :
-                                error ? 
+                                error ?
                                     <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
                                     <>
                                         <View style={s.header}>
-                                            <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text> 
+                                            <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text>
                                             <ButtonGroup
                                                 onPress={this.updateIdx}
                                                 selectedIndex={selectedIdx}
@@ -143,11 +143,11 @@ class Events extends Component {
                                                         )
                                                     }}
                                                     keyExtractor={event => `${event.calendar_id}`}
-                                                />  : 
+                                                />  :
                                                 <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
                                         }
                                     </>
-                            
+
                             }
                         </>
                     )
@@ -157,17 +157,17 @@ class Events extends Component {
     }
 }
 
-const getStyles = theme => StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({
     background: {
         padding: 30,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     header: {
-        backgroundColor: theme._6a7d8a,
+        backgroundColor: theme.orange7,
         paddingVertical: 10,
     },
     headerText: {
-        color: theme._f5fbff,
+        color: theme.neutral,
         textAlign: "center"
     },
     title: {
@@ -175,11 +175,11 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonStyle: {
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.blue2,
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
+        borderColor: theme.blue2,
         borderWidth: 2,
         backgroundColor: theme.buttonGroup,
     },
@@ -188,54 +188,54 @@ const getStyles = theme => StyleSheet.create({
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.buttonGBorder
+        color: theme.blue2
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme.white,
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
     textLink: {
         fontSize: 14,
         textAlign: 'center',
         paddingVertical: 10,
-        backgroundColor: theme.pageTitle,
-        color: theme.pbmText,
+        backgroundColor: theme.orange7,
+        color: theme.text,
         fontWeight: 'bold',
         marginBottom: 5
     },
     margin: {
         marginTop: 10,
-    },    
+    },
     problem: {
         textAlign: "center",
-        color: theme.pbmText,
+        color: theme.text,
         fontWeight: 'bold',
         marginTop: 20
     },
     cardContainer: {
         borderRadius: 5,
-        borderColor: theme.borderColor,
-        backgroundColor: theme._fff
+        borderColor: theme.orange3,
+        backgroundColor: theme.white
     },
     center: {
         textAlign: 'center'
     },
     cardTextStyle: {
         fontSize: 16,
-        color: theme.meta
+        color: theme.orange7
     },
     address: {
         fontSize: 12,
-        color: theme.d_9a836a
+        color: theme.orange7
     }
 })
 
 Events.propTypes = {
     navigation: PropTypes.object,
-    user: PropTypes.object, 
+    user: PropTypes.object,
     locations: PropTypes.object,
     query: PropTypes.object,
 }

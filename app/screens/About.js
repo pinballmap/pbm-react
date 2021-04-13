@@ -101,14 +101,14 @@ const About = ({navigation, appAlert}) => {
 
 About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#6a7d8a' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'About',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
         flex: 1
@@ -133,7 +133,7 @@ const getStyles = theme => StyleSheet.create({
     logo: {
         flex:1,
         width: deviceWidth - 20,
-        backgroundColor: theme._f5fbff
+        backgroundColor: theme.neutral
     },
     child: {
         margin: "auto",
@@ -151,12 +151,12 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.backButton,
+        color: theme.blue2,
         fontSize: 16,
     },
     appAlert: {
         borderWidth: 1,
-        borderColor: theme.buttonTextColor,
+        borderColor: theme.orange8,
         borderRadius: 10,
         margin: 10,
         paddingTop: 5,

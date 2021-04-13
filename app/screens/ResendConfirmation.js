@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Keyboard,
     StyleSheet,
     TouchableWithoutFeedback,
-    View 
+    View
 } from 'react-native'
 import { Input } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { 
+import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
@@ -24,11 +24,11 @@ const ResendConfirmation = ({ navigation }) => {
     const [identification, setIdentification] = useState('')
     const [identificationError, setIdentificationError] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-     
+
     const submit = () => {
         setIdentificationError('')
         postData('/users/resend_confirmation.json', { identification })
-            .then(() => setModalVisible(true), 
+            .then(() => setModalVisible(true),
                 (err) => { throw err})
             .catch(identificationError => setIdentificationError(identificationError))
     }
@@ -50,10 +50,10 @@ const ResendConfirmation = ({ navigation }) => {
                     </View>
                 </ConfirmationModal>
                 <View style={{marginTop:10}}>
-                    <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
-                    <Input 
+                    <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>
+                    <Input
                         placeholder='Username or email...'
-                        placeholderTextColor={theme.placeholder}
+                        placeholderTextColor={theme.indigo4}
                         onChangeText={identification => setIdentification(identification)}
                         value={identification}
                         errorStyle={{ color: 'red' }}
@@ -63,7 +63,7 @@ const ResendConfirmation = ({ navigation }) => {
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
-                    <PbmButton 
+                    <PbmButton
                         title={'Submit'}
                         onPress={submit}
                         disabled={identification.length === 0}
@@ -77,11 +77,11 @@ const ResendConfirmation = ({ navigation }) => {
 ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         flex: 1
     },
     gesturesEnabled: true
@@ -95,13 +95,13 @@ const getStyles = theme => StyleSheet.create({
     inputBox: {
         borderRadius: 5,
         borderWidth: 1,
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         margin: 15,
         paddingLeft: 10
     },
     inputText: {
-        color: theme.pbmText,
+        color: theme.text,
     },
     confirmText: {
         textAlign: 'center',

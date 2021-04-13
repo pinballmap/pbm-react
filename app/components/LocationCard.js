@@ -1,29 +1,28 @@
 import React, { useContext  } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Platform,
     StyleSheet,
-    Text, 
-    TouchableOpacity, 
-    View, 
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native'
 import { Card } from 'react-native-elements'
-import { Ionicons } from '@expo/vector-icons'
 import { ThemeContext } from '../theme-context'
 
 const NUM_MACHINES_TO_SHOW = 5
 
-const LocationCard = ({ 
-    distance, 
-    id, 
-    machines = [], 
-    name: locationName, 
-    navigation, 
-    state, 
-    street, 
-    city, 
-    type, 
-    zip 
+const LocationCard = ({
+    distance,
+    id,
+    machines = [],
+    name: locationName,
+    navigation,
+    state,
+    street,
+    city,
+    type,
+    zip
 }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -38,8 +37,8 @@ const LocationCard = ({
                         <View style={s.locationNameContainer}>
                             <Text style={s.locationName}>{locationName}</Text>
                         </View>
-                        <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>                           
-                        {type || distance ? 
+                        <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
+                        {type || distance ?
                             <Text style={s.marginS}>
                                 {type ? <Text style={s.gray}>{type}</Text> : null}
                                 {type && distance ? <Text style={s.gray}> • </Text> : null }
@@ -54,7 +53,7 @@ const LocationCard = ({
                                 const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                 return (
                                     <Text key={key} style={s.mName}>
-                                        <Text style={{fontWeight: 'bold',fontSize: 15}}>{title}</Text>
+                                        <Text style={{fontWeight: 'bold',fontSize: 17}}>{title}</Text>
                                         <Text>{`${info}\n`}</Text>
                                     </Text>
                                 )})
@@ -62,7 +61,6 @@ const LocationCard = ({
                             {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus,s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                         </View>
                     </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline"/>
                 </View>
             </TouchableOpacity>
         </Card>
@@ -72,37 +70,57 @@ const LocationCard = ({
 
 const getStyles = (theme) => StyleSheet.create({
     containerStyle: {
-        borderRadius: 5,
-        marginBottom: 8,
-        marginTop: 8,
-        borderColor: theme.borderColor,
-        backgroundColor: theme._fff
+        borderRadius: 15,
+        marginBottom: 12,
+        marginTop: 12,
+        marginRight: 20,
+        marginLeft: 20,
+        borderWidth: 0,
+        backgroundColor: theme.white,
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     flexi: {
-        flex: 1, 
-        flexDirection: 'row', 
-        alignItems: 'center', 
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
         alignContent: 'space-around',
         marginBottom: -5
     },
     mName: {
         marginBottom: Platform.OS === 'ios' ? -10 : 0,
-        color: theme.machineName
+        color: theme.text
     },
     plus: {
         marginBottom: 10,
-        color: theme.pbmText
+        color: theme.text
     },
-    locationNameContainer: {
+    locationNameContainerb: {
         width: '100%',
-        backgroundColor: theme.locationName,
+        backgroundColor: theme.blue1,
         marginBottom: 5,
         padding: 5,
     },
+    locationNameContainer: {
+        marginLeft: -15,
+        marginRight: -15,
+        backgroundColor: '#fcdac3',
+        marginTop: -15,
+        marginBottom: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        paddingVertical: 10,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
     locationName: {
         fontWeight: 'bold',
-        fontSize: 16,
-        color: theme.pbmText
+        fontSize: 20,
+        textAlign: 'center',
+        color: theme.text
     },
     margin: {
         marginTop: 10,
@@ -113,14 +131,14 @@ const getStyles = (theme) => StyleSheet.create({
         marginLeft: 5
     },
     gray: {
-        color: theme.drawerText,
+        color: theme.orange7,
     },
     italic: {
         fontStyle: 'italic',
     },
     iconStyle: {
         fontSize: 32,
-        color: theme._e0ebf2,
+        color: theme.white,
         marginRight: 0,
         position: "absolute",
         right: 0,

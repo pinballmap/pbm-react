@@ -36,12 +36,14 @@ export class LocationList extends Component {
             title: 'Location List',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#faf9f9',
+                borderBottomWidth: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontWeight: 'bold'
             },
             gesturesEnabled: true
         }
@@ -97,7 +99,7 @@ export class LocationList extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <>
+                        <View style={{backgroundColor: theme.neutral}}>
                             <Text style={s.sort}>SORT BY:</Text>
                             <ButtonGroup
                                 onPress={this.updateIndex}
@@ -108,6 +110,7 @@ export class LocationList extends Component {
                                 selectedButtonStyle={s.selButtonStyle}
                                 selectedTextStyle={s.selTextStyle}
                                 innerBorderStyle={s.innerBorderStyle}
+                                disabledStyle={{shadowColor: '#dcd3d6',shadowOffset: { width: 4, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
                             />
                             <FlatList
                                 data={locations}
@@ -128,7 +131,7 @@ export class LocationList extends Component {
                                 }
                                 keyExtractor={(item, index) => `list-item-${index}`}
                             />
-                        </>
+                        </View>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -143,23 +146,34 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        //borderColor: theme.blue2,
+        borderWidth: 0,
+        backgroundColor: theme.white,
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
         color: '#736f73',
         fontSize: deviceWidth < 321 ? 12 : 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.buttonGBorder
+        width: 0,
+        //color: theme.blue2,
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme.white,
+        shadowColor: 'white',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
 })
