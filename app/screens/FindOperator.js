@@ -1,17 +1,17 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
-import { 
-    StyleSheet, 
-    TouchableOpacity, 
-    View, 
+import { connect } from 'react-redux'
+import {
+    StyleSheet,
+    TouchableOpacity,
+    View,
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
-import { 
+import {
     HeaderBackButton,
     Text,
 } from '../components'
@@ -19,12 +19,12 @@ import {
 const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
-    
+
     const allOperators = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...operators]
     const [selectedOperators, setSelectedOperators] = useState(allOperators)
     const [query, setQuery] = useState('')
 
-    const handleSearch = (search = '') => { 
+    const handleSearch = (search = '') => {
         const formattedQuery = search.toLowerCase()
         const operators = allOperators.filter(o => o.name.toLowerCase().includes(formattedQuery))
         setQuery(search)
@@ -37,28 +37,28 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     }
 
     const renderRow = (operator) => (
-        <TouchableOpacity                           
+        <TouchableOpacity
             onPress={() => _selectOperator(operator.item.id)}
         >
             <View style={{padding:8}}>
                 <Text style={{fontSize:18}}>{operator.item.name}</Text>
-            </View>    
+            </View>
         </TouchableOpacity>
     )
 
     const _keyExtractor = operator => `${operator.id}`
-        
+
     return (
-        <> 
+        <>
             <SearchBar
                 lightTheme={theme.theme !== 'dark'}
                 placeholder='Filter operators...'
-                placeholderTextColor={theme.placeholder}
+                placeholderTextColor={theme.indigo4}
                 platform='default'
-                searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
-                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => handleSearch()} />}
+                searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => handleSearch()} />}
                 onChangeText={handleSearch}
-                inputStyle={{color:theme.pbmText}}
+                inputStyle={{color:theme.text}}
                 value={query}
                 inputContainerStyle={s.filterInput}
                 containerStyle={s.containerStyle}
@@ -74,13 +74,13 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
 const getStyles = theme => StyleSheet.create({
     filterInput: {
         height: 35,
-        backgroundColor: theme.findInput,
+        backgroundColor: theme.neutral,
         borderRadius: 10,
-        borderColor: theme.borderColor,
+        borderColor: theme.orange3,
         borderWidth: 1
     },
     containerStyle: {
-        backgroundColor: theme.d_493931,
+        backgroundColor: theme.orange3,
     }
 })
 
@@ -88,11 +88,11 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Select Operator',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         flex: 1
     },
     gesturesEnabled: true

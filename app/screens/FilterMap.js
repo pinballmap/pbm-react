@@ -145,9 +145,9 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     title: 'Filter Results',
     headerRight: <View style={{ padding: 6 }}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
         flex: 1
@@ -159,17 +159,17 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.pageTitle
+        backgroundColor: theme.orange7
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: "bold",
-        color: theme._f5fbff
+        color: theme.neutral
     },
     border: {
         borderWidth: 2,
-        borderColor: theme.borderColor,
+        borderColor: theme.orange3,
     },
     sectionTitle: {
         textAlign: 'center',
@@ -188,7 +188,7 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
+        borderColor: theme.blue2,
         borderWidth: 2,
         backgroundColor: theme.buttonGroup,
     },
@@ -197,13 +197,13 @@ const getStyles = theme => StyleSheet.create({
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.buttonGBorder
+        color: theme.blue2
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme.white,
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
 })

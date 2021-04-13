@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
-    StyleSheet, 
-    View, 
+import {
+    StyleSheet,
+    View,
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { 
-    Button, 
+import {
+    Button,
     ListItem,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { 
+import {
     ActivityIndicator,
-    ConfirmationModal, 
+    ConfirmationModal,
     HeaderBackButton,
-    NotLoggedIn, 
-    PbmButton, 
+    NotLoggedIn,
+    PbmButton,
     Screen,
     Text,
     WarningButton
@@ -39,11 +39,11 @@ class UserProfile extends Component {
             title: 'Profile',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1,
                 fontWeight: 'bold'
             }
@@ -69,7 +69,7 @@ class UserProfile extends Component {
             }
         })
     }
-      
+
     render(){
         if (this.state.fetchingUserInfo)
             return (
@@ -77,15 +77,15 @@ class UserProfile extends Component {
             )
         const { user } = this.props
         const profileInfo = this.state.profile_info
-        const { 
-            profile_list_of_edited_locations = [], 
-            profile_list_of_high_scores = [], 
-            created_at, 
-            num_machines_added, 
-            num_machines_removed, 
-            num_lmx_comments_left, 
-            num_locations_suggested, 
-            num_locations_edited 
+        const {
+            profile_list_of_edited_locations = [],
+            profile_list_of_high_scores = [],
+            created_at,
+            num_machines_added,
+            num_machines_removed,
+            num_lmx_comments_left,
+            num_locations_suggested,
+            num_locations_edited
         } = profileInfo
 
         return (
@@ -94,8 +94,8 @@ class UserProfile extends Component {
                     const s = getStyles(theme)
                     return (
                         <Screen>
-                            {!user.loggedIn ? 
-                                <NotLoggedIn 
+                            {!user.loggedIn ?
+                                <NotLoggedIn
                                     text={`You're not logged in, so you don't have a profile!`}
                                     title={'User Profile'}
                                     onPress={() => this.props.navigation.navigate('Login')}
@@ -141,7 +141,7 @@ class UserProfile extends Component {
                                         <Text style={s.stat}>Locations Edited:</Text>
                                         <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
                                     </View>
-                                    <Button 
+                                    <Button
                                         title={'Saved Locations'}
                                         type="outline"
                                         raised
@@ -164,7 +164,7 @@ class UserProfile extends Component {
                                                         {location[1]}
                                                     </ListItem.Title>
                                                 </ListItem.Content>
-                                            </ListItem> 
+                                            </ListItem>
                                         })}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
@@ -178,16 +178,16 @@ class UserProfile extends Component {
                                                         {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                                     </ListItem.Title>
                                                 </ListItem.Content>
-                                            </ListItem> 
+                                            </ListItem>
                                         })}
                                     </View>
                                     <WarningButton
-                                        title={"Logout"} 
+                                        title={"Logout"}
                                         onPress={() => this.setModalVisible(true)}
                                         accessibilityLabel="Logout"
-                                    /> 
+                                    />
                                 </View>
-                            }                      
+                            }
                         </Screen>
                     )
                 }}
@@ -198,24 +198,24 @@ class UserProfile extends Component {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     bold: {
         fontWeight: 'bold',
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        color: '#f2f2f2',
-        backgroundColor: theme.pageTitle
+        color: theme.indigo4,
+        backgroundColor: theme.orange7
     },
     savedIcon: {
         fontSize: 24,
-        color: theme.buttonTextColor,
+        color: theme.orange8,
         marginRight: 5
     },
     savedLink: {
         borderWidth: 2,
-        borderColor: theme.buttonColor,
+        borderColor: theme.blue2,
     },
     margin40: {
         marginLeft: 40,
@@ -224,7 +224,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     titleStyle: {
-        color: theme.buttonTextColor, 
+        color: theme.orange8,
         fontSize: 16
     },
     listTitleStyle: {
@@ -233,7 +233,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         marginBottom: -8,
         marginTop: -8,
-        color: theme.pbmText
+        color: theme.text
     },
     username: {
         fontWeight: 'bold',
@@ -241,20 +241,20 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: '#D3ECFF',
-        backgroundColor: theme._6a7d8a,
+        backgroundColor: theme.orange7,
         textAlign: "center"
     },
     stat: {
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: theme.drawerText,
+        color: theme.orange7,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: theme.buttonTextColor,
-        backgroundColor: theme.buttonColor,
+        color: theme.orange8,
+        backgroundColor: theme.blue2,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10
@@ -265,7 +265,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         marginTop: 5,
-        color: theme.pbmText
+        color: theme.text
     },
     buttonContainer: {
         marginLeft: 20,

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
-    StyleSheet, 
-    Text 
+import {
+    StyleSheet,
+    Text
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 
@@ -22,13 +22,13 @@ PbmText.propTypes = {
         PropTypes.object,
         PropTypes.array,
     ]),
-    onPress: PropTypes.func, 
+    onPress: PropTypes.func,
     children: PropTypes.node,
 }
 
 const getStyles = (theme) => StyleSheet.create({
     text: {
-        color: theme.pbmText
+        color: theme.text
     },
 })
 

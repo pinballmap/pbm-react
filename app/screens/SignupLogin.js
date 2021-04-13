@@ -286,7 +286,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color: "#4b5862",
+        color: "#766a62",
         fontSize: 16,
         fontWeight: '500'
     },
@@ -296,7 +296,7 @@ const getStyles = theme => StyleSheet.create({
         height: deviceHeight
     },
     skipTitle: {
-        color: theme.pbmText,
+        color: theme.text,
         fontSize: 14,
         textAlign: "center"
     }

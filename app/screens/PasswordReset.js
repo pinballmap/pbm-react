@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Keyboard,
     StyleSheet,
     TouchableWithoutFeedback,
-    View 
+    View
 } from 'react-native'
 import { Input } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { 
+import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
@@ -24,17 +24,17 @@ const PasswordReset = ({ navigation }) => {
     const [identification, setIdentification] = useState('')
     const [identificationError, setIdentificationError] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-  
+
     const submit = () => {
         setIdentificationError('')
         postData('/users/forgot_password.json', { identification })
-            .then(() => setModalVisible(true), 
+            .then(() => setModalVisible(true),
                 (err) => { throw err})
             .catch(identificationError => setIdentificationError(identificationError))
     }
 
     return(
-        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }> 
+        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
             <Screen>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
@@ -50,10 +50,10 @@ const PasswordReset = ({ navigation }) => {
                     </View>
                 </ConfirmationModal>
                 <View style={{marginTop:10}}>
-                    <Text style={s.titleText}>{`Reset Your Password`}</Text>                        
-                    <Input 
+                    <Text style={s.titleText}>{`Reset Your Password`}</Text>
+                    <Input
                         placeholder='Username or email...'
-                        placeholderTextColor={theme.placeholder}
+                        placeholderTextColor={theme.indigo4}
                         onChangeText={identification => setIdentification(identification)}
                         value={identification}
                         errorStyle={{ color: 'red' }}
@@ -63,7 +63,7 @@ const PasswordReset = ({ navigation }) => {
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
-                    <PbmButton 
+                    <PbmButton
                         title={'Submit'}
                         onPress={submit}
                         disabled={identification.length === 0}
@@ -77,11 +77,11 @@ const PasswordReset = ({ navigation }) => {
 PasswordReset.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         flex: 1
     },
     gesturesEnabled: true
@@ -95,13 +95,13 @@ const getStyles = theme => StyleSheet.create({
     inputBox: {
         borderRadius: 5,
         borderWidth: 1,
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         margin: 15,
         paddingLeft: 10
     },
     inputText: {
-        color: theme.pbmText,
+        color: theme.text,
     },
     confirmText: {
         textAlign: 'center',

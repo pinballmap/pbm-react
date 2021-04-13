@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import {     
+import {
     Linking,
     SafeAreaView,
-    StyleSheet, 
-    View, 
+    StyleSheet,
+    View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
-import { 
+import {
     HeaderBackButton,
     Screen,
-    Text, 
+    Text,
 } from '../components'
 
 const FAQ = ({ navigation, }) => {
@@ -48,7 +48,7 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.bold}>{`What is your privacy policy?`}</Text>
                         <Text style={s.text}>Please see the <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('http://pinballmap.com/privacy')}>detailed privacy policy on our website</Text>. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.</Text>
                         <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={ () => navigation.navigate('Contact') } style={s.textLink}>{"Ask us!"}</Text></Text>
-                    </View>  
+                    </View>
                 </View>
             </Screen>
         </SafeAreaView>
@@ -57,16 +57,16 @@ const FAQ = ({ navigation, }) => {
 
 FAQ.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'FAQ',
-    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#6a7d8a'}} />, 
+    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#95867c'}} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'FAQ',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         flex: 1
     },
     gesturesEnabled: true
@@ -75,7 +75,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     container: {
         justifyContent: 'space-between',
@@ -88,7 +88,7 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: theme.pbmText,
+        color: theme.text,
         lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
@@ -100,11 +100,11 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: "#D3ECFF",
-        backgroundColor: theme.pageTitle
+        backgroundColor: theme.orange7
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.buttonColor,
+        color: theme.blue2,
     },
 })
 

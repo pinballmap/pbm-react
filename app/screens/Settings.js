@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     AsyncStorage,
-    StyleSheet, 
-    View, 
+    StyleSheet,
+    View,
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -18,7 +18,7 @@ const Settings = () => {
 
     const [selectedDefault, updateSelectedDefault] = useState(0)
     const [selectedDark, updateSelectedDark] = useState(1)
-    
+
     useEffect(() => {
         retrieveItem('defaultThemeOverride')
             .then(defaultThemeOverride => defaultThemeOverride && updateSelectedDefault(1))
@@ -44,7 +44,7 @@ const Settings = () => {
         AsyncStorage.setItem('darkThemeOverride', JSON.stringify(idx === 0))
         toggleDarkTheme()
     }
-     
+
     return(
         <Screen>
             <View style={s.background}>
@@ -80,16 +80,16 @@ const Settings = () => {
 
 Settings.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Settings',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#6a7d8a' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Settings',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         flex: 1
     },
     gesturesEnabled: true
@@ -98,31 +98,31 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme._6a7d8a,
+        backgroundColor: theme.orange7,
         marginBottom: 10
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: "bold",
-        color: theme._f5fbff
+        color: theme.neutral
     },
     bold: {
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: theme.machineName,
-        backgroundColor: theme.loading,
+        color: theme.text,
+        backgroundColor: theme.blue1,
         textAlign: 'center'
     },
     text: {
         fontSize: 14,
-        color: theme.meta,
+        color: theme.orange7,
         fontStyle: 'italic',
         lineHeight: 22,
         marginBottom: 15,
@@ -131,11 +131,11 @@ const getStyles = theme => StyleSheet.create({
     },
     border: {
         borderWidth: 2,
-        borderColor: theme.borderColor,
+        borderColor: theme.orange3,
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
+        borderColor: theme.blue2,
         borderWidth: 2,
         backgroundColor: theme.buttonGroup,
     },
@@ -144,13 +144,13 @@ const getStyles = theme => StyleSheet.create({
     },
     innerBorderStyle: {
         width: 1,
-        color: theme.buttonGBorder
+        color: theme.blue2
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        backgroundColor: theme.white,
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
 })

@@ -35,9 +35,9 @@ class RecentActivity extends Component {
             title: 'Activity',
             headerRight: <FilterRecentActivity />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
@@ -163,14 +163,14 @@ class RecentActivity extends Component {
 
 const getStyles = theme => StyleSheet.create({
     pbmText: {
-        color: theme.pbmText
+        color: theme.text
     },
     header: {
-        backgroundColor: theme._6a7d8a,
+        backgroundColor: theme.orange7,
         paddingVertical: 10,
     },
     headerText: {
-        color: theme._f5fbff,
+        color: theme.neutral,
         textAlign: "center"
     },
     title: {
@@ -180,14 +180,14 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.meta
+        color: theme.orange7
     },
     paren: {
         fontSize: 12,
         fontStyle: "italic"
     },
     filterView: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.red2,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -196,15 +196,15 @@ const getStyles = theme => StyleSheet.create({
     filter: {
         fontSize: 14,
         textAlign: "center",
-        color: theme.pbmText,
+        color: theme.text,
         fontWeight: 'bold',
         paddingVertical: 8,
     },
     list: {
         borderRadius: 5,
         borderWidth: 2,
-        backgroundColor: theme._fff,
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         padding: 8,
         marginTop: 5,
         marginBottom: 5,
@@ -213,12 +213,12 @@ const getStyles = theme => StyleSheet.create({
     },
     problem: {
         textAlign: "center",
-        color: theme.pbmText,
+        color: theme.text,
         fontWeight: 'bold',
         marginTop: 20
     },
     xButton: {
-        color: '#f53240',
+        color: theme.red2,
         marginLeft: 8,
     }
 })
