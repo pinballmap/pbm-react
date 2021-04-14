@@ -11,7 +11,7 @@ const PbmText = ({ style, onPress, children }) => {
     const s = getStyles(theme)
 
     return (
-        <Text style={[s.text, style]} onPress={onPress}>
+        <Text selectable={true} style={[s.text, style]} onPress={onPress}>
             {children}
         </Text>
     )

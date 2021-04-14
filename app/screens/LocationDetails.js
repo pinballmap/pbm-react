@@ -275,7 +275,7 @@ class LocationDetails extends Component {
                                         <View style={s.locationMetaContainer}>
                                             <View style={s.locationMetaOuter}>
                                                 <View style={s.locationMetaInner}>
-                                                    <Text selectable style={[s.font18,s.marginRight]}>{location.street}</Text>
+                                                    <Text style={[s.font18,s.marginRight]}>{location.street}</Text>
                                                     <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
                                                 </View>
                                             </View>
@@ -283,7 +283,6 @@ class LocationDetails extends Component {
                                                 {location.location_type_id || locationTrackingServicesEnabled ?
                                                     <Text style={[s.meta,s.marginB8]}>
                                                         {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
-                                                        <Text>{locationTypeObj[locationTypeID]}</Text>
                                                         {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
                                                         {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
                                                     </Text>: null
