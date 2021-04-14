@@ -46,9 +46,6 @@ MarkerDot.propTypes = {
     numMachines: PropTypes.number,
 }
 
-const component1 = () => <MaterialCommunityIcons name="format-list-bulleted" size={24} underlayColor='transparent' />
-const component2 = () => <MaterialCommunityIcons name="filter-outline" size={24} underlayColor='transparent' />
-
 const CustomMarker = ({ marker, navigation, s }) => {
     const [tracksViewChanges, setTracksViewChanges] = useState(true)
 
@@ -230,8 +227,6 @@ class Map extends Component {
 
         const { theme } = this.context
         const s = getStyles(theme)
-
-        const buttons = [{ element: component1 }, { element: component2 }]
 
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
