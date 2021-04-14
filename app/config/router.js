@@ -119,7 +119,11 @@ const TabNav = createBottomTabNavigator(
                 style: {
                     backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
                     height: Platform.isPad ? 55 : Platform.OS === 'ios' ? 46 : 54,
-                    marginBottom: Platform.OS === 'ios' ? 0 : 5
+                    marginBottom: Platform.OS === 'ios' ? 0 : 5,
+                    borderTopWidth: 0,
+                    shadowColor: 'transparent',
+                    elevation: 0,
+                    shadowOffset: { height: 0, width: 0 },
                 },
                 iconStyle: {
                     height: 30,

@@ -122,6 +122,8 @@ class LocationDetails extends Component {
             return {...machineDetails, ...machine}
         }))
 
+        const locationTypeID = this.props.locations.locationTypes.find(type => type.id === location.location_type_id).id.toString()
+
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -281,6 +283,7 @@ class LocationDetails extends Component {
                                                 {location.location_type_id || locationTrackingServicesEnabled ?
                                                     <Text style={[s.meta,s.marginB8]}>
                                                         {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
+                                                        <Text>{locationTypeObj[locationTypeID]}</Text>
                                                         {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
                                                         {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
                                                     </Text>: null

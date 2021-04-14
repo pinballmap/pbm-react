@@ -98,16 +98,10 @@ const getStyles = (theme) => StyleSheet.create({
         marginBottom: 10,
         color: theme.text
     },
-    locationNameContainerb: {
-        width: '100%',
-        backgroundColor: theme.blue1,
-        marginBottom: 5,
-        padding: 5,
-    },
     locationNameContainer: {
         marginLeft: -15,
         marginRight: -15,
-        backgroundColor: '#fcdac3',
+        backgroundColor: theme.blue1,
         marginTop: -15,
         marginBottom: 10,
         borderTopLeftRadius: 15,

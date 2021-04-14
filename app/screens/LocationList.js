@@ -146,7 +146,6 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        //borderColor: theme.blue2,
         borderWidth: 0,
         backgroundColor: theme.white,
         shadowColor: '#dcd3d6',
@@ -162,7 +161,6 @@ const getStyles = theme => StyleSheet.create({
     },
     innerBorderStyle: {
         width: 0,
-        //color: theme.blue2,
     },
     selButtonStyle: {
         backgroundColor: theme.white,

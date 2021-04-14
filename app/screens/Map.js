@@ -14,7 +14,7 @@ import {
     Icon,
 } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -95,7 +95,6 @@ class Map extends Component {
             maxedOutZoom: false,
             themeState: '',
             showAppAlert: false,
-            selectedIndex: 2
             showUpdateSearch: false,
             latitude: null,
             longitude: null,
@@ -103,7 +102,6 @@ class Map extends Component {
             longitudeDelta: null,
             mapCoordinatesUpdated: false,
         }
-        this.updateIndex = this.updateIndex.bind(this)
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -123,7 +121,6 @@ class Map extends Component {
                 />,
             headerRight: null,
             headerStyle: {
-                //backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
                 shadowColor: 'transparent',
                 backgroundColor: 'transparent',
                 elevation: 0,
@@ -213,10 +210,6 @@ class Map extends Component {
         this.props.navigation.setParams({ theme })
     }
 
-    updateIndex (selectedIndex) {
-        selectedIndex ? this.props.navigation.navigate('FilterMap') : this.props.navigation.navigate('LocationList')
-    }
-
     render() {
         const {
             appAlert,
@@ -239,7 +232,6 @@ class Map extends Component {
         const s = getStyles(theme)
 
         const buttons = [{ element: component1 }, { element: component2 }]
-        const { selectedIndex } = this.state
 
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
@@ -312,61 +304,22 @@ class Map extends Component {
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                     </MapView>
-                    <ButtonGroup
-                        onPress={this.updateIndex}
-                        selectedIndex={selectedIndex}
-                        buttons={buttons}
-                        containerStyle={{height: 100, width: 40, position: 'absolute', right: 0, top: 110, borderRadius: 10,}}
-                        buttonStyle={{shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
-//                         containerStyle={s.buttonGroupContainer}
-//                         textStyle={s.buttonGroupInactive}
-//                         selectedButtonStyle={s.selButtonStyle}
-//                         selectedTextStyle={s.selTextStyle}
-//                         innerBorderStyle={s.innerBorderStyle}
-                        vertical
-                    />
-                    <Icon
-                        onPress={() => navigation.navigate('FilterMap')}
-                        containerStyle={{ position: 'absolute', top: 160, left: 0 }}
-                        type='material-community'
-                        name='filter-outline'
-                        size={24}
-                        raised
-                        underlayColor='transparent'
-                    />
-                    <Icon
-                        onPress={() => navigation.navigate('LocationList')}
-                        containerStyle={{ position: 'absolute', top: 100, left: 0}}
-                        type='material-community'
-                        name='format-list-bulleted'
-                        size={24}
-                        raised
-                        underlayColor='transparent'
-                    />
-                    <Button
-                        onPress={() => navigation.navigate('FilterMap')}
-                        containerStyle={{ position: 'absolute', top: 110, left: 70, borderRadius: 25 }}
-                        icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 18}} />}
-                        buttonStyle={{paddingTop: 0, paddingBottom: 0, height: 25, borderRadius: 25, backgroundColor: 'white',shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
-                        titleStyle={{color:'#394046',fontSize:14}}
-                        title="Filter"
-                        underlayColor='transparent'
-                    />
                     <Button
                         onPress={() => navigation.navigate('LocationList')}
-                        containerStyle={{ position: 'absolute', top: 110, left: 150, borderRadius: 25 }}
                         icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18}} />}
-                        buttonStyle={{paddingTop: 0, paddingBottom: 0, height: 25, borderRadius: 25, backgroundColor: 'white',shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
-                        titleStyle={{color:'#394046',fontSize:14}}
+                        containerStyle={s.listButtonContainer}
+                        buttonStyle={s.buttonStyle}
+                        titleStyle={s.buttonTitle}
                         title="List"
                         underlayColor='transparent'
+                        raised
                     />
                     <Icon
                         raised
-                        name='gps-fixed'
+                        name='location-arrow'
                         underlayColor='transparent'
-                        type='material'
-                        color='#1e9dff'
+                        type='font-awesome'
+                        color='#393e46'
                         containerStyle={{ position: 'absolute', bottom: 0, right: 0 }}
                         size={24}
                         onPress={() => {
@@ -378,21 +331,23 @@ class Map extends Component {
                             title={'Clear Filter'}
                             onPress={() => this.props.clearFilters()}
                             type="clear"
-                            titleStyle={s.clear}
-                            containerStyle={{ width: 100, position: 'absolute', top: 0, right: 0 }}
+                            containerStyle={s.filterContainer}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange3}]}
+                            titleStyle={s.buttonTitle}
                         />
                         : null
                     }
                     {showUpdateSearch ?
                         <Button
-                            title={'Update search'}
+                            raised
+                            title={'Update Search'}
                             onPress={() => {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                             }}
-                            type="clear"
-                            titleStyle={s.clear}
-                            containerStyle={{ width: 125, position: 'absolute', top: 0, left: 0 }}
+                            containerStyle={s.updateSearchContainer}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.neutral}]}
+                            titleStyle={s.buttonTitle}
                         />
                         : null
                     }
@@ -436,10 +391,10 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
     },
     clear: {
-        fontSize: 14,
+        fontSize: 16,
         color: "#F53240",
         padding: 5,
-        backgroundColor: theme.blue1
+        backgroundColor: theme.neutral
     },
     confirmText: {
         textAlign: 'center',
@@ -477,6 +432,42 @@ const getStyles = theme => StyleSheet.create({
     appAlert: {
         padding: 10,
         paddingBottom: 0,
+    },
+    buttonStyle: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 10,
+        paddingRight: 10,
+        height: 25,
+        borderRadius: 25,
+        backgroundColor: 'white',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5
+    },
+    buttonTitle: {
+        color: '#394046',
+        fontSize: 14
+    },
+    listButtonContainer: {
+        position: 'absolute',
+        top: 110,
+        left: 15,
+        borderRadius: 25
+    },
+    updateSearchContainer: {
+        position: 'absolute',
+        top: 110,
+        alignSelf: 'center',
+        borderRadius: 25
+    },
+    filterContainer: {
+        position: 'absolute',
+        top: 110,
+        right: 0,
+        borderRadius: 25
     }
 })
 
