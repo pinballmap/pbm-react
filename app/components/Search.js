@@ -297,7 +297,7 @@ class Search extends Component {
                                 </View>
                             </TouchableOpacity>
                             <Button
-                                onPress={() => this.props.navigation.navigate('FilterMap')}
+                                onPress={() => this.props.navigate('FilterMap')}
                                 containerStyle={{ position: 'absolute', top: 0, right: 0, borderBottomRightRadius: 25, borderTopRightRadius: 25 }}
                                 icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
                                 buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff',shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
@@ -394,7 +394,6 @@ const getStyles = theme => StyleSheet.create({
 Search.propTypes = {
     displayError: PropTypes.func,
     navigate: PropTypes.func,
-    navigation: PropTypes.object,
     regions: PropTypes.object,
     updateCoordinates: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
