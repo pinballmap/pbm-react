@@ -51,7 +51,6 @@ let deviceHeight = Dimensions.get('window').height
 class LocationDetails extends Component {
     state = {
         id: this.props.navigation.state.params['id'],
-        buttonIndex: 0,
         showLocationToolsModal: false
     }
 
@@ -60,11 +59,6 @@ class LocationDetails extends Component {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             gesturesEnabled: true
         }
-    }
-
-    updateIndex = buttonIndex => {
-        this.setState({ buttonIndex })
-        buttonIndex === 1 ? this.props.navigation.setParams({buttonIndex: 1}) : this.props.navigation.setParams({buttonIndex: 0})
     }
 
     getTitle = (machine, s) => (
@@ -102,7 +96,6 @@ class LocationDetails extends Component {
 
     componentDidMount() {
         this.props.fetchLocation(this.state.id)
-        this.props.navigation.setParams({loggedIn: this.props.user.loggedIn, buttonIndex: 0})
     }
 
     render() {
