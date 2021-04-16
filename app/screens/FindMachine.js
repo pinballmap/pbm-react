@@ -93,12 +93,15 @@ class FindMachine extends React.PureComponent {
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#1e9dff", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontSize: 20
             },
             gesturesEnabled: true
         }
@@ -258,7 +261,7 @@ class FindMachine extends React.PureComponent {
                                 inputStyle={{ color: theme.text }}
                                 value={this.state.query}
                                 inputContainerStyle={s.filterInput}
-                                containerStyle={{ backgroundColor: theme.orange3 }}
+                                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0}}
                                 autoCorrect={false}
                             />
                             {!multiSelect ?
@@ -275,9 +278,9 @@ class FindMachine extends React.PureComponent {
                             }
                             {multiSelect ?
                                 <View style={s.multiSelect}>
-                                    {machineList.length === 0 ? <Text style={{ color: "#fff7eb" }}>0 machines selected</Text> :
+                                    {machineList.length === 0 ? <Text style={{ color: "#fffbf5" }}>0 machines selected</Text> :
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Text style={{ color: "#fff7eb" }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                                            <Text style={{ color: "#fffbf5" }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
                                         </View>
                                     }
                                 </View> : null
@@ -287,6 +290,7 @@ class FindMachine extends React.PureComponent {
                                 data={this.state.machines}
                                 renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                                 keyExtractor={this.keyExtractor}
+                                style={{backgroundColor:theme.neutral}}
                             />
                         </>
                     )
@@ -302,10 +306,11 @@ const getStyles = theme => StyleSheet.create({
     },
     filterInput: {
         height: 35,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.white,
         borderRadius: 10,
         borderColor: theme.orange3,
-        borderWidth: 1
+        borderWidth: 1,
+        borderBottomWidth: 1
     },
     textInput: {
         backgroundColor: theme.white,
@@ -328,19 +333,28 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
+        fontSize: 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
+        width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

@@ -124,7 +124,7 @@ class Login extends Component {
                                                 raised
                                                 buttonStyle={s.buttonStyle}
                                                 titleStyle={s.buttonTitle}
-                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden'}}
+                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden',borderRadius: 25}}
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
@@ -206,12 +206,13 @@ const getStyles = theme => StyleSheet.create({
     },
     inputBox: {
         width: '100%',
-        borderRadius: 5,
+        borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
         borderColor: theme.orange3,
         marginTop: 15,
-        marginBottom: 15
+        marginBottom: 15,
+        paddingLeft: 10
     },
     inputText: {
         color: theme.text,
@@ -234,7 +235,8 @@ const getStyles = theme => StyleSheet.create({
     buttonStyle: {
         backgroundColor: theme.blue2,
         width: '100%',
-        elevation: 0
+        elevation: 0,
+        borderRadius: 25
     },
     buttonTitle: {
         color: theme.orange8,

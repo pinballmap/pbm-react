@@ -61,12 +61,13 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
                 inputStyle={{color:theme.text}}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={s.containerStyle}
+                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0}}
             />
             <FlatList
                 data={selectedOperators}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
+                style={{backgroundColor:theme.neutral}}
             />
         </>)
 }
@@ -74,26 +75,27 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
 const getStyles = theme => StyleSheet.create({
     filterInput: {
         height: 35,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.white,
         borderRadius: 10,
         borderColor: theme.orange3,
-        borderWidth: 1
+        borderWidth: 1,
+        borderBottomWidth: 1
     },
-    containerStyle: {
-        backgroundColor: theme.orange3,
-    }
 })
 
 FindOperator.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Select Operator',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })

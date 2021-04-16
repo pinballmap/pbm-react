@@ -148,9 +148,6 @@ TabNav.navigationOptions = {
     gesturesEnabled: false,
     headerTransparent: true
 }
-LocationDetails.navigationOptions = {
-    headerTransparent: true
-}
 
 export const MapStack = createStackNavigator({
     SignupLogin: { screen: SignupLogin, },

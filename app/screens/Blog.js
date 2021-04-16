@@ -33,11 +33,14 @@ Blog.navigationOptions = ({ navigation, theme }) => ({
     title: 'Blog',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0,
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
+        fontSize: 20,
         flex: 1
     },
     gesturesEnabled: true

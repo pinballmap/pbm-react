@@ -28,15 +28,18 @@ export class Saved extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Saved',
+            title: 'Saved Locations',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontSize: 20
             }
         }
     }
@@ -159,19 +162,27 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
+        width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

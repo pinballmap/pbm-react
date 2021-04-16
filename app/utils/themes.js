@@ -1,6 +1,7 @@
 export const dark = {
     text:       '#fff7eb',
     blue2:      '#addbff',
+    blue3:      '#7cc5ff',
     orange8:    '#fff7eb',
     orange7:    '#e6cfbe',
     indigo4:    '#b1c7d6',
@@ -9,6 +10,7 @@ export const dark = {
     white:      '#595759',
     red2:       '#e4606a',
     neutral:	'#1d1c1d',
+    neutral2:	'#505762',
     white:      '#595759',
     buttonMask: 'rgba(0,0,0,.2)',
     mask:       'rgba(0,0,0,.8)',
@@ -20,6 +22,7 @@ export const dark = {
 export const standard = {
     text:       '#393e46',
     blue2:      '#addbff',
+    blue3:      '#7cc5ff',
     orange8:    '#766a62',
     orange7:    '#95867c',
     indigo4:    '#bec2e6',
@@ -27,7 +30,8 @@ export const standard = {
     blue1:      '#D3ECFF',
     white:      '#ffffff',
     red2:       '#e4606a',
-    neutral:    '#fff7eb',
+    neutral:    '#fffbf5',
+    neutral2:   '#fff7eb',
     white:      '#ffffff',
     buttonMask: 'rgba(255,255,255,.2)',
     mask:       'rgba(255,255,255,.8)',

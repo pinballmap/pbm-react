@@ -240,7 +240,7 @@ class Map extends Component {
         }
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff7eb' }}>
+            <View style={{ flex: 1, backgroundColor: '#fffbf5' }}>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
