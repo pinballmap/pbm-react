@@ -35,7 +35,7 @@ class RecentActivity extends Component {
             title: 'Activity',
             headerRight: <FilterRecentActivity />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {

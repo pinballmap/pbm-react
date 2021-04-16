@@ -39,13 +39,15 @@ class UserProfile extends Component {
             title: 'Profile',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1,
-                fontWeight: 'bold'
+                fontSize: 20
             }
         }
     };
@@ -150,7 +152,7 @@ class UserProfile extends Component {
                                         titleStyle={s.titleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                                        containerStyle={[{overflow:'hidden'},s.margin40]}
+                                        containerStyle={[{overflow:'hidden',borderRadius:25},s.margin40]}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
@@ -203,10 +205,11 @@ const getStyles = theme => StyleSheet.create({
     bold: {
         fontWeight: 'bold',
         fontSize: 16,
+        textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 5,
-        color: theme.indigo4,
-        backgroundColor: theme.orange7
+        color: theme.text,
+        backgroundColor: theme.blue1
     },
     savedIcon: {
         fontSize: 24,
@@ -216,6 +219,7 @@ const getStyles = theme => StyleSheet.create({
     savedLink: {
         borderWidth: 2,
         borderColor: theme.blue2,
+        borderRadius:25
     },
     margin40: {
         marginLeft: 40,
@@ -240,8 +244,8 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: '#D3ECFF',
-        backgroundColor: theme.orange7,
+        color: theme.text,
+        backgroundColor: theme.blue1,
         textAlign: "center"
     },
     stat: {
@@ -254,7 +258,7 @@ const getStyles = theme => StyleSheet.create({
     statNum: {
         fontWeight: "bold",
         color: theme.orange8,
-        backgroundColor: theme.blue2,
+        backgroundColor: theme.blue1,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10

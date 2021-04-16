@@ -33,17 +33,18 @@ export class LocationList extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
-            title: 'Location List',
+            title: 'Locations on the Map',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#faf9f9',
-                borderBottomWidth: 0
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1,
-                fontWeight: 'bold'
+                fontSize: 20
             },
             gesturesEnabled: true
         }
@@ -110,7 +111,6 @@ export class LocationList extends Component {
                                 selectedButtonStyle={s.selButtonStyle}
                                 selectedTextStyle={s.selTextStyle}
                                 innerBorderStyle={s.innerBorderStyle}
-                                disabledStyle={{shadowColor: '#dcd3d6',shadowOffset: { width: 4, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
                             />
                             <FlatList
                                 data={locations}
@@ -147,7 +147,8 @@ const getStyles = theme => StyleSheet.create({
     buttonGroupContainer: {
         height: 40,
         borderWidth: 0,
-        backgroundColor: theme.white,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
         shadowColor: '#dcd3d6',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
@@ -163,12 +164,10 @@ const getStyles = theme => StyleSheet.create({
         width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
-        shadowColor: 'white',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.9,
-        shadowRadius: 5,
-        elevation: 5
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

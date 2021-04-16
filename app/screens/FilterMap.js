@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -27,6 +29,8 @@ import {
     getOperatorName,
     filterSelected,
 } from '../selectors'
+
+let deviceWidth = Dimensions.get('window').width
 
 const FilterMap = ({
     updateNumMachinesSelected,
@@ -87,7 +91,6 @@ const FilterMap = ({
 
     return (
         <Screen>
-            <View style={s.pageTitle}><Text style={s.pageTitleText}>Apply Filters to the Map Results</Text></View>
             <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
             <DropDownButton
                 title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
@@ -97,7 +100,7 @@ const FilterMap = ({
                 }}
             />
             <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Limit by number of machines per location:</Text>
-            <ButtonGroup style={s.border}
+            <ButtonGroup
                 onPress={setNumMachinesSelected}
                 selectedIndex={getIdx(numMachines)}
                 buttons={['All', '2+', '3+', '4+', '5+']}
@@ -118,7 +121,7 @@ const FilterMap = ({
                 onPress={() => navigate('FindOperator', { type: 'filter', setSelected: (id) => selectedOperatorTypeFilter(id) })}
             />
             <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved Locations:</Text>
-            <ButtonGroup style={s.border}
+            <ButtonGroup
                 onPress={updateViewFavorites}
                 selectedIndex={viewByFavoriteLocations ? 1 : 0}
                 buttons={['All', 'My Favorites']}
@@ -141,31 +144,27 @@ const FilterMap = ({
 
 FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
-    title: 'Filter Results',
-    headerRight: <View style={{ padding: 6 }}></View>,
+    title: 'Apply Filters to the Map',
+    headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        fontSize: 20,
+        width: deviceWidth - 100,
+        ...Platform.select({
+            android: { flex: 1 }
+        }),
     },
     gesturesEnabled: true
 })
 
 
 const getStyles = theme => StyleSheet.create({
-    pageTitle: {
-        paddingVertical: 10,
-        backgroundColor: theme.orange7
-    },
-    pageTitleText: {
-        textAlign: 'center',
-        fontSize: 18,
-        fontWeight: "bold",
-        color: theme.neutral
-    },
     border: {
         borderWidth: 2,
         borderColor: theme.orange3,
@@ -187,19 +186,28 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
+        fontSize: 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
+        width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

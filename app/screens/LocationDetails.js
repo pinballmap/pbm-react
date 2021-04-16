@@ -57,7 +57,8 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            gesturesEnabled: true
+            gesturesEnabled: true,
+            headerTransparent: true,
         }
     }
 
@@ -136,21 +137,21 @@ class LocationDetails extends Component {
                                     </View>
                                     <View style={{marginTop:10}}>
                                         <PbmButton
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
                                             icon={<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             title={'Add Machine'}
                                             accessibilityLabel="Add Machine"
                                             containerStyle={s.buttonContainer}
                                         />
                                         <PbmButton
-                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
                                             title={'Confirm Line-Up'}
                                             accessibilityLabel="Confirm Line-Up"
                                             icon={<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             containerStyle={s.buttonContainer}
                                         />
                                         <PbmButton
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') }
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
                                             icon={<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             title="Edit Location Details"
                                             accessibilityLabel="Edit"
@@ -263,7 +264,7 @@ class LocationDetails extends Component {
                                     <View style={s.locationNameContainer}>
                                         <Text style={{textAlign:'center',fontWeight:'bold',fontSize:28,color:'#483c3d'}}>{location.name}</Text>
                                     </View>
-                                    <View style={s.buttonGroupView}>
+                                    <View style={s.locationContainer}>
                                         {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={s.locationMetaOuter}>
@@ -360,6 +361,15 @@ const getStyles = theme => StyleSheet.create({
     backgroundColor: {
         backgroundColor: theme.neutral
     },
+    locationContainer: {
+        flex: 3,
+        backgroundColor: "#fef8f4",
+        borderRadius: 25,
+        marginBottom: 5,
+        marginRight: 40,
+        marginLeft: 40,
+        borderWidth: 0,
+    },
     locationNameContainer: {
         backgroundColor: 'rgba(190, 194, 230, 0.8)',
         borderRadius: 25,
@@ -370,15 +380,6 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
         paddingTop: 5,
         paddingBottom: 5,
-    },
-    buttonGroupView: {
-        flex: 3,
-        backgroundColor: "#fef8f4",
-        borderRadius: 25,
-        marginBottom: 5,
-        marginRight: 40,
-        marginLeft: 40,
-        borderWidth: 0,
     },
     buttonTitleStyle: {
         color: theme.orange8,
@@ -521,7 +522,7 @@ const getStyles = theme => StyleSheet.create({
     },
     commentUpdated: {
         color: theme.orange7,
-        marginLeft: 2,
+        marginLeft: 10,
     },
     buttonIcon: {
         color: "#878d92",

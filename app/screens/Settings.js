@@ -49,7 +49,7 @@ const Settings = () => {
         <Screen>
             <View style={s.background}>
                 <View style={s.pageTitle}><Text style={s.pageTitleText}>Standard Theme</Text></View>
-                <ButtonGroup style={s.border}
+                <ButtonGroup
                     onPress={updateDefaultPref}
                     selectedIndex={selectedDefault}
                     buttons={['Standard', 'Dark']}
@@ -61,7 +61,7 @@ const Settings = () => {
                 />
                 <Text style={s.text}>{`When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.`}</Text>
                 <View style={s.pageTitle}><Text style={s.pageTitleText}>Dark Mode Theme</Text></View>
-                <ButtonGroup style={s.border}
+                <ButtonGroup
                     onPress={updateDarkPref}
                     selectedIndex={selectedDark}
                     buttons={['Standard', 'Dark']}
@@ -85,12 +85,15 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
     title: 'Settings',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })
@@ -102,14 +105,14 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.orange7,
+        backgroundColor: theme.blue1,
         marginBottom: 10
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: "bold",
-        color: theme.neutral
+        color: theme.text
     },
     bold: {
         fontWeight: 'bold',
@@ -129,25 +132,29 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
-    border: {
-        borderWidth: 2,
-        borderColor: theme.orange3,
-    },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
+        width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

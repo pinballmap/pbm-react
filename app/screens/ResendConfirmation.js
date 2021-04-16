@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
+    Dimensions,
     Keyboard,
+    Platform,
     StyleSheet,
     TouchableWithoutFeedback,
     View
@@ -16,6 +18,8 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
+
+let deviceWidth = Dimensions.get('window').width
 
 const ResendConfirmation = ({ navigation }) => {
     const { theme } = useContext(ThemeContext)
@@ -50,7 +54,6 @@ const ResendConfirmation = ({ navigation }) => {
                     </View>
                 </ConfirmationModal>
                 <View style={{marginTop:10}}>
-                    <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>
                     <Input
                         placeholder='Username or email...'
                         placeholderTextColor={theme.indigo4}
@@ -76,13 +79,20 @@ const ResendConfirmation = ({ navigation }) => {
 
 ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
+    headerRight: <View style={{padding:6}}></View>,
+    title: 'Resend Confirmation Email',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        width: deviceWidth - 100,
+        ...Platform.select({
+            android: { flex: 1 }
+        }),
     },
     gesturesEnabled: true
 })
@@ -93,7 +103,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 25
     },
     inputBox: {
-        borderRadius: 5,
+        borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
         borderColor: theme.orange3,
@@ -109,12 +119,6 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18
-    },
-    titleText: {
-        textAlign:'center',
-        marginBottom:10,
-        fontSize: 18,
-        fontWeight: 'bold'
     },
     buttonContainer: {
         marginLeft: 20,

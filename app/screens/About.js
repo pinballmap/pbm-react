@@ -103,15 +103,18 @@ About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
     drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
-    title: 'About',
+    title: 'About Pinball Map',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0,
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })
@@ -151,7 +154,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.blue2,
+        color: '#7cc5ff',
         fontSize: 16,
     },
     appAlert: {

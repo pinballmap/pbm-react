@@ -43,12 +43,15 @@ class Events extends Component {
             title: 'Nearby Events',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontSize: 20
             },
             gesturesEnabled: true
         }
@@ -103,7 +106,7 @@ class Events extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <>
+                        <View style={{backgroundColor: theme.neutral}}>
                             {gettingEvents ?
                                 <View style={s.background}>
                                     <ActivityIndicator />
@@ -112,7 +115,6 @@ class Events extends Component {
                                     <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
                                     <>
                                         <View style={s.header}>
-                                            <Text style={[s.title,s.headerText]}>Upcoming Events Within</Text>
                                             <ButtonGroup
                                                 onPress={this.updateIdx}
                                                 selectedIndex={selectedIdx}
@@ -149,7 +151,7 @@ class Events extends Component {
                                     </>
 
                             }
-                        </>
+                        </View>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -163,35 +165,32 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.neutral
     },
     header: {
-        backgroundColor: theme.orange7,
         paddingVertical: 10,
-    },
-    headerText: {
-        color: theme.neutral,
-        textAlign: "center"
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    buttonStyle: {
-        backgroundColor: theme.blue2,
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: '#dcd3d6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
+        fontSize: 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
+        width: 0,
     },
     selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.blue1,
         backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
         color: theme.orange8,

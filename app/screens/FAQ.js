@@ -62,12 +62,14 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
     title: 'FAQ',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })
@@ -99,12 +101,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: "#D3ECFF",
-        backgroundColor: theme.orange7
+        color: theme.orange8,
+        backgroundColor: theme.blue1
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.blue2,
+        color: theme.blue3,
     },
 })
 
