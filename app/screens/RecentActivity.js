@@ -32,10 +32,11 @@ class RecentActivity extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Activity',
             headerRight: <FilterRecentActivity />,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
@@ -166,12 +167,12 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text
     },
     header: {
-        backgroundColor: theme.orange7,
+        backgroundColor: theme.blue2,
         paddingVertical: 10,
     },
     headerText: {
-        color: theme.neutral,
-        textAlign: "center"
+        textAlign: "center",
+        color: theme.orange8
     },
     title: {
         fontSize: 18,
@@ -180,11 +181,11 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.orange7
     },
     paren: {
         fontSize: 12,
-        fontStyle: "italic"
+        fontStyle: "italic",
+        color: theme.orange7
     },
     filterView: {
         backgroundColor: theme.red2,
@@ -201,15 +202,18 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 8,
     },
     list: {
-        borderRadius: 5,
-        borderWidth: 2,
+        borderRadius: 15,
+        marginBottom: 12,
+        marginTop: 12,
+        marginRight: 20,
+        marginLeft: 20,
+        borderWidth: 0,
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
-        padding: 8,
-        marginTop: 5,
-        marginBottom: 5,
-        marginLeft: 10,
-        marginRight: 10
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     problem: {
         textAlign: "center",

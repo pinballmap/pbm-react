@@ -112,7 +112,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                 containerStyle={{width:60}}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{color: theme.blue2, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
+                titleStyle={{color: theme.blue3, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
                 type="clear"
             />
         </View>

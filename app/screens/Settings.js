@@ -137,7 +137,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
         borderRadius: 10,
         backgroundColor: '#fff7eb',
-        shadowColor: '#dcd3d6',
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,

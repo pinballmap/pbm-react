@@ -56,10 +56,12 @@ class MachineDetails extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: `${navigation.getParam('machineName')} @ ${navigation.getParam('locationName')}`,
+            title: `${navigation.getParam('machineName')}`,
             headerRight: <RemoveMachine />,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
@@ -190,9 +192,14 @@ class MachineDetails extends Component {
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                             <ScrollView>
-                                <Text style={{textAlign:'center',marginTop:10,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                <View style={[{backgroundColor:theme.white,marginBottom:15},s.border]}>
-                                    <Text style={s.sectionTitle}>Machine Comments</Text>
+                                <View style={s.machineNameContainer}>
+                                    <Text style={s.machineName}>{machineName}</Text>
+                                </View>
+                                <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                <View style={s.containerStyle}>
+                                    <View style={s.locationNameContainer}>
+                                        <Text style={s.sectionTitle}>Machine Comments</Text>
+                                    </View>
                                     {mostRecentComments ?
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
@@ -219,8 +226,10 @@ class MachineDetails extends Component {
                                             () => this.props.navigation.navigate('Login')}
                                     />
                                 </View>
-                                <View style={[{backgroundColor:theme.white,marginBottom:15},s.border]}>
-                                    <Text style={s.sectionTitle}>Top Scores</Text>
+                                <View style={s.containerStyle}>
+                                    <View style={s.locationNameContainer}>
+                                        <Text style={s.sectionTitle}>Top Scores</Text>
+                                    </View>
                                     {userHighScore ?
                                         <View>
                                             <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
@@ -300,7 +309,26 @@ const getStyles = theme => StyleSheet.create({
     backgroundColor: {
         backgroundColor: theme.neutral
     },
+    machineName: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: theme.neutral
+    },
+    machineNameContainer: {
+        backgroundColor: theme.orange8,
+        borderRadius: 25,
+        marginTop: 10,
+        marginBottom: 5,
+        marginRight: 30,
+        marginLeft: 30,
+        borderWidth: 0,
+        paddingTop: 8,
+        paddingBottom: 8,
+        textAlign:'center',
+    },
     externalLink: {
+        borderRadius: 25,
         borderWidth: 2,
         borderColor: theme.blue2,
     },
@@ -348,14 +376,6 @@ const getStyles = theme => StyleSheet.create({
     radius10: {
         borderRadius: 10
     },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 10,
-        marginTop: 10,
-        color: theme.text
-    },
     userScoreTitle: {
         textAlign: 'center',
         marginTop: 5,
@@ -372,12 +392,6 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height: deviceHeight
-    },
-    border: {
-        borderBottomColor: theme.white,
-        borderBottomWidth: 1,
-        borderTopColor: theme.white,
-        borderTopWidth: 1,
     },
     modalTitle: {
         textAlign: 'center',
@@ -401,6 +415,36 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.white,
         paddingLeft: 30,
         paddingTop: 5
+    },
+    containerStyle: {
+        borderRadius: 15,
+        marginBottom: 20,
+        marginTop: 12,
+        marginRight: 20,
+        marginLeft: 20,
+        borderWidth: 0,
+        backgroundColor: theme.white,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+    },
+    locationNameContainer: {
+        backgroundColor: theme.indigo2,
+        marginTop: -15,
+        marginBottom: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        paddingVertical: 0,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 10,
+        marginTop: 10,
+        color: theme.text
     },
 })
 

@@ -36,6 +36,7 @@ import {
 import { alphaSortNameObj } from '../utils/utilityFunctions'
 
 let deviceHeight = Dimensions.get('window').height
+let deviceWidth = Dimensions.get('window').width
 
 const getDisplayText = machine => (
     <Text style={{ fontSize: 18 }}>
@@ -90,7 +91,7 @@ class FindMachine extends React.PureComponent {
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
             headerRight:
                 navigation.getParam('showDone') ?
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#1e9dff", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: '#addbff', fontSize: 18, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
@@ -100,8 +101,10 @@ class FindMachine extends React.PureComponent {
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1,
-                fontSize: 20
+                width: deviceWidth - 100,
+                ...Platform.select({
+                    android: { flex: 1 }
+                }),
             },
             gesturesEnabled: true
         }
@@ -261,7 +264,7 @@ class FindMachine extends React.PureComponent {
                                 inputStyle={{ color: theme.text }}
                                 value={this.state.query}
                                 inputContainerStyle={s.filterInput}
-                                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0}}
+                                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
                                 autoCorrect={false}
                             />
                             {!multiSelect ?
@@ -278,9 +281,9 @@ class FindMachine extends React.PureComponent {
                             }
                             {multiSelect ?
                                 <View style={s.multiSelect}>
-                                    {machineList.length === 0 ? <Text style={{ color: "#fffbf5" }}>0 machines selected</Text> :
+                                    {machineList.length === 0 ? <Text style={{ color: theme.text }}>0 machines selected</Text> :
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Text style={{ color: "#fffbf5" }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                                            <Text style={{ color: theme.text }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
                                         </View>
                                     }
                                 </View> : null
@@ -329,14 +332,14 @@ const getStyles = theme => StyleSheet.create({
     multiSelect: {
         alignItems: 'center',
         padding: 5,
-        backgroundColor: theme.orange7
+        backgroundColor: theme.indigo2
     },
     buttonGroupContainer: {
         height: 40,
         borderWidth: 0,
         borderRadius: 10,
         backgroundColor: '#fff7eb',
-        shadowColor: '#dcd3d6',
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,

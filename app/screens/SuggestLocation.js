@@ -280,7 +280,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={locationName => this.setState({ locationName })}
                                                 value={locationName}
@@ -292,7 +292,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Street</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={street => this.setState({ street })}
                                                 value={street}
@@ -304,7 +304,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>City</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={city => this.setState({ city })}
                                                 value={city}
@@ -316,7 +316,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>State</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={state => this.setState({ state })}
                                                 value={state}
@@ -328,7 +328,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Zip Code</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={zip => this.setState({ zip })}
                                                 value={zip}
@@ -345,6 +345,7 @@ class SuggestLocation extends Component {
                                                 /> :
                                                 <View style={s.viewPicker}>
                                                     <Picker
+                                                        style={{borderRadius:25}}
                                                         selectedValue={country}
                                                         onValueChange={country => this.setState({ country })}>
                                                         {countries.map(m => (
@@ -355,7 +356,7 @@ class SuggestLocation extends Component {
                                             }
                                             <Text style={s.title}>Phone</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={phone => this.setState({ phone })}
                                                 value={phone}
@@ -367,7 +368,7 @@ class SuggestLocation extends Component {
                                             />
                                             <Text style={s.title}>Website</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                                 value={website}
@@ -381,7 +382,7 @@ class SuggestLocation extends Component {
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
-                                                style={[{padding:5,height: 100},s.textInput,s.radius5]}
+                                                style={[{padding:5,height: 100},s.textInput,s.radius25]}
                                                 onChangeText={description => this.setState({ description })}
                                                 underlineColorAndroid='transparent'
                                                 value={description}
@@ -399,11 +400,14 @@ class SuggestLocation extends Component {
                                                 title={operatorName}
                                                 onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
                                             />
+                                            <Text style={s.title}>Machines</Text>
                                             <PbmButton
                                                 title={'Select Machines to Add'}
+                                                titleStyle={{fontSize:16,color:theme.text}}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                 containerStyle={s.addMachinesContainer}
+                                                buttonStyle={s.addMachinesButton}
                                             />
                                             {machineList.map(machine =>
                                                 <ListItem
@@ -484,15 +488,15 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 5
     },
-    radius5: {
-        borderRadius: 5,
+    radius25: {
+        borderRadius: 25,
     },
     viewPicker: {
         backgroundColor: theme.white,
         borderColor: theme.orange3,
         color: theme.text,
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 25,
         marginLeft: 10,
         marginRight: 10
     },
@@ -521,10 +525,13 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24
     },
     addMachinesContainer: {
-        marginTop: 25,
         marginBottom: 15,
-        marginLeft: 15,
-        marginRight: 15
+        marginLeft: 10,
+        marginRight: 10
+    },
+    addMachinesButton: {
+        backgroundColor: theme.white,
+        borderRadius: 25,
     },
     listContainerStyle: {
         backgroundColor: theme.white

@@ -298,9 +298,9 @@ class Search extends Component {
                             </TouchableOpacity>
                             <Button
                                 onPress={() => this.props.navigate('FilterMap')}
-                                containerStyle={{ position: 'absolute', top: 0, right: 0, borderBottomRightRadius: 25, borderTopRightRadius: 25 }}
+                                containerStyle={s.buttonContainerStyle}
                                 icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
-                                buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff',shadowColor: '#dcd3d6',shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}}
+                                buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
                                 titleStyle={{color:'#394046',fontSize:16}}
                                 title="Filter"
                                 underlayColor='transparent'
@@ -334,7 +334,7 @@ const getStyles = theme => StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: '#dcd3d6',
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,
@@ -371,6 +371,19 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7,
         marginBottom: -2,
         marginTop: -2
+    },
+    buttonContainerStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        borderBottomRightRadius: 25,
+        borderTopRightRadius: 25,
+        overflow: 'visible',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     searchHistoryTitle: {
         color: theme.orange7,
