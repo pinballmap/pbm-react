@@ -17,8 +17,7 @@ const DropDownButton = ({ title, onPress, }) => {
             titleStyle={s.titleStyle}
             icon={<MaterialIcons name='arrow-drop-down' style={s.dropdownIcon} />}
             iconRight
-            containerStyle={{marginTop:5,marginRight:10,marginLeft:10,borderRadius:10,}}
-            raised
+            containerStyle={s.containerStyle}
         />
     )
 }
@@ -29,14 +28,20 @@ const getStyles = (theme) => StyleSheet.create({
         width: '100%',
         borderColor: theme.orange3,
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 25,
         height: 40,
-        shadowColor: '#dcd3d6',
+    },
+    containerStyle: {
+        marginTop:5,
+        marginRight:10,
+        marginLeft:10,
+        borderRadius:25,
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,
         elevation: 5,
-
+        overflow: 'visible'
     },
     dropdownIcon: {
         color: theme.orange8,

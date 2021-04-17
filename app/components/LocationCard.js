@@ -77,7 +77,7 @@ const getStyles = (theme) => StyleSheet.create({
         marginLeft: 20,
         borderWidth: 0,
         backgroundColor: theme.white,
-        shadowColor: '#dcd3d6',
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,

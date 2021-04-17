@@ -302,21 +302,21 @@ class Map extends Component {
                     <Button
                         onPress={() => navigation.navigate('LocationList')}
                         icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18}} />}
-                        containerStyle={s.listButtonContainer}
+                        containerStyle={[s.listButtonContainer,s.containerStyle]}
                         buttonStyle={s.buttonStyle}
                         titleStyle={s.buttonTitle}
                         title="List"
                         underlayColor='transparent'
-                        raised
                     />
                     <Icon
-                        raised
+                        reverse
                         name='location-arrow'
                         underlayColor='transparent'
                         type='font-awesome'
-                        color='#393e46'
-                        containerStyle={{ position: 'absolute', bottom: 0, right: 0 }}
+                        color='#bec2e6'
+                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0, borderRadius:30 }]}
                         size={24}
+                        borderRadius={25}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
@@ -326,23 +326,22 @@ class Map extends Component {
                             title={'Clear Filter'}
                             onPress={() => this.props.clearFilters()}
                             type="clear"
-                            containerStyle={s.filterContainer}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange3}]}
+                            containerStyle={[s.filterContainer,s.containerStyle]}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.indigo2}]}
                             titleStyle={s.buttonTitle}
                         />
                         : null
                     }
                     {showUpdateSearch ?
                         <Button
-                            raised
-                            title={'Update Search'}
+                            title={'Search this Area'}
                             onPress={() => {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                             }}
-                            containerStyle={s.updateSearchContainer}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.neutral}]}
-                            titleStyle={s.buttonTitle}
+                            containerStyle={[s.updateSearchContainer,s.containerStyle]}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange8,padding:20,height:30}]}
+                            titleStyle={{color:theme.neutral,fontSize:16}}
                         />
                         : null
                     }
@@ -436,15 +435,18 @@ const getStyles = theme => StyleSheet.create({
         height: 25,
         borderRadius: 25,
         backgroundColor: 'white',
-        shadowColor: '#dcd3d6',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.9,
-        shadowRadius: 5,
-        elevation: 5
     },
     buttonTitle: {
         color: '#394046',
         fontSize: 14
+    },
+    containerStyle: {
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     listButtonContainer: {
         position: 'absolute',
@@ -454,14 +456,14 @@ const getStyles = theme => StyleSheet.create({
     },
     updateSearchContainer: {
         position: 'absolute',
-        top: 110,
+        bottom: 20,
         alignSelf: 'center',
         borderRadius: 25
     },
     filterContainer: {
         position: 'absolute',
         top: 110,
-        right: 0,
+        right: 15,
         borderRadius: 25
     }
 })

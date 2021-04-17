@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-    Dimensions,
     Image,
     Linking,
     Modal,
@@ -45,8 +44,6 @@ import androidCustomDark from '../utils/androidCustomDark'
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
 const moment = require('moment')
-
-let deviceHeight = Dimensions.get('window').height
 
 class LocationDetails extends Component {
     state = {
@@ -246,7 +243,7 @@ class LocationDetails extends Component {
                                             longitudeDelta: 0.03
                                         }}
                                         showsMyLocationButton={false}
-                                        style={deviceHeight > 800 ? s.mapTall : s.mapShort}
+                                        style={s.mapHeight}
                                         provider = { MapView.PROVIDER_GOOGLE }
                                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                     >
@@ -350,13 +347,9 @@ class LocationDetails extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
-    mapTall: {
+    mapHeight: {
         zIndex: -1,
         height: 160,
-    },
-    mapShort: {
-        height: 120,
-        zIndex: -1,
     },
     backgroundColor: {
         backgroundColor: theme.neutral
@@ -415,7 +408,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 20,
         borderWidth: 0,
         backgroundColor: theme.white,
-        shadowColor: '#dcd3d6',
+        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
         shadowRadius: 5,
