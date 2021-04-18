@@ -130,7 +130,7 @@ class Map extends Component {
     static contextType = ThemeContext;
 
     onRegionChange = (region) => {
-        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001) {
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
             this.setState({
                 ...region,
                 showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
@@ -334,7 +334,7 @@ class Map extends Component {
                     }
                     {showUpdateSearch ?
                         <Button
-                            title={'Search this Area'}
+                            title={'Search this area'}
                             onPress={() => {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
