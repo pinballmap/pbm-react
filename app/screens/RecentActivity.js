@@ -167,7 +167,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text
     },
     header: {
-        backgroundColor: theme.blue2,
+        backgroundColor: theme.blue1,
         paddingVertical: 10,
     },
     headerText: {
@@ -203,7 +203,7 @@ const getStyles = theme => StyleSheet.create({
     },
     list: {
         borderRadius: 15,
-        marginBottom: 12,
+        marginBottom: 6,
         marginTop: 12,
         marginRight: 20,
         marginLeft: 20,

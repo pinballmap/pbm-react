@@ -450,7 +450,7 @@ const getStyles = theme => StyleSheet.create({
     },
     listButtonContainer: {
         position: 'absolute',
-        top: 110,
+        top: 120,
         left: 15,
         borderRadius: 25
     },
@@ -462,7 +462,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterContainer: {
         position: 'absolute',
-        top: 110,
+        top: 120,
         right: 15,
         borderRadius: 25
     }
