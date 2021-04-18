@@ -340,7 +340,7 @@ class Map extends Component {
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                             }}
                             containerStyle={[s.updateSearchContainer,s.containerStyle]}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange8,padding:20,height:30}]}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange8,padding:20,height:40}]}
                             titleStyle={{color:theme.neutral,fontSize:16}}
                         />
                         : null
