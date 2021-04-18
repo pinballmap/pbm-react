@@ -309,7 +309,7 @@ class LocationDetails extends Component {
                                                     <View style={machine.condition ? s.machineNameContainer : s.machineNameContainer2} >
                                                         {this.getTitle(machine, s)}
                                                     </View>
-                                                    {machine.condition ?
+                                                    {machine.condition_date ?
                                                         <View style={s.condition}>
                                                             <View>
                                                                 {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
@@ -356,7 +356,6 @@ const getStyles = theme => StyleSheet.create({
     },
     locationContainer: {
         flex: 3,
-        backgroundColor: "#fef8f4",
         borderRadius: 25,
         marginBottom: 5,
         marginRight: 40,
