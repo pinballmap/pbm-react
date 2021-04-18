@@ -290,21 +290,23 @@ class Search extends Component {
                                     </View>
                                 </SafeAreaView>
                             </Modal>
-                            <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
-                                <View style={s.searchMap}>
-                                    <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                    <Text style={s.inputPlaceholder}>City, Address, Location</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <Button
-                                onPress={() => this.props.navigate('FilterMap')}
-                                containerStyle={s.buttonContainerStyle}
-                                icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
-                                buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
-                                titleStyle={{color:'#394046',fontSize:16}}
-                                title="Filter"
-                                underlayColor='transparent'
-                            />
+                            <View style={s.searchMapContainer}>
+                                <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
+                                    <View style={s.searchMap}>
+                                        <MaterialIcons name='search' size={25} style={s.searchIcon} />
+                                        <Text style={s.inputPlaceholder}>City, Address, Location</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <Button
+                                    onPress={() => this.props.navigate('FilterMap')}
+                                    containerStyle={s.buttonContainerStyle}
+                                    icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
+                                    buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
+                                    titleStyle={{color:'#394046',fontSize:16}}
+                                    title="Filter"
+                                    underlayColor='transparent'
+                                />
+                            </View>
                         </View>
                     )
                 }}
@@ -324,6 +326,15 @@ const getStyles = theme => StyleSheet.create({
     modalContainer: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : 10,
+    },
+    searchMapContainer: {
+        ...Platform.select({
+            android: { marginLeft: 15 }
+        }),
+        marginTop: 10,
+        flex: 1,
+        alignItems: 'center',
+        width: deviceWidth - 30,
     },
     searchMap: {
         width: deviceWidth - 30,
