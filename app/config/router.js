@@ -107,7 +107,7 @@ const TabNav = createBottomTabNavigator(
             },
             tabBarOptions: {
                 activeTintColor: {
-                    light: '#1e9dff',
+                    light: '#7cc5ff',
                     dark: '#addbff',
                 },
                 inactiveTintColor: {
@@ -187,7 +187,7 @@ export const MapStack = createStackNavigator({
             alignSelf: 'center',
             width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
-        headerTintColor: theme === 'dark' ? '#ebebeb' : '#766a62'
+        headerTintColor: theme === 'dark' ? '#ebebeb' : '#7cc5ff'
     })
 }
 )
@@ -232,11 +232,11 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontWeight: "bold",
         fontSize: 11,
-        color: theme === 'dark' ? '#addbff' : '#1e9dff'
+        color: theme === 'dark' ? '#addbff' : '#7cc5ff'
     },
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: theme === 'dark' ? '#ebebeb' : '#766a62'
+        color: theme === 'dark' ? '#ebebeb' : '#95867c'
     },
 })

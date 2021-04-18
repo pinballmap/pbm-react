@@ -22,7 +22,7 @@ import {
     ListItem,
 } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import {
     displayError,
@@ -300,7 +300,7 @@ class Search extends Component {
                                 <Button
                                     onPress={() => this.props.navigate('FilterMap')}
                                     containerStyle={s.buttonContainerStyle}
-                                    icon={<MaterialCommunityIcons name='filter-outline' style={{fontSize: 20,color:'#394046'}} />}
+                                    icon={<Octicons name='settings' style={{paddingRight:5,fontSize: 20,color:'#394046'}} />}
                                     buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
                                     titleStyle={{color:'#394046',fontSize:16}}
                                     title="Filter"

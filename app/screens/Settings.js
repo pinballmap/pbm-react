@@ -80,7 +80,7 @@ const Settings = () => {
 
 Settings.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Settings',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#95867c' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Settings',
     headerRight:<View style={{padding:6}}></View>,
