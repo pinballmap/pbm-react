@@ -113,8 +113,6 @@ class LocationDetails extends Component {
             return {...machineDetails, ...machine}
         }))
 
-        const locationTypeID = this.props.locations.locationTypes.find(type => type.id === location.location_type_id).id.toString()
-
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -259,26 +257,15 @@ class LocationDetails extends Component {
                                         </MapView.Marker>
                                     </MapView>
                                     <View style={s.locationNameContainer}>
-                                        <Text style={{textAlign:'center',fontWeight:'bold',fontSize:28,color:'#483c3d'}}>{location.name}</Text>
+                                        <Text style={s.locationName}>{location.name}</Text>
                                     </View>
                                     <View style={s.locationContainer}>
                                         {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                         <View style={s.locationMetaContainer}>
-                                            <View style={s.locationMetaOuter}>
-                                                <View style={s.locationMetaInner}>
-                                                    <Text style={[s.font18,s.marginRight]}>{location.street}</Text>
-                                                    <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
-                                                </View>
-                                            </View>
-                                            <View>
-                                                {location.location_type_id || locationTrackingServicesEnabled ?
-                                                    <Text style={[s.meta,s.marginB8]}>
-                                                        {location.location_type_id ? <Text>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>: null}
-                                                        {location.location_type_id && locationTrackingServicesEnabled ? <Text> • </Text> : null }
-                                                        {locationTrackingServicesEnabled && <Text>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
-                                                    </Text>: null
-                                                }
-
+                                            <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
+                                                <Text style={[s.font18,s.marginRight]}>{location.street}</Text>
+                                                <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text> : null}
                                                 {location.phone ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
                                                 {location.website ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
@@ -288,13 +275,28 @@ class LocationDetails extends Component {
                                                         <Text style={s.notItalic}> {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text> : null
                                                 }
-
-                                                {location.description ?
-                                                    <Text style={[s.metaDescription,s.italic]}>Location Notes:
-                                                        <Text style={[s.notItalic,s.metaDescription]}> {location.description}</Text>
-                                                    </Text> : null
-                                                }
                                             </View>
+                                            {location.location_type_id ?
+                                                <View style={s.locationMetaIcon}>
+                                                    <View>
+                                                        <Icon
+                                                            name={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).icon}
+                                                            type={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).library}
+                                                            color={theme.orange7}
+                                                            size={50}
+                                                        />
+                                                        <Text style={{textAlign:'center',color:theme.orange8}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                    </View>
+                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18}}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
+                                                </View> : null
+                                            }
+                                        </View>
+                                        <View style={{width:'100%'}}>
+                                            {location.description ?
+                                                <Text style={[s.metaDescription,s.italic]}>Location Notes:
+                                                    <Text style={[s.notItalic,s.metaDescription]}> {location.description}</Text>
+                                                </Text> : null
+                                            }
                                         </View>
                                     </View>
                                     <View style={s.backgroundColor}>
@@ -363,7 +365,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
     },
     locationNameContainer: {
-        backgroundColor: 'rgba(190, 194, 230, 0.8)',
+        backgroundColor: theme.white,
         borderRadius: 25,
         marginTop: 10,
         marginBottom: 10,
@@ -372,6 +374,12 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
         paddingTop: 5,
         paddingBottom: 5,
+    },
+    locationName: {
+        textAlign:'center',
+        fontWeight:'bold',
+        fontSize:28,
+        color: theme.orange8
     },
     buttonTitleStyle: {
         color: theme.orange8,
@@ -437,20 +445,25 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     locationMetaContainer: {
-        marginLeft: 15,
-        marginRight: 15,
         paddingTop: 5,
         paddingBottom: 10,
         marginTop: 5,
-    },
-    locationMetaOuter: {
-        justifyContent: "space-between",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "stretch"
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start'
     },
     locationMetaInner: {
-        margin: "auto",
+        width: '65%'
+    },
+    locationMetaInner2: {
+        width: '100%'
+    },
+    locationMetaIcon: {
+        backgroundColor: theme.indigo2,
+        borderRadius: 10,
+        padding: 5,
+        width: '35%',
+        alignItems: 'center',
     },
     locationIcon: {
         position: 'absolute',
