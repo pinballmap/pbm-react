@@ -1,4 +1,5 @@
 export const dark = {
+    theme: 'dark',
     addBtnBorderColor:  '#736f73',
     addBtnBorderW:  1,
     blue1:      '#736f73',
@@ -22,6 +23,7 @@ export const dark = {
 }
 
 export const standard = {
+    theme: 'standard',
     addBtnBorderColor:'transparent',
     addBtnBorderW:	 0,
     blue1:      '#D3ECFF',

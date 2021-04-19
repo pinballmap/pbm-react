@@ -10,11 +10,10 @@ import {
 } from 'react-native'
 import {
     Button,
-    ButtonGroup,
     Icon,
 } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons, FontAwesome } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -25,7 +24,6 @@ import {
     Search,
     Text,
     IosMarker,
-    AndroidMarker,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -101,31 +99,21 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => {
-        const theme = navigation.state.params && navigation.state.params.theme || ''
-
-        const titleStyle = {
-            color: theme === 'dark' ? '#addbff' : '#1e9dff',
-            fontSize: 16,
-            fontWeight: Platform.OS === 'ios' ? "600" : "400"
-        }
-
-        return {
-            headerLeft: null,
-            headerTitle:
+    static navigationOptions = ({ navigation }) => ({
+        headerLeft: null,
+        headerTitle:
                 <Search
                     navigate={navigation.navigate}
                 />,
-            headerRight: null,
-            headerStyle: {
-                shadowColor: 'transparent',
-                backgroundColor: 'transparent',
-                elevation: 0,
-                borderBottomColor: 'transparent',
-                shadowOffset: { height: 0, width: 0 }
-            },
-        }
-    }
+        headerRight: null,
+        headerStyle: {
+            shadowColor: 'transparent',
+            backgroundColor: 'transparent',
+            elevation: 0,
+            borderBottomColor: 'transparent',
+            shadowOffset: { height: 0, width: 0 }
+        },
+    })
 
     static contextType = ThemeContext;
 

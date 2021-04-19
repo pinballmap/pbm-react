@@ -14,7 +14,6 @@ import MapView from 'react-native-maps'
 import openMap from 'react-native-open-maps'
 import {
     Button,
-    ListItem,
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -51,7 +50,7 @@ class LocationDetails extends Component {
         showLocationToolsModal: false
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
+    static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             gesturesEnabled: true,
