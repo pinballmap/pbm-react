@@ -56,7 +56,6 @@ class MachineDetails extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: `${navigation.getParam('machineName')}`,
             headerRight: <RemoveMachine />,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
@@ -312,11 +311,11 @@ const getStyles = theme => StyleSheet.create({
     machineName: {
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
-        color: theme.neutral
+        fontSize: 26,
+        color: theme.orange8
     },
     machineNameContainer: {
-        backgroundColor: theme.orange8,
+        backgroundColor: theme.white,
         borderRadius: 25,
         marginTop: 10,
         marginBottom: 5,
