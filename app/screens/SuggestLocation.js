@@ -1,39 +1,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
+import {
     Keyboard,
-    Modal, 
-    Picker, 
-    Platform, 
-    SafeAreaView, 
-    ScrollView, 
-    StyleSheet, 
-    TextInput, 
-    TouchableWithoutFeedback, 
-    View, 
+    Modal,
+    Picker,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
+import {
     Icon,
     ListItem
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { 
+import {
     ActivityIndicator,
-    ConfirmationModal, 
-    DropDownButton, 
+    ConfirmationModal,
+    DropDownButton,
     HeaderBackButton,
-    NotLoggedIn, 
-    PbmButton, 
+    NotLoggedIn,
+    PbmButton,
     WarningButton,
     Text
 } from '../components'
-import { 
+import {
     clearError,
-    clearSelectedState, 
+    clearSelectedState,
     removeMachineFromList,
     setSelectedLocationType,
     setSelectedOperator,
@@ -50,25 +50,25 @@ class SuggestLocation extends Component {
         country: 'United States',
         zip: '',
         phone: '',
-        website: '', 
+        website: '',
         description: '',
         showSelectCountryModal: false,
         showSuggestLocationModal: false,
     }
-  
+
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Submit Location',
-            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#6a7d8a'}} />,
+            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#95867c'}} />,
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: 'Submit Location',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
-                textAlign: 'center', 
+                textAlign: 'center',
                 flex: 1
             },
             gesturesEnabled: true
@@ -76,31 +76,31 @@ class SuggestLocation extends Component {
     }
 
     confirmSuggestLocationDetails = () => {
-        const { 
+        const {
             locationName,
-            street, 
-            city, 
-            state,
-            zip,
-            country,
-            phone, 
-            website, 
-            description, 
-        } = this.state
-
-        const locationDetails = {
-            locationName,
-            street, 
+            street,
             city,
             state,
             zip,
             country,
-            phone, 
-            website, 
-            description, 
+            phone,
+            website,
+            description,
+        } = this.state
+
+        const locationDetails = {
+            locationName,
+            street,
+            city,
+            state,
+            zip,
+            country,
+            phone,
+            website,
+            description,
         }
         this.props.suggestLocation(locationDetails)
-    } 
+    }
 
     getDisplayText = machine => (
         <Text style={{fontSize: 16}}>
@@ -117,18 +117,18 @@ class SuggestLocation extends Component {
     componentWillUnmount() {
         this.props.clearSelectedState()
     }
-     
+
     render(){
-        const { 
+        const {
             locationName,
-            street, 
-            city, 
+            street,
+            city,
             state,
             zip,
             country,
-            phone, 
-            website, 
-            description, 
+            phone,
+            website,
+            description,
             showSelectCountryModal,
             showSuggestLocationModal,
         } = this.state
@@ -145,14 +145,14 @@ class SuggestLocation extends Component {
 
         const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
-       
+
         return(
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
                         <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={s.background}>
-                            {!loggedIn ? 
+                            {!loggedIn ?
                                 <NotLoggedIn
                                     title={'Suggest a New Location'}
                                     text={'But first! We ask that you log in. Thank you!'}
@@ -177,7 +177,7 @@ class SuggestLocation extends Component {
                                             onPress={() => this.setState({ showSelectCountryModal: false })}
                                             containerStyle={s.buttonContainer}
                                         />
-                                        <WarningButton 
+                                        <WarningButton
                                             title={'Cancel'}
                                             onPress={() => this.setState({ showSelectCountryModal: false })}
                                             containerStyle={s.buttonContainer}
@@ -189,12 +189,12 @@ class SuggestLocation extends Component {
                                         visible={showSuggestLocationModal}
                                         onRequestClose={()=>{}}
                                     >
-                                        {isSuggestingLocation ? 
+                                        {isSuggestingLocation ?
                                             <ActivityIndicator /> :
-                                            errorText ? 
+                                            errorText ?
                                                 <ScrollView style={[{paddingTop: 100},s.background]}>
                                                     <Text style={[s.error,s.success]}>{errorText}</Text>
-                                                    <PbmButton 
+                                                    <PbmButton
                                                         title={"OK"}
                                                         onPress={() => this.acceptError()}
                                                     />
@@ -202,7 +202,7 @@ class SuggestLocation extends Component {
                                                 locationSuggested ?
                                                     <ScrollView style={[{paddingTop: 100},s.background]}>
                                                         <Text style={s.success}>{`Thanks for submitting that location! We'll review the submission and add it!`}</Text>
-                                                        <PbmButton 
+                                                        <PbmButton
                                                             title={"OK"}
                                                             onPress={() => {
                                                                 this.setState({ showSuggestLocationModal: false })
@@ -210,12 +210,12 @@ class SuggestLocation extends Component {
                                                             }}
                                                         />
                                                     </ScrollView>
-                                                    :        
-                                                    <SafeAreaView style={[{flex: 1},s.background]}>               
+                                                    :
+                                                    <SafeAreaView style={[{flex: 1},s.background]}>
                                                         <ScrollView style={s.background}>
                                                             <View style={s.pageTitle}>
-                                                                {machineList.length === 0 || locationName.length === 0 ? 
-                                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text> 
+                                                                {machineList.length === 0 || locationName.length === 0 ?
+                                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text>
                                                                     : <Text style={s.pageTitleText}>Please review your submission</Text>
                                                                 }
                                                             </View>
@@ -256,12 +256,12 @@ class SuggestLocation extends Component {
                                                             <Text style={s.preview}>{typeof operator === 'number' && operator > -1 ? operators.filter(op=> op.id === operator).map(op => op.name) : 'None Selected'}</Text>
                                                             <View style={s.hr}></View>
                                                             <Text style={s.title}>Machine List</Text>
-                                                            {machineList.length === 0 ? 
-                                                                <Text style={[s.error,s.preview]}>Include at least one machine</Text> 
-                                                                : machineList.map(m => 
+                                                            {machineList.length === 0 ?
+                                                                <Text style={[s.error,s.preview]}>Include at least one machine</Text>
+                                                                : machineList.map(m =>
                                                                     <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
                                                                 )
-                                                            }                             
+                                                            }
                                                             <PbmButton
                                                                 title={'Submit Location'}
                                                                 onPress={() => this.confirmSuggestLocationDetails()}
@@ -280,100 +280,101 @@ class SuggestLocation extends Component {
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={locationName => this.setState({ locationName })}
                                                 value={locationName}
                                                 returnKeyType="done"
                                                 placeholder={"ex. Giovanni's Pizza"}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="organizationName"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>Street</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={street => this.setState({ street })}
                                                 value={street}
                                                 returnKeyType="done"
                                                 placeholder={'ex. 123 Coast Village Road'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="streetAddressLine1"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>City</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={city => this.setState({ city })}
                                                 value={city}
                                                 returnKeyType="done"
                                                 placeholder={'ex. Montecito'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="addressCity"
                                                 autoCapitalize="words"
                                             />
                                             <Text style={s.title}>State</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={state => this.setState({ state })}
                                                 value={state}
                                                 returnKeyType="done"
                                                 placeholder={'ex. CA'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="addressState"
                                                 autoCapitalize="characters"
                                             />
                                             <Text style={s.title}>Zip Code</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={zip => this.setState({ zip })}
                                                 value={zip}
                                                 returnKeyType="done"
                                                 placeholder={'ex. 93108'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="postalCode"
                                             />
                                             <Text style={s.title}>Country</Text>
-                                            {Platform.OS === "ios" ? 
+                                            {Platform.OS === "ios" ?
                                                 <DropDownButton
                                                     title={country}
                                                     onPress={() => this.setState({ showSelectCountryModal: true })}
                                                 /> :
                                                 <View style={s.viewPicker}>
-                                                    <Picker 
+                                                    <Picker
+                                                        style={{borderRadius:25}}
                                                         selectedValue={country}
                                                         onValueChange={country => this.setState({ country })}>
                                                         {countries.map(m => (
                                                             <Picker.Item label={m.name} value={m.name} key={m.name} />
                                                         ))}
-                                                    </Picker> 
-                                                </View>   
-                                            }   
+                                                    </Picker>
+                                                </View>
+                                            }
                                             <Text style={s.title}>Phone</Text>
-                                            <TextInput 
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                            <TextInput
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={phone => this.setState({ phone })}
                                                 value={phone}
                                                 returnKeyType="done"
                                                 placeholder={phone || '(503) xxx-xxxx'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="telephoneNumber"
                                                 autoCapitalize="none"
                                             />
                                             <Text style={s.title}>Website</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius5]}
+                                                style={[{height: 40,textAlign:'left'},s.textInput,s.radius25]}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={website => this.setState({ website: website ? website[0].toLowerCase() + website.slice(1) : '' })}
                                                 value={website}
                                                 returnKeyType="done"
                                                 placeholder={'http://...'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textContentType="URL"
                                                 autoCapitalize="none"
                                             />
@@ -381,45 +382,48 @@ class SuggestLocation extends Component {
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
-                                                style={[{padding:5,height: 100},s.textInput,s.radius5]}
+                                                style={[{padding:5,height: 100},s.textInput,s.radius25]}
                                                 onChangeText={description => this.setState({ description })}
                                                 underlineColorAndroid='transparent'
                                                 value={description}
                                                 placeholder={'Location description, hours, etc...'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
                                             />
-                                            <Text style={s.title}>Location Type</Text>                              
+                                            <Text style={s.title}>Location Type</Text>
                                             <DropDownButton
                                                 title={locationTypeName}
                                                 onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
-                                            /> 
-                                            <Text style={s.title}>Operator</Text>                 
+                                            />
+                                            <Text style={s.title}>Operator</Text>
                                             <DropDownButton
                                                 title={operatorName}
                                                 onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
-                                            />   
+                                            />
+                                            <Text style={s.title}>Machines</Text>
                                             <PbmButton
                                                 title={'Select Machines to Add'}
+                                                titleStyle={{fontSize:16,color:theme.text}}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                 containerStyle={s.addMachinesContainer}
-                                            />   
-                                            {machineList.map(machine => 
+                                                buttonStyle={s.addMachinesButton}
+                                            />
+                                            {machineList.map(machine =>
                                                 <ListItem
                                                     key={machine.id}
                                                     containerStyle={s.listContainerStyle}
                                                     onPress={() => this.props.removeMachineFromList(machine)}>
                                                     <ListItem.Content>
                                                         <Icon>
-                                                            {<MaterialIcons name='cancel' size={15} color={theme._97a5af} />}
+                                                            {<MaterialIcons name='cancel' size={15} color={theme.indigo4} />}
                                                         </Icon>
                                                         <ListItem.Title>
                                                             {this.getDisplayText(machine)}
                                                         </ListItem.Title>
                                                     </ListItem.Content>
                                                 </ListItem>
-                                            )}                 
+                                            )}
                                             <PbmButton
                                                 title={'Submit Location'}
                                                 onPress={() => this.setState({ showSuggestLocationModal: true })}
@@ -435,10 +439,10 @@ class SuggestLocation extends Component {
     }
 }
 
-const getStyles = theme => StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     text: {
         fontSize: 16,
@@ -447,7 +451,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontWeight: '600',
-        color: theme.drawerText,
+        color: theme.orange7,
         textAlign: 'center'
     },
     title: {
@@ -456,7 +460,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontWeight: "bold",
-        color: theme.meta
+        color: theme.orange7
     },
     preview: {
         fontSize: 15,
@@ -465,34 +469,34 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.pageTitle
+        backgroundColor: theme.orange7
     },
     pageTitleText: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontStyle: 'italic',
         fontSize: 18,
-        color: theme._f5fbff
+        color: theme.neutral
     },
     textInput: {
-        backgroundColor: theme.textInput, 
-        borderColor: theme.borderColor,
-        color: theme.pbmText,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
+        color: theme.text,
         borderWidth: 1,
         marginLeft: 10,
         marginRight: 10,
         paddingLeft: 10,
         paddingRight: 5
     },
-    radius5: {
-        borderRadius: 5,
+    radius25: {
+        borderRadius: 25,
     },
     viewPicker: {
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
-        color: theme.pbmText,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
+        color: theme.text,
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 25,
         marginLeft: 10,
         marginRight: 10
     },
@@ -501,7 +505,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 25,
         height: 2,
         marginTop: 10,
-        backgroundColor: theme.hr
+        backgroundColor: theme.indigo4
     },
     success: {
         textAlign: 'center',
@@ -511,23 +515,26 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 10
     },
     error: {
-        color: '#F53240'
+        color: theme.red2
     },
     errorTitle: {
         color: '#fdd4d7'
     },
     plusButton: {
-        color: "#f53240",
+        color: theme.red2,
         fontSize: 24
     },
     addMachinesContainer: {
-        marginTop: 25,
         marginBottom: 15,
-        marginLeft: 15,
-        marginRight: 15
+        marginLeft: 10,
+        marginRight: 10
+    },
+    addMachinesButton: {
+        backgroundColor: theme.white,
+        borderRadius: 25,
     },
     listContainerStyle: {
-        backgroundColor: theme._fff
+        backgroundColor: theme.white
     },
     picker: {
         backgroundColor: '#ffffff'
@@ -547,7 +554,7 @@ SuggestLocation.propTypes = {
     user: PropTypes.object,
     navigation: PropTypes.object,
     location: PropTypes.object,
-    clearError: PropTypes.func, 
+    clearError: PropTypes.func,
     removeMachineFromList: PropTypes.func,
     clearSelectedState: PropTypes.func,
     suggestLocation: PropTypes.func,

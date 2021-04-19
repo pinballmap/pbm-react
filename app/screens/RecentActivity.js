@@ -32,12 +32,13 @@ class RecentActivity extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Activity',
             headerRight: <FilterRecentActivity />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
@@ -163,15 +164,15 @@ class RecentActivity extends Component {
 
 const getStyles = theme => StyleSheet.create({
     pbmText: {
-        color: theme.pbmText
+        color: theme.text
     },
     header: {
-        backgroundColor: theme._6a7d8a,
+        backgroundColor: theme.blue1,
         paddingVertical: 10,
     },
     headerText: {
-        color: theme._f5fbff,
-        textAlign: "center"
+        textAlign: "center",
+        color: theme.orange8
     },
     title: {
         fontSize: 18,
@@ -180,14 +181,14 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.meta
     },
     paren: {
         fontSize: 12,
-        fontStyle: "italic"
+        fontStyle: "italic",
+        color: theme.orange7
     },
     filterView: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.red2,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -196,29 +197,32 @@ const getStyles = theme => StyleSheet.create({
     filter: {
         fontSize: 14,
         textAlign: "center",
-        color: theme.pbmText,
+        color: theme.text,
         fontWeight: 'bold',
         paddingVertical: 8,
     },
     list: {
-        borderRadius: 5,
-        borderWidth: 2,
-        backgroundColor: theme._fff,
-        borderColor: theme.borderColor,
-        padding: 8,
-        marginTop: 5,
-        marginBottom: 5,
-        marginLeft: 10,
-        marginRight: 10
+        borderRadius: 15,
+        marginBottom: 6,
+        marginTop: 12,
+        marginRight: 20,
+        marginLeft: 20,
+        borderWidth: 0,
+        backgroundColor: theme.white,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     problem: {
         textAlign: "center",
-        color: theme.pbmText,
+        color: theme.text,
         fontWeight: 'bold',
         marginTop: 20
     },
     xButton: {
-        color: '#f53240',
+        color: theme.red2,
         marginLeft: 8,
     }
 })

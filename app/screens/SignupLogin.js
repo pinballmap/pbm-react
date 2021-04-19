@@ -56,7 +56,7 @@ export class SignupLogin extends Component {
         } else if (url.indexOf('address=') > 0) {
             const decoded = decodeURIComponent(url)
             const address = decoded.split('address=')[1]
-            const { location } = await getData(`/locations/closest_by_address.json?address=${address}`)
+            const { location } = await getData(`/locations/closest_by_address.json?address=${address};no_details=1`)
             if (location) {
                 this.props.updateCurrCoordinates(location.lat, location.lon)
             }
@@ -286,7 +286,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0
     },
     titleStyle: {
-        color: "#4b5862",
+        color: "#766a62",
         fontSize: 16,
         fontWeight: '500'
     },
@@ -296,7 +296,7 @@ const getStyles = theme => StyleSheet.create({
         height: deviceHeight
     },
     skipTitle: {
-        color: theme.pbmText,
+        color: theme.text,
         fontSize: 14,
         textAlign: "center"
     }

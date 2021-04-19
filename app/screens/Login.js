@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { 
-    Dimensions, 
+import {
+    Dimensions,
     ImageBackground,
     Keyboard,
-    StyleSheet, 
-    Text, 
-    TouchableWithoutFeedback, 
-    View, 
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { 
-    Button, 
+import {
+    Button,
     Input,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { 
+import {
     getFavoriteLocations,
-    login, 
-    loginLater 
+    login,
+    loginLater
 } from '../actions/user_actions'
 import { getData } from '../config/request'
 
@@ -45,9 +45,9 @@ class Login extends Component {
             header: () => null,
             headerLeft: null,
             gesturesEnabled: true
-        } 
+        }
     }
-    
+
     submit = () => {
         this.setState({
             errors: false,
@@ -59,16 +59,16 @@ class Login extends Component {
                 if (data.errors) {
                     this.setState({ errors: true })
 
-                    if(data.errors === 'Unknown user') 
+                    if(data.errors === 'Unknown user')
                         this.setState({ loginError: 'Unknown user' })
 
-                    if(data.errors === 'Incorrect password') 
+                    if(data.errors === 'Incorrect password')
                         this.setState({ passwordError: 'Incorrect password' })
 
                     if(data.errors === 'User is not yet confirmed. Please follow emailed confirmation instructions.')
                         this.setState({ apiErrorMsg: 'User is not yet confirmed. Please follow emailed confirmation instructions.'})
                 }
-                if (data.user) {      
+                if (data.user) {
                     this.props.login(data.user)
                     this.props.getFavoriteLocations(data.user.id)
                     this.props.navigation.navigate('Map')
@@ -84,11 +84,11 @@ class Login extends Component {
                     const s = getStyles(theme)
                     return (
                         <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
-                            <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>     
+                            <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>
                                 <View style={s.mask}>
                                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                                         <View style={s.justify}>
-                                            {this.state.errors && 
+                                            {this.state.errors &&
                                                     <Text style={s.errorText}>
                                                         {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
                                                     </Text>
@@ -106,7 +106,7 @@ class Login extends Component {
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
-                                            <Input 
+                                            <Input
                                                 placeholder='Password'
                                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                                 onChangeText={password => this.setState({password})}
@@ -124,7 +124,7 @@ class Login extends Component {
                                                 raised
                                                 buttonStyle={s.buttonStyle}
                                                 titleStyle={s.buttonTitle}
-                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden'}}
+                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden',borderRadius: 25}}
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
@@ -137,7 +137,7 @@ class Login extends Component {
                                                 containerStyle={{marginBottom: 20}}
                                                 buttonStyle={s.buttonMask}
                                                 title="Not a user? SIGN UP!"
-                                            />              
+                                            />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('PasswordReset')}
                                                 title="I forgot my password"
@@ -151,18 +151,18 @@ class Login extends Component {
                                                 titleStyle={s.textLink}
                                                 containerStyle={{marginBottom: 20}}
                                                 buttonStyle={s.buttonMask}
-                                            />                       
-                                            <Button 
+                                            />
+                                            <Button
                                                 onPress={() => {
                                                     this.props.loginLater()
                                                     this.props.navigation.navigate('Map')
-                                                }} 
+                                                }}
                                                 titleStyle={s.textLink}
                                                 buttonStyle={s.buttonMask}
                                                 title="Skip logging in for now"
                                             />
                                         </View>
-                                    </TouchableWithoutFeedback>          
+                                    </TouchableWithoutFeedback>
                                 </View>
                             </ImageBackground>
                         </KeyboardAwareScrollView>
@@ -191,7 +191,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0
     },
     errorText: {
-        color: 'red', 
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -199,45 +199,47 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 22,
-        color: theme.pbmText,
-        textShadowColor: theme._fff,
+        color: theme.text,
+        textShadowColor: theme.white,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
     inputBox: {
         width: '100%',
-        borderRadius: 5,
+        borderRadius: 25,
         borderWidth: 1,
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         marginTop: 15,
-        marginBottom: 15
+        marginBottom: 15,
+        paddingLeft: 10
     },
     inputText: {
-        color: theme.pbmText,
+        color: theme.text,
     },
     textLink: {
         fontSize: 16,
         textAlign: "center",
         fontWeight: "bold",
-        color: theme.drawerText,
-        textShadowColor: theme._fff,
+        color: theme.orange7,
+        textShadowColor: theme.white,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
     },
     iconStyle: {
         fontSize: 24,
-        color: theme.placeholder,
+        color: theme.indigo4,
         marginRight: 5,
         marginLeft: 5
     },
     buttonStyle: {
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.blue2,
         width: '100%',
-        elevation: 0
+        elevation: 0,
+        borderRadius: 25
     },
     buttonTitle: {
-        color: theme.buttonTextColor, 
+        color: theme.orange8,
         fontSize: 16,
         fontWeight: '500'
     },
@@ -249,10 +251,10 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15
     },
     disabledStyle: {
-        backgroundColor: theme._e0f1fb,
+        backgroundColor: theme.white,
     },
     disabledTitleStyle: {
-        color: theme.disabledText
+        color: theme.orange3
     },
 })
 

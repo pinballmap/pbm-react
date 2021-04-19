@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
+import { connect } from 'react-redux'
 import { Text, StyleSheet } from 'react-native'
 import { removeMachineFromLocation } from '../actions/location_actions'
 import ConfirmationModal from './ConfirmationModal'
@@ -18,32 +18,32 @@ const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: l
     }
 
     const { curLmx, location } = loc
-    
+
     return(
         <ConfirmationModal>
             {machineName && <Text style={s.confirmText}>{`Remove ${machineName} from ${location.name}?`}</Text>}
-            <PbmButton 
+            <PbmButton
                 title={'Yes, Remove It'}
                 onPress={() => removeLmx(curLmx, location.id)}
                 containerStyle={s.buttonContainer}
             />
-            <WarningButton 
+            <WarningButton
                 title={'Cancel'}
                 onPress={() => closeModal()}
                 containerStyle={s.buttonContainer}
             />
-        </ConfirmationModal>    
+        </ConfirmationModal>
     )
 }
 
-const getStyles = theme => StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({
     confirmText: {
         textAlign: 'center',
         marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18,
-        color: theme.pbmText,
+        color: theme.text,
     },
     buttonContainer: {
         marginLeft: 20,
@@ -55,9 +55,9 @@ const getStyles = theme => StyleSheet.create({
 
 RemoveMachineModal.propTypes = {
     removeMachineFromLocation: PropTypes.func,
-    closeModal: PropTypes.func, 
+    closeModal: PropTypes.func,
     location: PropTypes.object,
-    machineName: PropTypes.string, 
+    machineName: PropTypes.string,
 }
 
 const mapStateToProps = ({ location, machines }) => {

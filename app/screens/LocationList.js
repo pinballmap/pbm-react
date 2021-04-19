@@ -33,15 +33,18 @@ export class LocationList extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} title="Map" />,
-            title: 'Location List',
+            title: 'Locations on the Map',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#faf9f9',
+                borderBottomWidth: 0,
+                elevation: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontSize: 20
             },
             gesturesEnabled: true
         }
@@ -97,7 +100,7 @@ export class LocationList extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <>
+                        <View style={{backgroundColor: theme.neutral}}>
                             <Text style={s.sort}>SORT BY:</Text>
                             <ButtonGroup
                                 onPress={this.updateIndex}
@@ -128,7 +131,7 @@ export class LocationList extends Component {
                                 }
                                 keyExtractor={(item, index) => `list-item-${index}`}
                             />
-                        </>
+                        </View>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -143,23 +146,31 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
         color: '#736f73',
         fontSize: deviceWidth < 321 ? 12 : 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.buttonGBorder
+        width: 0,
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        borderWidth: 4,
+        borderColor: theme.blue1,
+        backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
 })

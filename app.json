@@ -6,11 +6,11 @@
     ],
     "androidStatusBar": {
       "barStyle": "dark-content",
-      "backgroundColor": "#f5fbff"
+      "backgroundColor": "#fff7eb"
     },
     "splash": {
       "image": "app/assets/images/t-shirt-logo@3x.png",
-      "backgroundColor": "#4b5862",
+      "backgroundColor": "#766a62",
       "resizeMode": "contain"
     },
     "updates": {
@@ -41,7 +41,7 @@
       },
       "splash": {
         "image": "app/assets/images/t-shirt-logo@3x.png",
-        "backgroundColor": "#4b5862",
+        "backgroundColor": "#766a62",
         "resizeMode": "contain"
       }
     },
@@ -73,7 +73,7 @@
         "xhdpi": "app/assets/images/res/drawable-xhdpi/t-shirt-logo.png",
         "xxhdpi": "app/assets/images/res/drawable-xxhdpi/t-shirt-logo.png",
         "xxxhdpi": "app/assets/images/res/drawable-xxxhdpi/t-shirt-logo.png",
-        "backgroundColor": "#4b5862",
+        "backgroundColor": "#766a62",
         "resizeMode": "contain"
       },
       "intentFilters": [
@@ -98,6 +98,22 @@
     "platforms": [
       "android",
       "ios"
-    ]
+    ],
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    }
   }
 }

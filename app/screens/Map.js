@@ -10,10 +10,11 @@ import {
 } from 'react-native'
 import {
     Button,
+    ButtonGroup,
     Icon,
 } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -23,6 +24,8 @@ import {
     ConfirmationModal,
     Search,
     Text,
+    IosMarker,
+    AndroidMarker,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -30,7 +33,6 @@ import {
     clearFilters,
     clearError,
     getLocationsConsideringZoom,
-    updateMapCoordinates,
 } from '../actions'
 import {
     getMapLocations
@@ -38,45 +40,9 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 
-const MenuIcon = (props) => {
-    const { numMachines } = props
-    let dotFontMargin, dotWidthHeight
-    if (numMachines < 10) {
-        dotFontMargin = Platform.OS === 'ios' ? 0 : -2
-        dotWidthHeight = 32
-    } else if (numMachines < 20) {
-        dotFontMargin = Platform.OS === 'ios' ? 2 : 0
-        dotWidthHeight = 36
-    } else if (numMachines < 100) {
-        dotFontMargin = Platform.OS === 'ios' ? 4 : 2
-        dotWidthHeight = 40
-    } else {
-        dotFontMargin = Platform.OS === 'ios' ? 7 : 4
-        dotWidthHeight = 46
-    }
-    return (
-        <View style={{
-            width: dotWidthHeight,
-            height: dotWidthHeight,
-            borderRadius: dotWidthHeight / 2,
-            borderWidth: 3,
-            borderColor: '#d2e5fa',
-            backgroundColor: '#78b6fb',
-            elevation: 1,
-        }}>
-            <Text style={{
-                color: 'white',
-                fontWeight:'bold',
-                textAlign:'center',
-                fontSize: 20,
-                marginTop:dotFontMargin}}>
-                {numMachines}
-            </Text>
-        </View>
-    )
-}
+const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
 
-MenuIcon.propTypes = {
+MarkerDot.propTypes = {
     numMachines: PropTypes.number,
 }
 
@@ -95,7 +61,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            {marker.icon === 'dot' ? <MenuIcon numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
+            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
@@ -119,7 +85,6 @@ class Map extends Component {
     constructor(props) {
         super(props)
 
-        this.mapRef = null
         this.prevRegion = {}
 
         this.state = {
@@ -127,6 +92,12 @@ class Map extends Component {
             maxedOutZoom: false,
             themeState: '',
             showAppAlert: false,
+            showUpdateSearch: false,
+            latitude: null,
+            longitude: null,
+            latitudeDelta: null,
+            longitudeDelta: null,
+            mapCoordinatesUpdated: false,
         }
     }
 
@@ -140,30 +111,18 @@ class Map extends Component {
         }
 
         return {
-            headerLeft:
-                <Button
-                    onPress={() => navigation.navigate('LocationList')}
-                    containerStyle={{ width: 50 }}
-                    title="List"
-                    accessibilityLabel="List"
-                    titleStyle={titleStyle}
-                    type="clear"
-                />,
+            headerLeft: null,
             headerTitle:
                 <Search
                     navigate={navigation.navigate}
                 />,
-            headerRight:
-                <Button
-                    onPress={() => navigation.navigate('FilterMap')}
-                    containerStyle={{ width: 60 }}
-                    title="Filter"
-                    accessibilityLabel="Filter"
-                    titleStyle={titleStyle}
-                    type="clear"
-                />,
+            headerRight: null,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                shadowColor: 'transparent',
+                backgroundColor: 'transparent',
+                elevation: 0,
+                borderBottomColor: 'transparent',
+                shadowOffset: { height: 0, width: 0 }
             },
         }
     }
@@ -171,14 +130,11 @@ class Map extends Component {
     static contextType = ThemeContext;
 
     onRegionChange = (region) => {
-        const compareRegion = (region) => {
-            this.props.getLocationsConsideringZoom(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
-        }
-
-        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001) {
-            setTimeout(compareRegion, 800, region)
-            this.props.updateMapCoordinates({
-                ...region
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
+            this.setState({
+                ...region,
+                showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
+                mapCoordinatesUpdated: false
             })
         }
         this.prevRegion = region
@@ -189,10 +145,6 @@ class Map extends Component {
     }
 
     componentDidUpdate() {
-        if (this.mapRef) {
-            setTimeout(() => this.mapRef.fitToElements(true), 1000)
-        }
-
         const { theme } = this.context.theme
         if (theme !== this.state.themeState) {
             this.updateTheme(theme)
@@ -200,7 +152,7 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        if(this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
+        if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
             this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
         } else {
             this.props.getCurrentLocation()
@@ -227,8 +179,25 @@ class Map extends Component {
             viewByFavoriteLocations,
         } = props.query
 
+        const {
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
+        } = this.state
+
+        if (!this.state.latitude || this.props.query.curLat !== curLat) {
+            this.setState({
+                latitude: curLat,
+                longitude: curLon,
+                latitudeDelta: latDelta,
+                longitudeDelta: lonDelta,
+                mapCoordinatesUpdated: true,
+            })
+        }
+
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
-            this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
+            this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
         }
 
     }
@@ -249,6 +218,11 @@ class Map extends Component {
         const {
             showNoLocationTrackingModal,
             showAppAlert,
+            showUpdateSearch,
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
         } = this.state
 
         const { theme } = this.context
@@ -256,7 +230,7 @@ class Map extends Component {
 
         const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
-        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, curLat: latitude, curLon: longitude, latDelta: latitudeDelta, lonDelta: longitudeDelta, maxZoom } = this.props.query
+        const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
         if (!latitude) {
@@ -266,7 +240,7 @@ class Map extends Component {
         }
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#f5fbff' }}>
+            <View style={{ flex: 1, backgroundColor: '#fffbf5' }}>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
@@ -306,7 +280,7 @@ class Map extends Component {
                 </ConfirmationModal>
                 {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
-                <View style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
+                <View style={{ flex: 1, position: 'absolute', left: 0, top: -100, bottom: 0, right: 0 }}>
                     <MapView
                         ref={this.mapRef}
                         region={{
@@ -325,14 +299,24 @@ class Map extends Component {
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                     </MapView>
-                    <Icon
-                        raised
-                        name='gps-fixed'
+                    <Button
+                        onPress={() => navigation.navigate('LocationList')}
+                        icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18}} />}
+                        containerStyle={[s.listButtonContainer,s.containerStyle]}
+                        buttonStyle={s.buttonStyle}
+                        titleStyle={s.buttonTitle}
+                        title="List"
                         underlayColor='transparent'
-                        type='material'
-                        color='#1e9dff'
-                        containerStyle={{ position: 'absolute', bottom: 0, right: 0 }}
+                    />
+                    <Icon
+                        reverse
+                        name='location-arrow'
+                        underlayColor='transparent'
+                        type='font-awesome'
+                        color='#bec2e6'
+                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0, borderRadius:30 }]}
                         size={24}
+                        borderRadius={25}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
@@ -342,8 +326,22 @@ class Map extends Component {
                             title={'Clear Filter'}
                             onPress={() => this.props.clearFilters()}
                             type="clear"
-                            titleStyle={s.clear}
-                            containerStyle={{ width: 100, position: 'absolute', top: 0, right: 0 }}
+                            containerStyle={[s.filterContainer,s.containerStyle]}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.indigo2}]}
+                            titleStyle={s.buttonTitle}
+                        />
+                        : null
+                    }
+                    {showUpdateSearch ?
+                        <Button
+                            title={'Search this area'}
+                            onPress={() => {
+                                this.setState({ showUpdateSearch: false })
+                                this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
+                            }}
+                            containerStyle={[s.updateSearchContainer,s.containerStyle]}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange8,padding:20,height:40}]}
+                            titleStyle={{color:theme.neutral,fontSize:16}}
                         />
                         : null
                     }
@@ -381,16 +379,16 @@ const getStyles = theme => StyleSheet.create({
         zIndex: 10,
         alignSelf: "center",
         padding: 5,
-        backgroundColor: theme.loading,
-        color: theme.pbmText,
+        backgroundColor: theme.blue1,
+        color: theme.text,
         fontSize: 14,
         marginTop: 5,
     },
     clear: {
-        fontSize: 14,
+        fontSize: 16,
         color: "#F53240",
         padding: 5,
-        backgroundColor: theme.loading
+        backgroundColor: theme.neutral
     },
     confirmText: {
         textAlign: 'center',
@@ -409,16 +407,16 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         right: -15,
         top: -15,
-        color: theme.xButton,
+        color: theme.red2,
     },
     appAlertTitle: {
-        color: theme.buttonTextColor,
+        color: theme.orange8,
         textAlign: "center",
         fontSize: 18,
         fontWeight: 'bold'
     },
     appAlertHeader: {
-        backgroundColor: theme.loading,
+        backgroundColor: theme.blue1,
         marginTop: -15,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -428,6 +426,45 @@ const getStyles = theme => StyleSheet.create({
     appAlert: {
         padding: 10,
         paddingBottom: 0,
+    },
+    buttonStyle: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 10,
+        paddingRight: 10,
+        height: 25,
+        borderRadius: 25,
+        backgroundColor: 'white',
+    },
+    buttonTitle: {
+        color: '#394046',
+        fontSize: 14
+    },
+    containerStyle: {
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
+    },
+    listButtonContainer: {
+        position: 'absolute',
+        top: 120,
+        left: 15,
+        borderRadius: 25
+    },
+    updateSearchContainer: {
+        position: 'absolute',
+        bottom: 20,
+        alignSelf: 'center',
+        borderRadius: 25
+    },
+    filterContainer: {
+        position: 'absolute',
+        top: 120,
+        right: 15,
+        borderRadius: 25
     }
 })
 
@@ -437,7 +474,6 @@ Map.propTypes = {
     query: PropTypes.object,
     user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
-    updateMapCoordinates: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
@@ -467,7 +503,6 @@ const mapDispatchToProps = (dispatch) => ({
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
-    updateMapCoordinates: ({...region}) => dispatch(updateMapCoordinates({...region})),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

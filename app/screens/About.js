@@ -101,17 +101,20 @@ const About = ({navigation, appAlert}) => {
 
 About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#6a7d8a' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
-    title: 'About',
+    title: 'About Pinball Map',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0,
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        flex: 1
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })
@@ -133,7 +136,7 @@ const getStyles = theme => StyleSheet.create({
     logo: {
         flex:1,
         width: deviceWidth - 20,
-        backgroundColor: theme._f5fbff
+        backgroundColor: theme.neutral
     },
     child: {
         margin: "auto",
@@ -151,12 +154,12 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.backButton,
+        color: '#7cc5ff',
         fontSize: 16,
     },
     appAlert: {
         borderWidth: 1,
-        borderColor: theme.buttonTextColor,
+        borderColor: theme.orange8,
         borderRadius: 10,
         margin: 10,
         paddingTop: 5,

@@ -1,18 +1,18 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     View
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { 
+import {
     ActivityIndicator,
     HeaderBackButton,
 } from '../components'
 
 const Blog = () => {
     const [loading, setLoading] = useState(true)
-    
+
     return (
         <Fragment>
             <View style={loading ? {display: 'none'} : {flex: 1}}>
@@ -23,21 +23,24 @@ const Blog = () => {
             </View>
             {loading && <ActivityIndicator/>}
         </Fragment>
-    )   
+    )
 }
 
 Blog.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Blog',
-    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#6a7d8a'}} />,
+    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#95867c'}} />,
     headerLeft: <HeaderBackButton navigation={navigation} />,
     title: 'Blog',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0,
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
+        textAlign: 'center',
+        fontSize: 20,
         flex: 1
     },
     gesturesEnabled: true

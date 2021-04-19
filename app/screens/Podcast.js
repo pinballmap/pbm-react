@@ -5,9 +5,9 @@ import {
 } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { 
+import {
     ActivityIndicator,
-    HeaderBackButton, 
+    HeaderBackButton,
 } from '../components'
 
 const Podcast = () => {
@@ -29,17 +29,20 @@ const Podcast = () => {
 
 Podcast.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Podcast',
-    drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={{fontSize: 24,color: '#6a7d8a'}} />, 
+    drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={{fontSize: 24,color: '#95867c'}} />,
     headerLeft: <HeaderBackButton navigation={navigation}/>,
     title: 'Podcast',
     headerRight:<View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
-        flex: 1
+        textAlign: 'center',
+        flex: 1,
+        fontSize: 20
     },
     gesturesEnabled: true
 })

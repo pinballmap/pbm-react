@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { 
+import {
     ActivityIndicator,
-    StyleSheet, 
+    StyleSheet,
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
@@ -19,9 +19,9 @@ const styledActivityIndicator = () => {
 
 const getStyles = (theme) => StyleSheet.create({
     container: {
-        flex: 1, 
+        flex: 1,
         padding: 20,
-        backgroundColor:theme.backgroundColor,
+        backgroundColor:theme.neutral,
         display: "flex",
         justifyContent: "center",
         alignItems: "center"

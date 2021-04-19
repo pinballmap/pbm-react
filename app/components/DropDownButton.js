@@ -15,32 +15,42 @@ const DropDownButton = ({ title, onPress, }) => {
             onPress={onPress}
             buttonStyle={s.dropdown}
             titleStyle={s.titleStyle}
-            style={{borderRadius: 5}}
             icon={<MaterialIcons name='arrow-drop-down' style={s.dropdownIcon} />}
             iconRight
-            containerStyle={{marginTop:5,marginRight:10,marginLeft:10}}
+            containerStyle={s.containerStyle}
         />
     )
 }
 
 const getStyles = (theme) => StyleSheet.create({
     dropdown: {
-        backgroundColor: theme.textInput,
+        backgroundColor: theme.white,
         width: '100%',
-        elevation: 0,
-        borderColor: theme.borderColor,
+        borderColor: theme.orange3,
         borderWidth: 1,
-        borderRadius: 5,
-        height: 40
+        borderRadius: 25,
+        height: 40,
+    },
+    containerStyle: {
+        marginTop:5,
+        marginRight:10,
+        marginLeft:10,
+        borderRadius:25,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     dropdownIcon: {
-        color: theme.dropdownText,
+        color: theme.orange8,
         fontSize: 32,
         marginLeft: 5,
         marginTop: -3
     },
     titleStyle: {
-        color: theme.dropdownText,
+        color: theme.orange8,
         textTransform: 'capitalize',
         fontSize: 16
     }
