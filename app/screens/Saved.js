@@ -28,15 +28,18 @@ export class Saved extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Saved',
+            title: 'Saved Locations',
             headerRight: <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                flex: 1,
+                fontSize: 20
             }
         }
     }
@@ -148,33 +151,41 @@ export class Saved extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     sort: {
         textAlign: 'center',
         marginTop: 5,
     },
     buttonStyle: {
-        backgroundColor: theme.buttonColor,
+        backgroundColor: theme.blue2,
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.buttonGBorder
+        width: 0,
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        borderWidth: 4,
+        borderColor: theme.blue1,
+        backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
     savedIcon: {
@@ -182,12 +193,12 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 15,
         marginBottom: 15,
         textAlign: 'center',
-        color: '#F53240'
+        color: theme.red2
     },
     noSaved: {
         fontSize: 18,
         textAlign: 'center',
-        color: theme.d_9a836a
+        color: theme.orange7
     }
 })
 

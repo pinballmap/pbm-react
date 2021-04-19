@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
+    Dimensions,
     Keyboard,
+    Platform,
     StyleSheet,
     TouchableWithoutFeedback,
-    View 
+    View
 } from 'react-native'
 import { Input } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { 
+import {
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
@@ -17,6 +19,8 @@ import {
 } from '../components'
 import { postData } from '../config/request'
 
+let deviceWidth = Dimensions.get('window').width
+
 const ResendConfirmation = ({ navigation }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -24,11 +28,11 @@ const ResendConfirmation = ({ navigation }) => {
     const [identification, setIdentification] = useState('')
     const [identificationError, setIdentificationError] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-     
+
     const submit = () => {
         setIdentificationError('')
         postData('/users/resend_confirmation.json', { identification })
-            .then(() => setModalVisible(true), 
+            .then(() => setModalVisible(true),
                 (err) => { throw err})
             .catch(identificationError => setIdentificationError(identificationError))
     }
@@ -50,10 +54,9 @@ const ResendConfirmation = ({ navigation }) => {
                     </View>
                 </ConfirmationModal>
                 <View style={{marginTop:10}}>
-                    <Text style={s.titleText}>{`Resend the Confirmation Email`}</Text>                 
-                    <Input 
+                    <Input
                         placeholder='Username or email...'
-                        placeholderTextColor={theme.placeholder}
+                        placeholderTextColor={theme.indigo4}
                         onChangeText={identification => setIdentification(identification)}
                         value={identification}
                         errorStyle={{ color: 'red' }}
@@ -63,7 +66,7 @@ const ResendConfirmation = ({ navigation }) => {
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
-                    <PbmButton 
+                    <PbmButton
                         title={'Submit'}
                         onPress={submit}
                         disabled={identification.length === 0}
@@ -76,13 +79,20 @@ const ResendConfirmation = ({ navigation }) => {
 
 ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: <HeaderBackButton navigation={navigation} />,
+    headerRight: <View style={{padding:6}}></View>,
+    title: 'Resend Confirmation Email',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        borderBottomWidth: 0,
+        elevation: 0
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
-        textAlign: 'center', 
-        flex: 1
+        textAlign: 'center',
+        width: deviceWidth - 100,
+        ...Platform.select({
+            android: { flex: 1 }
+        }),
     },
     gesturesEnabled: true
 })
@@ -93,15 +103,15 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 25
     },
     inputBox: {
-        borderRadius: 5,
+        borderRadius: 25,
         borderWidth: 1,
-        backgroundColor: theme._e0ebf2, 
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         margin: 15,
         paddingLeft: 10
     },
     inputText: {
-        color: theme.pbmText,
+        color: theme.text,
     },
     confirmText: {
         textAlign: 'center',
@@ -109,12 +119,6 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18
-    },
-    titleText: {
-        textAlign:'center',
-        marginBottom:10,
-        fontSize: 18,
-        fontWeight: 'bold'
     },
     buttonContainer: {
         marginLeft: 20,

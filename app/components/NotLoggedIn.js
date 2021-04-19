@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
-    StyleSheet, 
-    Text, 
+import {
+    StyleSheet,
+    Text,
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
@@ -17,7 +17,7 @@ const NotLoggedIn = ({ onPress, text, title }) => {
             <Text style={s.pageTitle}>{title}</Text>
             <Text style={s.hiya}>{text}</Text>
             <PbmButton
-                title={"Log In"} 
+                title={"Log In"}
                 onPress={onPress}
                 accessibilityLabel="Log In"
             />
@@ -28,7 +28,7 @@ const NotLoggedIn = ({ onPress, text, title }) => {
 const getStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.neutral,
     },
     pageTitle: {
         fontSize: 14,
@@ -36,13 +36,13 @@ const getStyles = (theme) => StyleSheet.create({
         fontWeight: "bold",
         paddingBottom: 15,
         paddingTop: 10,
-        color: theme.pbmText
+        color: theme.text
     },
     hiya: {
         fontStyle: 'italic',
         paddingHorizontal: 15,
         paddingBottom: 10,
-        color: theme.drawerText,
+        color: theme.orange7,
         textAlign: 'center'
     },
 })

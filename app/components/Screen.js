@@ -5,12 +5,12 @@ import { ThemeContext } from '../theme-context'
 
 const Screen = (props) => {
     const { theme } = useContext(ThemeContext)
-    
+
     return (
-        <ScrollView 
-            {...props} 
+        <ScrollView
+            {...props}
             scrollIndicatorInsets={{ right: 1 }}
-            style={{ flex: 1,backgroundColor: theme.backgroundColor }}
+            style={{ flex: 1,backgroundColor: theme.neutral }}
         >
             {props.children}
         </ScrollView>

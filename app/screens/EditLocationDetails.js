@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux' 
-import { 
-    ActivityIndicator, 
+import { connect } from 'react-redux'
+import {
+    ActivityIndicator,
     Keyboard,
-    Modal, 
-    SafeAreaView, 
-    ScrollView, 
-    StyleSheet, 
-    TextInput, 
-    TouchableWithoutFeedback, 
-    View, 
+    Modal,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
-import { 
-    DropDownButton, 
+import {
+    DropDownButton,
     HeaderBackButton,
-    PbmButton, 
+    PbmButton,
     Screen,
     Text,
     WarningButton,
 } from '../components'
-import { 
+import {
     clearError,
     clearSelectedState,
     setSelectedOperator,
     setSelectedLocationType,
-    updateLocationDetails, 
+    updateLocationDetails,
 } from '../actions'
 
 class EditLocationDetails extends Component {
@@ -35,7 +35,7 @@ class EditLocationDetails extends Component {
 
         this.state = {
             phone: props.location.location.phone,
-            website: props.location.location.website, 
+            website: props.location.location.website,
             description: props.location.location.description,
             selectedLocationType: props.location.location.location_type_id,
             showEditLocationDetailsModal: false,
@@ -46,13 +46,16 @@ class EditLocationDetails extends Component {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('name'),
+            headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
-                textAlign: 'center', 
-                flex: 1
+                textAlign: 'center',
+                flex: 1,
+                fontSize: 20
             },
             gesturesEnabled: true
         }
@@ -101,17 +104,17 @@ class EditLocationDetails extends Component {
                                 visible={this.state.showEditLocationDetailsModal}
                                 onRequestClose={()=>{}}
                             >
-                                {errorText ? 
+                                {errorText ?
                                     <View style={{marginTop: 100}}>
                                         <Text>{errorText}</Text>
-                                        <PbmButton 
+                                        <PbmButton
                                             title={"OK"}
                                             onPress={() => this.acceptError()}
                                         />
                                     </View>
-                                    :              
-                                    <SafeAreaView style={s.background}>         
-                                        <ScrollView style={{backgroundColor:'#f5fbff'}}>
+                                    :
+                                    <SafeAreaView style={s.background}>
+                                        <ScrollView style={{backgroundColor:theme.neutral}}>
                                             <Text style={s.title}>Phone</Text>
                                             <Text style={s.preview}>{phone}</Text>
                                             <View style={s.hr}></View>
@@ -138,32 +141,32 @@ class EditLocationDetails extends Component {
                                     </SafeAreaView>
                                 }
                             </Modal>
-                            {updatingLocationDetails ?  
+                            {updatingLocationDetails ?
                                 <ActivityIndicator /> :
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                                     <View style={{marginLeft:10,marginRight:10}}>
                                         <Text style={s.title}>Phone</Text>
-                                        <TextInput 
-                                            style={[{height: 40},s.textInput,s.radius5]}
+                                        <TextInput
+                                            style={[{height: 40},s.textInput,s.radius25]}
                                             keyboardType='numeric'
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => this.setState({ phone })}
                                             value={phone}
                                             returnKeyType="done"
                                             placeholder={phone || '(503) xxx-xxxx'}
-                                            placeholderTextColor={theme.placeholder}
+                                            placeholderTextColor={theme.indigo4}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
                                         <Text style={s.title}>Website</Text>
                                         <TextInput
-                                            style={[{height: 40},s.textInput,s.radius5]}
+                                            style={[{height: 40},s.textInput,s.radius25]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={website => this.setState({ website })}
                                             value={website}
                                             returnKeyType="done"
                                             placeholder={website || 'http://...'}
-                                            placeholderTextColor={theme.placeholder}
+                                            placeholderTextColor={theme.indigo4}
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
@@ -171,24 +174,24 @@ class EditLocationDetails extends Component {
                                         <TextInput
                                             multiline={true}
                                             numberOfLines={4}
-                                            style={[{height: 100},s.textInput,s.radius5]}
+                                            style={[{height: 100},s.textInput,s.radius25]}
                                             onChangeText={description => this.setState({ description })}
                                             underlineColorAndroid='transparent'
                                             value={description}
                                             placeholder={description || 'Location description...'}
-                                            placeholderTextColor={theme.placeholder}
+                                            placeholderTextColor={theme.indigo4}
                                             textAlignVertical='top'
                                         />
                                         <Text style={s.title}>Location Type</Text>
                                         <DropDownButton
                                             title={locationTypeName}
                                             onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
-                                        /> 
+                                        />
                                         <Text style={s.title}>Operator</Text>
                                         <DropDownButton
                                             title={operatorName}
                                             onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
-                                        />                        
+                                        />
                                         <PbmButton
                                             title={'Submit Location Details'}
                                             onPress={() => this.setState({ showEditLocationDetailsModal: true })}
@@ -204,10 +207,10 @@ class EditLocationDetails extends Component {
     }
 }
 
-const getStyles = theme => StyleSheet.create({ 
+const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     title: {
         textAlign:'center',
@@ -215,7 +218,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontWeight: "bold",
-        color: theme.meta
+        color: theme.orange7
     },
     preview: {
         fontSize: 14,
@@ -223,31 +226,31 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25
     },
     textInput: {
-        backgroundColor: theme.textInput, 
-        borderColor: theme.borderColor,
-        color: theme.pbmText,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
+        color: theme.text,
         borderWidth: 1,
         marginLeft: 15,
         marginRight: 15,
         paddingLeft: 10,
         paddingRight: 5
     },
-    radius5: {
-        borderRadius: 5
+    radius25: {
+        borderRadius: 25
     },
     hr: {
         marginLeft:25,
         marginRight:25,
         height:2,
         marginTop: 10,
-        backgroundColor: theme.hr
+        backgroundColor: theme.indigo4
     },
-    
+
 })
 
 EditLocationDetails.propTypes = {
-    locations: PropTypes.object, 
-    location: PropTypes.object, 
+    locations: PropTypes.object,
+    location: PropTypes.object,
     operators: PropTypes.object,
     error: PropTypes.object,
     updateLocationDetails: PropTypes.func,

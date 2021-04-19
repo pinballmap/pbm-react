@@ -20,7 +20,7 @@ const WarningButton = ({ title, onPress, accessibilityLabel, containerStyle }) =
             buttonStyle={s.redButton}
             titleStyle={s.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{overflow:'hidden'}, containerStyle ? containerStyle : s.margin15]}
+            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}, containerStyle ? containerStyle : s.margin15]}
         />
     )
 }
@@ -46,9 +46,9 @@ const getStyles = (theme) => StyleSheet.create({
         fontWeight: Platform.OS === 'ios' ? "600" : "500"
     },
     redButton: {
-        backgroundColor: theme.warningButtonColor,
+        backgroundColor: theme.red2,
         width: '100%',
-        elevation: 0
+        borderRadius: 25,
     },
 })
 

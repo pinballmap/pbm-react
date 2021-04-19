@@ -8,8 +8,8 @@ const HeaderBackButton = ({navigation, title}) => {
     const { theme } = useContext(ThemeContext)
 
     return (
-        <HeaderBackButtonReactNavigation 
-            tintColor={theme.backButton}  
+        <HeaderBackButtonReactNavigation
+            tintColor={theme.blue2}
             onPress={() => {
                 navigation.goBack(null)
                 Keyboard.dismiss()
@@ -23,5 +23,5 @@ HeaderBackButton.propTypes = {
     navigation: PropTypes.object,
     title: PropTypes.string,
 }
-    
+
 export default HeaderBackButton

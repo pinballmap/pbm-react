@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
+import {
     Modal,
-    StyleSheet, 
-    View, 
+    StyleSheet,
+    View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 
@@ -24,7 +24,7 @@ const ConfirmationModal = ({children, visible}) => {
                     {children}
                 </View>
             </View>
-        </Modal>    
+        </Modal>
 
     )
 }
@@ -38,7 +38,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     modal: {
-        backgroundColor: theme.modalBg,
+        backgroundColor: theme.neutral,
         borderRadius: 15,
         width: '80%',
         paddingVertical: 15,

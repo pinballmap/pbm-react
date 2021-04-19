@@ -17,11 +17,12 @@ import {
     View,
 } from 'react-native'
 import {
+    Button,
     Input,
     ListItem,
 } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import {
     displayError,
@@ -100,7 +101,7 @@ class Search extends Component {
 
     getLocationsByCity = async ({ value }) => {
         try {
-            const { location } = await getData(`/locations/closest_by_address.json?address=${value}`)
+            const { location } = await getData(`/locations/closest_by_address.json?address=${value};no_details=1`)
             this.props.updateCoordinates(location.lat, location.lon)
             this.clearSearchState({ value })
         } catch (e) {
@@ -251,7 +252,7 @@ class Search extends Component {
                                 visible={searchModalVisible}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.neutral }}>
                                     <View style={s.modalContainer}>
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                                             <MaterialIcons
@@ -265,8 +266,8 @@ class Search extends Component {
                                             />
                                             <Input
                                                 placeholder='City, Address, Location'
-                                                leftIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} style={{ marginLeft: 10, marginRight: 0 }} />}
-                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
+                                                leftIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} style={{ marginLeft: 10, marginRight: 0 }} />}
+                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
                                                 onChangeText={query => this.changeQuery(query)}
                                                 value={q}
                                                 containerStyle={{ paddingTop: 4 }}
@@ -289,12 +290,23 @@ class Search extends Component {
                                     </View>
                                 </SafeAreaView>
                             </Modal>
-                            <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
-                                <View style={s.searchMap}>
-                                    <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                    <Text style={s.inputPlaceholder}>City, Address, Location</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <View style={s.searchMapContainer}>
+                                <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
+                                    <View style={s.searchMap}>
+                                        <MaterialIcons name='search' size={25} style={s.searchIcon} />
+                                        <Text style={s.inputPlaceholder}>City, Address, Location</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <Button
+                                    onPress={() => this.props.navigate('FilterMap')}
+                                    containerStyle={s.buttonContainerStyle}
+                                    icon={<Octicons name='settings' style={{paddingRight:5,fontSize: 20,color:'#394046'}} />}
+                                    buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
+                                    titleStyle={{color:'#394046',fontSize:16}}
+                                    title="Filter"
+                                    underlayColor='transparent'
+                                />
+                            </View>
                         </View>
                     )
                 }}
@@ -309,65 +321,90 @@ Search.propTypes = {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme._f2f4f5,
+        backgroundColor: theme.neutral,
     },
     modalContainer: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : 10,
     },
+    searchMapContainer: {
+        ...Platform.select({
+            android: { marginLeft: 15 }
+        }),
+        marginTop: 10,
+        flex: 1,
+        alignItems: 'center',
+        width: deviceWidth - 30,
+    },
     searchMap: {
-        width: Platform.OS === 'ios' ? deviceWidth - 115 : deviceWidth - 120,
-        backgroundColor: theme._f2f4f5,
-        height: 35,
-        borderRadius: 5,
-        borderColor: theme._e0ebf2,
-        borderWidth: 1,
+        width: deviceWidth - 30,
+        backgroundColor: 'white',
+        height: 40,
+        borderRadius: 25,
+        paddingLeft: 10,
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: Platform.OS === 'ios' ? -10 : 0,
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
     },
     searchIcon: {
         paddingLeft: 5,
-        color: theme._97a5af,
+        color: theme.indigo4,
     },
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
-        color: theme._97a5af,
+        color: theme.indigo4,
     },
     inputStyle: {
-        color: theme.drawerText,
+        color: theme.orange7,
     },
     inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: theme._f2f4f5,
-        borderRadius: 5,
+        backgroundColor: theme.neutral,
+        borderRadius: 25,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
-        height: 35,
+        height: 40,
         display: 'flex',
         flexDirection: 'row',
         paddingLeft: 0,
     },
     listContainerStyle: {
-        borderBottomColor: theme.hr,
+        borderBottomColor: theme.indigo4,
         borderBottomWidth: 1,
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     listItemTitle: {
-        color: theme.drawerText,
+        color: theme.orange7,
         marginBottom: -2,
         marginTop: -2
     },
+    buttonContainerStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        borderBottomRightRadius: 25,
+        borderTopRightRadius: 25,
+        overflow: 'visible',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+    },
     searchHistoryTitle: {
-        color: theme.drawerText,
+        color: theme.orange7,
         fontWeight: 'bold',
     },
     clear: {
-        color: theme.meta,
+        color: theme.orange7,
         marginLeft: 5,
-        marginRight: 5,
-        marginTop: 6,
+        marginRight: -5,
+        marginTop: 8,
     },
     cityRegionRow: {
         position: 'absolute',

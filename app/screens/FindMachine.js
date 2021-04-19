@@ -36,6 +36,7 @@ import {
 import { alphaSortNameObj } from '../utils/utilityFunctions'
 
 let deviceHeight = Dimensions.get('window').height
+let deviceWidth = Dimensions.get('window').width
 
 const getDisplayText = machine => (
     <Text style={{ fontSize: 18 }}>
@@ -54,7 +55,7 @@ class MultiSelectRow extends React.PureComponent {
             <TouchableOpacity onPress={this._onPress}>
                 <View style={{ display: 'flex', flexDirection: 'row', padding: 8 }}>
                     <Text style={{ fontSize: 18 }}>{getDisplayText(this.props.machine)}</Text>
-                    {this.props.selected ? <MaterialIcons name='cancel' size={18} color="#4b5862" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
+                    {this.props.selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
                 </View>
             </TouchableOpacity>
         )
@@ -90,15 +91,20 @@ class FindMachine extends React.PureComponent {
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
             headerRight:
                 navigation.getParam('showDone') ?
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: "#1e9dff", fontSize: 16, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: '#addbff', fontSize: 18, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5fbff',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#4b5862',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                flex: 1
+                width: deviceWidth - 100,
+                ...Platform.select({
+                    android: { flex: 1 }
+                }),
             },
             gesturesEnabled: true
         }
@@ -227,7 +233,7 @@ class FindMachine extends React.PureComponent {
                                             <TextInput
                                                 multiline={true}
                                                 placeholder={'You can also include a machine comment...'}
-                                                placeholderTextColor={theme.placeholder}
+                                                placeholderTextColor={theme.indigo4}
                                                 numberOfLines={2}
                                                 style={[{ padding: 5, height: 50 }, s.textInput]}
                                                 value={this.state.condition}
@@ -250,15 +256,15 @@ class FindMachine extends React.PureComponent {
                             <SearchBar
                                 lightTheme={theme.theme !== 'dark'}
                                 placeholder='Filter machines...'
-                                placeholderTextColor={theme.placeholder}
+                                placeholderTextColor={theme.indigo4}
                                 platform='default'
-                                searchIcon={<MaterialIcons name='search' size={25} color={theme._97a5af} />}
-                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme._97a5af} onPress={() => this.handleSearch('')} />}
+                                searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
+                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => this.handleSearch('')} />}
                                 onChangeText={(query) => this.handleSearch(query, this.state.machinesInView)}
-                                inputStyle={{ color: theme.pbmText }}
+                                inputStyle={{ color: theme.text }}
                                 value={this.state.query}
                                 inputContainerStyle={s.filterInput}
-                                containerStyle={{ backgroundColor: theme.d_493931 }}
+                                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
                                 autoCorrect={false}
                             />
                             {!multiSelect ?
@@ -275,9 +281,9 @@ class FindMachine extends React.PureComponent {
                             }
                             {multiSelect ?
                                 <View style={s.multiSelect}>
-                                    {machineList.length === 0 ? <Text style={{ color: "#f5fbff" }}>0 machines selected</Text> :
+                                    {machineList.length === 0 ? <Text style={{ color: theme.text }}>0 machines selected</Text> :
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Text style={{ color: "#f5fbff" }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                                            <Text style={{ color: theme.text }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
                                         </View>
                                     }
                                 </View> : null
@@ -287,6 +293,7 @@ class FindMachine extends React.PureComponent {
                                 data={this.state.machines}
                                 renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                                 keyExtractor={this.keyExtractor}
+                                style={{backgroundColor:theme.neutral}}
                             />
                         </>
                     )
@@ -298,18 +305,19 @@ class FindMachine extends React.PureComponent {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.backgroundColor
+        backgroundColor: theme.neutral
     },
     filterInput: {
         height: 35,
-        backgroundColor: theme.findInput,
+        backgroundColor: theme.white,
         borderRadius: 10,
-        borderColor: theme.borderColor,
-        borderWidth: 1
+        borderColor: theme.orange3,
+        borderWidth: 1,
+        borderBottomWidth: 1
     },
     textInput: {
-        backgroundColor: theme.textInput,
-        borderColor: theme.borderColor,
+        backgroundColor: theme.white,
+        borderColor: theme.orange3,
         borderWidth: 1,
         marginLeft: 20,
         marginRight: 20,
@@ -324,26 +332,35 @@ const getStyles = theme => StyleSheet.create({
     multiSelect: {
         alignItems: 'center',
         padding: 5,
-        backgroundColor: theme._6a7d8a
+        backgroundColor: theme.indigo2
     },
     buttonGroupContainer: {
         height: 40,
-        borderColor: theme.buttonColor,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
+        borderWidth: 0,
+        borderRadius: 10,
+        backgroundColor: '#fff7eb',
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73'
+        color: '#736f73',
+        fontSize: 14,
     },
     innerBorderStyle: {
-        width: 1,
-        color: theme.buttonGBorder
+        width: 0,
     },
     selButtonStyle: {
-        backgroundColor: theme._fff,
+        borderWidth: 4,
+        borderColor: theme.blue1,
+        backgroundColor: theme.white,
+        borderRadius: 10
     },
     selTextStyle: {
-        color: theme.buttonGTextColor,
+        color: theme.orange8,
         fontWeight: 'bold',
     },
 })
