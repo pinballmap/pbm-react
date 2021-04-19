@@ -5,6 +5,7 @@ import {
     Dimensions,
     Keyboard,
     Modal,
+    Platform,
     StyleSheet,
     TextInput,
     TouchableOpacity,
