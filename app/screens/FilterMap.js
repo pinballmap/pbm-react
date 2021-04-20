@@ -5,7 +5,6 @@ import {
     Dimensions,
     Platform,
     StyleSheet,
-    View,
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -90,7 +89,7 @@ const FilterMap = ({
     }
 
     return (
-        <View style={{marginHorizontal:5}}>
+        <Screen style={{marginHorizontal:5}}>
             <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
             <DropDownButton
                 title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
@@ -137,7 +136,7 @@ const FilterMap = ({
                     onPress={clearFilters}
                 /> : null
             }
-        </View>
+        </Screen>
     )
 
 }
