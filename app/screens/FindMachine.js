@@ -311,7 +311,7 @@ const getStyles = theme => StyleSheet.create({
     filterInput: {
         height: 35,
         backgroundColor: theme.white,
-        borderRadius: 10,
+        borderRadius: 25,
         borderColor: theme.orange3,
         borderWidth: 1,
         borderBottomWidth: 1,
@@ -340,7 +340,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         marginBottom: 10,
         borderWidth: 0,
-        borderRadius: 10,
+        borderRadius: 25,
         backgroundColor: '#fff7eb',
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
@@ -360,7 +360,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 4,
         borderColor: theme.blue1,
         backgroundColor: theme.white,
-        borderRadius: 10
+        borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
