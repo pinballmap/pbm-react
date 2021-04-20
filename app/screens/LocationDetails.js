@@ -387,26 +387,6 @@ const getStyles = theme => StyleSheet.create({
     textStyle: {
         color: theme.orange7,
     },
-    buttonGroupContainer: {
-        height: 35,
-        borderColor: theme.blue2,
-        borderWidth: 2,
-        backgroundColor: theme.buttonGroup,
-    },
-    buttonGroupInactive: {
-        color: '#736f73'
-    },
-    innerBorderStyle: {
-        width: 1,
-        color: theme.blue2
-    },
-    selButtonStyle: {
-        backgroundColor: theme.white,
-    },
-    selTextStyle: {
-        color: theme.orange8,
-        fontWeight: 'bold',
-    },
     listContainerStyle: {
         borderRadius: 25,
         marginBottom: 25,
