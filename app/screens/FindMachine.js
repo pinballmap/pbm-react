@@ -294,7 +294,7 @@ class FindMachine extends React.PureComponent {
                                 data={this.state.machines}
                                 renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                                 keyExtractor={this.keyExtractor}
-                                style={{backgroundColor:theme.neutral}}
+                                style={{backgroundColor:theme.neutral,paddingHorizontal:5}}
                             />
                         </>
                     )
@@ -314,7 +314,8 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 10,
         borderColor: theme.orange3,
         borderWidth: 1,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        marginHorizontal: 5
     },
     textInput: {
         backgroundColor: theme.white,
@@ -337,6 +338,7 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonGroupContainer: {
         height: 40,
+        marginBottom: 10,
         borderWidth: 0,
         borderRadius: 10,
         backgroundColor: '#fff7eb',
