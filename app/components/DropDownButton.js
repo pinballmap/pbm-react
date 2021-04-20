@@ -26,8 +26,6 @@ const getStyles = (theme) => StyleSheet.create({
     dropdown: {
         backgroundColor: theme.white,
         width: '100%',
-        borderColor: theme.orange3,
-        borderWidth: 1,
         borderRadius: 25,
         height: 40,
     },
