@@ -329,13 +329,12 @@ class LocationDetails extends Component {
                             <View style={s.locationIcon}>
                                 <Icon
                                     reverse
-                                    raised
                                     name='tools'
                                     type='entypo'
-                                    color='#8acbf9'
+                                    color={theme.indigo4}
                                     reverseColor='#ffffff'
                                     size={28}
-                                    containerStyle={{overflow: 'visible'}}
+                                    containerStyle={[s.iconContainerStyle,{overflow: 'visible'}]}
                                     onPress={() => this.setShowLocationToolsModal(true)}
                                 />
                             </View>
@@ -501,7 +500,6 @@ const getStyles = theme => StyleSheet.create({
     },
     lastUpdated: {
         textAlign: 'center',
-        marginTop: 5,
         color: theme.orange7
     },
     commentUpdated: {
@@ -509,7 +507,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 10,
     },
     buttonIcon: {
-        color: "#878d92",
+        color: '#fffbf5',
         fontSize: 24,
         marginRight: 10
     },
@@ -593,6 +591,14 @@ const getStyles = theme => StyleSheet.create({
         top: -15,
         color: theme.red2,
     },
+    iconContainerStyle: {
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.9,
+        shadowRadius: 5,
+        elevation: 5,
+        overflow: 'visible'
+    }
 })
 
 LocationDetails.propTypes = {
