@@ -301,10 +301,9 @@ class Map extends Component {
                         name='location-arrow'
                         underlayColor='transparent'
                         type='font-awesome'
-                        color='#bec2e6'
-                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0, borderRadius:30 }]}
+                        color={theme.indigo4}
+                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0 }]}
                         size={24}
-                        borderRadius={25}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
