@@ -259,6 +259,7 @@ class LocationDetails extends Component {
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
                                     <View style={s.locationContainer}>
+                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <Text>This location has not been updated in over 2 years. The information may be out of date.</Text>}
                                         {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
