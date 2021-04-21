@@ -54,7 +54,7 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         return (
             <TouchableOpacity onPress={this._onPress}>
-                <View style={{ display: 'flex', flexDirection: 'row', padding: 8 }}>
+                <View style={{ display: 'flex', flexDirection: 'row', padding: 8, backgroundColor: this.props.index % 2 === 0 ? 'red' : 'blue' }}>
                     <Text style={{ fontSize: 18 }}>{getDisplayText(this.props.machine)}</Text>
                     {this.props.selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
                 </View>
@@ -67,6 +67,7 @@ MultiSelectRow.propTypes = {
     onPressItem: PropTypes.func,
     machine: PropTypes.object,
     selected: PropTypes.bool,
+    index: PropTypes.number,
 }
 
 class FindMachine extends React.PureComponent {
@@ -172,21 +173,22 @@ class FindMachine extends React.PureComponent {
         })
     }
 
-    renderRow = (machine) => (
+    renderRow = ({ item, index }) => (
         <TouchableOpacity
-            onPress={() => this.setSelected(machine.item)}
+            onPress={() => this.setSelected(item)}
         >
-            <View style={{ padding: 8 }}>
-                <Text style={{ fontSize: 18 }}>{getDisplayText(machine.item)}</Text>
+            <View style={{ padding: 8, backgroundColor: index % 2 === 0 ? 'blue' : 'red' }}>
+                <Text style={{ fontSize: 18 }}>{getDisplayText(item)}</Text>
             </View>
         </TouchableOpacity>
     )
 
-    renderMultiSelectRow = (machine) => (
+    renderMultiSelectRow = ({ item, index}) => (
         <MultiSelectRow
-            machine={machine.item}
+            machine={item}
             onPressItem={this.onPressMultiSelect}
-            selected={!!this.props.location.machineList.find(m => m.id === machine.item.id)}
+            selected={!!this.props.location.machineList.find(m => m.id === item.id)}
+            index={index}
         />
     )
 

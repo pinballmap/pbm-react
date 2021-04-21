@@ -36,12 +36,12 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
         navigation.goBack()
     }
 
-    const renderRow = (locationType) => (
+    const renderRow = ({ item, index}) => (
         <TouchableOpacity
-            onPress={() => _selectLocationType(locationType.item.id)}
+            onPress={() => _selectLocationType(item.id)}
         >
-            <View style={{padding:8}}>
-                <Text style={{fontSize:18}}>{locationType.item.name}</Text>
+            <View style={{padding:8, backgroundColor: index % 2 === 0 ? 'blue' : 'red'}}>
+                <Text style={{fontSize:18}}>{item.name}</Text>
             </View>
         </TouchableOpacity>
     )
