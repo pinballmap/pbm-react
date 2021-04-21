@@ -54,7 +54,7 @@ class MachineDetails extends Component {
         showRemoveMachineModal: false,
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
+    static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             headerRight: <RemoveMachine />,
