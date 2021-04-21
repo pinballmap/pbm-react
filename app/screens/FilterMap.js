@@ -5,7 +5,6 @@ import {
     Dimensions,
     Platform,
     StyleSheet,
-    View,
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -90,7 +89,7 @@ const FilterMap = ({
     }
 
     return (
-        <Screen>
+        <Screen style={{marginHorizontal:5}}>
             <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
             <DropDownButton
                 title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
@@ -187,7 +186,7 @@ const getStyles = theme => StyleSheet.create({
     buttonGroupContainer: {
         height: 40,
         borderWidth: 0,
-        borderRadius: 10,
+        borderRadius: 25,
         backgroundColor: '#fff7eb',
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
@@ -207,7 +206,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 4,
         borderColor: theme.blue1,
         backgroundColor: theme.white,
-        borderRadius: 10
+        borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
