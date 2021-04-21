@@ -47,16 +47,25 @@ const getDisplayText = machine => (
 )
 
 class MultiSelectRow extends React.PureComponent {
+    static contextType = ThemeContext
+
     _onPress = () => {
         this.props.onPressItem(this.props.machine)
     }
 
     render() {
+        const { index, machine, selected } = this.props
+        let backgroundColor
+        if (this.context.theme.theme === 'dark') {
+            backgroundColor = index % 2 === 0 ? 'red' : 'blue'
+        } else {
+            backgroundColor = index % 2 === 0 ? 'green' : 'yellow'
+        }
         return (
             <TouchableOpacity onPress={this._onPress}>
-                <View style={{ display: 'flex', flexDirection: 'row', padding: 8, backgroundColor: this.props.index % 2 === 0 ? 'red' : 'blue' }}>
-                    <Text style={{ fontSize: 18 }}>{getDisplayText(this.props.machine)}</Text>
-                    {this.props.selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
+                <View style={{ display: 'flex', flexDirection: 'row', padding: 8, backgroundColor }}>
+                    <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
+                    {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
                 </View>
             </TouchableOpacity>
         )
@@ -111,6 +120,8 @@ class FindMachine extends React.PureComponent {
             gesturesEnabled: true
         }
     }
+
+    static contextType = ThemeContext
 
     handleSearch = (query, machinesInView) => {
         const formattedQuery = query.toLowerCase()
@@ -173,15 +184,23 @@ class FindMachine extends React.PureComponent {
         })
     }
 
-    renderRow = ({ item, index }) => (
-        <TouchableOpacity
-            onPress={() => this.setSelected(item)}
-        >
-            <View style={{ padding: 8, backgroundColor: index % 2 === 0 ? 'blue' : 'red' }}>
-                <Text style={{ fontSize: 18 }}>{getDisplayText(item)}</Text>
-            </View>
-        </TouchableOpacity>
-    )
+    renderRow = ({ item, index }) => {
+        let backgroundColor
+        if (this.context.theme.theme === 'dark') {
+            backgroundColor = index % 2 === 0 ? 'blue' : 'red'
+        } else {
+            backgroundColor = index % 2 === 0 ? 'green' : 'yellow'
+        }
+        return (
+            <TouchableOpacity
+                onPress={() => this.setSelected(item)}
+            >
+                <View style={{padding: 8, backgroundColor }}>
+                    <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
 
     renderMultiSelectRow = ({ item, index}) => (
         <MultiSelectRow
@@ -217,45 +236,42 @@ class FindMachine extends React.PureComponent {
         const { machineList = [] } = this.props.location
         const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
         const selectedIdx = this.state.machinesInView ? 1 : 0
-
+        const theme = this.context.theme
+        const s = getStyles(theme)
         return (
-            <ThemeContext.Consumer>
-                {({ theme }) => {
-                    const s = getStyles(theme)
-                    return (
-                        <>
-                            <Modal
-                                visible={this.state.showModal}
-                                onRequestClose={() => { }}
-                                transparent={false}
-                            >
-                                <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
-                                        <View style={s.verticalAlign}>
-                                            <Text style={{ textAlign: 'center', marginTop: 10, marginLeft: 15, marginRight: 15, fontSize: 18 }}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
-                                            <TextInput
-                                                multiline={true}
-                                                placeholder={'You can also include a machine comment...'}
-                                                placeholderTextColor={theme.indigo4}
-                                                numberOfLines={2}
-                                                style={[{ padding: 5, height: 50 }, s.textInput]}
-                                                value={this.state.condition}
-                                                onChangeText={condition => this.setState({ condition })}
-                                                textAlignVertical='top'
-                                                underlineColorAndroid='transparent'
-                                            />
-                                            <PbmButton
-                                                title={'Add'}
-                                                onPress={this.addMachine}
-                                            />
-                                            <WarningButton
-                                                title={'Cancel'}
-                                                onPress={this.cancelAddMachine}
-                                            />
-                                        </View>
-                                    </KeyboardAwareScrollView>
-                                </TouchableWithoutFeedback>
-                            </Modal>
+            <>
+                <Modal
+                    visible={this.state.showModal}
+                    onRequestClose={() => { }}
+                    transparent={false}
+                >
+                    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
+                            <View style={s.verticalAlign}>
+                                <Text style={{ textAlign: 'center', marginTop: 10, marginLeft: 15, marginRight: 15, fontSize: 18 }}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
+                                <TextInput
+                                    multiline={true}
+                                    placeholder={'You can also include a machine comment...'}
+                                    placeholderTextColor={theme.indigo4}
+                                    numberOfLines={2}
+                                    style={[{ padding: 5, height: 50 }, s.textInput]}
+                                    value={this.state.condition}
+                                    onChangeText={condition => this.setState({ condition })}
+                                    textAlignVertical='top'
+                                    underlineColorAndroid='transparent'
+                                />
+                                <PbmButton
+                                    title={'Add'}
+                                    onPress={this.addMachine}
+                                />
+                                <WarningButton
+                                    title={'Cancel'}
+                                    onPress={this.cancelAddMachine}
+                                />
+                            </View>
+                        </KeyboardAwareScrollView>
+                    </TouchableWithoutFeedback>
+                </Modal>
                             <SearchBar
                                 lightTheme={theme.theme !== 'dark'}
                                 placeholder='Filter machines...'
@@ -299,9 +315,6 @@ class FindMachine extends React.PureComponent {
                                 style={{backgroundColor:theme.neutral,paddingHorizontal:5}}
                             />
                         </>
-                    )
-                }}
-            </ThemeContext.Consumer>
         )
     }
 }
