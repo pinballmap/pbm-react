@@ -5,6 +5,7 @@ import {
     Dimensions,
     Platform,
     StyleSheet,
+    View,
 } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
