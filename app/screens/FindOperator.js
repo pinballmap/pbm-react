@@ -36,12 +36,12 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
         navigation.goBack()
     }
 
-    const renderRow = (operator) => (
+    const renderRow = ({ item, index}) => (
         <TouchableOpacity
-            onPress={() => _selectOperator(operator.item.id)}
+            onPress={() => _selectOperator(item.id)}
         >
-            <View style={{padding:8}}>
-                <Text style={{fontSize:18}}>{operator.item.name}</Text>
+            <View style={{padding:8, backgroundColor: index % 2 === 0 ? 'blue' : 'red'}}>
+                <Text style={{fontSize:18}}>{item.name}</Text>
             </View>
         </TouchableOpacity>
     )
