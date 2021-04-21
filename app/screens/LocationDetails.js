@@ -259,8 +259,8 @@ class LocationDetails extends Component {
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
                                     <View style={s.locationContainer}>
-                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <Text>This location has not been updated in over 2 years. The information may be out of date.</Text>}
                                         {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
+                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
                                                 <Text style={[s.font18,s.marginRight]}>{location.street}</Text>
@@ -291,7 +291,7 @@ class LocationDetails extends Component {
                                                 </View> : null
                                             }
                                         </View>
-                                        <View style={{width:'100%'}}>
+                                        <View style={{width:'100%',paddingBottom:5}}>
                                             {location.description ?
                                                 <Text style={[s.metaDescription,s.italic]}>Location Notes:
                                                     <Text style={[s.notItalic,s.metaDescription]}> {location.description}</Text>
@@ -359,8 +359,8 @@ const getStyles = theme => StyleSheet.create({
         flex: 3,
         borderRadius: 25,
         marginBottom: 5,
-        marginRight: 40,
-        marginLeft: 40,
+        marginRight: 30,
+        marginLeft: 30,
         borderWidth: 0,
     },
     locationNameContainer: {
@@ -375,9 +375,9 @@ const getStyles = theme => StyleSheet.create({
         paddingBottom: 5,
     },
     locationName: {
-        textAlign:'center',
-        fontWeight:'bold',
-        fontSize:28,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 24,
         color: theme.orange8
     },
     buttonTitleStyle: {
@@ -425,7 +425,7 @@ const getStyles = theme => StyleSheet.create({
     },
     locationMetaContainer: {
         paddingTop: 5,
-        paddingBottom: 10,
+        paddingBottom: 0,
         marginTop: 5,
         flex: 1,
         flexDirection: 'row',
@@ -498,6 +498,17 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 10,
         marginBottom: 10,
         paddingTop: 10,
+    },
+    staleView: {
+        marginVertical: 5,
+        borderRadius: 10,
+        backgroundColor: '#fee5e7',
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    staleText: {
+        color: theme.red2,
+        fontStyle: 'italic',
     },
     lastUpdated: {
         textAlign: 'center',
