@@ -29,6 +29,8 @@ import {
     getLocationsByRegion,
     updateCurrCoordinates,
     getLocationsFailure,
+    setSearchBarText,
+    clearSearchBarText,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
@@ -51,7 +53,7 @@ class Search extends Component {
             searchModalVisible: false,
             showSubmitButton: false,
             searching: false,
-            recentSearchHistory: []
+            recentSearchHistory: [],
         }
 
         this.autocompleteSearchDebounced = debounce(500, this.autocompleteSearch)
@@ -122,6 +124,7 @@ class Search extends Component {
 
     clearSearchState = (search) => {
         this.changeQuery('')
+        this.props.setSearchBarText(search.value ? search.value : search.full_name )
         this.setState({ searchModalVisible: false })
         if (search) {
             const duplicateIndex = this.isDuplicate(search)
@@ -239,8 +242,9 @@ class Search extends Component {
 
     render() {
         const { q, foundLocations = [], foundCities = [], foundRegions = [], recentSearchHistory = [], searchModalVisible, showSubmitButton, searching } = this.state
+        const { query, clearSearchBarText } = this.props
+        const { searchBarText } = query
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
-
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -258,6 +262,7 @@ class Search extends Component {
                                             <MaterialIcons
                                                 onPress={() => {
                                                     this.setState({ searchModalVisible: false })
+                                                    q === '' && clearSearchBarText()
                                                     this.changeQuery('')
                                                 }}
                                                 name='clear'
@@ -294,7 +299,7 @@ class Search extends Component {
                                 <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
                                     <View style={s.searchMap}>
                                         <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                        <Text style={s.inputPlaceholder}>City, Address, Location</Text>
+                                        <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <Button
@@ -434,9 +439,12 @@ Search.propTypes = {
     displayError: PropTypes.func,
     navigate: PropTypes.func,
     regions: PropTypes.object,
+    query: PropTypes.object,
     updateCoordinates: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
     getLocationsFailure: PropTypes.func,
+    setSearchBarText: PropTypes.func,
+    clearSearchBarText: PropTypes.func,
 }
 
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
@@ -445,5 +453,7 @@ const mapDispatchToProps = (dispatch) => ({
     updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     getLocationsFailure: () => dispatch(getLocationsFailure()),
+    setSearchBarText: (searchBarText) => dispatch(setSearchBarText(searchBarText)),
+    clearSearchBarText: () => dispatch(clearSearchBarText()),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))
