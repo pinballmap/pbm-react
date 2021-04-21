@@ -30,6 +30,7 @@ import {
     getFavoriteLocations,
     clearFilters,
     clearError,
+    clearSearchBarText,
     getLocationsConsideringZoom,
 } from '../actions'
 import {
@@ -329,6 +330,7 @@ class Map extends Component {
                             onPress={() => {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
+                                this.props.clearSearchBarText()
                             }}
                             titleStyle={s.updateTitleStyle}
                             containerStyle={[s.updateContainerStyle,s.containerStyle]}
@@ -482,6 +484,7 @@ Map.propTypes = {
     error: PropTypes.object,
     appAlert: PropTypes.string,
     getLocationsConsideringZoom: PropTypes.func,
+    clearSearchBarText: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -504,6 +507,7 @@ const mapDispatchToProps = (dispatch) => ({
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
+    clearSearchBarText: () => dispatch(clearSearchBarText())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

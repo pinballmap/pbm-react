@@ -2,6 +2,8 @@ import Geocode from 'react-geocode'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 import {
     CLEAR_FILTERS,
+    CLEAR_SEARCH_BAR_TEXT,
+    SET_SEARCH_BAR_TEXT,
     SET_SELECTED_ACTIVITY_FILTER,
     CLEAR_ACTIVITY_FILTER,
     SET_MACHINE_FILTER,
@@ -29,3 +31,9 @@ export const setSelectedActivityFilter = (selectedActivity) => ({
 })
 
 export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER })
+
+export const clearSearchBarText = () => ({ type: CLEAR_SEARCH_BAR_TEXT })
+export const setSearchBarText = (searchBarText) => ({
+    type: SET_SEARCH_BAR_TEXT,
+    searchBarText,
+})

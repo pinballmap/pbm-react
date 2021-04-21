@@ -12,6 +12,8 @@ import {
     FETCHING_LOCATION_TRACKING_FAILURE,
     SET_MAX_ZOOM,
     SET_MACHINE_VERSION_FILTER,
+    CLEAR_SEARCH_BAR_TEXT,
+    SET_SEARCH_BAR_TEXT,
 } from '../actions/types'
 
 export const initialState = {
@@ -29,6 +31,7 @@ export const initialState = {
     maxZoom: false,
     viewByFavoriteLocations: false,
     filterByMachineVersion: false,
+    searchBarText: '',
 }
 
 export default (state = initialState, action) => {
@@ -107,6 +110,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 filterByMachineVersion: action.filterByMachineVersion,
+            }
+        case SET_SEARCH_BAR_TEXT:
+            return {
+                ...state,
+                searchBarText: action.searchBarText,
+            }
+        case CLEAR_SEARCH_BAR_TEXT:
+            return {
+                ...state,
+                searchBarText: ''
             }
         default:
             return state
