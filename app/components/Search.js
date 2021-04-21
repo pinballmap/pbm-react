@@ -364,7 +364,7 @@ const getStyles = theme => StyleSheet.create({
     },
     inputContainerStyle: {
         borderWidth: 1,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.white,
         borderRadius: 25,
         width: deviceWidth - 60,
         borderColor: '#e0ebf2',
