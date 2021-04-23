@@ -181,6 +181,7 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
+        color: theme.orange7
     },
     paren: {
         fontSize: 12,
@@ -188,7 +189,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7
     },
     filterView: {
-        backgroundColor: theme.red2,
+        backgroundColor: theme.blue1,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

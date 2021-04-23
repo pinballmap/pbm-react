@@ -36,7 +36,7 @@ class UserProfile extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            title: 'Profile',
+            title: 'User Profile',
             headerRight:<View style={{padding:6}}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
@@ -144,7 +144,7 @@ class UserProfile extends Component {
                                         <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
                                     </View>
                                     <Button
-                                        title={'Saved Locations'}
+                                        title={'View Saved Locations'}
                                         type="outline"
                                         raised
                                         onPress={() => this.props.navigation.navigate('Saved')}
@@ -161,7 +161,7 @@ class UserProfile extends Component {
                                                 containerStyle={s.background}
                                                 key={location[0]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
-                                                <ListItem.Content>
+                                                <ListItem.Content style={{backgroundColor:theme.white,borderRadius:10}}>
                                                     <ListItem.Title style={s.listTitleStyle}>
                                                         {location[1]}
                                                     </ListItem.Title>
@@ -175,7 +175,7 @@ class UserProfile extends Component {
                                             return <ListItem
                                                 containerStyle={s.background}
                                                 key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}>
-                                                <ListItem.Content>
+                                                <ListItem.Content style={{backgroundColor:theme.white,borderRadius:10}}>
                                                     <ListItem.Title style={s.listTitleStyle}>
                                                         {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                                     </ListItem.Title>
@@ -219,7 +219,8 @@ const getStyles = theme => StyleSheet.create({
     savedLink: {
         borderWidth: 2,
         borderColor: theme.blue2,
-        borderRadius:25
+        borderRadius: 25,
+        backgroundColor: theme.white
     },
     margin40: {
         marginLeft: 40,
@@ -228,16 +229,15 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     titleStyle: {
-        color: theme.orange8,
+        color: theme.text,
         fontSize: 16
     },
     listTitleStyle: {
         marginLeft: 15,
         marginRight: 15,
         fontSize: 16,
-        marginBottom: -8,
-        marginTop: -8,
-        color: theme.text
+        paddingVertical: 5,
+        color: theme.text,
     },
     username: {
         fontWeight: 'bold',
@@ -261,7 +261,8 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.blue1,
         fontSize: 16,
         marginTop: 5,
-        marginLeft: 10
+        marginLeft: 10,
+        borderRadius: 10
     },
     member: {
         textAlign: "center",
