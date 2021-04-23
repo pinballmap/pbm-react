@@ -6,7 +6,6 @@ import {
     Keyboard,
     Linking,
     Modal,
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     TextInput,
@@ -186,115 +185,113 @@ class MachineDetails extends Component {
                                 </TouchableWithoutFeedback>
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
-                            <SafeAreaView style={s.background}>
-                                <ScrollView>
-                                    <View style={s.machineNameContainer}>
-                                        <Text style={s.machineName}>{machineName}</Text>
-                                        <Text style={s.locationName}>{location.name}</Text>
+                            <ScrollView>
+                                <View style={s.machineNameContainer}>
+                                    <Text style={s.machineName}>{machineName}</Text>
+                                    <Text style={s.locationName}>{location.name}</Text>
+                                </View>
+                                <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                <View style={s.containerStyle}>
+                                    <View style={s.locationNameContainer}>
+                                        <Text style={s.sectionTitle}>Machine Comments</Text>
                                     </View>
-                                    <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                    <View style={s.containerStyle}>
-                                        <View style={s.locationNameContainer}>
-                                            <Text style={s.sectionTitle}>Machine Comments</Text>
+                                    {mostRecentComments ?
+                                        mostRecentComments.map(commentObj => {
+                                            const { comment, created_at, username } = commentObj
+                                            return <ListItem
+                                                containerStyle={s.listContainerStyle}
+                                                key={commentObj.id}
+                                                bottomDivider>
+                                                <ListItem.Content>
+                                                    <ListItem.Title style={[{marginLeft:5,marginRight:5},s.conditionText]}>
+                                                        {`"${comment}"`}
+                                                    </ListItem.Title>
+                                                    <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                    </ListItem.Subtitle>
+                                                </ListItem.Content>
+                                            </ListItem>
+                                        }) :
+                                        <Text style={s.noneYet}>No machine comment added yet</Text>
+                                    }
+                                    <PbmButton
+                                        title={'Add a New Comment'}
+                                        onPress={loggedIn ?
+                                            () => this.setState({ showAddConditionModal: true }) :
+                                            () => this.props.navigation.navigate('Login')}
+                                    />
+                                </View>
+                                <View style={s.containerStyle}>
+                                    <View style={s.locationNameContainer}>
+                                        <Text style={s.sectionTitle}>Top Scores</Text>
+                                    </View>
+                                    {userHighScore ?
+                                        <View>
+                                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
                                         </View>
-                                        {mostRecentComments ?
-                                            mostRecentComments.map(commentObj => {
-                                                const { comment, created_at, username } = commentObj
-                                                return <ListItem
+                                        : null
+                                    }
+                                    {scores.length > 0 ?
+                                        scores.map(scoreObj => {
+                                            const {id, score, created_at, username} = scoreObj
+
+                                            return (
+                                                <ListItem
                                                     containerStyle={s.listContainerStyle}
-                                                    key={commentObj.id}
+                                                    key={id}
                                                     bottomDivider>
                                                     <ListItem.Content>
-                                                        <ListItem.Title style={[{marginLeft:5,marginRight:5},s.conditionText]}>
-                                                            {`"${comment}"`}
+                                                        <ListItem.Title style={s.scoreText}>
+                                                            {formatNumWithCommas(score)}
                                                         </ListItem.Title>
-                                                        <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
-                                                            {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                        <ListItem.Subtitle style={s.subtitleStyle}>
+                                                            {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
                                                         </ListItem.Subtitle>
                                                     </ListItem.Content>
-                                                </ListItem>
-                                            }) :
-                                            <Text style={s.noneYet}>No machine comment added yet</Text>
-                                        }
-                                        <PbmButton
-                                            title={'Add a New Comment'}
-                                            onPress={loggedIn ?
-                                                () => this.setState({ showAddConditionModal: true }) :
-                                                () => this.props.navigation.navigate('Login')}
-                                        />
-                                    </View>
-                                    <View style={s.containerStyle}>
-                                        <View style={s.locationNameContainer}>
-                                            <Text style={s.sectionTitle}>Top Scores</Text>
-                                        </View>
-                                        {userHighScore ?
-                                            <View>
-                                                <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                                                <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
-                                            </View>
-                                            : null
-                                        }
-                                        {scores.length > 0 ?
-                                            scores.map(scoreObj => {
-                                                const {id, score, created_at, username} = scoreObj
-
-                                                return (
-                                                    <ListItem
-                                                        containerStyle={s.listContainerStyle}
-                                                        key={id}
-                                                        bottomDivider>
-                                                        <ListItem.Content>
-                                                            <ListItem.Title style={s.scoreText}>
-                                                                {formatNumWithCommas(score)}
-                                                            </ListItem.Title>
-                                                            <ListItem.Subtitle style={s.subtitleStyle}>
-                                                                {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
-                                                            </ListItem.Subtitle>
-                                                        </ListItem.Content>
-                                                    </ListItem>)
-                                            })
-                                            : <Text style={s.noneYet}>No scores yet!</Text>
-                                        }
-                                        <PbmButton
-                                            title={'Add Your Score'}
-                                            onPress={loggedIn ?
-                                                () => this.setState({ showAddScoreModal: true }) :
-                                                () => this.props.navigation.navigate('Login')
-                                            }
-                                        />
-                                    </View>
-                                    {pintipsUrl ?
-                                        <Button
-                                            title={'View playing tips on PinTips'}
-                                            type="outline"
-                                            onPress={() => Linking.openURL(pintipsUrl)}
-                                            buttonStyle={s.externalLink}
-                                            titleStyle={s.externalLinkTitle}
-                                            iconRight
-                                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                            containerStyle={s.margin40}
-                                        /> :
-                                        null
+                                                </ListItem>)
+                                        })
+                                        : <Text style={s.noneYet}>No scores yet!</Text>
                                     }
+                                    <PbmButton
+                                        title={'Add Your Score'}
+                                        onPress={loggedIn ?
+                                            () => this.setState({ showAddScoreModal: true }) :
+                                            () => this.props.navigation.navigate('Login')
+                                        }
+                                    />
+                                </View>
+                                {pintipsUrl ?
                                     <Button
-                                        title={'View on IPDB'}
+                                        title={'View playing tips on PinTips'}
                                         type="outline"
-                                        onPress={() => Linking.openURL(ipdb_link)}
+                                        onPress={() => Linking.openURL(pintipsUrl)}
                                         buttonStyle={s.externalLink}
                                         titleStyle={s.externalLinkTitle}
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                                         containerStyle={s.margin40}
-                                    />
-                                    <WarningButton
-                                        title={'Remove Machine'}
-                                        onPress={loggedIn ?
-                                            () => this.setState({ showRemoveMachineModal: true }) :
-                                            () => this.props.navigation.navigate('Login')
-                                        }
-                                    />
-                                </ScrollView>
-                            </SafeAreaView>
+                                    /> :
+                                    null
+                                }
+                                <Button
+                                    title={'View on IPDB'}
+                                    type="outline"
+                                    onPress={() => Linking.openURL(ipdb_link)}
+                                    buttonStyle={s.externalLink}
+                                    titleStyle={s.externalLinkTitle}
+                                    iconRight
+                                    icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                                    containerStyle={s.margin40}
+                                />
+                                <WarningButton
+                                    title={'Remove Machine'}
+                                    onPress={loggedIn ?
+                                        () => this.setState({ showRemoveMachineModal: true }) :
+                                        () => this.props.navigation.navigate('Login')
+                                    }
+                                />
+                            </ScrollView>
                         </Screen>
                     )
                 }}
@@ -310,7 +307,7 @@ const getStyles = theme => StyleSheet.create({
     machineName: {
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 26,
+        fontSize: 24,
         color: theme.orange8
     },
     locationName: {
@@ -321,6 +318,7 @@ const getStyles = theme => StyleSheet.create({
     machineNameContainer: {
         backgroundColor: theme.white,
         borderRadius: 25,
+        marginTop: 90,
         marginBottom: 5,
         marginRight: 35,
         marginLeft: 35,

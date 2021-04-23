@@ -13,7 +13,9 @@ import {
 import MapView from 'react-native-maps'
 import openMap from 'react-native-open-maps'
 import {
+    Avatar,
     Button,
+    ListItem,
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
@@ -129,49 +131,74 @@ class LocationDetails extends Component {
                                             style={s.xButton}
                                         />
                                     </View>
-                                    <View style={{marginTop:10}}>
-                                        <PbmButton
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
-                                            icon={<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
-                                            title={'Add Machine'}
-                                            accessibilityLabel="Add Machine"
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                        <PbmButton
-                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
-                                            title={'Confirm Line-Up'}
-                                            accessibilityLabel="Confirm Line-Up"
-                                            icon={<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                        <PbmButton
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }
-                                            icon={<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
-                                            title="Edit Location Details"
-                                            accessibilityLabel="Edit"
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                        <PbmButton
+                                    <View>
+                                        <ListItem
+                                            containerStyle={s.containerBg}
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            <Avatar>
+                                                {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
+                                            </Avatar>
+                                            <ListItem.Content>
+                                                <ListItem.Title style={s.titleStyle}>
+                                                    <Text>{'Add Machine'}</Text>
+                                                </ListItem.Title>
+                                            </ListItem.Content>
+                                        </ListItem>
+                                        <ListItem
+                                            containerStyle={s.containerBg}
+                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            <Avatar>
+                                                {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
+                                            </Avatar>
+                                            <ListItem.Content>
+                                                <ListItem.Title style={s.titleStyle}>
+                                                    <Text>{'Confirm Line-Up'}</Text>
+                                                </ListItem.Title>
+                                            </ListItem.Content>
+                                        </ListItem>
+                                        <ListItem
+                                            containerStyle={s.containerBg}
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            <Avatar>
+                                                {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
+                                            </Avatar>
+                                            <ListItem.Content>
+                                                <ListItem.Title style={s.titleStyle}>
+                                                    <Text>{'Edit Location Details'}</Text>
+                                                </ListItem.Title>
+                                            </ListItem.Content>
+                                        </ListItem>
+                                        <ListItem
+                                            containerStyle={s.containerBg}
                                             onPress={async () => {
                                                 await Share.share({
                                                     message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
                                                 }) && this.setShowLocationToolsModal(false)
-                                            }}
-                                            icon={<Ionicons name="ios-share-outline" style={s.buttonIcon}/>}
-                                            title={'Share Location'}
-                                            accessibilityLabel='Share Location'
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                        <PbmButton
+                                            }}>
+                                            <Avatar>
+                                                {<MaterialCommunityIcons name='ios-share-outline' style={s.buttonIcon} />}
+                                            </Avatar>
+                                            <ListItem.Content>
+                                                <ListItem.Title style={s.titleStyle}>
+                                                    <Text>{'Share Location'}</Text>
+                                                </ListItem.Title>
+                                            </ListItem.Content>
+                                        </ListItem>
+                                        <ListItem
+                                            containerStyle={s.containerBg}
                                             onPress={() => {
                                                 openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
                                                 this.setShowLocationToolsModal(false)
-                                            }}
-                                            icon={<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
-                                            title={'Directions'}
-                                            accessibilityLabel='Directions'
-                                            containerStyle={s.buttonContainer}
-                                        />
+                                            }}>
+                                            <Avatar>
+                                                {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
+                                            </Avatar>
+                                            <ListItem.Content>
+                                                <ListItem.Title style={s.titleStyle}>
+                                                    <Text>{'Directions'}</Text>
+                                                </ListItem.Title>
+                                            </ListItem.Content>
+                                        </ListItem>
                                     </View>
                                 </ConfirmationModal>
                                 <ConfirmationModal visible={favoriteModalVisible}>
@@ -387,6 +414,12 @@ const getStyles = theme => StyleSheet.create({
     textStyle: {
         color: theme.orange7,
     },
+    containerBg: {
+        backgroundColor: theme.neutral
+    },
+    titleStyle: {
+        color: theme.text
+    },
     listContainerStyle: {
         borderRadius: 25,
         marginBottom: 25,
@@ -519,9 +552,8 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 10,
     },
     buttonIcon: {
-        color: '#fffbf5',
-        fontSize: 24,
-        marginRight: 10
+        color: theme.text,
+        fontSize: 32,
     },
     buttonContainer: {
         marginLeft: 20,

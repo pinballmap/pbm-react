@@ -35,7 +35,7 @@ const getStyles = (theme) => StyleSheet.create({
         borderRadius: 25,
     },
     titleStyle: {
-        color: 'white',
+        color: '#595759',
         fontSize: 18,
         textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"

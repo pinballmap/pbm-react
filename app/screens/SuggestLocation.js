@@ -469,7 +469,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.orange7
+        backgroundColor: theme.blue1
     },
     pageTitleText: {
         textAlign: 'center',
