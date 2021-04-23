@@ -187,9 +187,9 @@ class FindMachine extends React.PureComponent {
     renderRow = ({ item, index }) => {
         let backgroundColor
         if (this.context.theme.theme === 'dark') {
-            backgroundColor = index % 2 === 0 ? 'blue' : 'red'
+            backgroundColor = index % 2 === 0 ? '#1d1c1d' : '#000000'
         } else {
-            backgroundColor = index % 2 === 0 ? 'green' : 'yellow'
+            backgroundColor = index % 2 === 0 ? '#fffbf5' : '#ffffff'
         }
         return (
             <TouchableOpacity

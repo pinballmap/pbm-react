@@ -40,7 +40,7 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
         <TouchableOpacity
             onPress={() => _selectLocationType(item.id)}
         >
-            <View style={{padding:8, backgroundColor: index % 2 === 0 ? 'blue' : 'red'}}>
+            <View style={{padding:8, backgroundColor: index % 2 === 0 ? 'white' : theme.neutral}}>
                 <Text style={{fontSize:18}}>{item.name}</Text>
             </View>
         </TouchableOpacity>
