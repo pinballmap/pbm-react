@@ -56,10 +56,11 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         const { index, machine, selected } = this.props
         let backgroundColor
-        if (this.context.theme.theme === 'dark') {
-            backgroundColor = index % 2 === 0 ? 'red' : 'blue'
+        const theme = this.context.theme
+        if (theme.theme === 'dark') {
+            backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
         } else {
-            backgroundColor = index % 2 === 0 ? 'green' : 'yellow'
+            backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
         }
         return (
             <TouchableOpacity onPress={this._onPress}>
@@ -186,10 +187,11 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         let backgroundColor
-        if (this.context.theme.theme === 'dark') {
-            backgroundColor = index % 2 === 0 ? '#1d1c1d' : '#000000'
+        const theme = this.context.theme
+        if (theme.theme === 'dark') {
+            backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
         } else {
-            backgroundColor = index % 2 === 0 ? '#fffbf5' : '#ffffff'
+            backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
         }
         return (
             <TouchableOpacity
