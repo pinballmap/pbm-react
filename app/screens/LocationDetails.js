@@ -19,7 +19,7 @@ import {
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
