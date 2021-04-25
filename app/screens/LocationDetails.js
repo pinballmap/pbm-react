@@ -67,13 +67,18 @@ class LocationDetails extends Component {
         </Text>
     )
 
-    handleConfirmPress = id => {
-        const { email, username, authentication_token } = this.props.user
-        const body = {
-            user_email: email,
-            user_token: authentication_token,
+    handleConfirmPress = (id, loggedIn) => {
+        this.setShowLocationToolsModal(false)
+        if (loggedIn) {
+            const {email, username, authentication_token} = this.props.user
+            const body = {
+                user_email: email,
+                user_token: authentication_token,
+            }
+            this.props.confirmLocationIsUpToDate(body, id, username)
+        } else {
+            this.props.navigation.navigate('Login')
         }
-        this.props.confirmLocationIsUpToDate(body, id, username)
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -146,7 +151,7 @@ class LocationDetails extends Component {
                                         </ListItem>
                                         <ListItem
                                             containerStyle={s.containerBg}
-                                            onPress={() => loggedIn ? this.handleConfirmPress(location.id) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            onPress={() => this.handleConfirmPress(location.id, loggedIn) }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
