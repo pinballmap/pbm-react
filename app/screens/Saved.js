@@ -39,7 +39,6 @@ export class Saved extends Component {
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1,
-                fontSize: 20
             }
         }
     }

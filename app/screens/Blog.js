@@ -40,7 +40,6 @@ Blog.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        fontSize: 20,
         flex: 1
     },
     gesturesEnabled: true

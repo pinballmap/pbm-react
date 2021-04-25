@@ -154,7 +154,6 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        fontSize: 20,
         width: deviceWidth - 100,
         ...Platform.select({
             android: { flex: 1 }
