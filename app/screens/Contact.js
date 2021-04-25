@@ -130,7 +130,6 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
     headerTitleStyle: {
         textAlign: 'center',
         flex: 1,
-        fontSize: 20
     },
     gesturesEnabled: true
 })
