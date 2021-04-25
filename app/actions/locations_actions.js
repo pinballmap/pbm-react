@@ -45,7 +45,7 @@ export const getFilterState = (filterState) => {
 export const getLocations = (lat = '', lon = '', distance = global.STANDARD_DISTANCE) => (dispatch, getState) => {
     dispatch({type: FETCHING_LOCATIONS})
 
-    const { machineId, locationType, numMachines, selectedOperator, curLat, curLon } = getState().query
+    const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, filterByMachineVersion } = getState().query
     const machineQueryString = machineId ? `by_machine_id=${machineId};` : ''
     const locationTypeQueryString = locationType ? `by_type_id=${locationType};` : ''
     const numMachinesQueryString = numMachines ? `by_at_least_n_machines_type=${numMachines};` : ''
@@ -53,7 +53,7 @@ export const getLocations = (lat = '', lon = '', distance = global.STANDARD_DIST
     const url = `/locations/closest_by_lat_lon.json?lat=${lat ? lat : curLat};lon=${lon ? lon : curLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${distance};send_all_within_distance=1;no_details=1`
 
     return getData(url)
-        .then(data => dispatch(getLocationsSuccess(data)))
+        .then(data => dispatch(getLocationsSuccess(data, machineId, filterByMachineVersion)))
         .catch(err => dispatch(getLocationsFailure(err)))
 }
 
@@ -75,10 +75,14 @@ export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) 
     dispatch(getLocations(lat, lon))
 }
 
-export const getLocationsSuccess = (data) => {
+export const getLocationsSuccess = (data, machineId, filterByMachineVersion) => {
+    let locations = data.locations ? data.locations : []
+    if (machineId && filterByMachineVersion) {
+        locations = locations.filter(location => location.machine_ids.includes(machineId))
+    }
     return {
         type: FETCHING_LOCATIONS_SUCCESS,
-        locations: data.locations ? data.locations : [],
+        locations,
     }
 }
 

@@ -9,6 +9,7 @@ import {
     SET_VIEW_FAVORITE_LOCATIONS_FILTER,
     SET_LOCATION_TYPE_FILTER,
     SET_OPERATOR_FILTER,
+    SET_MACHINE_VERSION_FILTER,
 } from './types'
 Geocode.setApiKey(GOOGLE_MAPS_KEY)
 
@@ -16,6 +17,7 @@ Geocode.setApiKey(GOOGLE_MAPS_KEY)
 export const clearFilters = () => ({ type: CLEAR_FILTERS })
 
 export const setMachineFilter = (machine) => ({ type: SET_MACHINE_FILTER, machine })
+export const setMachineVersionFilter = (idx) => ({ type: SET_MACHINE_VERSION_FILTER, filterByMachineVersion: Boolean(idx)  })
 export const updateNumMachinesSelected = (numMachines) => ({ type: SET_NUM_MACHINES_FILTER, numMachines })
 export const updateViewFavoriteLocations = (idx) => ({ type: SET_VIEW_FAVORITE_LOCATIONS_FILTER, viewByFavoriteLocations: Boolean(idx) })
 export const selectedLocationTypeFilter = (locationType) => ({ type: SET_LOCATION_TYPE_FILTER, locationType })
