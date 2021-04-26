@@ -49,7 +49,6 @@ const getStyles = (theme) => StyleSheet.create({
     },
     titleStyle: {
         color: theme.orange8,
-        textTransform: 'capitalize',
         fontSize: 16
     }
 })

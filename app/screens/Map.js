@@ -289,7 +289,7 @@ class Map extends Component {
                     </MapView>
                     <Button
                         onPress={() => navigation.navigate('LocationList')}
-                        icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18}} />}
+                        icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18,color:theme.text,paddingRight:5}} />}
                         containerStyle={[s.listButtonContainer,s.containerStyle]}
                         buttonStyle={s.buttonStyle}
                         titleStyle={s.buttonTitle}
@@ -298,9 +298,9 @@ class Map extends Component {
                     />
                     <Icon
                         reverse
-                        name='location-arrow'
+                        name={Platform.OS === 'ios' ? 'location-arrow' : 'gps-fixed'}
                         underlayColor='transparent'
-                        type='font-awesome'
+                        type={Platform.OS === 'ios' ? 'font-awesome' : 'material'}
                         color={theme.indigo4}
                         containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0 }]}
                         size={24}
@@ -312,7 +312,6 @@ class Map extends Component {
                         <Button
                             title={'Clear Filter'}
                             onPress={() => this.props.clearFilters()}
-                            type="clear"
                             containerStyle={[s.filterContainer,s.containerStyle]}
                             buttonStyle={[s.buttonStyle,{backgroundColor:theme.indigo2}]}
                             titleStyle={s.buttonTitle}
@@ -326,9 +325,9 @@ class Map extends Component {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                             }}
-                            containerStyle={[s.updateSearchContainer,s.containerStyle]}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.orange8,padding:20,height:40}]}
-                            titleStyle={{color:theme.neutral,fontSize:16}}
+                            titleStyle={s.updateTitleStyle}
+                            containerStyle={[s.updateContainerStyle,s.containerStyle]}
+                            buttonStyle={s.updateButtonStyle}
                         />
                         : null
                     }
@@ -421,10 +420,10 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 10,
         height: 25,
         borderRadius: 25,
-        backgroundColor: 'white',
+        backgroundColor: theme.white,
     },
     buttonTitle: {
-        color: '#394046',
+        color: theme.text,
         fontSize: 14
     },
     containerStyle: {
@@ -441,11 +440,20 @@ const getStyles = theme => StyleSheet.create({
         left: 15,
         borderRadius: 25
     },
-    updateSearchContainer: {
+    updateContainerStyle: {
         position: 'absolute',
         bottom: 20,
-        alignSelf: 'center',
-        borderRadius: 25
+        alignSelf: 'center'
+    },
+    updateButtonStyle: {
+        borderRadius: 25,
+        backgroundColor: theme.white,
+        paddingVertical: 10,
+        paddingHorizontal: 20
+    },
+    updateTitleStyle: {
+        color: theme.text,
+        fontSize:16
     },
     filterContainer: {
         position: 'absolute',

@@ -124,7 +124,7 @@ class MachineDetails extends Component {
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}!`}</Text>
+                                            <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
@@ -158,7 +158,7 @@ class MachineDetails extends Component {
                                 <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}!`}</Text>
+                                            <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
                                             <TextInput
                                                 style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
                                                 keyboardType='numeric'
@@ -251,7 +251,7 @@ class MachineDetails extends Component {
                                                     </ListItem.Content>
                                                 </ListItem>)
                                         })
-                                        : <Text style={s.noneYet}>No scores yet!</Text>
+                                        : <Text style={s.noneYet}>No scores yet</Text>
                                     }
                                     <PbmButton
                                         title={'Add Your Score'}
