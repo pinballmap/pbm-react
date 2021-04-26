@@ -56,7 +56,7 @@ class MachineDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
-            headerRight: <RemoveMachine />,
+            headerRight: <RemoveMachine navigation={navigation} />,
             headerTransparent: true,
             headerTitleStyle: {
                 textAlign: 'center',
