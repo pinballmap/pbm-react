@@ -40,7 +40,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
         <TouchableOpacity
             onPress={() => _selectOperator(item.id)}
         >
-            <View style={{padding:8, backgroundColor: index % 2 === 0 ? theme.white : theme.neutral}}>
+            <View style={{padding:8, backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2}}>
                 <Text style={{fontSize:18}}>{item.name}</Text>
             </View>
         </TouchableOpacity>
