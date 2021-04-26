@@ -53,11 +53,16 @@ class MachineDetails extends Component {
         showRemoveMachineModal: false,
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: <HeaderBackButton navigation={navigation} />,
             headerRight: <RemoveMachine navigation={navigation} />,
-            headerTransparent: true,
+            headerStyle: {
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                borderBottomWidth: 0,
+                elevation: 0
+            },
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
                 flex: 1
@@ -318,7 +323,6 @@ const getStyles = theme => StyleSheet.create({
     machineNameContainer: {
         backgroundColor: theme.neutral2,
         borderRadius: 25,
-        marginTop: 90,
         marginBottom: 5,
         marginRight: 35,
         marginLeft: 35,
