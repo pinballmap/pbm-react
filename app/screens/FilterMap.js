@@ -23,6 +23,7 @@ import {
     selectedOperatorTypeFilter,
     clearFilters,
     setMachineFilter,
+    setMachineVersionFilter,
 } from '../actions'
 import {
     getLocationTypeName,
@@ -44,11 +45,12 @@ const FilterMap = ({
     selectedOperatorTypeFilter,
     clearFilters,
     setMachineFilter,
+    setMachineVersionFilter,
 }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
-    const { machine, numMachines, viewByFavoriteLocations } = query
+    const { machine, numMachines, viewByFavoriteLocations, filterByMachineVersion } = query
     const { navigate } = navigation
 
     const getIdx = (value) => {
@@ -89,16 +91,35 @@ const FilterMap = ({
         updateViewFavoriteLocations(idx)
     }
 
+    const setFilterByMachineVersion = idx => {
+        setMachineVersionFilter(idx)
+    }
+
     return (
         <Screen style={{marginHorizontal:5}}>
             <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
             <DropDownButton
-                title={machine && machine.machine_group_id ? `${machine.name.slice(0, machine.name.lastIndexOf('('))}-- All Versions` : machine.name ? machine.name : 'All'}
+                title={machine && machine.name ? machine.name : 'All'}
                 onPress={() => {
                     navigate('FindMachine', { machineFilter: true })
                     setMachineFilter()
                 }}
             />
+            {machine && machine.machine_group_id &&
+                <>
+                    <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine Version:</Text>
+                    <ButtonGroup
+                        onPress={setFilterByMachineVersion}
+                        selectedIndex={filterByMachineVersion ? 1 : 0}
+                        buttons={['All Versions', 'Selected Version']}
+                        containerStyle={s.buttonGroupContainer}
+                        textStyle={s.buttonGroupInactive}
+                        selectedButtonStyle={s.selButtonStyle}
+                        selectedTextStyle={s.selTextStyle}
+                        innerBorderStyle={s.innerBorderStyle}
+                    />
+                </>
+            }
             <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Limit by number of machines per location:</Text>
             <ButtonGroup
                 onPress={setNumMachinesSelected}
@@ -226,6 +247,7 @@ FilterMap.propTypes = {
     locationTypeName: PropTypes.string,
     hasFilterSelected: PropTypes.bool,
     setMachineFilter: PropTypes.func,
+    setMachineVersionFilter: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -248,7 +270,8 @@ const mapDispatchToProps = (dispatch) => ({
     selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
     clearFilters: () => dispatch(clearFilters()),
     setMachineFilter: () => dispatch(setMachineFilter()),
-    updateViewFavoriteLocations: idx => dispatch(updateViewFavoriteLocations(idx))
+    updateViewFavoriteLocations: idx => dispatch(updateViewFavoriteLocations(idx)),
+    setMachineVersionFilter: idx => dispatch(setMachineVersionFilter(idx)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap)
 

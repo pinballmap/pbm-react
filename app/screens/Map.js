@@ -165,6 +165,7 @@ class Map extends Component {
             numMachines,
             selectedOperator,
             viewByFavoriteLocations,
+            filterByMachineVersion,
         } = props.query
 
         const {
@@ -184,7 +185,7 @@ class Map extends Component {
             })
         }
 
-        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations) {
+        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations || filterByMachineVersion !== this.props.query.filterByMachineVersion) {
             this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
         }
 
