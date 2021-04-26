@@ -300,9 +300,9 @@ class Search extends Component {
                                 <Button
                                     onPress={() => this.props.navigate('FilterMap')}
                                     containerStyle={s.buttonContainerStyle}
-                                    icon={<Octicons name='settings' style={{paddingRight:5,fontSize: 20,color:'#394046'}} />}
-                                    buttonStyle={{height: 40, borderBottomRightRadius: 25, borderTopRightRadius: 25, backgroundColor: '#ddf0ff'}}
-                                    titleStyle={{color:'#394046',fontSize:16}}
+                                    icon={<Octicons name='settings' style={s.filterIcon} />}
+                                    buttonStyle={s.filterButtonStyle}
+                                    titleStyle={s.filterTitleStyle}
                                     title="Filter"
                                     underlayColor='transparent'
                                 />
@@ -338,7 +338,7 @@ const getStyles = theme => StyleSheet.create({
     },
     searchMap: {
         width: deviceWidth - 30,
-        backgroundColor: 'white',
+        backgroundColor: theme.white,
         height: 40,
         borderRadius: 25,
         paddingLeft: 10,
@@ -372,6 +372,21 @@ const getStyles = theme => StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         paddingLeft: 0,
+    },
+    filterButtonStyle: {
+        height: 40,
+        borderBottomRightRadius: 25,
+        borderTopRightRadius: 25,
+        backgroundColor: theme.blue1
+    },
+    filterTitleStyle: {
+        color: theme.text,
+        fontSize: 16
+    },
+    filterIcon: {
+        paddingRight: 5,
+        fontSize: 20,
+        color: theme.text
     },
     listContainerStyle: {
         borderBottomColor: theme.indigo4,
