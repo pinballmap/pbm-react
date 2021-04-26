@@ -170,7 +170,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: '#fff7eb',
+        backgroundColor: theme.neutral2,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.9,
@@ -179,7 +179,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: '#736f73',
+        color: theme.orange8,
         fontSize: 14,
     },
     innerBorderStyle: {
