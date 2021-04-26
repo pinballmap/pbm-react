@@ -11,6 +11,7 @@ import {
     FETCHING_LOCATION_TRACKING_SUCCESS,
     FETCHING_LOCATION_TRACKING_FAILURE,
     SET_MAX_ZOOM,
+    SET_MACHINE_VERSION_FILTER,
 } from '../actions/types'
 
 export const initialState = {
@@ -27,6 +28,7 @@ export const initialState = {
     machine: {},
     maxZoom: false,
     viewByFavoriteLocations: false,
+    filterByMachineVersion: false,
 }
 
 export default (state = initialState, action) => {
@@ -100,6 +102,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 maxZoom: action.maxZoom || false,
+            }
+        case SET_MACHINE_VERSION_FILTER:
+            return {
+                ...state,
+                filterByMachineVersion: action.filterByMachineVersion,
             }
         default:
             return state
