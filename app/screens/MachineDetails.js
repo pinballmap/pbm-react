@@ -316,7 +316,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7
     },
     machineNameContainer: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.neutral2,
         borderRadius: 25,
         marginTop: 90,
         marginBottom: 5,

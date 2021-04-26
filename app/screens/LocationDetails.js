@@ -396,7 +396,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
     },
     locationNameContainer: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.neutral2,
         borderRadius: 25,
         marginTop: 10,
         marginBottom: 10,
