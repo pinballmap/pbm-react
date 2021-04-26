@@ -183,7 +183,7 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
+        const backgroundColor = index % 2 === 0 ? theme.neutral : theme.neutral2
         return (
             <TouchableOpacity
                 onPress={() => this.setSelected(item)}
