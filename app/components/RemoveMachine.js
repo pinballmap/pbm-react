@@ -5,7 +5,7 @@ import { View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import RemoveMachineModal from './RemoveMachineModal'
 
-const RemoveMachine = ({ user }) => {
+const RemoveMachine = ({ user, navigation }) => {
     const [showModal, setShowModal] = useState(false)
 
     return(
@@ -16,11 +16,10 @@ const RemoveMachine = ({ user }) => {
                 size={30}
                 color={'#e4606a'}
                 style={{ marginRight: 10 }}
-                onPress={() => setShowModal(true)}
                 onPress={user.loggedIn ?
-                            () => setShowModal(true) :
-                            () => this.props.navigation.navigate('Login')
-                        }
+                    () => setShowModal(true) :
+                    () => navigation.navigate('Login')
+                }
             />
         </View>
     )
@@ -28,6 +27,7 @@ const RemoveMachine = ({ user }) => {
 
 RemoveMachine.propTypes = {
     user: PropTypes.object,
+    navigation: PropTypes.object,
 }
 
 const mapStateToProps = ({ user }) => ({ user })
