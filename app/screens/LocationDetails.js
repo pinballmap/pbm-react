@@ -560,12 +560,6 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         fontSize: 32,
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
-    },
     confirmText: {
         textAlign: 'center',
         fontSize: 18,
