@@ -4,7 +4,7 @@
 
 ![alt-text](https://github.com/bpoore/pbm-react/blob/master/app/assets/images/t-shirt-logo.png)
 
-## Overview of 5+ releases 
+## Overview of 5+ releases
 (prior to version 5, we were using different code bases for the app):
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
@@ -12,10 +12,13 @@ Release dates are approximate, given that review times vary between the App Stor
 ### 5.2.0
 Coming soon. It's still in development
 
-- Show number of machines on the dots on the map
+- Show number of machines on the dots on the map (iOS only). And places with more machines have slightly larger dots.
 - Universal links (aka deep links), so a url hyperlink will open up that location on the app
 - Added "share" button on location details screen, so you can text app links to friends
-- Adjusted the colors and redesigned things like buttons
+- When Filtering by machine, you can choose "all versions of that machine" (e.g Pro, Premium, etc) or just that one version
+- Performance improvement on map: map does not auto-refresh results when you pan/zoom. Now, you'll see a "Search this area" button to refresh the results
+- Added "stale" text to locations that haven't been updated in over two years
+- Redesigned colors/styles
 - Redesigned the location details screen so it is a single tab. All the tools (add machine, confirm lineup, etc) are found upon clicking the Tools button
 - Display a Message of the Day on the map screen. It will only display when we have something new to say. The message can also be found on the About page
 - Updated the FAQ
