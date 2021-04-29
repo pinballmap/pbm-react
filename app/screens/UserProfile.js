@@ -143,16 +143,14 @@ class UserProfile extends Component {
                                         <Text style={s.stat}>Locations Edited:</Text>
                                         <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
                                     </View>
-                                    <Button
+                                    <PbmButton
                                         title={'View Saved Locations'}
                                         type="outline"
-                                        raised
                                         onPress={() => this.props.navigation.navigate('Saved')}
                                         buttonStyle={s.savedLink}
-                                        titleStyle={s.titleStyle}
+                                        titleStyle={s.buttonTitleStyle}
                                         iconLeft
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
-                                        containerStyle={[{overflow:'hidden',borderRadius:25},s.margin40]}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
@@ -218,9 +216,16 @@ const getStyles = theme => StyleSheet.create({
     },
     savedLink: {
         borderWidth: 2,
+        width: '100%',
         borderColor: theme.blue2,
         borderRadius: 25,
         backgroundColor: theme.white
+    },
+    buttonTitleStyle: {
+        fontSize: 16,
+        color: '#595759',
+        textTransform: 'capitalize',
+        fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     margin40: {
         marginLeft: 40,
