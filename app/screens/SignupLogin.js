@@ -41,7 +41,7 @@ export class SignupLogin extends Component {
     }
     static navigationOptions = () => {
         return {
-            header: null
+            headerShown: false
         }
     }
 

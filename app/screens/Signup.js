@@ -232,8 +232,8 @@ const Signup = ({ login, loginLater, navigation }) => {
 }
 
 Signup.navigationOptions = {
-    header: null,
-    gesturesEnabled: true
+    headerShown: false,
+    gestureEnabled: true
 }
 
 const getStyles = theme => StyleSheet.create({

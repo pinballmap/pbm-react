@@ -14,6 +14,7 @@ const HeaderBackButton = ({navigation, title}) => {
                 navigation.goBack(null)
                 Keyboard.dismiss()
             }}
+            labelVisible={false}
             title={title}
         />
     )

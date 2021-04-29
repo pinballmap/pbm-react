@@ -331,7 +331,7 @@ const getStyles = theme => StyleSheet.create({
         ...Platform.select({
             android: { marginLeft: 15 }
         }),
-        marginTop: 10,
+        marginTop: 0,
         flex: 1,
         alignItems: 'center',
         width: deviceWidth - 30,
