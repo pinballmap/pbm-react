@@ -217,8 +217,7 @@ class LocationDetails extends Component {
                                                     onPress={this.props.closeFavoriteLocationModal}
                                                     accessibilityLabel="Great!"
                                                 />
-                                                <Button
-                                                    type="outline"
+                                                <PbmButton
                                                     title={'View Saved Locations'}
                                                     onPress={() => {
                                                         this.props.closeFavoriteLocationModal()
@@ -227,9 +226,7 @@ class LocationDetails extends Component {
                                                     buttonStyle={s.savedLink}
                                                     titleStyle={s.buttonTitleStyle}
                                                     iconLeft
-                                                    raised
                                                     icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                                                    containerStyle={{marginTop:10,marginBottom:10,marginRight:15,marginLeft:15,overflow:'hidden'}}
                                                 />
                                             </View>
                                         </View>
@@ -412,10 +409,6 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24,
         color: theme.orange8
     },
-    buttonTitleStyle: {
-        color: theme.orange8,
-        fontSize: 16
-    },
     textStyle: {
         color: theme.orange7,
     },
@@ -593,7 +586,16 @@ const getStyles = theme => StyleSheet.create({
     },
     savedLink: {
         borderWidth: 2,
+        width: '100%',
         borderColor: theme.blue2,
+        borderRadius: 25,
+        backgroundColor: theme.white
+    },
+    buttonTitleStyle: {
+        fontSize: 16,
+        color: '#595759',
+        textTransform: 'capitalize',
+        fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
     margin15: {
         marginLeft: 15,
