@@ -223,7 +223,7 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonTitleStyle: {
         fontSize: 16,
-        color: '#595759',
+        color: theme.text,
         textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
     },
