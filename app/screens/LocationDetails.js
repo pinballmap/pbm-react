@@ -54,8 +54,8 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: <HeaderBackButton navigation={navigation} />,
-            gesturesEnabled: true,
+            headerLeft: () => <HeaderBackButton navigation={navigation} />,
+            gestureEnabled: true,
             headerTransparent: true,
         }
     }

@@ -35,20 +35,16 @@ class UserProfile extends Component {
 
     static navigationOptions = ({ navigation, theme }) => {
         return {
-            headerLeft: <HeaderBackButton navigation={navigation} />,
+            headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'User Profile',
-            headerRight:<View style={{padding:6}}></View>,
+            headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
-                elevation: 0
+                elevation: 0,
+                shadowColor: 'transparent'
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
-            headerTitleStyle: {
-                textAlign: 'center',
-                flex: 1,
-                fontSize: 20
-            }
         }
     };
 

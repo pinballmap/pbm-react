@@ -43,8 +43,8 @@ class Login extends Component {
     static navigationOptions = () => {
         return {
             header: () => null,
-            headerLeft: null,
-            gesturesEnabled: true
+            headerLeft: () => null,
+            gestureEnabled: true
         }
     }
 

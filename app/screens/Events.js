@@ -39,20 +39,17 @@ class Events extends Component {
         return {
             drawerLabel: 'Events',
             drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#95867c'}} />,
-            headerLeft: <HeaderBackButton navigation={navigation} />,
+            headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
-            headerRight:<View style={{padding:6}}></View>,
+            headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
-                elevation: 0
+                elevation: 0,
+                shadowColor: 'transparent'
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
-            headerTitleStyle: {
-                textAlign: 'center',
-                flex: 1,
-            },
-            gesturesEnabled: true
+            gestureEnabled: true
         }
     }
 
