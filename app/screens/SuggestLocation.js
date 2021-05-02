@@ -154,7 +154,6 @@ class SuggestLocation extends Component {
                         <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={s.background}>
                             {!loggedIn ?
                                 <NotLoggedIn
-                                    title={'Suggest a New Location'}
                                     text={'But first! We ask that you log in. Thank you!'}
                                     onPress={() => navigate('Login')}
                                 /> :

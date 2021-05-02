@@ -99,7 +99,6 @@ class UserProfile extends Component {
                             {!user.loggedIn ?
                                 <NotLoggedIn
                                     text={`You're not logged in, so you don't have a profile!`}
-                                    title={'User Profile'}
                                     onPress={() => this.props.navigation.navigate('Login')}
                                 /> :
                                 <View>
