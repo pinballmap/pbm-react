@@ -448,7 +448,8 @@ const getStyles = theme => StyleSheet.create({
     updateContainerStyle: {
         position: 'absolute',
         bottom: 20,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius: 25
     },
     updateButtonStyle: {
         borderRadius: 25,
