@@ -277,13 +277,11 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonPink: {
         backgroundColor: "#fdd4d7",
-        borderRadius: 5,
         elevation: 0,
         borderRadius: 25
     },
     buttonBlue: {
         backgroundColor: "#D3ECFF",
-        borderRadius: 5,
         elevation: 0,
         borderRadius: 25
     },
