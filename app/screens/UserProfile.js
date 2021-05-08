@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import {
-    Button,
     ListItem,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
