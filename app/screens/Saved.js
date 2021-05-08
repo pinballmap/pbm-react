@@ -92,7 +92,6 @@ export class Saved extends Component {
                             {!loggedIn ?
                                 <NotLoggedIn
                                     text={`Please log in to start saving your favorite locations.`}
-                                    title={'Saved Locations'}
                                     onPress={() => this.props.navigation.navigate('Login')}
                                 /> :
                                 <View style={{ flex: 1 }}>

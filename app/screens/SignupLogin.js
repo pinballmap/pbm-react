@@ -208,7 +208,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="Current User? Log In"
                                         accessibilityLabel="Log In"
-                                        containerStyle={{overflow:'hidden'}}
+                                        containerStyle={{overflow:'hidden', borderRadius: 25}}
                                     />
                                     <Button
                                         onPress={() => this.props.navigation.navigate('Signup')}
@@ -217,7 +217,7 @@ export class SignupLogin extends Component {
                                         titleStyle={s.titleStyle}
                                         title="New User? Sign Up"
                                         accessibilityLabel="Sign Up"
-                                        containerStyle={{marginTop:15,marginBottom:20,overflow:'hidden'}}
+                                        containerStyle={{marginTop:15,marginBottom:20,overflow:'hidden',borderRadius: 25}}
                                     />
                                     <Button
                                         onPress={() => {
@@ -278,12 +278,14 @@ const getStyles = theme => StyleSheet.create({
     buttonPink: {
         backgroundColor: "#fdd4d7",
         borderRadius: 5,
-        elevation: 0
+        elevation: 0,
+        borderRadius: 25
     },
     buttonBlue: {
         backgroundColor: "#D3ECFF",
         borderRadius: 5,
-        elevation: 0
+        elevation: 0,
+        borderRadius: 25
     },
     titleStyle: {
         color: "#766a62",

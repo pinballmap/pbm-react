@@ -534,7 +534,7 @@ const getStyles = theme => StyleSheet.create({
     staleView: {
         marginVertical: 5,
         borderRadius: 10,
-        backgroundColor: '#fee5e7',
+        backgroundColor: theme.red3,
         paddingHorizontal: 10,
         paddingVertical: 5
     },
