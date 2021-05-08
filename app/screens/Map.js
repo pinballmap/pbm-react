@@ -65,6 +65,10 @@ const CustomMarker = ({ marker, navigation, s }) => {
                     <View style={s.calloutStyle}>
                         <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
+                        {Platform.OS === 'android' ?
+                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
+                            : null
+                        }
                     </View>
                     <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
                 </View>
@@ -346,7 +350,7 @@ const getStyles = theme => StyleSheet.create({
         minWidth: 50,
         width: '100%',
         maxWidth: 275,
-        height: Platform.OS === 'ios' ? 60 : 70,
+        height: Platform.OS === 'ios' ? 60 : 90,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -444,7 +448,8 @@ const getStyles = theme => StyleSheet.create({
     updateContainerStyle: {
         position: 'absolute',
         bottom: 20,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius: 25
     },
     updateButtonStyle: {
         borderRadius: 25,

@@ -30,12 +30,12 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, titl
 
 const getStyles = (theme) => StyleSheet.create({
     blueButton: {
-        backgroundColor: '#addbff',
+        backgroundColor: '#6eb4eb',
         width: '100%',
         borderRadius: 25,
     },
     titleStyle: {
-        color: '#595759',
+        color: 'white',
         fontSize: 18,
         textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
