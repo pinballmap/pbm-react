@@ -5,6 +5,7 @@ import {
     Image,
     Linking,
     Modal,
+    Platform,
     Share,
     StyleSheet,
     TouchableOpacity,
