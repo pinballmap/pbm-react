@@ -95,16 +95,17 @@ class FindMachine extends React.PureComponent {
 
     static navigationOptions = ({ navigation, theme }) => {
         return {
-            headerLeft: <HeaderBackButton navigation={navigation} />,
+            headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
-            headerRight:
+            headerRight: () =>
                 navigation.getParam('showDone') ?
                     <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: '#addbff', fontSize: 18, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
-                elevation: 0
+                elevation: 0,
+                shadowColor: 'transparent'
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
@@ -114,7 +115,7 @@ class FindMachine extends React.PureComponent {
                     android: { flex: 1 }
                 }),
             },
-            gesturesEnabled: true
+            gestureEnabled: true
         }
     }
 
