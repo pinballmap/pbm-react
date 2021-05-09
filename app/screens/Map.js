@@ -105,19 +105,18 @@ class Map extends Component {
     }
 
     static navigationOptions = ({ navigation }) => ({
-        headerLeft: null,
-        headerTitle:
+        headerLeft: () => null,
+        headerTitle: () =>
                 <Search
                     navigate={navigation.navigate}
                 />,
-        headerRight: null,
+        headerRight: () => null,
+//         headerTransparent: true,
         headerStyle: {
-            shadowColor: 'transparent',
-            backgroundColor: 'transparent',
+            borderBottomWidth: 0,
             elevation: 0,
-            borderBottomColor: 'transparent',
-            shadowOffset: { height: 0, width: 0 }
-        },
+            shadowColor: 'transparent',
+        }
     })
 
     static contextType = ThemeContext;
@@ -274,7 +273,7 @@ class Map extends Component {
                 </ConfirmationModal>
                 {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
                 {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
-                <View style={{ flex: 1, position: 'absolute', left: 0, top: -100, bottom: 0, right: 0 }}>
+                <View style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
                     <MapView
                         ref={this.mapRef}
                         region={{

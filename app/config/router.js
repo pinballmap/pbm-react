@@ -143,10 +143,10 @@ const TabNav = createBottomTabNavigator(
 )
 
 TabNav.navigationOptions = {
-    header: null,
+    headerShown: false,
     headerVisible: false,
-    gesturesEnabled: false,
-    headerTransparent: true
+    gestureEnabled: false,
+    headerTransparent: true,
 }
 
 export const MapStack = createStackNavigator({
@@ -178,8 +178,7 @@ export const MapStack = createStackNavigator({
         drawerLabel: 'Map',
         drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#95867c' }} />,
         headerStyle: {
-            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
-            height: Platform.OS === 'ios' ? 44 : 56,
+            backgroundColor: theme === 'dark' ? '#1d1c1d' : 'red',
         },
         headerTitleStyle: {
             textAlign: 'center',
