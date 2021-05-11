@@ -36,7 +36,7 @@ export class LocationList extends Component {
             title: 'Locations on the Map',
             headerRight: () => <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#faf9f9',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
