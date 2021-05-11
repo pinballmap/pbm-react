@@ -5,6 +5,7 @@ import {
     AsyncStorage,
     Image,
     Platform,
+    SafeAreaView,
     StyleSheet,
     View,
 } from 'react-native'
@@ -104,19 +105,9 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = ({ navigation }) => ({
-        headerLeft: () => null,
-        headerTitle: () =>
-                <Search
-                    navigate={navigation.navigate}
-                />,
-        headerRight: () => null,
-//         headerTransparent: true,
-        headerStyle: {
-            borderBottomWidth: 0,
-            elevation: 0,
-            shadowColor: 'transparent',
-        }
+    static navigationOptions = () => ({
+        headerBackButton: () => null,
+        headerShown: false,
     })
 
     static contextType = ThemeContext;
@@ -233,7 +224,7 @@ class Map extends Component {
         }
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#fffbf5' }}>
+            <>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
@@ -271,9 +262,12 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
-                {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
-                <View style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
+                <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
+                    <View style={s.search}>
+                        <Search navigate={navigation.navigate}/>
+                    </View>
+                    {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
+                    {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
                     <MapView
                         ref={this.mapRef}
                         region={{
@@ -337,8 +331,8 @@ class Map extends Component {
                         />
                         : null
                     }
-                </View>
-            </View>
+                </SafeAreaView>
+            </>
         )
     }
 }
@@ -367,14 +361,21 @@ const getStyles = theme => StyleSheet.create({
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },
+    search: {
+        position: 'absolute',
+        top: 30,
+        zIndex: 10,
+        alignSelf: "center"
+    },
     loading: {
         zIndex: 10,
+        position: 'absolute',
+        top: 80,
         alignSelf: "center",
         padding: 5,
         backgroundColor: theme.blue1,
         color: theme.text,
         fontSize: 14,
-        marginTop: 5,
     },
     clear: {
         fontSize: 16,
