@@ -224,7 +224,8 @@ class Map extends Component {
         }
 
         return (
-            <>
+            <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}
+>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
@@ -262,7 +263,7 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
+                <View style={{flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0}}>
                     <View style={s.search}>
                         <Search navigate={navigation.navigate}/>
                     </View>
@@ -331,8 +332,8 @@ class Map extends Component {
                         />
                         : null
                     }
-                </SafeAreaView>
-            </>
+                </View>
+            </SafeAreaView>
         )
     }
 }
@@ -363,14 +364,14 @@ const getStyles = theme => StyleSheet.create({
     },
     search: {
         position: 'absolute',
-        top: 30,
+        top: 50,
         zIndex: 10,
         alignSelf: "center"
     },
     loading: {
         zIndex: 10,
         position: 'absolute',
-        top: 80,
+        top: 100,
         alignSelf: "center",
         padding: 5,
         backgroundColor: theme.blue1,
@@ -443,7 +444,7 @@ const getStyles = theme => StyleSheet.create({
     },
     listButtonContainer: {
         position: 'absolute',
-        top: 120,
+        top: 100,
         left: 15,
         borderRadius: 25
     },
@@ -465,7 +466,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterContainer: {
         position: 'absolute',
-        top: 120,
+        top: 100,
         right: 15,
         borderRadius: 25
     }
