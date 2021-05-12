@@ -224,8 +224,7 @@ class Map extends Component {
         }
 
         return (
-            <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}
->
+            <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
@@ -358,7 +357,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 26,
         color: '#c1c9cf',
         position: "absolute",
-        top: Platform.OS === 'ios' ? 14 : 20,
+        top: Platform.OS === 'ios' ? 14 : 30,
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },

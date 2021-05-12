@@ -333,9 +333,6 @@ const getStyles = theme => StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 0 : 10,
     },
     searchMapContainer: {
-        ...Platform.select({
-            android: { marginLeft: 15 }
-        }),
         marginTop: 0,
         flex: 1,
         alignItems: 'center',

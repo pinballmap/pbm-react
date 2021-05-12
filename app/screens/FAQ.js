@@ -62,7 +62,11 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
     headerStyle: {
         backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
         borderBottomWidth: 0,
+        elevation: 0,
         shadowColor: 'transparent'
+    },
+    headerTitleStyle: {
+        textAlign: 'center',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
