@@ -436,10 +436,10 @@ const getStyles = theme => StyleSheet.create({
     },
     containerStyle: {
         shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.9,
-        shadowRadius: 5,
-        elevation: 5,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
         overflow: 'visible'
     },
     listButtonContainer: {

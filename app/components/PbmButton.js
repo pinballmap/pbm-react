@@ -23,7 +23,7 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, titl
             buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
             titleStyle={titleStyle ? titleStyle : styles.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}, containerStyle ? containerStyle : styles.margin15]}
+            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 0 },shadowOpacity: 0.6,shadowRadius: 6,elevation: 6,}, containerStyle ? containerStyle : styles.margin15]}
         />
     )
 }

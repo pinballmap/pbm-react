@@ -35,7 +35,7 @@ export const standard = {
     orange8:    '#766a62',
     red2:       '#e4606a',
     red3:       '#fee5e7',
-    shadow:     '#dcd3d6',
+    shadow:     '#c3baad',
     text:       '#393e46',
     white:      '#ffffff',
 }

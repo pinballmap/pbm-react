@@ -20,7 +20,7 @@ const WarningButton = ({ title, onPress, accessibilityLabel, containerStyle }) =
             buttonStyle={s.redButton}
             titleStyle={s.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}
-            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.9,shadowRadius: 5,elevation: 5,}, containerStyle ? containerStyle : s.margin15]}
+            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 0 },shadowOpacity: 0.6,shadowRadius: 6,elevation: 6,}, containerStyle ? containerStyle : s.margin15]}
         />
     )
 }
