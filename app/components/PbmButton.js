@@ -47,10 +47,8 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.orange3
     },
     margin15: {
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 15,
-        marginBottom: 15
+        marginHorizontal: 40,
+        marginVertical: 15
     },
 })
 
