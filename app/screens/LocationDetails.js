@@ -522,7 +522,7 @@ const getStyles = theme => StyleSheet.create({
     condition: {
         marginTop: 5,
         flexDirection: 'column',
-        marginLeft: 10
+        marginHorizontal: 10,
     },
     conditionText: {
         color: theme.indigo4,
