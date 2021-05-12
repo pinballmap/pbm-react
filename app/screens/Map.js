@@ -5,7 +5,6 @@ import {
     AsyncStorage,
     Image,
     Platform,
-    SafeAreaView,
     StyleSheet,
     View,
 } from 'react-native'
@@ -40,6 +39,7 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 import Constants from 'expo-constants'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
 
@@ -225,7 +225,7 @@ class Map extends Component {
         }
 
         return (
-            <SafeAreaView style={{ flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0 }}>
+            <>
                 <ConfirmationModal
                     visible={showAppAlert}>
                     <View style={s.appAlertHeader}>
@@ -263,7 +263,7 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                <View style={{flex: 1, position: 'absolute', left: 0, top: 0, bottom: 0, right: 0}}>
+                <SafeAreaView edges={['right', 'left', 'top']} style={{flex:1,marginTop: -Constants.statusBarHeight}}>
                     <View style={s.search}>
                         <Search navigate={navigation.navigate}/>
                     </View>
@@ -332,8 +332,8 @@ class Map extends Component {
                         />
                         : null
                     }
-                </View>
-            </SafeAreaView>
+                </SafeAreaView>
+            </>
         )
     }
 }
@@ -364,14 +364,14 @@ const getStyles = theme => StyleSheet.create({
     },
     search: {
         position: 'absolute',
-        top: Constants.statusBarHeight > 40 ? 50 : 30,
+        top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 50 : Constants.statusBarHeight + 30,
         zIndex: 10,
         alignSelf: "center"
     },
     loading: {
         zIndex: 10,
         position: 'absolute',
-        top: Constants.statusBarHeight > 40 ? 100 : 80,
+        top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         alignSelf: "center",
         padding: 5,
         backgroundColor: theme.blue1,
@@ -444,7 +444,7 @@ const getStyles = theme => StyleSheet.create({
     },
     listButtonContainer: {
         position: 'absolute',
-        top: Constants.statusBarHeight > 40 ? 100 : 80,
+        top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         left: 15,
         borderRadius: 25
     },
