@@ -269,7 +269,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         backgroundColor: theme.white,
         borderColor: theme.orange3,
-        marginTop: 15,
+        marginTop: 5,
         marginBottom: 5,
         paddingLeft: 10
     },
