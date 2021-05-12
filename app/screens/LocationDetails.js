@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
     Image,
     Linking,
     Modal,
@@ -20,7 +21,7 @@ import {
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
@@ -44,6 +45,8 @@ import {
 import androidCustomDark from '../utils/androidCustomDark'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
+
+let deviceWidth = Dimensions.get('window').width
 
 const moment = require('moment')
 
@@ -217,6 +220,7 @@ class LocationDetails extends Component {
                                                 <PbmButton
                                                     title={"Great!"}
                                                     onPress={this.props.closeFavoriteLocationModal}
+                                                    containerStyle={s.buttonContainerStyle}
                                                     accessibilityLabel="Great!"
                                                 />
                                                 <PbmButton
@@ -227,8 +231,9 @@ class LocationDetails extends Component {
                                                     }}
                                                     buttonStyle={s.savedLink}
                                                     titleStyle={s.buttonTitleStyle}
+                                                    containerStyle={s.buttonContainerStyle}
                                                     iconLeft
-                                                    icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
+                                                    icon={<MaterialCommunityIcons name="heart" style={s.savedIcon} />}
                                                 />
                                             </View>
                                         </View>
@@ -260,8 +265,8 @@ class LocationDetails extends Component {
                                     </View>
                                 </ConfirmationModal>
                                 <View style={{ flex: 1, position: 'relative' }}>
-                                    {loggedIn && isUserFave && <FontAwesome style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
-                                    {loggedIn && !isUserFave && <FontAwesome style={s.saveLocation} name="heart-o" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
+                                    {loggedIn && isUserFave && <MaterialCommunityIcons style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
+                                    {loggedIn && !isUserFave && <MaterialCommunityIcons style={s.saveLocation} name="heart-outline" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
 
                                     <MapView
                                         region={{
@@ -294,12 +299,12 @@ class LocationDetails extends Component {
                                         {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.font18,s.marginRight]}>{location.street}</Text>
-                                                <Text style={[s.city,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                                <Text style={[s.metaText,s.font18,s.marginRight]}>{location.street}</Text>
+                                                <Text style={[s.metaText,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text> : null}
-                                                {location.phone ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
+                                                {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
-                                                {location.website ? <Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
+                                                {location.website ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
 
                                                 {location.operator_id ?
                                                     <Text style={[s.metaDescription,s.italic,s.marginB8]}>Operated by:
@@ -316,9 +321,9 @@ class LocationDetails extends Component {
                                                             color={theme.orange7}
                                                             size={50}
                                                         />
-                                                        <Text style={{textAlign:'center',color:theme.orange8}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                        <Text style={{textAlign:'center',color:theme.orange7}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
-                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18}}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
+                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
                                                 </View> : null
                                             }
                                         </View>
@@ -460,6 +465,7 @@ const getStyles = theme => StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 0,
         marginTop: 5,
+        marginBottom: 5,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-start'
@@ -497,8 +503,10 @@ const getStyles = theme => StyleSheet.create({
     },
     link: {
         textDecorationLine: 'underline',
-        color: theme.text,
         fontSize: 16
+    },
+    metaText: {
+        color: theme.orange8
     },
     italic: {
         fontStyle: 'italic',
@@ -520,16 +528,15 @@ const getStyles = theme => StyleSheet.create({
         color: '#97a5af',
     },
     condition: {
-        marginTop: 5,
         flexDirection: 'column',
         marginHorizontal: 10,
+        marginVertical: 10,
     },
     conditionText: {
         color: theme.indigo4,
         fontSize: 12,
         fontStyle: 'italic',
         marginLeft: 10,
-        marginBottom: 10,
         paddingTop: 10,
     },
     staleView: {
@@ -575,9 +582,9 @@ const getStyles = theme => StyleSheet.create({
     saveLocation: {
         position: 'absolute',
         zIndex: 10,
-        top: 120,
-        right: 5,
-        fontSize: 28,
+        top: 115,
+        right: 0,
+        fontSize: 32,
         color: theme.red2,
         padding: 10
     },
@@ -598,6 +605,10 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         textTransform: 'capitalize',
         fontWeight: Platform.OS === 'ios' ? "500" : "400"
+    },
+    buttonContainerStyle: {
+        marginHorizontal: deviceWidth < 325 ? 20 : 40,
+        marginVertical: 10
     },
     margin15: {
         marginLeft: 15,
