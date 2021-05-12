@@ -32,6 +32,7 @@ class RecentActivity extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
+            title: null,
             headerRight: () => <FilterRecentActivity />,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
