@@ -48,6 +48,9 @@ class Events extends Component {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
+            headerTitleStyle: {
+                textAlign: 'center',
+            },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
         }
