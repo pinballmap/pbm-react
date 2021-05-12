@@ -39,6 +39,7 @@ import {
 } from '../selectors'
 import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
+import Constants from 'expo-constants'
 
 const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
 
@@ -363,14 +364,14 @@ const getStyles = theme => StyleSheet.create({
     },
     search: {
         position: 'absolute',
-        top: 50,
+        top: Constants.statusBarHeight > 40 ? 50 : 30,
         zIndex: 10,
         alignSelf: "center"
     },
     loading: {
         zIndex: 10,
         position: 'absolute',
-        top: 100,
+        top: Constants.statusBarHeight > 40 ? 100 : 80,
         alignSelf: "center",
         padding: 5,
         backgroundColor: theme.blue1,
@@ -443,7 +444,7 @@ const getStyles = theme => StyleSheet.create({
     },
     listButtonContainer: {
         position: 'absolute',
-        top: 100,
+        top: Constants.statusBarHeight > 40 ? 100 : 80,
         left: 15,
         borderRadius: 25
     },
@@ -465,7 +466,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterContainer: {
         position: 'absolute',
-        top: 100,
+        top: Constants.statusBarHeight > 40 ? 100 : 80,
         right: 15,
         borderRadius: 25
     }
