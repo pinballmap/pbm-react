@@ -57,6 +57,7 @@ class MachineDetails extends Component {
         return {
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             headerRight: () => <RemoveMachine navigation={navigation} />,
+            title: null,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
@@ -192,7 +193,7 @@ class MachineDetails extends Component {
                                     <Text style={s.machineName}>{machineName}</Text>
                                     <Text style={s.locationName}>{location.name}</Text>
                                 </View>
-                                <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added to location: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.sectionTitle}>Machine Comments</Text>

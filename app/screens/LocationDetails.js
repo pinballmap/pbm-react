@@ -20,7 +20,7 @@ import {
     Icon,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
@@ -56,6 +56,7 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
+            title: null,
             gestureEnabled: true,
             headerTransparent: true,
         }
@@ -182,7 +183,7 @@ class LocationDetails extends Component {
                                                 }) && this.setShowLocationToolsModal(false)
                                             }}>
                                             <Avatar>
-                                                {<MaterialCommunityIcons name='ios-share-outline' style={s.buttonIcon} />}
+                                                {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
                                                 <ListItem.Title style={s.titleStyle}>
