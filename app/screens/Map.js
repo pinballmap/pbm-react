@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     AsyncStorage,
+    Dimensions,
     Image,
     Platform,
     StyleSheet,
@@ -40,6 +41,8 @@ import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 import Constants from 'expo-constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+let deviceWidth = Dimensions.get('window').width
 
 const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
 
@@ -345,7 +348,7 @@ const getStyles = theme => StyleSheet.create({
     calloutStyle: {
         minWidth: 50,
         width: '100%',
-        maxWidth: 275,
+        maxWidth: deviceWidth < 325 ? deviceWidth - 50 : 275,
         height: Platform.OS === 'ios' ? 60 : 90,
         display: 'flex',
         flexDirection: 'column',
