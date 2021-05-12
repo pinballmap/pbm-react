@@ -134,7 +134,7 @@ class Login extends Component {
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 20}}
+                                                containerStyle={{marginBottom: 10}}
                                                 buttonStyle={s.buttonMask}
                                                 title="Not a user? SIGN UP!"
                                             />
@@ -142,14 +142,14 @@ class Login extends Component {
                                                 onPress={() => this.props.navigation.navigate('PasswordReset')}
                                                 title="I forgot my password"
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 20}}
+                                                containerStyle={{marginBottom: 10}}
                                                 buttonStyle={s.buttonMask}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('ResendConfirmation')}
                                                 title="Resend my confirmation email"
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 20}}
+                                                containerStyle={{marginBottom: 10}}
                                                 buttonStyle={s.buttonMask}
                                             />
                                             <Button
@@ -210,8 +210,8 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         backgroundColor: theme.white,
         borderColor: theme.orange3,
-        marginTop: 15,
-        marginBottom: 15,
+        marginTop: 5,
+        marginBottom: 5,
         paddingLeft: 10
     },
     inputText: {
