@@ -23,6 +23,7 @@ import {
     loginLater
 } from '../actions/user_actions'
 import { getData } from '../config/request'
+import { PbmButton } from '../components'
 
 let deviceHeight = Dimensions.get('window').height
 
@@ -37,7 +38,6 @@ class Login extends Component {
             passwordError: null,
             apiErrorMsg: null,
         }
-
     }
 
     static navigationOptions = () => {
@@ -96,6 +96,7 @@ class Login extends Component {
                                             <Text style={s.bold}>Log In</Text>
                                             <Input
                                                 placeholder='Username or Email'
+                                                placeholderTextColor={'#9b9ebb'}
                                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
                                                 onChangeText={login => this.setState({login})}
                                                 value={this.state.login}
@@ -108,6 +109,7 @@ class Login extends Component {
                                             />
                                             <Input
                                                 placeholder='Password'
+                                                placeholderTextColor={'#9b9ebb'}
                                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                                 onChangeText={password => this.setState({password})}
                                                 value={this.state.password}
@@ -119,17 +121,14 @@ class Login extends Component {
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                             />
-                                            <Button
+                                            <PbmButton
                                                 onPress={() => this.submit()}
-                                                raised
-                                                buttonStyle={s.buttonStyle}
-                                                titleStyle={s.buttonTitle}
-                                                containerStyle={{marginLeft:10,marginRight:10,marginTop:15,marginBottom:25,overflow:'hidden',borderRadius: 25}}
                                                 title="Log In"
                                                 accessibilityLabel="Log In"
                                                 disabled={!this.state.login || !this.state.password}
                                                 disabledStyle={s.disabledStyle}
                                                 disabledTitleStyle={s.disabledTitleStyle}
+                                                containerStyle={{marginHorizontal:10,marginTop:10,marginBottom:25}}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}
@@ -228,7 +227,7 @@ const getStyles = theme => StyleSheet.create({
     },
     iconStyle: {
         fontSize: 24,
-        color: theme.indigo4,
+        color: '#9b9ebb',
         marginRight: 5,
         marginLeft: 5
     },
