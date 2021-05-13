@@ -5,7 +5,6 @@ import {
     ActivityIndicator,
     Keyboard,
     Modal,
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     TextInput,
@@ -28,6 +27,7 @@ import {
     setSelectedLocationType,
     updateLocationDetails,
 } from '../actions'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 class EditLocationDetails extends Component {
     constructor(props) {
@@ -185,11 +185,13 @@ class EditLocationDetails extends Component {
                                         <Text style={s.title}>Location Type</Text>
                                         <DropDownButton
                                             title={locationTypeName}
+                                            containerStyle={s.containerStyle}
                                             onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
                                         />
                                         <Text style={s.title}>Operator</Text>
                                         <DropDownButton
                                             title={operatorName}
+                                            containerStyle={[{marginBottom:10},s.containerStyle]}
                                             onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
                                         />
                                         <PbmButton
@@ -230,8 +232,7 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.orange3,
         color: theme.text,
         borderWidth: 1,
-        marginLeft: 15,
-        marginRight: 15,
+        marginHorizontal: 20,
         paddingLeft: 10,
         paddingRight: 5
     },
@@ -239,11 +240,15 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     hr: {
-        marginLeft:25,
-        marginRight:25,
-        height:2,
+        marginLeft: 25,
+        marginRight: 25,
+        height: 2,
         marginTop: 10,
         backgroundColor: theme.indigo4
+    },
+    containerStyle: {
+        marginTop: 0,
+        marginHorizontal: 20,
     },
 
 })

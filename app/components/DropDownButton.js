@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
 import { ThemeContext } from '../theme-context'
 
-const DropDownButton = ({ title, onPress, }) => {
+const DropDownButton = ({ title, onPress, containerStyle }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -17,7 +17,7 @@ const DropDownButton = ({ title, onPress, }) => {
             titleStyle={s.titleStyle}
             icon={<MaterialIcons name='arrow-drop-down' style={s.dropdownIcon} />}
             iconRight
-            containerStyle={s.containerStyle}
+            containerStyle={[{overflow:'visible',borderRadius: 25,shadowColor: theme.shadow,shadowOffset: { width: 0, height: 0 },shadowOpacity: 0.6,shadowRadius: 6,elevation: 6,}, containerStyle ? containerStyle : s.containerMargin]}
         />
     )
 }
@@ -29,17 +29,9 @@ const getStyles = (theme) => StyleSheet.create({
         borderRadius: 25,
         height: 40,
     },
-    containerStyle: {
-        marginTop:5,
-        marginRight:10,
-        marginLeft:10,
-        borderRadius:25,
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
-        shadowRadius: 6,
-        elevation: 6,
-        overflow: 'visible'
+    containerMargin: {
+        marginTop: 5,
+        marginHorizontal: 10,
     },
     dropdownIcon: {
         color: theme.orange8,

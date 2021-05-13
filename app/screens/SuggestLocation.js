@@ -6,7 +6,6 @@ import {
     Modal,
     Picker,
     Platform,
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     TextInput,
@@ -40,6 +39,7 @@ import {
     suggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 class SuggestLocation extends Component {
     state = {
@@ -277,7 +277,7 @@ class SuggestLocation extends Component {
                                         }
                                     </Modal>
                                     <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-                                        <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                                        <SafeAreaView edges={['right', 'bottom', 'left']}>
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
@@ -341,6 +341,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Country</Text>
                                             {Platform.OS === "ios" ?
                                                 <DropDownButton
+                                                    containerStyle={s.containerStyle}
                                                     title={country}
                                                     onPress={() => this.setState({ showSelectCountryModal: true })}
                                                 /> :
@@ -394,10 +395,12 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Location Type</Text>
                                             <DropDownButton
                                                 title={locationTypeName}
+                                                containerStyle={s.containerStyle}
                                                 onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
                                             />
                                             <Text style={s.title}>Operator</Text>
                                             <DropDownButton
+                                                containerStyle={s.containerStyle}
                                                 title={operatorName}
                                                 onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
                                             />
@@ -429,7 +432,7 @@ class SuggestLocation extends Component {
                                                 title={'Submit Location'}
                                                 onPress={() => this.setState({ showSuggestLocationModal: true })}
                                             />
-                                        </View>
+                                        </SafeAreaView>
                                     </TouchableWithoutFeedback>
                                 </View>}
                         </KeyboardAwareScrollView>
@@ -484,8 +487,7 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.orange3,
         color: theme.text,
         borderWidth: 1,
-        marginLeft: 10,
-        marginRight: 10,
+        marginHorizontal: 20,
         paddingLeft: 10,
         paddingRight: 5
     },
@@ -498,8 +500,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         borderWidth: 1,
         borderRadius: 25,
-        marginLeft: 10,
-        marginRight: 10
+        marginHorizontal: 20,
     },
     hr: {
         marginLeft: 25,
@@ -527,15 +528,15 @@ const getStyles = theme => StyleSheet.create({
     },
     addMachinesContainer: {
         marginBottom: 15,
-        marginLeft: 10,
-        marginRight: 10
+        marginHorizontal: 20,
     },
     addMachinesButton: {
         backgroundColor: theme.white,
         borderRadius: 25,
     },
     listContainerStyle: {
-        backgroundColor: theme.white
+        backgroundColor: theme.white,
+        paddingTop: 0
     },
     picker: {
         backgroundColor: '#ffffff'
@@ -545,6 +546,10 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 20,
         marginTop: 10,
         marginBottom: 10
+    },
+    containerStyle: {
+        marginTop: 0,
+        marginHorizontal: 20,
     },
 })
 
