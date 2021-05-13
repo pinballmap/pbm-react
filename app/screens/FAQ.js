@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
     Linking,
-    SafeAreaView,
     StyleSheet,
     View,
 } from 'react-native'
@@ -13,13 +12,14 @@ import {
     Screen,
     Text,
 } from '../components'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const FAQ = ({ navigation, }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
     return(
-        <SafeAreaView style={s.background}>
+        <SafeAreaView edges={['right', 'bottom', 'left']} style={s.background}>
             <Screen>
                 <View style={s.container}>
                     <View style={s.child}>
