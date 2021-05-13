@@ -123,6 +123,8 @@ class LocationDetails extends Component {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))
+        const distance = getDistance(userLat, userLon, location.lat, location.lon)
+        const displayDistance = distance > 99 ? Math.round(distance) : distance.toFixed(1)
 
         return (
             <ThemeContext.Consumer>
@@ -301,7 +303,7 @@ class LocationDetails extends Component {
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
                                                 <Text style={[s.metaText,s.font18,s.marginRight]}>{location.street}</Text>
                                                 <Text style={[s.metaText,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text> : null}
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{displayDistance} mi</Text> : null}
                                                 {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
                                                 {location.website ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
@@ -323,7 +325,7 @@ class LocationDetails extends Component {
                                                         />
                                                         <Text style={{textAlign:'center',color:theme.orange7}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
-                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{getDistance(userLat, userLon, location.lat, location.lon).toFixed(2)} mi</Text>}
+                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{displayDistance} mi</Text>}
                                                 </View> : null
                                             }
                                         </View>
