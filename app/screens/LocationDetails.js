@@ -394,7 +394,7 @@ const getStyles = theme => StyleSheet.create({
     locationContainer: {
         flex: 3,
         borderRadius: 25,
-        marginBottom: 5,
+        marginBottom: 10,
         marginRight: 30,
         marginLeft: 30,
         borderWidth: 0,
@@ -423,7 +423,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.neutral
     },
     titleStyle: {
-        color: theme.text
+        color: theme.orange8
     },
     listContainerStyle: {
         borderRadius: 25,
@@ -465,7 +465,6 @@ const getStyles = theme => StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 0,
         marginTop: 5,
-        marginBottom: 5,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-start'
@@ -482,6 +481,7 @@ const getStyles = theme => StyleSheet.create({
         padding: 5,
         width: '35%',
         alignItems: 'center',
+        marginBottom: 5
     },
     locationIcon: {
         position: 'absolute',
@@ -559,7 +559,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 10,
     },
     buttonIcon: {
-        color: theme.text,
+        color: theme.orange8,
         fontSize: 32,
     },
     confirmText: {

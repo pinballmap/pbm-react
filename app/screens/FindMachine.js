@@ -266,49 +266,51 @@ class FindMachine extends React.PureComponent {
                         </KeyboardAwareScrollView>
                     </TouchableWithoutFeedback>
                 </Modal>
-                            <SearchBar
-                                lightTheme={theme.theme !== 'dark'}
-                                placeholder='Filter machines...'
-                                placeholderTextColor={theme.indigo4}
-                                platform='default'
-                                searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
-                                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => this.handleSearch('')} />}
-                                onChangeText={(query) => this.handleSearch(query, this.state.machinesInView)}
-                                inputStyle={{ color: theme.text }}
-                                value={this.state.query}
-                                inputContainerStyle={s.filterInput}
-                                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
-                                autoCorrect={false}
-                            />
-                            {!multiSelect ?
-                                <ButtonGroup
-                                    onPress={this.toggleViewMachinesInMapArea}
-                                    selectedIndex={selectedIdx}
-                                    buttons={['All Machines', 'Machines in Map Area']}
-                                    containerStyle={s.buttonGroupContainer}
-                                    textStyle={s.buttonGroupInactive}
-                                    selectedButtonStyle={s.selButtonStyle}
-                                    selectedTextStyle={s.selTextStyle}
-                                    innerBorderStyle={s.innerBorderStyle}
-                                /> : null
-                            }
-                            {multiSelect ?
-                                <View style={s.multiSelect}>
-                                    {machineList.length === 0 ? <Text style={{ color: theme.text }}>0 machines selected</Text> :
-                                        <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Text style={{ color: theme.text }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
-                                        </View>
-                                    }
-                                </View> : null
-                            }
-                            <FlatList
-                                keyboardShouldPersistTaps="always"
-                                data={this.state.machines}
-                                renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
-                                keyExtractor={this.keyExtractor}
-                                style={{backgroundColor:theme.neutral,paddingHorizontal:5}}
-                            />
-                        </>
+                <SearchBar
+                    lightTheme={theme.theme !== 'dark'}
+                    placeholder='Filter machines...'
+                    placeholderTextColor={theme.indigo4}
+                    platform='default'
+                    searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
+                    clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => this.handleSearch('')} />}
+                    onChangeText={(query) => this.handleSearch(query, this.state.machinesInView)}
+                    inputStyle={{ color: theme.text }}
+                    value={this.state.query}
+                    inputContainerStyle={s.filterInput}
+                    containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
+                    autoCorrect={false}
+                />
+                {!multiSelect ?
+                    <View style={{backgroundColor:theme.neutral}}>
+                      <ButtonGroup
+                          onPress={this.toggleViewMachinesInMapArea}
+                          selectedIndex={selectedIdx}
+                          buttons={['All Machines', 'Machines in Map Area']}
+                          containerStyle={s.buttonGroupContainer}
+                          textStyle={s.buttonGroupInactive}
+                          selectedButtonStyle={s.selButtonStyle}
+                          selectedTextStyle={s.selTextStyle}
+                          innerBorderStyle={s.innerBorderStyle}
+                      />
+                    </View> : null
+                }
+                {multiSelect ?
+                    <View style={s.multiSelect}>
+                        {machineList.length === 0 ? <Text style={{ color: theme.text }}>0 machines selected</Text> :
+                            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                <Text style={{ color: theme.text }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                            </View>
+                        }
+                    </View> : null
+                }
+                <FlatList
+                    keyboardShouldPersistTaps="always"
+                    data={this.state.machines}
+                    renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
+                    keyExtractor={this.keyExtractor}
+                    style={{backgroundColor:theme.neutral,paddingHorizontal:5}}
+                />
+            </>
         )
     }
 }

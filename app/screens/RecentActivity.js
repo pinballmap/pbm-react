@@ -32,13 +32,16 @@ class RecentActivity extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: null,
+            title: 'Recent Nearby Activity',
             headerRight: () => <FilterRecentActivity />,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
+            },
+            headerTitleStyle: {
+                textAlign: 'center',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -103,8 +106,7 @@ class RecentActivity extends Component {
                     return (
                         <Screen>
                             <View style={s.header}>
-                                <Text style={[s.title, s.headerText]}>Recent Nearby Activity</Text>
-                                <Text style={[s.paren, s.headerText]}>(30 miles, 30 days)</Text>
+                                <Text style={[s.title, s.headerText]}>30 miles, 30 days</Text>
                             </View>
                             {selectedActivity ?
                                 <View style={s.filterView}>
@@ -167,23 +169,20 @@ const getStyles = theme => StyleSheet.create({
     header: {
         backgroundColor: theme.blue1,
         paddingVertical: 10,
+        marginBottom: 10
     },
     headerText: {
         textAlign: "center",
         color: theme.orange8
     },
     title: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 16,
+        fontStyle: "italic",
+        color: theme.orange7
     },
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.orange7
-    },
-    paren: {
-        fontSize: 12,
-        fontStyle: "italic",
         color: theme.orange7
     },
     filterView: {
@@ -202,10 +201,8 @@ const getStyles = theme => StyleSheet.create({
     },
     list: {
         borderRadius: 15,
-        marginBottom: 6,
-        marginTop: 12,
-        marginRight: 20,
-        marginLeft: 20,
+        marginVertical: 8,
+        marginHorizontal: 20,
         borderWidth: 0,
         backgroundColor: theme.white,
         shadowColor: theme.shadow,

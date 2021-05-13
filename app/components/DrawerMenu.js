@@ -36,7 +36,7 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
                     containerStyle={s.buttonContainer}
                 />
                 <PbmButton
-                    title={"Actually, Stay Logged In"}
+                    title={"Stay Logged In"}
                     onPress={() => setModalVisible(false)}
                     accessibilityLabel="Stay Logged In"
                     containerStyle={s.buttonContainer}
