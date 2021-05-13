@@ -23,6 +23,7 @@ import {
 } from '../components'
 import { getData } from '../config/request'
 import { logout } from '../actions'
+import { formatNumWithCommas } from '../utils/utilityFunctions'
 
 const moment = require('moment')
 
@@ -123,23 +124,23 @@ class UserProfile extends Component {
                                     <Text style={s.member}>{`Joined: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Machines Added:</Text>
-                                        <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
+                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_added)} `}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Machines Removed:</Text>
-                                        <Text style={s.statNum}>{` ${num_machines_removed} `}</Text>
+                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_removed)} `}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Machines Comments:</Text>
-                                        <Text style={s.statNum}>{` ${num_lmx_comments_left} `}</Text>
+                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_lmx_comments_left)} `}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Locations Submitted:</Text>
-                                        <Text style={s.statNum}>{` ${num_locations_suggested} `}</Text>
+                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_suggested)} `}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Locations Edited:</Text>
-                                        <Text style={s.statNum}>{` ${num_locations_edited} `}</Text>
+                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_edited)} `}</Text>
                                     </View>
                                     <PbmButton
                                         title={'View Saved Locations'}
@@ -154,10 +155,11 @@ class UserProfile extends Component {
                                     <View style={{paddingVertical:8}}>
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                             return <ListItem
+                                                underlayColor={theme.indigo2}
                                                 containerStyle={s.background}
                                                 key={location[0]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
-                                                <ListItem.Content style={{backgroundColor:theme.white,borderRadius:10}}>
+                                                <ListItem.Content style={s.list}>
                                                     <ListItem.Title style={s.listTitleStyle}>
                                                         {location[1]}
                                                     </ListItem.Title>
@@ -166,7 +168,7 @@ class UserProfile extends Component {
                                         })}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
-                                    <View style={{paddingTop:0,paddingBottom:15}}>
+                                    <View style={{paddingTop:8,paddingBottom:15}}>
                                         {profile_list_of_high_scores.map((score, idx) => {
                                             return <ListItem
                                                 containerStyle={s.background}
@@ -199,6 +201,18 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.neutral,
         paddingVertical: 5,
         paddingHorizontal: 10
+    },
+    list: {
+        borderRadius: 15,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderWidth: 0,
+        backgroundColor: theme.white,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
     },
     bold: {
         fontWeight: 'bold',
@@ -241,8 +255,8 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 16,
-        paddingVertical: 5,
-        color: theme.orange8,
+        paddingVertical: 10,
+        color: theme.text,
     },
     username: {
         fontWeight: 'bold',
@@ -257,7 +271,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: theme.orange8,
+        color: theme.text,
         width: 200
     },
     statNum: {
@@ -275,7 +289,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         marginTop: 5,
-        color: theme.text
+        color: theme.orange8
     },
     buttonContainer: {
         marginLeft: 20,
