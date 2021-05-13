@@ -316,8 +316,8 @@ class Map extends Component {
                             title={'Clear Filter'}
                             onPress={() => this.props.clearFilters()}
                             containerStyle={[s.filterContainer,s.containerStyle]}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:theme.indigo2}]}
-                            titleStyle={s.buttonTitle}
+                            buttonStyle={[s.buttonStyle,{backgroundColor:'#fee5e7'}]}
+                            titleStyle={{color:'#453e39',fontSize: 14}}
                         />
                         : null
                     }
@@ -429,7 +429,7 @@ const getStyles = theme => StyleSheet.create({
         paddingBottom: 0,
         paddingLeft: 10,
         paddingRight: 10,
-        height: 25,
+        height: 30,
         borderRadius: 25,
         backgroundColor: theme.white,
     },
@@ -449,7 +449,7 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         left: 15,
-        borderRadius: 25
+        borderRadius: 25,
     },
     updateContainerStyle: {
         position: 'absolute',
@@ -469,7 +469,7 @@ const getStyles = theme => StyleSheet.create({
     },
     filterContainer: {
         position: 'absolute',
-        top: Constants.statusBarHeight > 40 ? 100 : 80,
+        top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         right: 15,
         borderRadius: 25
     }

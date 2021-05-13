@@ -36,6 +36,6 @@ export const standard = {
     red2:       '#e4606a',
     red3:       '#fee5e7',
     shadow:     '#c3baad',
-    text:       '#393e46',
+    text:       '#453e39',
     white:      '#ffffff',
 }

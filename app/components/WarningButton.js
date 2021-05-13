@@ -16,7 +16,6 @@ const WarningButton = ({ title, onPress, accessibilityLabel, containerStyle }) =
             title={title}
             onPress={onPress}
             accessibilityLabel={accessibilityLabel}
-            raised
             buttonStyle={s.redButton}
             titleStyle={s.titleStyle}
             containerViewStyle={{alignSelf: 'stretch'}}

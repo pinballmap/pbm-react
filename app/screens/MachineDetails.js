@@ -206,7 +206,7 @@ class MachineDetails extends Component {
                                                 key={commentObj.id}
                                                 bottomDivider>
                                                 <ListItem.Content>
-                                                    <ListItem.Title style={[{marginLeft:5,marginRight:5},s.conditionText]}>
+                                                    <ListItem.Title style={[{marginRight:5},s.conditionText]}>
                                                         {`"${comment}"`}
                                                     </ListItem.Title>
                                                     <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
@@ -349,13 +349,13 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     conditionText: {
-        color: theme.text,
+        color: theme.orange8,
         fontStyle: 'italic',
         fontSize: 16,
         marginTop: 5
     },
     scoreText: {
-        color: theme.text,
+        color: theme.orange8,
         fontSize: 16,
         marginTop: 5,
         fontWeight: 'bold',

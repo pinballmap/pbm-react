@@ -120,7 +120,7 @@ class UserProfile extends Component {
                                         />
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
-                                    <Text style={s.member}>{`Member since: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
+                                    <Text style={s.member}>{`Joined: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={s.stat}>Machines Added:</Text>
                                         <Text style={s.statNum}>{` ${num_machines_added} `}</Text>
@@ -196,7 +196,9 @@ class UserProfile extends Component {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.neutral
+        backgroundColor: theme.neutral,
+        paddingVertical: 5,
+        paddingHorizontal: 10
     },
     bold: {
         fontWeight: 'bold',
@@ -205,7 +207,7 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         color: theme.text,
-        backgroundColor: theme.blue1
+        backgroundColor: theme.indigo2
     },
     savedIcon: {
         fontSize: 24,
@@ -232,7 +234,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     titleStyle: {
-        color: theme.text,
+        color: theme.orange8,
         fontSize: 16
     },
     listTitleStyle: {
@@ -240,7 +242,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
         fontSize: 16,
         paddingVertical: 5,
-        color: theme.text,
+        color: theme.orange8,
     },
     username: {
         fontWeight: 'bold',
@@ -255,13 +257,13 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 30,
         fontSize: 16,
-        color: theme.orange7,
+        color: theme.orange8,
         width: 200
     },
     statNum: {
         fontWeight: "bold",
-        color: theme.orange8,
-        backgroundColor: theme.blue1,
+        color: theme.neutral,
+        backgroundColor: theme.orange7,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
