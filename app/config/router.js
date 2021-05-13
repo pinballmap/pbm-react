@@ -212,11 +212,11 @@ export const drawerNavigator = createDrawerNavigator({
     contentOptions: {
         activeTintColor: {
             light: '#95867c',
-            dark: '#ebebeb'
+            dark: '#e6cfbe'
         },
         inactiveTintColor: {
             light: '#95867c',
-            dark: '#ebebeb'
+            dark: '#e6cfbe'
         },
         activeBackgroundColor: {
             light: '#fff7eb',

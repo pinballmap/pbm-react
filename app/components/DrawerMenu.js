@@ -49,7 +49,7 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
                 />
                 {loggedIn ?
                     <TouchableOpacity style={s.container} onPress={() => setModalVisible(true)}>
-                        <MaterialCommunityIcons name='logout' style={s.icon} />
+                        <MaterialCommunityIcons name='exit-run' style={s.icon} />
                         <Text style={s.text}>Logout</Text>
                     </TouchableOpacity>
                     : <TouchableOpacity style={s.container} onPress={() => navigation.navigate('Login')}>
@@ -68,9 +68,9 @@ const getStyles = theme => StyleSheet.create({
     },
     icon: {
         fontSize: 24,
-        color: theme.indigo4,
+        color: '#95867c',
         position: 'absolute',
-        paddingLeft: Platform.OS === 'ios' ? 20 : 15
+        paddingLeft: Platform.OS === 'ios' ? 16 : 15
     },
     text: {
         color: theme.orange7,
