@@ -20,6 +20,7 @@ import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { PbmButton } from '../components'
 
 let deviceHeight = Dimensions.get('window').height
 
@@ -142,7 +143,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             <Text style={s.bold}>Sign Up</Text>
                             <Input
                                 placeholder='Username'
-                                placeholderTextColor={theme.indigo4}
+                                placeholderTextColor={'#9b9ebb'}
                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
                                 onChangeText={username => setUsername(username)}
                                 value={username}
@@ -155,7 +156,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             />
                             <Input
                                 placeholder="Email Address"
-                                placeholderTextColor={theme.indigo4}
+                                placeholderTextColor={'#9b9ebb'}
                                 leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
                                 onChangeText={email => setEmail(email)}
                                 value={email}
@@ -169,7 +170,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             />
                             <Input
                                 placeholder="Password"
-                                placeholderTextColor={theme.indigo4}
+                                placeholderTextColor={'#9b9ebb'}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={password => setPassword(password)}
                                 value={password}
@@ -183,7 +184,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             />
                             <Input
                                 placeholder="Confirm Password"
-                                placeholderTextColor={theme.indigo4}
+                                placeholderTextColor={'#9b9ebb'}
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={confirm_password => setConfirmPassword(confirm_password)}
                                 value={confirm_password}
@@ -195,12 +196,9 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
-                            <Button
+                            <PbmButton
                                 onPress={submit}
-                                raised
-                                buttonStyle={s.buttonStyle}
-                                titleStyle={s.buttonTitle}
-                                containerStyle={{marginLeft:10,marginRight:10,marginTop: 15,marginBottom: 25,overflow:'hidden',borderRadius: 25}}
+                                containerStyle={{marginHorizontal:10,marginTop:10,marginBottom:25}}
                                 title="Sign Up"
                                 accessibilityLabel="Sign Up"
                                 disabled={!username || !email || !password || !confirm_password}
@@ -284,7 +282,7 @@ const getStyles = theme => StyleSheet.create({
     },
     iconStyle: {
         fontSize: 24,
-        color: theme.indigo4,
+        color: '#9b9ebb',
         marginRight: 5,
         marginLeft: 5
     },
