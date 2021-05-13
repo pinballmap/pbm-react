@@ -138,7 +138,7 @@ class RecentActivity extends Component {
                                             <ListItem
                                                 containerStyle={s.list}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
-                                                underlayColor="#D3ECFF">
+                                                underlayColor={theme.indigo2}>
                                                 <Avatar>
                                                     {activity.submissionTypeIcon}
                                                 </Avatar>
