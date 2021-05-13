@@ -29,6 +29,8 @@ const LocationCard = ({
 
     const numMachines = machines.length
 
+    const displayDistance = distance > 99 ? Math.round(distance) : distance.toFixed(1)
+
     return(
         <Card containerStyle={s.containerStyle}>
             <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
@@ -42,7 +44,7 @@ const LocationCard = ({
                             <Text style={s.marginS}>
                                 {type ? <Text style={s.gray}>{type}</Text> : null}
                                 {type && distance ? <Text style={s.gray}> • </Text> : null }
-                                {distance ? <Text style={[s.gray,s.marginS]}>{distance.toFixed(2)} mi</Text>: null}
+                                {distance ? <Text style={[s.gray,s.marginS]}>{displayDistance} mi</Text>: null}
                             </Text> : null
                         }
                         <View style={s.margin}>
