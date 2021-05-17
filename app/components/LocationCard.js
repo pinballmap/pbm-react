@@ -4,10 +4,9 @@ import {
     Platform,
     StyleSheet,
     Text,
-    TouchableOpacity,
+    Pressable,
     View,
 } from 'react-native'
-import { Card } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 
 const NUM_MACHINES_TO_SHOW = 5
@@ -32,13 +31,16 @@ const LocationCard = ({
     const displayDistance = distance > 99 ? Math.round(distance) : distance.toFixed(1)
 
     return(
-        <Card containerStyle={s.containerStyle}>
-            <TouchableOpacity onPress={() => navigation.navigate('LocationDetails', {id, locationName })}>
-                <View style={s.flexi}>
-                    <View style={{width: '100%',zIndex: 10}}>
-                        <View style={s.locationNameContainer}>
-                            <Text style={s.locationName}>{locationName}</Text>
-                        </View>
+        <Pressable
+            style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.NotPressed]}
+            onPress={() => navigation.navigate('LocationDetails', {id, locationName })}
+        >
+            <View style={s.flexi}>
+                <View style={{zIndex: 10,flex:1}}>
+                    <View style={s.locationNameContainer}>
+                        <Text style={s.locationName}>{locationName}</Text>
+                    </View>
+                    <View style={{paddingHorizontal:10,paddingBottom:5}}>
                         <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
                         {type || distance ?
                             <Text style={s.marginS}>
@@ -64,8 +66,8 @@ const LocationCard = ({
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity>
-        </Card>
+            </View>
+        </Pressable>
     )
 
 }
@@ -77,20 +79,19 @@ const getStyles = (theme) => StyleSheet.create({
         marginTop: 12,
         marginRight: 20,
         marginLeft: 20,
-        borderWidth: 0,
         backgroundColor: theme.white,
-        shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        shadowColor: theme.shadow
     },
     flexi: {
-        flex: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
         flexDirection: 'row',
         alignItems: 'center',
         alignContent: 'space-around',
-        marginBottom: -5
     },
     mName: {
         marginBottom: Platform.OS === 'ios' ? -10 : 0,
@@ -101,10 +102,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.text
     },
     locationNameContainer: {
-        marginLeft: -15,
-        marginRight: -15,
         backgroundColor: theme.blue1,
-        marginTop: -15,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -140,6 +138,18 @@ const getStyles = (theme) => StyleSheet.create({
         right: 0,
         zIndex: 5
     },
+    pressed: {
+        borderColor: theme.blue1,
+        borderWidth: 1,
+        shadowColor: 'transparent',
+        opacity: 0.8
+    },
+    notPressed: {
+        borderColor: 'transparent',
+        borderWidth: 0,
+        shadowColor: theme.shadow,
+        opacity: 1.0
+    }
 })
 
 LocationCard.propTypes = {

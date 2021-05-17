@@ -10,10 +10,10 @@ import {
     Dimensions,
     Modal,
     Platform,
+    Pressable,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native'
 import {
@@ -156,7 +156,8 @@ class Search extends Component {
     }
 
     renderRegionRow = (region, s) => (
-        <TouchableOpacity
+        <Pressable
+            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
             key={region.id}
             onPress={() => this.getLocationsByRegion(region)}
         >
@@ -170,11 +171,12 @@ class Search extends Component {
                     </ListItem.Title>
                 </ListItem.Content>
             </ListItem>
-        </TouchableOpacity>
+        </Pressable>
     )
 
     renderCityRow = (location, s) => (
-        <TouchableOpacity
+        <Pressable
+            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
             key={location.value}
             onPress={() => this.getLocationsByCity(location)}
         >
@@ -188,11 +190,12 @@ class Search extends Component {
                     </ListItem.Title>
                 </ListItem.Content>
             </ListItem>
-        </TouchableOpacity>
+        </Pressable>
     )
 
     renderLocationRow = (location, s) => (
-        <TouchableOpacity
+        <Pressable
+            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
             key={location.id}
             onPress={() => this.goToLocation(location)}
         >
@@ -203,7 +206,7 @@ class Search extends Component {
                     </ListItem.Title>
                 </ListItem.Content>
             </ListItem>
-        </TouchableOpacity>
+        </Pressable>
     )
 
     renderRecentSearchHistory = (s) => (
@@ -296,12 +299,15 @@ class Search extends Component {
                                 </SafeAreaView>
                             </Modal>
                             <View style={s.searchMapContainer}>
-                                <TouchableOpacity onPress={() => this.setState({ searchModalVisible: true })}>
+                                <Pressable
+                                    style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
+                                    onPress={() => this.setState({ searchModalVisible: true })}
+                                >
                                     <View style={s.searchMap}>
                                         <MaterialIcons name='search' size={25} style={s.searchIcon} />
                                         <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
                                     </View>
-                                </TouchableOpacity>
+                                </Pressable>
                                 <Button
                                     onPress={() => this.props.navigate('FilterMap')}
                                     containerStyle={s.buttonContainerStyle}
@@ -369,7 +375,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.white,
         borderRadius: 25,
         width: deviceWidth - 60,
-        borderColor: '#e0ebf2',
+        borderColor: theme.orange3,
         height: 40,
         display: 'flex',
         flexDirection: 'row',
@@ -393,7 +399,7 @@ const getStyles = theme => StyleSheet.create({
     listContainerStyle: {
         borderBottomColor: theme.indigo4,
         borderBottomWidth: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: 'transparent'
     },
     listItemTitle: {
         color: theme.orange7,
@@ -429,6 +435,12 @@ const getStyles = theme => StyleSheet.create({
         fontStyle:
         'italic',
         color: '#97a5af'
+    },
+    pressed: {
+        backgroundColor: theme.indigo2,
+    },
+    notPressed: {
+        backgroundColor: theme.neutral
     }
 })
 
