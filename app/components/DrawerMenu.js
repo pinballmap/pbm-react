@@ -5,7 +5,7 @@ import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import {
     Platform,
     Text,
-    TouchableOpacity,
+    Pressable,
     View,
     StyleSheet
 } from 'react-native'
@@ -48,14 +48,21 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
                     onItemPress={(item) => navigation.navigate(item.route.key)}
                 />
                 {loggedIn ?
-                    <TouchableOpacity style={s.container} onPress={() => setModalVisible(true)}>
-                        <MaterialCommunityIcons name='exit-run' style={s.icon} />
+                    <Pressable
+                        onPress={() => setModalVisible(true)}
+                        style={({ pressed }) => [{opacity: pressed ? 0.2 : 1.0},s.container]}
+                    >
                         <Text style={s.text}>Logout</Text>
-                    </TouchableOpacity>
-                    : <TouchableOpacity style={s.container} onPress={() => navigation.navigate('Login')}>
+                        <MaterialCommunityIcons name='exit-run' style={s.icon} />
+                    </Pressable>
+                    :
+                    <Pressable
+                        onPress={() => navigation.navigate('Login')}
+                        style={({ pressed }) => [{opacity: pressed ? 0.2 : 1.0},s.container]}
+                    >
+                        <Text style={s.text}>Login</Text>
                         <MaterialCommunityIcons name='login' style={s.icon} />
-                        <Text style={s.text}>Log In</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 }
             </View>
         </View>
