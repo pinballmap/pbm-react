@@ -7,9 +7,9 @@ import {
     Linking,
     Modal,
     Platform,
+    Pressable,
     Share,
     StyleSheet,
-    TouchableOpacity,
     View,
 } from 'react-native'
 import MapView from 'react-native-maps'
@@ -339,28 +339,30 @@ class LocationDetails extends Component {
                                     </View>
                                     <View style={s.backgroundColor}>
                                         {sortedMachines.map(machine => (
-                                            <TouchableOpacity
+                                            <Pressable
                                                 key={machine.id}
                                                 onPress={() => {
                                                     this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
                                                     this.props.setCurrentMachine(machine.id)
-                                                }}>
-                                                <View style={s.listContainerStyle}>
-                                                    <View style={machine.condition ? s.machineNameContainer : s.machineNameContainer2} >
-                                                        {this.getTitle(machine, s)}
+                                                }}
+                                                children={({ pressed }) => (
+                                                    <View style={[s.listContainerStyle,pressed ? s.pressed : s.NotPressed]}>
+                                                        <View style={machine.condition ? s.machineNameContainer : s.machineNameContainer2} >
+                                                            {this.getTitle(machine, s)}
+                                                        </View>
+                                                        {machine.condition_date ?
+                                                            <View style={s.condition}>
+                                                                <View>
+                                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                </View>
+                                                                <View>
+                                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                </View>
+                                                            </View> : null
+                                                        }
                                                     </View>
-                                                    {machine.condition_date ?
-                                                        <View style={s.condition}>
-                                                            <View>
-                                                                {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
-                                                            </View>
-                                                            <View>
-                                                                {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
-                                                            </View>
-                                                        </View> : null
-                                                    }
-                                                </View>
-                                            </TouchableOpacity>
+                                                )}
+                                            />
                                         ))}
                                     </View>
                                 </View>
@@ -438,6 +440,20 @@ const getStyles = theme => StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
+        elevation: 6,
+    },
+    pressed: {
+        borderColor: theme.blue1,
+        borderWidth: 1,
+        shadowColor: 'transparent',
+        opacity: 0.8,
+        elevation: 0,
+    },
+    notPressed: {
+        borderColor: 'transparent',
+        borderWidth: 0,
+        shadowColor: theme.shadow,
+        opacity: 1.0,
         elevation: 6,
     },
     machineName: {

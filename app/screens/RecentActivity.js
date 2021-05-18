@@ -2,13 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Pressable,
     StyleSheet,
     View,
 } from 'react-native'
-import {
-    Avatar,
-    ListItem
-} from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -134,24 +131,25 @@ class RecentActivity extends Component {
                                             return activity
                                         }
                                     }).map(activity => (
-                                        <View key={activity.id}>
-                                            <ListItem
-                                                containerStyle={s.list}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
-                                                underlayColor={theme.indigo2}>
-                                                <Avatar>
+                                        <Pressable
+                                            key={activity.id}
+                                            onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
+                                            children={({ pressed }) => (
+                                                <View style={[s.list,s.flexi,pressed ? s.pressed : s.notPressed]}>
+                                                <View style={{width: '15%'}}>
                                                     {activity.submissionTypeIcon}
-                                                </Avatar>
-                                                <ListItem.Content>
-                                                    <ListItem.Title style={s.pbmText}>
+                                                </View>
+                                                <View style={{width: '85%'}}>
+                                                    <Text style={s.pbmText}>
                                                         {activity.submission}
-                                                    </ListItem.Title>
-                                                    <ListItem.Subtitle style={s.subtitleStyle}>
+                                                    </Text>
+                                                    <Text style={s.subtitleStyle}>
                                                         {`${moment(activity.updated_at).format('LL')}`}
-                                                    </ListItem.Subtitle>
-                                                </ListItem.Content>
-                                            </ListItem>
-                                        </View>
+                                                    </Text>
+                                                </View>
+                                                </View>
+                                            )}
+                                        />
                                     ))
                             }
                         </Screen>
@@ -164,7 +162,8 @@ class RecentActivity extends Component {
 
 const getStyles = theme => StyleSheet.create({
     pbmText: {
-        color: theme.text
+        color: theme.text,
+        fontSize: 16
     },
     header: {
         backgroundColor: theme.blue1,
@@ -186,7 +185,9 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7
     },
     filterView: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.indigo2,
+        marginTop: -10,
+        marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -199,7 +200,15 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
         paddingVertical: 8,
     },
+    flexi: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'space-around',
+    },
     list: {
+        padding: 10,
         borderRadius: 15,
         marginVertical: 8,
         marginHorizontal: 20,
@@ -220,6 +229,18 @@ const getStyles = theme => StyleSheet.create({
     xButton: {
         color: theme.red2,
         marginLeft: 8,
+    },
+    pressed: {
+        borderColor: theme.blue1,
+        borderWidth: 1,
+        shadowColor: 'transparent',
+        opacity: 0.8
+    },
+    notPressed: {
+        borderColor: 'transparent',
+        borderWidth: 0,
+        shadowColor: theme.shadow,
+        opacity: 1.0
     }
 })
 

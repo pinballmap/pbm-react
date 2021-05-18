@@ -5,7 +5,7 @@ import {
     Keyboard,
     Platform,
     StyleSheet,
-    TouchableWithoutFeedback,
+    Pressable,
     View
 } from 'react-native'
 import { Input } from 'react-native-elements'
@@ -38,8 +38,8 @@ const PasswordReset = ({ navigation }) => {
     }
 
     return(
-        <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
-            <Screen>
+        <Screen>
+            <Pressable onPress={ () => { Keyboard.dismiss() } }>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
                     <View>
@@ -73,8 +73,8 @@ const PasswordReset = ({ navigation }) => {
                         containerStyle={s.container}
                     />
                 </View>
-            </Screen>
-        </TouchableWithoutFeedback>)
+            </Pressable>
+        </Screen>)
 }
 
 PasswordReset.navigationOptions = ({ navigation, theme }) => ({

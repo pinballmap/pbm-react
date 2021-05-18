@@ -7,7 +7,7 @@ import {
     Keyboard,
     StyleSheet,
     Text,
-    TouchableWithoutFeedback,
+    Pressable,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -133,7 +133,7 @@ const Signup = ({ login, loginLater, navigation }) => {
         <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                 <View style={s.mask}>
-                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                    <Pressable onPress={ () => { Keyboard.dismiss() } }>
                         <View style={s.justify}>
                             {errors &&
                                 <Text style={s.errorText}>
@@ -222,7 +222,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 title="skip signing up for now"
                             />
                         </View>
-                    </TouchableWithoutFeedback>
+                    </Pressable>
                 </View>
             </ImageBackground>
         </KeyboardAwareScrollView>
@@ -243,9 +243,6 @@ const getStyles = theme => StyleSheet.create({
     mask: {
         flex: 1,
         backgroundColor: theme.mask,
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
     },
     buttonMask: {
         backgroundColor: theme.buttonMask,

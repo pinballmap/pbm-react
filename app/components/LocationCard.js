@@ -142,13 +142,15 @@ const getStyles = (theme) => StyleSheet.create({
         borderColor: theme.blue1,
         borderWidth: 1,
         shadowColor: 'transparent',
-        opacity: 0.8
+        opacity: 0.8,
+        elevation: 0,
     },
     notPressed: {
         borderColor: 'transparent',
         borderWidth: 0,
         shadowColor: theme.shadow,
-        opacity: 1.0
+        opacity: 1.0,
+        elevation: 6,
     }
 })
 

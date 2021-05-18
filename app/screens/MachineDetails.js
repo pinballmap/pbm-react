@@ -9,7 +9,7 @@ import {
     ScrollView,
     StyleSheet,
     TextInput,
-    TouchableWithoutFeedback,
+    Pressable,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -124,7 +124,7 @@ class MachineDetails extends Component {
                                 visible={this.state.showAddConditionModal}
                                 onRequestClose={()=>{}}
                             >
-                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                <Pressable onPress={ () => { Keyboard.dismiss() } }>
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
@@ -150,7 +150,7 @@ class MachineDetails extends Component {
                                             />
                                         </View>
                                     </KeyboardAwareScrollView>
-                                </TouchableWithoutFeedback>
+                                </Pressable>
                             </Modal>
                             <Modal
                                 animationType="slide"
@@ -158,7 +158,7 @@ class MachineDetails extends Component {
                                 visible={this.state.showAddScoreModal}
                                 onRequestClose={()=>{}}
                             >
-                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                <Pressable onPress={ () => { Keyboard.dismiss() } }>
                                     <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
@@ -185,7 +185,7 @@ class MachineDetails extends Component {
                                             />
                                         </View>
                                     </KeyboardAwareScrollView>
-                                </TouchableWithoutFeedback>
+                                </Pressable>
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
                             <ScrollView>

@@ -213,6 +213,7 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        marginHorizontal: 10,
     },
     bold: {
         fontWeight: 'bold',
@@ -252,8 +253,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     listTitleStyle: {
-        marginLeft: 15,
-        marginRight: 15,
+        marginHorizontal: 10,
         fontSize: 16,
         paddingVertical: 10,
         color: theme.text,

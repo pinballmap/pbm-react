@@ -99,7 +99,7 @@ export class LocationList extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <View style={{backgroundColor: theme.neutral}}>
+                        <View style={{flex: 1,backgroundColor: theme.neutral}}>
                             <Text style={s.sort}>SORT BY:</Text>
                             <ButtonGroup
                                 onPress={this.updateIndex}
