@@ -96,68 +96,70 @@ const FilterMap = ({
     }
 
     return (
-        <Screen style={{marginHorizontal:5}}>
-            <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
-            <DropDownButton
-                title={machine && machine.name ? machine.name : 'All'}
-                onPress={() => {
-                    navigate('FindMachine', { machineFilter: true })
-                    setMachineFilter()
-                }}
-            />
-            {machine && machine.machine_group_id &&
-                <>
-                    <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine Version:</Text>
-                    <ButtonGroup
-                        onPress={setFilterByMachineVersion}
-                        selectedIndex={filterByMachineVersion ? 1 : 0}
-                        buttons={['All Versions', 'Selected Version']}
-                        containerStyle={s.buttonGroupContainer}
-                        textStyle={s.buttonGroupInactive}
-                        selectedButtonStyle={s.selButtonStyle}
-                        selectedTextStyle={s.selTextStyle}
-                        innerBorderStyle={s.innerBorderStyle}
-                    />
-                </>
-            }
-            <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Limit by number of machines per location:</Text>
-            <ButtonGroup
-                onPress={setNumMachinesSelected}
-                selectedIndex={getIdx(numMachines)}
-                buttons={['All', '2+', '3+', '4+', '5+']}
-                containerStyle={s.buttonGroupContainer}
-                textStyle={s.buttonGroupInactive}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-            />
-            <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by location type:</Text>
-            <DropDownButton
-                title={locationTypeName}
-                onPress={() => navigate('FindLocationType', { type: 'filter', setSelected: (id) => selectedLocationTypeFilter(id) })}
-            />
-            <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by operator:</Text>
-            <DropDownButton
-                title={operatorName}
-                onPress={() => navigate('FindOperator', { type: 'filter', setSelected: (id) => selectedOperatorTypeFilter(id) })}
-            />
-            <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved Locations:</Text>
-            <ButtonGroup
-                onPress={updateViewFavorites}
-                selectedIndex={viewByFavoriteLocations ? 1 : 0}
-                buttons={['All', 'My Favorites']}
-                containerStyle={s.buttonGroupContainer}
-                textStyle={s.buttonGroupInactive}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-            />
-            {hasFilterSelected ?
-                <WarningButton
-                    title={'Clear Filters'}
-                    onPress={clearFilters}
-                /> : null
-            }
+        <Screen>
+            <View style={{marginHorizontal:10}}>
+                <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
+                <DropDownButton
+                    title={machine && machine.name ? machine.name : 'All'}
+                    onPress={() => {
+                        navigate('FindMachine', { machineFilter: true })
+                        setMachineFilter()
+                    }}
+                />
+                {machine && machine.machine_group_id &&
+                    <>
+                        <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine Version:</Text>
+                        <ButtonGroup
+                            onPress={setFilterByMachineVersion}
+                            selectedIndex={filterByMachineVersion ? 1 : 0}
+                            buttons={['All Versions', 'Selected Version']}
+                            containerStyle={s.buttonGroupContainer}
+                            textStyle={s.buttonGroupInactive}
+                            selectedButtonStyle={s.selButtonStyle}
+                            selectedTextStyle={s.selTextStyle}
+                            innerBorderStyle={s.innerBorderStyle}
+                        />
+                    </>
+                }
+                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Limit by number of machines per location:</Text>
+                <ButtonGroup
+                    onPress={setNumMachinesSelected}
+                    selectedIndex={getIdx(numMachines)}
+                    buttons={['All', '2+', '3+', '4+', '5+']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.buttonGroupInactive}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
+                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by location type:</Text>
+                <DropDownButton
+                    title={locationTypeName}
+                    onPress={() => navigate('FindLocationType', { type: 'filter', setSelected: (id) => selectedLocationTypeFilter(id) })}
+                />
+                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by operator:</Text>
+                <DropDownButton
+                    title={operatorName}
+                    onPress={() => navigate('FindOperator', { type: 'filter', setSelected: (id) => selectedOperatorTypeFilter(id) })}
+                />
+                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved Locations:</Text>
+                <ButtonGroup
+                    onPress={updateViewFavorites}
+                    selectedIndex={viewByFavoriteLocations ? 1 : 0}
+                    buttons={['All', 'My Favorites']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.buttonGroupInactive}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
+                {hasFilterSelected ?
+                    <WarningButton
+                        title={'Clear Filters'}
+                        onPress={clearFilters}
+                    /> : null
+                }
+            </View>
         </Screen>
     )
 
