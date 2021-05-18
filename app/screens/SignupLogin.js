@@ -242,8 +242,6 @@ const getStyles = theme => StyleSheet.create({
     mask: {
         flex: 1,
         backgroundColor: theme.mask,
-        flexDirection: 'column',
-        justifyContent: 'center',
     },
     backgroundImage: {
         flex: 1,

@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Pressable,
     StyleSheet,
-    TouchableOpacity,
     View,
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
@@ -37,13 +37,13 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
     }
 
     const renderRow = ({ item, index}) => (
-        <TouchableOpacity
+        <Pressable
             onPress={() => _selectLocationType(item.id)}
-        >
-            <View style={{padding:8, backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2}}>
-                <Text style={{fontSize:18}}>{item.name}</Text>
-            </View>
-        </TouchableOpacity>
+            children={({ pressed }) => (
+                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2,opacity: 1}]}>
+                    <Text style={{fontSize: 18}}>{item.name}</Text>
+                </View>
+            )}/>
     )
 
     const _keyExtractor = locationType => `${locationType.id}`
@@ -96,8 +96,14 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.orange3,
         borderWidth: 1,
         borderBottomWidth: 1
-
     },
+    pressed: {
+        backgroundColor: theme.indigo2,
+        opacity: 0.8
+    },
+    notPressed: {
+        backgroundColor: 'transparent',
+    }
 })
 
 FindLocationType.propTypes = {

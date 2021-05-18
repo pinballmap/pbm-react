@@ -100,7 +100,7 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.neutral,
     },
     pageTitle: {
         paddingVertical: 10,
@@ -141,7 +141,8 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
-        overflow: 'visible'
+        overflow: 'visible',
+        marginHorizontal: 15
     },
     buttonGroupInactive: {
         color: theme.orange8,

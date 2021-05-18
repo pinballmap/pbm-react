@@ -5,10 +5,10 @@ import {
     ActivityIndicator,
     Keyboard,
     Modal,
+    Pressable,
     ScrollView,
     StyleSheet,
     TextInput,
-    TouchableWithoutFeedback,
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
@@ -143,7 +143,7 @@ class EditLocationDetails extends Component {
                             </Modal>
                             {updatingLocationDetails ?
                                 <ActivityIndicator /> :
-                                <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                <Pressable onPress={ () => { Keyboard.dismiss() } }>
                                     <View style={{marginLeft:10,marginRight:10}}>
                                         <Text style={s.title}>Phone</Text>
                                         <TextInput
@@ -199,7 +199,7 @@ class EditLocationDetails extends Component {
                                             onPress={() => this.setState({ showEditLocationDetailsModal: true })}
                                         />
                                     </View>
-                                </TouchableWithoutFeedback>
+                                </Pressable>
                             }
                         </Screen>
                     )

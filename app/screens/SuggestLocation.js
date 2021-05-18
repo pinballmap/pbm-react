@@ -9,7 +9,7 @@ import {
     ScrollView,
     StyleSheet,
     TextInput,
-    TouchableWithoutFeedback,
+    Pressable,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -276,7 +276,7 @@ class SuggestLocation extends Component {
                                                     </SafeAreaView>
                                         }
                                     </Modal>
-                                    <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
+                                    <Pressable onPress={ () => { Keyboard.dismiss() } }>
                                         <SafeAreaView edges={['right', 'bottom', 'left']}>
                                             <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
@@ -433,7 +433,7 @@ class SuggestLocation extends Component {
                                                 onPress={() => this.setState({ showSuggestLocationModal: true })}
                                             />
                                         </SafeAreaView>
-                                    </TouchableWithoutFeedback>
+                                    </Pressable>
                                 </View>}
                         </KeyboardAwareScrollView>
                     )

@@ -6,10 +6,9 @@ import {
     Keyboard,
     Modal,
     Platform,
+    Pressable,
     StyleSheet,
     TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -59,12 +58,13 @@ class MultiSelectRow extends React.PureComponent {
         const backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
 
         return (
-            <TouchableOpacity onPress={this._onPress}>
-                <View style={{ display: 'flex', flexDirection: 'row', padding: 8, backgroundColor }}>
-                    <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
-                    {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
-                </View>
-            </TouchableOpacity>
+            <Pressable
+                onPress={this._onPress}
+                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor,opacity: 1}]}
+            >
+                <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
+                {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
+            </Pressable>
         )
     }
 }
@@ -99,7 +99,13 @@ class FindMachine extends React.PureComponent {
             title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
             headerRight: () =>
                 navigation.getParam('showDone') ?
-                    <TouchableOpacity onPress={() => navigation.goBack(null)}><Text style={{ color: '#addbff', fontSize: 18, fontWeight: 'bold', marginRight: 10 }}>Done</Text></TouchableOpacity>
+                    <Pressable
+                        onPress={() => navigation.goBack(null)}
+                        children={({ pressed }) => (
+                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontWeight: 'bold', marginRight: 10}}>
+                                Done
+                            </Text>
+                    )}/>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
@@ -186,13 +192,13 @@ class FindMachine extends React.PureComponent {
         const theme = this.context.theme
         const backgroundColor = index % 2 === 0 ? theme.neutral : theme.neutral2
         return (
-            <TouchableOpacity
+            <Pressable
                 onPress={() => this.setSelected(item)}
-            >
-                <View style={{padding: 8, backgroundColor }}>
-                    <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
-                </View>
-            </TouchableOpacity>
+                children={({ pressed }) => (
+                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
+                        <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
+                    </View>
+            )}/>
         )
     }
 
@@ -239,7 +245,7 @@ class FindMachine extends React.PureComponent {
                     onRequestClose={() => { }}
                     transparent={false}
                 >
-                    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+                    <Pressable onPress={() => { Keyboard.dismiss() }}>
                         <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
                             <View style={s.verticalAlign}>
                                 <Text style={{ textAlign: 'center', marginTop: 10, marginLeft: 15, marginRight: 15, fontSize: 18 }}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
@@ -264,7 +270,7 @@ class FindMachine extends React.PureComponent {
                                 />
                             </View>
                         </KeyboardAwareScrollView>
-                    </TouchableWithoutFeedback>
+                    </Pressable>
                 </Modal>
                 <SearchBar
                     lightTheme={theme.theme !== 'dark'}
@@ -377,6 +383,13 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         fontWeight: 'bold',
     },
+    pressed: {
+        backgroundColor: theme.indigo2,
+        opacity: 0.8
+    },
+    notPressed: {
+        backgroundColor: 'transparent',
+    }
 })
 
 FindMachine.propTypes = {
