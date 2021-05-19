@@ -492,7 +492,7 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 5
     },
     radius25: {
-        borderRadius: 25,
+        borderRadius: 10,
     },
     viewPicker: {
         backgroundColor: theme.white,
