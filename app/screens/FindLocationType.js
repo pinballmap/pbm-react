@@ -92,17 +92,11 @@ const getStyles = theme => StyleSheet.create({
     filterInput: {
         height: 35,
         backgroundColor: theme.white,
-        borderRadius: 10,
+        borderRadius: 25,
         borderColor: theme.orange3,
         borderWidth: 1,
-        borderBottomWidth: 1
-    },
-    pressed: {
-        backgroundColor: theme.indigo2,
-        opacity: 0.8
-    },
-    notPressed: {
-        backgroundColor: 'transparent',
+        borderBottomWidth: 1,
+        marginHorizontal: 10
     }
 })
 
