@@ -61,7 +61,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
                 inputStyle={{color:theme.text}}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0}}
+                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
             />
             <FlatList
                 data={selectedOperators}
