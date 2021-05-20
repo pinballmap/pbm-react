@@ -15,7 +15,6 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
     Button,
-    ListItem,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { EvilIcons } from '@expo/vector-icons'
@@ -201,21 +200,18 @@ class MachineDetails extends Component {
                                     {mostRecentComments ?
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
-                                            return <ListItem
-                                                containerStyle={s.listContainerStyle}
-                                                key={commentObj.id}
-                                                bottomDivider>
-                                                <ListItem.Content>
-                                                    <ListItem.Title style={[{marginRight:5},s.conditionText]}>
-                                                        {`"${comment}"`}
-                                                    </ListItem.Title>
-                                                    <ListItem.Subtitle style={[s.subtitleStyle,s.subtitleMargin]}>
-                                                        {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
-                                                    </ListItem.Subtitle>
-                                                </ListItem.Content>
-                                            </ListItem>
+                                            return <View
+                                                style={[s.listContainerStyle,s.hr]}
+                                                key={commentObj.id}>
+                                                <Text style={[{marginRight:5},s.conditionText]}>
+                                                    {`"${comment}"`}
+                                                </Text>
+                                                <Text style={[s.subtitleStyle,s.subtitleMargin]}>
+                                                    {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                </Text>
+                                            </View>
                                         }) :
-                                        <Text style={s.noneYet}>No machine comment added yet</Text>
+                                        <Text style={s.noneYet}>No machine comments yet</Text>
                                     }
                                     <PbmButton
                                         title={'Add a New Comment'}
@@ -225,7 +221,7 @@ class MachineDetails extends Component {
                                     />
                                 </View>
                                 <View style={s.containerStyle}>
-                                    <View style={s.locationNameContainer}>
+                                    <View style={[s.locationNameContainer,s.hr]}>
                                         <Text style={s.sectionTitle}>Top Scores</Text>
                                     </View>
                                     {userHighScore ?
@@ -240,19 +236,16 @@ class MachineDetails extends Component {
                                             const {id, score, created_at, username} = scoreObj
 
                                             return (
-                                                <ListItem
-                                                    containerStyle={s.listContainerStyle}
-                                                    key={id}
-                                                    bottomDivider>
-                                                    <ListItem.Content>
-                                                        <ListItem.Title style={s.scoreText}>
-                                                            {formatNumWithCommas(score)}
-                                                        </ListItem.Title>
-                                                        <ListItem.Subtitle style={s.subtitleStyle}>
-                                                            {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
-                                                        </ListItem.Subtitle>
-                                                    </ListItem.Content>
-                                                </ListItem>)
+                                                <View
+                                                    style={s.listContainerStyle}
+                                                    key={id}>
+                                                    <Text style={s.scoreText}>
+                                                        {formatNumWithCommas(score)}
+                                                    </Text>
+                                                    <Text style={s.subtitleStyle}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                    </Text>
+                                                </View>)
                                         })
                                         : <Text style={s.noneYet}>No scores yet</Text>
                                     }
@@ -416,8 +409,13 @@ const getStyles = theme => StyleSheet.create({
     },
     listContainerStyle: {
         backgroundColor: theme.white,
-        paddingLeft: 30,
-        paddingTop: 5
+        marginHorizontal: 15,
+        paddingTop: 5,
+        paddingBottom: 10
+    },
+    hr: {
+        borderBottomWidth: 1,
+        borderBottomColor: theme.indigo4
     },
     containerStyle: {
         borderRadius: 15,
