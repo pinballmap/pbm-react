@@ -26,7 +26,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
     ConfirmationModal,
-    HeaderBackButton,
     PbmButton,
     Screen,
     Text,
@@ -43,6 +42,7 @@ import {
     updateCurrCoordinates,
 } from '../actions'
 import androidCustomDark from '../utils/androidCustomDark'
+import { HeaderBackButton } from 'react-navigation-stack'
 
 import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
 
@@ -58,7 +58,13 @@ class LocationDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
+            headerLeft: () => <HeaderBackButton
+                    tintColor={'#2d8ad3'}
+                    onPress={() => {
+                        navigation.goBack(null)
+                    }}
+                    labelVisible={false}
+                />,
             title: null,
             gestureEnabled: true,
             headerTransparent: true,
