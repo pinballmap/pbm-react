@@ -6,6 +6,7 @@ import {
     Dimensions,
     Image,
     Platform,
+    Pressable,
     StyleSheet,
     View,
 } from 'react-native'
@@ -322,16 +323,18 @@ class Map extends Component {
                         : null
                     }
                     {showUpdateSearch ?
-                        <Button
-                            title={'Search this area'}
+                        <Pressable
+                            style={({ pressed }) => [{},s.containerStyle,s.updateContainerStyle,pressed ? s.pressed : s.notPressed]}
                             onPress={() => {
                                 this.setState({ showUpdateSearch: false })
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                                 this.props.clearSearchBarText()
                             }}
-                            titleStyle={s.updateTitleStyle}
-                            containerStyle={[s.updateContainerStyle,s.containerStyle]}
-                            buttonStyle={s.updateButtonStyle}
+                            children={({ pressed }) => (
+                                <Text style={[ pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
+                                    Search this area
+                                </Text>
+                            )}
                         />
                         : null
                     }
@@ -455,23 +458,31 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         alignSelf: 'center',
-        borderRadius: 25
-    },
-    updateButtonStyle: {
         borderRadius: 25,
         backgroundColor: theme.white,
         paddingVertical: 10,
         paddingHorizontal: 20
     },
     updateTitleStyle: {
-        color: theme.text,
-        fontSize:16
+        color: theme.blue4,
+        fontSize: 16
+    },
+    pressedTitleStyle: {
+        color: theme.blue3,
+        fontSize: 16
     },
     filterContainer: {
         position: 'absolute',
         top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         right: 15,
         borderRadius: 25
+    },
+    pressed: {
+        opacity: 0.8,
+        backgroundColor: theme.blue1
+    },
+    notPressed: {
+        opacity: 1.0
     }
 })
 
