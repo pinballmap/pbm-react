@@ -59,7 +59,7 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton
-                    tintColor={'#2d8ad3'}
+                    tintColor={'#3794dd'}
                     onPress={() => {
                         navigation.goBack(null)
                     }}
