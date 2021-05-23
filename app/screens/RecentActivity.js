@@ -134,22 +134,23 @@ class RecentActivity extends Component {
                                         <Pressable
                                             key={activity.id}
                                             onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
-                                            children={({ pressed }) => (
+                                        >
+                                            {({ pressed }) => (
                                                 <View style={[s.list,s.flexi,pressed ? s.pressed : s.notPressed]}>
-                                                <View style={{width: '15%'}}>
-                                                    {activity.submissionTypeIcon}
-                                                </View>
-                                                <View style={{width: '85%'}}>
-                                                    <Text style={s.pbmText}>
-                                                        {activity.submission}
-                                                    </Text>
-                                                    <Text style={s.subtitleStyle}>
-                                                        {`${moment(activity.updated_at).format('LL')}`}
-                                                    </Text>
-                                                </View>
+                                                    <View style={{width: '15%'}}>
+                                                        {activity.submissionTypeIcon}
+                                                    </View>
+                                                    <View style={{width: '85%'}}>
+                                                        <Text style={s.pbmText}>
+                                                            {activity.submission}
+                                                        </Text>
+                                                        <Text style={s.subtitleStyle}>
+                                                            {`${moment(activity.updated_at).format('LL')}`}
+                                                        </Text>
+                                                    </View>
                                                 </View>
                                             )}
-                                        />
+                                        </Pressable>
                                     ))
                             }
                         </Screen>

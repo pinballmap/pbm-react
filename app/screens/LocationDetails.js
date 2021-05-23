@@ -59,12 +59,12 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton
-                    tintColor={'#3794dd'}
-                    onPress={() => {
-                        navigation.goBack(null)
-                    }}
-                    labelVisible={false}
-                />,
+                tintColor={'#3794dd'}
+                onPress={() => {
+                    navigation.goBack(null)
+                }}
+                labelVisible={false}
+            />,
             title: null,
             gestureEnabled: true,
             headerTransparent: true,
@@ -351,7 +351,8 @@ class LocationDetails extends Component {
                                                     this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
                                                     this.props.setCurrentMachine(machine.id)
                                                 }}
-                                                children={({ pressed }) => (
+                                            >
+                                                {({ pressed }) => (
                                                     <View style={[s.listContainerStyle,pressed ? s.pressed : s.NotPressed]}>
                                                         <View style={machine.condition ? s.machineNameContainer : s.machineNameContainer2} >
                                                             {this.getTitle(machine, s)}
@@ -368,7 +369,7 @@ class LocationDetails extends Component {
                                                         }
                                                     </View>
                                                 )}
-                                            />
+                                            </Pressable>
                                         ))}
                                     </View>
                                 </View>

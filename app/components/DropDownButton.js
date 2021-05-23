@@ -51,6 +51,7 @@ DropDownButton.propTypes = {
     accessibilityLabel: PropTypes.string,
     icon: PropTypes.node,
     disabled: PropTypes.bool,
+    containerStyle: PropTypes.array,
 }
 
 export default DropDownButton
