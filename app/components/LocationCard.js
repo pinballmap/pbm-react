@@ -28,7 +28,7 @@ const LocationCard = ({
 
     const numMachines = machines.length
 
-    const displayDistance = distance > 99 ? Math.round(distance) : distance.toFixed(1)
+    const displayDistance = !distance ? null : distance > 99 ? Math.round(distance) : distance.toFixed(1)
 
     return(
         <Pressable
