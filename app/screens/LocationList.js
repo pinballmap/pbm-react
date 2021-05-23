@@ -10,8 +10,10 @@ import {
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
+    ConfirmationModal,
     HeaderBackButton,
     LocationCard,
+    PbmButton,
     Text
 } from '../components'
 import { getDistance } from '../utils/utilityFunctions'
@@ -27,6 +29,7 @@ export class LocationList extends Component {
 
         this.state = {
             locations: this.props.locations.mapLocations,
+            showNoLocationTrackingModal: false,
         }
     }
 
@@ -49,7 +52,12 @@ export class LocationList extends Component {
         }
     }
 
-    updateIndex = (buttonIndex) => this.props.selectLocationListFilterBy(buttonIndex)
+    updateIndex = (buttonIndex) => {
+        if (buttonIndex === 0 && !this.props.user.locationTrackingServicesEnabled) {
+            this.setState({ showNoLocationTrackingModal: true })
+        }
+        this.props.selectLocationListFilterBy(buttonIndex)
+    }
 
     sortLocations(locations, idx) {
         switch (idx) {
@@ -92,13 +100,26 @@ export class LocationList extends Component {
 
     render() {
         const { lat, lon, locationTrackingServicesEnabled } = this.props.user
-        const { locations = [] } = this.state
+        const { locations = [], showNoLocationTrackingModal } = this.state
 
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
+                        <>
+                        <ConfirmationModal
+                            visible={showNoLocationTrackingModal}>
+                            <View>
+                                <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
+                                <PbmButton
+                                    title={"OK"}
+                                    onPress={() => this.setState({ showNoLocationTrackingModal: false })}
+                                    accessibilityLabel="Great!"
+                                    containerStyle={s.buttonContainer}
+                                />
+                            </View>
+                        </ConfirmationModal>
                         <View style={{flex: 1,backgroundColor: theme.neutral}}>
                             <Text style={s.sort}>SORT BY:</Text>
                             <ButtonGroup
@@ -131,6 +152,7 @@ export class LocationList extends Component {
                                 keyExtractor={(item, index) => `list-item-${index}`}
                             />
                         </View>
+                        </>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -171,6 +193,19 @@ const getStyles = theme => StyleSheet.create({
     selTextStyle: {
         color: theme.orange8,
         fontWeight: 'bold',
+    },
+    confirmText: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+        marginRight: 10
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 
