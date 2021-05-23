@@ -330,12 +330,13 @@ class Map extends Component {
                                 this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
                                 this.props.clearSearchBarText()
                             }}
-                            children={({ pressed }) => (
+                        >
+                            {({ pressed }) => (
                                 <Text style={[ pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
                                     Search this area
                                 </Text>
                             )}
-                        />
+                        </Pressable>
                         : null
                     }
                 </SafeAreaView>

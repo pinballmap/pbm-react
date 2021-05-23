@@ -101,11 +101,13 @@ class FindMachine extends React.PureComponent {
                 navigation.getParam('showDone') ?
                     <Pressable
                         onPress={() => navigation.goBack(null)}
-                        children={({ pressed }) => (
+                    >
+                        {({ pressed }) => (
                             <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontWeight: 'bold', marginRight: 10}}>
                                 Done
                             </Text>
-                    )}/>
+                        )}
+                    </Pressable>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
@@ -194,11 +196,13 @@ class FindMachine extends React.PureComponent {
         return (
             <Pressable
                 onPress={() => this.setSelected(item)}
-                children={({ pressed }) => (
+            >
+                {({ pressed }) => (
                     <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
                         <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
                     </View>
-            )}/>
+                )}
+            </Pressable>
         )
     }
 
@@ -288,16 +292,16 @@ class FindMachine extends React.PureComponent {
                 />
                 {!multiSelect ?
                     <View style={{backgroundColor:theme.neutral}}>
-                      <ButtonGroup
-                          onPress={this.toggleViewMachinesInMapArea}
-                          selectedIndex={selectedIdx}
-                          buttons={['All Machines', 'Machines in Map Area']}
-                          containerStyle={s.buttonGroupContainer}
-                          textStyle={s.buttonGroupInactive}
-                          selectedButtonStyle={s.selButtonStyle}
-                          selectedTextStyle={s.selTextStyle}
-                          innerBorderStyle={s.innerBorderStyle}
-                      />
+                        <ButtonGroup
+                            onPress={this.toggleViewMachinesInMapArea}
+                            selectedIndex={selectedIdx}
+                            buttons={['All Machines', 'Machines in Map Area']}
+                            containerStyle={s.buttonGroupContainer}
+                            textStyle={s.buttonGroupInactive}
+                            selectedButtonStyle={s.selButtonStyle}
+                            selectedTextStyle={s.selTextStyle}
+                            innerBorderStyle={s.innerBorderStyle}
+                        />
                     </View> : null
                 }
                 {multiSelect ?

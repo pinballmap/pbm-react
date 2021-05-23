@@ -39,11 +39,13 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
     const renderRow = ({ item, index}) => (
         <Pressable
             onPress={() => _selectLocationType(item.id)}
-            children={({ pressed }) => (
+        >
+            {({ pressed }) => (
                 <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2,opacity: 1}]}>
                     <Text style={{fontSize: 18}}>{item.name}</Text>
                 </View>
-            )}/>
+            )}
+        </Pressable>
     )
 
     const _keyExtractor = locationType => `${locationType.id}`
