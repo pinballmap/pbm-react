@@ -97,7 +97,7 @@ const FilterMap = ({
 
     return (
         <Screen>
-            <View style={{marginHorizontal:10}}>
+            <View style={{marginHorizontal:10,marginBottom:10}}>
                 <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
                 <DropDownButton
                     title={machine && machine.name ? machine.name : 'All'}

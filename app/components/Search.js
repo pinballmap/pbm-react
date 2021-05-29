@@ -300,13 +300,11 @@ class Search extends Component {
                             </Modal>
                             <View style={s.searchMapContainer}>
                                 <Pressable
-                                    style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
+                                    style={({ pressed }) => [{},s.searchMap,pressed ? s.pressed : s.NotPressed]}
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
-                                    <View style={s.searchMap}>
-                                        <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                        <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
-                                    </View>
+                                    <MaterialIcons name='search' size={25} style={s.searchIcon} />
+                                    <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
                                 </Pressable>
                                 <Button
                                     onPress={() => this.props.navigate('FilterMap')}
@@ -412,12 +410,6 @@ const getStyles = theme => StyleSheet.create({
         right: 0,
         borderBottomRightRadius: 25,
         borderTopRightRadius: 25,
-        overflow: 'visible',
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
-        shadowRadius: 6,
-        elevation: 6,
     },
     searchHistoryTitle: {
         color: theme.orange7,
