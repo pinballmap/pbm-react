@@ -21,7 +21,7 @@
     "react-native-open-maps": "0.3.5",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.2.0",
-    "react-native-screens": "~3.0.0",
+    "react-native-screens": "2.15.2",
     "react-native-webview": "11.2.3",
     "react-navigation": "^4.4.4",
     "react-navigation-drawer": "^2.7.1",
