@@ -305,7 +305,8 @@ class Map extends Component {
                         name={Platform.OS === 'ios' ? 'location-arrow' : 'gps-fixed'}
                         underlayColor='transparent'
                         type={Platform.OS === 'ios' ? 'font-awesome' : 'material'}
-                        color={theme.indigo4}
+                        color={theme.neutral}
+                        reverseColor={theme.indigo4}
                         containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0 }]}
                         size={24}
                         onPress={() => {

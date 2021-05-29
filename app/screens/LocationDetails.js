@@ -406,8 +406,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 3,
         borderRadius: 25,
         marginBottom: 10,
-        marginRight: 30,
-        marginLeft: 30,
+        marginHorizontal: deviceWidth < 325 ? 20 : 30,
         borderWidth: 0,
     },
     locationNameContainer: {

@@ -221,7 +221,7 @@ class MachineDetails extends Component {
                                     />
                                 </View>
                                 <View style={s.containerStyle}>
-                                    <View style={[s.locationNameContainer,s.hr]}>
+                                    <View style={s.locationNameContainer}>
                                         <Text style={s.sectionTitle}>Top Scores</Text>
                                     </View>
                                     {userHighScore ?
@@ -237,7 +237,7 @@ class MachineDetails extends Component {
 
                                             return (
                                                 <View
-                                                    style={s.listContainerStyle}
+                                                    style={[s.listContainerStyle,s.hr]}
                                                     key={id}>
                                                     <Text style={s.scoreText}>
                                                         {formatNumWithCommas(score)}
@@ -433,7 +433,6 @@ const getStyles = theme => StyleSheet.create({
     },
     locationNameContainer: {
         backgroundColor: theme.indigo2,
-        marginTop: -15,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,

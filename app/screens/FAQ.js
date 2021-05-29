@@ -25,6 +25,12 @@ const FAQ = ({ navigation, }) => {
                     <View style={s.child}>
                         <Text style={s.bold}>{`How do I search for a particular machine?`}</Text>
                         <Text style={s.text}>{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}</Text>
+                        <Text style={s.bold}>{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
+                        <Text style={s.text}>{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+                        <Text style={s.bold}>{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
+                        <Text style={s.text}>{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
+                        <Text style={s.bold}>{`Can you include 'bat games' like SlugFest on the map?`}</Text>
+                        <Text style={s.text}>No. We used to include bat games, but found that non-pinball machines like that were a slippery slope toward including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on <Text style={{textDecorationLine: 'underline'}} onPress={() => Linking.openURL('http://opdb.org')}>OPDB</Text> then we will not include it.</Text>
                         <Text style={s.bold}>{`The Location List isn't showing a location that I think it should.`}</Text>
                         <Text style={s.text}>{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
                         <Text style={s.bold}>{`How do I add a new location?`}</Text>
@@ -33,10 +39,6 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.text}>{`No. Pinball Map only lists publicly-accessible locations. The definition of 'public' varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members.`}</Text>
                         <Text style={s.bold}>{`How do I remove a machine from a location?`}</Text>
                         <Text style={s.text}>{`Click on the machine name, and then look for a "remove" button.`}</Text>
-                        <Text style={s.bold}>{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
-                        <Text style={s.text}>{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
-                        <Text style={s.bold}>{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
-                        <Text style={s.text}>{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
                         <Text style={s.bold}>{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
                         <Text style={s.text}>{`These are data entry mistakes. Please `}<Text onPress={ () => navigation.navigate('Contact') } style={{textDecorationLine: 'underline'}}>{"contact us"}</Text>{` so we can fix them.`}</Text>
                         <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
