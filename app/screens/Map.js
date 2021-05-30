@@ -306,8 +306,8 @@ class Map extends Component {
                         underlayColor='transparent'
                         type={Platform.OS === 'ios' ? 'font-awesome' : 'material'}
                         color={theme.neutral}
-                        reverseColor={theme.indigo4}
-                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 0, right: 0 }]}
+                        reverseColor={theme.orange7}
+                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 5, right: 5 }]}
                         size={24}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
