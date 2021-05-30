@@ -59,7 +59,7 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton
-                tintColor={'#3794dd'}
+                tintColor={'#1e9dff'}
                 onPress={() => {
                     navigation.goBack(null)
                 }}
@@ -378,11 +378,11 @@ class LocationDetails extends Component {
                                 <Icon
                                     reverse
                                     name='tools'
-                                    type='entypo'
-                                    color={theme.indigo4}
-                                    reverseColor='#ffffff'
+                                    type='material-community'
+                                    color={theme.orange8}
+                                    reverseColor={theme.indigo2}
                                     size={28}
-                                    containerStyle={[s.iconContainerStyle,{overflow: 'visible'}]}
+                                    containerStyle={[s.iconContainerStyle]}
                                     onPress={() => this.setShowLocationToolsModal(true)}
                                 />
                             </View>

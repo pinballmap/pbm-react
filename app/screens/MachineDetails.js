@@ -187,7 +187,7 @@ class MachineDetails extends Component {
                                 </Pressable>
                             </Modal>
                             {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
-                            <ScrollView>
+                            <ScrollView style={{marginBottom:20}}>
                                 <View style={s.machineNameContainer}>
                                     <Text style={s.machineName}>{machineName}</Text>
                                     <Text style={s.locationName}>{location.name}</Text>
@@ -420,9 +420,8 @@ const getStyles = theme => StyleSheet.create({
     containerStyle: {
         borderRadius: 15,
         marginBottom: 20,
-        marginTop: 12,
-        marginRight: 20,
-        marginLeft: 20,
+        marginTop: 0,
+        marginHorizontal: 20,
         borderWidth: 0,
         backgroundColor: theme.white,
         shadowColor: theme.shadow,
