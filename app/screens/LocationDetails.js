@@ -354,7 +354,7 @@ class LocationDetails extends Component {
                                             >
                                                 {({ pressed }) => (
                                                     <View style={[s.listContainerStyle,pressed ? s.pressed : s.NotPressed]}>
-                                                        <View style={machine.condition ? s.machineNameContainer : s.machineNameContainer2} >
+                                                        <View style={machine.condition_date ? s.machineNameContainer : s.machineNameContainer2} >
                                                             {this.getTitle(machine, s)}
                                                         </View>
                                                         {machine.condition_date ?
@@ -397,7 +397,7 @@ class LocationDetails extends Component {
 const getStyles = theme => StyleSheet.create({
     mapHeight: {
         zIndex: -1,
-        height: 160,
+        height: deviceWidth < 325 ? 120 : 160,
     },
     backgroundColor: {
         backgroundColor: theme.neutral
