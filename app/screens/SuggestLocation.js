@@ -407,7 +407,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Machines</Text>
                                             <PbmButton
                                                 title={'Select Machines to Add'}
-                                                titleStyle={{fontSize:16,color:theme.text}}
+                                                titleStyle={{fontSize:16,color:theme.orange8}}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                 containerStyle={s.addMachinesContainer}
