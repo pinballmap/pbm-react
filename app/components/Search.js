@@ -300,21 +300,19 @@ class Search extends Component {
                             </Modal>
                             <View style={s.searchMapContainer}>
                                 <Pressable
-                                    style={({ pressed }) => [{},s.searchMap,pressed ? s.pressed : s.NotPressed]}
+                                    style={({ pressed }) => [{},s.searchMap,s.searchMapChild,pressed ? s.pressed : s.NotPressed]}
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
                                     <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
                                 </Pressable>
-                                <Button
+                                <Pressable
+                                    style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
                                     onPress={() => this.props.navigate('FilterMap')}
-                                    containerStyle={s.buttonContainerStyle}
-                                    icon={<Octicons name='settings' style={s.filterIcon} />}
-                                    buttonStyle={s.filterButtonStyle}
-                                    titleStyle={s.filterTitleStyle}
-                                    title="Filter"
-                                    underlayColor='transparent'
-                                />
+                                >
+                                    <Octicons name='settings' size={20} style={s.filterIcon} />
+                                    <Text style={s.filterTitleStyle}>Filter</Text>
+                                </Pressable>
                             </View>
                         </View>
                     )
@@ -341,14 +339,10 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         width: deviceWidth - 30,
+        flexDirection: 'row',
+        height: 40
     },
-    searchMap: {
-        width: deviceWidth - 30,
-        backgroundColor: theme.white,
-        height: 40,
-        borderRadius: 25,
-        paddingLeft: 10,
-        display: 'flex',
+    searchMapChild: {
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: theme.shadow,
@@ -356,6 +350,22 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        margin: 'auto',
+        height: 40,
+    },
+    searchMap: {
+        backgroundColor: theme.white,
+        width: deviceWidth - 110,
+        borderBottomLeftRadius: 25,
+        borderTopLeftRadius: 25,
+        paddingLeft: 10,
+    },
+    buttonContainerStyle: {
+        paddingHorizontal: 10,
+        width: 80,
+        borderBottomRightRadius: 25,
+        borderTopRightRadius: 25,
+        backgroundColor: theme.blue1,
     },
     searchIcon: {
         paddingLeft: 5,
@@ -379,12 +389,6 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 0,
     },
-    filterButtonStyle: {
-        height: 40,
-        borderBottomRightRadius: 25,
-        borderTopRightRadius: 25,
-        backgroundColor: theme.blue1
-    },
     filterTitleStyle: {
         color: theme.text,
         fontSize: 16
@@ -404,13 +408,6 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: -2,
         marginTop: -2
     },
-    buttonContainerStyle: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        borderBottomRightRadius: 25,
-        borderTopRightRadius: 25,
-    },
     searchHistoryTitle: {
         color: theme.orange7,
         fontWeight: 'bold',
@@ -424,8 +421,7 @@ const getStyles = theme => StyleSheet.create({
     cityRegionRow: {
         position: 'absolute',
         right: 0,
-        fontStyle:
-        'italic',
+        fontStyle: 'italic',
         color: '#97a5af'
     },
     pressed: {
@@ -433,6 +429,12 @@ const getStyles = theme => StyleSheet.create({
     },
     notPressed: {
         backgroundColor: theme.neutral
+    },
+    filterPressed: {
+        backgroundColor: theme.blue2,
+    },
+    filterNotPressed: {
+        backgroundColor: theme.blue1
     }
 })
 
