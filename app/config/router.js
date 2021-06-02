@@ -184,7 +184,6 @@ export const MapStack = createStackNavigator({
             textAlign: 'center',
             flexGrow: 1,
             alignSelf: 'center',
-            width: Platform.OS === 'ios' ? deviceWidth - 100 : null
         },
         headerTintColor: theme === 'dark' ? '#ebebeb' : '#7cc5ff'
     })

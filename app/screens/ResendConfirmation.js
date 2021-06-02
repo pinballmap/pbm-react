@@ -19,8 +19,6 @@ import {
 } from '../components'
 import { postData } from '../config/request'
 
-let deviceWidth = Dimensions.get('window').width
-
 const ResendConfirmation = ({ navigation }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -90,10 +88,6 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        width: deviceWidth - 100,
-        ...Platform.select({
-            android: { flex: 1 }
-        }),
     },
     gestureEnabled: true
 })
