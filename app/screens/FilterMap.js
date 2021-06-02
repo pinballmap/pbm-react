@@ -31,8 +31,6 @@ import {
     filterSelected,
 } from '../selectors'
 
-let deviceWidth = Dimensions.get('window').width
-
 const FilterMap = ({
     updateNumMachinesSelected,
     updateViewFavoriteLocations,
@@ -178,10 +176,6 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
-        width: deviceWidth - 100,
-        ...Platform.select({
-            android: { flex: 1 }
-        }),
     },
     gestureEnabled: true
 })

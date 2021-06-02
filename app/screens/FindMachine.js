@@ -36,7 +36,6 @@ import {
 import { alphaSortNameObj } from '../utils/utilityFunctions'
 
 let deviceHeight = Dimensions.get('window').height
-let deviceWidth = Dimensions.get('window').width
 
 const getDisplayText = machine => (
     <Text style={{ fontSize: 18 }}>
@@ -118,10 +117,6 @@ class FindMachine extends React.PureComponent {
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
-                width: deviceWidth - 100,
-                ...Platform.select({
-                    android: { flex: 1 }
-                }),
             },
             gestureEnabled: true
         }
