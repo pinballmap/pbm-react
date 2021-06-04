@@ -43,8 +43,11 @@ import {
 } from '../actions'
 import androidCustomDark from '../utils/androidCustomDark'
 import { HeaderBackButton } from 'react-navigation-stack'
-
-import { alphaSortNameObj, getDistance } from '../utils/utilityFunctions'
+import {
+    alphaSortNameObj,
+    getDistance,
+    formatNumWithCommas
+} from '../utils/utilityFunctions'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -130,7 +133,7 @@ class LocationDetails extends Component {
             return {...machineDetails, ...machine}
         }))
         const distance = getDistance(userLat, userLon, location.lat, location.lon)
-        const displayDistance = distance > 99 ? Math.round(distance) : distance.toFixed(1)
+        const displayDistance = distance > 9 ? Math.round(distance) : distance.toFixed(1)
 
         return (
             <ThemeContext.Consumer>
@@ -309,7 +312,7 @@ class LocationDetails extends Component {
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
                                                 <Text style={[s.metaText,s.font18,s.marginRight]}>{location.street}</Text>
                                                 <Text style={[s.metaText,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{displayDistance} mi</Text> : null}
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{formatNumWithCommas(displayDistance)} mi</Text> : null}
                                                 {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
                                                 {location.website ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
@@ -331,7 +334,7 @@ class LocationDetails extends Component {
                                                         />
                                                         <Text style={{textAlign:'center',color:theme.orange7}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
-                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{displayDistance} mi</Text>}
+                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{formatNumWithCommas(displayDistance)} mi</Text>}
                                                 </View> : null
                                             }
                                         </View>
@@ -380,7 +383,7 @@ class LocationDetails extends Component {
                                     name='tools'
                                     type='material-community'
                                     color={theme.orange8}
-                                    reverseColor={theme.indigo2}
+                                    reverseColor={theme.indigo1}
                                     size={28}
                                     containerStyle={[s.iconContainerStyle]}
                                     onPress={() => this.setShowLocationToolsModal(true)}
@@ -500,7 +503,7 @@ const getStyles = theme => StyleSheet.create({
         width: '100%'
     },
     locationMetaIcon: {
-        backgroundColor: theme.indigo2,
+        backgroundColor: theme.indigo1,
         borderRadius: 10,
         padding: 5,
         width: '35%',
