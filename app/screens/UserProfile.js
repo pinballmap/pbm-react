@@ -155,7 +155,7 @@ class UserProfile extends Component {
                                     <View style={{paddingVertical:8}}>
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => {
                                             return <ListItem
-                                                underlayColor={theme.indigo2}
+                                                underlayColor={theme.indigo1}
                                                 containerStyle={s.background}
                                                 key={location[0]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
@@ -222,7 +222,7 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         color: theme.text,
-        backgroundColor: theme.indigo2
+        backgroundColor: theme.indigo1
     },
     savedIcon: {
         fontSize: 24,

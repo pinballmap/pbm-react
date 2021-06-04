@@ -41,7 +41,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
             onPress={() => _selectOperator(item.id)}
         >
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2,opacity: 1}]}>
+                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2,opacity: 1}]}>
                     <Text style={{fontSize: 18}}>{item.name}</Text>
                 </View>
             )}

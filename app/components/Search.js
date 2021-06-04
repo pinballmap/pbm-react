@@ -426,7 +426,7 @@ const getStyles = theme => StyleSheet.create({
         color: '#97a5af'
     },
     pressed: {
-        backgroundColor: theme.indigo2,
+        backgroundColor: theme.indigo1,
     },
     notPressed: {
         backgroundColor: theme.neutral

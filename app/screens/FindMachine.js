@@ -59,7 +59,7 @@ class MultiSelectRow extends React.PureComponent {
         return (
             <Pressable
                 onPress={this._onPress}
-                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor,opacity: 1}]}
+                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor,opacity: 1}]}
             >
                 <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
                 {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
@@ -193,7 +193,7 @@ class FindMachine extends React.PureComponent {
                 onPress={() => this.setSelected(item)}
             >
                 {({ pressed }) => (
-                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo2,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
+                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
                         <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
                     </View>
                 )}
@@ -350,7 +350,7 @@ const getStyles = theme => StyleSheet.create({
     multiSelect: {
         alignItems: 'center',
         padding: 5,
-        backgroundColor: theme.indigo2
+        backgroundColor: theme.indigo1
     },
     buttonGroupContainer: {
         height: 40,
@@ -383,7 +383,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
     },
     pressed: {
-        backgroundColor: theme.indigo2,
+        backgroundColor: theme.indigo1,
         opacity: 0.8
     },
     notPressed: {

@@ -431,7 +431,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     locationNameContainer: {
-        backgroundColor: theme.indigo2,
+        backgroundColor: theme.indigo1,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
