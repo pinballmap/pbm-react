@@ -186,7 +186,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7
     },
     filterView: {
-        backgroundColor: theme.indigo2,
+        backgroundColor: theme.indigo1,
         marginTop: -10,
         marginBottom: 10,
         display: 'flex',
