@@ -310,7 +310,7 @@ class Search extends Component {
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
                                     onPress={() => this.props.navigate('FilterMap')}
                                 >
-                                    <Octicons name='settings' size={20} style={s.filterIcon} />
+                                    <MaterialCommunityIcons name='tune' size={20} style={s.filterIcon} />
                                     <Text style={s.filterTitleStyle}>Filter</Text>
                                 </Pressable>
                             </View>
@@ -361,7 +361,8 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
     },
     buttonContainerStyle: {
-        paddingHorizontal: 10,
+        paddingRight: 10,
+        paddingLeft: 8,
         width: 80,
         borderBottomRightRadius: 25,
         borderTopRightRadius: 25,
