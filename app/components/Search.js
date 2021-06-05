@@ -310,7 +310,7 @@ class Search extends Component {
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
                                     onPress={() => this.props.navigate('FilterMap')}
                                 >
-                                    <MaterialCommunityIcons name='tune' size={20} style={s.filterIcon} />
+                                    <Octicons name='settings' size={20} style={s.filterIcon} />
                                     <Text style={s.filterTitleStyle}>Filter</Text>
                                 </Pressable>
                             </View>
