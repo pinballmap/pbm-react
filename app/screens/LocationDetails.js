@@ -310,8 +310,8 @@ class LocationDetails extends Component {
                                         {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.metaText,s.font18,s.marginRight]}>{location.street}</Text>
-                                                <Text style={[s.metaText,s.font18,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
+                                                <Text style={[s.metaText,s.font16,s.marginRight]}>{location.street}</Text>
+                                                <Text style={[s.metaText,s.font16,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{formatNumWithCommas(displayDistance)} mi</Text> : null}
                                                 {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
@@ -516,8 +516,8 @@ const getStyles = theme => StyleSheet.create({
         right: 10,
         zIndex: 100
     },
-    font18: {
-        fontSize: 18
+    font16: {
+        fontSize: 16
     },
     marginB8: {
         marginBottom: 8
