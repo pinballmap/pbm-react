@@ -354,7 +354,7 @@ const getStyles = theme => StyleSheet.create({
         minWidth: 50,
         width: '100%',
         maxWidth: deviceWidth < 325 ? deviceWidth - 50 : 275,
-        height: Platform.OS === 'ios' ? 60 : 90,
+        height: Platform.OS === 'ios' ? 70 : 100,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
