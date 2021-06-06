@@ -75,7 +75,7 @@ const TabNav = createBottomTabNavigator(
                     case 'Activity':
                         return <FontAwesome name='newspaper-o' size={(focused) ? 26 : 24} color={tintColor} />
                     case 'Profile':
-                        return <MaterialIcons name='face' size={(focused) ? 28 : 26} color={tintColor} />
+                        return <MaterialCommunityIcons name='emoticon-cool-outline' size={(focused) ? 30 : 28} color={tintColor} />
                     case 'Menu':
                         return <MaterialIcons name='more-horiz' size={(focused) ? 30 : 28} color={tintColor} />
                 }
