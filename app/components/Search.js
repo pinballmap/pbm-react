@@ -17,7 +17,6 @@ import {
     View,
 } from 'react-native'
 import {
-    Button,
     Input,
     ListItem,
 } from 'react-native-elements'
