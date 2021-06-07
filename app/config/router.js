@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer'
-import { Platform, StyleSheet, Text, Dimensions } from 'react-native'
+import { Platform, StyleSheet, Text } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import FilterMap from '../screens/FilterMap.js'
 import LocationList from '../screens/LocationList.js'
@@ -32,8 +32,6 @@ import FindLocationType from '../screens/FindLocationType'
 import Settings from '../screens/Settings'
 
 import { DrawerMenu } from '../components'
-
-let deviceWidth = Dimensions.get('window').width
 
 const map = createStackNavigator({
     Map
