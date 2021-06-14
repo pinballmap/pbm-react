@@ -415,18 +415,16 @@ const getStyles = theme => StyleSheet.create({
     locationNameContainer: {
         backgroundColor: theme.neutral2,
         borderRadius: 25,
-        marginTop: 10,
-        marginBottom: 10,
-        marginRight: 30,
-        marginLeft: 30,
+        marginVertical: 10,
+        marginHorizontal: 15,
         borderWidth: 0,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingVertical: 5,
     },
     locationName: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 24,
+        paddingHorizontal: 8,
         color: theme.orange8
     },
     textStyle: {
