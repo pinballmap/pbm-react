@@ -129,7 +129,6 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
     },
     logoWrapper: {
-        padding: 5,
         flex: 2,
         margin: "auto",
         paddingTop: 10,
