@@ -271,7 +271,7 @@ class Map extends Component {
                     <View style={s.search}>
                         <Search navigate={navigation.navigate}/>
                     </View>
-                    {isFetchingLocations ? <Text style={s.loading}>Loading...</Text> : null}
+                    {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
                     {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
                     <MapView
                         ref={this.mapRef}
@@ -381,8 +381,12 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         alignSelf: "center",
-        padding: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         backgroundColor: theme.blue1,
+        borderRadius: 15
+    },
+    loadingText: {
         color: theme.text,
         fontSize: 14,
     },
