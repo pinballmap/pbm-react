@@ -30,6 +30,7 @@ import ResendConfirmation from '../screens/ResendConfirmation'
 import FindOperator from '../screens/FindOperator'
 import FindLocationType from '../screens/FindLocationType'
 import Settings from '../screens/Settings'
+import Resources from '../screens/Resources.js'
 
 import { DrawerMenu } from '../components'
 
@@ -161,6 +162,7 @@ export const MapStack = createStackNavigator({
     Contact: { screen: Contact },
     FAQ: { screen: FAQ },
     Blog: { screen: Blog },
+    Resources: { screen: Resources },
     About: { screen: About },
     Podcast: { screen: Podcast },
     FindMachine: { screen: FindMachine },
@@ -197,6 +199,7 @@ export const drawerNavigator = createDrawerNavigator({
     FAQ: { screen: FAQ },
     Podcast: { screen: Podcast },
     Blog: { screen: Blog },
+    Resources: { screen: Resources },
     Settings: { screen: Settings },
 }, {
     contentComponent: DrawerMenu,
