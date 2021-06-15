@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import {connect} from "react-redux"
 import {
     Dimensions,
     Linking,
@@ -10,7 +9,6 @@ import {
 } from 'react-native'
 import Image from 'react-native-scalable-image'
 import { ThemeContext } from '../theme-context'
-import { getData } from '../config/request'
 import { Screen, Text } from '../components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
@@ -18,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 let deviceWidth = Dimensions.get('window').width
 
-const Resources = ({navigation, appAlert}) => {
+const Resources = () => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -27,7 +25,7 @@ const Resources = ({navigation, appAlert}) => {
             <Screen>
                 <Text style={s.text}>
                     <Text style={s.bold}>Pinball is fun!</Text>
-                   {` Here are some great pinball resources. But this is just the start! You can also often find a local facebook pinball group. If you're a business owner looking to add machines, you can look (via facebook or Pinside) for a local operator who will place, and maintain, machines at your venue.`}
+                    {` Here are some great pinball resources. But this is just the start! You can also often find a local facebook pinball group. If you're a business owner looking to add machines, you can look (via facebook or Pinside) for a local operator who will place, and maintain, machines at your venue.`}
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://matchplay.events')} style={[s.logoWrapper,{backgroundColor:'#fffbf5',paddingVertical: 10,}]}>
@@ -64,7 +62,7 @@ const Resources = ({navigation, appAlert}) => {
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://pintips.net')}>{`PinTips`}</Text>
-                    {` is a great place to quickly pick up some quick tips about specific machines. And it's very easy to contribute your own tips!`}
+                    {` is a great place to quickly pick up tips about how to play specific machines. And it's very easy to contribute your own tips!`}
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://pinside.com/')} style={[s.logoWrapper]}>
@@ -75,12 +73,20 @@ const Resources = ({navigation, appAlert}) => {
                     {` is a huge community resource. It's especially useful for solving issues with your machines. But it also has a whole lot more.`}
                 </Text>
                 <View style={s.hr}></View>
+                <Pressable onPress={() => Linking.openURL('https://www.ifpapinball.com')} style={[s.logoWrapper]}>
+                    <Image source={require('../assets/images/Resource_IFPA.jpg')} width={deviceWidth - 50} />
+                </Pressable>
+                <Text style={s.text}>
+                    {`The `}<Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com')}>{`IFPA`}</Text>
+                    {` - or the International Flipper Pinball Association - is a governing body for competitive pinball. Check out the calendar to find tournaments near you.`}
+                </Text>
+                <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://scorbit.io/')} style={[s.logoWrapper]}>
                     <Image source={require('../assets/images/Resource_Scorbit.png')} resizeMode="contain" width={deviceWidth - 70} />
                 </Pressable>
-                <Text style={s.text}>
+                <Text style={[s.text,{marginBottom: 20}]}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://scorbit.io/')}>{`Scorbit`}</Text>
-                    {` is a platform (hardware/app) for tracking scores - and much more - in real-time. Operators can use it to track earnings. It does a lot, and you can install it on lots of machines.`}
+                    {` is a platform (hardware/app) for tracking scores - and much more - in real-time. Operators can use it to track earnings. It does a lot, and its compatible with many machines.`}
                 </Text>
             </Screen>
         </SafeAreaView>
