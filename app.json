@@ -64,7 +64,7 @@
       ],
       "versionCode": 60,
       "adaptiveIcon": {
-        "backgroundColor": "#f2e6f1",
+        "backgroundColor": "#ebecff",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
       },
       "splash": {
