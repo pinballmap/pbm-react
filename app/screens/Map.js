@@ -94,8 +94,6 @@ class Map extends Component {
     constructor(props) {
         super(props)
 
-        this.prevRegion = {}
-
         this.state = {
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
@@ -118,14 +116,13 @@ class Map extends Component {
     static contextType = ThemeContext;
 
     onRegionChange = (region, { isGesture }) => {
-        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001 && isGesture) {
+        if (isGesture) {
             this.setState({
                 ...region,
                 showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
                 mapCoordinatesUpdated: false
             })
         }
-        this.prevRegion = region
     }
 
     updateCurrentLocation = () => {
