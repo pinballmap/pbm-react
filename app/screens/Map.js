@@ -117,8 +117,8 @@ class Map extends Component {
 
     static contextType = ThemeContext;
 
-    onRegionChange = (region) => {
-        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.0001) {
+    onRegionChange = (region, { isGesture }) => {
+        if (Math.abs(region.latitude - this.prevRegion.latitude) > 0.001 && isGesture) {
             this.setState({
                 ...region,
                 showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
