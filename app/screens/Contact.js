@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
     ActivityIndicator,
+    Keyboard,
+    Platform,
     StyleSheet,
     TextInput,
     View,
@@ -52,9 +54,10 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     }
 
     const { loggedIn, submittingMessage, confirmationMessage } = user
+    const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
     return(
-        <Screen keyboardDismissMode="on-drag">
+        <Screen {...keyboardDismissProp}>
             <ConfirmationModal visible={confirmationMessage.length > 0}>
                 <Text style={s.confirmText}>{confirmationMessage}</Text>
                 <View>

@@ -8,6 +8,7 @@ import {
     ActivityIndicator,
     AsyncStorage,
     Dimensions,
+    Keyboard,
     Modal,
     Platform,
     Pressable,
@@ -156,7 +157,7 @@ class Search extends Component {
 
     renderRegionRow = (region, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
+            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
             key={region.id}
             onPress={() => this.getLocationsByRegion(region)}
         >
@@ -175,7 +176,7 @@ class Search extends Component {
 
     renderCityRow = (location, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
+            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
             key={location.value}
             onPress={() => this.getLocationsByCity(location)}
         >
@@ -194,7 +195,7 @@ class Search extends Component {
 
     renderLocationRow = (location, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.NotPressed]}
+            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
             key={location.id}
             onPress={() => this.goToLocation(location)}
         >
@@ -247,6 +248,7 @@ class Search extends Component {
         const { query, clearSearchBarText } = this.props
         const { searchBarText } = query
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
+        const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -272,7 +274,7 @@ class Search extends Component {
                                                 style={s.clear}
                                             />
                                             <Input
-                                                placeholder='City, Address, Location'
+                                                placeholder='City, Address, Location...'
                                                 leftIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} style={{ marginLeft: 10, marginRight: 0 }} />}
                                                 rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
                                                 onChangeText={query => this.changeQuery(query)}
@@ -287,7 +289,7 @@ class Search extends Component {
                                                 autoCorrect={false}
                                             />
                                         </View>
-                                        <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                                        <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
                                             {searching ? <ActivityIndicator /> : null}
                                             {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
                                             {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
@@ -299,7 +301,7 @@ class Search extends Component {
                             </Modal>
                             <View style={s.searchMapContainer}>
                                 <Pressable
-                                    style={({ pressed }) => [{},s.searchMap,s.searchMapChild,pressed ? s.pressed : s.NotPressed]}
+                                    style={({ pressed }) => [{},s.searchMap,s.searchMapChild,pressed ? s.pressed : s.notPressed]}
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />

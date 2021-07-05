@@ -5,6 +5,7 @@ import {
     Dimensions,
     ImageBackground,
     Keyboard,
+    Platform,
     Pressable,
     StyleSheet,
     Text,
@@ -83,7 +84,7 @@ class Login extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
+                        <KeyboardAwareScrollView {...Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                             <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>
                                 <View style={s.mask}>
                                     <Pressable onPress={ () => { Keyboard.dismiss() } }>
