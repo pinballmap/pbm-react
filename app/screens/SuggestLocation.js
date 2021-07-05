@@ -147,13 +147,14 @@ class SuggestLocation extends Component {
 
         const operatorObj = operators.find(op => op.id === operator) || {}
         const { name: operatorName = "Select operator" } = operatorObj
+        const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
         return(
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} style={s.background}>
+                        <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} style={s.background}>
                             {!loggedIn ?
                                 <NotLoggedIn
                                     text={'But first! We ask that you log in. Thank you!'}
@@ -175,11 +176,6 @@ class SuggestLocation extends Component {
                                         </ScrollView>
                                         <PbmButton
                                             title={'OK'}
-                                            onPress={() => this.setState({ showSelectCountryModal: false })}
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                        <WarningButton
-                                            title={'Cancel'}
                                             onPress={() => this.setState({ showSelectCountryModal: false })}
                                             containerStyle={s.buttonContainer}
                                         />
@@ -347,7 +343,7 @@ class SuggestLocation extends Component {
                                                 /> :
                                                 <View style={s.viewPicker}>
                                                     <Picker
-                                                        style={{borderRadius:25}}
+                                                        style={{color:theme.orange8}}
                                                         selectedValue={country}
                                                         onValueChange={country => this.setState({ country })}>
                                                         {countries.map(m => (
@@ -495,12 +491,15 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 10,
     },
     viewPicker: {
-        backgroundColor: theme.white,
-        borderColor: theme.orange3,
-        color: theme.text,
-        borderWidth: 1,
         borderRadius: 25,
+        elevation: 6,
+        backgroundColor: theme.white,
         marginHorizontal: 20,
+        paddingHorizontal: 10,
+        fontWeight: 'bold'
+    },
+    picker: {
+        backgroundColor: '#ffffff',
     },
     hr: {
         marginLeft: 25,
@@ -537,9 +536,6 @@ const getStyles = theme => StyleSheet.create({
     listContainerStyle: {
         backgroundColor: theme.white,
         paddingTop: 0
-    },
-    picker: {
-        backgroundColor: '#ffffff'
     },
     buttonContainer: {
         marginLeft: 20,

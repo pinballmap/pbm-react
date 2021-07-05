@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     Keyboard,
     Modal,
+    Platform,
     Pressable,
     ScrollView,
     StyleSheet,
@@ -91,13 +92,14 @@ class EditLocationDetails extends Component {
 
         const operatorObj = operators.find(op=> op.id === operatorId) || {}
         const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
+        const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
         return(
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                        <Screen keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
                             <Modal
                                 animationType="slide"
                                 transparent={false}

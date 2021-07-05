@@ -5,9 +5,10 @@ import {
     Dimensions,
     ImageBackground,
     Keyboard,
+    Platform,
+    Pressable,
     StyleSheet,
     Text,
-    Pressable,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -128,9 +129,10 @@ const Signup = ({ login, loginLater, navigation }) => {
                 })
         }
     }
+    const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
     return (
-        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
+        <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                 <View style={s.mask}>
                     <Pressable onPress={ () => { Keyboard.dismiss() } }>

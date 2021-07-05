@@ -5,6 +5,7 @@ import {
     Dimensions,
     Keyboard,
     Modal,
+    Platform,
     Pressable,
     StyleSheet,
     TextInput,
@@ -236,6 +237,7 @@ class FindMachine extends React.PureComponent {
         const selectedIdx = this.state.machinesInView ? 1 : 0
         const theme = this.context.theme
         const s = getStyles(theme)
+        const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
         return (
             <>
                 <Modal
@@ -244,7 +246,7 @@ class FindMachine extends React.PureComponent {
                     transparent={false}
                 >
                     <Pressable onPress={() => { Keyboard.dismiss() }}>
-                        <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
+                        <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.background}>
                             <View style={s.verticalAlign}>
                                 <Text style={{ textAlign: 'center', marginTop: 10, marginLeft: 15, marginRight: 15, fontSize: 18 }}>{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
                                 <TextInput

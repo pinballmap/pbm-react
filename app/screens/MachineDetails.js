@@ -6,10 +6,11 @@ import {
     Keyboard,
     Linking,
     Modal,
+    Platform,
+    Pressable,
     ScrollView,
     StyleSheet,
     TextInput,
-    Pressable,
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -110,6 +111,7 @@ class MachineDetails extends Component {
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
+        const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
         return (
             <ThemeContext.Consumer>
@@ -124,7 +126,7 @@ class MachineDetails extends Component {
                                 onRequestClose={()=>{}}
                             >
                                 <Pressable onPress={ () => { Keyboard.dismiss() } }>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
+                                    <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
                                             <TextInput
@@ -158,7 +160,7 @@ class MachineDetails extends Component {
                                 onRequestClose={()=>{}}
                             >
                                 <Pressable onPress={ () => { Keyboard.dismiss() } }>
-                                    <KeyboardAwareScrollView keyboardDismissMode="on-drag" enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
+                                    <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
                                             <TextInput
