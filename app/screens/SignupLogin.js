@@ -241,7 +241,7 @@ export class SignupLogin extends Component {
 const getStyles = theme => StyleSheet.create({
     mask: {
         flex: 1,
-        backgroundColor: theme.mask,
+        backgroundColor: 'rgba(255,255,255,.8)',
     },
     backgroundImage: {
         flex: 1,
