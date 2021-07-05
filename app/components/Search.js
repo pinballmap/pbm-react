@@ -258,6 +258,7 @@ class Search extends Component {
                             <Modal
                                 transparent={false}
                                 visible={searchModalVisible}
+                                onShow={() => { this.textInput.focus(); }}
                                 onRequestClose={() => { }}
                             >
                                 <SafeAreaView style={{ flex: 1, backgroundColor: theme.neutral }}>
@@ -285,7 +286,7 @@ class Search extends Component {
                                                 onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
                                                 inputContainerStyle={s.inputContainerStyle}
                                                 inputStyle={s.inputStyle}
-                                                autoFocus
+                                                ref={(input) => { this.textInput = input }}
                                                 autoCorrect={false}
                                             />
                                         </View>
