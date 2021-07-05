@@ -276,6 +276,7 @@ class Search extends Component {
                                             />
                                             <Input
                                                 placeholder='City, Address, Location...'
+                                                placeholderTextColor={theme.indigo4}
                                                 leftIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} style={{ marginLeft: 10, marginRight: 0 }} />}
                                                 rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
                                                 onChangeText={query => this.changeQuery(query)}
@@ -306,7 +307,7 @@ class Search extends Component {
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                    <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location'}</Text>
+                                    <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location...'}</Text>
                                 </Pressable>
                                 <Pressable
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
@@ -377,6 +378,7 @@ const getStyles = theme => StyleSheet.create({
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
         color: theme.indigo4,
+        paddingLeft: 5
     },
     inputStyle: {
         color: theme.orange7,
