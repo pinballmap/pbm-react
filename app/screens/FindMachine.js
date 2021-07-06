@@ -309,7 +309,7 @@ class FindMachine extends React.PureComponent {
                         }
                     </View> : null
                 }
-                <FlatList
+                <FlatList {...keyboardDismissProp}
                     keyboardShouldPersistTaps="always"
                     data={this.state.machines}
                     renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
