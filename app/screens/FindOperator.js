@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Keyboard,
+    Platform,
     Pressable,
     StyleSheet,
     View,
