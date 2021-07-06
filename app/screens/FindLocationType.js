@@ -49,6 +49,7 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
     )
 
     const _keyExtractor = locationType => `${locationType.id}`
+    const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
     return (
         <>
@@ -65,11 +66,11 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
                 inputContainerStyle={s.filterInput}
                 containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
             />
-            <FlatList
+            <FlatList {...keyboardDismissProp}
                 data={selectedLocationTypes}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{backgroundColor:theme.neutral}}
+                style={{backgroundColor:theme.neutral,marginBottom:20}}
             />
         </>)
 }

@@ -49,6 +49,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
     )
 
     const _keyExtractor = operator => `${operator.id}`
+    const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
     return (
         <>
@@ -65,7 +66,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
                 inputContainerStyle={s.filterInput}
                 containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
             />
-            <FlatList
+            <FlatList {...keyboardDismissProp}
                 data={selectedOperators}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
