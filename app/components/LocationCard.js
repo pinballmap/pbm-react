@@ -33,7 +33,7 @@ const LocationCard = ({
 
     return(
         <Pressable
-            style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.NotPressed]}
+            style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
             onPress={() => navigation.navigate('LocationDetails', {id, locationName })}
         >
             <View style={s.flexi}>

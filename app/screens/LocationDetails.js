@@ -356,7 +356,7 @@ class LocationDetails extends Component {
                                                 }}
                                             >
                                                 {({ pressed }) => (
-                                                    <View style={[s.listContainerStyle,pressed ? s.pressed : s.NotPressed]}>
+                                                    <View style={[s.listContainerStyle,pressed ? s.pressed : s.notPressed]}>
                                                         <View style={machine.condition_date ? s.machineNameContainer : s.machineNameContainer2} >
                                                             {this.getTitle(machine, s)}
                                                         </View>

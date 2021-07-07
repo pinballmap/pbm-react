@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     Platform,
+    Pressable,
     StyleSheet,
     View,
 } from 'react-native'
@@ -154,17 +155,18 @@ class UserProfile extends Component {
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => {
-                                            return <ListItem
-                                                underlayColor={theme.indigo1}
-                                                containerStyle={s.background}
+                                            return <Pressable
                                                 key={location[0]}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}>
-                                                <ListItem.Content style={s.list}>
-                                                    <ListItem.Title style={s.listTitleStyle}>
-                                                        {location[1]}
-                                                    </ListItem.Title>
-                                                </ListItem.Content>
-                                            </ListItem>
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
+                                                >
+                                                {({ pressed }) => (
+                                                    <View style={[s.list,pressed ? s.pressed : s.notPressed]}>
+                                                        <Text style={[s.listTitleStyle,pressed ? s.textPressed : s.textNotPressed]}>
+                                                            {location[1]}
+                                                        </Text>
+                                                    </View>
+                                                )}
+                                            </Pressable>
                                         })}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
@@ -212,8 +214,9 @@ const getStyles = theme => StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
-        elevation: 6,
-        marginHorizontal: 10,
+        elevation: 2,
+        marginHorizontal: 15,
+        marginVertical: 6
     },
     bold: {
         fontWeight: 'bold',
@@ -297,6 +300,22 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+    pressed: {
+        shadowColor: 'transparent',
+        opacity: 0.8,
+        elevation: 0,
+    },
+    notPressed: {
+        shadowColor: theme.shadow,
+        opacity: 1.0,
+        elevation: 2,
+    },
+    textPressed: {
+        color: theme.orange8,
+    },
+    textNotPressed: {
+        color: theme.text,
+    }
 })
 
 UserProfile.propTypes = {
