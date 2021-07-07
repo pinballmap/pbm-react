@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-    ActivityIndicator,
     Keyboard,
     Modal,
     Platform,
@@ -14,6 +13,7 @@ import {
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 import {
+    ActivityIndicator,
     DropDownButton,
     HeaderBackButton,
     PbmButton,

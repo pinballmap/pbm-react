@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import {
-    ActivityIndicator,
     FlatList,
     Linking,
     StyleSheet,
@@ -16,7 +15,7 @@ import {
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
+import { HeaderBackButton, ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'
 import { GOOGLE_MAPS_KEY } from '../config/keys'
 

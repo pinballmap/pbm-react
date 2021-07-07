@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
-    ActivityIndicator,
     Keyboard,
     Platform,
     StyleSheet,
@@ -12,6 +11,7 @@ import {
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
+    ActivityIndicator,
     ConfirmationModal,
     HeaderBackButton,
     PbmButton,
