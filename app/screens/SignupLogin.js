@@ -150,7 +150,7 @@ export class SignupLogin extends Component {
             .catch(apiError => this.setState({ apiError }))
 
         retrieveItem('auth').then(async auth => {
-            const initialUrl = await Linking.getInitialURL()
+            const initialUrl = await Linking.getInitialURL() || ''
 
             if (auth) {
                 if (auth.id) {
