@@ -104,7 +104,6 @@ class Map extends Component {
             longitude: null,
             latitudeDelta: null,
             longitudeDelta: null,
-            mapCoordinatesUpdated: false,
         }
     }
 
@@ -119,8 +118,7 @@ class Map extends Component {
         if (isGesture) {
             this.setState({
                 ...region,
-                showUpdateSearch: this.state.mapCoordinatesUpdated ? false : true,
-                mapCoordinatesUpdated: false
+                showUpdateSearch: true,
             })
         }
     }
@@ -178,7 +176,6 @@ class Map extends Component {
                 longitude: curLon,
                 latitudeDelta: latDelta,
                 longitudeDelta: lonDelta,
-                mapCoordinatesUpdated: true,
             })
         }
 
