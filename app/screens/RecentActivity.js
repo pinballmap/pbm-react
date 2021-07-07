@@ -235,7 +235,8 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.blue1,
         borderWidth: 1,
         shadowColor: 'transparent',
-        opacity: 0.8
+        opacity: 0.8,
+        marginBottom: 6
     },
     notPressed: {
         borderColor: 'transparent',
