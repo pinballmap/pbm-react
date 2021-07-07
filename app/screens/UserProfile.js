@@ -154,11 +154,11 @@ class UserProfile extends Component {
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
                                     <View style={{paddingVertical:8}}>
-                                        {profile_list_of_edited_locations.slice(0, 50).map(location => {
-                                            return <Pressable
+                                        {profile_list_of_edited_locations.slice(0, 50).map(location => (
+                                            <Pressable
                                                 key={location[0]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
-                                                >
+                                            >
                                                 {({ pressed }) => (
                                                     <View style={[s.list,pressed ? s.pressed : s.notPressed]}>
                                                         <Text style={[s.listTitleStyle,pressed ? s.textPressed : s.textNotPressed]}>
@@ -167,7 +167,7 @@ class UserProfile extends Component {
                                                     </View>
                                                 )}
                                             </Pressable>
-                                        })}
+                                        ))}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
                                     <View style={{paddingTop:8,paddingBottom:15}}>
