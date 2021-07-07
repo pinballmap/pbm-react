@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
 import {
-    ActivityIndicator,
     AsyncStorage,
     Dimensions,
     Keyboard,
@@ -37,6 +36,7 @@ import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { ActivityIndicator } from './index'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -249,6 +249,7 @@ class Search extends Component {
         const { searchBarText } = query
         const submitButton = foundLocations.length === 0 && foundCities.length === 0 && q !== '' && showSubmitButton
         const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
+
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
