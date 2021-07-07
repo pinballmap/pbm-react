@@ -231,11 +231,15 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontWeight: "bold",
         fontSize: 11,
-        color: theme === 'dark' ? '#addbff' : '#7cc5ff'
+        color: theme === 'dark' ? '#addbff' : '#7cc5ff',
+        marginBottom: Platform.OS === 'android' ? 5 : 0,
+        marginTop: Platform.OS === 'android' ? -5 : 0
     },
     inactiveTabText: {
         fontWeight: "normal",
         fontSize: 11,
-        color: theme === 'dark' ? '#ebebeb' : '#95867c'
+        color: theme === 'dark' ? '#ebebeb' : '#95867c',
+        marginBottom: Platform.OS === 'android' ? 5 : 0,
+        marginTop: Platform.OS === 'android' ? -5 : 0
     },
 })
