@@ -36,7 +36,7 @@ import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ActivityIndicator } from './index'
+import ActivityIndicator from './ActivityIndicator'
 
 let deviceWidth = Dimensions.get('window').width
 
