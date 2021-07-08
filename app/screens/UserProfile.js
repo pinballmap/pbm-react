@@ -175,7 +175,7 @@ class UserProfile extends Component {
                                             return <ListItem
                                                 containerStyle={s.background}
                                                 key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}>
-                                                <ListItem.Content style={{backgroundColor:theme.white,borderRadius:10}}>
+                                                <ListItem.Content style={{marginHorizontal:5,backgroundColor:theme.white,borderRadius:15}}>
                                                     <ListItem.Title style={s.listTitleStyle}>
                                                         {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                                     </ListItem.Title>

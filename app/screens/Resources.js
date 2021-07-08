@@ -25,7 +25,7 @@ const Resources = () => {
             <Screen>
                 <Text style={s.text}>
                     <Text style={s.bold}>Pinball is fun!</Text>
-                    {` Here are some great pinball resources. But this is just the start! You can also often find a local facebook pinball group. If you're a business owner looking to add machines, you can look (via facebook or Pinside) for a local operator who will place, and maintain, machines at your venue.`}
+                    {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place, and maintain, machines at your venue.`}
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://matchplay.events')} style={[s.logoWrapper,{backgroundColor:'#fffbf5',paddingVertical: 10,}]}>
@@ -36,6 +36,14 @@ const Resources = () => {
                     {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices.`}
                 </Text>
                 <View style={s.hr}></View>
+                <Pressable onPress={() => Linking.openURL('https://pindigo.app')} style={[s.logoWrapper,{backgroundColor:'#363377',        paddingVertical: 10,}]}>
+                    <Image source={require('../assets/images/Resource_Pindigo.png')} resizeMode="contain" width={deviceWidth - 70} />
+                </Pressable>
+                <Text style={s.text}>
+                    <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app')}>{`Pindigo`}</Text>
+                    {` is an app for recording your scores. You can track all your high scores and compare them with friends.`}
+                </Text>
+                <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://www.thisweekinpinball.com/')} style={[s.logoWrapper]}>
                     <Image source={require('../assets/images/Resource_TWIP.png')} resizeMode="contain" width={deviceWidth - 50} />
                 </Pressable>
@@ -44,12 +52,12 @@ const Resources = () => {
                     {` is a great resource for keeping up with all the pinball news. Learn about upcoming games, read interviews and reviews, and much more.`}
                 </Text>
                 <View style={s.hr}></View>
-                <Pressable onPress={() => Linking.openURL('https://pindigo.app')} style={[s.logoWrapper,{backgroundColor:'#363377',        paddingVertical: 10,}]}>
-                    <Image source={require('../assets/images/Resource_Pindigo.png')} resizeMode="contain" width={deviceWidth - 70} />
+                <Pressable onPress={() => Linking.openURL('https://www.ifpapinball.com')} style={[s.logoWrapper]}>
+                    <Image source={require('../assets/images/Resource_IFPA.jpg')} width={deviceWidth - 50} />
                 </Pressable>
                 <Text style={s.text}>
-                    <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app')}>{`Pindigo`}</Text>
-                    {` is an app for recording your scores. You can track all your high scores and compare them with friends.`}
+                    {`The `}<Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com')}>{`IFPA`}</Text>
+                    {` - or the International Flipper Pinball Association - is a governing body for competitive pinball. Check out the calendar to find tournaments near you.`}
                 </Text>
                 <View style={s.hr}></View>
                 <Text style={s.text}>
@@ -65,20 +73,12 @@ const Resources = () => {
                     {` is a great place to quickly pick up tips about how to play specific machines. And it's very easy to contribute your own tips!`}
                 </Text>
                 <View style={s.hr}></View>
-                <Pressable onPress={() => Linking.openURL('https://pinside.com/')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_Pinside.png')} resizeMode="contain" width={deviceWidth - 50} />
+                <Pressable onPress={() => Linking.openURL('https://pinside.com/')} style={[s.logoWrapper,{backgroundColor:'#ff953e',paddingVertical: 10}]}>
+                    <Image source={require('../assets/images/Resource_Pinside.png')} resizeMode="contain" width={theme.theme === 'dark' ? deviceWidth - 70 : deviceWidth - 50} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://pinside.com/')}>{`Pinside`}</Text>
                     {` is a huge community resource. It's especially useful for solving issues with your machines. But it also has a whole lot more.`}
-                </Text>
-                <View style={s.hr}></View>
-                <Pressable onPress={() => Linking.openURL('https://www.ifpapinball.com')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_IFPA.jpg')} width={deviceWidth - 50} />
-                </Pressable>
-                <Text style={s.text}>
-                    {`The `}<Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com')}>{`IFPA`}</Text>
-                    {` - or the International Flipper Pinball Association - is a governing body for competitive pinball. Check out the calendar to find tournaments near you.`}
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://scorbit.io/')} style={[s.logoWrapper]}>
