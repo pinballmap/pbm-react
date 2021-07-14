@@ -383,14 +383,12 @@ class LocationDetails extends Component {
                                     this.setShowLocationToolsModal(true)
                                 }}
                             >
-                                {({ pressed }) => (
-                                    <MaterialCommunityIcons
-                                        name={'tools'}
-                                        color={theme.indigo1}
-                                        size={28}
-                                        style={{justifyContent:'center',alignSelf:'center'}}
-                                    />
-                                )}
+                                <MaterialCommunityIcons
+                                    name={'tools'}
+                                    color={theme.indigo1}
+                                    size={28}
+                                    style={{justifyContent:'center',alignSelf:'center'}}
+                                />
                             </Pressable>
                         </View>
                     )
