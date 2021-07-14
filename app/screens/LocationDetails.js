@@ -377,18 +377,21 @@ class LocationDetails extends Component {
                                     </View>
                                 </View>
                             </Screen>
-                            <View style={s.locationIcon}>
-                                <Icon
-                                    reverse
-                                    name='tools'
-                                    type='material-community'
-                                    color={theme.orange8}
-                                    reverseColor={theme.indigo1}
-                                    size={28}
-                                    containerStyle={[s.iconContainerStyle]}
-                                    onPress={() => this.setShowLocationToolsModal(true)}
-                                />
-                            </View>
+                            <Pressable
+                                style={({ pressed }) => [{},s.iconContainerStyle,pressed ? s.iconPressed : s.iconNotPressed]}
+                                onPress={() => {
+                                    this.setShowLocationToolsModal(true)
+                                }}
+                            >
+                                {({ pressed }) => (
+                                    <MaterialCommunityIcons
+                                        name={'tools'}
+                                        color={theme.indigo1}
+                                        size={28}
+                                        style={{justifyContent:'center',alignSelf:'center'}}
+                                    />
+                                )}
+                            </Pressable>
                         </View>
                     )
                 }}
@@ -508,12 +511,6 @@ const getStyles = theme => StyleSheet.create({
         width: '35%',
         alignItems: 'center',
         marginBottom: 5
-    },
-    locationIcon: {
-        position: 'absolute',
-        bottom: 25,
-        right: 10,
-        zIndex: 100
     },
     font16: {
         fontSize: 16
@@ -681,7 +678,22 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
-        overflow: 'visible'
+        overflow: 'visible',
+        position: 'absolute',
+        bottom: 30,
+        right: 20,
+        zIndex: 100,
+        alignSelf: 'center',
+        justifyContent:'center',
+        borderRadius: 30,
+        height: 60,
+        width: 60,
+    },
+    iconPressed: {
+        backgroundColor: theme.orange7,
+    },
+    iconNotPressed: {
+        backgroundColor: theme.orange8,
     }
 })
 

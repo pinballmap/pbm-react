@@ -10,12 +10,9 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import {
-    Button,
-    Icon,
-} from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -294,19 +291,29 @@ class Map extends Component {
                         title="List"
                         underlayColor='transparent'
                     />
-                    <Icon
-                        reverse
-                        name={Platform.OS === 'ios' ? 'location-arrow' : 'gps-fixed'}
-                        underlayColor='transparent'
-                        type={Platform.OS === 'ios' ? 'font-awesome' : 'material'}
-                        color={theme.neutral}
-                        reverseColor={theme.orange7}
-                        containerStyle={[s.containerStyle,{ position: 'absolute', bottom: 5, right: 5 }]}
-                        size={24}
+                    <Pressable
+                        style={({ pressed }) => [{},s.containerStyle,s.myLocationContainer,pressed ? s.pressed : s.notPressed]}
                         onPress={() => {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
-                    />
+                    >
+                        {({ pressed }) => (
+                            {...Platform.OS === 'ios' ?
+                                <FontAwesome
+                                    name={'location-arrow'}
+                                    color={theme.orange7}
+                                    size={24}
+                                    style={{justifyContent:'center',alignSelf:'center'}}
+                                /> :
+                                <MaterialIcons
+                                    name={'gps-fixed'}
+                                    color={theme.orange7}
+                                    size={24}
+                                    style={{justifyContent:'center',alignSelf:'center'}}
+                                />
+                            }
+                        )}
+                    </Pressable>
                     {filterApplied ?
                         <Button
                             title={'Clear Filter'}
@@ -470,6 +477,17 @@ const getStyles = theme => StyleSheet.create({
     pressedTitleStyle: {
         color: theme.blue3,
         fontSize: 16
+    },
+    myLocationContainer: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        alignSelf: 'center',
+        justifyContent:'center',
+        borderRadius: 25,
+        height: 50,
+        width: 50,
+        backgroundColor: theme.neutral,
     },
     filterContainer: {
         position: 'absolute',
