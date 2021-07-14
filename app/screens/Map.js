@@ -297,22 +297,20 @@ class Map extends Component {
                             locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
                         }}
                     >
-                        {({ pressed }) => (
-                            {...Platform.OS === 'ios' ?
-                                <FontAwesome
-                                    name={'location-arrow'}
-                                    color={theme.orange7}
-                                    size={24}
-                                    style={{justifyContent:'center',alignSelf:'center'}}
-                                /> :
-                                <MaterialIcons
-                                    name={'gps-fixed'}
-                                    color={theme.orange7}
-                                    size={24}
-                                    style={{justifyContent:'center',alignSelf:'center'}}
-                                />
-                            }
-                        )}
+                        {Platform.OS === 'ios' ?
+                            <FontAwesome
+                                name={'location-arrow'}
+                                color={theme.orange7}
+                                size={24}
+                                style={{justifyContent:'center',alignSelf:'center'}}
+                            /> :
+                            <MaterialIcons
+                                name={'gps-fixed'}
+                                color={theme.orange7}
+                                size={24}
+                                style={{justifyContent:'center',alignSelf:'center'}}
+                            />
+                        }
                     </Pressable>
                     {filterApplied ?
                         <Button
