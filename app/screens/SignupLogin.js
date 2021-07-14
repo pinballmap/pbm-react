@@ -82,15 +82,6 @@ export class SignupLogin extends Component {
                 this.props.getLocationsByRegion(region)
             }
             startUpApp && region ? navigate('Map', { setMapLocation: true }) : navigate('Map')
-        } else if (url.indexOf('profile') > 0) {
-            startUpApp && navigate('Map')
-            navigate('UserProfile')
-        } else if (url.indexOf('store') > 0 || url.indexOf('privacy') > 0) {
-            startUpApp && navigate('Map')
-            navigate('About')
-        } else if (url.indexOf('faq') > 0) {
-            startUpApp && navigate('Map')
-            navigate('FAQ')
         } else if (url.indexOf('about') > 0) {
             startUpApp && navigate('Map')
             navigate('Contact')
@@ -103,18 +94,6 @@ export class SignupLogin extends Component {
         } else if (url.indexOf('saved') > 0) {
             startUpApp && navigate('Map')
             navigate('Saved')
-        } else if (url.indexOf('login') > 0) {
-            startUpApp && navigate('Map')
-            navigate('Login')
-        } else if (url.indexOf('join') > 0) {
-            startUpApp && navigate('Map')
-            navigate('Signup')
-        } else if (url.indexOf('confirmation') > 0) {
-            startUpApp && navigate('Map')
-            navigate('ResendConfirmation')
-        } else if (url.indexOf('password') > 0) {
-            startUpApp && navigate('Map')
-            navigate('PasswordReset')
         } else {
             const region = this.props.regions.regions.find(({name}) => url.includes(name))
             if (region) {
