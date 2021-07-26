@@ -337,7 +337,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Country</Text>
                                             {Platform.OS === "ios" ?
                                                 <DropDownButton
-                                                    containerStyle={s.containerStyle}
+                                                    containerStyle={[{marginTop: 0,marginHorizontal: 20}]}
                                                     title={country}
                                                     onPress={() => this.setState({ showSelectCountryModal: true })}
                                                 /> :
@@ -391,12 +391,12 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Location Type</Text>
                                             <DropDownButton
                                                 title={locationTypeName}
-                                                containerStyle={s.containerStyle}
+                                                containerStyle={[{marginTop: 0,marginHorizontal: 20}]}
                                                 onPress={() => navigate('FindLocationType', {type: 'search', setSelected: (id) => this.props.setSelectedLocationType(id)})}
                                             />
                                             <Text style={s.title}>Operator</Text>
                                             <DropDownButton
-                                                containerStyle={s.containerStyle}
+                                                containerStyle={[{marginTop: 0,marginHorizontal: 20}]}
                                                 title={operatorName}
                                                 onPress={() => navigate('FindOperator', {type: 'search', setSelected: (id) => this.props.setSelectedOperator(id)})}
                                             />
