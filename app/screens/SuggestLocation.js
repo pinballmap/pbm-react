@@ -37,6 +37,7 @@ import {
     setSelectedLocationType,
     setSelectedOperator,
     suggestLocation,
+    resetSuggestLocation,
 } from '../actions'
 import countries from '../utils/countries'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -203,6 +204,7 @@ class SuggestLocation extends Component {
                                                             title={"OK"}
                                                             onPress={() => {
                                                                 this.setState({ showSuggestLocationModal: false })
+                                                                this.props.resetSuggestLocation()
                                                                 navigate('Map')
                                                             }}
                                                         />
@@ -562,6 +564,7 @@ SuggestLocation.propTypes = {
     suggestLocation: PropTypes.func,
     setSelectedOperator: PropTypes.func,
     setSelectedLocationType: PropTypes.func,
+    resetSuggestLocation: PropTypes.func,
 }
 
 const mapStateToProps = ({ error, location, locations, operators, user }) => ({ error, location, locations, operators, user })
@@ -572,5 +575,6 @@ const mapDispatchToProps = (dispatch) => ({
     suggestLocation: (goBack, locationDetails) => dispatch(suggestLocation(goBack, locationDetails)),
     setSelectedOperator: id => dispatch(setSelectedOperator(id)),
     setSelectedLocationType: id => dispatch(setSelectedLocationType(id)),
+    resetSuggestLocation: () => dispatch(resetSuggestLocation())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuggestLocation)
