@@ -10,7 +10,7 @@ export const getLocationTypeName = createSelector(
         const type = locationType > -1 ? locationTypes.find(location => location.id === locationType) : false
         if (type)
             return type.name
-         
+
         return 'All'
     }
 )
@@ -23,9 +23,9 @@ export const getOperatorName = createSelector(
     [operators, selectedOperator],
     (operators, selectedOperator) => {
         const operatorName = selectedOperator > -1 ? operators.find(operator => operator.id === selectedOperator) : false
-        if (operatorName) 
+        if (operatorName)
             return operatorName.name
-        
+
         return 'All'
     }
 )
@@ -43,7 +43,7 @@ const faveLocations = ({user}) => user.faveLocations
 
 export const getMapLocations = createSelector(
     [mapLocations, faveLocations, queryState],
-    (locations = [], faveLocations, query) => {
+    (locations = [], faveLocations = [], query) => {
         if (query.viewByFavoriteLocations) {
             return locations.filter(loc => {
                 if (faveLocations.findIndex(fave => fave.location_id === loc.id) > -1) {
@@ -57,7 +57,7 @@ export const getMapLocations = createSelector(
         }
         else {
             return locations.map(loc => ({
-                ...loc, 
+                ...loc,
                 icon: faveLocations.findIndex(fave => fave.location_id === loc.id) > -1 ? 'heart' : 'dot'
             }))
         }
