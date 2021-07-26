@@ -18,7 +18,7 @@ import {
     CLEAR_SELECTED_STATE,
     SUGGESTING_LOCATION,
     LOCATION_SUGGESTED,
-    FAILED_SUGGEST_LOCATION,
+    RESET_SUGGEST_LOCATION,
     SET_SELECTED_OPERATOR,
     SET_SELECTED_LOCATION_TYPE,
 } from '../actions/types'
@@ -209,7 +209,7 @@ export default (state = initialState, action) => {
                 isSuggestingLocation: false,
                 locationSuggested: true,
             }
-        case FAILED_SUGGEST_LOCATION:
+        case RESET_SUGGEST_LOCATION:
             return {
                 ...state,
                 isSuggestingLocation: false,
