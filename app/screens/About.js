@@ -49,7 +49,7 @@ const About = ({navigation, appAlert}) => {
     })
 
     return(
-        <SafeAreaView edges={['right', 'bottom', 'left']} style={{flex:1}}>
+        <SafeAreaView edges={['right', 'bottom', 'left']} style={s.background}>
             <Screen>
                 <View style={s.container}>
                     <View style={[s.logoWrapper]}>
@@ -122,6 +122,10 @@ About.navigationOptions = ({ navigation, theme }) => ({
 })
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: theme.neutral
+    },
     container: {
         justifyContent: 'space-between',
         alignItems: 'center',
