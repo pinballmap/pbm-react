@@ -478,7 +478,7 @@ const getStyles = theme => StyleSheet.create({
         fontWeight: 'bold',
         fontStyle: 'italic',
         fontSize: 18,
-        color: theme.neutral
+        color: theme.orange8
     },
     textInput: {
         backgroundColor: theme.white,
@@ -513,7 +513,6 @@ const getStyles = theme => StyleSheet.create({
     success: {
         textAlign: 'center',
         fontSize: 20,
-        fontWeight: "bold",
         marginLeft: 10,
         marginRight: 10
     },
