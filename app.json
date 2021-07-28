@@ -16,7 +16,7 @@
     "updates": {
       "enabled": false
     },
-    "version": "5.2.1",
+    "version": "5.2.2",
     "slug": "pbm-app",
     "name": "Pinball Map",
     "scheme": "pinballmap",
@@ -28,7 +28,7 @@
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "92",
+      "buildNumber": "93",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
@@ -62,7 +62,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 64,
+      "versionCode": 65,
       "adaptiveIcon": {
         "backgroundColor": "#ebecff",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
