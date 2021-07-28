@@ -10,6 +10,11 @@
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
 ### 5.2.1
+July 28, 2021
+
+- Fixed a bug: when submitting multiple locations in a row, sometimes the 2nd+ locations weren't submitting correctly (but the user probably wouldn't know).
+
+### 5.2.1
 July 15, 2021
 
 - Adjusted deep links
