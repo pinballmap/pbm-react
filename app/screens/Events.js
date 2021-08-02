@@ -5,13 +5,13 @@ import Geocode from 'react-geocode'
 import {
     FlatList,
     Linking,
+    Pressable,
     StyleSheet,
     Text,
     View,
 } from 'react-native'
 import {
     ButtonGroup,
-    Card,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -134,12 +134,17 @@ class Events extends Component {
                                                         const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
                                                         const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
                                                         return (
-                                                            <Card containerStyle={s.cardContainer}>
-                                                                <Text style={s.textLink} onPress={() => Linking.openURL(item.website)}>{item.tournament_name}</Text>
+                                                            <Pressable
+                                                                style={({ pressed }) => [{},s.cardContainer,pressed ? s.pressed : s.notPressed]}
+                                                                onPress={() => Linking.openURL(item.website)}
+                                                            >
+                                                                <View style={s.locationNameContainer}>
+                                                                    <Text style={s.locationName}>{item.tournament_name}</Text>
+                                                                </View>
                                                                 <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                                <Text style={[s.cardTextStyle,s.margin]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                                <Text style={[s.address,s.margin]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
-                                                            </Card>
+                                                                <Text style={[s.cardTextStyle,s.margin,s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                                <Text style={[s.address,s.margin,s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                            </Pressable>
                                                         )
                                                     }}
                                                     keyExtractor={event => `${event.calendar_id}`}
@@ -194,39 +199,73 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         fontWeight: 'bold',
     },
-    textLink: {
-        fontSize: 14,
-        textAlign: 'center',
+    locationNameContainer: {
+        backgroundColor: theme.blue1,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
         paddingVertical: 10,
-        backgroundColor: theme.orange7,
-        color: theme.text,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    locationName: {
         fontWeight: 'bold',
-        marginBottom: 5
+        fontSize: 16,
+        textAlign: 'center',
+        color: theme.text
     },
     margin: {
         marginTop: 10,
+    },
+    padding: {
+        paddingHorizontal: 10,
+        paddingBottom: 10
     },
     problem: {
         textAlign: "center",
         color: theme.text,
         fontWeight: 'bold',
-        marginTop: 20
+        marginTop: 20,
+        paddingHorizontal: 10
     },
     cardContainer: {
-        borderRadius: 5,
-        borderColor: theme.orange3,
-        backgroundColor: theme.white
+        padding: 0,
+        borderRadius: 15,
+        marginBottom: 12,
+        marginTop: 12,
+        marginRight: 20,
+        marginLeft: 20,
+        backgroundColor: theme.white,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
+        shadowColor: theme.shadow,
     },
     center: {
         textAlign: 'center'
     },
     cardTextStyle: {
         fontSize: 16,
-        color: theme.orange7
+        color: theme.text
     },
     address: {
         fontSize: 12,
-        color: theme.orange7
+        color: theme.text
+    },
+    pressed: {
+        borderColor: theme.blue1,
+        borderWidth: 1,
+        shadowColor: 'transparent',
+        opacity: 0.8,
+        elevation: 0,
+        marginBottom: 10
+    },
+    notPressed: {
+        borderColor: 'transparent',
+        borderWidth: 0,
+        shadowColor: theme.shadow,
+        opacity: 1.0,
+        elevation: 6,
     }
 })
 
