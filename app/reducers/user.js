@@ -19,6 +19,7 @@ import {
     CLEAR_MESSAGE,
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
+    SET_UNIT_PREFERENCE,
 } from '../actions/types'
 
 export const initialState = {
@@ -40,6 +41,7 @@ export const initialState = {
     selectedFavoriteLocationFilter: 0,
     submittingMessage: false,
     confirmationMessage: '',
+    unitPreference: 0,
 }
 
 export default (state = initialState, action) => {
@@ -175,6 +177,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 confirmationMessage: '',
+            }
+        case SET_UNIT_PREFERENCE:
+            return {
+                ...state,
+                unitPreference: action.unitPreference
             }
         default:
             return state

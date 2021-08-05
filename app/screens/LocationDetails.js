@@ -45,8 +45,7 @@ import androidCustomDark from '../utils/androidCustomDark'
 import { HeaderBackButton } from 'react-navigation-stack'
 import {
     alphaSortNameObj,
-    getDistance,
-    formatNumWithCommas
+    getDistanceWithUnit,
 } from '../utils/utilityFunctions'
 
 let deviceWidth = Dimensions.get('window').width
@@ -126,14 +125,12 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
-        const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled } = this.props.user
+        const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))
-        const distance = getDistance(userLat, userLon, location.lat, location.lon)
-        const displayDistance = distance > 9 ? Math.round(distance) : distance.toFixed(1)
 
         return (
             <ThemeContext.Consumer>
@@ -312,7 +309,7 @@ class LocationDetails extends Component {
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
                                                 <Text style={[s.metaText,s.font16,s.marginRight]}>{location.street}</Text>
                                                 <Text style={[s.metaText,s.font16,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{formatNumWithCommas(displayDistance)} mi</Text> : null}
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text> : null}
                                                 {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
 
                                                 {location.website ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
@@ -334,7 +331,7 @@ class LocationDetails extends Component {
                                                         />
                                                         <Text style={{textAlign:'center',color:theme.orange7}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
-                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{formatNumWithCommas(displayDistance)} mi</Text>}
+                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text>}
                                                 </View> : null
                                             }
                                         </View>

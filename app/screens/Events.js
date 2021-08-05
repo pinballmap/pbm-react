@@ -63,8 +63,9 @@ class Events extends Component {
     }
 
     fetchEvents = async (radius) => {
+        const distanceUnit = this.props.user.unitPreference ? 'k' : 'm'
         try {
-            const data = await getIfpaData(this.state.address, radius)
+            const data = await getIfpaData(this.state.address, radius, distanceUnit)
             this.setState({ error: false, events: data.calendar ? data.calendar : [], gettingEvents: false, refetchingEvents: false })
         }
         catch(e) {
@@ -98,6 +99,8 @@ class Events extends Component {
 
     render(){
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
+        const distanceUnit = this.props.user.unitPreference ? 'km' : 'mi'
+        const buttons = [`50 ${distanceUnit}`, `100 ${distanceUnit}`, `150 ${distanceUnit}`, `200 ${distanceUnit}`, `250 ${distanceUnit}`]
 
         return(
             <ThemeContext.Consumer>
@@ -116,7 +119,7 @@ class Events extends Component {
                                             <ButtonGroup
                                                 onPress={this.updateIdx}
                                                 selectedIndex={selectedIdx}
-                                                buttons={['50 mi', '100 mi', '150 mi', '200 mi', '250 mi']}
+                                                buttons={buttons}
                                                 containerStyle={s.buttonGroupContainer}
                                                 textStyle={s.buttonGroupInactive}
                                                 selectedButtonStyle={s.selButtonStyle}

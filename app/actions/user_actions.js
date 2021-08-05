@@ -18,9 +18,11 @@ import {
     CLEAR_MESSAGE,
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
+    SET_UNIT_PREFERENCE,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
 import { updateCurrCoordinates } from './locations_actions'
+import { AsyncStorage } from "react-native"
 
 export const fetchCurrentLocation = () => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
@@ -171,4 +173,12 @@ export const clearMessage = () => ({ type: CLEAR_MESSAGE })
 export const messageSubmissionFailed = (err) => {
     console.log(err)
     return { type: MESSAGE_SUBMISSION_FAILED }
+}
+
+export const setUnitPreference = (unitPreference) => {
+    AsyncStorage.setItem('unitPreference', JSON.stringify(unitPreference === 1))
+    return {
+        type: SET_UNIT_PREFERENCE,
+        unitPreference
+    }
 }

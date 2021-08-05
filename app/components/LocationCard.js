@@ -8,7 +8,6 @@ import {
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
-import { formatNumWithCommas } from '../utils/utilityFunctions'
 
 const NUM_MACHINES_TO_SHOW = 5
 
@@ -29,8 +28,6 @@ const LocationCard = ({
 
     const numMachines = machines.length
 
-    const displayDistance = !distance ? null : distance > 9 ? Math.round(distance) : distance.toFixed(1)
-
     return(
         <Pressable
             style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
@@ -47,7 +44,7 @@ const LocationCard = ({
                             <Text style={s.marginS}>
                                 {type ? <Text style={s.gray}>{type}</Text> : null}
                                 {type && distance ? <Text style={s.gray}> • </Text> : null }
-                                {distance ? <Text style={[s.gray,s.marginS]}>{formatNumWithCommas(displayDistance)} mi</Text>: null}
+                                {distance ? <Text style={[s.gray,s.marginS]}>{distance}</Text>: null}
                             </Text> : null
                         }
                         <View style={s.margin}>
@@ -161,7 +158,7 @@ LocationCard.propTypes = {
     type: PropTypes.string,
     zip: PropTypes.string,
     state: PropTypes.string,
-    distance: PropTypes.number,
+    distance: PropTypes.string,
     name: PropTypes.string,
     id: PropTypes.number,
     street: PropTypes.string,

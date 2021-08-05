@@ -15,7 +15,7 @@ import {
     NotLoggedIn,
     Text
 } from '../components'
-import { getDistance } from '../utils/utilityFunctions'
+import { getDistance, getDistanceWithUnit } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
 
 const moment = require('moment')
@@ -81,7 +81,7 @@ export class Saved extends Component {
     }
 
     render() {
-        const { loggedIn } = this.props.user
+        const { loggedIn, unitPreference } = this.props.user
 
         return (
             <ThemeContext.Consumer>
@@ -115,7 +115,7 @@ export class Saved extends Component {
                                                     renderItem={({ item }) =>
                                                         <LocationCard
                                                             name={item.location.name}
-                                                            distance={getDistance(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon)}
+                                                            distance={getDistanceWithUnit(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon, unitPreference)}
                                                             street={item.location.street}
                                                             city={item.location.city}
                                                             state={item.location.state}

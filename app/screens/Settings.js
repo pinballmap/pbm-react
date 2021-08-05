@@ -5,14 +5,16 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
+import { connect } from "react-redux"
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { Screen, Text } from '../components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton } from '../components'
 import { retrieveItem } from '../config/utils'
+import { setUnitPreference } from "../actions"
 
-const Settings = () => {
+const Settings = ({ user, setUnitPreference }) => {
     const { toggleDefaultTheme, toggleDarkTheme, theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -45,6 +47,10 @@ const Settings = () => {
         toggleDarkTheme()
     }
 
+    const updateUnitPref = (idx) => {
+        setUnitPreference(idx)
+    }
+
     return(
         <Screen>
             <View style={s.background}>
@@ -72,6 +78,17 @@ const Settings = () => {
                     innerBorderStyle={s.innerBorderStyle}
                 />
                 <Text style={s.text}>{`When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.`}</Text>
+                <View style={s.pageTitle}><Text style={s.pageTitleText}>Distance Unit</Text></View>
+                <ButtonGroup
+                    onPress={updateUnitPref}
+                    selectedIndex={user.unitPreference ? 1 : 0}
+                    buttons={['Miles', 'Kilometers']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.buttonGroupInactive}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
             </View>
         </Screen>
     )
@@ -164,6 +181,12 @@ const getStyles = theme => StyleSheet.create({
 
 Settings.propTypes = {
     navigation: PropTypes.object,
+    user: PropTypes.object,
+    setUnitPreference: PropTypes.func,
 }
 
-export default Settings
+const mapStateToProps = ({ user }) => ({ user })
+const mapDispatchToProps = (dispatch) => ({
+    setUnitPreference: unitPreference => dispatch(setUnitPreference((unitPreference))),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

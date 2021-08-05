@@ -83,8 +83,8 @@ export const getData = uri => {
         .catch(err => err)
 }
 
-export const getIfpaData = (address, radius) => {
-    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}&m=${radius}`)
+export const getIfpaData = (address, radius, distanceUnit) => {
+    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`)
         .then(response => {
             if(response.status === 200)
                 return response.json()
