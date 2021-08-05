@@ -91,7 +91,7 @@ export const getIfpaData = (address, radius) => {
 
             throw new Error('IFPA API response was not ok')
         })
-        .catch(err => err)
+        .catch(err => Promise.reject(err))
 }
 
 export const deleteData = (uri, body)  => {
