@@ -16,7 +16,7 @@ import {
     PbmButton,
     Text
 } from '../components'
-import { getDistance } from '../utils/utilityFunctions'
+import { getDistance, getDistanceWithUnit } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
 
 let deviceWidth = Dimensions.get('window').width
@@ -99,7 +99,7 @@ export class LocationList extends Component {
     }
 
     render() {
-        const { lat, lon, locationTrackingServicesEnabled } = this.props.user
+        const { lat, lon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { locations = [], showNoLocationTrackingModal } = this.state
 
         return (
@@ -138,7 +138,7 @@ export class LocationList extends Component {
                                 renderItem={({ item }) =>
                                     <LocationCard
                                         name={item.name}
-                                        distance={locationTrackingServicesEnabled ? getDistance(lat, lon, item.lat, item.lon) : undefined}
+                                        distance={locationTrackingServicesEnabled ? getDistanceWithUnit(lat, lon, item.lat, item.lon, unitPreference) : undefined}
                                         street={item.street}
                                         city={item.city}
                                         state={item.state}

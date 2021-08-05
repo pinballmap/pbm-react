@@ -50,3 +50,12 @@ export const alphaSort = array => {
     })
 }
 
+export const getDistanceWithUnit = (lat1, lon1, lat2, lon2, unitPreference) => {
+    const defaultKm = Boolean(unitPreference)
+    let distance = getDistance(lat1, lon1, lat2, lon2)
+    if (defaultKm) {
+        distance = distance/0.62137
+    }
+    distance = formatNumWithCommas(distance > 9 ? Math.round(distance) : distance.toFixed(1))
+    return `${distance} ${defaultKm ? 'km' : 'mi'}`
+}

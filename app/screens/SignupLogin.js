@@ -25,6 +25,7 @@ import {
     getRegions,
     getLocationsByRegion,
     updateCurrCoordinates,
+    setUnitPreference,
 } from '../actions'
 import { retrieveItem } from '../config/utils'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -128,6 +129,11 @@ export class SignupLogin extends Component {
             })
             .catch(apiError => this.setState({ apiError }))
 
+        retrieveItem('unitPreference').then(unitPreference => {
+            if (unitPreference) {
+                this.props.setUnitPreference(true)
+            }
+        })
         retrieveItem('auth').then(async auth => {
             const initialUrl = await Linking.getInitialURL() || ''
 
@@ -293,6 +299,7 @@ SignupLogin.propTypes = {
     getLocationsByRegion: PropTypes.func,
     updateCurrCoordinates: PropTypes.func,
     regions: PropTypes.object,
+    setUnitPreference: PropTypes.func,
 }
 
 const mapStateToProps = ({ user, regions }) => ({ user, regions })
@@ -307,6 +314,7 @@ const mapDispatchToProps = (dispatch) => ({
     getRegions: (url) => dispatch(getRegions(url)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     updateCurrCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
+    setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin)
