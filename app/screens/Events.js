@@ -65,10 +65,10 @@ class Events extends Component {
     fetchEvents = async (radius) => {
         try {
             const data = await getIfpaData(this.state.address, radius)
-            this.setState({ events: data.calendar ? data.calendar : [], gettingEvents: false, refetchingEvents: false })
+            this.setState({ error: false, events: data.calendar ? data.calendar : [], gettingEvents: false, refetchingEvents: false })
         }
         catch(e) {
-            throw e
+            this.setState({ error: true, gettingEvents: false, refetchingEvents: false })
         }
     }
 
@@ -110,7 +110,7 @@ class Events extends Component {
                                     <ActivityIndicator />
                                 </View> :
                                 error ?
-                                    <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Oops. Something went wrong.</Text> :
+                                    <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
                                     <>
                                         <View style={s.header}>
                                             <ButtonGroup
@@ -266,6 +266,11 @@ const getStyles = theme => StyleSheet.create({
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
+    },
+    textLink: {
+        textDecorationLine: 'underline',
+        color: '#7cc5ff',
+        fontSize: 16,
     }
 })
 
