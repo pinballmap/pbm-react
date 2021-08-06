@@ -15,6 +15,7 @@ import Screen from './Screen'
 import withThemeHOC from './withThemeHOC'
 import ActivityIndicator from './ActivityIndicator'
 import IosMarker from './IosMarker'
+import IosHeartMarker from './IosHeartMarker'
 
 export {
     LocationCard,
@@ -34,4 +35,5 @@ export {
     withThemeHOC,
     ActivityIndicator,
     IosMarker,
+    IosHeartMarker,
 }

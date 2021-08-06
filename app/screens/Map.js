@@ -23,6 +23,7 @@ import {
     Search,
     Text,
     IosMarker,
+    IosHeartMarker,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -43,9 +44,15 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 let deviceWidth = Dimensions.get('window').width
 
 const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
+const MarkerHeart = ({numMachines, stopRendering}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />
 
 MarkerDot.propTypes = {
     numMachines: PropTypes.number,
+}
+
+MarkerHeart.propTypes = {
+    numMachines: PropTypes.number,
+    stopRendering: PropTypes.func,
 }
 
 const CustomMarker = ({ marker, navigation, s }) => {
@@ -63,7 +70,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />}
+            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} stopRendering={stopRendering} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
