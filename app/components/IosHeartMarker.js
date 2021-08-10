@@ -5,28 +5,32 @@ import PropTypes from "prop-types"
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 
 const IosHeartMarker = ({numMachines}) => {
-    let dotFontMargin, dotWidthHeight
+    let dotFontMargin, dotWidth, dotHeight
     if (numMachines < 10) {
-        dotFontMargin = 5
-        dotWidthHeight = 32
+        dotFontMargin = 4
+        dotWidth = 36
+        dotHeight = dotWidth * .875
     } else if (numMachines < 20) {
-        dotFontMargin = 5
-        dotWidthHeight = 36
+        dotFontMargin = 4
+        dotWidth = 40
+        dotHeight = dotWidth * .875
     } else if (numMachines < 100) {
-        dotFontMargin = 6
-        dotWidthHeight = 40
+        dotFontMargin = 7
+        dotWidth = 46
+        dotHeight = dotWidth * .875
     } else {
         dotFontMargin = 8
-        dotWidthHeight = 46
+        dotWidth = 54
+        dotHeight = dotWidth * .875
     }
     return (
-        <ImageBackground style={{width: dotWidthHeight, height: dotWidthHeight}}source={markerDotHeart} >
+        <ImageBackground style={{width: dotWidth, height: dotHeight}}source={markerDotHeart} >
             <Text style={{
                 color: 'white',
-                fontWeight:'bold',
-                textAlign:'center',
-                fontSize: 16,
-                marginTop:dotFontMargin}}>
+                fontWeight: 'bold',
+                textAlign: 'center',
+                fontSize: 18,
+                marginTop: dotFontMargin}}>
                 {numMachines}
             </Text>
         </ImageBackground>
