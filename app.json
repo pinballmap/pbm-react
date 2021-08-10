@@ -9,8 +9,8 @@
       "backgroundColor": "#736f73"
     },
     "splash": {
-      "image": "app/assets/images/t-shirt-logo@3x.png",
-      "backgroundColor": "#aeb1d2",
+      "image": "app/assets/images/pbm-splash-2021.png",
+      "backgroundColor": "#fffbf5",
       "resizeMode": "contain"
     },
     "updates": {
@@ -23,7 +23,7 @@
     "description": "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
     "privacy": "public",
     "githubUrl": "https://github.com/bpoore/pbm-react/",
-    "primaryColor": "#aeb1d2",
+    "primaryColor": "#ebecff",
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
@@ -39,11 +39,6 @@
         "googleMapsApiKey": "key",
         "usesNonExemptEncryption": false
       },
-      "splash": {
-        "image": "app/assets/images/t-shirt-logo@3x.png",
-        "backgroundColor": "#aeb1d2",
-        "resizeMode": "contain"
-      }
     },
     "android": {
       "package": "com.pbm",
@@ -66,15 +61,6 @@
       "adaptiveIcon": {
         "backgroundColor": "#ebecff",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
-      },
-      "splash": {
-        "mdpi": "app/assets/images/res/drawable-mdpi/t-shirt-logo.png",
-        "hdpi": "app/assets/images/res/drawable-hdpi/t-shirt-logo.png",
-        "xhdpi": "app/assets/images/res/drawable-xhdpi/t-shirt-logo.png",
-        "xxhdpi": "app/assets/images/res/drawable-xxhdpi/t-shirt-logo.png",
-        "xxxhdpi": "app/assets/images/res/drawable-xxxhdpi/t-shirt-logo.png",
-        "backgroundColor": "#aeb1d2",
-        "resizeMode": "contain"
       },
       "intentFilters": [
         {
