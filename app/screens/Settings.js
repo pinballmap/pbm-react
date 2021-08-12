@@ -118,6 +118,7 @@ const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: theme.neutral,
+        marginBottom: 15,
     },
     pageTitle: {
         paddingVertical: 10,
