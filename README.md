@@ -9,6 +9,13 @@
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.3
+August 12, 2021
+
+- Added an option in the Settings page for using Miles or Kilometers as the distance unit
+- On iOS, Show the number of machines at your Saved locations on the map (the heart icon)
+- Styled the Events page (missed this in the 5.2.0 update), and added a more descriptive message when Events cannot be fetched from the IFPA calendar
+
 ### 5.2.2
 July 28, 2021
 
