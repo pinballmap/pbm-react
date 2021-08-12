@@ -10,25 +10,25 @@
     },
     "splash": {
       "image": "app/assets/images/t-shirt-logo@3x.png",
-      "backgroundColor": "#aeb1d2",
+      "backgroundColor": "#bec2e6",
       "resizeMode": "contain"
     },
     "updates": {
       "enabled": false
     },
-    "version": "5.2.2",
+    "version": "5.2.3",
     "slug": "pbm-app",
     "name": "Pinball Map",
     "scheme": "pinballmap",
     "description": "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
     "privacy": "public",
     "githubUrl": "https://github.com/bpoore/pbm-react/",
-    "primaryColor": "#aeb1d2",
+    "primaryColor": "#bec2e6",
     "ios": {
       "bundleIdentifier": "net.isaacruiz.ppm",
       "userInterfaceStyle": "automatic",
       "icon": "app/assets/images/ios-icon.png",
-      "buildNumber": "93",
+      "buildNumber": "94",
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow access to device location to show nearby places with pinball machines"
@@ -41,7 +41,7 @@
       },
       "splash": {
         "image": "app/assets/images/t-shirt-logo@3x.png",
-        "backgroundColor": "#aeb1d2",
+        "backgroundColor": "#bec2e6",
         "resizeMode": "contain"
       }
     },
@@ -62,7 +62,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES"
       ],
-      "versionCode": 65,
+      "versionCode": 67,
       "adaptiveIcon": {
         "backgroundColor": "#ebecff",
         "foregroundImage": "app/assets/images/adaptive-foreground.png"
@@ -73,7 +73,7 @@
         "xhdpi": "app/assets/images/res/drawable-xhdpi/t-shirt-logo.png",
         "xxhdpi": "app/assets/images/res/drawable-xxhdpi/t-shirt-logo.png",
         "xxxhdpi": "app/assets/images/res/drawable-xxxhdpi/t-shirt-logo.png",
-        "backgroundColor": "#aeb1d2",
+        "backgroundColor": "#bec2e6",
         "resizeMode": "contain"
       },
       "intentFilters": [
