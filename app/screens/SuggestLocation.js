@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
     Keyboard,
     Modal,
-    Picker,
     Platform,
     ScrollView,
     StyleSheet,
@@ -22,7 +21,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
-    ConfirmationModal,
     DropDownButton,
     HeaderBackButton,
     NotLoggedIn,
@@ -39,7 +37,6 @@ import {
     suggestLocation,
     resetSuggestLocation,
 } from '../actions'
-import countries from '../utils/countries'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 class SuggestLocation extends Component {
@@ -48,12 +45,12 @@ class SuggestLocation extends Component {
         street: '',
         city: '',
         state: '',
-        country: 'United States',
+        countryName: 'United States',
+        countryCode: 'US',
         zip: '',
         phone: '',
         website: '',
         description: '',
-        showSelectCountryModal: false,
         showSuggestLocationModal: false,
     }
 
@@ -85,7 +82,7 @@ class SuggestLocation extends Component {
             city,
             state,
             zip,
-            country,
+            countryCode,
             phone,
             website,
             description,
@@ -97,7 +94,7 @@ class SuggestLocation extends Component {
             city,
             state,
             zip,
-            country,
+            country: countryCode,
             phone,
             website,
             description,
@@ -128,11 +125,10 @@ class SuggestLocation extends Component {
             city,
             state,
             zip,
-            country,
+            countryName,
             phone,
             website,
             description,
-            showSelectCountryModal,
             showSuggestLocationModal,
         } = this.state
         const { loggedIn } = this.props.user
@@ -162,25 +158,6 @@ class SuggestLocation extends Component {
                                     onPress={() => navigate('Login')}
                                 /> :
                                 <View>
-                                    <ConfirmationModal
-                                        visible={showSelectCountryModal}
-                                    >
-                                        <ScrollView>
-                                            <Picker
-                                                style={s.picker}
-                                                selectedValue={country}
-                                                onValueChange={country => this.setState({ country })}>
-                                                {countries.map(m => (
-                                                    <Picker.Item label={m.name} value={m.name} key={m.name} />
-                                                ))}
-                                            </Picker>
-                                        </ScrollView>
-                                        <PbmButton
-                                            title={'OK'}
-                                            onPress={() => this.setState({ showSelectCountryModal: false })}
-                                            containerStyle={s.buttonContainer}
-                                        />
-                                    </ConfirmationModal>
                                     <Modal
                                         animationType="slide"
                                         transparent={false}
@@ -237,7 +214,7 @@ class SuggestLocation extends Component {
                                                             <Text style={s.preview}>{zip}</Text>
                                                             <View style={s.hr}></View>
                                                             <Text style={s.title}>Country</Text>
-                                                            <Text style={s.preview}>{country}</Text>
+                                                            <Text style={s.preview}>{countryName}</Text>
                                                             <View style={s.hr}></View>
                                                             <Text style={s.title}>Phone</Text>
                                                             <Text style={s.preview}>{phone}</Text>
@@ -337,23 +314,11 @@ class SuggestLocation extends Component {
                                                 textContentType="postalCode"
                                             />
                                             <Text style={s.title}>Country</Text>
-                                            {Platform.OS === "ios" ?
-                                                <DropDownButton
-                                                    containerStyle={[{marginTop: 0,marginHorizontal: 20}]}
-                                                    title={country}
-                                                    onPress={() => this.setState({ showSelectCountryModal: true })}
-                                                /> :
-                                                <View style={s.viewPicker}>
-                                                    <Picker
-                                                        style={{color:theme.orange8}}
-                                                        selectedValue={country}
-                                                        onValueChange={country => this.setState({ country })}>
-                                                        {countries.map(m => (
-                                                            <Picker.Item label={m.name} value={m.name} key={m.name} />
-                                                        ))}
-                                                    </Picker>
-                                                </View>
-                                            }
+                                            <DropDownButton
+                                                title={countryName}
+                                                containerStyle={[{marginTop: 0,marginHorizontal: 20}]}
+                                                onPress={() => navigate('FindCountry', {type: 'search', setSelected: (countryName, countryCode) => this.setState({ countryName, countryCode })})}
+                                            />
                                             <Text style={s.title}>Phone</Text>
                                             <TextInput
                                                 style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
