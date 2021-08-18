@@ -404,8 +404,7 @@ const getStyles = theme => StyleSheet.create({
     },
     confirmText: {
         textAlign: 'center',
-        fontSize: 20,
-        fontWeight: "bold",
+        fontSize: 16,
         marginLeft: 10,
         marginRight: 10
     },
