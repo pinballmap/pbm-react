@@ -477,7 +477,7 @@ const getStyles = theme => StyleSheet.create({
     },
     success: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 16,
         marginLeft: 10,
         marginRight: 10
     },
