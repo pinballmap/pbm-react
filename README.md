@@ -9,6 +9,13 @@
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.4
+August 18, 2021
+
+- Update the "country" picker in the Location Suggestion form
+- Fixed a bug in how that country field is processed
+- Minor design tweaks, including a new splash screen logo
+
 ### 5.2.3
 August 12, 2021
 
