@@ -6,3 +6,4 @@ script:
   - npm run lint
 on:
   branch: master
+  type: pull_request
