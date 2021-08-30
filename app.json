@@ -10,7 +10,7 @@
     },
     "splash": {
       "image": "app/assets/images/pbm-splash-2021.png",
-      "backgroundColor": "#fffbf5",
+      "backgroundColor": "#ebecff",
       "resizeMode": "contain"
     },
     "updates": {
