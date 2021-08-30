@@ -453,11 +453,10 @@ const getStyles = theme => StyleSheet.create({
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
-        marginBottom: 23
     },
     notPressed: {
         borderColor: 'transparent',
-        borderWidth: 0,
+        borderWidth: 1,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
@@ -474,6 +473,8 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
         paddingLeft: 20,
         paddingRight: 15,
+        marginTop: -1,
+        marginHorizontal: -2
     },
     machineNameContainer2: {
         backgroundColor: theme.blue1,
@@ -481,6 +482,8 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
         paddingLeft: 20,
         paddingRight: 15,
+        marginVertical: -2,
+        marginHorizontal: -2
     },
     machineMeta: {
         fontSize: 16

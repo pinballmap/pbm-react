@@ -117,7 +117,7 @@ const TabNav = createBottomTabNavigator(
                 showIcon: true,
                 adaptive: false,
                 style: {
-                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fff7eb',
+                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
                     height: Platform.isPad ? 55 : Platform.OS === 'ios' ? 46 : 54,
                     marginBottom: Platform.OS === 'ios' ? 0 : 5,
                     borderTopWidth: 0,
@@ -208,7 +208,7 @@ export const drawerNavigator = createDrawerNavigator({
     drawerPosition: 'right',
     drawerWidth: 250,
     drawerBackgroundColor: {
-        light: '#fff7eb',
+        light: '#fffbf5',
         dark: '#1d1c1d',
     },
     contentOptions: {
@@ -221,7 +221,7 @@ export const drawerNavigator = createDrawerNavigator({
             dark: '#e6cfbe'
         },
         activeBackgroundColor: {
-            light: '#fff7eb',
+            light: '#fffbf5',
             dark: '#1d1c1d'
         },
     },
