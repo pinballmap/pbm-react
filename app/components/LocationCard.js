@@ -106,7 +106,9 @@ const getStyles = (theme) => StyleSheet.create({
         borderTopRightRadius: 15,
         paddingVertical: 10,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        marginTop: -1,
+        marginHorizontal: -2
     },
     locationName: {
         fontWeight: 'bold',
@@ -142,11 +144,10 @@ const getStyles = (theme) => StyleSheet.create({
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
-        marginBottom: 10
     },
     notPressed: {
         borderColor: 'transparent',
-        borderWidth: 0,
+        borderWidth: 1,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
