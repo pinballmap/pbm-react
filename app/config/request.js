@@ -116,18 +116,11 @@ export const deleteData = (uri, body)  => {
         .catch(err => Promise.reject(err))
 }
 
-export const getCurrentLocation = () => {
-    Location.installWebGeolocationPolyfill()
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => resolve(position),
-            (error) => {
-                if (error.message === 'Permission to access location not granted. User must now enable it manually in settings') {
-                    reject('Location services are not enabled')
-                } else {
-                    reject(error.message)
-                }
-            }
-        )
-    })
+export const getCurrentLocation = async () => {
+    try {
+        const position = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest})
+        return position
+    } catch (e) {
+        return Promise.reject(e)
+    }
 }
