@@ -71,17 +71,20 @@ const CustomMarker = ({ marker, navigation, s }) => {
             pointerEvents="auto"
         >
             {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} stopRendering={stopRendering} />}
-            <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
-                <View>
+            <MapView.Callout
+                tooltip={true}
+                onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
+                <View style={s.backgroundBox} >
                     <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
-                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
+                        <Text style={s.locationText}>{marker.name}</Text>
+                        <Text style={s.addressText}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                         {Platform.OS === 'android' ?
-                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
+                            <Text style={s.machineCountText}>{`${marker.machine_names.length} machine${marker.machine_names.length > 1 ? 's': ''}`}</Text>
                             : null
                         }
                     </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
+                    <Ionicons
+                        style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
                 </View>
             </MapView.Callout>
         </MapView.Marker>
@@ -355,6 +358,27 @@ class Map extends Component {
 const getStyles = theme => StyleSheet.create({
     map: {
         flex: 1
+    },
+    backgroundBox: {
+        backgroundColor: theme.white,
+        borderRadius: 25,
+        padding: 5,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    locationText: {
+        marginRight: 20,
+        color: theme.text,
+        fontWeight: 'bold' 
+    },
+    addressText: {
+        marginRight: 20,
+        color: theme.text,
+        marginTop: 5
+    },
+    machineCountText: {
+        color: theme.text,
+        marginTop: 5
     },
     calloutStyle: {
         minWidth: 50,
