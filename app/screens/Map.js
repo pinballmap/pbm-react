@@ -84,7 +84,8 @@ const CustomMarker = ({ marker, navigation, s }) => {
                         }
                     </View>
                     <Ionicons
-                        style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
+                        style={s.iconStyle}
+                        name="ios-arrow-forward-circle-outline" />
                 </View>
             </MapView.Callout>
         </MapView.Marker>
