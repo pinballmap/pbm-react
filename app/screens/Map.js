@@ -129,6 +129,7 @@ class Map extends Component {
 
     updateCurrentLocation = () => {
         this.props.getCurrentLocation()
+        this.setState({ moveToCurrentLocation: true })
     }
 
     componentDidUpdate() {
@@ -172,14 +173,16 @@ class Map extends Component {
             longitude,
             latitudeDelta,
             longitudeDelta,
+            moveToCurrentLocation,
         } = this.state
 
-        if (!this.state.latitude || this.props.query.curLat !== curLat) {
+        if (!this.state.latitude || moveToCurrentLocation || this.props.query.curLat !== curLat) {
             this.setState({
                 latitude: curLat,
                 longitude: curLon,
                 latitudeDelta: latDelta,
                 longitudeDelta: lonDelta,
+                moveToCurrentLocation: false,
             })
         }
 
