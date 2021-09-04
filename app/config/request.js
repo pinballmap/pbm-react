@@ -118,7 +118,8 @@ export const deleteData = (uri, body)  => {
 
 export const getCurrentLocation = async () => {
     try {
-        const position = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest})
+        await Location.requestForegroundPermissionsAsync()
+        const position = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Lowest})
         return position
     } catch (e) {
         return Promise.reject(e)
