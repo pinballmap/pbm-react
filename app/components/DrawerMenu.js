@@ -81,7 +81,7 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         color: theme.orange7,
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         position: 'absolute',
         paddingLeft: 72,
         paddingRight: 120,

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
     Linking,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -62,7 +63,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
     title: 'FAQ',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
@@ -77,7 +78,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     container: {
         justifyContent: 'space-between',
@@ -97,8 +98,8 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
     },
     bold: {
-        fontWeight: 'bold',
-        fontSize: 18,
+        fontWeight: Platform.OS === 'ios' ? '500' : 'bold',
+        fontSize: 17,
         marginBottom: 10,
         padding: 10,
         color: theme.orange8,

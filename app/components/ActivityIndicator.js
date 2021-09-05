@@ -21,7 +21,7 @@ const getStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor:theme.neutral,
+        backgroundColor: theme.base1,
         display: "flex",
         justifyContent: "center",
         alignItems: "center"

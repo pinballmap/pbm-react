@@ -52,7 +52,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
-                                        <Text>{'New Machines'}</Text>
+                                        New Machines
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
@@ -64,7 +64,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
-                                        <Text>{'New Conditions'}</Text>
+                                        New Conditions
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
@@ -76,7 +76,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
-                                        <Text>{'Removed Machines'}</Text>
+                                        Removed Machines
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
@@ -88,7 +88,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
-                                        <Text>{'Scores'}</Text>
+                                        Scores
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
@@ -100,7 +100,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                                 </Avatar>
                                 <ListItem.Content>
                                     <ListItem.Title style={s.titleStyle}>
-                                        <Text>{'Confirmed Locations'}</Text>
+                                        Confirmed Locations
                                     </ListItem.Title>
                                 </ListItem.Content>
                             </ListItem>
@@ -112,7 +112,7 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
                 containerStyle={{width:60}}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{color: theme.blue3, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "400"}}
+                titleStyle={{color: theme.blue3, fontSize: 16, fontWeight: Platform.OS === 'ios' ? "600" : "normal"}}
                 type="clear"
             />
         </View>
@@ -122,11 +122,11 @@ const FilterRecentActivity = ({setSelectedActivityFilter, query }) => {
 
 const getStyles = (theme) => StyleSheet.create({
     containerNotSelected: {
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
     },
     header: {
         backgroundColor: theme.blue1,
-        marginTop: -15,
+        marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         height: 40,
@@ -136,7 +136,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.orange8,
         textAlign: "center",
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold'
     },
     xButton: {
         position: 'absolute',

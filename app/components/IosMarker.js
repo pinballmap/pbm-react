@@ -1,5 +1,5 @@
 import React from 'react'
-import {View} from "react-native"
+import {Platform, View} from "react-native"
 import Text from './PbmText'
 import PropTypes from "prop-types"
 
@@ -29,7 +29,7 @@ const IosMarker = ({numMachines}) => {
         }}>
             <Text style={{
                 color: 'white',
-                fontWeight: 'bold',
+                fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
                 textAlign: 'center',
                 fontSize: 18,
                 marginTop: dotFontMargin}}>

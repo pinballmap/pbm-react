@@ -42,7 +42,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontSize: 18,
         color: 'white',
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "600" : "500"
+        fontWeight: Platform.OS === 'ios' ? "600" : "bold"
     },
     redButton: {
         backgroundColor: theme.red2,

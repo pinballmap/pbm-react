@@ -59,7 +59,7 @@ class MachineDetails extends Component {
             headerRight: () => <RemoveMachine navigation={navigation} />,
             title: null,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
@@ -194,7 +194,7 @@ class MachineDetails extends Component {
                                     <Text style={s.machineName}>{machineName}</Text>
                                     <Text style={s.locationName}>{location.name}</Text>
                                 </View>
-                                <Text style={{textAlign:'center',marginTop:5,marginBottom:10}}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.sectionTitle}>Machine Comments</Text>
@@ -300,29 +300,33 @@ class MachineDetails extends Component {
 
 const getStyles = theme => StyleSheet.create({
     backgroundColor: {
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     machineName: {
         textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 24,
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontSize: 18,
         color: theme.orange8
     },
     locationName: {
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 16,
         color: theme.orange7
     },
     machineNameContainer: {
-        backgroundColor: theme.neutral2,
-        borderRadius: 25,
         marginBottom: 5,
-        marginRight: 35,
-        marginLeft: 35,
+        marginHorizontal: 35,
         borderWidth: 0,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingVertical: 5,
         textAlign:'center',
+    },
+    addedText: {
+        textAlign: 'center',
+        marginTop: 5,
+        marginBottom: 10,
+        fontSize: 14,
+        color: theme.orange7,
+        opacity: 0.9
     },
     externalLink: {
         borderRadius: 25,
@@ -346,14 +350,14 @@ const getStyles = theme => StyleSheet.create({
     conditionText: {
         color: theme.orange8,
         fontStyle: 'italic',
-        fontSize: 16,
+        fontSize: 14,
         marginTop: 5
     },
     scoreText: {
         color: theme.orange8,
-        fontSize: 16,
+        fontSize: 14,
         marginTop: 5,
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
     },
     noneYet: {
         textAlign: 'center',
@@ -364,7 +368,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         color: theme.text,
         borderWidth: 1,
         marginBottom: 10,
@@ -382,7 +386,7 @@ const getStyles = theme => StyleSheet.create({
     },
     userHighScore: {
         textAlign:'center',
-        fontSize: 24,
+        fontSize: 20,
         paddingBottom: 15,
         color: theme.orange7
     },
@@ -433,19 +437,20 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     locationNameContainer: {
-        backgroundColor: theme.indigo1,
+        backgroundColor: theme.base3,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 0,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 16,
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 10,
-        color: theme.text
+        color: theme.orange8,
+        opacity: 0.9
     },
 })
 

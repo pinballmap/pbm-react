@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
     Dimensions,
     FlatList,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -39,7 +40,7 @@ export class LocationList extends Component {
             title: 'Locations on the Map',
             headerRight: () => <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
@@ -120,8 +121,7 @@ export class LocationList extends Component {
                                 />
                             </View>
                         </ConfirmationModal>
-                        <View style={{flex: 1,backgroundColor: theme.neutral}}>
-                            <Text style={s.sort}>SORT BY:</Text>
+                        <View style={{flex: 1,backgroundColor: theme.base1}}>
                             <ButtonGroup
                                 onPress={this.updateIndex}
                                 selectedIndex={this.props.locations.selectedLocationListFilter}
@@ -161,15 +161,11 @@ export class LocationList extends Component {
 }
 
 const getStyles = theme => StyleSheet.create({
-    sort: {
-        textAlign: 'center',
-        marginTop: 5,
-    },
     buttonGroupContainer: {
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -186,13 +182,13 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
     },
     confirmText: {
         textAlign: 'center',

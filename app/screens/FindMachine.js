@@ -39,7 +39,7 @@ let deviceHeight = Dimensions.get('window').height
 
 const getDisplayText = machine => (
     <Text style={{ fontSize: 18 }}>
-        <Text style={{ fontWeight: 'bold' }}>{machine.name}</Text>
+        <Text style={{ fontWeight: Platform.OS === 'ios' ? '600' : 'bold' }}>{machine.name}</Text>
         <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
 )
@@ -54,12 +54,12 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         const { index, machine, selected } = this.props
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.neutral : theme.white
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.white
 
         return (
             <Pressable
                 onPress={this._onPress}
-                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor,opacity: 1}]}
+                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}
             >
                 <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
                 {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
@@ -102,14 +102,14 @@ class FindMachine extends React.PureComponent {
                         onPress={() => navigation.goBack(null)}
                     >
                         {({ pressed }) => (
-                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontWeight: 'bold', marginRight: 10}}>
+                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontWeight: Platform.OS === 'ios' ? '600' : 'bold', marginRight: 10}}>
                                 Done
                             </Text>
                         )}
                     </Pressable>
                     : <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
@@ -187,13 +187,13 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.neutral : theme.neutral2
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
         return (
             <Pressable
                 onPress={() => this.setSelected(item)}
             >
                 {({ pressed }) => (
-                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
+                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
                         <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
                     </View>
                 )}
@@ -283,11 +283,11 @@ class FindMachine extends React.PureComponent {
                     inputStyle={{ color: theme.text }}
                     value={this.state.query}
                     inputContainerStyle={s.filterInput}
-                    containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
+                    containerStyle={{backgroundColor:theme.base1,borderBottomWidth:0,borderTopWidth:0}}
                     autoCorrect={false}
                 />
                 {!multiSelect ?
-                    <View style={{backgroundColor:theme.neutral}}>
+                    <View style={{backgroundColor:theme.base1}}>
                         <ButtonGroup
                             onPress={this.toggleViewMachinesInMapArea}
                             selectedIndex={selectedIdx}
@@ -314,7 +314,7 @@ class FindMachine extends React.PureComponent {
                     data={this.state.machines}
                     renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                     keyExtractor={this.keyExtractor}
-                    style={{backgroundColor:theme.neutral,paddingHorizontal:5}}
+                    style={{backgroundColor:theme.base1,paddingHorizontal:5}}
                 />
             </>
         )
@@ -323,20 +323,20 @@ class FindMachine extends React.PureComponent {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     filterInput: {
         height: 35,
         backgroundColor: theme.white,
         borderRadius: 25,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         borderWidth: 1,
         borderBottomWidth: 1,
         marginHorizontal: 5
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         borderWidth: 1,
         marginLeft: 20,
         marginRight: 20,
@@ -351,14 +351,14 @@ const getStyles = theme => StyleSheet.create({
     multiSelect: {
         alignItems: 'center',
         padding: 5,
-        backgroundColor: theme.indigo1
+        backgroundColor: theme.base3
     },
     buttonGroupContainer: {
         height: 40,
         marginBottom: 10,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -375,16 +375,16 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
     },
     pressed: {
-        backgroundColor: theme.indigo1,
+        backgroundColor: theme.base3,
         opacity: 0.8
     },
     notPressed: {

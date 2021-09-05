@@ -71,11 +71,11 @@ const TabNav = createBottomTabNavigator(
                     case 'Map':
                         return <MaterialIcons name='search' size={(focused) ? 30 : 28} color={tintColor} />
                     case 'Saved':
-                        return <MaterialCommunityIcons name='heart-outline' size={(focused) ? 28 : 26} color={tintColor} />
+                        return <MaterialCommunityIcons name='heart-outline' size={(focused) ? 30 : 28} color={tintColor} />
                     case 'Activity':
-                        return <FontAwesome name='newspaper-o' size={(focused) ? 26 : 24} color={tintColor} />
+                        return <MaterialCommunityIcons name='newspaper-variant-outline' size={(focused) ? 30 : 28} color={tintColor} />
                     case 'Profile':
-                        return <MaterialCommunityIcons name='emoticon-cool-outline' size={(focused) ? 30 : 28} color={tintColor} />
+                        return <MaterialCommunityIcons name='account-circle-outline' size={(focused) ? 30 : 28} color={tintColor} />
                     case 'Menu':
                         return <MaterialIcons name='more-horiz' size={(focused) ? 30 : 28} color={tintColor} />
                 }
@@ -91,7 +91,7 @@ const TabNav = createBottomTabNavigator(
                     case 'Activity':
                         return label = focused ? <Text style={s(theme).activeTabText}>Activity</Text> : <Text style={s(theme).inactiveTabText}>Activity</Text>
                     case 'Profile':
-                        return label = focused ? <Text style={s(theme).activeTabText}>Profile</Text> : <Text style={s(theme).inactiveTabText}>Profile</Text>
+                        return label = focused ? <Text style={s(theme).activeTabText}>You</Text> : <Text style={s(theme).inactiveTabText}>You</Text>
                     case 'Menu':
                         return label = focused ? <Text style={s(theme).activeTabText}>More</Text> : <Text style={s(theme).inactiveTabText}>More</Text>
                 }
@@ -117,10 +117,11 @@ const TabNav = createBottomTabNavigator(
                 showIcon: true,
                 adaptive: false,
                 style: {
-                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                    backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                     height: Platform.isPad ? 55 : Platform.OS === 'ios' ? 46 : 54,
                     marginBottom: 0,
-                    borderTopWidth: 0,
+                    borderTopWidth: 1,
+                    borderTopColor: theme === 'dark' ? '#797479' : '#e0e0ff',
                     shadowColor: 'transparent',
                     elevation: 0,
                     shadowOffset: { height: 0, width: 0 },
@@ -208,7 +209,7 @@ export const drawerNavigator = createDrawerNavigator({
     drawerPosition: 'right',
     drawerWidth: 250,
     drawerBackgroundColor: {
-        light: '#fffbf5',
+        light: '#f5f5ff',
         dark: '#1d1c1d',
     },
     contentOptions: {
@@ -221,7 +222,7 @@ export const drawerNavigator = createDrawerNavigator({
             dark: '#e6cfbe'
         },
         activeBackgroundColor: {
-            light: '#fffbf5',
+            light: '#f5f5ff',
             dark: '#1d1c1d'
         },
     },
@@ -231,7 +232,7 @@ export const PbmStack = createAppContainer(drawerNavigator)
 
 const s = theme => StyleSheet.create({
     activeTabText: {
-        fontWeight: "bold",
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         fontSize: 11,
         color: theme === 'dark' ? '#addbff' : '#7cc5ff',
         marginBottom: Platform.OS === 'android' ? 5 : 0,

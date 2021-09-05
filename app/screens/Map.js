@@ -74,7 +74,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: 'bold' }}>{marker.name}</Text>
+                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: '600' }}>{marker.name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                         {Platform.OS === 'android' ?
                             <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
@@ -403,7 +403,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: "#F53240",
         padding: 5,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     confirmText: {
         textAlign: 'center',
@@ -427,11 +427,11 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         textAlign: "center",
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold'
     },
     appAlertHeader: {
         backgroundColor: theme.blue1,
-        marginTop: -15,
+        marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         height: 40,
@@ -448,16 +448,16 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 10,
         height: 30,
         borderRadius: 25,
-        backgroundColor: theme.white,
+        backgroundColor: theme.base1,
     },
     buttonTitle: {
         color: theme.text,
         fontSize: 14
     },
     containerStyle: {
-        shadowColor: theme.shadow,
+        shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
+        shadowOpacity: .6,
         shadowRadius: 6,
         elevation: 6,
         overflow: 'visible'
@@ -473,7 +473,7 @@ const getStyles = theme => StyleSheet.create({
         bottom: 20,
         alignSelf: 'center',
         borderRadius: 25,
-        backgroundColor: theme.white,
+        backgroundColor: theme.base1,
         paddingVertical: 10,
         paddingHorizontal: 20
     },
@@ -494,7 +494,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         height: 50,
         width: 50,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
     },
     filterContainer: {
         position: 'absolute',

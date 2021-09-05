@@ -49,7 +49,7 @@ class EditLocationDetails extends Component {
             title: navigation.getParam('name'),
             headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
@@ -116,7 +116,7 @@ class EditLocationDetails extends Component {
                                     </View>
                                     :
                                     <SafeAreaView style={s.background}>
-                                        <ScrollView style={{backgroundColor:theme.neutral}}>
+                                        <ScrollView style={{backgroundColor:theme.base1}}>
                                             <Text style={s.title}>Phone</Text>
                                             <Text style={s.preview}>{phone}</Text>
                                             <View style={s.hr}></View>
@@ -214,14 +214,14 @@ class EditLocationDetails extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     title: {
         textAlign:'center',
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         color: theme.orange7
     },
     preview: {
@@ -231,7 +231,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         color: theme.text,
         borderWidth: 1,
         marginHorizontal: 20,

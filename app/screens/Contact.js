@@ -125,7 +125,7 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
     title: 'Contact',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
@@ -144,15 +144,15 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 15,
         marginRight: 15,
-        fontWeight: '600',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         color: theme.text,
         textAlign: 'center'
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         color: theme.text,
-        borderWidth:1,
+        borderWidth: 1,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 20,

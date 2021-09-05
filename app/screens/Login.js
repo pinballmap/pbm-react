@@ -189,11 +189,11 @@ const getStyles = theme => StyleSheet.create({
     },
     errorText: {
         color: 'red',
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         textAlign: 'center'
     },
     bold: {
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         textAlign: 'center',
         fontSize: 22,
         color: theme.text,
@@ -206,7 +206,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         marginTop: 5,
         marginBottom: 5,
         paddingLeft: 10
@@ -217,7 +217,7 @@ const getStyles = theme => StyleSheet.create({
     textLink: {
         fontSize: 16,
         textAlign: "center",
-        fontWeight: "bold",
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
         color: theme.orange7,
         textShadowColor: theme.white,
         textShadowOffset: {width: -1, height: 1},
@@ -238,7 +238,7 @@ const getStyles = theme => StyleSheet.create({
     buttonTitle: {
         color: theme.orange8,
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: Platform.OS === 'ios' ? '500' : 'bold'
     },
     justify: {
         flexDirection: 'column',

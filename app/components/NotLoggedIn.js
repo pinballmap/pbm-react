@@ -27,7 +27,7 @@ const NotLoggedIn = ({ onPress, text }) => {
 const getStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
     },
     hiya: {
         fontStyle: 'italic',

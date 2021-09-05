@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground } from "react-native"
+import { ImageBackground, Platform } from "react-native"
 import Text from './PbmText'
 import PropTypes from "prop-types"
 import markerDotHeart from '../assets/images/markerdot-heart.png'
@@ -23,7 +23,7 @@ const IosHeartMarker = ({numMachines}) => {
         <ImageBackground style={{width: dotWidth, height: dotWidth * .875}} source={markerDotHeart} >
             <Text style={{
                 color: 'white',
-                fontWeight: 'bold',
+                fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
                 textAlign: 'center',
                 fontSize: 18,
                 marginTop: dotFontMargin}}>

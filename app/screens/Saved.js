@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     FlatList,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -31,7 +32,7 @@ export class Saved extends Component {
             title: 'Saved Locations',
             headerRight: () => <View style={{ padding: 6 }}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
@@ -97,7 +98,6 @@ export class Saved extends Component {
                                 <View style={{ flex: 1 }}>
                                     {this.state.locations.length > 0 ?
                                         <View style={{ flex: 1 }}>
-                                            <Text style={s.sort}>SORT BY:</Text>
                                             <ButtonGroup
                                                 onPress={this.updateIndex}
                                                 selectedIndex={this.props.user.selectedFavoriteLocationFilter}
@@ -108,7 +108,7 @@ export class Saved extends Component {
                                                 selectedTextStyle={s.selTextStyle}
                                                 innerBorderStyle={s.innerBorderStyle}
                                             />
-                                            <View style={{ flex: 1, position: 'absolute', left: 0, top: 70, bottom: 0, right: 0 }}>
+                                            <View style={{ flex: 1, position: 'absolute', left: 0, top: 55, bottom: 0, right: 0 }}>
                                                 <FlatList
                                                     data={this.state.locations}
                                                     extraData={this.state}
@@ -149,11 +149,7 @@ export class Saved extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
-    },
-    sort: {
-        textAlign: 'center',
-        marginTop: 5,
+        backgroundColor: theme.base1
     },
     buttonStyle: {
         backgroundColor: theme.blue2,
@@ -162,7 +158,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -178,13 +174,13 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
     },
     savedIcon: {
         fontSize: 50,

@@ -6,6 +6,7 @@ import {
     Image,
     ImageBackground,
     Linking,
+    Platform,
     StyleSheet,
     Text,
     View,
@@ -234,7 +235,7 @@ const getStyles = theme => StyleSheet.create({
         height: null,
     },
     bold: {
-        fontWeight:"bold",
+        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
     },
     outerBorder: {
         marginTop: 10,
@@ -271,7 +272,7 @@ const getStyles = theme => StyleSheet.create({
     titleStyle: {
         color: "#766a62",
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: Platform.OS === 'ios' ? '500' : 'bold'
     },
     justify: {
         flexDirection: 'column',
