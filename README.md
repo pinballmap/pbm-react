@@ -9,6 +9,11 @@
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.6
+September 5, 2021
+
+- Fixed that bug more better with the "my location" button on some devices
+
 ### 5.2.5
 August 30, 2021
 
