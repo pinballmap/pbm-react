@@ -143,6 +143,7 @@ class Map extends Component {
         if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
             this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
         } else {
+            this.setState({ isInitialLoad: true })
             this.props.getCurrentLocation()
         }
 
@@ -188,6 +189,14 @@ class Map extends Component {
 
         if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations || filterByMachineVersion !== this.props.query.filterByMachineVersion) {
             this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
+        }
+
+        if (!props.user.locationTrackingServicesEnabled && !props.user.isFetchingLocationTrackingEnabled && props.user.isFetchingLocationTrackingEnabled !== this.props.user.isFetchingLocationTrackingEnabled) {
+            if (this.state.isInitialLoad) {
+                this.setState({ isInitialLoad: false })
+            } else {
+                this.setState({ showNoLocationTrackingModal: true })
+            }
         }
 
     }
@@ -303,9 +312,7 @@ class Map extends Component {
                     />
                     <Pressable
                         style={({ pressed }) => [{},s.containerStyle,s.myLocationContainer,pressed ? s.pressed : s.notPressed]}
-                        onPress={() => {
-                            locationTrackingServicesEnabled ? this.updateCurrentLocation() : this.setState({ showNoLocationTrackingModal: true })
-                        }}
+                        onPress={this.updateCurrentLocation}
                     >
                         {Platform.OS === 'ios' ?
                             <FontAwesome
