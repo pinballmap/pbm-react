@@ -296,7 +296,7 @@ class Map extends Component {
                         showsUserLocation={true}
                         moveOnMarkerPress={false}
                         showsMyLocationButton={false}
-                        provider = { MapView.PROVIDER_GOOGLE }
+                        userInterfaceStyle={ theme.theme === 'dark' ? 'dark' : 'light'}
                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                     >
                         {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
