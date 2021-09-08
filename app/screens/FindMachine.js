@@ -39,7 +39,7 @@ let deviceHeight = Dimensions.get('window').height
 
 const getDisplayText = machine => (
     <Text style={{ fontSize: 18 }}>
-        <Text style={{ fontWeight: Platform.OS === 'ios' ? '600' : 'bold' }}>{machine.name}</Text>
+        <Text style={{ fontFamily: 'boldFont', }}>{machine.name}</Text>
         <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
 )
@@ -102,7 +102,7 @@ class FindMachine extends React.PureComponent {
                         onPress={() => navigation.goBack(null)}
                     >
                         {({ pressed }) => (
-                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontWeight: Platform.OS === 'ios' ? '600' : 'bold', marginRight: 10}}>
+                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontFamily: 'boldFont', marginRight: 10}}>
                                 Done
                             </Text>
                         )}
@@ -117,6 +117,7 @@ class FindMachine extends React.PureComponent {
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             gestureEnabled: true
         }
@@ -381,7 +382,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
     },
     pressed: {
         backgroundColor: theme.base3,

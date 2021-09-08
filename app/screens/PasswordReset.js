@@ -86,6 +86,7 @@ PasswordReset.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     gestureEnabled: true
 })

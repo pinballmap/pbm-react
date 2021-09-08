@@ -47,6 +47,7 @@ export class LocationList extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -188,7 +189,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
     },
     confirmText: {
         textAlign: 'center',

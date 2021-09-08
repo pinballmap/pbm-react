@@ -110,6 +110,7 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -120,33 +121,22 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         backgroundColor: theme.base1,
         marginBottom: 15,
+        paddingHorizontal: 10
     },
     pageTitle: {
-        paddingVertical: 10,
-        backgroundColor: theme.blue1,
-        marginBottom: 10
+        paddingTop: 10,
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.text
-    },
-    bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
-        fontSize: 18,
-        marginBottom: 10,
-        padding: 10,
-        color: theme.text,
-        backgroundColor: theme.blue1,
-        textAlign: 'center'
     },
     text: {
         fontSize: 14,
         color: theme.orange7,
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
         lineHeight: 22,
-        marginBottom: 15,
         marginLeft: 15,
         marginRight: 15,
     },
@@ -177,7 +167,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
     },
 })
 

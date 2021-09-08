@@ -109,6 +109,7 @@ Resources.navigationOptions = ({ navigation, theme }) => ({
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -127,7 +128,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
     },
     bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
     },
     textLink: {
         textDecorationLine: 'underline',

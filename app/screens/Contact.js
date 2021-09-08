@@ -132,6 +132,7 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -144,7 +145,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginLeft: 15,
         marginRight: 15,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.text,
         textAlign: 'center'
     },

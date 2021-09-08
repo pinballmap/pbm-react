@@ -40,6 +40,7 @@ class RecentActivity extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -176,7 +177,7 @@ const getStyles = theme => StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontStyle: "italic",
+        fontFamily: 'regularItalicFont',
         color: theme.orange7
     },
     subtitleStyle: {
@@ -197,7 +198,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: "center",
         color: theme.text,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         paddingVertical: 8,
     },
     flexi: {
@@ -223,7 +224,7 @@ const getStyles = theme => StyleSheet.create({
     problem: {
         textAlign: "center",
         color: theme.text,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         marginTop: 20
     },
     xButton: {

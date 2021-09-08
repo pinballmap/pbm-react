@@ -304,7 +304,7 @@ const getStyles = theme => StyleSheet.create({
     },
     machineName: {
         textAlign: 'center',
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         color: theme.orange8
     },
@@ -349,7 +349,6 @@ const getStyles = theme => StyleSheet.create({
     },
     conditionText: {
         color: theme.orange8,
-        fontStyle: 'italic',
         fontSize: 14,
         marginTop: 5
     },
@@ -357,12 +356,11 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         fontSize: 14,
         marginTop: 5,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
     },
     noneYet: {
         textAlign: 'center',
         paddingHorizontal: 15,
-        fontStyle: 'italic',
         color: theme.orange7,
         paddingVertical: 5,
     },
@@ -445,7 +443,7 @@ const getStyles = theme => StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 10,

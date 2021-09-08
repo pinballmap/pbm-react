@@ -56,6 +56,7 @@ class EditLocationDetails extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -221,7 +222,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.orange7
     },
     preview: {

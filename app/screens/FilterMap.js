@@ -175,6 +175,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     gestureEnabled: true
 })
@@ -188,7 +189,7 @@ const getStyles = theme => StyleSheet.create({
     sectionTitle: {
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
     },
     marginTop25: {
         marginTop: 25
@@ -227,7 +228,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: '600',
+        fontFamily: 'regularBoldFont',
     },
 })
 

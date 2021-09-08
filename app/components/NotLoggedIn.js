@@ -30,7 +30,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme.base1,
     },
     hiya: {
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
         paddingHorizontal: 15,
         paddingBottom: 10,
         paddingTop: 25,

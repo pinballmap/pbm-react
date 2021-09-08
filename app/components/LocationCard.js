@@ -55,7 +55,7 @@ const LocationCard = ({
                                 const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                 return (
                                     <Text key={key} style={s.mName}>
-                                        <Text style={{fontWeight: Platform.OS === 'ios' ? '600' : 'bold',fontSize: 17}}>{title}</Text>
+                                        <Text style={{fontFamily: 'boldFont',fontSize: 17}}>{title}</Text>
                                         <Text>{`${info}\n`}</Text>
                                     </Text>
                                 )})
@@ -111,7 +111,7 @@ const getStyles = (theme) => StyleSheet.create({
         marginHorizontal: -2,
     },
     locationName: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         textAlign: 'center',
         color: theme.text
@@ -128,7 +128,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.orange7,
     },
     italic: {
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
     },
     iconStyle: {
         fontSize: 32,

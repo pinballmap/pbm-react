@@ -416,7 +416,7 @@ const getStyles = theme => StyleSheet.create({
     },
     searchHistoryTitle: {
         color: theme.orange7,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
     },
     clear: {
         color: theme.orange7,
@@ -427,7 +427,7 @@ const getStyles = theme => StyleSheet.create({
     cityRegionRow: {
         position: 'absolute',
         right: 0,
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
         color: '#97a5af'
     },
     pressed: {

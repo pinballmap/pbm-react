@@ -35,10 +35,11 @@ export class Saved extends Component {
                 backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
-                shadowColor: 'transparent'
+                shadowColor: 'transparent',
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -180,7 +181,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
     },
     savedIcon: {
         fontSize: 50,

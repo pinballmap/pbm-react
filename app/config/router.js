@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer'
-import { Platform, StyleSheet, Text } from 'react-native'
+import { Dimensions, Platform, StyleSheet, Text } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import FilterMap from '../screens/FilterMap'
 import LocationList from '../screens/LocationList'
@@ -34,6 +34,8 @@ import Resources from '../screens/Resources'
 import FindCountry from '../screens/FindCountry'
 
 import { DrawerMenu } from '../components'
+
+let deviceWidth = Dimensions.get('window').width
 
 const map = createStackNavigator({
     Map
@@ -225,6 +227,10 @@ export const drawerNavigator = createDrawerNavigator({
             light: '#f5f5ff',
             dark: '#1d1c1d'
         },
+        labelStyle: {
+            fontFamily: 'boldFont',
+            marginVertical: deviceWidth < 325 ? 10 : 15
+        }
     },
 })
 
@@ -232,14 +238,14 @@ export const PbmStack = createAppContainer(drawerNavigator)
 
 const s = theme => StyleSheet.create({
     activeTabText: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
         fontSize: 11,
         color: theme === 'dark' ? '#addbff' : '#7cc5ff',
         marginBottom: Platform.OS === 'android' ? 5 : 0,
         marginTop: Platform.OS === 'android' ? -5 : 0
     },
     inactiveTabText: {
-        fontWeight: "normal",
+        fontFamily: 'regularFont',
         fontSize: 11,
         color: theme === 'dark' ? '#ebebeb' : '#95867c',
         marginBottom: Platform.OS === 'android' ? 5 : 0,

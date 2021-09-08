@@ -28,7 +28,7 @@ export const standard = {
     base2:      '#f5f5ff',
     base3:      '#ebebff',
     base4:      '#e0e0ff',
-    blue1:      '#D3ECFF',
+    blue1:      '#e0f1ff',
     blue2:      '#addbff',
     blue3:      '#7cc5ff',
     blue4:      '#2d8ad3',

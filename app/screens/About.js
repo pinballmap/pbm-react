@@ -92,7 +92,7 @@ const About = ({navigation, appAlert}) => {
                     </View>
                     {Platform.OS === "android" ?
                         <View style={[s.logoWrapper]}>
-                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/>
+                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.patreonLogo]}/>
                         </View>: null
                     }
                 </View>
@@ -116,6 +116,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -136,12 +137,18 @@ const getStyles = theme => StyleSheet.create({
         flex: 2,
         margin: "auto",
         paddingTop: 10,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+
     },
     logo: {
         flex: 1,
         width: deviceWidth - 20,
-        backgroundColor: theme.blue2
+        borderRadius: Platform.OS === "ios" ? 10 : 0,
+        backgroundColor: theme.blue2,
+    },
+    patreonLogo: {
+        flex: 1,
+        width: deviceWidth - 20,
     },
     child: {
         margin: "auto",
@@ -153,7 +160,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10
     },
     bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         marginBottom: 10
     },

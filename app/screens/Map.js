@@ -74,7 +74,7 @@ const CustomMarker = ({ marker, navigation, s }) => {
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18', fontWeight: '600' }}>{marker.name}</Text>
+                        <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{marker.name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
                         {Platform.OS === 'android' ?
                             <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
@@ -434,7 +434,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         textAlign: "center",
         fontSize: 18,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold'
+        fontFamily: 'boldFont',
     },
     appAlertHeader: {
         backgroundColor: theme.blue1,

@@ -48,6 +48,7 @@ class UserProfile extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -219,7 +220,7 @@ const getStyles = theme => StyleSheet.create({
         marginVertical: 6
     },
     bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
         paddingHorizontal: 10,
@@ -262,7 +263,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
     },
     username: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
@@ -278,7 +279,7 @@ const getStyles = theme => StyleSheet.create({
         width: 200
     },
     statNum: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.base1,
         backgroundColor: theme.orange7,
         fontSize: 16,
@@ -289,7 +290,7 @@ const getStyles = theme => StyleSheet.create({
     member: {
         textAlign: "center",
         marginBottom: 10,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 16,
         marginTop: 5,
         color: theme.orange8

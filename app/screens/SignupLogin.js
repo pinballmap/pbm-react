@@ -235,7 +235,7 @@ const getStyles = theme => StyleSheet.create({
         height: null,
     },
     bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
     },
     outerBorder: {
         marginTop: 10,
@@ -272,7 +272,7 @@ const getStyles = theme => StyleSheet.create({
     titleStyle: {
         color: "#766a62",
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '500' : 'bold'
+        fontFamily: 'boldFont',
     },
     justify: {
         flexDirection: 'column',

@@ -76,7 +76,7 @@ class LocationDetails extends Component {
     getTitle = (machine, s) => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year ? <Text style={[s.fontSize18,s.italic,s.orange7]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
+            {machine.year ? <Text style={[s.fontSize18,s.orange7]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
@@ -367,11 +367,18 @@ class LocationDetails extends Component {
                                                 {location.website ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8]}>Operated by:
+                                                    <View style={(location.phone && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
                                                         <Text style={s.orange7}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text></View> : null
                                                 }
+
+                                                {location.date_last_updated ?
+                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    : null
+                                                }
+
                                             </View>
+
                                             {location.location_type_id ?
                                                 <View style={s.locationTypeContainer}>
                                                     {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.orange8,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
@@ -382,7 +389,7 @@ class LocationDetails extends Component {
                                                             color={theme.orange3}
                                                             size={46}
                                                         />
-                                                        <Text style={[s.fontSize14,s.orange8,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.orange8,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
                                                 </View> : null
                                             }
@@ -394,7 +401,6 @@ class LocationDetails extends Component {
                                                 </View> : null
                                             }
                                         </View>
-                                        {location.date_last_updated && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>}
                                         {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                     </View>
                                     <View style={s.backgroundColor}>
@@ -415,7 +421,7 @@ class LocationDetails extends Component {
                                                                     {machine.condition_date ? <Text style={[s.fontSize13,s.orange7]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                 </View>
                                                                 <View style={{flexDirection: "row",paddingTop: 10}}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
-                                                                    {machine.condition ? <Text style={[s.orange7,s.italic,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                    {machine.condition ? <Text style={[s.orange7,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                 </View>
                                                             </View> : null
                                                         }
@@ -462,12 +468,13 @@ const getStyles = theme => StyleSheet.create({
     },
     locationName: {
         textAlign: 'center',
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 20,
         paddingHorizontal: 8,
         color: theme.text,
-        marginVertical: 8,
-        opacity: 0.9
+        marginTop: 8,
+        marginBottom: 4,
+        opacity: 0.8
     },
     machineListContainer: {
         borderRadius: 25,
@@ -500,7 +507,7 @@ const getStyles = theme => StyleSheet.create({
     },
     machineName: {
         color: theme.text,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 20,
     },
     locationMetaContainer: {
@@ -542,6 +549,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
     },
     marginB8: {
+        marginTop: Platform.OS === 'android' ? 2 : 0,
         marginBottom: 8
     },
     marginRight: {
@@ -559,7 +567,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8
     },
     italic: {
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont'
     },
     opacity09: {
         opacity: 0.9
@@ -585,7 +593,6 @@ const getStyles = theme => StyleSheet.create({
     },
     staleText: {
         color: theme.red2,
-        fontStyle: 'italic',
     },
     buttonIcon: {
         color: theme.orange7,
@@ -595,7 +602,7 @@ const getStyles = theme => StyleSheet.create({
     confirmText: {
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         marginLeft: 10,
         marginRight: 10
     },
@@ -614,22 +621,20 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         padding: 10,
         zIndex: 10,
-        borderRadius: 17,
-        height: 34,
-        width: 34,
+        borderRadius: 20,
+        height: 40,
+        width: 40,
         alignSelf: 'center',
         justifyContent:'center',
+        top: deviceWidth < 325 ? 75 : 115
     },
     saveButton: {
-        top: 120,
         right: 10,
     },
     plusButton: {
-        top: 120,
         right: 110,
     },
     shareButton: {
-        top: 120,
         right: 60,
     },
     savedIcon: {
@@ -662,7 +667,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.text,
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "bold"
+        fontFamily: 'boldFont',
     },
     buttonContainerStyle: {
         marginHorizontal: deviceWidth < 325 ? 20 : 40,
@@ -689,7 +694,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         textAlign: "center",
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold'
+        fontFamily: 'boldFont',
     },
     xButton: {
         position: 'absolute',
@@ -705,14 +710,14 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
         overflow: 'visible',
         position: 'absolute',
-        bottom: 30,
+        bottom: deviceWidth < 325 ? 20 : 30,
         right: 20,
         zIndex: 100,
         alignSelf: 'center',
         justifyContent:'center',
-        borderRadius: 25,
-        height: 50,
-        width: 50,
+        borderRadius: 27,
+        height: 54,
+        width: 54,
     },
     toolsIconPressed: {
         backgroundColor: theme.base2,
@@ -725,6 +730,14 @@ const getStyles = theme => StyleSheet.create({
     },
     quickButtonNotPressed: {
         backgroundColor: theme.white,
+    },
+    wide: {
+        width: '153%',
+        flexDirection: "row"
+    },
+    narrow: {
+        width: '100%',
+        flexDirection: "row"
     }
 })
 

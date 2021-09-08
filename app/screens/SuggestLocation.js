@@ -69,6 +69,7 @@ class SuggestLocation extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -104,7 +105,7 @@ class SuggestLocation extends Component {
 
     getDisplayText = machine => (
         <Text style={{fontSize: 16}}>
-            <Text style={{fontWeight: Platform.OS === 'ios' ? '600' : 'bold'}}>{machine.name}</Text>
+            <Text style={{fontFamily: 'boldFont',}}>{machine.name}</Text>
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
@@ -191,7 +192,7 @@ class SuggestLocation extends Component {
                                                         <ScrollView style={s.background}>
                                                             <View style={s.pageTitle}>
                                                                 {machineList.length === 0 || locationName.length === 0 ?
-                                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text>
+                                                                    <Text style={[s.pageTitleText,s.error]}>Please fill in required fields</Text>
                                                                     : <Text style={s.pageTitleText}>Please review your submission</Text>
                                                                 }
                                                             </View>
@@ -417,7 +418,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginLeft: 15,
         marginRight: 15,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.text,
         textAlign: 'center'
     },
@@ -426,7 +427,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.orange7
     },
     preview: {
@@ -440,8 +441,8 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitleText: {
         textAlign: 'center',
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
-        fontStyle: 'italic',
+        fontFamily: 'boldFont',
+        fontFamily: 'regularItalicFont',
         fontSize: 18,
         color: theme.orange8
     },
@@ -463,7 +464,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.white,
         marginHorizontal: 20,
         paddingHorizontal: 10,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold'
+        fontFamily: 'boldFont',
     },
     picker: {
         backgroundColor: '#ffffff',
@@ -483,9 +484,6 @@ const getStyles = theme => StyleSheet.create({
     },
     error: {
         color: theme.red2
-    },
-    errorTitle: {
-        color: '#fdd4d7'
     },
     plusButton: {
         color: theme.red2,

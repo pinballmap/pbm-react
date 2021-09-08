@@ -252,11 +252,11 @@ const getStyles = theme => StyleSheet.create({
     },
     errorText: {
         color: 'red',
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         textAlign: 'center'
     },
     bold: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         textAlign: 'center',
         fontSize: 18,
     },
@@ -276,7 +276,7 @@ const getStyles = theme => StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: "center",
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         color: theme.orange7,
     },
     iconStyle: {
@@ -294,7 +294,7 @@ const getStyles = theme => StyleSheet.create({
     buttonTitle: {
         color: theme.orange8,
         fontSize: 16,
-        fontWeight: Platform.OS === 'ios' ? '500' : 'bold'
+        fontFamily: 'boldFont',
     },
     justify: {
         flexDirection: 'column',

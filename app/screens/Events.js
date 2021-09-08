@@ -50,6 +50,7 @@ class Events extends Component {
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -114,7 +115,7 @@ class Events extends Component {
                                     <ActivityIndicator />
                                 </View> :
                                 error ?
-                                    <Text style={{textAlign:'center',fontWeight:Platform.OS === 'ios' ? '600' : 'bold',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
+                                    <Text style={{textAlign:'center',fontFamily: 'boldFont',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
                                     <>
                                         <View style={s.header}>
                                             <ButtonGroup
@@ -205,7 +206,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
         backgroundColor: theme.blue1,
@@ -218,7 +219,7 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: -2
     },
     locationName: {
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
         color: theme.text
@@ -233,7 +234,7 @@ const getStyles = theme => StyleSheet.create({
     problem: {
         textAlign: "center",
         color: theme.text,
-        fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+        fontFamily: 'boldFont',
         marginTop: 20,
         paddingHorizontal: 10,
         fontSize: 14

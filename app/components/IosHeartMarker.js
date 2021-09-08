@@ -7,23 +7,23 @@ import markerDotHeart from '../assets/images/markerdot-heart.png'
 const IosHeartMarker = ({numMachines}) => {
     let dotFontMargin, dotWidth
     if (numMachines < 10) {
-        dotFontMargin = 4
+        dotFontMargin = 3
         dotWidth = 36
     } else if (numMachines < 20) {
-        dotFontMargin = 4
+        dotFontMargin = 3
         dotWidth = 40
     } else if (numMachines < 100) {
-        dotFontMargin = 7
+        dotFontMargin = 6
         dotWidth = 46
     } else {
-        dotFontMargin = 8
+        dotFontMargin = 7
         dotWidth = 54
     }
     return (
         <ImageBackground style={{width: dotWidth, height: dotWidth * .875}} source={markerDotHeart} >
             <Text style={{
                 color: 'white',
-                fontWeight: Platform.OS === 'ios' ? '600' : 'bold',
+                fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,
                 marginTop: dotFontMargin}}>
