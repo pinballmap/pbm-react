@@ -252,11 +252,11 @@ const getStyles = theme => StyleSheet.create({
     },
     errorText: {
         color: 'red',
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         textAlign: 'center'
     },
     bold: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         textAlign: 'center',
         fontSize: 18,
     },
@@ -265,7 +265,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         marginTop: 5,
         marginBottom: 5,
         paddingLeft: 10
@@ -276,7 +276,7 @@ const getStyles = theme => StyleSheet.create({
     textLink: {
         fontSize: 14,
         textAlign: "center",
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
         color: theme.orange7,
     },
     iconStyle: {
@@ -294,7 +294,7 @@ const getStyles = theme => StyleSheet.create({
     buttonTitle: {
         color: theme.orange8,
         fontSize: 16,
-        fontWeight: '500'
+        fontFamily: 'boldFont',
     },
     justify: {
         flexDirection: 'column',

@@ -42,7 +42,7 @@ const FindCountry = ({ navigation }) => {
             onPress={() => _selectCountry(item.name, item.code)}
         >
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.indigo1,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.neutral : theme.neutral2,opacity: 1}]}>
+                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
                     <Text style={{fontSize: 18}}>{item.name}</Text>
                 </View>
             )}
@@ -65,13 +65,13 @@ const FindCountry = ({ navigation }) => {
                 inputStyle={{color:theme.text}}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:theme.neutral,borderBottomWidth:0,borderTopWidth:0}}
+                containerStyle={{backgroundColor:theme.base1,borderBottomWidth:0,borderTopWidth:0}}
             />
             <FlatList {...keyboardDismissProp}
                 data={selectedCountries}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{backgroundColor:theme.neutral}}
+                style={{backgroundColor:theme.base1}}
             />
         </>)
 }
@@ -81,7 +81,7 @@ const getStyles = theme => StyleSheet.create({
         height: 35,
         backgroundColor: theme.white,
         borderRadius: 25,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         borderWidth: 1,
         borderBottomWidth: 1,
         marginHorizontal: 10
@@ -92,13 +92,14 @@ FindCountry.navigationOptions = ({ navigation, theme }) => ({
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Select Country',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true

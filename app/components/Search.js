@@ -262,7 +262,7 @@ class Search extends Component {
                                 onShow={() => { this.textInput.focus() }}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.neutral }}>
+                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.base1 }}>
                                     <View style={s.modalContainer}>
                                         <View style={{ display: 'flex', flexDirection: 'row' }}>
                                             <MaterialIcons
@@ -332,7 +332,7 @@ Search.propTypes = {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
     },
     modalContainer: {
         flex: 1,
@@ -349,7 +349,7 @@ const getStyles = theme => StyleSheet.create({
     searchMapChild: {
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: theme.shadow,
+        shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
@@ -389,7 +389,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.white,
         borderRadius: 25,
         width: deviceWidth - 60,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         height: 40,
         display: 'flex',
         flexDirection: 'row',
@@ -416,7 +416,7 @@ const getStyles = theme => StyleSheet.create({
     },
     searchHistoryTitle: {
         color: theme.orange7,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
     },
     clear: {
         color: theme.orange7,
@@ -427,14 +427,14 @@ const getStyles = theme => StyleSheet.create({
     cityRegionRow: {
         position: 'absolute',
         right: 0,
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
         color: '#97a5af'
     },
     pressed: {
-        backgroundColor: theme.indigo1,
+        backgroundColor: theme.base3,
     },
     notPressed: {
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     filterPressed: {
         backgroundColor: theme.blue2,

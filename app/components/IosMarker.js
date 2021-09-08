@@ -1,21 +1,21 @@
 import React from 'react'
-import {View} from "react-native"
+import {Platform, View} from "react-native"
 import Text from './PbmText'
 import PropTypes from "prop-types"
 
 const IosMarker = ({numMachines}) => {
     let dotFontMargin, dotWidthHeight
     if (numMachines < 10) {
-        dotFontMargin = 3
+        dotFontMargin = 2
         dotWidthHeight = 32
     } else if (numMachines < 20) {
-        dotFontMargin = 5
+        dotFontMargin = 4
         dotWidthHeight = 36
     } else if (numMachines < 100) {
-        dotFontMargin = 7
+        dotFontMargin = 6
         dotWidthHeight = 40
     } else {
-        dotFontMargin = 10
+        dotFontMargin = 9
         dotWidthHeight = 46
     }
     return (
@@ -29,7 +29,7 @@ const IosMarker = ({numMachines}) => {
         }}>
             <Text style={{
                 color: 'white',
-                fontWeight: 'bold',
+                fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,
                 marginTop: dotFontMargin}}>

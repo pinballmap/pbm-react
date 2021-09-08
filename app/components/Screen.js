@@ -10,7 +10,7 @@ const Screen = (props) => {
         <ScrollView
             {...props}
             scrollIndicatorInsets={{ right: 1 }}
-            style={{ flex: 1,backgroundColor: theme.neutral }}
+            style={{ flex: 1,backgroundColor: theme.base1 }}
         >
             {props.children}
         </ScrollView>

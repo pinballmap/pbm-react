@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -166,7 +167,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     title: 'Apply Filters to the Map',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
@@ -174,6 +175,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     gestureEnabled: true
 })
@@ -182,12 +184,12 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     border: {
         borderWidth: 2,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
     },
     sectionTitle: {
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
     },
     marginTop25: {
         marginTop: 25
@@ -203,7 +205,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -220,13 +222,13 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontFamily: 'regularBoldFont',
     },
 })
 

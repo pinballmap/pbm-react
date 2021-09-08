@@ -38,7 +38,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     modal: {
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
         borderRadius: 15,
         width: '80%',
         paddingVertical: 15,

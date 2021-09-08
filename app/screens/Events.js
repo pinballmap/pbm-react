@@ -5,6 +5,7 @@ import Geocode from 'react-geocode'
 import {
     FlatList,
     Linking,
+    Platform,
     Pressable,
     StyleSheet,
     Text,
@@ -42,13 +43,14 @@ class Events extends Component {
             title: 'Nearby Events',
             headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -107,13 +109,13 @@ class Events extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <View style={{flex:1,backgroundColor: theme.neutral}}>
+                        <View style={{flex:1,backgroundColor: theme.base1}}>
                             {gettingEvents ?
                                 <View style={s.background}>
                                     <ActivityIndicator />
                                 </View> :
                                 error ?
-                                    <Text style={{textAlign:'center',fontWeight:'bold',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
+                                    <Text style={{textAlign:'center',fontFamily: 'boldFont',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
                                     <>
                                         <View style={s.header}>
                                             <ButtonGroup
@@ -130,6 +132,10 @@ class Events extends Component {
                                         {refetchingEvents ?
                                             <ActivityIndicator /> :
                                             events.length > 0 ?
+                                                <View>
+                                                    <Text style={s.sourceText}>
+                                                        These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
+                                                    </Text>
                                                 <FlatList
                                                     data={events}
                                                     extraData={this.state}
@@ -151,7 +157,7 @@ class Events extends Component {
                                                         )
                                                     }}
                                                     keyExtractor={event => `${event.calendar_id}`}
-                                                />  :
+                                                /></View>  :
                                                 <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
                                         }
                                     </>
@@ -168,7 +174,7 @@ class Events extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         padding: 30,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     header: {
         paddingVertical: 10,
@@ -177,7 +183,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -194,13 +200,13 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
         backgroundColor: theme.blue1,
@@ -209,11 +215,11 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
         paddingLeft: 10,
         paddingRight: 10,
-        marginTop: -1,
+        marginTop: -2,
         marginHorizontal: -2
     },
     locationName: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
         color: theme.text
@@ -228,9 +234,22 @@ const getStyles = theme => StyleSheet.create({
     problem: {
         textAlign: "center",
         color: theme.text,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         marginTop: 20,
+        paddingHorizontal: 10,
+        fontSize: 14
+    },
+    sourceText: {
+        textAlign: "center",
+        color: theme.orange7,
+        fontSize: 12,
+        marginTop: 0,
         paddingHorizontal: 10
+    },
+    smallLink: {
+        textDecorationLine: 'underline',
+        color: '#7cc5ff',
+        fontSize: 12
     },
     cardContainer: {
         padding: 0,
@@ -250,8 +269,8 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center'
     },
     cardTextStyle: {
-        fontSize: 16,
-        color: theme.text
+        fontSize: 14,
+        color: theme.orange8
     },
     address: {
         fontSize: 12,
@@ -259,14 +278,14 @@ const getStyles = theme => StyleSheet.create({
     },
     pressed: {
         borderColor: theme.blue1,
-        borderWidth: 1,
+        borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 1,
+        borderColor: theme.white,
+        borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,

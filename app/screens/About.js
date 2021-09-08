@@ -57,8 +57,8 @@ const About = ({navigation, appAlert}) => {
                     </View>
                     <View style={s.child}>
                         <View style={s.appAlert}>
-                            <Text style={[{textAlign:'center'},s.bold]}>Message of the Day</Text>
-                            <Text style={s.text}>{appAlert}</Text>
+                            <Text style={[{textAlign:'center',color:theme.orange8},s.bold]}>Message of the Day</Text>
+                            <Text style={[{color:theme.orange8},s.text]}>{appAlert}</Text>
                         </View>
                         <Text style={s.text}>Pinball Map is a crowdsourced map of all public pinball machines. It was founded in 2008 in Portland, Oregon.</Text>
                         <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
@@ -92,7 +92,7 @@ const About = ({navigation, appAlert}) => {
                     </View>
                     {Platform.OS === "android" ?
                         <View style={[s.logoWrapper]}>
-                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.logo]}/>
+                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.patreonLogo]}/>
                         </View>: null
                     }
                 </View>
@@ -109,13 +109,14 @@ About.navigationOptions = ({ navigation, theme }) => ({
     title: 'About Pinball Map',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -124,7 +125,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     container: {
         justifyContent: 'space-between',
@@ -136,12 +137,18 @@ const getStyles = theme => StyleSheet.create({
         flex: 2,
         margin: "auto",
         paddingTop: 10,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+
     },
     logo: {
         flex: 1,
         width: deviceWidth - 20,
-        backgroundColor: '#fffbf5'
+        borderRadius: Platform.OS === "ios" ? 10 : 0,
+        backgroundColor: theme.blue2,
+    },
+    patreonLogo: {
+        flex: 1,
+        width: deviceWidth - 20,
     },
     child: {
         margin: "auto",
@@ -153,7 +160,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10
     },
     bold: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         marginBottom: 10
     },
@@ -164,14 +171,14 @@ const getStyles = theme => StyleSheet.create({
     },
     appAlert: {
         borderWidth: 1,
-        borderColor: theme.orange8,
+        borderColor: theme.orange7,
         borderRadius: 10,
         margin: 10,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 0,
-        backgroundColor: theme._eee
+        backgroundColor: theme.white
     }
 })
 

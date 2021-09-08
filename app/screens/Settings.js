@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
     AsyncStorage,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -102,13 +103,14 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
     title: 'Settings',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -117,35 +119,24 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
         marginBottom: 15,
+        paddingHorizontal: 10
     },
     pageTitle: {
-        paddingVertical: 10,
-        backgroundColor: theme.blue1,
-        marginBottom: 10
+        paddingTop: 10,
     },
     pageTitleText: {
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
         color: theme.text
-    },
-    bold: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginBottom: 10,
-        padding: 10,
-        color: theme.text,
-        backgroundColor: theme.blue1,
-        textAlign: 'center'
     },
     text: {
         fontSize: 14,
         color: theme.orange7,
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
         lineHeight: 22,
-        marginBottom: 15,
         marginLeft: 15,
         marginRight: 15,
     },
@@ -153,7 +144,7 @@ const getStyles = theme => StyleSheet.create({
         height: 40,
         borderWidth: 0,
         borderRadius: 25,
-        backgroundColor: theme.neutral2,
+        backgroundColor: theme.base3,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -170,13 +161,13 @@ const getStyles = theme => StyleSheet.create({
     },
     selButtonStyle: {
         borderWidth: 4,
-        borderColor: theme.blue1,
+        borderColor: theme.base4,
         backgroundColor: theme.white,
         borderRadius: 25
     },
     selTextStyle: {
         color: theme.orange8,
-        fontWeight: 'bold',
+        fontFamily: 'regularBoldFont',
     },
 })
 

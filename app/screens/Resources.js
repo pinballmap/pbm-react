@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {
     Dimensions,
     Linking,
+    Platform,
     Pressable,
     StyleSheet,
     View,
@@ -28,7 +29,7 @@ const Resources = () => {
                     {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place, and maintain, machines at your venue.`}
                 </Text>
                 <View style={s.hr}></View>
-                <Pressable onPress={() => Linking.openURL('https://matchplay.events')} style={[s.logoWrapper,{backgroundColor:'#fffbf5',paddingVertical: 10,}]}>
+                <Pressable onPress={() => Linking.openURL('https://matchplay.events')} style={[s.logoWrapper,{backgroundColor:'#f5f5ff',paddingVertical: 10,}]}>
                     <Image source={require('../assets/images/Resource_Matchplay.png')} width={theme.theme === 'dark' ? deviceWidth - 70 : deviceWidth - 50} />
                 </Pressable>
                 <Text style={s.text}>
@@ -101,13 +102,14 @@ Resources.navigationOptions = ({ navigation, theme }) => ({
     title: 'Pinball Resources',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -126,7 +128,7 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 15,
     },
     bold: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
     },
     textLink: {
         textDecorationLine: 'underline',

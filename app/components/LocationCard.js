@@ -55,7 +55,7 @@ const LocationCard = ({
                                 const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                 return (
                                     <Text key={key} style={s.mName}>
-                                        <Text style={{fontWeight: 'bold',fontSize: 17}}>{title}</Text>
+                                        <Text style={{fontFamily: 'boldFont',fontSize: 17}}>{title}</Text>
                                         <Text>{`${info}\n`}</Text>
                                     </Text>
                                 )})
@@ -82,7 +82,7 @@ const getStyles = (theme) => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
-        shadowColor: theme.shadow
+        shadowColor: theme.shadow,
     },
     flexi: {
         display: 'flex',
@@ -92,7 +92,7 @@ const getStyles = (theme) => StyleSheet.create({
         alignContent: 'space-around',
     },
     mName: {
-        marginBottom: Platform.OS === 'ios' ? -10 : 0,
+        marginBottom: -10,
         color: theme.text
     },
     plus: {
@@ -107,12 +107,12 @@ const getStyles = (theme) => StyleSheet.create({
         paddingVertical: 10,
         paddingLeft: 10,
         paddingRight: 10,
-        marginTop: -1,
-        marginHorizontal: -2
+        marginTop: -2,
+        marginHorizontal: -2,
     },
     locationName: {
-        fontWeight: 'bold',
-        fontSize: 20,
+        fontFamily: 'boldFont',
+        fontSize: 18,
         textAlign: 'center',
         color: theme.text
     },
@@ -128,7 +128,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.orange7,
     },
     italic: {
-        fontStyle: 'italic',
+        fontFamily: 'regularItalicFont',
     },
     iconStyle: {
         fontSize: 32,
@@ -140,14 +140,14 @@ const getStyles = (theme) => StyleSheet.create({
     },
     pressed: {
         borderColor: theme.blue1,
-        borderWidth: 1,
+        borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 1,
+        borderColor: theme.white,
+        borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,

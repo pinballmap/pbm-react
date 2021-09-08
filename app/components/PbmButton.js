@@ -36,9 +36,9 @@ const getStyles = (theme) => StyleSheet.create({
     },
     titleStyle: {
         color: 'white',
-        fontSize: 18,
+        fontSize: 16,
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "400"
+        fontFamily: 'boldFont',
     },
     disabledStyle: {
         backgroundColor: theme.white

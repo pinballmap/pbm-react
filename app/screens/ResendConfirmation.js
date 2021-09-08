@@ -78,7 +78,7 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerRight: () => <View style={{padding:6}}></View>,
     title: 'Resend Confirmation Email',
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
@@ -86,6 +86,7 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     gestureEnabled: true
 })
@@ -99,7 +100,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         margin: 15,
         paddingLeft: 10
     },

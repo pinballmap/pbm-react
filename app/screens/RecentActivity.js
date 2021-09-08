@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Platform,
     Pressable,
     StyleSheet,
     View,
@@ -32,13 +33,14 @@ class RecentActivity extends Component {
             title: 'Recent Nearby Activity',
             headerRight: () => <FilterRecentActivity />,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -167,9 +169,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     header: {
-        backgroundColor: theme.blue1,
         paddingVertical: 10,
-        marginBottom: 10
     },
     headerText: {
         textAlign: "center",
@@ -177,7 +177,7 @@ const getStyles = theme => StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontStyle: "italic",
+        fontFamily: 'regularItalicFont',
         color: theme.orange7
     },
     subtitleStyle: {
@@ -186,8 +186,8 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange7
     },
     filterView: {
-        backgroundColor: theme.indigo1,
-        marginTop: -10,
+        backgroundColor: theme.base3,
+        marginTop: -20,
         marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
@@ -198,7 +198,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         textAlign: "center",
         color: theme.text,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         paddingVertical: 8,
     },
     flexi: {
@@ -224,7 +224,7 @@ const getStyles = theme => StyleSheet.create({
     problem: {
         textAlign: "center",
         color: theme.text,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         marginTop: 20
     },
     xButton: {
@@ -233,13 +233,13 @@ const getStyles = theme => StyleSheet.create({
     },
     pressed: {
         borderColor: theme.blue1,
-        borderWidth: 1,
+        borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 1,
+        borderColor: theme.white,
+        borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0
     }

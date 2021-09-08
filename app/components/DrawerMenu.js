@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import {
+    Dimensions,
     Platform,
     Text,
     Pressable,
@@ -15,6 +16,8 @@ import { logout } from '../actions'
 import ConfirmationModal from './ConfirmationModal'
 import PbmButton from './PbmButton'
 import WarningButton from './WarningButton'
+
+let deviceWidth = Dimensions.get('window').width
 
 const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
     const { theme } = useContext(ThemeContext)
@@ -70,7 +73,7 @@ const DrawerMenu = ({ loggedIn, logout, navigation, ...props }) => {
 }
 const getStyles = theme => StyleSheet.create({
     container: {
-        marginTop: 8,
+        marginTop: deviceWidth < 325 ? 5 : 8,
         height: 55,
     },
     icon: {
@@ -81,7 +84,8 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         color: theme.orange7,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
+        fontSize: 14,
         position: 'absolute',
         paddingLeft: 72,
         paddingRight: 120,

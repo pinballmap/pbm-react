@@ -49,13 +49,14 @@ class EditLocationDetails extends Component {
             title: navigation.getParam('name'),
             headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -116,7 +117,7 @@ class EditLocationDetails extends Component {
                                     </View>
                                     :
                                     <SafeAreaView style={s.background}>
-                                        <ScrollView style={{backgroundColor:theme.neutral}}>
+                                        <ScrollView style={{backgroundColor:theme.base1}}>
                                             <Text style={s.title}>Phone</Text>
                                             <Text style={s.preview}>{phone}</Text>
                                             <View style={s.hr}></View>
@@ -214,14 +215,14 @@ class EditLocationDetails extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     title: {
         textAlign:'center',
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
         color: theme.orange7
     },
     preview: {
@@ -231,7 +232,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         color: theme.text,
         borderWidth: 1,
         marginHorizontal: 20,

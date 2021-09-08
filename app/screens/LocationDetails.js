@@ -61,7 +61,7 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton
-                tintColor={'#1e9dff'}
+                tintColor={'#6eb4eb'}
                 onPress={() => {
                     navigation.goBack(null)
                 }}
@@ -76,7 +76,7 @@ class LocationDetails extends Component {
     getTitle = (machine, s) => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year ? <Text style={[s.machineMeta,s.italic]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
+            {machine.year ? <Text style={[s.fontSize18,s.orange7]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
@@ -157,59 +157,59 @@ class LocationDetails extends Component {
                                     </View>
                                     <View>
                                         <ListItem
-                                            containerStyle={s.containerBg}
+                                            containerStyle={s.backgroundColor}
                                             onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.titleStyle}>
-                                                    <Text>{'Add Machine'}</Text>
+                                                <ListItem.Title style={s.orange8}>
+                                                    Add Machine
                                                 </ListItem.Title>
                                             </ListItem.Content>
                                         </ListItem>
                                         <ListItem
-                                            containerStyle={s.containerBg}
+                                            containerStyle={s.backgroundColor}
                                             onPress={() => this.handleConfirmPress(location.id, loggedIn) }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.titleStyle}>
-                                                    <Text>{'Confirm Line-Up'}</Text>
+                                                <ListItem.Title style={s.orange8}>
+                                                    Confirm Line-Up
                                                 </ListItem.Title>
                                             </ListItem.Content>
                                         </ListItem>
                                         <ListItem
-                                            containerStyle={s.containerBg}
+                                            containerStyle={s.backgroundColor}
                                             onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.titleStyle}>
-                                                    <Text>{'Edit Location Details'}</Text>
+                                                <ListItem.Title style={s.orange8}>
+                                                    Edit Location Details
                                                 </ListItem.Title>
                                             </ListItem.Content>
                                         </ListItem>
                                         <ListItem
-                                            containerStyle={s.containerBg}
+                                            containerStyle={s.backgroundColor}
                                             onPress={async () => {
                                                 await Share.share({
-                                                    message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                                    message: `https://pinballmap.com/map/?by_location_id=${location.id}`,
                                                 }) && this.setShowLocationToolsModal(false)
                                             }}>
                                             <Avatar>
                                                 {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.titleStyle}>
-                                                    <Text>{'Share Location'}</Text>
+                                                <ListItem.Title style={s.orange8}>
+                                                    Share Location
                                                 </ListItem.Title>
                                             </ListItem.Content>
                                         </ListItem>
                                         <ListItem
-                                            containerStyle={s.containerBg}
+                                            containerStyle={s.backgroundColor}
                                             onPress={() => {
                                                 openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
                                                 this.setShowLocationToolsModal(false)
@@ -218,8 +218,8 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.titleStyle}>
-                                                    <Text>{'Directions'}</Text>
+                                                <ListItem.Title style={s.orange8}>
+                                                    Directions
                                                 </ListItem.Title>
                                             </ListItem.Content>
                                         </ListItem>
@@ -279,8 +279,53 @@ class LocationDetails extends Component {
                                     </View>
                                 </ConfirmationModal>
                                 <View style={{ flex: 1, position: 'relative' }}>
-                                    {loggedIn && isUserFave && <MaterialCommunityIcons style={s.saveLocation} name="heart" onPress={() => this.props.removeFavoriteLocation(location.id)}/>}
-                                    {loggedIn && !isUserFave && <MaterialCommunityIcons style={s.saveLocation} name="heart-outline" onPress={() => this.props.addFavoriteLocation(location.id)}/>}
+                                <Pressable
+                                    style={({ pressed }) => [{},s.plusButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                    onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
+                                >
+                                    <MaterialCommunityIcons
+                                        name={'plus'}
+                                        color={theme.orange8}
+                                        size={28}
+                                        style={{height:28,width:28,justifyContent:'center',alignSelf:'center'}}
+                                    />
+                                </Pressable>
+                                <Pressable
+                                    style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                    onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
+                                >
+                                    {loggedIn && isUserFave &&
+                                        <MaterialCommunityIcons
+                                            name={'heart'}
+                                            color={theme.red2}
+                                            size={26}
+                                            style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                        />
+                                    }
+                                    {loggedIn && !isUserFave &&
+                                        <MaterialCommunityIcons
+                                            name={'heart-outline'}
+                                            color={theme.red2}
+                                            size={26}
+                                            style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                        />
+                                    }
+                                </Pressable>
+                                <Pressable
+                                    style={({ pressed }) => [{},s.shareButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                    onPress={async () => {
+                                        await Share.share({
+                                            message: `https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                        })
+                                    }}
+                                >
+                                    <MaterialIcons
+                                        name={'ios-share'}
+                                        color={theme.orange8}
+                                        size={24}
+                                        style={{height:24,width:24,justifyContent:'center',alignSelf:'center'}}
+                                    />
+                                </Pressable>
 
                                     <MapView
                                         region={{
@@ -305,49 +350,58 @@ class LocationDetails extends Component {
                                             <View style={s.markerDot}></View>
                                         </MapView.Marker>
                                     </MapView>
-                                    <View style={s.locationNameContainer}>
+                                    <View>
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
                                     <View style={s.locationContainer}>
-                                        {location.date_last_updated && <Text style={s.lastUpdated}>Updated: {moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }<Text style={s.textStyle}>{` ${location.last_updated_by_username}`}</Text></Text>}
-                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.metaText,s.font16,s.marginRight]}>{location.street}</Text>
-                                                <Text style={[s.metaText,s.font16,s.marginB8,s.marginRight]}>{location.city}, {location.state} {location.zip}</Text>
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <Text style={[s.meta,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text> : null}
-                                                {location.phone ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text> : null}
+                                                <Text style={[s.orange8,s.fontSize16,s.marginRight,s.opacity09]}>{location.street}</Text>
 
-                                                {location.website ? <Text style={[s.metaText,s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text> : null}
+                                                <Text style={[s.orange8,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{location.city}, {location.state} {location.zip}</Text>
+
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13,s.orange7,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
+
+                                                {location.phone ? <View style={{flexDirection: "row"}}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
+
+                                                {location.website ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <Text style={[s.metaDescription,s.italic,s.marginB8]}>Operated by:
-                                                        <Text style={s.notItalic}> {` ${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
-                                                    </Text> : null
+                                                    <View style={(location.phone && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
+                                                        <Text style={s.orange7}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
+                                                    </Text></View> : null
                                                 }
+
+                                                {location.date_last_updated ?
+                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.operator_id && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    : null
+                                                }
+
                                             </View>
+
                                             {location.location_type_id ?
-                                                <View style={s.locationMetaIcon}>
+                                                <View style={s.locationTypeContainer}>
+                                                    {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.orange8,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
                                                     <View>
                                                         <Icon
                                                             name={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).icon}
                                                             type={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).library}
-                                                            color={theme.orange7}
-                                                            size={50}
+                                                            color={theme.orange3}
+                                                            size={46}
                                                         />
-                                                        <Text style={{textAlign:'center',color:theme.orange7}}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.orange8,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
-                                                    {locationTrackingServicesEnabled && <Text style={{fontSize:18,color:theme.orange7}}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text>}
                                                 </View> : null
                                             }
                                         </View>
-                                        <View style={{width:'100%',paddingBottom:5}}>
+                                        <View style={{width:'100%',paddingRight:10,paddingBottom:5}}>
                                             {location.description ?
-                                                <Text style={[s.metaDescription,s.italic]}>Location Notes:
-                                                    <Text style={[s.notItalic,s.metaDescription]}> {location.description}</Text>
-                                                </Text> : null
+                                                <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='notebook-outline' style={s.metaIcon} />
+                                                    <Text style={[s.orange7,s.fontSize13]}>{location.description}</Text>
+                                                </View> : null
                                             }
                                         </View>
+                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
                                     </View>
                                     <View style={s.backgroundColor}>
                                         {sortedMachines.map(machine => (
@@ -359,17 +413,15 @@ class LocationDetails extends Component {
                                                 }}
                                             >
                                                 {({ pressed }) => (
-                                                    <View style={[s.listContainerStyle,pressed ? s.pressed : s.notPressed]}>
-                                                        <View style={machine.condition_date ? s.machineNameContainer : s.machineNameContainer2} >
-                                                            {this.getTitle(machine, s)}
-                                                        </View>
+                                                    <View style={[s.machineListContainer,pressed ? s.pressed : s.notPressed]}>
+                                                        {this.getTitle(machine, s)}
                                                         {machine.condition_date ?
                                                             <View style={s.condition}>
-                                                                <View>
-                                                                    {machine.condition_date ? <Text style={s.commentUpdated}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} />
+                                                                    {machine.condition_date ? <Text style={[s.fontSize13,s.orange7]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                 </View>
-                                                                <View>
-                                                                    {machine.condition ? <Text style={s.conditionText}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                <View style={{flexDirection: "row",paddingTop: 10}}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
+                                                                    {machine.condition ? <Text style={[s.orange7,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                 </View>
                                                             </View> : null
                                                         }
@@ -381,14 +433,14 @@ class LocationDetails extends Component {
                                 </View>
                             </Screen>
                             <Pressable
-                                style={({ pressed }) => [{},s.iconContainerStyle,pressed ? s.iconPressed : s.iconNotPressed]}
+                                style={({ pressed }) => [{},s.toolsIconContainerStyle,pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
                                     this.setShowLocationToolsModal(true)
                                 }}
                             >
                                 <MaterialCommunityIcons
                                     name={'tools'}
-                                    color={theme.indigo1}
+                                    color={theme.orange8}
                                     size={28}
                                     style={{justifyContent:'center',alignSelf:'center'}}
                                 />
@@ -407,97 +459,60 @@ const getStyles = theme => StyleSheet.create({
         height: deviceWidth < 325 ? 120 : 160,
     },
     backgroundColor: {
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     locationContainer: {
         flex: 3,
-        borderRadius: 25,
         marginBottom: 10,
         marginHorizontal: deviceWidth < 325 ? 20 : 30,
-        borderWidth: 0,
-    },
-    locationNameContainer: {
-        backgroundColor: theme.neutral2,
-        borderRadius: 25,
-        marginVertical: 10,
-        marginHorizontal: 15,
-        borderWidth: 0,
-        paddingVertical: 5,
     },
     locationName: {
         textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 24,
+        fontFamily: 'boldFont',
+        fontSize: 20,
         paddingHorizontal: 8,
-        color: theme.orange8
+        color: theme.text,
+        marginTop: 8,
+        marginBottom: 4,
+        opacity: 0.8
     },
-    textStyle: {
-        color: theme.orange7,
-    },
-    containerBg: {
-        backgroundColor: theme.neutral
-    },
-    titleStyle: {
-        color: theme.orange8
-    },
-    listContainerStyle: {
+    machineListContainer: {
         borderRadius: 25,
-        marginBottom: 25,
+        marginBottom: 20,
         marginRight: 20,
         marginLeft: 20,
-        borderWidth: 0,
         backgroundColor: theme.white,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        paddingVertical: 10,
+        paddingLeft: 20,
+        paddingRight: 15,
     },
     pressed: {
         borderColor: theme.blue1,
-        borderWidth: 1,
+        borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 1,
+        borderColor: theme.white,
+        borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
     },
     machineName: {
         color: theme.text,
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         fontSize: 20,
-    },
-    machineNameContainer: {
-        backgroundColor: theme.blue1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        paddingVertical: 10,
-        paddingLeft: 20,
-        paddingRight: 15,
-        marginTop: -1,
-        marginHorizontal: -2
-    },
-    machineNameContainer2: {
-        backgroundColor: theme.blue1,
-        borderRadius: 25,
-        paddingVertical: 10,
-        paddingLeft: 20,
-        paddingRight: 15,
-        marginVertical: -2,
-        marginHorizontal: -2
-    },
-    machineMeta: {
-        fontSize: 16
     },
     locationMetaContainer: {
         paddingTop: 5,
         paddingBottom: 0,
-        marginTop: 5,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-start'
@@ -508,47 +523,57 @@ const getStyles = theme => StyleSheet.create({
     locationMetaInner2: {
         width: '100%'
     },
-    locationMetaIcon: {
-        backgroundColor: theme.indigo1,
+    locationTypeContainer: {
+        backgroundColor: theme.base2,
+        borderWidth: 2,
+        borderColor: theme.base4,
         borderRadius: 10,
         padding: 5,
         width: '35%',
         alignItems: 'center',
         marginBottom: 5
     },
-    font16: {
+    fontSize12: {
+        fontSize: 12
+    },
+    fontSize14: {
+        fontSize: 14
+    },
+    fontSize13: {
+        fontSize: 13
+    },
+    fontSize16: {
         fontSize: 16
     },
+    fontSize18: {
+        fontSize: 18,
+    },
     marginB8: {
+        marginTop: Platform.OS === 'android' ? 2 : 0,
         marginBottom: 8
     },
     marginRight: {
         marginRight: 10
     },
-    street: {
-        fontWeight: 'bold'
-    },
     link: {
         textDecorationLine: 'underline',
-        fontSize: 16
+        fontSize: 14,
+        color: theme.blue3
     },
-    metaText: {
+    orange7: {
+        color: theme.orange7
+    },
+    orange8: {
         color: theme.orange8
     },
     italic: {
-        fontStyle: 'italic',
-        color: theme.orange7
+        fontFamily: 'regularItalicFont'
     },
-    notItalic: {
-        fontStyle: 'normal',
-        color: theme.orange7
+    opacity09: {
+        opacity: 0.9
     },
-    meta: {
-        fontSize: 16,
-        color: theme.orange7
-    },
-    metaDescription: {
-        fontSize: 13
+    opacity06: {
+        opacity: 0.6
     },
     iconStyle: {
         fontSize: 32,
@@ -556,15 +581,8 @@ const getStyles = theme => StyleSheet.create({
     },
     condition: {
         flexDirection: 'column',
-        marginHorizontal: 10,
-        marginVertical: 10,
-    },
-    conditionText: {
-        color: theme.indigo4,
-        fontSize: 12,
-        fontStyle: 'italic',
-        marginLeft: 10,
-        paddingTop: 10,
+        marginRight: 10,
+        marginTop: 10,
     },
     staleView: {
         marginVertical: 5,
@@ -575,24 +593,16 @@ const getStyles = theme => StyleSheet.create({
     },
     staleText: {
         color: theme.red2,
-        fontStyle: 'italic',
-    },
-    lastUpdated: {
-        textAlign: 'center',
-        color: theme.orange7
-    },
-    commentUpdated: {
-        color: theme.orange7,
-        marginLeft: 10,
     },
     buttonIcon: {
-        color: theme.orange8,
+        color: theme.orange7,
+        opacity: 0.8,
         fontSize: 32,
     },
     confirmText: {
         textAlign: 'center',
-        fontSize: 18,
-        fontWeight: "bold",
+        fontSize: 16,
+        fontFamily: 'boldFont',
         marginLeft: 10,
         marginRight: 10
     },
@@ -606,19 +616,45 @@ const getStyles = theme => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    saveLocation: {
+    quickButton: {
+        backgroundColor: theme.white,
         position: 'absolute',
+        padding: 10,
         zIndex: 10,
-        top: 115,
-        right: 0,
-        fontSize: 32,
-        color: theme.red2,
-        padding: 10
+        borderRadius: 20,
+        height: 40,
+        width: 40,
+        alignSelf: 'center',
+        justifyContent:'center',
+        top: deviceWidth < 325 ? 75 : 115
+    },
+    saveButton: {
+        right: 10,
+    },
+    plusButton: {
+        right: 110,
+    },
+    shareButton: {
+        right: 60,
     },
     savedIcon: {
         color: theme.orange8,
         fontSize: 24,
         marginRight: 5
+    },
+    metaIcon: {
+        paddingTop: 1,
+        fontSize: 16,
+        color: theme.indigo4,
+        marginRight: 5,
+        opacity: 0.5
+    },
+    distanceIcon: {
+        marginTop: -1,
+        fontSize: 18,
+        color: theme.indigo4,
+        marginRight: 3,
+        opacity: 0.5
     },
     savedLink: {
         borderWidth: 2,
@@ -631,21 +667,11 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.text,
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "400"
+        fontFamily: 'boldFont',
     },
     buttonContainerStyle: {
         marginHorizontal: deviceWidth < 325 ? 20 : 40,
         marginVertical: 10
-    },
-    margin15: {
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop: 0,
-        marginBottom: 15
-    },
-    borderBottom: {
-        borderBottomColor: theme.orange3,
-        borderBottomWidth: 1,
     },
     markerDot: {
         width: 30,
@@ -658,7 +684,7 @@ const getStyles = theme => StyleSheet.create({
     },
     header: {
         backgroundColor: theme.blue1,
-        marginTop: -15,
+        marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         height: 40,
@@ -668,7 +694,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.orange8,
         textAlign: "center",
         fontSize: 16,
-        fontWeight: 'bold'
+        fontFamily: 'boldFont',
     },
     xButton: {
         position: 'absolute',
@@ -676,7 +702,7 @@ const getStyles = theme => StyleSheet.create({
         top: -15,
         color: theme.red2,
     },
-    iconContainerStyle: {
+    toolsIconContainerStyle: {
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -684,20 +710,34 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
         overflow: 'visible',
         position: 'absolute',
-        bottom: 30,
+        bottom: deviceWidth < 325 ? 20 : 30,
         right: 20,
         zIndex: 100,
         alignSelf: 'center',
         justifyContent:'center',
-        borderRadius: 30,
-        height: 60,
-        width: 60,
+        borderRadius: 27,
+        height: 54,
+        width: 54,
     },
-    iconPressed: {
-        backgroundColor: theme.orange7,
+    toolsIconPressed: {
+        backgroundColor: theme.base2,
     },
-    iconNotPressed: {
+    toolsIconNotPressed: {
+        backgroundColor: theme.base4,
+    },
+    quickButtonPressed: {
         backgroundColor: theme.orange8,
+    },
+    quickButtonNotPressed: {
+        backgroundColor: theme.white,
+    },
+    wide: {
+        width: '153%',
+        flexDirection: "row"
+    },
+    narrow: {
+        width: '100%',
+        flexDirection: "row"
     }
 })
 

@@ -39,10 +39,10 @@ const getStyles = (theme) => StyleSheet.create({
         marginBottom: 15
     },
     titleStyle: {
-        fontSize: 18,
+        fontSize: 16,
         color: 'white',
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "600" : "500"
+        fontFamily: 'boldFont',
     },
     redButton: {
         backgroundColor: theme.red2,

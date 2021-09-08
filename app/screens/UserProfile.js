@@ -38,16 +38,17 @@ class UserProfile extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: 'User Profile',
+            title: 'Your Profile',
             headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
         }
@@ -200,7 +201,7 @@ class UserProfile extends Component {
 
 const getStyles = theme => StyleSheet.create({
     background: {
-        backgroundColor: theme.neutral,
+        backgroundColor: theme.base1,
         paddingVertical: 5,
         paddingHorizontal: 10
     },
@@ -219,13 +220,13 @@ const getStyles = theme => StyleSheet.create({
         marginVertical: 6
     },
     bold: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 5,
         color: theme.text,
-        backgroundColor: theme.indigo1
+        backgroundColor: theme.base3
     },
     savedIcon: {
         fontSize: 24,
@@ -243,7 +244,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.text,
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "400"
+        fontWeight: Platform.OS === 'ios' ? "500" : "bold"
     },
     margin40: {
         marginLeft: 40,
@@ -262,7 +263,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
     },
     username: {
-        fontWeight: 'bold',
+        fontFamily: 'boldFont',
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
@@ -278,8 +279,8 @@ const getStyles = theme => StyleSheet.create({
         width: 200
     },
     statNum: {
-        fontWeight: "bold",
-        color: theme.neutral,
+        fontFamily: 'boldFont',
+        color: theme.base1,
         backgroundColor: theme.orange7,
         fontSize: 16,
         marginTop: 5,
@@ -289,7 +290,7 @@ const getStyles = theme => StyleSheet.create({
     member: {
         textAlign: "center",
         marginBottom: 10,
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
         fontSize: 16,
         marginTop: 5,
         color: theme.orange8

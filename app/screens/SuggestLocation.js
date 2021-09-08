@@ -62,13 +62,14 @@ class SuggestLocation extends Component {
             title: 'Submit Location',
             headerRight: () =><View style={{padding:6}}></View>,
             headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowColor: 'transparent'
             },
             headerTitleStyle: {
                 textAlign: 'center',
+                fontFamily: 'boldFont',
             },
             headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
             gestureEnabled: true
@@ -104,7 +105,7 @@ class SuggestLocation extends Component {
 
     getDisplayText = machine => (
         <Text style={{fontSize: 16}}>
-            <Text style={{fontWeight: 'bold'}}>{machine.name}</Text>
+            <Text style={{fontFamily: 'boldFont',}}>{machine.name}</Text>
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
@@ -191,7 +192,7 @@ class SuggestLocation extends Component {
                                                         <ScrollView style={s.background}>
                                                             <View style={s.pageTitle}>
                                                                 {machineList.length === 0 || locationName.length === 0 ?
-                                                                    <Text style={[s.pageTitleText,s.errorTitle]}>Please fill in required fields</Text>
+                                                                    <Text style={[s.pageTitleText,s.error]}>Please fill in required fields</Text>
                                                                     : <Text style={s.pageTitleText}>Please review your submission</Text>
                                                                 }
                                                             </View>
@@ -409,7 +410,7 @@ class SuggestLocation extends Component {
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     text: {
         fontSize: 16,
@@ -417,8 +418,8 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginLeft: 15,
         marginRight: 15,
-        fontWeight: '600',
-        color: theme.orange7,
+        fontFamily: 'boldFont',
+        color: theme.text,
         textAlign: 'center'
     },
     title: {
@@ -426,7 +427,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         fontSize: 16,
-        fontWeight: "bold",
+        fontFamily: 'boldFont',
         color: theme.orange7
     },
     preview: {
@@ -440,14 +441,14 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitleText: {
         textAlign: 'center',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
+        fontFamily: 'boldFont',
+        fontFamily: 'regularItalicFont',
         fontSize: 18,
         color: theme.orange8
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.orange3,
+        borderColor: theme.base4,
         color: theme.text,
         borderWidth: 1,
         marginHorizontal: 20,
@@ -463,7 +464,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.white,
         marginHorizontal: 20,
         paddingHorizontal: 10,
-        fontWeight: 'bold'
+        fontFamily: 'boldFont',
     },
     picker: {
         backgroundColor: '#ffffff',
@@ -483,9 +484,6 @@ const getStyles = theme => StyleSheet.create({
     },
     error: {
         color: theme.red2
-    },
-    errorTitle: {
-        color: '#fdd4d7'
     },
     plusButton: {
         color: theme.red2,

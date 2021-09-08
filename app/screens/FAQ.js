@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
     Linking,
+    Platform,
     StyleSheet,
     View,
 } from 'react-native'
@@ -62,13 +63,14 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
     title: 'FAQ',
     headerRight: () =><View style={{padding:6}}></View>,
     headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fffbf5',
+        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
         borderBottomWidth: 0,
         elevation: 0,
         shadowColor: 'transparent'
     },
     headerTitleStyle: {
         textAlign: 'center',
+        fontFamily: 'boldFont',
     },
     headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
     gestureEnabled: true
@@ -77,7 +79,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: theme.neutral
+        backgroundColor: theme.base1
     },
     container: {
         justifyContent: 'space-between',
@@ -90,18 +92,18 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: theme.text,
+        color: theme.orange8,
         lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
         marginRight: 15,
     },
     bold: {
-        fontWeight: 'bold',
-        fontSize: 18,
+        fontFamily: 'boldFont',
+        fontSize: 17,
         marginBottom: 10,
         padding: 10,
-        color: theme.orange8,
+        color: theme.text,
         backgroundColor: theme.blue1
     },
     textLink: {
