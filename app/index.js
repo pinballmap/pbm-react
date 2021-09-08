@@ -8,7 +8,16 @@ import { PbmStack } from './config/router'
 import { dark, standard } from './utils/themes'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
-
+import {
+  useFonts,
+  Lato_400Regular,
+  Lato_400Regular_Italic,
+  Lato_700Bold,
+} from '@expo-google-fonts/lato'
+import {
+  Nunito_700Bold,
+} from '@expo-google-fonts/nunito'
+import AppLoading from 'expo-app-loading'
 import store from './store'
 
 const defaultTheme = Appearance.getColorScheme()
@@ -27,21 +36,31 @@ const App = () => {
 
     const toggleDefaultTheme = () => defaultTheme !== 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const toggleDarkTheme = () => defaultTheme === 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
+    let [fontsLoaded] = useFonts({
+        regularFont: Lato_400Regular,
+        regularBoldFont: Lato_700Bold,
+        regularItalicFont: Lato_400Regular_Italic,
+        boldFont: Nunito_700Bold,
+    })
 
-    return (
-        <SafeAreaProvider>
-            <ThemeContext.Provider value={{
-                toggleDefaultTheme,
-                toggleDarkTheme,
-                theme: selectedTheme === 'dark' ? dark : standard
-            }}>
-                <Provider store={store}>
-                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
-                </Provider>
-            </ThemeContext.Provider>
-            <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
-        </SafeAreaProvider>
-    )
+    if (!fontsLoaded) {
+        return <AppLoading />
+    } else {
+        return (
+            <SafeAreaProvider>
+                <ThemeContext.Provider value={{
+                    toggleDefaultTheme,
+                    toggleDarkTheme,
+                    theme: selectedTheme === 'dark' ? dark : standard
+                }}>
+                    <Provider store={store}>
+                        <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                    </Provider>
+                </ThemeContext.Provider>
+                <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
+            </SafeAreaProvider>
+        )
+    }
 }
 
 export default registerRootComponent(App)
