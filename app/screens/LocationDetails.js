@@ -373,7 +373,7 @@ class LocationDetails extends Component {
                                                 }
 
                                                 {location.date_last_updated ?
-                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.operator_id && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
                                                     : null
                                                 }
 
