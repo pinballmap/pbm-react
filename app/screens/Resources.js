@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
     Dimensions,
     Linking,
-    Platform,
     Pressable,
     StyleSheet,
     View,

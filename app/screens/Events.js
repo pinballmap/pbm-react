@@ -5,7 +5,6 @@ import Geocode from 'react-geocode'
 import {
     FlatList,
     Linking,
-    Platform,
     Pressable,
     StyleSheet,
     Text,
@@ -136,28 +135,28 @@ class Events extends Component {
                                                     <Text style={s.sourceText}>
                                                         These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
-                                                <FlatList
-                                                    data={events}
-                                                    extraData={this.state}
-                                                    renderItem={({ item }) => {
-                                                        const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
-                                                        const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
-                                                        return (
-                                                            <Pressable
-                                                                style={({ pressed }) => [{},s.cardContainer,pressed ? s.pressed : s.notPressed]}
-                                                                onPress={() => Linking.openURL(item.website)}
-                                                            >
-                                                                <View style={s.locationNameContainer}>
-                                                                    <Text style={s.locationName}>{item.tournament_name}</Text>
-                                                                </View>
-                                                                <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                                <Text style={[s.cardTextStyle,s.margin,s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                                <Text style={[s.address,s.margin,s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
-                                                            </Pressable>
-                                                        )
-                                                    }}
-                                                    keyExtractor={event => `${event.calendar_id}`}
-                                                /></View>  :
+                                                    <FlatList
+                                                        data={events}
+                                                        extraData={this.state}
+                                                        renderItem={({ item }) => {
+                                                            const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
+                                                            const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
+                                                            return (
+                                                                <Pressable
+                                                                    style={({ pressed }) => [{},s.cardContainer,pressed ? s.pressed : s.notPressed]}
+                                                                    onPress={() => Linking.openURL(item.website)}
+                                                                >
+                                                                    <View style={s.locationNameContainer}>
+                                                                        <Text style={s.locationName}>{item.tournament_name}</Text>
+                                                                    </View>
+                                                                    <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                    <Text style={[s.cardTextStyle,s.margin,s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                                    <Text style={[s.address,s.margin,s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                                </Pressable>
+                                                            )
+                                                        }}
+                                                        keyExtractor={event => `${event.calendar_id}`}
+                                                    /></View>  :
                                                 <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
                                         }
                                     </>

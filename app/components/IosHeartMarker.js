@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, Platform } from "react-native"
+import { ImageBackground } from "react-native"
 import Text from './PbmText'
 import PropTypes from "prop-types"
 import markerDotHeart from '../assets/images/markerdot-heart.png'

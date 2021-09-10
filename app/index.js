@@ -9,13 +9,13 @@ import { dark, standard } from './utils/themes'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import {
-  useFonts,
-  Lato_400Regular,
-  Lato_400Regular_Italic,
-  Lato_700Bold,
+    useFonts,
+    Lato_400Regular,
+    Lato_400Regular_Italic,
+    Lato_700Bold,
 } from '@expo-google-fonts/lato'
 import {
-  Nunito_700Bold,
+    Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
 import AppLoading from 'expo-app-loading'
 import store from './store'
@@ -45,22 +45,21 @@ const App = () => {
 
     if (!fontsLoaded) {
         return <AppLoading />
-    } else {
-        return (
-            <SafeAreaProvider>
-                <ThemeContext.Provider value={{
-                    toggleDefaultTheme,
-                    toggleDarkTheme,
-                    theme: selectedTheme === 'dark' ? dark : standard
-                }}>
-                    <Provider store={store}>
-                        <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
-                    </Provider>
-                </ThemeContext.Provider>
-                <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
-            </SafeAreaProvider>
-        )
     }
+    return (
+        <SafeAreaProvider>
+            <ThemeContext.Provider value={{
+                toggleDefaultTheme,
+                toggleDarkTheme,
+                theme: selectedTheme === 'dark' ? dark : standard
+            }}>
+                <Provider store={store}>
+                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                </Provider>
+            </ThemeContext.Provider>
+            <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
+        </SafeAreaProvider>
+    )
 }
 
 export default registerRootComponent(App)

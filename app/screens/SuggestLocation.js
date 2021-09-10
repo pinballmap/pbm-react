@@ -441,7 +441,6 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitleText: {
         textAlign: 'center',
-        fontFamily: 'boldFont',
         fontFamily: 'regularItalicFont',
         fontSize: 18,
         color: theme.orange8

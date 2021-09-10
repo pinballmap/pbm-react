@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
     AsyncStorage,
-    Platform,
     StyleSheet,
     View,
 } from 'react-native'

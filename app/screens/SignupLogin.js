@@ -6,7 +6,6 @@ import {
     Image,
     ImageBackground,
     Linking,
-    Platform,
     StyleSheet,
     Text,
     View,

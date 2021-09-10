@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
-    Platform,
     StyleSheet,
 } from 'react-native'
 import { Button } from 'react-native-elements'

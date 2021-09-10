@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
     Dimensions,
     FlatList,
-    Platform,
     StyleSheet,
     View,
 } from 'react-native'

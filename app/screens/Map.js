@@ -227,7 +227,6 @@ class Map extends Component {
         const { theme } = this.context
         const s = getStyles(theme)
 
-        const { locationTrackingServicesEnabled } = this.props.user
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false

@@ -279,53 +279,53 @@ class LocationDetails extends Component {
                                     </View>
                                 </ConfirmationModal>
                                 <View style={{ flex: 1, position: 'relative' }}>
-                                <Pressable
-                                    style={({ pressed }) => [{},s.plusButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                    onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
-                                >
-                                    <MaterialCommunityIcons
-                                        name={'plus'}
-                                        color={theme.orange8}
-                                        size={28}
-                                        style={{height:28,width:28,justifyContent:'center',alignSelf:'center'}}
-                                    />
-                                </Pressable>
-                                <Pressable
-                                    style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                    onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
-                                >
-                                    {loggedIn && isUserFave &&
+                                    <Pressable
+                                        style={({ pressed }) => [{},s.plusButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
+                                    >
+                                        <MaterialCommunityIcons
+                                            name={'plus'}
+                                            color={theme.orange8}
+                                            size={28}
+                                            style={{height:28,width:28,justifyContent:'center',alignSelf:'center'}}
+                                        />
+                                    </Pressable>
+                                    <Pressable
+                                        style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
+                                    >
+                                        {loggedIn && isUserFave &&
                                         <MaterialCommunityIcons
                                             name={'heart'}
                                             color={theme.red2}
                                             size={26}
                                             style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
                                         />
-                                    }
-                                    {loggedIn && !isUserFave &&
+                                        }
+                                        {loggedIn && !isUserFave &&
                                         <MaterialCommunityIcons
                                             name={'heart-outline'}
                                             color={theme.red2}
                                             size={26}
                                             style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
                                         />
-                                    }
-                                </Pressable>
-                                <Pressable
-                                    style={({ pressed }) => [{},s.shareButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                    onPress={async () => {
-                                        await Share.share({
-                                            message: `https://pinballmap.com/map/?by_location_id=${location.id}`,
-                                        })
-                                    }}
-                                >
-                                    <MaterialIcons
-                                        name={'ios-share'}
-                                        color={theme.orange8}
-                                        size={24}
-                                        style={{height:24,width:24,justifyContent:'center',alignSelf:'center'}}
-                                    />
-                                </Pressable>
+                                        }
+                                    </Pressable>
+                                    <Pressable
+                                        style={({ pressed }) => [{},s.shareButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        onPress={async () => {
+                                            await Share.share({
+                                                message: `https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                            })
+                                        }}
+                                    >
+                                        <MaterialIcons
+                                            name={'ios-share'}
+                                            color={theme.orange8}
+                                            size={24}
+                                            style={{height:24,width:24,justifyContent:'center',alignSelf:'center'}}
+                                        />
+                                    </Pressable>
 
                                     <MapView
                                         region={{
