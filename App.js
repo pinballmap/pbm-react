@@ -1,11 +1,11 @@
 import { registerRootComponent } from 'expo'
 import React, { useState, useEffect } from 'react'
 import { Appearance } from 'react-native'
-import { retrieveItem } from './config/utils'
-import { ThemeContext } from './theme-context'
+import { retrieveItem } from './app/config/utils'
+import { ThemeContext } from './app/theme-context'
 import { Provider } from 'react-redux'
-import { PbmStack } from './config/router'
-import { dark, standard } from './utils/themes'
+import { PbmStack } from './app/config/router'
+import { dark, standard } from './app/utils/themes'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import {
@@ -18,7 +18,7 @@ import {
     Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
 import AppLoading from 'expo-app-loading'
-import store from './store'
+import store from './app/store'
 
 const defaultTheme = Appearance.getColorScheme()
 

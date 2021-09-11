@@ -69,5 +69,5 @@
       "./setupJest.js"
     ]
   },
-  "main": "./app/index.js"
+  "main": "App.js"
 }
