@@ -1,9 +1,7 @@
-import "../config/globals.js"
-import { IFPA_API_KEY } from '../config/keys'
 import * as Location from 'expo-location'
 
 export const postData = (uri, body) => {
-    return fetch(global.api_url + uri, {
+    return fetch(process.env.API_URL + uri, {
         method: 'post',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -38,7 +36,7 @@ export const postData = (uri, body) => {
 }
 
 export const putData = (uri, body) => {
-    return fetch(global.api_url + uri, {
+    return fetch(process.env.API_URL + uri, {
         method: 'put',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -73,7 +71,7 @@ export const putData = (uri, body) => {
 }
 
 export const getData = uri => {
-    return fetch(global.api_url + uri)
+    return fetch(process.env.API_URL + uri)
         .then(response => {
             if(response.status === 200)
                 return response.json()
@@ -84,7 +82,7 @@ export const getData = uri => {
 }
 
 export const getIfpaData = (address, radius, distanceUnit) => {
-    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=${IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`)
+    return fetch(`https://api.ifpapinball.com/v1/calendar/search?api_key=${process.env.IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`)
         .then(response => {
             if(response.status === 200)
                 return response.json()
@@ -95,7 +93,7 @@ export const getIfpaData = (address, radius, distanceUnit) => {
 }
 
 export const deleteData = (uri, body)  => {
-    return fetch(global.api_url + uri, {
+    return fetch(process.env.API_URL + uri, {
         method: 'delete',
         headers: {
             'Accept': 'application/json, text/plain, */*',

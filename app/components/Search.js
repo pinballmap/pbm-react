@@ -32,7 +32,6 @@ import {
     clearSearchBarText,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
-import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -40,7 +39,7 @@ import ActivityIndicator from './ActivityIndicator'
 
 let deviceWidth = Dimensions.get('window').width
 
-Geocode.setApiKey(GOOGLE_MAPS_KEY)
+Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 class Search extends Component {
     constructor(props) {
