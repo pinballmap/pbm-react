@@ -283,8 +283,8 @@ class Search extends Component {
                                                 onChangeText={query => this.changeQuery(query)}
                                                 value={q}
                                                 containerStyle={{ paddingTop: 4 }}
-                                                key={submitButton ? 'search' : 'none'}
-                                                returnKeyType={submitButton ? 'search' : 'none'}
+                                                key={'search'}
+                                                returnKeyType={'search'}
                                                 onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
                                                 inputContainerStyle={s.inputContainerStyle}
                                                 inputStyle={s.inputStyle}
