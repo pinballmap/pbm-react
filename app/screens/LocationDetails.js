@@ -618,6 +618,8 @@ const getStyles = theme => StyleSheet.create({
     },
     quickButton: {
         backgroundColor: theme.white,
+        borderWidth: 1,
+        borderColor: theme.borderWhite,
         position: 'absolute',
         padding: 10,
         zIndex: 10,
@@ -736,7 +738,7 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: "row"
     },
     narrow: {
-        width: '100%',
+        width: '95%',
         flexDirection: "row"
     }
 })

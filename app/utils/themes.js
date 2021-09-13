@@ -20,6 +20,7 @@ export const dark = {
     darkShadow: 'transparent',
     text:       '#eee5d7',
     white:      '#322f32',
+    borderWhite:'#eee5d7'
 }
 
 export const standard = {
@@ -44,4 +45,5 @@ export const standard = {
     darkShadow: '#aaaac7',
     text:       '#453e39',
     white:      '#ffffff',
+    borderWhite:'#ffffff',
 }
