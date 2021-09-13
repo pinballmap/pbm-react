@@ -1,5 +1,4 @@
 import Geocode from 'react-geocode'
-import { GOOGLE_MAPS_KEY } from '../config/keys'
 import {
     CLEAR_FILTERS,
     CLEAR_SEARCH_BAR_TEXT,
@@ -13,7 +12,7 @@ import {
     SET_OPERATOR_FILTER,
     SET_MACHINE_VERSION_FILTER,
 } from './types'
-Geocode.setApiKey(GOOGLE_MAPS_KEY)
+Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 
 export const clearFilters = () => ({ type: CLEAR_FILTERS })

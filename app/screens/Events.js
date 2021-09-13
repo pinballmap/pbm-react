@@ -17,11 +17,10 @@ import { ThemeContext } from '../theme-context'
 import { MaterialIcons } from '@expo/vector-icons'
 import { HeaderBackButton, ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'
-import { GOOGLE_MAPS_KEY } from '../config/keys'
 
 const moment = require('moment')
 
-Geocode.setApiKey(GOOGLE_MAPS_KEY)
+Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 class Events extends Component {
     state = {

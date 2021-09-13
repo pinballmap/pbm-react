@@ -17,4 +17,4 @@ __snapshots__/
 # Expo
 .expo/
 
-app/config/keys.js
+.env
