@@ -617,7 +617,7 @@ const getStyles = theme => StyleSheet.create({
         alignItems: 'center',
     },
     quickButton: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.blue1,
         borderWidth: 1,
         borderColor: theme.borderWhite,
         position: 'absolute',
@@ -628,7 +628,12 @@ const getStyles = theme => StyleSheet.create({
         width: 40,
         alignSelf: 'center',
         justifyContent:'center',
-        top: deviceWidth < 325 ? 75 : 115
+        top: deviceWidth < 325 ? 75 : 115,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
     },
     saveButton: {
         right: 10,
@@ -728,10 +733,10 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base4,
     },
     quickButtonPressed: {
-        backgroundColor: theme.orange8,
+        backgroundColor: theme.blue2,
     },
     quickButtonNotPressed: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.base4,
     },
     wide: {
         width: '153%',
