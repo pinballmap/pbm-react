@@ -32,7 +32,6 @@ import {
     clearSearchBarText,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
-import { GOOGLE_MAPS_KEY } from '../config/keys'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -40,7 +39,7 @@ import ActivityIndicator from './ActivityIndicator'
 
 let deviceWidth = Dimensions.get('window').width
 
-Geocode.setApiKey(GOOGLE_MAPS_KEY)
+Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 class Search extends Component {
     constructor(props) {
@@ -283,8 +282,8 @@ class Search extends Component {
                                                 onChangeText={query => this.changeQuery(query)}
                                                 value={q}
                                                 containerStyle={{ paddingTop: 4 }}
-                                                key={submitButton ? 'search' : 'none'}
-                                                returnKeyType={submitButton ? 'search' : 'none'}
+                                                key={'search'}
+                                                returnKeyType={'search'}
                                                 onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
                                                 inputContainerStyle={s.inputContainerStyle}
                                                 inputStyle={s.inputStyle}

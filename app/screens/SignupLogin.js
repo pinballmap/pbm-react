@@ -30,7 +30,6 @@ import {
 import { retrieveItem } from '../config/utils'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { getData } from '../config/request'
-import "../config/globals.js"
 
 let deviceHeight = Dimensions.get('window').height
 

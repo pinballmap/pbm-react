@@ -1,0 +1,15 @@
+############################################
+## This is a template showing what variables
+## are used in this project, and it is
+## in source control. Therefore:
+##
+## /!\ DO NOT ADD SECRETS TO THIS FILE /!\
+##
+## Copy this file to .env and remove this
+## header to populate the ENV variables
+############################################
+GOOGLE_MAPS_KEY='<key>'
+IFPA_API_KEY='<key>'
+#API_URL='https://pinballmapstaging.herokuapp.com/api/v1'
+API_URL='https://www.pinballmap.com/api/v1'
+STANDARD_DISTANCE = 5

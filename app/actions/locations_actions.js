@@ -1,5 +1,4 @@
 import Geocode from 'react-geocode'
-import { GOOGLE_MAPS_KEY } from '../config/keys'
 import {
     FETCHING_LOCATION_TYPES,
     FETCHING_LOCATION_TYPES_SUCCESS,
@@ -15,7 +14,7 @@ import {
 import { getData } from '../config/request'
 import { getDistance } from "../utils/utilityFunctions"
 
-Geocode.setApiKey(GOOGLE_MAPS_KEY)
+Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 export const fetchLocationTypes = (url) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TYPES})
@@ -42,7 +41,7 @@ export const getFilterState = (filterState) => {
     return filteringByTwoMachines ? 300 : filterApplied ? 500 : 200
 }
 
-export const getLocations = (lat = '', lon = '', distance = global.STANDARD_DISTANCE) => (dispatch, getState) => {
+export const getLocations = (lat = '', lon = '', distance = process.env.STANDARD_DISTANCE) => (dispatch, getState) => {
     dispatch({type: FETCHING_LOCATIONS})
 
     const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, filterByMachineVersion } = getState().query

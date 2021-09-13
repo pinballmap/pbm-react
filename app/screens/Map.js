@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -44,7 +44,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 let deviceWidth = Dimensions.get('window').width
 
 const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
-const MarkerHeart = ({numMachines, stopRendering}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} onLoad={stopRendering} />
+const MarkerHeart = ({numMachines}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
 
 MarkerDot.propTypes = {
     numMachines: PropTypes.number,
@@ -52,13 +52,9 @@ MarkerDot.propTypes = {
 
 MarkerHeart.propTypes = {
     numMachines: PropTypes.number,
-    stopRendering: PropTypes.func,
 }
 
 const CustomMarker = ({ marker, navigation, s }) => {
-    const [tracksViewChanges, setTracksViewChanges] = useState(true)
-
-    const stopRendering = () => setTracksViewChanges(false)
     return (
         <MapView.Marker
             key={marker.id}
@@ -67,10 +63,9 @@ const CustomMarker = ({ marker, navigation, s }) => {
                 longitude: Number(marker.lon)
             }}
             title={marker.title}
-            tracksViewChanges={tracksViewChanges}
             pointerEvents="auto"
         >
-            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} stopRendering={stopRendering} />}
+            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
                 <View>
                     <View style={s.calloutStyle}>
