@@ -34,7 +34,7 @@ const getStyles = (theme) => StyleSheet.create({
         paddingHorizontal: 15,
         paddingBottom: 10,
         paddingTop: 25,
-        color: theme.orange7,
+        color: theme.text2,
         textAlign: 'center'
     },
 })

@@ -83,7 +83,7 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
         elevation: 0,
         shadowColor: 'transparent'
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     headerTitleStyle: {
         textAlign: 'center',
         fontFamily: 'boldFont',
@@ -100,7 +100,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         margin: 15,
         paddingLeft: 10
     },

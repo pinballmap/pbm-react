@@ -43,7 +43,7 @@ const FindOperator = ({ navigation, operators: { operators = [] } }) => {
             onPress={() => _selectOperator(item.id)}
         >
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
+                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base2,opacity: 1}]}>
                     <Text style={{fontSize: 18}}>{item.name}</Text>
                 </View>
             )}
@@ -82,7 +82,7 @@ const getStyles = theme => StyleSheet.create({
         height: 35,
         backgroundColor: theme.white,
         borderRadius: 25,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         borderWidth: 1,
         borderBottomWidth: 1,
         marginHorizontal: 10
@@ -102,7 +102,7 @@ FindOperator.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     gestureEnabled: true,
     headerRight: () =><View style={{padding:6}}></View>
 })

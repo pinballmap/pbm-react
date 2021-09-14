@@ -50,7 +50,7 @@ class UserProfile extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
         }
     };
 
@@ -230,7 +230,7 @@ const getStyles = theme => StyleSheet.create({
     },
     savedIcon: {
         fontSize: 24,
-        color: theme.orange8,
+        color: theme.text3,
         marginRight: 5
     },
     savedLink: {
@@ -253,7 +253,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     titleStyle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 16
     },
     listTitleStyle: {
@@ -281,7 +281,7 @@ const getStyles = theme => StyleSheet.create({
     statNum: {
         fontFamily: 'boldFont',
         color: theme.base1,
-        backgroundColor: theme.orange7,
+        backgroundColor: theme.text2,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
@@ -293,7 +293,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 16,
         marginTop: 5,
-        color: theme.orange8
+        color: theme.text3
     },
     buttonContainer: {
         marginLeft: 20,
@@ -312,7 +312,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 2,
     },
     textPressed: {
-        color: theme.orange8,
+        color: theme.text3,
     },
     textNotPressed: {
         color: theme.text,

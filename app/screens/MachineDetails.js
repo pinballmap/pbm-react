@@ -64,7 +64,7 @@ class MachineDetails extends Component {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
             gestureEnabled: true
         }
     }
@@ -306,12 +306,12 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'boldFont',
         fontSize: 18,
-        color: theme.orange8
+        color: theme.text3
     },
     locationName: {
         textAlign: 'center',
         fontSize: 16,
-        color: theme.orange7
+        color: theme.text2
     },
     machineNameContainer: {
         marginBottom: 5,
@@ -325,7 +325,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginBottom: 10,
         fontSize: 14,
-        color: theme.orange7,
+        color: theme.text2,
         opacity: 0.9
     },
     externalLink: {
@@ -335,7 +335,7 @@ const getStyles = theme => StyleSheet.create({
     },
     externalIcon: {
         fontSize: 24,
-        color: theme.orange7
+        color: theme.text2
     },
     externalLinkTitle: {
         color: theme.text,
@@ -348,12 +348,12 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     conditionText: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 14,
         marginTop: 5
     },
     scoreText: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 14,
         marginTop: 5,
         fontFamily: 'boldFont',
@@ -361,12 +361,12 @@ const getStyles = theme => StyleSheet.create({
     noneYet: {
         textAlign: 'center',
         paddingHorizontal: 15,
-        color: theme.orange7,
+        color: theme.text2,
         paddingVertical: 5,
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         color: theme.text,
         borderWidth: 1,
         marginBottom: 10,
@@ -380,13 +380,13 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: theme.orange7
+        color: theme.text2
     },
     userHighScore: {
         textAlign:'center',
         fontSize: 20,
         paddingBottom: 15,
-        color: theme.orange7
+        color: theme.text2
     },
     verticalAlign: {
         flexDirection: 'column',
@@ -403,7 +403,7 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.orange7
+        color: theme.text2
     },
     subtitleMargin: {
         marginTop: 5,
@@ -447,7 +447,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 10,
-        color: theme.orange8,
+        color: theme.text3,
         opacity: 0.9
     },
 })

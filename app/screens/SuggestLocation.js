@@ -71,7 +71,7 @@ class SuggestLocation extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
             gestureEnabled: true
         }
     }
@@ -254,7 +254,7 @@ class SuggestLocation extends Component {
                                     </Modal>
                                     <Pressable onPress={ () => { Keyboard.dismiss() } }>
                                         <SafeAreaView edges={['right', 'bottom', 'left']}>
-                                            <Text style={s.text}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
+                                            <Text style={[{marginTop: 10},s.text]}>{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                                             <Text style={s.title}>Location Name</Text>
                                             <TextInput
                                                 style={[{height: 40,textAlign:'left'},s.textInput,s.radius10]}
@@ -371,7 +371,7 @@ class SuggestLocation extends Component {
                                             <Text style={s.title}>Machines</Text>
                                             <PbmButton
                                                 title={'Select Machines to Add'}
-                                                titleStyle={{fontSize:16,color:theme.orange8}}
+                                                titleStyle={{fontSize:16,color:theme.text3}}
                                                 onPress={() => navigate('FindMachine', { multiSelect: true })}
                                                 icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                                 containerStyle={s.addMachinesContainer}
@@ -428,7 +428,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontFamily: 'boldFont',
-        color: theme.orange7
+        color: theme.text2
     },
     preview: {
         fontSize: 15,
@@ -443,11 +443,11 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'regularItalicFont',
         fontSize: 18,
-        color: theme.orange8
+        color: theme.text3
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         color: theme.text,
         borderWidth: 1,
         marginHorizontal: 20,

@@ -206,7 +206,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         marginTop: 5,
         marginBottom: 5,
         paddingLeft: 10
@@ -218,7 +218,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         fontFamily: 'boldFont',
-        color: theme.orange7,
+        color: theme.text2,
         textShadowColor: theme.white,
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 2,
@@ -236,7 +236,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     buttonTitle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 16,
         fontFamily: 'boldFont',
     },

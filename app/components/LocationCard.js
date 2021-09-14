@@ -38,12 +38,12 @@ const LocationCard = ({
                         <Text style={s.locationName}>{locationName}</Text>
                     </View>
                     <View style={{paddingHorizontal:10,paddingBottom:5}}>
-                        <Text style={[s.gray,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
+                        <Text style={[s.text3,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
                         {type || distance ?
                             <Text style={s.marginS}>
-                                {type ? <Text style={s.gray}>{type}</Text> : null}
-                                {type && distance ? <Text style={s.gray}> • </Text> : null }
-                                {distance ? <Text style={[s.gray,s.marginS]}>{distance}</Text>: null}
+                                {type ? <Text style={s.text3}>{type}</Text> : null}
+                                {type && distance ? <Text style={s.text3}> • </Text> : null }
+                                {distance ? <Text style={[s.text3,s.marginS]}>{distance}</Text>: null}
                             </Text> : null
                         }
                         <View style={s.margin}>
@@ -55,7 +55,7 @@ const LocationCard = ({
                                 return (
                                     <Text key={key} style={s.mName}>
                                         <Text style={{fontFamily: 'boldFont',fontSize: 17}}>{title}</Text>
-                                        <Text>{`${info}\n`}</Text>
+                                        <Text style={s.text2}>{`${info}\n`}</Text>
                                     </Text>
                                 )})
                             }
@@ -96,7 +96,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     plus: {
         marginBottom: 10,
-        color: theme.text
+        color: theme.tex2
     },
     locationNameContainer: {
         backgroundColor: theme.blue1,
@@ -123,8 +123,11 @@ const getStyles = (theme) => StyleSheet.create({
         marginTop: 3,
         marginLeft: 5
     },
-    gray: {
-        color: theme.orange7,
+    text2: {
+        color: theme.text2
+    },
+    text3: {
+        color: theme.text3,
     },
     italic: {
         fontFamily: 'regularItalicFont',

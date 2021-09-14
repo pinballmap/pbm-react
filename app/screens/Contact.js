@@ -134,7 +134,7 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     gestureEnabled: true
 })
 
@@ -151,7 +151,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         color: theme.text,
         borderWidth: 1,
         marginLeft: 10,

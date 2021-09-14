@@ -37,10 +37,10 @@ import { alphaSortNameObj } from '../utils/utilityFunctions'
 
 let deviceHeight = Dimensions.get('window').height
 
-const getDisplayText = machine => (
+const getDisplayText = (machine, theme) => (
     <Text style={{ fontSize: 18 }}>
-        <Text style={{ fontFamily: 'boldFont', }}>{machine.name}</Text>
-        <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        <Text style={{fontFamily: 'boldFont', color: theme.text}}>{machine.name}</Text>
+        <Text style={{color: theme.text3}}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
 )
 
@@ -54,15 +54,15 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         const { index, machine, selected } = this.props
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.white
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
 
         return (
             <Pressable
                 onPress={this._onPress}
                 style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}
             >
-                <Text style={{ fontSize: 18 }}>{getDisplayText(machine)}</Text>
-                {selected ? <MaterialIcons name='cancel' size={18} color="#766a62" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
+                <Text style={{ fontSize: 18 }}>{getDisplayText(machine, theme)}</Text>
+                {selected ? <MaterialIcons name='cancel' size={18} color="#616182" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
             </Pressable>
         )
     }
@@ -114,7 +114,7 @@ class FindMachine extends React.PureComponent {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
             headerTitleStyle: {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
@@ -188,14 +188,14 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
         return (
             <Pressable
                 onPress={() => this.setSelected(item)}
             >
                 {({ pressed }) => (
                     <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
-                        <Text style={{fontSize: 18}}>{getDisplayText(item)}</Text>
+                        <Text style={{fontSize: 18}}>{getDisplayText(item, theme)}</Text>
                     </View>
                 )}
             </Pressable>
@@ -330,14 +330,14 @@ const getStyles = theme => StyleSheet.create({
         height: 35,
         backgroundColor: theme.white,
         borderRadius: 25,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         borderWidth: 1,
         borderBottomWidth: 1,
         marginHorizontal: 5
     },
     textInput: {
         backgroundColor: theme.white,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         borderWidth: 1,
         marginLeft: 20,
         marginRight: 20,
@@ -368,7 +368,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 14,
     },
     innerBorderStyle: {
@@ -381,8 +381,15 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontFamily: 'regularBoldFont',
+    },
+    machineName: {
+        fontFamily: 'boldFont',
+        color: theme.text
+    },
+    manYear: {
+        color: theme.text3
     },
     pressed: {
         backgroundColor: theme.base3,

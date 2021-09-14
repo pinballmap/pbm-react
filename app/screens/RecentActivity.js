@@ -41,7 +41,7 @@ class RecentActivity extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
         }
     }
 
@@ -172,17 +172,17 @@ const getStyles = theme => StyleSheet.create({
     },
     headerText: {
         textAlign: "center",
-        color: theme.orange8
+        color: theme.text3
     },
     title: {
         fontSize: 16,
         fontFamily: 'regularItalicFont',
-        color: theme.orange7
+        color: theme.text2
     },
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.orange7
+        color: theme.text3
     },
     filterView: {
         backgroundColor: theme.base3,

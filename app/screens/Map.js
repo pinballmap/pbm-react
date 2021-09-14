@@ -311,13 +311,13 @@ class Map extends Component {
                         {Platform.OS === 'ios' ?
                             <FontAwesome
                                 name={'location-arrow'}
-                                color={theme.orange7}
+                                color={theme.text2}
                                 size={24}
                                 style={{justifyContent:'center',alignSelf:'center'}}
                             /> :
                             <MaterialIcons
                                 name={'gps-fixed'}
-                                color={theme.orange7}
+                                color={theme.text2}
                                 size={24}
                                 style={{justifyContent:'center',alignSelf:'center'}}
                             />
@@ -425,7 +425,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     appAlertTitle: {
-        color: theme.orange8,
+        color: theme.text3,
         textAlign: "center",
         fontSize: 18,
         fontFamily: 'boldFont',

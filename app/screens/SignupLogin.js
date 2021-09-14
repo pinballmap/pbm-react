@@ -268,7 +268,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     titleStyle: {
-        color: "#766a62",
+        color: "#616182",
         fontSize: 16,
         fontFamily: 'boldFont',
     },

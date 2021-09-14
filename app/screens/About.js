@@ -57,8 +57,8 @@ const About = ({navigation, appAlert}) => {
                     </View>
                     <View style={s.child}>
                         <View style={s.appAlert}>
-                            <Text style={[{textAlign:'center',color:theme.orange8},s.bold]}>Message of the Day</Text>
-                            <Text style={[{color:theme.orange8},s.text]}>{appAlert}</Text>
+                            <Text style={[{textAlign:'center',color:theme.text3},s.bold]}>Message of the Day</Text>
+                            <Text style={[{color:theme.text3},s.text]}>{appAlert}</Text>
                         </View>
                         <Text style={s.text}>Pinball Map is a crowdsourced map of all public pinball machines. It was founded in 2008 in Portland, Oregon.</Text>
                         <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
@@ -118,7 +118,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     gestureEnabled: true
 })
 
@@ -171,7 +171,7 @@ const getStyles = theme => StyleSheet.create({
     },
     appAlert: {
         borderWidth: 1,
-        borderColor: theme.orange7,
+        borderColor: theme.text2,
         borderRadius: 10,
         margin: 10,
         paddingTop: 5,

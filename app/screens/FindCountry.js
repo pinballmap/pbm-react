@@ -81,7 +81,7 @@ const getStyles = theme => StyleSheet.create({
         height: 35,
         backgroundColor: theme.white,
         borderRadius: 25,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         borderWidth: 1,
         borderBottomWidth: 1,
         marginHorizontal: 10
@@ -101,7 +101,7 @@ FindCountry.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     gestureEnabled: true
 })
 

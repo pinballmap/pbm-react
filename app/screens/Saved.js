@@ -40,7 +40,7 @@ export class Saved extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
         }
     }
 
@@ -167,7 +167,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.orange8,
+        color: theme.text3,
     },
     innerBorderStyle: {
         width: 0,
@@ -179,7 +179,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontFamily: 'regularBoldFont',
     },
     savedIcon: {
@@ -192,7 +192,7 @@ const getStyles = theme => StyleSheet.create({
     noSaved: {
         fontSize: 18,
         textAlign: 'center',
-        color: theme.orange7
+        color: theme.text2
     }
 })
 

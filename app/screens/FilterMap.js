@@ -171,7 +171,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
         elevation: 0,
         shadowColor: 'transparent'
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
     headerTitleStyle: {
         textAlign: 'center',
         fontFamily: 'boldFont',
@@ -183,7 +183,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
 const getStyles = theme => StyleSheet.create({
     border: {
         borderWidth: 2,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
     },
     sectionTitle: {
         textAlign: 'center',
@@ -213,7 +213,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: 14,
     },
     innerBorderStyle: {
@@ -226,7 +226,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontFamily: 'regularBoldFont',
     },
 })

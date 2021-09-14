@@ -113,8 +113,8 @@ const TabNav = createBottomTabNavigator(
                     dark: '#addbff',
                 },
                 inactiveTintColor: {
-                    light: '#95867c',
-                    dark: '#ebebeb',
+                    light: '#7f7fa0',
+                    dark: '#d9d9e0',
                 },
                 showIcon: true,
                 adaptive: false,
@@ -190,7 +190,7 @@ export const MapStack = createStackNavigator({
             flexGrow: 1,
             alignSelf: 'center',
         },
-        headerTintColor: theme === 'dark' ? '#ebebeb' : '#7cc5ff'
+        headerTintColor: theme === 'dark' ? '#d9d9e0' : '#7f7fa0'
     })
 }
 )
@@ -216,12 +216,12 @@ export const drawerNavigator = createDrawerNavigator({
     },
     contentOptions: {
         activeTintColor: {
-            light: '#95867c',
-            dark: '#e6cfbe'
+            light: '#7f7fa0',
+            dark: '#cac6ca'
         },
         inactiveTintColor: {
-            light: '#95867c',
-            dark: '#e6cfbe'
+            light: '#7f7fa0',
+            dark: '#cac6ca'
         },
         activeBackgroundColor: {
             light: '#f5f5ff',
@@ -247,7 +247,7 @@ const s = theme => StyleSheet.create({
     inactiveTabText: {
         fontFamily: 'regularFont',
         fontSize: 11,
-        color: theme === 'dark' ? '#ebebeb' : '#95867c',
+        color: theme === 'dark' ? '#d9d9e0' : '#7f7fa0',
         marginBottom: Platform.OS === 'android' ? 5 : 0,
         marginTop: Platform.OS === 'android' ? -5 : 0
     },

@@ -83,7 +83,7 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: Platform.OS === 'ios' ? 16 : 15
     },
     text: {
-        color: theme.orange7,
+        color: theme.text2,
         fontFamily: 'boldFont',
         fontSize: 14,
         position: 'absolute',

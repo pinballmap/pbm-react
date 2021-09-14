@@ -132,7 +132,7 @@ const getStyles = (theme) => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: theme.orange8,
+        color: theme.text3,
         textAlign: "center",
         fontSize: 16,
         fontFamily: 'boldFont',
@@ -144,7 +144,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.red2,
     },
     titleStyle: {
-        color: theme.orange8
+        color: theme.text3
     },
     containerBg: {
         backgroundColor: theme.blue2

@@ -76,7 +76,7 @@ class LocationDetails extends Component {
     getTitle = (machine, s) => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year ? <Text style={[s.fontSize18,s.orange7]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
+            {machine.year ? <Text style={[s.fontSize18,s.text2]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
@@ -163,7 +163,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.orange8}>
+                                                <ListItem.Title style={s.text3}>
                                                     Add Machine
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -175,7 +175,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.orange8}>
+                                                <ListItem.Title style={s.text3}>
                                                     Confirm Line-Up
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -187,7 +187,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.orange8}>
+                                                <ListItem.Title style={s.text3}>
                                                     Edit Location Details
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -203,7 +203,7 @@ class LocationDetails extends Component {
                                                 {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.orange8}>
+                                                <ListItem.Title style={s.text3}>
                                                     Share Location
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -218,7 +218,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.orange8}>
+                                                <ListItem.Title style={s.text3}>
                                                     Directions
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -285,7 +285,7 @@ class LocationDetails extends Component {
                                     >
                                         <MaterialCommunityIcons
                                             name={'plus'}
-                                            color={theme.orange8}
+                                            color={theme.text2}
                                             size={28}
                                             style={{height:28,width:28,justifyContent:'center',alignSelf:'center'}}
                                         />
@@ -321,7 +321,7 @@ class LocationDetails extends Component {
                                     >
                                         <MaterialIcons
                                             name={'ios-share'}
-                                            color={theme.orange8}
+                                            color={theme.text2}
                                             size={24}
                                             style={{height:24,width:24,justifyContent:'center',alignSelf:'center'}}
                                         />
@@ -356,24 +356,24 @@ class LocationDetails extends Component {
                                     <View style={s.locationContainer}>
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.orange8,s.fontSize16,s.marginRight,s.opacity09]}>{location.street}</Text>
+                                                <Text style={[s.text2,s.fontSize16,s.marginRight,s.opacity09]}>{location.street}</Text>
 
-                                                <Text style={[s.orange8,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{location.city}, {location.state} {location.zip}</Text>
+                                                <Text style={[s.text2,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{location.city}, {location.state} {location.zip}</Text>
 
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13,s.orange7,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13,s.text3,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
                                                 {location.phone ? <View style={{flexDirection: "row"}}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
 
                                                 {location.website ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <View style={(location.phone && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
-                                                        <Text style={s.orange7}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
+                                                    <View style={(location.phone && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
+                                                        <Text style={s.text3}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text></View> : null
                                                 }
 
                                                 {location.date_last_updated ?
-                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.operator_id && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.orange8,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.orange7}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.operator_id && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
                                                     : null
                                                 }
 
@@ -381,7 +381,7 @@ class LocationDetails extends Component {
 
                                             {location.location_type_id ?
                                                 <View style={s.locationTypeContainer}>
-                                                    {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.orange8,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
+                                                    {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.text2,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
                                                     <View>
                                                         <Icon
                                                             name={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).icon}
@@ -389,7 +389,7 @@ class LocationDetails extends Component {
                                                             color={theme.orange3}
                                                             size={46}
                                                         />
-                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.orange8,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.text2,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
                                                     </View>
                                                 </View> : null
                                             }
@@ -397,7 +397,7 @@ class LocationDetails extends Component {
                                         <View style={{width:'100%',paddingRight:10,paddingBottom:5}}>
                                             {location.description ?
                                                 <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='notebook-outline' style={s.metaIcon} />
-                                                    <Text style={[s.orange7,s.fontSize13]}>{location.description}</Text>
+                                                    <Text style={[s.text3,s.fontSize13]}>{location.description}</Text>
                                                 </View> : null
                                             }
                                         </View>
@@ -418,10 +418,10 @@ class LocationDetails extends Component {
                                                         {machine.condition_date ?
                                                             <View style={s.condition}>
                                                                 <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} />
-                                                                    {machine.condition_date ? <Text style={[s.fontSize13,s.orange7]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                    {machine.condition_date ? <Text style={[s.fontSize13,s.text3]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                 </View>
                                                                 <View style={{flexDirection: "row",paddingTop: 10}}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
-                                                                    {machine.condition ? <Text style={[s.orange7,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                    {machine.condition ? <Text style={[s.text3,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                 </View>
                                                             </View> : null
                                                         }
@@ -440,7 +440,7 @@ class LocationDetails extends Component {
                             >
                                 <MaterialCommunityIcons
                                     name={'tools'}
-                                    color={theme.orange8}
+                                    color={theme.text3}
                                     size={28}
                                     style={{justifyContent:'center',alignSelf:'center'}}
                                 />
@@ -474,7 +474,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         marginTop: 8,
         marginBottom: 4,
-        opacity: 0.8
+        opacity: 0.9
     },
     machineListContainer: {
         borderRadius: 25,
@@ -526,7 +526,7 @@ const getStyles = theme => StyleSheet.create({
     locationTypeContainer: {
         backgroundColor: theme.base2,
         borderWidth: 2,
-        borderColor: theme.base4,
+        borderColor: theme.indigo4,
         borderRadius: 10,
         padding: 5,
         width: '35%',
@@ -560,11 +560,11 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         color: theme.blue3
     },
-    orange7: {
-        color: theme.orange7
+    text2: {
+        color: theme.text2
     },
-    orange8: {
-        color: theme.orange8
+    text3: {
+        color: theme.text3
     },
     italic: {
         fontFamily: 'regularItalicFont'
@@ -595,7 +595,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     buttonIcon: {
-        color: theme.orange7,
+        color: theme.text3,
         opacity: 0.8,
         fontSize: 32,
     },
@@ -629,7 +629,7 @@ const getStyles = theme => StyleSheet.create({
         alignSelf: 'center',
         justifyContent:'center',
         top: deviceWidth < 325 ? 75 : 115,
-        shadowColor: theme.shadow,
+        shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
@@ -645,7 +645,7 @@ const getStyles = theme => StyleSheet.create({
         right: 60,
     },
     savedIcon: {
-        color: theme.orange8,
+        color: theme.text2,
         fontSize: 24,
         marginRight: 5
     },
@@ -698,7 +698,7 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: theme.orange8,
+        color: theme.text2,
         textAlign: "center",
         fontSize: 16,
         fontFamily: 'boldFont',

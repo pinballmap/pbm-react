@@ -48,7 +48,7 @@ export class LocationList extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#766a62',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
             gestureEnabled: true
         }
     }
@@ -174,7 +174,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.orange8,
+        color: theme.text3,
         fontSize: deviceWidth < 321 ? 12 : 14,
     },
     innerBorderStyle: {
@@ -187,7 +187,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.orange8,
+        color: theme.text3,
         fontFamily: 'regularBoldFont',
     },
     confirmText: {
