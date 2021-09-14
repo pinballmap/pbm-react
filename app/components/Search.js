@@ -85,6 +85,7 @@ class Search extends Component {
     }
 
     geocodeSearch = (query) => {
+        this.props.setSearchBarText(query)
         this.setState({ searching: true })
         Geocode.fromAddress(query)
             .then(response => {
@@ -307,7 +308,7 @@ class Search extends Component {
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                    <Text style={s.inputPlaceholder}>{searchBarText ? searchBarText.length < 25 ? searchBarText : `${searchBarText.substr(0, 25)}...` : 'City, Address, Location...'}</Text>
+                                    <Text numberOfLines={1} style={s.inputPlaceholder}>{searchBarText}</Text>
                                 </Pressable>
                                 <Pressable
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
@@ -378,7 +379,8 @@ const getStyles = theme => StyleSheet.create({
     inputPlaceholder: {
         fontSize: deviceWidth < 321 ? 14 : 16,
         color: theme.indigo4,
-        paddingLeft: 5
+        paddingLeft: 5,
+        flex: 1,
     },
     inputStyle: {
         color: theme.indigo4,
