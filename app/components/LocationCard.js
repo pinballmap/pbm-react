@@ -7,6 +7,7 @@ import {
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const NUM_MACHINES_TO_SHOW = 5
 
@@ -42,7 +43,7 @@ const LocationCard = ({
                         {type || distance ?
                             <Text style={s.marginS}>
                                 {type ? <Text style={s.text3}>{type}</Text> : null}
-                                {type && distance ? <Text style={s.text3}> • </Text> : null }
+                                {type && distance ? <Text style={s.text3}> <MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /> </Text> : null }
                                 {distance ? <Text style={[s.text3,s.marginS]}>{distance}</Text>: null}
                             </Text> : null
                         }
@@ -153,7 +154,13 @@ const getStyles = (theme) => StyleSheet.create({
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
-    }
+    },
+    distanceIcon: {
+        fontSize: 18,
+        color: theme.indigo4,
+        marginRight: 3,
+        opacity: 0.6
+    },
 })
 
 LocationCard.propTypes = {
