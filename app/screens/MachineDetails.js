@@ -306,12 +306,12 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'boldFont',
         fontSize: 18,
-        color: theme.text3
+        color: theme.text2
     },
     locationName: {
         textAlign: 'center',
         fontSize: 16,
-        color: theme.text2
+        color: theme.text3
     },
     machineNameContainer: {
         marginBottom: 5,
@@ -325,7 +325,7 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginBottom: 10,
         fontSize: 14,
-        color: theme.text2,
+        color: theme.text3,
         opacity: 0.9
     },
     externalLink: {
@@ -348,13 +348,13 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 15
     },
     conditionText: {
-        color: theme.text3,
+        color: theme.text2,
         fontSize: 14,
         marginTop: 5
     },
     scoreText: {
-        color: theme.text3,
-        fontSize: 14,
+        color: theme.text2,
+        fontSize: 16,
         marginTop: 5,
         fontFamily: 'boldFont',
     },
@@ -403,7 +403,7 @@ const getStyles = theme => StyleSheet.create({
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.text2
+        color: theme.text3
     },
     subtitleMargin: {
         marginTop: 5,
@@ -447,7 +447,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
         marginTop: 10,
-        color: theme.text3,
+        color: theme.text2,
         opacity: 0.9
     },
 })

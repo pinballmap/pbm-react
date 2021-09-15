@@ -433,7 +433,7 @@ class LocationDetails extends Component {
                                 </View>
                             </Screen>
                             <Pressable
-                                style={({ pressed }) => [{},s.toolsIconContainerStyle,pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
+                                style={({ pressed }) => [{},s.toolsIconButton,pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
                                     this.setShowLocationToolsModal(true)
                                 }}
@@ -526,7 +526,7 @@ const getStyles = theme => StyleSheet.create({
     locationTypeContainer: {
         backgroundColor: theme.base2,
         borderWidth: 2,
-        borderColor: theme.indigo4,
+        borderColor: theme.base4,
         borderRadius: 10,
         padding: 5,
         width: '35%',
@@ -617,7 +617,6 @@ const getStyles = theme => StyleSheet.create({
         alignItems: 'center',
     },
     quickButton: {
-        backgroundColor: theme.blue1,
         borderWidth: 1,
         borderColor: theme.borderWhite,
         position: 'absolute',
@@ -654,14 +653,14 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.indigo4,
         marginRight: 5,
-        opacity: 0.5
+        opacity: 0.6
     },
     distanceIcon: {
         marginTop: -1,
         fontSize: 18,
         color: theme.indigo4,
         marginRight: 3,
-        opacity: 0.5
+        opacity: 0.6
     },
     savedLink: {
         borderWidth: 2,
@@ -709,7 +708,9 @@ const getStyles = theme => StyleSheet.create({
         top: -15,
         color: theme.red2,
     },
-    toolsIconContainerStyle: {
+    toolsIconButton: {
+        borderWidth: 1,
+        borderColor: theme.borderWhite,
         shadowColor: theme.shadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
