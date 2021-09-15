@@ -308,7 +308,7 @@ class Search extends Component {
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
-                                    <Text numberOfLines={1} style={s.inputPlaceholder}>{searchBarText}</Text>
+                                    <Text numberOfLines={1} style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location...'}</Text>
                                 </Pressable>
                                 <Pressable
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
