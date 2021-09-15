@@ -97,7 +97,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     plus: {
         marginBottom: 10,
-        color: theme.tex2
+        color: theme.text2
     },
     locationNameContainer: {
         backgroundColor: theme.blue1,
