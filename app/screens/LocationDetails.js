@@ -137,6 +137,7 @@ class LocationDetails extends Component {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))
+        const { icon: locationIcon, library: iconLibrary } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id)
 
         return (
             <ThemeContext.Consumer>
@@ -384,8 +385,8 @@ class LocationDetails extends Component {
                                                     {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.text2,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
                                                     <View>
                                                         <Icon
-                                                            name={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).icon}
-                                                            type={this.props.locations.locationTypes.find(type => type.id === location.location_type_id).library}
+                                                            name={locationIcon}
+                                                            type={iconLibrary}
                                                             color={theme.orange3}
                                                             size={46}
                                                         />
