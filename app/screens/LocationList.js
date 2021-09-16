@@ -137,6 +137,7 @@ export class LocationList extends Component {
                                 extraData={this.state}
                                 renderItem={({ item }) =>
                                     <LocationCard
+                                        locationType={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id) : {}}
                                         name={item.name}
                                         distance={locationTrackingServicesEnabled ? getDistanceWithUnit(lat, lon, item.lat, item.lon, unitPreference) : undefined}
                                         street={item.street}
@@ -144,7 +145,6 @@ export class LocationList extends Component {
                                         state={item.state}
                                         zip={item.zip}
                                         machines={item.machine_names}
-                                        type={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id).name : ""}
                                         navigation={this.props.navigation}
                                         id={item.id}
                                     />

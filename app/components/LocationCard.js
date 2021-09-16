@@ -20,14 +20,14 @@ const LocationCard = ({
     state,
     street,
     city,
-    type,
+    locationType,
     zip
 }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
-
+    const { name: type, icon, library } = locationType
     const numMachines = machines.length
-
+    console.log(`type = ${type}, icon = ${icon}, library = ${library}`)
     return(
         <Pressable
             style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
@@ -165,6 +165,8 @@ const getStyles = (theme) => StyleSheet.create({
 
 LocationCard.propTypes = {
     machines: PropTypes.array,
+    locationType: PropTypes.object,
+
     type: PropTypes.string,
     zip: PropTypes.string,
     state: PropTypes.string,
