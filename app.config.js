@@ -8,7 +8,7 @@ export default {
         ],
         androidStatusBar: {
             barStyle: "light-content",
-            backgroundColor: "#736f73"
+            backgroundColor: "#fafaff"
         },
         splash: {
             image: "app/assets/images/pbm-splash-2021.png",
