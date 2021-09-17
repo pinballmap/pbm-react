@@ -130,7 +130,7 @@ const getStyles = (theme) => StyleSheet.create({
         marginLeft: 5
     },
     marginH: {
-        marginRight: 8,
+        marginRight: 12,
     },
     vertAlign: {
         flexDirection: 'row',

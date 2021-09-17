@@ -281,7 +281,7 @@ const getStyles = theme => StyleSheet.create({
     statNum: {
         fontFamily: 'boldFont',
         color: theme.base1,
-        backgroundColor: theme.text2,
+        backgroundColor: theme.text3,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
