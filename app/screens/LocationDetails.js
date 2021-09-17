@@ -295,7 +295,7 @@ class LocationDetails extends Component {
                                         style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
                                     >
-                                        {!loggedIn || isUserFave ?
+                                        {isUserFave ?
                                             <MaterialCommunityIcons
                                                 name={'heart'}
                                                 color={theme.red2}
