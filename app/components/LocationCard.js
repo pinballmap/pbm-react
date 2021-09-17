@@ -43,12 +43,12 @@ const LocationCard = ({
                         {type || distance ?
                             <View style={{flexDirection: 'row',marginTop:4,marginLeft:5}}>
                                 {type ? <View style={s.vertAlign}><Icon
-                                            name={icon}
-                                            type={library}
-                                            color={theme.indigo4}
-                                            size={30}
-                                            style={s.icon}
-                                        /><Text style={[s.text3,s.marginH]}> {type}</Text></View> : null}
+                                    name={icon}
+                                    type={library}
+                                    color={theme.indigo4}
+                                    size={30}
+                                    style={s.icon}
+                                /><Text style={[s.text3,s.marginH]}> {type}</Text></View> : null}
                                 {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={s.text3}> {distance}</Text></View> : null}
                             </View> : null
                         }

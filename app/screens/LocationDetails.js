@@ -137,7 +137,7 @@ class LocationDetails extends Component {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return {...machineDetails, ...machine}
         }))
-        const { icon: locationIcon, library: iconLibrary } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id)
+        const { icon: locationIcon, library: iconLibrary, name: locationTypeName } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id) || {}
 
         return (
             <ThemeContext.Consumer>
@@ -295,21 +295,19 @@ class LocationDetails extends Component {
                                         style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
                                     >
-                                        {loggedIn && isUserFave &&
-                                        <MaterialCommunityIcons
-                                            name={'heart'}
-                                            color={theme.red2}
-                                            size={26}
-                                            style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
-                                        />
-                                        }
-                                        {loggedIn && !isUserFave &&
-                                        <MaterialCommunityIcons
-                                            name={'heart-outline'}
-                                            color={theme.red2}
-                                            size={26}
-                                            style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
-                                        />
+                                        {!loggedIn || isUserFave ?
+                                            <MaterialCommunityIcons
+                                                name={'heart'}
+                                                color={theme.red2}
+                                                size={26}
+                                                style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                            /> :
+                                            <MaterialCommunityIcons
+                                                name={'heart-outline'}
+                                                color={theme.red2}
+                                                size={26}
+                                                style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                            />
                                         }
                                     </Pressable>
                                     <Pressable
@@ -390,7 +388,7 @@ class LocationDetails extends Component {
                                                             color={theme.orange3}
                                                             size={46}
                                                         />
-                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.text2,s.opacity09]}>{this.props.locations.locationTypes.find(type => type.id === location.location_type_id).name}</Text>
+                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.text2,s.opacity09]}>{locationTypeName}</Text>
                                                     </View>
                                                 </View> : null
                                             }
