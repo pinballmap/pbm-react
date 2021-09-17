@@ -114,6 +114,7 @@ export class Saved extends Component {
                                                     extraData={this.state}
                                                     renderItem={({ item }) =>
                                                         <LocationCard
+                                                            locationType={item.location.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location.location_type_id) : {}}
                                                             name={item.location.name}
                                                             distance={getDistanceWithUnit(this.props.user.lat, this.props.user.lon, item.location.lat, item.location.lon, unitPreference)}
                                                             street={item.location.street}
@@ -121,7 +122,6 @@ export class Saved extends Component {
                                                             state={item.location.state}
                                                             zip={item.location.zip}
                                                             machines={item.location.machines}
-                                                            type={item.location.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location.location_type_id).name : ""}
                                                             navigation={this.props.navigation}
                                                             id={item.location.id}
                                                         />

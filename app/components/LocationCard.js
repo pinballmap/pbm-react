@@ -6,6 +6,7 @@ import {
     Pressable,
     View,
 } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
@@ -27,7 +28,6 @@ const LocationCard = ({
     const s = getStyles(theme)
     const { name: type, icon, library } = locationType
     const numMachines = machines.length
-    console.log(`type = ${type}, icon = ${icon}, library = ${library}`)
     return(
         <Pressable
             style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
@@ -39,13 +39,18 @@ const LocationCard = ({
                         <Text style={s.locationName}>{locationName}</Text>
                     </View>
                     <View style={{paddingHorizontal:10,paddingBottom:5}}>
-                        <Text style={[s.text3,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
+                        <Text style={[s.text2,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
                         {type || distance ?
-                            <Text style={s.marginS}>
-                                {type ? <Text style={s.text3}>{type}</Text> : null}
-                                {type && distance ? <Text style={s.text3}> <MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /> </Text> : null }
-                                {distance ? <Text style={[s.text3,s.marginS]}>{distance}</Text>: null}
-                            </Text> : null
+                            <View style={{flexDirection: 'row',marginTop:4,marginLeft:5}}>
+                                {type ? <View style={s.vertAlign}><Icon
+                                            name={icon}
+                                            type={library}
+                                            color={theme.indigo4}
+                                            size={30}
+                                            style={s.icon}
+                                        /><Text style={[s.text3,s.marginH]}> {type}</Text></View> : null}
+                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={s.text3}> {distance}</Text></View> : null}
+                            </View> : null
                         }
                         <View style={s.margin}>
                             {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
@@ -124,6 +129,13 @@ const getStyles = (theme) => StyleSheet.create({
         marginTop: 3,
         marginLeft: 5
     },
+    marginH: {
+        marginRight: 8,
+    },
+    vertAlign: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     text2: {
         color: theme.text2
     },
@@ -155,11 +167,11 @@ const getStyles = (theme) => StyleSheet.create({
         opacity: 1.0,
         elevation: 6,
     },
-    distanceIcon: {
-        fontSize: 18,
+    icon: {
+        fontSize: 20,
         color: theme.indigo4,
-        marginRight: 3,
-        opacity: 0.6
+        opacity: 0.8,
+        marginRight: 1
     },
 })
 
