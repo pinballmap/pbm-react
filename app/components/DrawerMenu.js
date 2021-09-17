@@ -80,16 +80,17 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 24,
         color: '#95867c',
         position: 'absolute',
+        opacity: 0.7,
         paddingLeft: Platform.OS === 'ios' ? 16 : 15
     },
     text: {
-        color: theme.text2,
+        color: theme.text3,
         fontFamily: 'boldFont',
         fontSize: 14,
         position: 'absolute',
         paddingLeft: 72,
         paddingRight: 120,
-        top: 4
+        top: 4,
     },
     buttonContainer: {
         marginLeft: 20,
