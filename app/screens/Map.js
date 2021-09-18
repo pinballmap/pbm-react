@@ -32,6 +32,9 @@ import {
     fetchLocationTypes,
     fetchMachines,
     fetchOperators,
+    login,
+    setUnitPreference,
+    getLocationAndMachineCounts,
 } from '../actions'
 import {
     getMapLocations
@@ -91,7 +94,8 @@ class Map extends Component {
             this.props.getRegions('/regions.json'),
             this.props.getLocationTypes('/location_types.json'),
             this.props.getMachines('/machines.json'),
-            this.props.getOperators('/operators.json')
+            this.props.getOperators('/operators.json'),
+            this.props.getLocationAndMachineCounts('/regions/location_and_machine_counts.json')
         ])
 
         if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
@@ -101,10 +105,27 @@ class Map extends Component {
             this.props.getCurrentLocation()
         }
 
+        retrieveItem('auth').then(auth => {
+            if (!auth) { this.props.navigation.navigate('SignupLogin') }
+            else {
+                if (auth.id) {
+                    this.props.login(auth)
+                    this.props.getFavoriteLocations(auth.id)
+                }
+                //this.navigateToScreen(initialUrl, true)
+            }
+        })
+
         retrieveItem('appAlert').then(appAlert => {
             if (appAlert !== this.props.appAlert) {
                 this.setState({ showAppAlert: true })
                 AsyncStorage.setItem('appAlert', JSON.stringify(this.props.appAlert))
+            }
+        })
+
+        retrieveItem('unitPreference').then(unitPreference => {
+            if (unitPreference) {
+                this.props.setUnitPreference(true)
             }
         })
     }
@@ -492,6 +513,9 @@ const mapDispatchToProps = (dispatch) => ({
     getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
     getMachines: (url) =>  dispatch(fetchMachines(url)),
     getOperators: (url) => dispatch(fetchOperators(url)),
+    login: (auth) => dispatch(login(auth)),
+    setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
+    getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
