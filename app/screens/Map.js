@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     AsyncStorage,
-    Dimensions,
-    Image,
     Platform,
     Pressable,
     StyleSheet,
@@ -12,18 +10,16 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
-import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
+    CustomMapMarker,
     PbmButton,
     ConfirmationModal,
     Search,
     Text,
-    IosMarker,
-    IosHeartMarker,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -32,6 +28,10 @@ import {
     clearError,
     clearSearchBarText,
     getLocationsConsideringZoom,
+    getRegions,
+    fetchLocationTypes,
+    fetchMachines,
+    fetchOperators,
 } from '../actions'
 import {
     getMapLocations
@@ -40,54 +40,6 @@ import androidCustomDark from '../utils/androidCustomDark'
 import { ThemeContext } from '../theme-context'
 import Constants from 'expo-constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
-let deviceWidth = Dimensions.get('window').width
-
-const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
-const MarkerHeart = ({numMachines}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
-
-MarkerDot.propTypes = {
-    numMachines: PropTypes.number,
-}
-
-MarkerHeart.propTypes = {
-    numMachines: PropTypes.number,
-}
-
-const CustomMarker = ({ marker, navigation, s }) => {
-    return (
-        <MapView.Marker
-            key={marker.id}
-            coordinate={{
-                latitude: Number(marker.lat),
-                longitude: Number(marker.lon)
-            }}
-            title={marker.title}
-            pointerEvents="auto"
-        >
-            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} />}
-            <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
-                <View>
-                    <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{marker.name}</Text>
-                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
-                        {Platform.OS === 'android' ?
-                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
-                            : null
-                        }
-                    </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
-                </View>
-            </MapView.Callout>
-        </MapView.Marker>
-    )
-}
-
-CustomMarker.propTypes = {
-    marker: PropTypes.object,
-    navigation: PropTypes.object,
-    s: PropTypes.object,
-}
 
 class Map extends Component {
     constructor(props) {
@@ -134,7 +86,14 @@ class Map extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await Promise.all([
+            this.props.getRegions('/regions.json'),
+            this.props.getLocationTypes('/location_types.json'),
+            this.props.getMachines('/machines.json'),
+            this.props.getOperators('/operators.json')
+        ])
+
         if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
             this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
         } else {
@@ -293,7 +252,7 @@ class Map extends Component {
                         provider = { MapView.PROVIDER_GOOGLE }
                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                     >
-                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
+                        {mapLocations.map(l => <CustomMapMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                     </MapView>
                     <Button
                         onPress={() => navigation.navigate('LocationList')}
@@ -359,26 +318,6 @@ class Map extends Component {
 const getStyles = theme => StyleSheet.create({
     map: {
         flex: 1
-    },
-    calloutStyle: {
-        minWidth: 50,
-        width: '100%',
-        maxWidth: deviceWidth < 325 ? deviceWidth - 50 : 275,
-        height: Platform.OS === 'ios' ? 70 : 100,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignContent: 'space-around',
-        zIndex: 5,
-        marginRight: 7,
-    },
-    iconStyle: {
-        fontSize: 26,
-        color: '#c1c9cf',
-        position: "absolute",
-        top: Platform.OS === 'ios' ? 14 : 30,
-        right: Platform.OS === 'ios' ? -5 : 2,
-        zIndex: 0
     },
     search: {
         position: 'absolute',
@@ -531,7 +470,7 @@ Map.propTypes = {
 const mapStateToProps = (state) => {
     const { error, locations, query, regions, user } = state
     const mapLocations = getMapLocations(state)
-    const appAlert = regions.regions.filter(region => region.id === 1)[0].motd
+    const appAlert = 'this is an alert' //regions.regions.filter(region => region.id === 1)[0].motd
 
     return {
         appAlert,
@@ -548,7 +487,11 @@ const mapDispatchToProps = (dispatch) => ({
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
-    clearSearchBarText: () => dispatch(clearSearchBarText())
+    clearSearchBarText: () => dispatch(clearSearchBarText()),
+    getRegions: (url) => dispatch(getRegions(url)),
+    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
+    getMachines: (url) =>  dispatch(fetchMachines(url)),
+    getOperators: (url) => dispatch(fetchOperators(url)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

@@ -18,11 +18,7 @@ import {
 import {
     loginLater,
     login,
-    fetchLocationTypes,
-    fetchMachines,
-    fetchOperators,
     getFavoriteLocations,
-    getRegions,
     getLocationsByRegion,
     updateCurrCoordinates,
     setUnitPreference,
@@ -103,14 +99,7 @@ export class SignupLogin extends Component {
         }
     }
 
-    async componentDidMount(){
-        await Promise.all([
-            this.props.getRegions('/regions.json'),
-            this.props.getLocationTypes('/location_types.json'),
-            this.props.getMachines('/machines.json'),
-            this.props.getOperators('/operators.json')
-        ])
-
+    componentDidMount(){
         Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
 
         getData('/regions/location_and_machine_counts.json')
@@ -304,13 +293,9 @@ SignupLogin.propTypes = {
 const mapStateToProps = ({ user, regions }) => ({ user, regions })
 
 const mapDispatchToProps = (dispatch) => ({
-    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
-    getMachines: (url) =>  dispatch(fetchMachines(url)),
-    getOperators: (url) => dispatch(fetchOperators(url)),
     loginLater: () => dispatch(loginLater()),
     login: (auth) => dispatch(login(auth)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
-    getRegions: (url) => dispatch(getRegions(url)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     updateCurrCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
     setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
