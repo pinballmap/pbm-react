@@ -20,6 +20,7 @@ import {
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
+    HIDE_NO_LOCATION_TRACKING_MODAL,
 } from '../actions/types'
 
 export const initialState = {
@@ -42,6 +43,7 @@ export const initialState = {
     submittingMessage: false,
     confirmationMessage: '',
     unitPreference: 0,
+    showNoLocationTrackingModal: false,
 }
 
 export default (state = initialState, action) => {
@@ -66,6 +68,12 @@ export default (state = initialState, action) => {
                 lat: 45.51322,
                 lon: -122.6587,
                 locationTrackingServicesEnabled: false,
+                showNoLocationTrackingModal: action.showNoLocationTrackingModal,
+            }
+        case HIDE_NO_LOCATION_TRACKING_MODAL:
+            return {
+                ...state,
+                showNoLocationTrackingModal: false
             }
         case LOG_IN: {
             if (!action.credentials)

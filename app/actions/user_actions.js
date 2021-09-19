@@ -19,16 +19,17 @@ import {
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
+    HIDE_NO_LOCATION_TRACKING_MODAL,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
 import { updateCurrCoordinates } from './locations_actions'
 import { AsyncStorage } from "react-native"
 
-export const fetchCurrentLocation = () => dispatch => {
+export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
 
     return getCurrentLocation()
-        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), err => dispatch(getLocationTrackingEnabledFailure(err)))
+        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), () => dispatch(getLocationTrackingEnabledFailure(isInitialLoad)))
         .then(({lat, lon}) => dispatch(updateCurrCoordinates(lat, lon)))
         .catch(err => console.log(err))
 }
@@ -42,13 +43,18 @@ export const getLocationTrackingEnabledSuccess = (data) => {
     }
 }
 
-export const getLocationTrackingEnabledFailure = () => {
+export const getLocationTrackingEnabledFailure = (isInitialLoad) => {
     return {
         type: FETCHING_LOCATION_TRACKING_FAILURE,
         lat: 45.51322,
         lon: -122.6587,
+        showNoLocationTrackingModal: !isInitialLoad,
     }
 }
+
+export const hideNoLocationTrackingModal = () => ({
+    type: HIDE_NO_LOCATION_TRACKING_MODAL
+})
 
 export const login = (credentials) => {
     return {

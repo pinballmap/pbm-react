@@ -18,6 +18,7 @@ import IosMarker from './IosMarker'
 import IosHeartMarker from './IosHeartMarker'
 import CustomMapMarker from './CustomMapMarker'
 import AppAlert from './AppAlert'
+import NoLocationTrackingModal from './NoLocationTrackingModal'
 
 export {
     LocationCard,
@@ -40,4 +41,5 @@ export {
     IosHeartMarker,
     CustomMapMarker,
     AppAlert,
+    NoLocationTrackingModal,
 }
