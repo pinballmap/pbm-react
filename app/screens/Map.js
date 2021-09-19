@@ -52,7 +52,6 @@ class Map extends Component {
         this.state = {
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
-            themeState: '',
             showUpdateSearch: false,
             latitude: null,
             longitude: null,
@@ -80,13 +79,6 @@ class Map extends Component {
     updateCurrentLocation = () => {
         this.props.getCurrentLocation()
         this.setState({ moveToCurrentLocation: true })
-    }
-
-    componentDidUpdate() {
-        const { theme } = this.context.theme
-        if (theme !== this.state.themeState) {
-            this.updateTheme(theme)
-        }
     }
 
     async componentDidMount() {
@@ -167,11 +159,6 @@ class Map extends Component {
             }
         }
 
-    }
-
-    updateTheme(theme) {
-        this.setState({ themeState: theme })
-        this.props.navigation.setParams({ theme })
     }
 
     render() {
