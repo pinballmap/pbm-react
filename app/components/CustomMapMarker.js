@@ -8,11 +8,9 @@ import {
     View,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import {
-    IosHeartMarker,
-    IosMarker,
-    Text
-} from './index'
+import IosHeartMarker from './IosHeartMarker'
+import IosMarker from './IosMarker'
+import Text from './PbmText'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 let deviceWidth = Dimensions.get('window').width
 

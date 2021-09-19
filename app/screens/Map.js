@@ -15,6 +15,7 @@ import MapView from 'react-native-maps'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
+    AppAlert,
     CustomMapMarker,
     PbmButton,
     ConfirmationModal,
@@ -52,7 +53,6 @@ class Map extends Component {
             showNoLocationTrackingModal: false,
             maxedOutZoom: false,
             themeState: '',
-            showAppAlert: false,
             showUpdateSearch: false,
             latitude: null,
             longitude: null,
@@ -116,13 +116,6 @@ class Map extends Component {
             }
         })
 
-        retrieveItem('appAlert').then(appAlert => {
-            if (appAlert !== this.props.appAlert) {
-                this.setState({ showAppAlert: true })
-                AsyncStorage.setItem('appAlert', JSON.stringify(this.props.appAlert))
-            }
-        })
-
         retrieveItem('unitPreference').then(unitPreference => {
             if (unitPreference) {
                 this.props.setUnitPreference(true)
@@ -183,7 +176,6 @@ class Map extends Component {
 
     render() {
         const {
-            appAlert,
             isFetchingLocations,
             mapLocations,
             navigation,
@@ -191,7 +183,6 @@ class Map extends Component {
 
         const {
             showNoLocationTrackingModal,
-            showAppAlert,
             showUpdateSearch,
             latitude,
             longitude,
@@ -214,21 +205,7 @@ class Map extends Component {
 
         return (
             <>
-                <ConfirmationModal
-                    visible={showAppAlert}>
-                    <View style={s.appAlertHeader}>
-                        <Text style={s.appAlertTitle}>Message of the Day!</Text>
-                        <MaterialCommunityIcons
-                            name='close-circle'
-                            size={45}
-                            onPress={() => this.setState({ showAppAlert: false })}
-                            style={s.xButton}
-                        />
-                    </View>
-                    <View style={s.appAlert}>
-                        <Text style={{fontSize: 16}}>{appAlert}</Text>
-                    </View>
-                </ConfirmationModal>
+                <AppAlert />
                 <ConfirmationModal
                     visible={showNoLocationTrackingModal}>
                     <View>
@@ -378,30 +355,6 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    xButton: {
-        position: 'absolute',
-        right: -15,
-        top: -15,
-        color: theme.red2,
-    },
-    appAlertTitle: {
-        color: theme.text3,
-        textAlign: "center",
-        fontSize: 18,
-        fontFamily: 'boldFont',
-    },
-    appAlertHeader: {
-        backgroundColor: theme.blue1,
-        marginTop: -25,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        height: 40,
-        paddingVertical: 10,
-    },
-    appAlert: {
-        padding: 10,
-        paddingBottom: 0,
-    },
     buttonStyle: {
         paddingTop: 0,
         paddingBottom: 0,
@@ -483,18 +436,16 @@ Map.propTypes = {
     clearFilters: PropTypes.func,
     clearError: PropTypes.func,
     error: PropTypes.object,
-    appAlert: PropTypes.string,
+    motd: PropTypes.string,
     getLocationsConsideringZoom: PropTypes.func,
     clearSearchBarText: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
-    const { error, locations, query, regions, user } = state
+    const { error, locations, query, user } = state
     const mapLocations = getMapLocations(state)
-    const appAlert = 'this is an alert' //regions.regions.filter(region => region.id === 1)[0].motd
 
     return {
-        appAlert,
         error,
         query,
         user,
