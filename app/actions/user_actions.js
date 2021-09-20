@@ -20,6 +20,7 @@ import {
     ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
     HIDE_NO_LOCATION_TRACKING_MODAL,
+    INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
 import { updateCurrCoordinates } from './locations_actions'
@@ -29,8 +30,18 @@ export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
 
     return getCurrentLocation()
-        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), () => dispatch(getLocationTrackingEnabledFailure(isInitialLoad)))
-        .then(({lat, lon}) => dispatch(updateCurrCoordinates(lat, lon)))
+        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), () => {
+            let coords = {}
+            if (isInitialLoad) {
+                coords = dispatch(getInitialLocationTrackingEnabledFailure())
+            } else {
+                dispatch(getLocationTrackingEnabledFailure())
+            }
+            return coords
+        })
+        .then(({lat, lon}) => {
+            if (lat) dispatch(updateCurrCoordinates(lat, lon))
+        })
         .catch(err => console.log(err))
 }
 
@@ -43,14 +54,17 @@ export const getLocationTrackingEnabledSuccess = (data) => {
     }
 }
 
-export const getLocationTrackingEnabledFailure = (isInitialLoad) => {
+export const getInitialLocationTrackingEnabledFailure = () => {
     return {
-        type: FETCHING_LOCATION_TRACKING_FAILURE,
+        type: INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
         lat: 45.51322,
         lon: -122.6587,
-        showNoLocationTrackingModal: !isInitialLoad,
     }
 }
+
+export const getLocationTrackingEnabledFailure = () => ({
+    type: FETCHING_LOCATION_TRACKING_FAILURE,
+})
 
 export const hideNoLocationTrackingModal = () => ({
     type: HIDE_NO_LOCATION_TRACKING_MODAL

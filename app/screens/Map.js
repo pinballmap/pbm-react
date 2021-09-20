@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-    AsyncStorage,
     Linking,
     Platform,
     Pressable,
@@ -38,6 +37,7 @@ import {
     login,
     setUnitPreference,
     getLocationAndMachineCounts,
+    updateCoordinates,
 } from '../actions'
 import {
     getMapLocations
@@ -52,12 +52,7 @@ class Map extends Component {
         super(props)
 
         this.state = {
-            maxedOutZoom: false,
             showUpdateSearch: false,
-            latitude: null,
-            longitude: null,
-            latitudeDelta: null,
-            longitudeDelta: null,
         }
     }
 
@@ -120,19 +115,15 @@ class Map extends Component {
         }
     }
 
-
     onRegionChange = (region, { isGesture }) => {
         if (isGesture) {
-            this.setState({
-                ...region,
-                showUpdateSearch: true,
-            })
+            this.setState({ showUpdateSearch: true })
+            this.props.updateCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         }
     }
 
     updateCurrentLocation = () => {
         this.props.getCurrentLocation()
-        this.setState({ moveToCurrentLocation: true })
     }
 
     async componentDidMount() {
@@ -166,66 +157,23 @@ class Map extends Component {
         })
     }
 
-    UNSAFE_componentWillReceiveProps(props) {
-        const {
-            curLat,
-            curLon,
-            latDelta,
-            lonDelta,
-            machineId,
-            locationType,
-            numMachines,
-            selectedOperator,
-            viewByFavoriteLocations,
-            filterByMachineVersion,
-        } = props.query
-
-        const {
-            latitude,
-            longitude,
-            latitudeDelta,
-            longitudeDelta,
-            moveToCurrentLocation,
-        } = this.state
-
-        if (!this.state.latitude || moveToCurrentLocation || this.props.query.curLat !== curLat) {
-            this.setState({
-                latitude: curLat,
-                longitude: curLon,
-                latitudeDelta: latDelta,
-                longitudeDelta: lonDelta,
-                moveToCurrentLocation: false,
-            })
-        }
-
-        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations || filterByMachineVersion !== this.props.query.filterByMachineVersion) {
-            this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
-        }
-    }
-
     render() {
         const {
             isFetchingLocations,
             mapLocations,
             navigation,
+            query,
         } = this.props
 
-        const {
-            showUpdateSearch,
-            latitude,
-            longitude,
-            latitudeDelta,
-            longitudeDelta,
-        } = this.state
-
+        const { showUpdateSearch } = this.state
         const { theme } = this.context
         const s = getStyles(theme)
-
+        const { curLat, curLon, latDelta, lonDelta } = query
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
-        if (!latitude) {
+        if (!curLat) {
             return (
                 <ActivityIndicator />
             )
@@ -251,12 +199,11 @@ class Map extends Component {
                 {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
                 {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
                 <MapView
-                    ref={this.mapRef}
                     region={{
-                        latitude,
-                        longitude,
-                        latitudeDelta,
-                        longitudeDelta,
+                        latitude: curLat,
+                        longitude: curLon,
+                        latitudeDelta: latDelta,
+                        longitudeDelta: lonDelta,
                     }}
                     style={s.map}
                     onRegionChangeComplete={this.onRegionChange}
@@ -311,7 +258,7 @@ class Map extends Component {
                         style={({ pressed }) => [{},s.containerStyle,s.updateContainerStyle,pressed ? s.pressed : s.notPressed]}
                         onPress={() => {
                             this.setState({ showUpdateSearch: false })
-                            this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
+                            this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
                             this.props.clearSearchBarText()
                         }}
                     >
@@ -475,6 +422,7 @@ const mapDispatchToProps = (dispatch) => ({
     login: (auth) => dispatch(login(auth)),
     setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
     getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
+    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

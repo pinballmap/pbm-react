@@ -21,6 +21,7 @@ import {
     ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
     HIDE_NO_LOCATION_TRACKING_MODAL,
+    INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
 } from '../actions/types'
 
 export const initialState = {
@@ -61,14 +62,18 @@ export default (state = initialState, action) => {
                 lon: Number(action.lon),
                 locationTrackingServicesEnabled: true,
             }
-        case FETCHING_LOCATION_TRACKING_FAILURE:
+        case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
             return {
                 ...state,
                 isFetchingLocationTrackingEnabled: false,
                 lat: 45.51322,
                 lon: -122.6587,
                 locationTrackingServicesEnabled: false,
-                showNoLocationTrackingModal: action.showNoLocationTrackingModal,
+            }
+        case FETCHING_LOCATION_TRACKING_FAILURE:
+            return {
+                ...state,
+                showNoLocationTrackingModal: true
             }
         case HIDE_NO_LOCATION_TRACKING_MODAL:
             return {

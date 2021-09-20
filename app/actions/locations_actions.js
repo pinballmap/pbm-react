@@ -69,6 +69,24 @@ export const getLocationsConsideringZoom = (lat, lon, latDelta = 0.1, lonDelta =
     }
 }
 
+export const updateFilterLocations = () => (dispatch, getState) => {
+    const viewableMax = getFilterState(getState().query)
+    const { curLat, curLon, latDelta, lonDelta } = getState().query
+    const viewableLat = getDistance(curLat - 0.5 * latDelta, curLon, curLat + 0.5 * latDelta, curLon)
+    const viewableLon = getDistance(curLat, curLon - 0.5 * lonDelta, curLat, curLon + 0.5 * lonDelta)
+    const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon
+    const maxZoom = viewableLat > viewableMax || viewableLon > viewableMax
+
+    dispatch({ type: SET_MAX_ZOOM, maxZoom })
+    if (!maxZoom) {
+        dispatch(getLocations(curLat, curLon, viewableDist * 1.1 / 2))
+    }
+}
+
+export const updateCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) => (dispatch) => {
+    dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta })
+}
+
 export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) => (dispatch) => {
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta })
     dispatch(getLocations(lat, lon))

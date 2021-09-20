@@ -9,7 +9,7 @@ import {
     SET_LOCATION_TYPE_FILTER,
     SET_OPERATOR_FILTER,
     FETCHING_LOCATION_TRACKING_SUCCESS,
-    FETCHING_LOCATION_TRACKING_FAILURE,
+    INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
     SET_MAX_ZOOM,
     SET_MACHINE_VERSION_FILTER,
     CLEAR_SEARCH_BAR_TEXT,
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_COORDINATES:
         case FETCHING_LOCATION_TRACKING_SUCCESS:
-        case FETCHING_LOCATION_TRACKING_FAILURE:
+        case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
             return {
                 ...state,
                 curLat: Number(action.lat),
