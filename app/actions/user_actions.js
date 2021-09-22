@@ -21,6 +21,7 @@ import {
     SET_UNIT_PREFERENCE,
     HIDE_NO_LOCATION_TRACKING_MODAL,
     INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
+    APP_LOADED,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
 import { updateCurrCoordinates } from './locations_actions'
@@ -41,6 +42,7 @@ export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
         })
         .then(({lat, lon}) => {
             if (lat) dispatch(updateCurrCoordinates(lat, lon))
+            if (isInitialLoad) dispatch({type: APP_LOADED})
         })
         .catch(err => console.log(err))
 }

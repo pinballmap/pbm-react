@@ -19,6 +19,8 @@ import {
 } from '@expo-google-fonts/nunito'
 import AppLoading from 'expo-app-loading'
 import store from './app/store'
+import * as SplashScreen from 'expo-splash-screen'
+import { AppWrapper } from './app/components'
 
 const defaultTheme = Appearance.getColorScheme()
 
@@ -31,6 +33,11 @@ const App = () => {
 
         retrieveItem('darkThemeOverride')
             .then(darkThemeOverride => defaultTheme === 'dark' && darkThemeOverride && setSelectedTheme(''))
+
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync()
+        }
+        prepare()
 
     }, [])
 
@@ -54,7 +61,9 @@ const App = () => {
                 theme: selectedTheme === 'dark' ? dark : standard
             }}>
                 <Provider store={store}>
-                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                    <AppWrapper>
+                        <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                    </AppWrapper>
                 </Provider>
             </ThemeContext.Provider>
             <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
