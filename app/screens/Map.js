@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
+import { getData } from '../config/request'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -39,6 +40,7 @@ import {
     getLocationAndMachineCounts,
     updateCoordinates,
     updateCoordinatesAndGetLocations,
+    getLocationsByRegion,
 } from '../actions'
 import {
     getMapLocations
@@ -392,9 +394,19 @@ Map.propTypes = {
     clearFilters: PropTypes.func,
     clearError: PropTypes.func,
     error: PropTypes.object,
-    motd: PropTypes.string,
     getLocationsConsideringZoom: PropTypes.func,
     clearSearchBarText: PropTypes.func,
+    setUnitPreference: PropTypes.func,
+    updateCoordinates: PropTypes.func,
+    updateCoordinatesAndGetLocations: PropTypes.func,
+    regions: PropTypes.object,
+    login: PropTypes.func,
+    getLocationAndMachineCounts: PropTypes.func,
+    getOperators: PropTypes.func,
+    getMachines: PropTypes.func,
+    getLocationTypes: PropTypes.func,
+    getRegions: PropTypes.func,
+    getLocationsByRegion: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -425,6 +437,7 @@ const mapDispatchToProps = (dispatch) => ({
     getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
+    getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
