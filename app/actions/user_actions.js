@@ -24,7 +24,7 @@ import {
     APP_LOADED,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
-import { updateCurrCoordinates } from './locations_actions'
+import { updateCoordinatesAndGetLocations } from './locations_actions'
 import { AsyncStorage } from "react-native"
 
 export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
@@ -41,7 +41,7 @@ export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
             return coords
         })
         .then(({lat, lon}) => {
-            if (lat) dispatch(updateCurrCoordinates(lat, lon))
+            if (lat) dispatch(updateCoordinatesAndGetLocations(lat, lon))
             if (isInitialLoad) dispatch({type: APP_LOADED})
         })
         .catch(err => console.log(err))

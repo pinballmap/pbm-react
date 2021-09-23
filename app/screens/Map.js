@@ -38,6 +38,7 @@ import {
     setUnitPreference,
     getLocationAndMachineCounts,
     updateCoordinates,
+    updateCoordinatesAndGetLocations,
 } from '../actions'
 import {
     getMapLocations
@@ -74,7 +75,7 @@ class Map extends Component {
             const address = decoded.split('address=')[1]
             const { location } = await getData(`/locations/closest_by_address.json?address=${address};no_details=1`)
             if (location) {
-                this.props.updateCurrCoordinates(location.lat, location.lon)
+                this.props.updateCoordinatesAndGetLocations(location.lat, location.lon)
             }
             navigate('Map')
         } else if (url.indexOf('region=') > 0) {
@@ -90,7 +91,7 @@ class Map extends Component {
                 locations = byCity.locations || []
                 if (locations.length > 0) {
                     const {lat, lon} = locations[0]
-                    this.props.updateCurrCoordinates(lat, lon)
+                    this.props.updateCoordinatesAndGetLocations(lat, lon)
                 }
             }
             // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
@@ -423,6 +424,7 @@ const mapDispatchToProps = (dispatch) => ({
     setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
     getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
+    updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

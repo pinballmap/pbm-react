@@ -39,7 +39,7 @@ import {
     fetchLocation,
     removeFavoriteLocation,
     setCurrentMachine,
-    updateCurrCoordinates,
+    updateCoordinatesAndGetLocations,
 } from '../actions'
 import androidCustomDark from '../utils/androidCustomDark'
 import { HeaderBackButton } from 'react-navigation-stack'
@@ -103,7 +103,7 @@ class LocationDetails extends Component {
             this.props.navigation.setParams({ locationName: props.location.location.name })
 
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
-            this.props.updateCurrCoordinates(props.location.location.lat, props.location.location.lon)
+            this.props.updateCoordinatesAndGetLocations(props.location.location.lat, props.location.location.lon)
         }
 
         if (props.navigation.state.params['id'] !== this.props.navigation.state.params['id']) {
@@ -764,7 +764,7 @@ LocationDetails.propTypes = {
     closeFavoriteLocationModal: PropTypes.func,
     removeFavoriteLocation: PropTypes.func,
     addFavoriteLocation: PropTypes.func,
-    updateCurrCoordinates: PropTypes.func,
+    updateCoordinatesAndGetLocations: PropTypes.func,
 }
 
 const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user})
@@ -777,6 +777,6 @@ const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
     closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
-    updateCurrCoordinates: (lat, lon) => dispatch(updateCurrCoordinates(lat, lon)),
+    updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)

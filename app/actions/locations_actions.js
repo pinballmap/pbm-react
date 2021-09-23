@@ -87,7 +87,7 @@ export const updateCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) => (
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta })
 }
 
-export const updateCurrCoordinates = (lat, lon, latDelta = 0.1, lonDelta = 0.1) => (dispatch) => {
+export const updateCoordinatesAndGetLocations = (lat, lon, latDelta = 0.1, lonDelta = 0.1) => (dispatch) => {
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta })
     dispatch(getLocations(lat, lon))
 }
