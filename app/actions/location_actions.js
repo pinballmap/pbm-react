@@ -24,6 +24,7 @@ import {
     SET_SELECTED_OPERATOR,
     SET_SELECTED_LOCATION_TYPE,
 } from './types'
+import { updateCoordinatesAndGetLocations } from './locations_actions'
 
 import { getData, postData, putData, deleteData } from '../config/request'
 
@@ -35,6 +36,11 @@ export const fetchLocation = id => dispatch => {
         .catch(err => dispatch(getLocationFailure(err)))
 }
 
+export const fetchLocationAndUpdateMap = id => async dispatch => {
+    const data = await dispatch(fetchLocation(id))
+    const { lat, lon } = data.location
+    dispatch(updateCoordinatesAndGetLocations(lat, lon))
+}
 
 export const getLocationSuccess = (data) => {
     return {

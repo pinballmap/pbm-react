@@ -95,10 +95,6 @@ class LocationDetails extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
-            this.props.updateCoordinatesAndGetLocations(props.location.location.lat, props.location.location.lon)
-        }
-
         if (props.navigation.state.params['id'] !== this.props.navigation.state.params['id']) {
             this.setState({ id: props.navigation.state.params['id'] }, () => {
                 this.props.fetchLocation(this.state.id)

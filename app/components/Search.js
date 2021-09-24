@@ -30,6 +30,7 @@ import {
     getLocationsFailure,
     setSearchBarText,
     clearSearchBarText,
+    fetchLocationAndUpdateMap,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { retrieveItem } from '../config/utils'
@@ -113,7 +114,8 @@ class Search extends Component {
     }
 
     goToLocation = (location) => {
-        this.props.navigate('LocationDetails', { id: location.id, locationName: location.label, updateMap: true })
+        this.props.navigate('LocationDetails', { id: location.id })
+        this.props.fetchLocationAndUpdateMap(location.id)
         this.clearSearchState(location)
     }
 
@@ -455,6 +457,7 @@ Search.propTypes = {
     getLocationsFailure: PropTypes.func,
     setSearchBarText: PropTypes.func,
     clearSearchBarText: PropTypes.func,
+    fetchLocationAndUpdateMap: PropTypes.func,
 }
 
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
@@ -465,5 +468,6 @@ const mapDispatchToProps = (dispatch) => ({
     getLocationsFailure: () => dispatch(getLocationsFailure()),
     setSearchBarText: (searchBarText) => dispatch(setSearchBarText(searchBarText)),
     clearSearchBarText: () => dispatch(clearSearchBarText()),
+    fetchLocationAndUpdateMap: (locationId) => dispatch(fetchLocationAndUpdateMap(locationId)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

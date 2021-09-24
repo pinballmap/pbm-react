@@ -41,6 +41,7 @@ import {
     updateCoordinates,
     updateCoordinatesAndGetLocations,
     getLocationsByRegion,
+    fetchLocationAndUpdateMap,
 } from '../actions'
 import {
     getMapLocations
@@ -72,6 +73,7 @@ class Map extends Component {
             const idSegment = url.split('location_id=')[1]
             const id = idSegment.split('&')[0]
             navigate('LocationDetails', { id })
+            this.props.fetchLocationAndUpdateMap(id)
         } else if (url.indexOf('address=') > 0) {
             const decoded = decodeURIComponent(url)
             const address = decoded.split('address=')[1]
@@ -407,6 +409,7 @@ Map.propTypes = {
     getLocationTypes: PropTypes.func,
     getRegions: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
+    fetchLocationAndUpdateMap: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -438,6 +441,7 @@ const mapDispatchToProps = (dispatch) => ({
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
+    fetchLocationAndUpdateMap: (locationId) => dispatch(fetchLocationAndUpdateMap(locationId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
