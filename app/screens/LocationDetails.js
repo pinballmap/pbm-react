@@ -95,10 +95,6 @@ class LocationDetails extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.location.addingMachineToLocation && !props.location.addingMachineToLocation) {
-            this.props.fetchLocation(this.state.id)
-        }
-
         if (this.props.navigation.state.params['updateMap'] && this.props.location.isFetchingLocation && !props.location.isFetchingLocation) {
             this.props.updateCoordinatesAndGetLocations(props.location.location.lat, props.location.location.lon)
         }

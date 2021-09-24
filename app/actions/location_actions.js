@@ -170,12 +170,10 @@ export const addMachineToLocation = (machine, condition) => (dispatch, getState)
         .catch(err => dispatch(addMachineToLocationFailure(err)))
 }
 
-const machineAddedToLocation = (location_id, machine) => dispatch =>
-    dispatch({
-        type: MACHINE_ADDED_TO_LOCATION,
-        location_id,
-        machine,
-    })
+const machineAddedToLocation = (location_id, machine) => dispatch => {
+    dispatch({type: MACHINE_ADDED_TO_LOCATION, location_id, machine})
+    dispatch(fetchLocation(location_id))
+}
 
 export const addMachineToLocationFailure = (err) => dispatch => {
     dispatch({type: DISPLAY_ERROR, err})
