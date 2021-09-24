@@ -383,7 +383,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
     },
     inputStyle: {
-        color: theme.indigo4,
+        color: theme.text,
     },
     inputContainerStyle: {
         borderWidth: 1,
@@ -413,7 +413,8 @@ const getStyles = theme => StyleSheet.create({
     listItemTitle: {
         color: theme.text3,
         marginBottom: -2,
-        marginTop: -2
+        marginTop: -2,
+        fontSize: 16
     },
     searchHistoryTitle: {
         color: theme.indigo4,

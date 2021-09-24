@@ -282,7 +282,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0,
     },
     notPressed: {
-        borderColor: theme.white,
+        borderColor: 'transparent',
         borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,

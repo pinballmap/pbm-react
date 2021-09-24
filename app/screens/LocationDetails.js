@@ -372,7 +372,7 @@ class LocationDetails extends Component {
                                                 }
 
                                                 {location.date_last_updated ?
-                                                    <View style={(location.phone && location.website && location.location_type_id) || (location.phone && location.operator_id && location.location_type_id) || (location.website && location.operator_id && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
                                                     : null
                                                 }
 
@@ -463,7 +463,7 @@ const getStyles = theme => StyleSheet.create({
     locationContainer: {
         flex: 3,
         marginBottom: 10,
-        marginHorizontal: deviceWidth < 325 ? 20 : 30,
+        marginHorizontal: deviceWidth < 325 ? 20 : 25,
     },
     locationName: {
         textAlign: 'center',
@@ -485,9 +485,8 @@ const getStyles = theme => StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
-        elevation: 6,
         paddingVertical: 10,
-        paddingLeft: 20,
+        paddingLeft: 15,
         paddingRight: 15,
     },
     pressed: {
@@ -498,7 +497,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 0,
     },
     notPressed: {
-        borderColor: theme.white,
+        borderColor: 'transparent',
         borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,
@@ -517,7 +516,7 @@ const getStyles = theme => StyleSheet.create({
         alignItems: 'flex-start'
     },
     locationMetaInner: {
-        width: '65%'
+        width: deviceWidth > 576 ? deviceWidth - 225 : '65%'
     },
     locationMetaInner2: {
         width: '100%'
@@ -528,7 +527,7 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.base4,
         borderRadius: 10,
         padding: 5,
-        width: '35%',
+        width: deviceWidth > 576 ? 150 : '35%',
         alignItems: 'center',
         marginBottom: 5
     },
@@ -648,8 +647,8 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 5
     },
     metaIcon: {
-        paddingTop: 1,
-        fontSize: 16,
+        paddingTop: 0,
+        fontSize: 18,
         color: theme.indigo4,
         marginRight: 5,
         opacity: 0.6
