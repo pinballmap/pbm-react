@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import {
     AsyncStorage,
     StyleSheet,
-    Text,
     View
 } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import ConfirmationModal from './ConfirmationModal'
 import { ThemeContext } from '../theme-context'
 import { retrieveItem } from '../config/utils'
+import Text from './PbmText'
 
 const AppAlert = ({ motd }) => {
     const { theme } = useContext(ThemeContext)
