@@ -21,12 +21,18 @@ const AppAlert = ({ motd }) => {
     useEffect(() => {
         if (!motd) return
 
-        retrieveItem('appAlert').then(appAlert => {
+        const updateMOTD = async () => {
+            // If this is the first time a user is firing up the app, do not initially show MOTD
+            const auth = await retrieveItem('auth')
+            if (!auth) return
+
+            const appAlert = await retrieveItem('appAlert')
             if (appAlert !== motd) {
                 setIsVisible(true)
                 AsyncStorage.setItem('appAlert', JSON.stringify(motd))
             }
-        })
+        }
+        updateMOTD()
     }, [motd])
 
     return (
