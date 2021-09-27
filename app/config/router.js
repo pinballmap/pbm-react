@@ -153,8 +153,8 @@ TabNav.navigationOptions = {
 }
 
 export const MapStack = createStackNavigator({
-    SignupLogin: { screen: SignupLogin, },
     Map: { screen: TabNav },
+    SignupLogin: { screen: SignupLogin, },
     LocationList: { screen: LocationList },
     LocationDetails: { screen: LocationDetails, },
     Signup: { screen: Signup, },

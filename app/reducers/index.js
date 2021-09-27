@@ -7,6 +7,7 @@ import user from './user'
 import operators from './operators'
 import error from './error'
 import regions from './regions'
+import app from './app'
 
 export default combineReducers({
     query,
@@ -17,4 +18,5 @@ export default combineReducers({
     operators,
     error,
     regions,
+    app,
 })

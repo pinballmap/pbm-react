@@ -26,10 +26,11 @@ import { getData } from '../config/request'
 import {
     displayError,
     getLocationsByRegion,
-    updateCurrCoordinates,
+    updateCoordinatesAndGetLocations,
     getLocationsFailure,
     setSearchBarText,
     clearSearchBarText,
+    fetchLocationAndUpdateMap,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { retrieveItem } from '../config/utils'
@@ -90,7 +91,7 @@ class Search extends Component {
         Geocode.fromAddress(query)
             .then(response => {
                 const { lat, lng } = response.results[0].geometry.location
-                this.props.updateCoordinates(lat, lng)
+                this.props.updateCoordinatesAndGetLocations(lat, lng)
             }, error => {
                 console.log(error)
                 this.props.displayError('An error occurred geocoding.')
@@ -104,7 +105,7 @@ class Search extends Component {
     getLocationsByCity = async ({ value }) => {
         try {
             const { location } = await getData(`/locations/closest_by_address.json?address=${value};no_details=1`)
-            this.props.updateCoordinates(location.lat, location.lon)
+            this.props.updateCoordinatesAndGetLocations(location.lat, location.lon)
             this.clearSearchState({ value })
         } catch (e) {
             this.props.getLocationsFailure()
@@ -113,7 +114,8 @@ class Search extends Component {
     }
 
     goToLocation = (location) => {
-        this.props.navigate('LocationDetails', { id: location.id, locationName: location.label, updateMap: true })
+        this.props.navigate('LocationDetails', { id: location.id })
+        this.props.fetchLocationAndUpdateMap(location.id)
         this.clearSearchState(location)
     }
 
@@ -451,20 +453,22 @@ Search.propTypes = {
     navigate: PropTypes.func,
     regions: PropTypes.object,
     query: PropTypes.object,
-    updateCoordinates: PropTypes.func,
+    updateCoordinatesAndGetLocations: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
     getLocationsFailure: PropTypes.func,
     setSearchBarText: PropTypes.func,
     clearSearchBarText: PropTypes.func,
+    fetchLocationAndUpdateMap: PropTypes.func,
 }
 
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
-    updateCoordinates: (lat, lng) => dispatch(updateCurrCoordinates(lat, lng)),
+    updateCoordinatesAndGetLocations: (lat, lng) => dispatch(updateCoordinatesAndGetLocations(lat, lng)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     getLocationsFailure: () => dispatch(getLocationsFailure()),
     setSearchBarText: (searchBarText) => dispatch(setSearchBarText(searchBarText)),
     clearSearchBarText: () => dispatch(clearSearchBarText()),
+    fetchLocationAndUpdateMap: (locationId) => dispatch(fetchLocationAndUpdateMap(locationId)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

@@ -9,7 +9,6 @@ import { ThemeContext } from '../theme-context'
 
 const ConfirmationModal = ({children, visible}) => {
     const { theme } = useContext(ThemeContext)
-
     const s = getStyles(theme)
 
     return(

@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-    AsyncStorage,
-    Dimensions,
-    Image,
+    Linking,
     Platform,
     Pressable,
     StyleSheet,
@@ -12,18 +10,19 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import { retrieveItem } from '../config/utils'
-import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { getData } from '../config/request'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import MapView from 'react-native-maps'
-import markerDotHeart from '../assets/images/markerdot-heart.png'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
+    AppAlert,
+    CustomMapMarker,
     PbmButton,
     ConfirmationModal,
     Search,
     Text,
-    IosMarker,
-    IosHeartMarker,
+    NoLocationTrackingModal,
 } from '../components'
 import {
     fetchCurrentLocation,
@@ -32,6 +31,17 @@ import {
     clearError,
     clearSearchBarText,
     getLocationsConsideringZoom,
+    getRegions,
+    fetchLocationTypes,
+    fetchMachines,
+    fetchOperators,
+    login,
+    setUnitPreference,
+    getLocationAndMachineCounts,
+    updateCoordinates,
+    updateCoordinatesAndGetLocations,
+    getLocationsByRegion,
+    fetchLocationAndUpdateMap,
 } from '../actions'
 import {
     getMapLocations
@@ -41,68 +51,12 @@ import { ThemeContext } from '../theme-context'
 import Constants from 'expo-constants'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-let deviceWidth = Dimensions.get('window').width
-
-const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
-const MarkerHeart = ({numMachines}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
-
-MarkerDot.propTypes = {
-    numMachines: PropTypes.number,
-}
-
-MarkerHeart.propTypes = {
-    numMachines: PropTypes.number,
-}
-
-const CustomMarker = ({ marker, navigation, s }) => {
-    return (
-        <MapView.Marker
-            key={marker.id}
-            coordinate={{
-                latitude: Number(marker.lat),
-                longitude: Number(marker.lon)
-            }}
-            title={marker.title}
-            pointerEvents="auto"
-        >
-            {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} />}
-            <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
-                <View>
-                    <View style={s.calloutStyle}>
-                        <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{marker.name}</Text>
-                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
-                        {Platform.OS === 'android' ?
-                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
-                            : null
-                        }
-                    </View>
-                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
-                </View>
-            </MapView.Callout>
-        </MapView.Marker>
-    )
-}
-
-CustomMarker.propTypes = {
-    marker: PropTypes.object,
-    navigation: PropTypes.object,
-    s: PropTypes.object,
-}
-
 class Map extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            showNoLocationTrackingModal: false,
-            maxedOutZoom: false,
-            themeState: '',
-            showAppAlert: false,
             showUpdateSearch: false,
-            latitude: null,
-            longitude: null,
-            latitudeDelta: null,
-            longitudeDelta: null,
         }
     }
 
@@ -111,156 +65,129 @@ class Map extends Component {
         headerShown: false,
     })
 
-    static contextType = ThemeContext;
+    static contextType = ThemeContext
+
+    navigateToScreen = async (url) => {
+        const { navigate } = this.props.navigation
+        if (url.indexOf('location_id=') > 0) {
+            const idSegment = url.split('location_id=')[1]
+            const id = idSegment.split('&')[0]
+            navigate('LocationDetails', { id })
+            this.props.fetchLocationAndUpdateMap(id)
+        } else if (url.indexOf('address=') > 0) {
+            const decoded = decodeURIComponent(url)
+            const address = decoded.split('address=')[1]
+            const { location } = await getData(`/locations/closest_by_address.json?address=${address};no_details=1`)
+            if (location) {
+                this.props.updateCoordinatesAndGetLocations(location.lat, location.lon)
+            }
+            navigate('Map')
+        } else if (url.indexOf('region=') > 0) {
+            const regionSegment = url.split('region=')[1]
+            const regionName = regionSegment.split('&')[0]
+            const region = this.props.regions.regions.find(({name}) => name.toLowerCase() === regionName.toLowerCase())
+
+            const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
+            const cityName = citySegment.split('&')[0]
+            let locations = []
+            if (cityName) {
+                const byCity = await getData(`/region/${regionName}/locations.json?by_city_id=${cityName}`)
+                locations = byCity.locations || []
+                if (locations.length > 0) {
+                    const {lat, lon} = locations[0]
+                    this.props.updateCoordinatesAndGetLocations(lat, lon)
+                }
+            }
+            // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
+            if (region && locations.length === 0) {
+                this.props.getLocationsByRegion(region)
+            }
+            navigate('Map')
+        } else if (url.indexOf('about') > 0) {
+            navigate('Contact')
+        } else if (url.indexOf('events') > 0) {
+            navigate('Events')
+        } else if (url.indexOf('suggest') > 0) {
+            navigate('SuggestLocation')
+        } else if (url.indexOf('saved') > 0) {
+            navigate('Saved')
+        } else {
+            const region = this.props.regions.regions.find(({name}) => url.includes(name))
+            if (region) {
+                this.props.getLocationsByRegion(region)
+            }
+            navigate('Map')
+        }
+    }
 
     onRegionChange = (region, { isGesture }) => {
         if (isGesture) {
-            this.setState({
-                ...region,
-                showUpdateSearch: true,
-            })
+            this.setState({ showUpdateSearch: true })
+            this.props.updateCoordinates(region.latitude, region.longitude, region.latitudeDelta, region.longitudeDelta)
         }
     }
 
     updateCurrentLocation = () => {
         this.props.getCurrentLocation()
-        this.setState({ moveToCurrentLocation: true })
     }
 
-    componentDidUpdate() {
-        const { theme } = this.context.theme
-        if (theme !== this.state.themeState) {
-            this.updateTheme(theme)
-        }
-    }
+    async componentDidMount() {
+        await Promise.all([
+            this.props.getRegions('/regions.json'),
+            this.props.getLocationTypes('/location_types.json'),
+            this.props.getMachines('/machines.json'),
+            this.props.getOperators('/operators.json'),
+            this.props.getLocationAndMachineCounts('/regions/location_and_machine_counts.json'),
+            this.props.getCurrentLocation(true)
+        ])
 
-    componentDidMount() {
-        if (this.props.navigation.dangerouslyGetParent().getParam('setMapLocation')) {
-            this.props.navigation.dangerouslyGetParent().setParams({setMapLocation: null})
-        } else {
-            this.setState({ isInitialLoad: true })
-            this.props.getCurrentLocation()
-        }
+        Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
 
-        retrieveItem('appAlert').then(appAlert => {
-            if (appAlert !== this.props.appAlert) {
-                this.setState({ showAppAlert: true })
-                AsyncStorage.setItem('appAlert', JSON.stringify(this.props.appAlert))
+        retrieveItem('auth').then(async auth => {
+            if (!auth) { this.props.navigation.navigate('SignupLogin') }
+            else {
+                const initialUrl = await Linking.getInitialURL() || ''
+                if (auth.id) {
+                    this.props.login(auth)
+                    this.props.getFavoriteLocations(auth.id)
+                }
+                this.navigateToScreen(initialUrl)
+            }
+        })
+
+        retrieveItem('unitPreference').then(unitPreference => {
+            if (unitPreference) {
+                this.props.setUnitPreference(true)
             }
         })
     }
 
-    UNSAFE_componentWillReceiveProps(props) {
-        const {
-            curLat,
-            curLon,
-            latDelta,
-            lonDelta,
-            machineId,
-            locationType,
-            numMachines,
-            selectedOperator,
-            viewByFavoriteLocations,
-            filterByMachineVersion,
-        } = props.query
-
-        const {
-            latitude,
-            longitude,
-            latitudeDelta,
-            longitudeDelta,
-            moveToCurrentLocation,
-        } = this.state
-
-        if (!this.state.latitude || moveToCurrentLocation || this.props.query.curLat !== curLat) {
-            this.setState({
-                latitude: curLat,
-                longitude: curLon,
-                latitudeDelta: latDelta,
-                longitudeDelta: lonDelta,
-                moveToCurrentLocation: false,
-            })
-        }
-
-        if (machineId !== this.props.query.machineId || locationType !== this.props.query.locationType || numMachines !== this.props.query.numMachines || selectedOperator !== this.props.query.selectedOperator || viewByFavoriteLocations !== this.props.query.viewByFavoriteLocations || filterByMachineVersion !== this.props.query.filterByMachineVersion) {
-            this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
-        }
-
-        if (!props.user.locationTrackingServicesEnabled && !props.user.isFetchingLocationTrackingEnabled && props.user.isFetchingLocationTrackingEnabled !== this.props.user.isFetchingLocationTrackingEnabled) {
-            if (this.state.isInitialLoad) {
-                this.setState({ isInitialLoad: false })
-            } else {
-                this.setState({ showNoLocationTrackingModal: true })
-            }
-        }
-
-    }
-
-    updateTheme(theme) {
-        this.setState({ themeState: theme })
-        this.props.navigation.setParams({ theme })
-    }
-
     render() {
         const {
-            appAlert,
             isFetchingLocations,
             mapLocations,
             navigation,
+            query,
         } = this.props
 
-        const {
-            showNoLocationTrackingModal,
-            showAppAlert,
-            showUpdateSearch,
-            latitude,
-            longitude,
-            latitudeDelta,
-            longitudeDelta,
-        } = this.state
-
+        const { showUpdateSearch } = this.state
         const { theme } = this.context
         const s = getStyles(theme)
-
+        const { curLat, curLon, latDelta, lonDelta } = query
         const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
-        if (!latitude) {
+        if (!curLat) {
             return (
                 <ActivityIndicator />
             )
         }
 
         return (
-            <>
-                <ConfirmationModal
-                    visible={showAppAlert}>
-                    <View style={s.appAlertHeader}>
-                        <Text style={s.appAlertTitle}>Message of the Day!</Text>
-                        <MaterialCommunityIcons
-                            name='close-circle'
-                            size={45}
-                            onPress={() => this.setState({ showAppAlert: false })}
-                            style={s.xButton}
-                        />
-                    </View>
-                    <View style={s.appAlert}>
-                        <Text style={{fontSize: 16}}>{appAlert}</Text>
-                    </View>
-                </ConfirmationModal>
-                <ConfirmationModal
-                    visible={showNoLocationTrackingModal}>
-                    <View>
-                        <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
-                        <PbmButton
-                            title={"OK"}
-                            onPress={() => this.setState({ showNoLocationTrackingModal: false })}
-                            accessibilityLabel="Great!"
-                            containerStyle={s.buttonContainer}
-                        />
-                    </View>
-                </ConfirmationModal>
+            <SafeAreaView edges={['right', 'left', 'top']} style={{flex:1,marginTop: -Constants.statusBarHeight}}>
+                <AppAlert />
+                <NoLocationTrackingModal />
                 <ConfirmationModal
                     visible={errorText ? true : false}>
                     <View>
@@ -271,87 +198,84 @@ class Map extends Component {
                         />
                     </View>
                 </ConfirmationModal>
-                <SafeAreaView edges={['right', 'left', 'top']} style={{flex:1,marginTop: -Constants.statusBarHeight}}>
-                    <View style={s.search}>
-                        <Search navigate={navigation.navigate}/>
-                    </View>
-                    {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
-                    {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
-                    <MapView
-                        ref={this.mapRef}
-                        region={{
-                            latitude,
-                            longitude,
-                            latitudeDelta,
-                            longitudeDelta,
-                        }}
-                        style={s.map}
-                        onRegionChangeComplete={this.onRegionChange}
-                        showsUserLocation={true}
-                        moveOnMarkerPress={false}
-                        showsMyLocationButton={false}
-                        provider = { MapView.PROVIDER_GOOGLE }
-                        customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
-                    >
-                        {mapLocations.map(l => <CustomMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
-                    </MapView>
-                    <Button
-                        onPress={() => navigation.navigate('LocationList')}
-                        icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18,color:theme.text,paddingRight:5}} />}
-                        containerStyle={[s.listButtonContainer,s.containerStyle]}
-                        buttonStyle={s.buttonStyle}
-                        titleStyle={s.buttonTitle}
-                        title="List"
-                        underlayColor='transparent'
-                    />
-                    <Pressable
-                        style={({ pressed }) => [{},s.containerStyle,s.myLocationContainer,pressed ? s.pressed : s.notPressed]}
-                        onPress={this.updateCurrentLocation}
-                    >
-                        {Platform.OS === 'ios' ?
-                            <FontAwesome
-                                name={'location-arrow'}
-                                color={theme.text2}
-                                size={24}
-                                style={{justifyContent:'center',alignSelf:'center'}}
-                            /> :
-                            <MaterialIcons
-                                name={'gps-fixed'}
-                                color={theme.text2}
-                                size={24}
-                                style={{justifyContent:'center',alignSelf:'center'}}
-                            />
-                        }
-                    </Pressable>
-                    {filterApplied ?
-                        <Button
-                            title={'Clear Filter'}
-                            onPress={() => this.props.clearFilters()}
-                            containerStyle={[s.filterContainer,s.containerStyle]}
-                            buttonStyle={[s.buttonStyle,{backgroundColor:'#fee5e7'}]}
-                            titleStyle={{color:'#453e39',fontSize: 14}}
+                <View style={s.search}>
+                    <Search navigate={navigation.navigate}/>
+                </View>
+                {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
+                {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
+                <MapView
+                    region={{
+                        latitude: curLat,
+                        longitude: curLon,
+                        latitudeDelta: latDelta,
+                        longitudeDelta: lonDelta,
+                    }}
+                    style={s.map}
+                    onRegionChangeComplete={this.onRegionChange}
+                    showsUserLocation={true}
+                    moveOnMarkerPress={false}
+                    showsMyLocationButton={false}
+                    provider = { MapView.PROVIDER_GOOGLE }
+                    customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
+                >
+                    {mapLocations.map(l => <CustomMapMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
+                </MapView>
+                <Button
+                    onPress={() => navigation.navigate('LocationList')}
+                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18,color:theme.text,paddingRight:5}} />}
+                    containerStyle={[s.listButtonContainer,s.containerStyle]}
+                    buttonStyle={s.buttonStyle}
+                    titleStyle={s.buttonTitle}
+                    title="List"
+                    underlayColor='transparent'
+                />
+                <Pressable
+                    style={({ pressed }) => [{},s.containerStyle,s.myLocationContainer,pressed ? s.pressed : s.notPressed]}
+                    onPress={this.updateCurrentLocation}
+                >
+                    {Platform.OS === 'ios' ?
+                        <FontAwesome
+                            name={'location-arrow'}
+                            color={theme.text2}
+                            size={24}
+                            style={{justifyContent:'center',alignSelf:'center'}}
+                        /> :
+                        <MaterialIcons
+                            name={'gps-fixed'}
+                            color={theme.text2}
+                            size={24}
+                            style={{justifyContent:'center',alignSelf:'center'}}
                         />
-                        : null
                     }
-                    {showUpdateSearch ?
-                        <Pressable
-                            style={({ pressed }) => [{},s.containerStyle,s.updateContainerStyle,pressed ? s.pressed : s.notPressed]}
-                            onPress={() => {
-                                this.setState({ showUpdateSearch: false })
-                                this.props.getLocationsConsideringZoom(latitude, longitude, latitudeDelta, longitudeDelta)
-                                this.props.clearSearchBarText()
-                            }}
-                        >
-                            {({ pressed }) => (
-                                <Text style={[ pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
+                </Pressable>
+                {filterApplied ?
+                    <Button
+                        title={'Clear Filter'}
+                        onPress={() => this.props.clearFilters()}
+                        containerStyle={[s.filterContainer,s.containerStyle]}
+                        buttonStyle={[s.buttonStyle,{backgroundColor:'#fee5e7'}]}
+                        titleStyle={{color:'#453e39',fontSize: 14}}
+                    />
+                    : null
+                }
+                {showUpdateSearch ?
+                    <Pressable
+                        style={({ pressed }) => [{},s.containerStyle,s.updateContainerStyle,pressed ? s.pressed : s.notPressed]}
+                        onPress={() => {
+                            this.setState({ showUpdateSearch: false })
+                            this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
+                            this.props.clearSearchBarText()
+                        }}
+                    >
+                        {({ pressed }) => (
+                            <Text style={[ pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
                                     Search this area
-                                </Text>
-                            )}
-                        </Pressable>
-                        : null
-                    }
-                </SafeAreaView>
-            </>
+                            </Text>
+                        )}
+                    </Pressable>
+                    : null
+                }
+            </SafeAreaView>
         )
     }
 }
@@ -359,26 +283,6 @@ class Map extends Component {
 const getStyles = theme => StyleSheet.create({
     map: {
         flex: 1
-    },
-    calloutStyle: {
-        minWidth: 50,
-        width: '100%',
-        maxWidth: deviceWidth < 325 ? deviceWidth - 50 : 275,
-        height: Platform.OS === 'ios' ? 70 : 100,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignContent: 'space-around',
-        zIndex: 5,
-        marginRight: 7,
-    },
-    iconStyle: {
-        fontSize: 26,
-        color: '#c1c9cf',
-        position: "absolute",
-        top: Platform.OS === 'ios' ? 14 : 30,
-        right: Platform.OS === 'ios' ? -5 : 2,
-        zIndex: 0
     },
     search: {
         position: 'absolute',
@@ -411,36 +315,6 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         marginLeft: 10,
         marginRight: 10
-    },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
-    },
-    xButton: {
-        position: 'absolute',
-        right: -15,
-        top: -15,
-        color: theme.red2,
-    },
-    appAlertTitle: {
-        color: theme.text3,
-        textAlign: "center",
-        fontSize: 18,
-        fontFamily: 'boldFont',
-    },
-    appAlertHeader: {
-        backgroundColor: theme.blue1,
-        marginTop: -25,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        height: 40,
-        paddingVertical: 10,
-    },
-    appAlert: {
-        padding: 10,
-        paddingBottom: 0,
     },
     buttonStyle: {
         paddingTop: 0,
@@ -516,39 +390,58 @@ Map.propTypes = {
     isFetchingLocations: PropTypes.bool,
     mapLocations: PropTypes.array,
     query: PropTypes.object,
-    user: PropTypes.object,
     getCurrentLocation: PropTypes.func,
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
     clearError: PropTypes.func,
     error: PropTypes.object,
-    appAlert: PropTypes.string,
     getLocationsConsideringZoom: PropTypes.func,
     clearSearchBarText: PropTypes.func,
+    setUnitPreference: PropTypes.func,
+    updateCoordinates: PropTypes.func,
+    updateCoordinatesAndGetLocations: PropTypes.func,
+    regions: PropTypes.object,
+    login: PropTypes.func,
+    getLocationAndMachineCounts: PropTypes.func,
+    getOperators: PropTypes.func,
+    getMachines: PropTypes.func,
+    getLocationTypes: PropTypes.func,
+    getRegions: PropTypes.func,
+    getLocationsByRegion: PropTypes.func,
+    fetchLocationAndUpdateMap: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
-    const { error, locations, query, regions, user } = state
+    const { error, locations, query, regions } = state
     const mapLocations = getMapLocations(state)
-    const appAlert = regions.regions.filter(region => region.id === 1)[0].motd
 
     return {
-        appAlert,
         error,
         query,
-        user,
+        regions,
         mapLocations,
         isFetchingLocations: locations.isFetchingLocations,
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getCurrentLocation: () => dispatch(fetchCurrentLocation()),
+    getCurrentLocation: (isInitialLoad = false) => dispatch(fetchCurrentLocation(isInitialLoad)),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
-    clearSearchBarText: () => dispatch(clearSearchBarText())
+    clearSearchBarText: () => dispatch(clearSearchBarText()),
+    getRegions: (url) => dispatch(getRegions(url)),
+    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
+    getMachines: (url) =>  dispatch(fetchMachines(url)),
+    getOperators: (url) => dispatch(fetchOperators(url)),
+    login: (auth) => dispatch(login(auth)),
+    setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
+    getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
+    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
+    updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
+    getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
+    fetchLocationAndUpdateMap: (locationId) => dispatch(fetchLocationAndUpdateMap(locationId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

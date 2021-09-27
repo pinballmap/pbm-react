@@ -19,17 +19,31 @@ import {
     ERROR_ADDING_FAVORITE_LOCATION,
     ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
+    HIDE_NO_LOCATION_TRACKING_MODAL,
+    INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
+    APP_LOADED,
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
-import { updateCurrCoordinates } from './locations_actions'
+import { updateCoordinatesAndGetLocations } from './locations_actions'
 import { AsyncStorage } from "react-native"
 
-export const fetchCurrentLocation = () => dispatch => {
+export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})
 
     return getCurrentLocation()
-        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), err => dispatch(getLocationTrackingEnabledFailure(err)))
-        .then(({lat, lon}) => dispatch(updateCurrCoordinates(lat, lon)))
+        .then(data => dispatch(getLocationTrackingEnabledSuccess(data)), () => {
+            let coords = {}
+            if (isInitialLoad) {
+                coords = dispatch(getInitialLocationTrackingEnabledFailure())
+            } else {
+                dispatch(getLocationTrackingEnabledFailure())
+            }
+            return coords
+        })
+        .then(({lat, lon}) => {
+            if (lat) dispatch(updateCoordinatesAndGetLocations(lat, lon))
+            if (isInitialLoad) dispatch({type: APP_LOADED})
+        })
         .catch(err => console.log(err))
 }
 
@@ -42,13 +56,21 @@ export const getLocationTrackingEnabledSuccess = (data) => {
     }
 }
 
-export const getLocationTrackingEnabledFailure = () => {
+export const getInitialLocationTrackingEnabledFailure = () => {
     return {
-        type: FETCHING_LOCATION_TRACKING_FAILURE,
+        type: INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
         lat: 45.51322,
         lon: -122.6587,
     }
 }
+
+export const getLocationTrackingEnabledFailure = () => ({
+    type: FETCHING_LOCATION_TRACKING_FAILURE,
+})
+
+export const hideNoLocationTrackingModal = () => ({
+    type: HIDE_NO_LOCATION_TRACKING_MODAL
+})
 
 export const login = (credentials) => {
     return {
