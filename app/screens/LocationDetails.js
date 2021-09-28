@@ -355,7 +355,7 @@ class LocationDetails extends Component {
                                                 {location.website ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <View style={(location.phone && location.website && location.location_type_id) ? s.wide : s.narrow}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
                                                         <Text style={s.text3}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text></View> : null
                                                 }
@@ -727,11 +727,11 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.blue1,
     },
     wide: {
-        width: '153%',
+        width: '150%',
         flexDirection: "row"
     },
     narrow: {
-        width: '95%',
+        width: '90%',
         flexDirection: "row"
     }
 })
