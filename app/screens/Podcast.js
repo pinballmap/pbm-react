@@ -18,7 +18,7 @@ const Podcast = () => {
             <View style={loading ? {display: 'none'} : {flex: 1}}>
                 <WebView
                     onLoad={() => setLoading(false)}
-                    source={{uri: 'http://pod.pinballmap.com/'}}
+                    source={{uri: 'https://pod.pinballmap.com/'}}
                 />
             </View>
             {loading && <ActivityIndicator/>}

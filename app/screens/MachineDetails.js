@@ -342,10 +342,8 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     margin40: {
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 15,
-        marginBottom: 15
+        marginHorizontal: 40,
+        marginVertical: 15,
     },
     conditionText: {
         color: theme.text2,
@@ -370,8 +368,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         borderWidth: 1,
         marginBottom: 10,
-        marginLeft: 15,
-        marginRight: 15,
+        marginHorizontal: 30,
     },
     radius10: {
         borderRadius: 10
@@ -391,13 +388,12 @@ const getStyles = theme => StyleSheet.create({
     verticalAlign: {
         flexDirection: 'column',
         justifyContent: 'center',
-        height: deviceHeight
+        height: deviceHeight,
     },
     modalTitle: {
         textAlign: 'center',
         marginBottom: 10,
-        marginLeft: 15,
-        marginRight: 15,
+        marginHorizontal: 40,
         fontSize: 18
     },
     subtitleStyle: {
@@ -407,8 +403,7 @@ const getStyles = theme => StyleSheet.create({
     },
     subtitleMargin: {
         marginTop: 5,
-        marginLeft: 0,
-        marginRight: 0,
+        marginHorizontal: 0,
         fontSize: 14
     },
     listContainerStyle: {
@@ -445,8 +440,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         fontFamily: 'boldFont',
         textAlign: 'center',
-        marginBottom: 10,
-        marginTop: 10,
+        marginVertical: 10,
         color: theme.text2,
         opacity: 0.9
     },

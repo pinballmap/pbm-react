@@ -124,25 +124,27 @@ class UserProfile extends Component {
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
                                     <Text style={s.member}>{`Joined: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={s.stat}>Machines Added:</Text>
-                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_added)} `}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={s.stat}>Machines Removed:</Text>
-                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_removed)} `}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={s.stat}>Machines Comments:</Text>
-                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_lmx_comments_left)} `}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={s.stat}>Locations Submitted:</Text>
-                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_suggested)} `}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={s.stat}>Locations Edited:</Text>
-                                        <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_edited)} `}</Text>
+                                    <View style={{width:'100%',alignItems:'center'}}>
+                                        <View style={s.statItem}>
+                                            <Text style={s.stat}>Machines added:</Text>
+                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_added)} `}</Text>
+                                        </View>
+                                        <View style={s.statItem}>
+                                            <Text style={s.stat}>Machines removed:</Text>
+                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_removed)} `}</Text>
+                                        </View>
+                                        <View style={s.statItem}>
+                                            <Text style={s.stat}>Machines comments:</Text>
+                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_lmx_comments_left)} `}</Text>
+                                        </View>
+                                        <View style={s.statItem}>
+                                            <Text style={s.stat}>Locations submitted:</Text>
+                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_suggested)} `}</Text>
+                                        </View>
+                                        <View style={s.statItem}>
+                                            <Text style={s.stat}>Locations edited:</Text>
+                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_edited)} `}</Text>
+                                        </View>
                                     </View>
                                     <PbmButton
                                         title={'View Saved Locations'}
@@ -244,7 +246,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.text,
         textTransform: 'capitalize',
-        fontWeight: Platform.OS === 'ios' ? "500" : "bold"
+        fontFamily: 'boldFont'
     },
     margin40: {
         marginLeft: 40,
@@ -271,12 +273,17 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.blue1,
         textAlign: "center"
     },
+    statItem: {
+        flexDirection: 'row',
+        width: 220
+    },
     stat: {
         marginTop: 5,
-        marginLeft: 30,
-        fontSize: 16,
+        fontSize: 15,
+        fontFamily: 'boldFont',
+        opacity: 0.9,
         color: theme.text,
-        width: 200
+        width: 160
     },
     statNum: {
         fontFamily: 'boldFont',

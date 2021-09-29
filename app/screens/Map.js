@@ -202,7 +202,7 @@ class Map extends Component {
                     <Search navigate={navigation.navigate}/>
                 </View>
                 {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
-                {maxZoom ? <Text style={s.loading}>Zoom in for updated results</Text> : null}
+                {maxZoom ? <View style={s.loading}><Text style={s.loadingText}>Zoom in for updated results</Text></View> : null}
                 <MapView
                     region={{
                         latitude: curLat,

@@ -70,7 +70,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             </ConfirmationModal>
             {submittingMessage ?
                 <ActivityIndicator /> :
-                <View style={{marginLeft:10,marginRight:10,marginTop:5}}>
+                <View style={{marginLeft:20,marginRight:20,marginTop:10}}>
                     <Text style={s.text}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
                     {!loggedIn ?
                         <View>
@@ -143,8 +143,8 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         marginTop: 5,
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 20,
+        marginRight: 20,
         fontFamily: 'boldFont',
         color: theme.text,
         textAlign: 'center'
@@ -154,11 +154,10 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.indigo4,
         color: theme.text,
         borderWidth: 1,
-        marginLeft: 10,
-        marginRight: 10,
         marginTop: 20,
         borderRadius: 10,
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         textAlign: 'left'
     },
     confirmText: {

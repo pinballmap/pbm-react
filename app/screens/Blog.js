@@ -18,7 +18,7 @@ const Blog = () => {
             <View style={loading ? {display: 'none'} : {flex: 1}}>
                 <WebView
                     onLoad={() => setLoading(false)}
-                    source={{uri: 'http://blog.pinballmap.com/'}}
+                    source={{uri: 'https://blog.pinballmap.com/'}}
                 />
             </View>
             {loading && <ActivityIndicator/>}

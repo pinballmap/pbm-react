@@ -236,8 +236,8 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text,
         borderWidth: 1,
         marginHorizontal: 20,
-        paddingLeft: 10,
-        paddingRight: 5
+        paddingHorizontal: 10,
+        paddingVertical: 5
     },
     radius10: {
         borderRadius: 10
