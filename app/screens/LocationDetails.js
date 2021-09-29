@@ -172,7 +172,7 @@ class LocationDetails extends Component {
                                         </ListItem>
                                         <ListItem
                                             containerStyle={s.backgroundColor}
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: this.props.navigation.getParam('locationName')}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: location.name}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
@@ -396,7 +396,7 @@ class LocationDetails extends Component {
                                             <Pressable
                                                 key={machine.id}
                                                 onPress={() => {
-                                                    this.props.navigation.navigate('MachineDetails', {machineName: machine.name, locationName: location.name})
+                                                    this.props.navigation.navigate('MachineDetails', {machineName: machine.name})
                                                     this.props.setCurrentMachine(machine.id)
                                                 }}
                                             >

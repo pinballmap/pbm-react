@@ -158,7 +158,7 @@ class UserProfile extends Component {
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => (
                                             <Pressable
                                                 key={location[0]}
-                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0], locationName: location[1] })}
+                                                onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0] })}
                                             >
                                                 {({ pressed }) => (
                                                     <View style={[s.list,pressed ? s.pressed : s.notPressed]}>

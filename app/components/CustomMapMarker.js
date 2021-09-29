@@ -36,7 +36,7 @@ const CustomMapMarker = ({ marker, navigation }) => (
         pointerEvents="auto"
     >
         {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} />}
-        <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id, locationName: marker.name })}>
+        <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id })}>
             <View>
                 <View style={s.calloutStyle}>
                     <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{marker.name}</Text>

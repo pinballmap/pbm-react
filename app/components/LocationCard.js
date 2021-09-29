@@ -31,7 +31,7 @@ const LocationCard = ({
     return(
         <Pressable
             style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
-            onPress={() => navigation.navigate('LocationDetails', {id, locationName })}
+            onPress={() => navigation.navigate('LocationDetails', { id })}
         >
             <View style={s.flexi}>
                 <View style={{zIndex: 10,flex:1}}>
