@@ -9,10 +9,21 @@
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.7
+September 29, 2021
+
+- Updated theme colors, as well as redesigned some elements, especially on the Location Details screen
+- Replaced system fonts with custom fonts
+- Android: Fixed bug with heart map marker icons not always displaying correctly
+- Fixed issue with search not geocoding correctly
+- Fixed issue with search keyboard being dismissed at wrong times
+- Code enhancements and performance improvements (lots of behind the scenes updates, like how we store secrets, and where the root of the app is, etc)
+
 ### 5.2.6
 September 5, 2021
 
 - Fixed that bug more better with the "my location" button on some devices
+- Fixed issue with deep links not always working correctly
 
 ### 5.2.5
 August 30, 2021
