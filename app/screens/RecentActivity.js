@@ -186,7 +186,6 @@ const getStyles = theme => StyleSheet.create({
     },
     filterView: {
         backgroundColor: theme.base3,
-        marginTop: -20,
         marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
