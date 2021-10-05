@@ -6,7 +6,6 @@ import { ThemeContext } from './app/theme-context'
 import { Provider } from 'react-redux'
 import { PbmStack } from './app/config/router'
 import { dark, standard } from './app/utils/themes'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import {
     useFonts,
@@ -54,20 +53,18 @@ const App = () => {
         return <AppLoading />
     }
     return (
-        <SafeAreaProvider>
-            <ThemeContext.Provider value={{
-                toggleDefaultTheme,
-                toggleDarkTheme,
-                theme: selectedTheme === 'dark' ? dark : standard
-            }}>
-                <Provider store={store}>
-                    <AppWrapper>
-                        <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
-                    </AppWrapper>
-                </Provider>
-            </ThemeContext.Provider>
+        <ThemeContext.Provider value={{
+            toggleDefaultTheme,
+            toggleDarkTheme,
+            theme: selectedTheme === 'dark' ? dark : standard
+        }}>
+            <Provider store={store}>
+                <AppWrapper>
+                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                </AppWrapper>
+            </Provider>
             <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />
-        </SafeAreaProvider>
+        </ThemeContext.Provider>
     )
 }
 
