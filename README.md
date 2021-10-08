@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/bpoore/pbm-react.svg?branch=master)](https://travis-ci.org/bpoore/pbm-react)
 
-<a href="https://www.pinballmap.com/app">Get the app for iOS and Android!</a>
+This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/app). The code for the [Pinball Map website is here](https://github.com/scottwainstock/pbm). If you have an app issue, please use this repo; if you have a website issue, please use that one!
 
-![alt-text](https://github.com/bpoore/pbm-react/blob/master/app/assets/images/t-shirt-logo.png)
+<p align="center">
+<img src="https://github.com/bpoore/pbm-react/blob/master/app/assets/images/t-shirt-logo.png" alt="Pinball Map App Logo" width="300" style="margin: 0 auto;text-align: center;display: block;"/>
+</p>
 
 ## Overview of 5+ releases
 (prior to version 5, we were using different code bases for the app):
