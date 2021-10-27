@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
     Dimensions,
+    Image,
     Linking,
     Pressable,
     StyleSheet,
     View,
 } from 'react-native'
-import Image from 'react-native-scalable-image'
 import { ThemeContext } from '../theme-context'
 import { Screen, Text } from '../components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -29,7 +29,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://matchplay.events')} style={[s.logoWrapper,{backgroundColor:'#f5f5ff',paddingVertical: 10,}]}>
-                    <Image source={require('../assets/images/Resource_Matchplay.png')} width={theme.theme === 'dark' ? deviceWidth - 70 : deviceWidth - 50} />
+                    <Image source={require('../assets/images/Resource_Matchplay.png')} style={{width:deviceWidth-70,height:(deviceWidth-70)/8.08,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://matchplay.events/')}>{`Match Play Events`}</Text>
@@ -37,7 +37,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://pindigo.app')} style={[s.logoWrapper,{backgroundColor:'#363377',        paddingVertical: 10,}]}>
-                    <Image source={require('../assets/images/Resource_Pindigo.png')} resizeMode="contain" width={deviceWidth - 70} />
+                    <Image source={require('../assets/images/Resource_Pindigo.png')} style={{width:deviceWidth-70,height:(deviceWidth-70)/3.53,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app')}>{`Pindigo`}</Text>
@@ -45,7 +45,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://www.pinballnews.com/site/')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_PinballNews.png')} resizeMode="contain" width={deviceWidth - 50} />
+                    <Image source={require('../assets/images/Resource_PinballNews.png')} style={{width:deviceWidth-50,height:(deviceWidth-50)/4.07,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://www.pinballnews.com/site/')}>{`Pinball News`}</Text>
@@ -53,7 +53,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://www.ifpapinball.com')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_IFPA.jpg')} width={deviceWidth - 50} />
+                    <Image source={require('../assets/images/Resource_IFPA.jpg')} style={{width:deviceWidth-50,height:(deviceWidth-50)/2.85,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     {`The `}<Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com')}>{`IFPA`}</Text>
@@ -66,7 +66,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://pintips.net')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_Pintips.png')} width={deviceWidth - 50} />
+                    <Image source={require('../assets/images/Resource_Pintips.png')} style={{width:deviceWidth-50,height:(deviceWidth-50)/7.63,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://pintips.net')}>{`PinTips`}</Text>
@@ -74,7 +74,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://pinside.com/')} style={[s.logoWrapper,{backgroundColor:'#ff953e',paddingVertical: 10}]}>
-                    <Image source={require('../assets/images/Resource_Pinside.png')} resizeMode="contain" width={theme.theme === 'dark' ? deviceWidth - 70 : deviceWidth - 50} />
+                    <Image source={require('../assets/images/Resource_Pinside.png')} style={{width:deviceWidth-70,height:(deviceWidth-70)/6.6,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://pinside.com/')}>{`Pinside`}</Text>
@@ -82,7 +82,7 @@ const Resources = () => {
                 </Text>
                 <View style={s.hr}></View>
                 <Pressable onPress={() => Linking.openURL('https://scorbit.io/')} style={[s.logoWrapper]}>
-                    <Image source={require('../assets/images/Resource_Scorbit.png')} resizeMode="contain" width={deviceWidth - 70} />
+                    <Image source={require('../assets/images/Resource_Scorbit.png')} style={{width:deviceWidth-70,height:(deviceWidth-70)/2.87,resizeMode: 'stretch'}} />
                 </Pressable>
                 <Text style={[s.text,{marginBottom: 20}]}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://scorbit.io/')}>{`Scorbit`}</Text>
@@ -118,7 +118,7 @@ const getStyles = theme => StyleSheet.create({
     logoWrapper: {
         alignSelf: 'center',
         paddingHorizontal: 10,
-        marginBottom: 20
+        marginBottom: 20,
     },
     text: {
         fontSize: 16,
