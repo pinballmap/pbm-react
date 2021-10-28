@@ -96,6 +96,8 @@ export default (state = initialState, action) => {
                 curLmx: action.machine,
                 location: {
                     ...state.location,
+                    last_updated_by_username: action.username,
+                    date_last_updated: moment().format('YYYY-MM-DD'),
                     location_machine_xrefs,
                 }
             }
@@ -135,6 +137,8 @@ export default (state = initialState, action) => {
                 curLmx: null,
                 location: {
                     ...state.location,
+                    last_updated_by_username: action.username,
+                    date_last_updated: moment().format('YYYY-MM-DD'),
                     location_machine_xrefs,
                 }
             }

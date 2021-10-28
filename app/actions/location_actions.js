@@ -88,7 +88,7 @@ export const setCurrentMachine = id => (dispatch, getState) => {
 }
 
 export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
-    const { email, authentication_token } = getState().user
+    const { email, authentication_token, username } = getState().user
     const body = {
         user_email: email,
         user_token: authentication_token,
@@ -96,14 +96,15 @@ export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
     }
 
     return putData(`/location_machine_xrefs/${lmx}.json`, body)
-        .then(data => dispatch(machineConditionUpdated(data)))
+        .then(data => dispatch(machineConditionUpdated(data, username)))
         .catch(err => console.log(err))
 }
 
-export const machineConditionUpdated = (data) => {
+export const machineConditionUpdated = (data, username) => {
     return {
         type: MACHINE_CONDITION_UPDATED,
         machine: data.location_machine,
+        username,
     }
 }
 
@@ -130,7 +131,7 @@ export const machineScoreAdded = (data) => {
 
 export const removeMachineFromLocation = (curLmx, location_id) => (dispatch, getState) => {
     const { id: lmx, machine_id } = curLmx
-    const { email, authentication_token } = getState().user
+    const { email, authentication_token, username } = getState().user
     const body = {
         user_email: email,
         user_token: authentication_token,
@@ -139,17 +140,18 @@ export const removeMachineFromLocation = (curLmx, location_id) => (dispatch, get
     const nameManYear = machines.find(machine => machine.id === machine_id).nameManYear
 
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
-        .then(() => dispatch(locationMachineRemoved(lmx, nameManYear, location_id)),
+        .then(() => dispatch(locationMachineRemoved(lmx, nameManYear, location_id, username)),
             err => { throw err })
         .catch(err => dispatch({type: DISPLAY_ERROR, err}))
 }
 
-export const locationMachineRemoved = (lmx, nameManYear, location_id) => {
+export const locationMachineRemoved = (lmx, nameManYear, location_id, username) => {
     return {
         type: LOCATION_MACHINE_REMOVED,
         lmx,
         nameManYear,
         location_id,
+        username,
     }
 }
 
