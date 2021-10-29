@@ -108,8 +108,8 @@ class EditLocationDetails extends Component {
                                 onRequestClose={()=>{}}
                             >
                                 {errorText ?
-                                    <View style={{marginTop: 100}}>
-                                        <Text>{errorText}</Text>
+                                    <View style={{marginTop: 100,alignItems: 'center'}}>
+                                        <Text style={{fontSize:16,color:theme.red2}}>{errorText}</Text>
                                         <PbmButton
                                             title={"OK"}
                                             onPress={() => this.acceptError()}
