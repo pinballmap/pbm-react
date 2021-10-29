@@ -151,7 +151,6 @@ class EditLocationDetails extends Component {
                                         <Text style={s.title}>Phone</Text>
                                         <TextInput
                                             style={[{height: 40},s.textInput,s.radius10]}
-                                            keyboardType='numeric'
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => this.setState({ phone })}
                                             value={phone}
