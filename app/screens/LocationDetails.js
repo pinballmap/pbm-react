@@ -247,8 +247,8 @@ class LocationDetails extends Component {
                                     visible={errorModalVisible}
                                     onRequestClose={()=>{}}
                                 >
-                                    <View style={{marginTop: 100}}>
-                                        <Text>{errorText}</Text>
+                                    <View style={{marginTop: 100,alignItems: 'center'}}>
+                                        <Text style={{fontSize:16,color:theme.red2}}>{errorText}</Text>
                                         <Button
                                             title={"OK"}
                                             onPress={this.props.clearError}
