@@ -60,14 +60,23 @@ const About = ({navigation, appAlert}) => {
                             <Text style={[{textAlign:'center',color:theme.text3},s.bold]}>Message of the Day</Text>
                             <Text style={[{color:theme.text3},s.text]}>{appAlert}</Text>
                         </View>
+
                         <Text style={s.text}>Pinball Map is a crowdsourced map of all public pinball machines. It was founded in 2008 in Portland, Oregon.</Text>
+
                         <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
-                        <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>.</Text>
-                        <Text style={s.text}><Text onPress={ () => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. <Text onPress={ () => navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={ () => navigation.navigate('FAQ') } style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
+
+                        <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>. Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>{`this app's code`}</Text>.</Text>
+
+                        <Text style={s.text}><Text onPress={ () => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. Or you can start a discussion about anything on our <Text onPress={ () => Linking.openURL('https://github.com/scottwainstock/pbm/discussions')} style={s.textLink}>{`Github discussion page`}</Text>.</Text>
+
+                        <Text style={s.text}><Text onPress={ () => navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={ () => navigation.navigate('FAQ') } style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
+
                         <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
+
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
+
                         <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
-                        <Text style={s.text}>Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore/pbm-react')}>{`this app's code`}</Text>.</Text>
+
                         <Text style={s.bold}>App Credits:</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
@@ -144,7 +153,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         width: deviceWidth - 20,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
-        backgroundColor: theme.blue2,
+        backgroundColor: theme.base4,
     },
     patreonLogo: {
         flex: 1,
