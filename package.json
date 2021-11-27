@@ -5,6 +5,7 @@
   "dependencies": {
     "@expo-google-fonts/lato": "^0.2.0",
     "@expo-google-fonts/nunito": "^0.2.0",
+    "@react-native-async-storage/async-storage": "^1.15.13",
     "dotenv": "^10.0.0",
     "enzyme-to-json": "^3.3.4",
     "eslint-plugin-react-native": "^3.2.1",

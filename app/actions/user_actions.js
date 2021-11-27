@@ -25,7 +25,7 @@ import {
 } from './types'
 import { getCurrentLocation, getData, postData } from '../config/request'
 import { updateCoordinatesAndGetLocations } from './locations_actions'
-import { AsyncStorage } from "react-native"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const fetchCurrentLocation = (isInitialLoad) => dispatch => {
     dispatch({type: FETCHING_LOCATION_TRACKING_ENABLED})

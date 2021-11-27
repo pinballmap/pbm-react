@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
 import {
-    AsyncStorage,
     Dimensions,
     Keyboard,
     Modal,
@@ -16,6 +15,7 @@ import {
     Text,
     View,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
     Input,
     ListItem,

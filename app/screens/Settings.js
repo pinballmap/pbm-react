@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-    AsyncStorage,
     StyleSheet,
     View,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { connect } from "react-redux"
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'

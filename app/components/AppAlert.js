@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
-    AsyncStorage,
     StyleSheet,
     View
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import ConfirmationModal from './ConfirmationModal'
 import { ThemeContext } from '../theme-context'
