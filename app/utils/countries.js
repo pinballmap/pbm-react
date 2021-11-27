@@ -116,6 +116,7 @@ export default [
     {name: 'Kiribati', code: 'KI'}, 
     {name: 'Korea, Democratic People\'S Republic of', code: 'KP'}, 
     {name: 'Korea, Republic of', code: 'KR'}, 
+    {name: 'Kosovo', code: 'XK'},
     {name: 'Kuwait', code: 'KW'}, 
     {name: 'Kyrgyzstan', code: 'KG'}, 
     {name: 'Lao People\'S Democratic Republic', code: 'LA'}, 
