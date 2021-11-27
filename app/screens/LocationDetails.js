@@ -605,7 +605,7 @@ const getStyles = theme => StyleSheet.create({
     },
     quickButton: {
         borderWidth: 1,
-        borderColor: theme.borderWhite,
+        borderColor: theme.blue1,
         position: 'absolute',
         padding: 10,
         zIndex: 10,
@@ -696,8 +696,6 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     toolsIconButton: {
-        borderWidth: 1,
-        borderColor: theme.borderWhite,
         shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -718,13 +716,13 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base2,
     },
     toolsIconNotPressed: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.base4,
     },
     quickButtonPressed: {
         backgroundColor: theme.blue2,
     },
     quickButtonNotPressed: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.white,
     },
     wide: {
         width: '150%',

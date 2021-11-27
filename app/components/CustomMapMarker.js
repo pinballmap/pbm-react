@@ -75,7 +75,7 @@ const s = StyleSheet.create({
         fontSize: 26,
         color: '#c1c9cf',
         position: "absolute",
-        top: Platform.OS === 'ios' ? 14 : 30,
+        top: Platform.OS === 'ios' ? 20 : 30,
         right: Platform.OS === 'ios' ? -5 : 2,
         zIndex: 0
     },
