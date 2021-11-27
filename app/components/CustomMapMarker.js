@@ -25,32 +25,36 @@ MarkerHeart.propTypes = {
     numMachines: PropTypes.number,
 }
 
-const CustomMapMarker = ({ marker, navigation }) => (
-    <MapView.Marker
-        key={marker.id}
-        coordinate={{
-            latitude: Number(marker.lat),
-            longitude: Number(marker.lon)
-        }}
-        title={marker.title}
-        pointerEvents="auto"
-    >
-        {marker.icon === 'dot' ? <MarkerDot numMachines={marker.machine_names.length} /> : <MarkerHeart numMachines={marker.machine_names.length} />}
-        <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id: marker.id })}>
-            <View>
-                <View style={s.calloutStyle}>
-                    <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{marker.name}</Text>
-                    <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${marker.street}, ${marker.city}, ${marker.state} ${marker.zip}`}</Text>
-                    {Platform.OS === 'android' ?
-                        <Text style={{ color: '#000e18', marginTop: 5 }}>{`${marker.machine_names.length} machine${marker.machine_names.length >1 ? 's': ''}`}</Text>
-                        : null
-                    }
+const CustomMapMarker = ({ marker, navigation }) => {
+    const { city, state, street, zip, machine_names, name, lat, lon, id, title, icon } = marker
+    const cityState = state ? `${city}, ${state}` : city
+    return (
+        <MapView.Marker
+            key={id}
+            coordinate={{
+                latitude: Number(lat),
+                longitude: Number(lon)
+            }}
+            title={title}
+            pointerEvents="auto"
+        >
+            {icon === 'dot' ? <MarkerDot numMachines={machine_names.length} /> : <MarkerHeart numMachines={machine_names.length} />}
+            <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id })}>
+                <View>
+                    <View style={s.calloutStyle}>
+                        <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{name}</Text>
+                        <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${street}, ${cityState} ${zip}`}</Text>
+                        {Platform.OS === 'android' ?
+                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${machine_names.length} machine${machine_names.length >1 ? 's': ''}`}</Text>
+                            : null
+                        }
+                    </View>
+                    <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
                 </View>
-                <Ionicons style={s.iconStyle} name="ios-arrow-forward-circle-outline" />
-            </View>
-        </MapView.Callout>
-    </MapView.Marker>
-)
+            </MapView.Callout>
+        </MapView.Marker>
+    )
+}
 
 CustomMapMarker.propTypes = {
     marker: PropTypes.object,

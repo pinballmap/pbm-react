@@ -28,6 +28,7 @@ const LocationCard = ({
     const s = getStyles(theme)
     const { name: type, icon, library } = locationType
     const numMachines = machines.length
+    const cityState = state ? `${city}, ${state}` : city
     return(
         <Pressable
             style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
@@ -39,7 +40,7 @@ const LocationCard = ({
                         <Text style={s.locationName}>{locationName}</Text>
                     </View>
                     <View style={{paddingHorizontal:10,paddingBottom:5}}>
-                        <Text style={[s.text2,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${city}, ${state} ${zip}`}</Text>
+                        <Text style={[s.text2,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
                         {type || distance ?
                             <View style={{flexDirection: 'row',marginTop:4,marginLeft:5}}>
                                 {type ? <View style={s.vertAlign}><Icon

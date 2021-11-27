@@ -127,7 +127,7 @@ class LocationDetails extends Component {
             return {...machineDetails, ...machine}
         }))
         const { icon: locationIcon, library: iconLibrary, name: locationTypeName } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id) || {}
-
+        const cityState = location.state ? `${location.city}, ${location.state}` : location.city
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -201,7 +201,7 @@ class LocationDetails extends Component {
                                         <ListItem
                                             containerStyle={s.backgroundColor}
                                             onPress={() => {
-                                                openMap({end: `${location.name} ${location.city} ${location.state} ${location.zip}`})
+                                                openMap({end: `${location.name} ${location.city} ${location.state || ''} ${location.zip}`})
                                                 this.setShowLocationToolsModal(false)
                                             }}>
                                             <Avatar>
@@ -346,7 +346,7 @@ class LocationDetails extends Component {
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
                                                 <Text style={[s.text2,s.fontSize16,s.marginRight,s.opacity09]}>{location.street}</Text>
 
-                                                <Text style={[s.text2,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{location.city}, {location.state} {location.zip}</Text>
+                                                <Text style={[s.text2,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{cityState} {location.zip}</Text>
 
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13,s.text3,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
