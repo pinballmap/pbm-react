@@ -37,5 +37,5 @@ Create a file called ”.env”, in  the root directory of the project on your l
 * `npm start` (This delegates to `expo start`, so you can type whichever you like.)
 * The terminal should now show you a QR code. Scan the QR code with your device using the Camera app (iOS) or the Expo app (Android). This should start the Pinball Map app running on your device using Expo. Note that your device and your computer must be on the same network.
 
-If you are unable to successfully get set-up like this, or you identify errors in these instructions, we'd love for you to file an issue or open a pull request.
+If you are unable to successfully get set-up like this, or if you identify errors in these instructions, we'd love for you to file an issue or open a pull request.
 
