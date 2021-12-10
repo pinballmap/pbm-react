@@ -71,6 +71,5 @@
     "setupFiles": [
       "./setupJest.js"
     ]
-  },
-  "main": "App.js"
+  }
 }
