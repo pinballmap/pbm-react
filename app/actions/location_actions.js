@@ -193,8 +193,8 @@ export const updateLocationDetails = (goBack, phone, website, description) => (d
 
     const { email, authentication_token, username } = getState().user
     const { locationType, operator, location } = getState().location
-    const location_type = locationType === -1 ? null : locationType ? locationType : location.location_type_id
-    const operator_id = operator === -1 ? null : operator ? operator : location.operator_id
+    const location_type = locationType === -1 ? '' : locationType ? locationType : location.location_type_id
+    const operator_id = operator === -1 ? '' : operator ? operator : location.operator_id
 
     const { id } = location
     const body = {
