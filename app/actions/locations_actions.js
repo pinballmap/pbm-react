@@ -14,6 +14,8 @@ import {
 import { getData } from '../config/request'
 import { getDistance } from "../utils/utilityFunctions"
 
+const STANDARD_DISTANCE = 5.5
+
 Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY)
 
 export const fetchLocationTypes = (url) => dispatch => {
@@ -41,7 +43,7 @@ export const getFilterState = (filterState) => {
     return filteringByTwoMachines ? 300 : filterApplied ? 500 : 200
 }
 
-export const getLocations = (lat = '', lon = '', distance = process.env.STANDARD_DISTANCE) => (dispatch, getState) => {
+export const getLocations = (lat = '', lon = '', distance = STANDARD_DISTANCE) => (dispatch, getState) => {
     dispatch({type: FETCHING_LOCATIONS})
 
     const { machineId, locationType, numMachines, selectedOperator, curLat, curLon, filterByMachineVersion } = getState().query

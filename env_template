@@ -12,4 +12,3 @@ GOOGLE_MAPS_KEY='<key>'
 IFPA_API_KEY='<key>'
 #API_URL='https://pinballmapstaging.herokuapp.com/api/v1'
 API_URL='https://www.pinballmap.com/api/v1'
-STANDARD_DISTANCE = 5.5
