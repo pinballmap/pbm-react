@@ -11,6 +11,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.9
+December 20, 2021
+
+- Fixed a bug where you couldn't remove an operator from a location
+- Added Kosovo to list of countries in Submit Location form
+- Other minor enhancements
+
 ### 5.2.8
 November 11, 2021
 
