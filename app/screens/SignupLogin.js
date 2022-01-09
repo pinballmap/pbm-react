@@ -36,11 +36,11 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                             <Text style={s.bold}> {formatNumWithCommas(allMachinesCount)} </Text>
                             <Text>machines.</Text>
                             {"\n"}{"\n"}
-                            <Text>Please log in to help keep it up to date!</Text>
-                            {"\n"}{"\n"}
                             <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
-                        When prompted, enable locations services to see pinball machines near you!
+                        When prompted on the next screen, enable location services to see pinball machines near you!
                             </Text>
+                            {"\n"}{"\n"}
+                            <Text>YOU can help keep the map up to date! Create an account (optional).</Text>
                         </Text>
                     </View>
                 </View>
@@ -50,8 +50,8 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                         raised
                         buttonStyle={s.buttonBlue}
                         titleStyle={s.titleStyle}
-                        title="Current User? Log In"
-                        accessibilityLabel="Log In"
+                        title="Current user? Log in"
+                        accessibilityLabel="Log in"
                         containerStyle={{overflow:'hidden', borderRadius: 25}}
                     />
                     <Button
@@ -59,18 +59,20 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                         raised
                         buttonStyle={s.buttonPink}
                         titleStyle={s.titleStyle}
-                        title="New User? Sign Up"
-                        accessibilityLabel="Sign Up"
+                        title="New user? Sign up"
+                        accessibilityLabel="Sign up"
                         containerStyle={{marginTop:15,marginBottom:20,overflow:'hidden',borderRadius: 25}}
                     />
                     <Button
                         onPress={() => {
                             loginLater()
                             navigation.navigate('Map')}}
-                        title="skip this for now"
-                        accessibilityLabel="skip this for now"
+                        title="Skip signing in"
+                        accessibilityLabel="Skip signing in"
+                        raised
                         titleStyle={s.skipTitle}
-                        buttonStyle={{backgroundColor:'rgba(255,255,255,.2)',elevation: 0}}
+                        buttonStyle={s.buttonWhite}
+                        containerStyle={{overflow:'hidden', borderRadius: 25}}
                     />
                 </View>
             </View>
@@ -120,6 +122,11 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonBlue: {
         backgroundColor: "#D3ECFF",
+        elevation: 0,
+        borderRadius: 25
+    },
+    buttonWhite: {
+        backgroundColor: "#FFFFFF",
         elevation: 0,
         borderRadius: 25
     },
