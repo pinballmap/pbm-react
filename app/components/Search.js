@@ -107,7 +107,7 @@ class Search extends Component {
     getLocationsByCity = async ({ value }) => {
         try {
             const [city, state] = value.split(', ')
-            const { locations } = await getData(`/locations?by_city_id=${city};by_state_id=${state}`)
+            const { locations } = await getData(`/locations?by_city_id=${city};by_state_id=${state};no_details=1`)
             // In order to show all locations for a given city, we must determine the min/max lat/lon
             // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
             // the defined city, we make a fresh request for locations to get any locations we be missing.
@@ -133,14 +133,26 @@ class Search extends Component {
                 }
             }, {})
             
-            // Determine the delta plus a buffer
-            const latDelta = Math.abs(maxLat - minLat) * 1.10
-            const lonDelta = Math.abs(maxLon - minLon) * 1.10
-
+            // Determine the delta
+            let latDelta = Math.abs(maxLat - minLat)
+            let lonDelta = Math.abs(maxLon - minLon)
+        
+            // Account for min/max zoom
+            if (latDelta < 0.1) {
+                latDelta = 0.1
+            } else if (latDelta > 3) {
+                latDelta = 3
+            }
+            if (lonDelta < 0.1) {
+                lonDelta = 0.1
+            } else if (lonDelta > 3) {
+                lonDelta = 3
+            }
+      
             // Place the center of the map and request for the avg of the coordinates
             const latAvg = (maxLat + minLat) / 2
-            const lonAvg = (maxLon + minLon) /2
-            
+            const lonAvg = (maxLon + minLon) / 2
+
             this.props.updateCoordinates(latAvg, lonAvg, latDelta, lonDelta)
             this.props.getLocationsConsideringZoom(latAvg, lonAvg, latDelta, lonDelta)
             this.clearSearchState({ value })
