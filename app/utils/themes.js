@@ -19,7 +19,7 @@ export const dark = {
     text3:      '#b1b1b5',
     white:      '#322f32',
     borderWhite:'#eee5d7',
-    pink1:      '#fd0091',
+    pink1:      '#ffa7dd',
     pink2:      '#474347',
     pink3:      '#ffa7dd'
 }

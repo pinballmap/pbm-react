@@ -269,7 +269,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: theme.text,
-        backgroundColor: '#fee7f5',
+        backgroundColor: theme.pink2,
         textAlign: "center"
     },
     statItem: {
