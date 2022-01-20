@@ -71,7 +71,7 @@ class SuggestLocation extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
             gestureEnabled: true
         }
     }
@@ -437,7 +437,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.blue1
+        backgroundColor: theme.pink2
     },
     pageTitleText: {
         textAlign: 'center',

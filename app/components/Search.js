@@ -372,7 +372,7 @@ const getStyles = theme => StyleSheet.create({
         width: 80,
         borderBottomRightRadius: 25,
         borderTopRightRadius: 25,
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
     },
     searchIcon: {
         paddingLeft: 5,
@@ -444,7 +444,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.blue2,
     },
     filterNotPressed: {
-        backgroundColor: theme.blue1
+        backgroundColor: theme.pink2
     }
 })
 

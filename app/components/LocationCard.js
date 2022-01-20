@@ -106,7 +106,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.text2
     },
     locationNameContainer: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -155,7 +155,7 @@ const getStyles = (theme) => StyleSheet.create({
         zIndex: 5
     },
     pressed: {
-        borderColor: theme.blue1,
+        borderColor: theme.pink2,
         borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,

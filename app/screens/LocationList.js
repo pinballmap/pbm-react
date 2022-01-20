@@ -48,7 +48,7 @@ export class LocationList extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
             gestureEnabled: true
         }
     }

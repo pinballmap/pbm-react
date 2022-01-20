@@ -64,7 +64,7 @@ class MachineDetails extends Component {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
             gestureEnabled: true
         }
     }

@@ -297,7 +297,7 @@ const getStyles = theme => StyleSheet.create({
         alignSelf: "center",
         paddingVertical: 5,
         paddingHorizontal: 10,
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
         borderRadius: 15
     },
     loadingText: {
@@ -379,7 +379,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pressed: {
         opacity: 0.8,
-        backgroundColor: theme.blue1
+        backgroundColor: theme.pink2
     },
     notPressed: {
         opacity: 1.0

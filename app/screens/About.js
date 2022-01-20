@@ -127,7 +127,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
     gestureEnabled: true
 })
 
@@ -153,7 +153,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         width: deviceWidth - 20,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
-        backgroundColor: theme.base4,
+        backgroundColor: '#74f700',
     },
     patreonLogo: {
         flex: 1,
@@ -175,7 +175,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: '#7cc5ff',
+        color: theme.pink1,
         fontSize: 16,
     },
     appAlert: {

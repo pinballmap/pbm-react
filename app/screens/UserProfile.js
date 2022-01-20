@@ -49,7 +49,7 @@ class UserProfile extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
         }
     };
 
@@ -269,7 +269,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         color: theme.text,
-        backgroundColor: theme.blue1,
+        backgroundColor: '#fee7f5',
         textAlign: "center"
     },
     statItem: {
@@ -287,7 +287,7 @@ const getStyles = theme => StyleSheet.create({
     statNum: {
         fontFamily: 'boldFont',
         color: theme.base1,
-        backgroundColor: theme.text3,
+        backgroundColor: theme.pink1,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,

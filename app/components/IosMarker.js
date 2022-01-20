@@ -24,8 +24,8 @@ const IosMarker = ({numMachines}) => {
             height: dotWidthHeight,
             borderRadius: dotWidthHeight / 2,
             borderWidth: 2,
-            borderColor: '#d2e5fa',
-            backgroundColor: '#78b6fb'
+            borderColor: '#ffa7dd',
+            backgroundColor: '#fd0091'
         }}>
             <Text style={{
                 color: 'white',

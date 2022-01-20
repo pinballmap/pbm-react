@@ -50,7 +50,7 @@ class Events extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
             gestureEnabled: true
         }
     }
@@ -207,7 +207,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
@@ -275,7 +275,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text
     },
     pressed: {
-        borderColor: theme.blue1,
+        borderColor: theme.pink2,
         borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,

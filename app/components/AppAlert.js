@@ -66,7 +66,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'boldFont',
     },
     appAlertHeader: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
         marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
