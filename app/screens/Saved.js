@@ -40,7 +40,7 @@ export class Saved extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
         }
     }
 

@@ -109,7 +109,7 @@ const TabNav = createBottomTabNavigator(
             },
             tabBarOptions: {
                 activeTintColor: {
-                    light: '#fd0091',
+                    light: '#ff5eba',
                     dark: '#ffa7dd',
                 },
                 inactiveTintColor: {
@@ -240,7 +240,7 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontFamily: 'regularBoldFont',
         fontSize: 11,
-        color: theme === 'dark' ? '#ffa7dd' : '#fd0091',
+        color: theme === 'dark' ? '#ffa7dd' : '#ff5eba',
         marginBottom: Platform.OS === 'android' ? 5 : 0,
         marginTop: Platform.OS === 'android' ? -5 : 0
     },

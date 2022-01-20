@@ -83,7 +83,7 @@ ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
         elevation: 0,
         shadowColor: 'transparent'
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#fd0091',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
     headerTitleStyle: {
         textAlign: 'center',
         fontFamily: 'boldFont',
