@@ -493,7 +493,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     machineName: {
-        color: theme.text,
+        color: theme.pink1,
         fontFamily: 'boldFont',
         fontSize: 20,
     },

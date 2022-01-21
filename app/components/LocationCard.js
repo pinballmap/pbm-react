@@ -99,7 +99,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: -10,
-        color: theme.text
+        color: theme.pink1
     },
     plus: {
         marginBottom: 10,
@@ -120,7 +120,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 18,
         textAlign: 'center',
-        color: theme.pink1
+        color: theme.text
     },
     margin: {
         marginTop: 10,
