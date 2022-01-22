@@ -670,9 +670,9 @@ const getStyles = theme => StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 30 / 2,
-        borderWidth: 3,
-        borderColor: '#ffa7dd',
-        backgroundColor: '#fd0091',
+        borderWidth: 2,
+        borderColor: '#ff5eba',
+        backgroundColor: '#fee7f5',
         elevation: 1
     },
     header: {

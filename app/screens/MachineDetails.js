@@ -64,7 +64,7 @@ class MachineDetails extends Component {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
             gestureEnabled: true
         }
     }
@@ -306,7 +306,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'boldFont',
         fontSize: 18,
-        color: theme.text2
+        color: theme.pink1
     },
     locationName: {
         textAlign: 'center',
@@ -430,7 +430,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     locationNameContainer: {
-        backgroundColor: theme.base3,
+        backgroundColor: theme.pink2,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,

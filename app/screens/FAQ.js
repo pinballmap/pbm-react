@@ -71,7 +71,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 
@@ -91,7 +91,7 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: theme.text3,
+        color: theme.text2,
         lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
@@ -102,12 +102,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 17,
         marginBottom: 10,
         padding: 10,
-        color: theme.text,
-        backgroundColor: theme.pink2
+        color: theme.pink2,
+        backgroundColor: theme.text2
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.blue3,
+        color: theme.pink3,
     },
 })
 

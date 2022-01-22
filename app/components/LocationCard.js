@@ -106,7 +106,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.text2
     },
     locationNameContainer: {
-        backgroundColor: theme.pink2,
+        backgroundColor: theme.text3,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -120,7 +120,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 18,
         textAlign: 'center',
-        color: theme.text
+        color: theme.base2
     },
     margin: {
         marginTop: 10,

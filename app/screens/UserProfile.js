@@ -49,7 +49,7 @@ class UserProfile extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
         }
     };
 
@@ -226,8 +226,8 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 5,
-        color: theme.text,
-        backgroundColor: theme.base3
+        color: theme.pink2,
+        backgroundColor: theme.text2
     },
     savedIcon: {
         fontSize: 24,
@@ -268,8 +268,8 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
-        color: theme.text,
-        backgroundColor: theme.pink2,
+        color: theme.pink1,
+        backgroundColor: theme.base3,
         textAlign: "center"
     },
     statItem: {
@@ -286,8 +286,8 @@ const getStyles = theme => StyleSheet.create({
     },
     statNum: {
         fontFamily: 'boldFont',
-        color: theme.base1,
-        backgroundColor: theme.pink1,
+        color: theme.text,
+        backgroundColor: theme.pink2,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
@@ -296,7 +296,6 @@ const getStyles = theme => StyleSheet.create({
     member: {
         textAlign: "center",
         marginBottom: 10,
-        fontFamily: 'boldFont',
         fontSize: 16,
         marginTop: 5,
         color: theme.text3
