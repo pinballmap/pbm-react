@@ -671,8 +671,8 @@ const getStyles = theme => StyleSheet.create({
         height: 30,
         borderRadius: 30 / 2,
         borderWidth: 2,
-        borderColor: '#ff5eba',
-        backgroundColor: '#fee7f5',
+        borderColor: theme.pink2,
+        backgroundColor: theme.text2,
         elevation: 1
     },
     header: {

@@ -419,7 +419,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16
     },
     searchHistoryTitle: {
-        color: theme.indigo4,
+        color: theme.pink3,
         fontFamily: 'boldFont',
     },
     clear: {

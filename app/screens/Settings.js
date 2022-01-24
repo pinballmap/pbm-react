@@ -97,7 +97,7 @@ const Settings = ({ user, setUnitPreference }) => {
 
 Settings.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Settings',
-    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#ffa7dd' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Settings',
     headerRight: () =><View style={{padding:6}}></View>,

@@ -54,15 +54,15 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         const { index, machine, selected } = this.props
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
 
         return (
             <Pressable
                 onPress={this._onPress}
-                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}
+                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor,opacity: 1}]}
             >
                 <Text style={{ fontSize: 18 }}>{getDisplayText(machine, theme)}</Text>
-                {selected ? <MaterialIcons name='cancel' size={18} color="#616182" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
+                {selected ? <MaterialIcons name='cancel' size={18} color="#fd0091" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
             </Pressable>
         )
     }
@@ -114,7 +114,7 @@ class FindMachine extends React.PureComponent {
                 elevation: 0,
                 shadowColor: 'transparent'
             },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
             headerTitleStyle: {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
@@ -188,13 +188,13 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
         return (
             <Pressable
                 onPress={() => this.setSelected(item)}
             >
                 {({ pressed }) => (
-                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
+                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
                         <Text style={{fontSize: 18}}>{getDisplayText(item, theme)}</Text>
                     </View>
                 )}
@@ -303,9 +303,9 @@ class FindMachine extends React.PureComponent {
                 }
                 {multiSelect ?
                     <View style={s.multiSelect}>
-                        {machineList.length === 0 ? <Text style={{ color: theme.text }}>0 machines selected</Text> :
+                        {machineList.length === 0 ? <Text style={{ color: theme.pink1 }}>0 machines selected</Text> :
                             <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                <Text style={{ color: theme.text }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
+                                <Text style={{ color: theme.pink1 }}>{`${machineList.length} machine${machineList.length > 1 ? 's' : ''} selected`}</Text>
                             </View>
                         }
                     </View> : null
@@ -352,7 +352,7 @@ const getStyles = theme => StyleSheet.create({
     multiSelect: {
         alignItems: 'center',
         padding: 5,
-        backgroundColor: theme.base3
+        backgroundColor: theme.pink2
     },
     buttonGroupContainer: {
         height: 40,

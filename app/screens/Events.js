@@ -36,7 +36,7 @@ class Events extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Events',
-            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#95867c'}} />,
+            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#ffa7dd'}} />,
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight: () =><View style={{padding:6}}></View>,

@@ -113,7 +113,7 @@ const About = ({navigation, appAlert}) => {
 
 About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#ffa7dd' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'About Pinball Map',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -153,7 +153,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         width: deviceWidth - 20,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
-        backgroundColor: '#74f700',
+        backgroundColor: '#fee7f5',
     },
     patreonLogo: {
         flex: 1,
