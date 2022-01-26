@@ -132,23 +132,23 @@ class Search extends Component {
                     minLon,
                 }
             }, {})
-            
+
             // Determine the delta
             let latDelta = Math.abs(maxLat - minLat)
             let lonDelta = Math.abs(maxLon - minLon)
-        
+
             // Account for min/max zoom
-            if (latDelta < 0.1) {
-                latDelta = 0.1
+            if (latDelta < 0.07) {
+                latDelta = 0.07
             } else if (latDelta > 3) {
                 latDelta = 3
             }
-            if (lonDelta < 0.1) {
-                lonDelta = 0.1
+            if (lonDelta < 0.07) {
+                lonDelta = 0.07
             } else if (lonDelta > 3) {
                 lonDelta = 3
             }
-      
+
             // Place the center of the map and request for the avg of the coordinates
             const latAvg = (maxLat + minLat) / 2
             const lonAvg = (maxLon + minLon) / 2
