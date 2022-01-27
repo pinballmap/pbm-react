@@ -582,7 +582,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     buttonIcon: {
-        color: theme.text3,
+        color: theme.pink3,
         opacity: 0.8,
         fontSize: 32,
     },

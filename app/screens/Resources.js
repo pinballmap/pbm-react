@@ -23,7 +23,7 @@ const Resources = () => {
     return(
         <SafeAreaView edges={['right', 'bottom', 'left']} style={{flex:1}}>
             <Screen>
-                <Text style={s.text}>
+                <Text style={[{marginTop:10},s.text]}>
                     <Text style={s.bold}>Pinball is fun!</Text>
                     {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place and maintain machines at your venue.`}
                 </Text>

@@ -207,7 +207,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
-        backgroundColor: theme.pink2,
+        backgroundColor: theme.text3,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
@@ -220,7 +220,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
-        color: theme.text
+        color: theme.base2
     },
     margin: {
         marginTop: 10,
@@ -268,11 +268,11 @@ const getStyles = theme => StyleSheet.create({
     },
     cardTextStyle: {
         fontSize: 14,
-        color: theme.text3
+        color: theme.text
     },
     address: {
         fontSize: 12,
-        color: theme.text
+        color: theme.text3
     },
     pressed: {
         borderColor: theme.pink2,

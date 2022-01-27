@@ -432,7 +432,7 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         right: 0,
         fontFamily: 'regularItalicFont',
-        color: '#97a5af'
+        color: theme.pink3
     },
     pressed: {
         backgroundColor: theme.base3,
