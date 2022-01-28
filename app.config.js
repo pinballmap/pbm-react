@@ -11,8 +11,8 @@ export default {
             backgroundColor: "#fafaff"
         },
         splash: {
-            image: "app/assets/images/pbm-splash-2021.png",
-            backgroundColor: "#ebecff",
+            image: "app/assets/images/pbm-splash-2022.png",
+            backgroundColor: "#47475f",
             resizeMode: "contain"
         },
         updates: {
