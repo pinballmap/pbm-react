@@ -245,7 +245,7 @@ class SuggestLocation extends Component {
                                                                 disabled={machineList.length === 0 || locationName.length === 0}
                                                             />
                                                             <WarningButton
-                                                                title={'Cancel'}
+                                                                title={'Go Back'}
                                                                 onPress={() => this.setState({ showSuggestLocationModal: false})}
                                                             />
                                                         </ScrollView>
