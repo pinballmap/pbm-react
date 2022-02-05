@@ -130,7 +130,7 @@ class Events extends Component {
                                         {refetchingEvents ?
                                             <ActivityIndicator /> :
                                             events.length > 0 ?
-                                                <View>
+                                                <View style={{flex: 1,backgroundColor: theme.base1}}>
                                                     <Text style={s.sourceText}>
                                                         These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
@@ -242,6 +242,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         fontSize: 12,
         marginTop: 0,
+        marginBottom: 5,
         paddingHorizontal: 10
     },
     smallLink: {
