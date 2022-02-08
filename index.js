@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo'
 import React, { useState, useEffect } from 'react'
-import { Appearance } from 'react-native'
+import { Appearance, Platform } from 'react-native'
 import { retrieveItem } from './app/config/utils'
 import { ThemeContext } from './app/theme-context'
 import { Provider } from 'react-redux'
@@ -22,6 +22,12 @@ import * as SplashScreen from 'expo-splash-screen'
 import { AppWrapper } from './app/components'
 
 const defaultTheme = Appearance.getColorScheme()
+
+// https://github.com/facebook/react-native/issues/19410
+if(Platform.OS === 'android') {
+    require('intl')
+    require('intl/locale-data/jsonp/en-US')
+}
 
 const App = () => {
     const [selectedTheme, setSelectedTheme] = useState(defaultTheme === 'dark' ? 'dark' : '')
