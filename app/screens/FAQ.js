@@ -57,7 +57,7 @@ const FAQ = ({ navigation, }) => {
 
 FAQ.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'FAQ',
-    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#95867c'}} />,
+    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#ffa7dd'}} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'FAQ',
     headerRight: () =><View style={{padding:6}}></View>,

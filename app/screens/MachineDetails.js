@@ -331,7 +331,8 @@ const getStyles = theme => StyleSheet.create({
     externalLink: {
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: theme.blue2,
+        borderColor: theme.text3,
+        backgroundColor: theme.base3
     },
     externalIcon: {
         fontSize: 24,

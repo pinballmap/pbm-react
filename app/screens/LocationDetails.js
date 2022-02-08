@@ -582,7 +582,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     buttonIcon: {
-        color: theme.text3,
+        color: theme.pink3,
         opacity: 0.8,
         fontSize: 32,
     },
@@ -671,8 +671,8 @@ const getStyles = theme => StyleSheet.create({
         height: 30,
         borderRadius: 30 / 2,
         borderWidth: 2,
-        borderColor: '#ff5eba',
-        backgroundColor: '#fee7f5',
+        borderColor: theme.pink2,
+        backgroundColor: theme.text2,
         elevation: 1
     },
     header: {

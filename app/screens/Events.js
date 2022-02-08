@@ -36,7 +36,7 @@ class Events extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Events',
-            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#95867c'}} />,
+            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#ffa7dd'}} />,
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'Nearby Events',
             headerRight: () =><View style={{padding:6}}></View>,
@@ -130,7 +130,7 @@ class Events extends Component {
                                         {refetchingEvents ?
                                             <ActivityIndicator /> :
                                             events.length > 0 ?
-                                                <View>
+                                                <View style={{flex: 1,backgroundColor: theme.base1}}>
                                                     <Text style={s.sourceText}>
                                                         These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
@@ -207,7 +207,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
-        backgroundColor: theme.pink2,
+        backgroundColor: theme.text3,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
@@ -220,7 +220,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
-        color: theme.text
+        color: theme.base2
     },
     margin: {
         marginTop: 10,
@@ -242,6 +242,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         fontSize: 12,
         marginTop: 0,
+        marginBottom: 5,
         paddingHorizontal: 10
     },
     smallLink: {
@@ -268,11 +269,11 @@ const getStyles = theme => StyleSheet.create({
     },
     cardTextStyle: {
         fontSize: 14,
-        color: theme.text3
+        color: theme.text
     },
     address: {
         fontSize: 12,
-        color: theme.text
+        color: theme.text3
     },
     pressed: {
         borderColor: theme.pink2,

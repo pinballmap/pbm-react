@@ -28,7 +28,7 @@ const Blog = () => {
 
 Blog.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Blog',
-    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#95867c'}} />,
+    drawerIcon: () => <MaterialCommunityIcons name='book-open-variant' style={{fontSize: 24,color: '#ffa7dd'}} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Blog',
     headerRight: () =><View style={{padding:6}}></View>,

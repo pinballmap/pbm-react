@@ -237,9 +237,9 @@ const getStyles = theme => StyleSheet.create({
     savedLink: {
         borderWidth: 2,
         width: '100%',
-        borderColor: theme.blue2,
         borderRadius: 25,
-        backgroundColor: theme.white
+        borderColor: theme.text3,
+        backgroundColor: theme.base3
     },
     buttonTitleStyle: {
         fontSize: 16,
