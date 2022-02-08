@@ -462,7 +462,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: 'transparent'
     },
     listItemTitle: {
-        color: theme.text3,
+        color: theme.text2,
         marginBottom: -2,
         marginTop: -2,
         fontSize: 16
