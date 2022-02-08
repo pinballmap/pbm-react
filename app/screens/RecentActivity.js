@@ -41,7 +41,7 @@ class RecentActivity extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
         }
     }
 
@@ -230,7 +230,7 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 8,
     },
     pressed: {
-        borderColor: theme.blue1,
+        borderColor: theme.pink2,
         borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,

@@ -23,7 +23,7 @@ const Resources = () => {
     return(
         <SafeAreaView edges={['right', 'bottom', 'left']} style={{flex:1}}>
             <Screen>
-                <Text style={s.text}>
+                <Text style={[{marginTop:10},s.text]}>
                     <Text style={s.bold}>Pinball is fun!</Text>
                     {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place and maintain machines at your venue.`}
                 </Text>
@@ -96,7 +96,7 @@ const Resources = () => {
 
 Resources.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Resources',
-    drawerIcon: () => <MaterialCommunityIcons name='star-face' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialCommunityIcons name='star-face' style={{ fontSize: 24, color: '#ffa7dd' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Pinball Resources',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -110,7 +110,7 @@ Resources.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 

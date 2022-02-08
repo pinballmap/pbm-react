@@ -109,8 +109,8 @@ const TabNav = createBottomTabNavigator(
             },
             tabBarOptions: {
                 activeTintColor: {
-                    light: '#7cc5ff',
-                    dark: '#addbff',
+                    light: '#ff5eba',
+                    dark: '#ffa7dd',
                 },
                 inactiveTintColor: {
                     light: '#7f7fa0',
@@ -181,9 +181,9 @@ export const MapStack = createStackNavigator({
     navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
         drawerLabel: 'Map',
-        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#95867c' }} />,
+        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#ffa7dd' }} />,
         headerStyle: {
-            backgroundColor: theme === 'dark' ? '#1d1c1d' : 'red',
+            backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fafaff',
         },
         headerTitleStyle: {
             textAlign: 'center',
@@ -216,11 +216,11 @@ export const drawerNavigator = createDrawerNavigator({
     },
     contentOptions: {
         activeTintColor: {
-            light: '#7f7fa0',
+            light: '#47475f',
             dark: '#cac6ca'
         },
         inactiveTintColor: {
-            light: '#7f7fa0',
+            light: '#47475f',
             dark: '#cac6ca'
         },
         activeBackgroundColor: {
@@ -240,7 +240,7 @@ const s = theme => StyleSheet.create({
     activeTabText: {
         fontFamily: 'regularBoldFont',
         fontSize: 11,
-        color: theme === 'dark' ? '#addbff' : '#7cc5ff',
+        color: theme === 'dark' ? '#ffa7dd' : '#ff5eba',
         marginBottom: Platform.OS === 'android' ? 5 : 0,
         marginTop: Platform.OS === 'android' ? -5 : 0
     },

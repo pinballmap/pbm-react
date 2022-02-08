@@ -57,7 +57,7 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Submit Location',
-            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#95867c'}} />,
+            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#ffa7dd'}} />,
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'Submit Location',
             headerRight: () =><View style={{padding:6}}></View>,
@@ -71,7 +71,7 @@ class SuggestLocation extends Component {
                 textAlign: 'center',
                 fontFamily: 'boldFont',
             },
-            headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
             gestureEnabled: true
         }
     }
@@ -245,7 +245,7 @@ class SuggestLocation extends Component {
                                                                 disabled={machineList.length === 0 || locationName.length === 0}
                                                             />
                                                             <WarningButton
-                                                                title={'Cancel'}
+                                                                title={'Go Back'}
                                                                 onPress={() => this.setState({ showSuggestLocationModal: false})}
                                                             />
                                                         </ScrollView>
@@ -418,8 +418,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginLeft: 15,
         marginRight: 15,
-        fontFamily: 'boldFont',
-        color: theme.text,
+        color: theme.pink1,
         textAlign: 'center'
     },
     title: {
@@ -437,7 +436,7 @@ const getStyles = theme => StyleSheet.create({
     },
     pageTitle: {
         paddingVertical: 10,
-        backgroundColor: theme.blue1
+        backgroundColor: theme.pink2
     },
     pageTitleText: {
         textAlign: 'center',

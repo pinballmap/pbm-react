@@ -171,7 +171,7 @@ FilterMap.navigationOptions = ({ navigation, theme }) => ({
         elevation: 0,
         shadowColor: 'transparent'
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     headerTitleStyle: {
         textAlign: 'center',
         fontFamily: 'boldFont',

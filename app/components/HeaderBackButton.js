@@ -9,7 +9,7 @@ const HeaderBackButton = ({navigation, title}) => {
 
     return (
         <HeaderBackButtonReactNavigation
-            tintColor={theme.blue2}
+            tintColor={theme.pink1}
             onPress={() => {
                 navigation.goBack(null)
                 Keyboard.dismiss()

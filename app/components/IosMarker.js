@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from "react-native"
 import Text from './PbmText'
 import PropTypes from "prop-types"
+import { ThemeContext } from '../theme-context'
 
 const IosMarker = ({numMachines}) => {
+    const { theme } = useContext(ThemeContext)
+
     let dotFontMargin, dotWidthHeight
     if (numMachines < 10) {
         dotFontMargin = 2
@@ -24,11 +27,11 @@ const IosMarker = ({numMachines}) => {
             height: dotWidthHeight,
             borderRadius: dotWidthHeight / 2,
             borderWidth: 2,
-            borderColor: '#d2e5fa',
-            backgroundColor: '#78b6fb'
+            borderColor: theme.pink2,
+            backgroundColor: theme.text2,
         }}>
             <Text style={{
-                color: 'white',
+                color: theme.base2,
                 fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,

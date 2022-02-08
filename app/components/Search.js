@@ -27,6 +27,8 @@ import {
     displayError,
     getLocationsByRegion,
     updateCoordinatesAndGetLocations,
+    updateCoordinates,
+    getLocationsConsideringZoom,
     getLocationsFailure,
     setSearchBarText,
     clearSearchBarText,
@@ -104,8 +106,55 @@ class Search extends Component {
 
     getLocationsByCity = async ({ value }) => {
         try {
-            const { location } = await getData(`/locations/closest_by_address.json?address=${value};no_details=1`)
-            this.props.updateCoordinatesAndGetLocations(location.lat, location.lon)
+            const [city, state] = value.split(', ')
+            const { locations } = await getData(`/locations?by_city_id=${city};by_state_id=${state};no_details=1`)
+            // In order to show all locations for a given city, we must determine the min/max lat/lon
+            // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
+            // the defined city, we make a fresh request for locations to get any locations we be missing.
+            const {maxLat, minLat, maxLon, minLon} = locations.reduce((prev, cur) => {
+                let {minLat, maxLat, minLon, maxLon} = prev
+                if (!maxLat || cur.lat > maxLat) {
+                    maxLat = parseFloat(cur.lat)
+                }
+                if (!minLat || cur.lat < minLat) {
+                    minLat = parseFloat(cur.lat)
+                }
+                if (!maxLon || cur.lon > maxLon) {
+                    maxLon = parseFloat(cur.lon)
+                }
+                if (!minLon || cur.lon < minLon) {
+                    minLon = parseFloat(cur.lon)
+                }
+                return {
+                    maxLat,
+                    minLat,
+                    maxLon,
+                    minLon,
+                }
+            }, {})
+
+            // Determine the delta
+            let latDelta = Math.abs(maxLat - minLat)
+            let lonDelta = Math.abs(maxLon - minLon)
+
+            // Account for min/max zoom
+            if (latDelta < 0.07) {
+                latDelta = 0.07
+            } else if (latDelta > 3) {
+                latDelta = 3
+            }
+            if (lonDelta < 0.07) {
+                lonDelta = 0.07
+            } else if (lonDelta > 3) {
+                lonDelta = 3
+            }
+
+            // Place the center of the map and request for the avg of the coordinates
+            const latAvg = (maxLat + minLat) / 2
+            const lonAvg = (maxLon + minLon) / 2
+
+            this.props.updateCoordinates(latAvg, lonAvg, latDelta, lonDelta)
+            this.props.getLocationsConsideringZoom(latAvg, lonAvg, latDelta, lonDelta)
             this.clearSearchState({ value })
         } catch (e) {
             this.props.getLocationsFailure()
@@ -372,7 +421,7 @@ const getStyles = theme => StyleSheet.create({
         width: 80,
         borderBottomRightRadius: 25,
         borderTopRightRadius: 25,
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
     },
     searchIcon: {
         paddingLeft: 5,
@@ -413,13 +462,13 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: 'transparent'
     },
     listItemTitle: {
-        color: theme.text3,
+        color: theme.text2,
         marginBottom: -2,
         marginTop: -2,
         fontSize: 16
     },
     searchHistoryTitle: {
-        color: theme.indigo4,
+        color: theme.pink3,
         fontFamily: 'boldFont',
     },
     clear: {
@@ -432,7 +481,7 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         right: 0,
         fontFamily: 'regularItalicFont',
-        color: '#97a5af'
+        color: theme.pink3
     },
     pressed: {
         backgroundColor: theme.base3,
@@ -441,10 +490,10 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base1
     },
     filterPressed: {
-        backgroundColor: theme.blue2,
+        backgroundColor: '#ffa7dd',
     },
     filterNotPressed: {
-        backgroundColor: theme.blue1
+        backgroundColor: theme.pink2
     }
 })
 
@@ -453,7 +502,8 @@ Search.propTypes = {
     navigate: PropTypes.func,
     regions: PropTypes.object,
     query: PropTypes.object,
-    updateCoordinatesAndGetLocations: PropTypes.func,
+    updateCoordinates: PropTypes.func,
+    getLocationsConsideringZoom: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
     getLocationsFailure: PropTypes.func,
     setSearchBarText: PropTypes.func,
@@ -464,7 +514,9 @@ Search.propTypes = {
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
 const mapDispatchToProps = (dispatch) => ({
     displayError: error => dispatch(displayError(error)),
-    updateCoordinatesAndGetLocations: (lat, lng) => dispatch(updateCoordinatesAndGetLocations(lat, lng)),
+    updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
+    updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
+    getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
     getLocationsFailure: () => dispatch(getLocationsFailure()),
     setSearchBarText: (searchBarText) => dispatch(setSearchBarText(searchBarText)),

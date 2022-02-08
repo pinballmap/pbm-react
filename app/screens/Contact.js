@@ -120,7 +120,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
 
 Contact.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Contact',
-    drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={{ fontSize: 24, color: '#95867c'}} />,
+    drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={{ fontSize: 24, color: '#ffa7dd'}} />,
     headerLeft: () => <HeaderBackButton navigation={navigation}/>,
     title: 'Contact',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -134,7 +134,7 @@ Contact.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 

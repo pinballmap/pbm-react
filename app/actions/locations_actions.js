@@ -67,7 +67,7 @@ export const getLocationsConsideringZoom = (lat, lon, latDelta = 0.1, lonDelta =
 
     dispatch({ type: SET_MAX_ZOOM, maxZoom })
     if (distance || !maxZoom) {
-        dispatch(getLocations(lat, lon, distance ? distance : viewableDist * 1.1 / 2))
+        dispatch(getLocations(lat, lon, distance ? distance : viewableDist))
     }
 }
 
@@ -81,7 +81,7 @@ export const updateFilterLocations = () => (dispatch, getState) => {
 
     dispatch({ type: SET_MAX_ZOOM, maxZoom })
     if (!maxZoom) {
-        dispatch(getLocations(curLat, curLon, viewableDist * 1.1 / 2))
+        dispatch(getLocations(curLat, curLon, viewableDist))
     }
 }
 

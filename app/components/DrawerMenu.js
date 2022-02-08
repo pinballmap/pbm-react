@@ -78,13 +78,13 @@ const getStyles = theme => StyleSheet.create({
     },
     icon: {
         fontSize: 24,
-        color: '#95867c',
+        color: '#ffa7dd',
         position: 'absolute',
         opacity: 0.7,
         paddingLeft: Platform.OS === 'ios' ? 16 : 15
     },
     text: {
-        color: theme.text3,
+        color: theme.text,
         fontFamily: 'boldFont',
         fontSize: 14,
         position: 'absolute',

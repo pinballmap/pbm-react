@@ -42,7 +42,7 @@ const FindCountry = ({ navigation }) => {
             onPress={() => _selectCountry(item.name, item.code)}
         >
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base3,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
+                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
                     <Text style={{fontSize: 18}}>{item.name}</Text>
                 </View>
             )}
@@ -101,7 +101,7 @@ FindCountry.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 

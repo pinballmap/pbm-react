@@ -61,7 +61,7 @@ const About = ({navigation, appAlert}) => {
                             <Text style={[{color:theme.text3},s.text]}>{appAlert}</Text>
                         </View>
 
-                        <Text style={s.text}>Pinball Map is a crowdsourced map of all public pinball machines. It was founded in 2008 in Portland, Oregon.</Text>
+                        <Text style={s.text}>Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines.</Text>
 
                         <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
 
@@ -113,7 +113,7 @@ const About = ({navigation, appAlert}) => {
 
 About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#ffa7dd' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'About Pinball Map',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -127,7 +127,7 @@ About.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 
@@ -153,7 +153,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         width: deviceWidth - 20,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
-        backgroundColor: theme.base4,
+        backgroundColor: '#fee7f5',
     },
     patreonLogo: {
         flex: 1,
@@ -175,7 +175,7 @@ const getStyles = theme => StyleSheet.create({
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: '#7cc5ff',
+        color: theme.pink1,
         fontSize: 16,
     },
     appAlert: {

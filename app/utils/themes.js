@@ -4,14 +4,12 @@ export const dark = {
     base2:      '#3c393c',
     base3:      '#5f5b5f',
     base4:      '#797479',
-    blue1:      '#474347',
     blue2:      '#7cc5ff',
     blue3:      '#7cc5ff',
     blue4:      '#D3ECFF',
     buttonMask: 'rgba(0,0,0,.2)',
     indigo4:    '#a6a6ab',
     mask:       'rgba(0,0,0,.8)',
-    orange3:    '#797479',
     red2:       '#e4606a',
     red3:       '#3f2d2f',
     shadow:     'transparent',
@@ -20,7 +18,10 @@ export const dark = {
     text2:      '#cac6ca',
     text3:      '#b1b1b5',
     white:      '#322f32',
-    borderWhite:'#eee5d7'
+    borderWhite:'#eee5d7',
+    pink1:      '#ffa7dd',
+    pink2:      '#474347',
+    pink3:      '#ffa7dd'
 }
 
 export const standard = {
@@ -29,14 +30,12 @@ export const standard = {
     base2:      '#f5f5ff',
     base3:      '#ebebff',
     base4:      '#e0e0ff',
-    blue1:      '#e0f1ff',
     blue2:      '#addbff',
     blue3:      '#7cc5ff',
     blue4:      '#2d8ad3',
     buttonMask: 'rgba(255,255,255,.2)',
     indigo4:    '#bec2e6',
     mask:       'rgba(255,255,255,.8)',
-    orange3:    '#e6cfbe',
     red2:       '#e4606a',
     red3:       '#fee5e7',
     shadow:     '#e0e0ff',
@@ -46,4 +45,7 @@ export const standard = {
     text3:      '#7f7fa0',
     white:      '#ffffff',
     borderWhite:'#ffffff',
+    pink1:      '#fd0091',
+    pink2:      '#fee7f5',
+    pink3:      '#ffa7dd'
 }

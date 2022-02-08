@@ -11,6 +11,14 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.10
+February 8, 2022
+
+- Refined the City search so that it pulls up all results in that city
+- Design updates (increased text contrast, revised colors)
+- Fixed a scrolling issue on the Events page
+- Fixed an issue on Android where commas weren't being added when entering a high score
+
 ### 5.2.9
 December 20, 2021
 

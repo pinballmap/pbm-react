@@ -97,7 +97,7 @@ const Settings = ({ user, setUnitPreference }) => {
 
 Settings.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Settings',
-    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#95867c' }} />,
+    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#ffa7dd' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Settings',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -111,7 +111,7 @@ Settings.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 

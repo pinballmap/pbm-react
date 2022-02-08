@@ -61,7 +61,7 @@ class LocationDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () => <HeaderBackButton
-                tintColor={'#6eb4eb'}
+                tintColor={'#fd0091'}
                 onPress={() => {
                     navigation.goBack(null)
                 }}
@@ -153,7 +153,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text3}>
+                                                <ListItem.Title style={s.text2}>
                                                     Add Machine
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -165,7 +165,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text3}>
+                                                <ListItem.Title style={s.text2}>
                                                     Confirm Line-Up
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -177,7 +177,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text3}>
+                                                <ListItem.Title style={s.text2}>
                                                     Edit Location Details
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -193,7 +193,7 @@ class LocationDetails extends Component {
                                                 {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text3}>
+                                                <ListItem.Title style={s.text2}>
                                                     Share Location
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -208,7 +208,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text3}>
+                                                <ListItem.Title style={s.text2}>
                                                     Directions
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -287,13 +287,13 @@ class LocationDetails extends Component {
                                         {loggedIn && isUserFave ?
                                             <MaterialCommunityIcons
                                                 name={'heart'}
-                                                color={theme.red2}
+                                                color={theme.pink1}
                                                 size={26}
                                                 style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
                                             /> :
                                             <MaterialCommunityIcons
                                                 name={'heart-outline'}
-                                                color={theme.red2}
+                                                color={theme.pink1}
                                                 size={26}
                                                 style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
                                             />
@@ -374,7 +374,7 @@ class LocationDetails extends Component {
                                                         <Icon
                                                             name={locationIcon}
                                                             type={iconLibrary}
-                                                            color={theme.orange3}
+                                                            color={theme.pink3}
                                                             size={46}
                                                         />
                                                         <Text style={[{textAlign: 'center'},s.fontSize14,s.text2,s.opacity09]}>{locationTypeName}</Text>
@@ -409,7 +409,7 @@ class LocationDetails extends Component {
                                                                     {machine.condition_date ? <Text style={[s.fontSize13,s.text3]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                 </View>
                                                                 <View style={{flexDirection: "row",paddingTop: 10}}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
-                                                                    {machine.condition ? <Text style={[s.text3,s.opacity06,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                    {machine.condition ? <Text style={[s.text3,s.opacity09,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                 </View>
                                                             </View> : null
                                                         }
@@ -428,7 +428,7 @@ class LocationDetails extends Component {
                             >
                                 <MaterialCommunityIcons
                                     name={'tools'}
-                                    color={theme.text3}
+                                    color={theme.white}
                                     size={28}
                                     style={{justifyContent:'center',alignSelf:'center'}}
                                 />
@@ -479,7 +479,7 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 15,
     },
     pressed: {
-        borderColor: theme.blue1,
+        borderColor: theme.pink2,
         borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
@@ -493,7 +493,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     machineName: {
-        color: theme.text,
+        color: theme.pink1,
         fontFamily: 'boldFont',
         fontSize: 20,
     },
@@ -582,7 +582,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.red2,
     },
     buttonIcon: {
-        color: theme.text3,
+        color: theme.pink3,
         opacity: 0.8,
         fontSize: 32,
     },
@@ -605,7 +605,7 @@ const getStyles = theme => StyleSheet.create({
     },
     quickButton: {
         borderWidth: 1,
-        borderColor: theme.blue1,
+        borderColor: theme.pink2,
         position: 'absolute',
         padding: 10,
         zIndex: 10,
@@ -670,13 +670,13 @@ const getStyles = theme => StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 30 / 2,
-        borderWidth: 3,
-        borderColor: '#d2e5fa',
-        backgroundColor: '#78b6fb',
+        borderWidth: 2,
+        borderColor: theme.pink2,
+        backgroundColor: theme.text2,
         elevation: 1
     },
     header: {
-        backgroundColor: theme.blue1,
+        backgroundColor: theme.pink2,
         marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -684,7 +684,7 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: theme.text2,
+        color: theme.pink1,
         textAlign: "center",
         fontSize: 16,
         fontFamily: 'boldFont',
@@ -716,7 +716,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base2,
     },
     toolsIconNotPressed: {
-        backgroundColor: theme.base4,
+        backgroundColor: theme.pink1,
     },
     quickButtonPressed: {
         backgroundColor: theme.blue2,

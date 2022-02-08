@@ -57,7 +57,7 @@ const FAQ = ({ navigation, }) => {
 
 FAQ.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'FAQ',
-    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#95867c'}} />,
+    drawerIcon: () => <MaterialIcons name='question-answer' style={{fontSize: 24, color: '#ffa7dd'}} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'FAQ',
     headerRight: () =><View style={{padding:6}}></View>,
@@ -71,7 +71,7 @@ FAQ.navigationOptions = ({ navigation, theme }) => ({
         textAlign: 'center',
         fontFamily: 'boldFont',
     },
-    headerTintColor: theme === 'dark' ? '#fdd4d7' : '#616182',
+    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
     gestureEnabled: true
 })
 
@@ -91,7 +91,7 @@ const getStyles = theme => StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: theme.text3,
+        color: theme.text2,
         lineHeight: 22,
         marginBottom: 15,
         marginLeft: 15,
@@ -102,12 +102,12 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 17,
         marginBottom: 10,
         padding: 10,
-        color: theme.text,
-        backgroundColor: theme.blue1
+        color: theme.pink2,
+        backgroundColor: theme.text2
     },
     textLink: {
         textDecorationLine: 'underline',
-        color: theme.blue3,
+        color: theme.pink3,
     },
 })
 

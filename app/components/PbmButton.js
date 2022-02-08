@@ -29,7 +29,7 @@ const PbmButton = ({title, accessibilityLabel, buttonStyle, containerStyle, titl
 
 const getStyles = (theme) => StyleSheet.create({
     blueButton: {
-        backgroundColor: '#6eb4eb',
+        backgroundColor: '#616182',
         width: '100%',
         borderRadius: 25,
     },
@@ -43,7 +43,7 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme.white
     },
     disabledTitleStyle: {
-        color: theme.orange3
+        color: theme.pink3
     },
     margin15: {
         marginHorizontal: 40,
