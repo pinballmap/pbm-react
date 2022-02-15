@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     Dimensions,
+    Image,
     Keyboard,
     Linking,
     Modal,
@@ -43,6 +44,7 @@ import {
 const moment = require('moment')
 
 let deviceHeight = Dimensions.get('window').height
+let deviceWidth = Dimensions.get('window').width
 
 class MachineDetails extends Component {
     state = {
@@ -102,10 +104,12 @@ class MachineDetails extends Component {
 
         const { id: userId, loggedIn } = this.props.user
         const { ipdb_link } = this.props.machineDetails
-        const { opdb_id } = this.props.machineDetails
+        const { opdb_id, opdb_img, opdb_img_height, opdb_img_width } = this.props.machineDetails
         const pintipsUrl = opdb_id ?
             `http://pintips.net/opdb/${opdb_id}` :
             ``
+        const opdb_resized = opdb_img_width - (deviceWidth - 48)
+        const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
@@ -195,6 +199,15 @@ class MachineDetails extends Component {
                                     <Text style={s.locationName}>{location.name}</Text>
                                 </View>
                                 <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                {opdb_img ?
+                                    <View style={s.imageContainer}>
+                                        <Image
+                                            style={{height: opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height, width: opdb_resized > 0 ? deviceWidth-48 : opdb_img_width, resizeMode: 'stretch', borderRadius: 10}}
+                                            source={{uri: opdb_img}}
+                                        />
+                                    </View>
+                                    : null
+                                }
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.sectionTitle}>Machine Comments</Text>
@@ -445,6 +458,13 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         opacity: 0.9
     },
+    imageContainer: {
+        marginBottom: 20,
+        marginHorizontal: 20,
+        borderWidth: 4,
+        borderColor: theme.text3,
+        borderRadius: 14
+    }
 })
 
 MachineDetails.propTypes = {
