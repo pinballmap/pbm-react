@@ -106,7 +106,7 @@ class MachineDetails extends Component {
         const pintipsUrl = opdb_id ?
             `http://pintips.net/opdb/${opdb_id}` :
             ``
-
+        const operatorHasEmail = location.operator_id ? this.props.operators.operators.find(operator => operator.id === location.operator_id).operator_has_email : {}
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
@@ -221,6 +221,16 @@ class MachineDetails extends Component {
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
                                     />
+                                    {location.operator_id ?
+                                        operatorHasEmail ?
+                                            <View style={[s.operatorEmail,s.operatorHasEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
+                                            </View> :
+                                            <View style={[s.operatorEmail,s.operatorNotEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.white}}>This operator does not receive machine comments</Text>
+                                            </View>
+                                        : null
+                                    }
                                 </View>
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
@@ -360,7 +370,7 @@ const getStyles = theme => StyleSheet.create({
     noneYet: {
         textAlign: 'center',
         paddingHorizontal: 15,
-        color: theme.text2,
+        color: theme.text3,
         paddingVertical: 5,
     },
     textInput: {
@@ -445,21 +455,33 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         opacity: 0.9
     },
+    operatorEmail: {
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        paddingVertical: 10
+    },
+    operatorHasEmail: {
+        backgroundColor: theme.base4,
+    },
+    operatorNotEmail: {
+        backgroundColor: theme.indigo4,
+    }
 })
 
 MachineDetails.propTypes = {
     location: PropTypes.object,
     addMachineCondition: PropTypes.func,
     addMachineScore: PropTypes.func,
+    operators: PropTypes.object,
     navigation: PropTypes.object,
     user: PropTypes.object,
     machineDetails: PropTypes.object,
     removeMachineFromLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, user, machines }) => {
+const mapStateToProps = ({ location, operators, user, machines }) => {
     const machineDetails = location.curLmx ? machines.machines.find(m => m.id === location.curLmx.machine_id) : {}
-    return ({ location, user, machineDetails })
+    return ({ location, operators, user, machineDetails })
 }
 const mapDispatchToProps = (dispatch) => ({
     addMachineCondition: (condition, lmx) => dispatch(addMachineCondition(condition, lmx)),
