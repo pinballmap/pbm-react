@@ -53,6 +53,8 @@ class MachineDetails extends Component {
         showAddScoreModal: false,
         score: '',
         showRemoveMachineModal: false,
+        isLoadingImage: false,
+        imageLoaded: false,
     }
 
     static navigationOptions = ({ navigation, theme }) => {
@@ -110,12 +112,14 @@ class MachineDetails extends Component {
             ``
         const opdb_resized = opdb_img_width - (deviceWidth - 48)
         const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
-
+        const opdbImgHeight = opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height
+        const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
         const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
+        const {isLoadingImage, imageLoaded} = this.state
 
         return (
             <ThemeContext.Consumer>
@@ -199,14 +203,18 @@ class MachineDetails extends Component {
                                     <Text style={s.locationName}>{location.name}</Text>
                                 </View>
                                 <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                {opdb_img ?
-                                    <View style={s.imageContainer}>
-                                        <Image
-                                            style={{height: opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height, width: opdb_resized > 0 ? deviceWidth-48 : opdb_img_width, resizeMode: 'stretch', borderRadius: 10}}
-                                            source={{uri: opdb_img}}
-                                        />
+                                {!!opdb_img &&
+                                    <View style={{alignItems: "center"}}>
+                                        <View style={[s.imageContainer,{width: opdbImgWidth + 8}]}>
+                                            <Image
+                                                style={[{width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'stretch', borderRadius: 10}, isLoadingImage && {display: "none"}]}
+                                                source={{uri: opdb_img}}
+                                                onLoadStart={() => !imageLoaded && this.setState({isLoadingImage: true})}
+                                                onLoadEnd={() => this.setState({imageLoaded: true, isLoadingImage: false})}
+                                            />
+                                            {isLoadingImage && <ActivityIndicator />}
+                                        </View>
                                     </View>
-                                    : null
                                 }
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
@@ -463,7 +471,9 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: 20,
         borderWidth: 4,
         borderColor: theme.text3,
-        borderRadius: 14
+        borderRadius: 14,
+        alignItems: "center",
+        justifyContent: "center"
     }
 })
 
