@@ -106,7 +106,8 @@ class MachineDetails extends Component {
         const pintipsUrl = opdb_id ?
             `http://pintips.net/opdb/${opdb_id}` :
             ``
-        const operatorHasEmail = location.operator_id ? this.props.operators.operators.find(operator => operator.id === location.operator_id).operator_has_email : {}
+        const operator = location.operator_id ? this.props.operators.operators.find(operator => operator.id === location.operator_id)
+        const operatorHasEmail = operator && operator.operator_has_email ? operator.operator_has_email : false
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
@@ -226,7 +227,15 @@ class MachineDetails extends Component {
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
                                     />
-                                    {location.operator_id ?
+                                    {!!location.operator_id &&
+                                        operatorHasEmail ?
+                                            <View style={[s.operatorEmail,s.operatorHasEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
+                                            </View> :
+                                            <View style={[s.operatorEmail,s.operatorNotEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.white}}>This operator does not receive machine comments</Text>
+                                            </View>
+                                    }
                                         operatorHasEmail ?
                                             <View style={[s.operatorEmail,s.operatorHasEmail]}>
                                                 <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
