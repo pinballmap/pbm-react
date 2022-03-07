@@ -140,6 +140,11 @@ class MachineDetails extends Component {
                                                 placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
                                             />
+                                            {location.operator_id ?
+                                                operatorHasEmail ?
+                                                        <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. In your comment, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text> : null
+                                                : null
+                                            }
                                             <PbmButton
                                                 title={'Add Condition'}
                                                 disabled={this.state.conditionText.length === 0}
@@ -391,7 +396,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2
     },
     userHighScore: {
-        textAlign:'center',
+        textAlign: 'center',
         fontSize: 20,
         paddingBottom: 15,
         color: theme.text2
@@ -406,6 +411,11 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 40,
         fontSize: 18
+    },
+    modalSubText: {
+        marginHorizontal: 40,
+        fontSize: 14,
+        textAlign: 'justify',
     },
     subtitleStyle: {
         paddingTop: 3,
