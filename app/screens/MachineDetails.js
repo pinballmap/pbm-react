@@ -228,10 +228,13 @@ class MachineDetails extends Component {
                                             () => this.props.navigation.navigate('Login')}
                                     />
                                     {!!location.operator_id &&
-                                        operatorHasEmail ?
+                                        operatorHasEmail &&
                                             <View style={[s.operatorEmail,s.operatorHasEmail]}>
                                                 <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
-                                            </View> :
+                                            </View>
+                                    }
+                                    {!!location.operator_id &&
+                                        !operatorHasEmail &&
                                             <View style={[s.operatorEmail,s.operatorNotEmail]}>
                                                 <Text style={{textAlign:'center',color:theme.white}}>This operator does not receive machine comments</Text>
                                             </View>
