@@ -71,7 +71,7 @@ const getStyles = (theme) => StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         height: 40,
-        paddingVertical: 10,
+        paddingVertical: 8,
     },
     appAlert: {
         padding: 10,
