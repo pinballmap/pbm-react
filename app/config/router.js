@@ -181,7 +181,7 @@ export const MapStack = createStackNavigator({
     navigationOptions: ({ theme }) => ({
         gesturesEnabled: true,
         drawerLabel: 'Map',
-        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#ffa7dd' }} />,
+        drawerIcon: <MaterialIcons name='search' style={{ fontSize: 24, color: '#bec2e6' }} />,
         headerStyle: {
             backgroundColor: theme === 'dark' ? '#1d1c1d' : '#fafaff',
         },
