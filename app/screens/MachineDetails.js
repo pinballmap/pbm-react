@@ -114,6 +114,10 @@ class MachineDetails extends Component {
         const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
         const opdbImgHeight = opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height
         const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width
+        
+        const operator = location.operator_id && this.props.operators.operators.find(operator => operator.id === location.operator_id)
+        const operatorHasEmail = operator && operator.operator_has_email ? operator.operator_has_email : false
+        
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
@@ -148,6 +152,9 @@ class MachineDetails extends Component {
                                                 placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
                                             />
+                                            {!!location.operator_id && operatorHasEmail &&
+                                                <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. In your comment, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text>
+                                            }
                                             <PbmButton
                                                 title={'Add Condition'}
                                                 disabled={this.state.conditionText.length === 0}
@@ -242,6 +249,18 @@ class MachineDetails extends Component {
                                             () => this.setState({ showAddConditionModal: true }) :
                                             () => this.props.navigation.navigate('Login')}
                                     />
+                                    {!!location.operator_id &&
+                                        operatorHasEmail &&
+                                            <View style={[s.operatorEmail,s.operatorHasEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
+                                            </View>
+                                    }
+                                    {!!location.operator_id &&
+                                        !operatorHasEmail &&
+                                            <View style={[s.operatorEmail,s.operatorNotEmail]}>
+                                                <Text style={{textAlign:'center',color:theme.white}}>This operator does not receive machine comments</Text>
+                                            </View>
+                                    }
                                 </View>
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
@@ -381,7 +400,7 @@ const getStyles = theme => StyleSheet.create({
     noneYet: {
         textAlign: 'center',
         paddingHorizontal: 15,
-        color: theme.text2,
+        color: theme.text3,
         paddingVertical: 5,
     },
     textInput: {
@@ -402,7 +421,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2
     },
     userHighScore: {
-        textAlign:'center',
+        textAlign: 'center',
         fontSize: 20,
         paddingBottom: 15,
         color: theme.text2
@@ -417,6 +436,11 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 40,
         fontSize: 18
+    },
+    modalSubText: {
+        marginHorizontal: 40,
+        fontSize: 14,
+        textAlign: 'justify',
     },
     subtitleStyle: {
         paddingTop: 3,
@@ -474,6 +498,17 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 14,
         alignItems: "center",
         justifyContent: "center"
+    },
+    operatorEmail: {
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        paddingVertical: 10
+    },
+    operatorHasEmail: {
+        backgroundColor: theme.base4,
+    },
+    operatorNotEmail: {
+        backgroundColor: theme.indigo4,
     }
 })
 
@@ -481,15 +516,16 @@ MachineDetails.propTypes = {
     location: PropTypes.object,
     addMachineCondition: PropTypes.func,
     addMachineScore: PropTypes.func,
+    operators: PropTypes.object,
     navigation: PropTypes.object,
     user: PropTypes.object,
     machineDetails: PropTypes.object,
     removeMachineFromLocation: PropTypes.func,
 }
 
-const mapStateToProps = ({ location, user, machines }) => {
+const mapStateToProps = ({ location, operators, user, machines }) => {
     const machineDetails = location.curLmx ? machines.machines.find(m => m.id === location.curLmx.machine_id) : {}
-    return ({ location, user, machineDetails })
+    return ({ location, operators, user, machineDetails })
 }
 const mapDispatchToProps = (dispatch) => ({
     addMachineCondition: (condition, lmx) => dispatch(addMachineCondition(condition, lmx)),
