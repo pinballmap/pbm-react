@@ -113,7 +113,7 @@ const About = ({navigation, appAlert}) => {
 
 About.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#ffa7dd' }} />,
+    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#bec2e6' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'About Pinball Map',
     headerRight: () =><View style={{padding:6}}></View>,

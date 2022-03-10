@@ -96,7 +96,7 @@ const Resources = () => {
 
 Resources.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Resources',
-    drawerIcon: () => <MaterialCommunityIcons name='star-face' style={{ fontSize: 24, color: '#ffa7dd' }} />,
+    drawerIcon: () => <MaterialCommunityIcons name='star-face' style={{ fontSize: 24, color: '#bec2e6' }} />,
     headerLeft: () => <HeaderBackButton navigation={navigation} />,
     title: 'Pinball Resources',
     headerRight: () =><View style={{padding:6}}></View>,

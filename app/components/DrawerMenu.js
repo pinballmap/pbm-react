@@ -78,7 +78,7 @@ const getStyles = theme => StyleSheet.create({
     },
     icon: {
         fontSize: 24,
-        color: '#ffa7dd',
+        color: '#bec2e6',
         position: 'absolute',
         opacity: 0.7,
         paddingLeft: Platform.OS === 'ios' ? 16 : 15

@@ -29,7 +29,7 @@ const Podcast = () => {
 
 Podcast.navigationOptions = ({ navigation, theme }) => ({
     drawerLabel: 'Podcast',
-    drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={{fontSize: 24,color: '#ffa7dd'}} />,
+    drawerIcon: () => <MaterialCommunityIcons name='radio-tower' style={{fontSize: 24,color: '#bec2e6'}} />,
     headerLeft: () => <HeaderBackButton navigation={navigation}/>,
     title: 'Podcast',
     headerRight: () =><View style={{padding:6}}></View>,

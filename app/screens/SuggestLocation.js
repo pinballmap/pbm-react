@@ -57,7 +57,7 @@ class SuggestLocation extends Component {
     static navigationOptions = ({ navigation, theme }) => {
         return {
             drawerLabel: 'Submit Location',
-            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#ffa7dd'}} />,
+            drawerIcon: () => <MaterialIcons name='add-location' style={{fontSize: 24,color: '#bec2e6'}} />,
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             title: 'Submit Location',
             headerRight: () =><View style={{padding:6}}></View>,
