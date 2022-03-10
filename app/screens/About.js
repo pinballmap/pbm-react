@@ -82,7 +82,7 @@ const About = ({navigation, appAlert}) => {
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
                         <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
                         <Text style={{fontSize:16}}>Elijah St Clair (DevOps)</Text>
-                        <Text style={{fontSize:16,marginBottom: 10}}>Landon Orr (Contributor)</Text>
+                        <Text style={{fontSize:16,marginBottom: 10}}>And other great folks (noted on Github)!</Text>
                         <Text style={s.text}>If you like the app,&nbsp;
                             {Platform.OS === "ios" ?
                                 <Text style={s.textLink}
