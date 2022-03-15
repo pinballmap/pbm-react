@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Image,
     Pressable,
     StyleSheet,
     View,
@@ -88,8 +89,27 @@ class UserProfile extends Component {
             num_machines_removed,
             num_lmx_comments_left,
             num_locations_suggested,
-            num_locations_edited
+            num_locations_edited,
+            num_total_submissions,
+            admin_rank_int,
+            admin_title,
+            contributor_rank_int,
+            contributor_rank
         } = profileInfo
+        let admin_icon
+        if (admin_rank_int == 1) {
+            admin_icon = require('../assets/images/Rank_1.png')
+        } else if (admin_rank_int == 2) {
+            admin_icon = require('../assets/images/Rank_2.png')
+        }
+        let contributor_icon
+        if (contributor_rank_int == 3) {
+            contributor_icon = require('../assets/images/Rank_3.png')
+        } else if (contributor_rank_int == 4) {
+            contributor_icon = require('../assets/images/Rank_4.png')
+        } else if (contributor_rank_int == 5) {
+            contributor_icon = require('../assets/images/Rank_5.png')
+        }
 
         return (
             <ThemeContext.Consumer>
@@ -122,27 +142,43 @@ class UserProfile extends Component {
                                         />
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
+                                    {admin_rank_int &&
+                                        <View style={s.rankView}>
+                                            <Text style={s.rankText}>{admin_title}</Text>
+                                            <Image source={admin_icon} style={s.rankIcon} />
+                                        </View>
+                                    }
+                                    {!admin_rank_int && contributor_rank_int &&
+                                        <View style={s.rankView}>
+                                            <Text style={s.rankText}>{contributor_rank}</Text>
+                                            <Image source={contributor_icon} style={s.rankIcon} />
+                                        </View>
+                                    }
                                     <Text style={s.member}>{`Joined: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
                                     <View style={{width:'100%',alignItems:'center'}}>
                                         <View style={s.statItem}>
+                                            <Text style={s.stat}>Total contributions:</Text>
+                                            <Text style={s.statNum}>{num_total_submissions ? ` ${formatNumWithCommas(num_total_submissions)} ` : ` 0 `}</Text>
+                                        </View>
+                                        <View style={s.statItem}>
                                             <Text style={s.stat}>Machines added:</Text>
-                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_added)} `}</Text>
+                                            <Text style={s.statNum}>{num_machines_added ? ` ${formatNumWithCommas(num_machines_added)} ` : ` 0 `}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Machines removed:</Text>
-                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_machines_removed)} `}</Text>
+                                            <Text style={s.statNum}>{num_machines_removed ? ` ${formatNumWithCommas(num_machines_removed)} ` : ` 0 `}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Machines comments:</Text>
-                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_lmx_comments_left)} `}</Text>
+                                            <Text style={s.statNum}>{num_lmx_comments_left ? ` ${formatNumWithCommas(num_lmx_comments_left)} ` : ` 0 `}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Locations submitted:</Text>
-                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_suggested)} `}</Text>
+                                            <Text style={s.statNum}>{num_locations_suggested ? ` ${formatNumWithCommas(num_locations_suggested)} ` : ` 0 `}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Locations edited:</Text>
-                                            <Text style={s.statNum}>{` ${formatNumWithCommas(num_locations_edited)} `}</Text>
+                                            <Text style={s.statNum}>{num_locations_edited ? ` ${formatNumWithCommas(num_locations_edited)} ` : ` 0 `}</Text>
                                         </View>
                                     </View>
                                     <PbmButton
@@ -238,7 +274,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         width: '100%',
         borderRadius: 25,
-        borderColor: theme.text3,
+        borderColor: theme.base4,
         backgroundColor: theme.base3
     },
     buttonTitleStyle: {
@@ -266,7 +302,6 @@ const getStyles = theme => StyleSheet.create({
     username: {
         fontFamily: 'boldFont',
         fontSize: 18,
-        marginBottom: 10,
         padding: 10,
         color: theme.pink1,
         backgroundColor: theme.base3,
@@ -296,8 +331,8 @@ const getStyles = theme => StyleSheet.create({
     member: {
         textAlign: "center",
         marginBottom: 10,
+        paddingTop: 10,
         fontSize: 16,
-        marginTop: 5,
         color: theme.text3
     },
     buttonContainer: {
@@ -321,6 +356,23 @@ const getStyles = theme => StyleSheet.create({
     },
     textNotPressed: {
         color: theme.text,
+    },
+    rankView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 8
+    },
+    rankText: {
+        fontSize: 16,
+        fontFamily: 'boldFont'
+    },
+    rankIcon: {
+        width: 20,
+        height: 20,
+        resizeMode: 'stretch',
+        marginLeft: 3
     }
 })
 
