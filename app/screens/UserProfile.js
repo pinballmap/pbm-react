@@ -74,6 +74,10 @@ class UserProfile extends Component {
         })
     }
 
+    getStatNum(stat) {
+        return stat ? `${formatNumWithCommas(stat)} ` : ' 0 '
+    }
+
     render(){
         if (this.state.fetchingUserInfo)
             return (
@@ -142,13 +146,13 @@ class UserProfile extends Component {
                                         />
                                     </ConfirmationModal>
                                     <Text style={s.username}>{user.username}</Text>
-                                    {admin_rank_int &&
+                                    {!!admin_rank_int &&
                                         <View style={s.rankView}>
                                             <Text style={s.rankText}>{admin_title}</Text>
                                             <Image source={admin_icon} style={s.rankIcon} />
                                         </View>
                                     }
-                                    {!admin_rank_int && contributor_rank_int &&
+                                    {!admin_rank_int && !!contributor_rank_int &&
                                         <View style={s.rankView}>
                                             <Text style={s.rankText}>{contributor_rank}</Text>
                                             <Image source={contributor_icon} style={s.rankIcon} />
@@ -158,27 +162,27 @@ class UserProfile extends Component {
                                     <View style={{width:'100%',alignItems:'center'}}>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Total contributions:</Text>
-                                            <Text style={s.statNum}>{num_total_submissions ? ` ${formatNumWithCommas(num_total_submissions)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_total_submissions)}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Machines added:</Text>
-                                            <Text style={s.statNum}>{num_machines_added ? ` ${formatNumWithCommas(num_machines_added)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_machines_added)}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Machines removed:</Text>
-                                            <Text style={s.statNum}>{num_machines_removed ? ` ${formatNumWithCommas(num_machines_removed)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_machines_removed)}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Machines comments:</Text>
-                                            <Text style={s.statNum}>{num_lmx_comments_left ? ` ${formatNumWithCommas(num_lmx_comments_left)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_lmx_comments_left)}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Locations submitted:</Text>
-                                            <Text style={s.statNum}>{num_locations_suggested ? ` ${formatNumWithCommas(num_locations_suggested)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_locations_suggested)}</Text>
                                         </View>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Locations edited:</Text>
-                                            <Text style={s.statNum}>{num_locations_edited ? ` ${formatNumWithCommas(num_locations_edited)} ` : ` 0 `}</Text>
+                                            <Text style={s.statNum}>{this.getStatNum(num_locations_edited)}</Text>
                                         </View>
                                     </View>
                                     <PbmButton
