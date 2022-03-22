@@ -75,7 +75,7 @@ class UserProfile extends Component {
     }
 
     getStatNum(stat) {
-        return stat ? `${formatNumWithCommas(stat)} ` : ' 0 '
+        return stat ? ` ${formatNumWithCommas(stat)} ` : ' 0 '
     }
 
     render(){
@@ -330,7 +330,6 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
-        borderRadius: 10
     },
     member: {
         textAlign: "center",
