@@ -11,6 +11,15 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.11
+March, 2022
+
+- Show backglass image (from OPDB) on machine screen
+- Note whether or not an operator receives machine comments
+- Add contributor rank and badge to user profile
+- Updated the FAQ
+- Bug fixes and stuff
+
 ### 5.2.10
 February 8, 2022
 
