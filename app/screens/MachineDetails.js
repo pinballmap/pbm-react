@@ -508,7 +508,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base4,
     },
     operatorNotEmail: {
-        backgroundColor: theme.pink3,
+        backgroundColor: theme.base3,
     }
 })
 
