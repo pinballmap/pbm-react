@@ -114,10 +114,10 @@ class MachineDetails extends Component {
         const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
         const opdbImgHeight = opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height
         const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width
-        
+
         const operator = location.operator_id && this.props.operators.operators.find(operator => operator.id === location.operator_id)
         const operatorHasEmail = operator && operator.operator_has_email ? operator.operator_has_email : false
-        
+
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
@@ -214,7 +214,7 @@ class MachineDetails extends Component {
                                     <View style={{alignItems: "center"}}>
                                         <View style={[s.imageContainer,{width: opdbImgWidth + 8}]}>
                                             <Image
-                                                style={[{width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'stretch', borderRadius: 10}, isLoadingImage && {display: "none"}]}
+                                                style={[{width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'cover', borderRadius: 10}, isLoadingImage && {display: "none"}]}
                                                 source={{uri: opdb_img}}
                                                 onLoadStart={() => !imageLoaded && this.setState({isLoadingImage: true})}
                                                 onLoadEnd={() => this.setState({imageLoaded: true, isLoadingImage: false})}
@@ -258,7 +258,7 @@ class MachineDetails extends Component {
                                     {!!location.operator_id &&
                                         !operatorHasEmail &&
                                             <View style={[s.operatorEmail,s.operatorNotEmail]}>
-                                                <Text style={{textAlign:'center',color:theme.white}}>This operator does not receive machine comments</Text>
+                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator does not receive machine comments</Text>
                                             </View>
                                     }
                                 </View>
@@ -508,7 +508,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base4,
     },
     operatorNotEmail: {
-        backgroundColor: theme.indigo4,
+        backgroundColor: theme.pink3,
     }
 })
 
