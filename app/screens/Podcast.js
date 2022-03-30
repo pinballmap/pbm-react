@@ -19,6 +19,7 @@ const Podcast = () => {
                 <WebView
                     onLoad={() => setLoading(false)}
                     source={{uri: 'https://pod.pinballmap.com/'}}
+                    androidHardwareAccelerationDisabled={true}
                 />
             </View>
             {loading && <ActivityIndicator/>}

@@ -19,6 +19,7 @@ const Blog = () => {
                 <WebView
                     onLoad={() => setLoading(false)}
                     source={{uri: 'https://blog.pinballmap.com/'}}
+                    androidHardwareAccelerationDisabled={true}
                 />
             </View>
             {loading && <ActivityIndicator/>}
