@@ -153,7 +153,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title>
+                                                <ListItem.Title style={s.text}>
                                                     Add Machine
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -165,7 +165,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title>
+                                                <ListItem.Title style={s.text}>
                                                     Confirm Line-Up
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -177,7 +177,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title>
+                                                <ListItem.Title style={s.text}>
                                                     Edit Location Details
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -193,7 +193,7 @@ class LocationDetails extends Component {
                                                 {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title>
+                                                <ListItem.Title style={s.text}>
                                                     Share Location
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -208,7 +208,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title>
+                                                <ListItem.Title style={s.text}>
                                                     Directions
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -547,6 +547,9 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 14,
         color: theme.blue3
     },
+    text: {
+        color: theme.text
+    },
     text2: {
         color: theme.text2
     },
@@ -568,7 +571,7 @@ const getStyles = theme => StyleSheet.create({
     },
     condition: {
         flexDirection: 'column',
-        marginRight: 10,
+        marginRight: 15,
         marginTop: 10,
     },
     staleView: {
