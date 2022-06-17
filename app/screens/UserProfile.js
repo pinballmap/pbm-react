@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     Image,
+    Linking,
     Pressable,
     StyleSheet,
     View,
@@ -229,6 +230,16 @@ class UserProfile extends Component {
                                         title={"Logout"}
                                         onPress={() => this.setModalVisible(true)}
                                         accessibilityLabel="Logout"
+                                    />
+                                    <View>
+                                        <Text style={s.member}>Want to update your password, or your email, or delete your account? These can be done on your Profile page on the website. Click below!</Text>
+                                    </View>
+                                    <PbmButton
+                                        title={'Website Profile Page'}
+                                        type="outline"
+                                        onPress={() => Linking.openURL('https://pinballmap.com/users/' + user.username + '/profile')}
+                                        buttonStyle={s.savedLink}
+                                        titleStyle={s.buttonTitleStyle}
                                     />
                                 </View>
                             }
