@@ -10,7 +10,6 @@ import { Input } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     ConfirmationModal,
-    HeaderBackButton,
     PbmButton,
     Screen,
     Text,
@@ -29,13 +28,13 @@ const PasswordReset = ({ navigation }) => {
         setIdentificationError('')
         postData('/users/forgot_password.json', { identification })
             .then(() => setModalVisible(true),
-                (err) => { throw err})
+                (err) => { throw err })
             .catch(identificationError => setIdentificationError(identificationError))
     }
 
-    return(
+    return (
         <Screen>
-            <Pressable onPress={ () => { Keyboard.dismiss() } }>
+            <Pressable onPress={() => { Keyboard.dismiss() }}>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
                     <View>
@@ -49,7 +48,7 @@ const PasswordReset = ({ navigation }) => {
                         />
                     </View>
                 </ConfirmationModal>
-                <View style={{marginTop:10}}>
+                <View style={{ marginTop: 10 }}>
                     <Input
                         placeholder='Username or email...'
                         placeholderTextColor={theme.indigo4}
@@ -72,24 +71,6 @@ const PasswordReset = ({ navigation }) => {
             </Pressable>
         </Screen>)
 }
-
-PasswordReset.navigationOptions = ({ navigation, theme }) => ({
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    title: 'Reset Your Password',
-    headerRight: () => <View style={{padding:6}}></View>,
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    gestureEnabled: true
-})
 
 const getStyles = theme => StyleSheet.create({
     container: {

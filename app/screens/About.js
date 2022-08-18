@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import {connect} from "react-redux"
+import { connect } from "react-redux"
 import {
     Dimensions,
     Image,
@@ -12,14 +12,12 @@ import {
 import { ThemeContext } from '../theme-context'
 import { getData } from '../config/request'
 import { Screen, Text } from '../components'
-import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 let deviceWidth = Dimensions.get('window').width
 
-const About = ({navigation, appAlert}) => {
+const About = ({ navigation, appAlert }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -48,17 +46,17 @@ const About = ({navigation, appAlert}) => {
         }
     })
 
-    return(
+    return (
         <SafeAreaView edges={['right', 'bottom', 'left']} style={s.background}>
             <Screen>
                 <View style={s.container}>
                     <View style={[s.logoWrapper]}>
-                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo}/>
+                        <Image source={require('../assets/images/pinballmapcom_nocom.png')} resizeMode="contain" style={s.logo} />
                     </View>
                     <View style={s.child}>
                         <View style={s.appAlert}>
-                            <Text style={[{textAlign:'center',color:theme.text3},s.bold]}>Message of the Day</Text>
-                            <Text style={[{color:theme.text3},s.text]}>{appAlert}</Text>
+                            <Text style={[{ textAlign: 'center', color: theme.text3 }, s.bold]}>Message of the Day</Text>
+                            <Text style={[{ color: theme.text3 }, s.text]}>{appAlert}</Text>
                         </View>
 
                         <Text style={s.text}>Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines.</Text>
@@ -67,9 +65,9 @@ const About = ({navigation, appAlert}) => {
 
                         <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>. Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/pinballmap/pbm-react')}>{`this app's code`}</Text>.</Text>
 
-                        <Text style={s.text}><Text onPress={ () => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. Or you can start a discussion about anything on our <Text onPress={ () => Linking.openURL('https://github.com/pinballmap/pbm/discussions')} style={s.textLink}>{`Github discussion page`}</Text>.</Text>
+                        <Text style={s.text}><Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. Or you can start a discussion about anything on our <Text onPress={() => Linking.openURL('https://github.com/pinballmap/pbm/discussions')} style={s.textLink}>{`Github discussion page`}</Text>.</Text>
 
-                        <Text style={s.text}><Text onPress={ () => navigation.navigate('Blog') } style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={ () => navigation.navigate('FAQ') } style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
+                        <Text style={s.text}><Text onPress={() => navigation.navigate('Blog')} style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
 
                         <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
 
@@ -78,11 +76,11 @@ const About = ({navigation, appAlert}) => {
                         <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
 
                         <Text style={s.bold}>App Credits:</Text>
-                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
-                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
-                        <Text style={{fontSize:16}}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
-                        <Text style={{fontSize:16}}>Elijah St Clair (DevOps)</Text>
-                        <Text style={{fontSize:16,marginBottom: 10}}>And other great folks (noted on Github)!</Text>
+                        <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
+                        <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
+                        <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
+                        <Text style={{ fontSize: 16 }}>Elijah St Clair (DevOps)</Text>
+                        <Text style={{ fontSize: 16, marginBottom: 10 }}>And other great folks (noted on Github)!</Text>
                         <Text style={s.text}>If you like the app,&nbsp;
                             {Platform.OS === "ios" ?
                                 <Text style={s.textLink}
@@ -90,19 +88,19 @@ const About = ({navigation, appAlert}) => {
                                 : <Text style={s.textLink}
                                     onPress={() => Linking.openURL('market://details?id=com.pbm')}>please rate and review it</Text>
                             }
-                                    !</Text>
+                            !</Text>
                         <Text style={s.text}>Thanks to our beta testers!</Text>
-                        <Text style={{fontSize:16}}>And thanks to all our
+                        <Text style={{ fontSize: 16 }}>And thanks to all our
                             {Platform.OS === "ios" ?
-                                <Text style={{fontSize:16}}> Patreon </Text>
+                                <Text style={{ fontSize: 16 }}> Patreon </Text>
                                 : <Text style={s.textLink} onPress={() => Linking.openURL('https://patreon.com/pinballmap')}> Patreon </Text>
                             }
-                                    supporters!</Text>
+                            supporters!</Text>
                     </View>
                     {Platform.OS === "android" ?
                         <View style={[s.logoWrapper]}>
-                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.patreonLogo]}/>
-                        </View>: null
+                            <Image source={require('../assets/images/patreon.png')} resizeMode="contain" onPress={() => Linking.openURL('https://patreon.com/pinballmap')} style={[s.patreonLogo]} />
+                        </View> : null
                     }
                 </View>
             </Screen>
@@ -110,26 +108,6 @@ const About = ({navigation, appAlert}) => {
     )
 
 }
-
-About.navigationOptions = ({ navigation, theme }) => ({
-    drawerLabel: 'About',
-    drawerIcon: () => <MaterialIcons name='info-outline' style={{ fontSize: 24, color: '#bec2e6' }} />,
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    title: 'About Pinball Map',
-    headerRight: () =><View style={{padding:6}}></View>,
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    gestureEnabled: true
-})
 
 const getStyles = theme => StyleSheet.create({
     background: {

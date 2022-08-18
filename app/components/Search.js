@@ -21,7 +21,7 @@ import {
     ListItem,
 } from 'react-native-elements'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import {
     displayError,
@@ -37,7 +37,7 @@ import {
 import withThemeHOC from './withThemeHOC'
 import { retrieveItem } from '../config/utils'
 import { ThemeContext }  from '../theme-context'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import ActivityIndicator from './ActivityIndicator'
 
 let deviceWidth = Dimensions.get('window').width
@@ -313,45 +313,47 @@ class Search extends Component {
                                 onShow={() => { this.textInput.focus() }}
                                 onRequestClose={() => { }}
                             >
-                                <SafeAreaView style={{ flex: 1, backgroundColor: theme.base1 }}>
-                                    <View style={s.modalContainer}>
-                                        <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <MaterialIcons
-                                                onPress={() => {
-                                                    this.setState({ searchModalVisible: false })
-                                                    q === '' && clearSearchBarText()
-                                                    this.changeQuery('')
-                                                }}
-                                                name='clear'
-                                                size={30}
-                                                style={s.clear}
-                                            />
-                                            <Input
-                                                placeholder='City, Address, Location...'
-                                                placeholderTextColor={theme.indigo4}
-                                                leftIcon={<MaterialIcons name='search' size={25} color={theme.base4} style={{ marginLeft: 10, marginRight: 0 }} />}
-                                                rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
-                                                onChangeText={query => this.changeQuery(query)}
-                                                value={q}
-                                                containerStyle={{ paddingTop: 4 }}
-                                                key={'search'}
-                                                returnKeyType={'search'}
-                                                onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
-                                                inputContainerStyle={s.inputContainerStyle}
-                                                inputStyle={s.inputStyle}
-                                                ref={(input) => { this.textInput = input }}
-                                                autoCorrect={false}
-                                            />
+                                <SafeAreaProvider>
+                                    <SafeAreaView style={{ flex: 1, backgroundColor: theme.base1 }}>
+                                        <View style={s.modalContainer}>
+                                            <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                                <MaterialIcons
+                                                    onPress={() => {
+                                                        this.setState({ searchModalVisible: false })
+                                                        q === '' && clearSearchBarText()
+                                                        this.changeQuery('')
+                                                    }}
+                                                    name='clear'
+                                                    size={30}
+                                                    style={s.clear}
+                                                />
+                                                <Input
+                                                    placeholder='City, Address, Location...'
+                                                    placeholderTextColor={theme.indigo4}
+                                                    leftIcon={<MaterialIcons name='search' size={25} color={theme.base4} style={{ marginLeft: 10, marginRight: 0 }} />}
+                                                    rightIcon={q ? <MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} style={{ marginRight: 2 }} onPress={() => this.changeQuery('')} /> : null}
+                                                    onChangeText={query => this.changeQuery(query)}
+                                                    value={q}
+                                                    containerStyle={{ paddingTop: 4 }}
+                                                    key={'search'}
+                                                    returnKeyType={'search'}
+                                                    onSubmitEditing={submitButton ? ({ nativeEvent }) => this.geocodeSearch(nativeEvent.text) : () => { }}
+                                                    inputContainerStyle={s.inputContainerStyle}
+                                                    inputStyle={s.inputStyle}
+                                                    ref={(input) => { this.textInput = input }}
+                                                    autoCorrect={false}
+                                                />
+                                            </View>
+                                            <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
+                                                {searching ? <ActivityIndicator /> : null}
+                                                {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
+                                                {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
+                                                {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
+                                                {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
+                                            </ScrollView>
                                         </View>
-                                        <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
-                                            {searching ? <ActivityIndicator /> : null}
-                                            {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
-                                            {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
-                                            {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
-                                            {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
-                                        </ScrollView>
-                                    </View>
-                                </SafeAreaView>
+                                    </SafeAreaView>
+                                </SafeAreaProvider>
                             </Modal>
                             <View style={s.searchMapContainer}>
                                 <Pressable
@@ -365,7 +367,7 @@ class Search extends Component {
                                     style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
                                     onPress={() => this.props.navigate('FilterMap')}
                                 >
-                                    <Octicons name='settings' size={20} style={s.filterIcon} />
+                                    <Entypo name='sound-mix' size={20} style={s.filterIcon} />
                                     <Text style={s.filterTitleStyle}>Filter</Text>
                                 </Pressable>
                             </View>

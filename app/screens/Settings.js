@@ -9,8 +9,6 @@ import { connect } from "react-redux"
 import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import { Screen, Text } from '../components'
-import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton } from '../components'
 import { retrieveItem } from '../config/utils'
 import { setUnitPreference } from "../actions"
 
@@ -51,7 +49,7 @@ const Settings = ({ user, setUnitPreference }) => {
         setUnitPreference(idx)
     }
 
-    return(
+    return (
         <Screen>
             <View style={s.background}>
                 <View style={s.pageTitle}><Text style={s.pageTitleText}>Standard Theme</Text></View>
@@ -94,26 +92,6 @@ const Settings = ({ user, setUnitPreference }) => {
     )
 
 }
-
-Settings.navigationOptions = ({ navigation, theme }) => ({
-    drawerLabel: 'Settings',
-    drawerIcon: () => <MaterialIcons name='settings' style={{ fontSize: 24, color: '#bec2e6' }} />,
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    title: 'Settings',
-    headerRight: () =><View style={{padding:6}}></View>,
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    gestureEnabled: true
-})
 
 const getStyles = theme => StyleSheet.create({
     background: {

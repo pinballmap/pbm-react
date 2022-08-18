@@ -21,30 +21,30 @@ let deviceHeight = Dimensions.get('window').height
 const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLater }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
-    return(
+    return (
         <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
-            <View style={[s.mask,s.justify]}>
+            <View style={[s.mask, s.justify]}>
                 <View style={s.logoWrapper}>
-                    <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo}/>
+                    <Image source={require('../assets/images/pinballmapcom_nocom.png')} style={s.logo} />
                 </View>
                 <View style={s.outerBorder}>
                     <View style={s.textBg}>
-                        <Text style={{fontSize:18,textAlign:"center"}}>
+                        <Text style={{ fontSize: 18, textAlign: "center" }}>
                             <Text>Pinball Map is a user-updated map listing</Text>
                             <Text style={s.bold}> {formatNumWithCommas(allLocationsCount)} </Text>
                             <Text>locations and</Text>
                             <Text style={s.bold}> {formatNumWithCommas(allMachinesCount)} </Text>
                             <Text>machines.</Text>
                             {"\n"}{"\n"}
-                            <Text style={{marginTop:15,fontSize:18,textAlign:"center"}}>
-                        When prompted on the next screen, enable location services to see pinball machines near you!
+                            <Text style={{ marginTop: 15, fontSize: 18, textAlign: "center" }}>
+                                When prompted on the next screen, enable location services to see pinball machines near you!
                             </Text>
                             {"\n"}{"\n"}
                             <Text>YOU can help keep the map up to date! Create an account (optional).</Text>
                         </Text>
                     </View>
                 </View>
-                <View style={{paddingVertical:10,paddingHorizontal:15,marginLeft: 15,marginRight: 15}}>
+                <View style={{ paddingVertical: 10, paddingHorizontal: 15, marginLeft: 15, marginRight: 15 }}>
                     <Button
                         onPress={() => navigation.navigate('Login')}
                         raised
@@ -52,7 +52,7 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                         titleStyle={s.titleStyle}
                         title="Current user? Log in"
                         accessibilityLabel="Log in"
-                        containerStyle={{overflow:'hidden', borderRadius: 25}}
+                        containerStyle={{ overflow: 'hidden', borderRadius: 25 }}
                     />
                     <Button
                         onPress={() => navigation.navigate('Signup')}
@@ -61,18 +61,19 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                         titleStyle={s.titleStyle}
                         title="New user? Sign up"
                         accessibilityLabel="Sign up"
-                        containerStyle={{marginTop:15,marginBottom:20,overflow:'hidden',borderRadius: 25}}
+                        containerStyle={{ marginTop: 15, marginBottom: 20, overflow: 'hidden', borderRadius: 25 }}
                     />
                     <Button
                         onPress={() => {
                             loginLater()
-                            navigation.navigate('Map')}}
+                            navigation.navigate('Map')
+                        }}
                         title="Skip signing in"
                         accessibilityLabel="Skip signing in"
                         raised
                         titleStyle={s.skipTitle}
                         buttonStyle={s.buttonWhite}
-                        containerStyle={{overflow:'hidden', borderRadius: 25}}
+                        containerStyle={{ overflow: 'hidden', borderRadius: 25 }}
                     />
                 </View>
             </View>

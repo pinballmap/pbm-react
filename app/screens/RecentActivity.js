@@ -12,7 +12,6 @@ import { getData } from '../config/request'
 import {
     ActivityIndicator,
     FilterRecentActivity,
-    HeaderBackButton,
     Screen,
     Text,
 } from '../components'
@@ -24,25 +23,6 @@ class RecentActivity extends Component {
     state = {
         fetchingRecentActivity: true,
         recentActivity: [],
-    }
-
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: 'Recent Nearby Activity',
-            headerRight: () => <FilterRecentActivity />,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-        }
     }
 
     getIcon(type) {
@@ -79,8 +59,11 @@ class RecentActivity extends Component {
     }
 
     componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: () => <FilterRecentActivity />,
+        })
         //The listener will refetch recent activity data every time this screen is navigated to
-        this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
+        this.focusListener = this.props.navigation.addListener('focus', () => {
             const { curLat, curLon } = this.props.query
             getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon}`)
                 .then(data => {
@@ -137,11 +120,11 @@ class RecentActivity extends Component {
                                             onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
                                         >
                                             {({ pressed }) => (
-                                                <View style={[s.list,s.flexi,pressed ? s.pressed : s.notPressed]}>
-                                                    <View style={{width: '15%'}}>
+                                                <View style={[s.list, s.flexi, pressed ? s.pressed : s.notPressed]}>
+                                                    <View style={{ width: '15%' }}>
                                                         {activity.submissionTypeIcon}
                                                     </View>
-                                                    <View style={{width: '85%'}}>
+                                                    <View style={{ width: '85%' }}>
                                                         <Text style={s.pbmText}>
                                                             {activity.submission}
                                                         </Text>

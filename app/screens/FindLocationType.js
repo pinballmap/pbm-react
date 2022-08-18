@@ -13,16 +13,14 @@ import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
-import {
-    HeaderBackButton,
-    Text,
-} from '../components'
+import { Text } from '../components'
 
-const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => {
+const FindLocationType = ({ navigation, route, locations: { locationTypes = [] } }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
+    const { previous_screen } = route.params
 
-    const allLocationTypes = [{name: navigation.getParam('type') === 'search' ? 'N/A' : 'All', id: -1 }, ...locationTypes]
+    const allLocationTypes = [{ name: route.params?.type === 'search' ? 'N/A' : 'All', id: -1 }, ...locationTypes]
     const [selectedLocationTypes, setLocationTypes] = useState(allLocationTypes)
     const [query, setQuery] = useState('')
 
@@ -34,17 +32,18 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
     }
 
     const _selectLocationType = id => {
-        navigation.getParam('setSelected')(id)
-        navigation.goBack()
+        navigation.navigate({
+            name: previous_screen,
+            params: { setSelectedLocationType: id },
+            merge: true,
+        })
     }
 
-    const renderRow = ({ item, index}) => (
-        <Pressable
-            onPress={() => _selectLocationType(item.id)}
-        >
+    const renderRow = ({ item, index }) => (
+        <Pressable onPress={() => _selectLocationType(item.id)}>
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
-                    <Text style={{fontSize: 18}}>{item.name}</Text>
+                <View style={[{ padding: 8 }, pressed ? { backgroundColor: theme.base4, opacity: 0.8 } : { backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3, opacity: 1 }]}>
+                    <Text style={{ fontSize: 18 }}>{item.name}</Text>
                 </View>
             )}
         </Pressable>
@@ -61,39 +60,21 @@ const FindLocationType = ({ navigation, locations: { locationTypes = [] } }) => 
                 placeholderTextColor={theme.indigo4}
                 platform='default'
                 searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
-                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => handleSearch()}/>}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => handleSearch()} />}
                 onChangeText={handleSearch}
-                inputStyle={{color:theme.text}}
+                inputStyle={{ color: theme.text }}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:theme.base1,borderBottomWidth:0,borderTopWidth:0}}
+                containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
             />
             <FlatList {...keyboardDismissProp}
                 data={selectedLocationTypes}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{backgroundColor:theme.base1,marginBottom:20}}
+                style={{ backgroundColor: theme.base1, marginBottom: 20 }}
             />
         </>)
 }
-
-FindLocationType.navigationOptions = ({ navigation, theme }) => ({
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    title: 'Select Location Type',
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    gestureEnabled: true,
-    headerRight: () =><View style={{padding:6}}></View>
-})
 
 const getStyles = theme => StyleSheet.create({
     filterInput: {

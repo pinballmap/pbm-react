@@ -32,14 +32,13 @@ import {
 } from '../utils/utilityFunctions'
 import {
     ActivityIndicator,
-    HeaderBackButton,
     PbmButton,
-    RemoveMachine,
     RemoveMachineModal,
+    RemoveMachine,
     Screen,
     Text,
     WarningButton,
-}  from '../components'
+} from '../components'
 
 const moment = require('moment')
 
@@ -57,22 +56,6 @@ class MachineDetails extends Component {
         imageLoaded: false,
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            headerRight: () => <RemoveMachine navigation={navigation} />,
-            title: null,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-            gestureEnabled: true
-        }
-    }
-
     cancelAddCondition = () => this.setState({ showAddConditionModal: false, conditionText: '' })
 
     cancelAddScore = () => this.setState({ showAddScoreModal: false, score: '' })
@@ -88,6 +71,12 @@ class MachineDetails extends Component {
     addScore = (lmx) => {
         this.props.addMachineScore(removeCommasFromNum(this.state.score), lmx)
         this.setState({ showAddScoreModal: false, score: '' })
+    }
+
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: ({ navigation }) => <RemoveMachine navigation={navigation} />
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -119,11 +108,11 @@ class MachineDetails extends Component {
         const operatorHasEmail = operator && operator.operator_has_email ? operator.operator_has_email : false
 
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
-        const scores = curLmx.machine_score_xrefs.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
+        const scores = curLmx.machine_score_xrefs.sort((a, b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
         const { name: machineName } = this.props.machineDetails
         const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
-        const {isLoadingImage, imageLoaded} = this.state
+        const { isLoadingImage, imageLoaded } = this.state
 
         return (
             <ThemeContext.Consumer>
@@ -135,9 +124,9 @@ class MachineDetails extends Component {
                                 animationType="slide"
                                 transparent={false}
                                 visible={this.state.showAddConditionModal}
-                                onRequestClose={()=>{}}
+                                onRequestClose={() => { }}
                             >
-                                <Pressable onPress={ () => { Keyboard.dismiss() } }>
+                                <Pressable onPress={() => { Keyboard.dismiss() }}>
                                     <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
@@ -147,7 +136,7 @@ class MachineDetails extends Component {
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={conditionText => this.setState({ conditionText })}
                                                 value={this.state.conditionText}
-                                                style={[{padding:5,height:100},s.textInput,s.radius10]}
+                                                style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
                                                 placeholder={'Enter machine condition...'}
                                                 placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
@@ -172,14 +161,14 @@ class MachineDetails extends Component {
                                 animationType="slide"
                                 transparent={false}
                                 visible={this.state.showAddScoreModal}
-                                onRequestClose={()=>{}}
+                                onRequestClose={() => { }}
                             >
-                                <Pressable onPress={ () => { Keyboard.dismiss() } }>
+                                <Pressable onPress={() => { Keyboard.dismiss() }}>
                                     <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
                                             <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
                                             <TextInput
-                                                style={[{height: 40,textAlign:'center'},s.textInput,s.radius10]}
+                                                style={[{ height: 40, textAlign: 'center' }, s.textInput, s.radius10]}
                                                 keyboardType='numeric'
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={score => this.setState({ score })}
@@ -203,21 +192,21 @@ class MachineDetails extends Component {
                                     </KeyboardAwareScrollView>
                                 </Pressable>
                             </Modal>
-                            {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({showRemoveMachineModal: false})} />}
-                            <ScrollView style={{marginBottom:20}}>
+                            {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({ showRemoveMachineModal: false })} />}
+                            <ScrollView style={{ marginBottom: 20 }}>
                                 <View style={s.machineNameContainer}>
                                     <Text style={s.machineName}>{machineName}</Text>
                                     <Text style={s.locationName}>{location.name}</Text>
                                 </View>
                                 <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
                                 {!!opdb_img &&
-                                    <View style={{alignItems: "center"}}>
-                                        <View style={[s.imageContainer,{width: opdbImgWidth + 8}]}>
+                                    <View style={{ alignItems: "center" }}>
+                                        <View style={[s.imageContainer, { width: opdbImgWidth + 8 }]}>
                                             <Image
-                                                style={[{width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'cover', borderRadius: 10}, isLoadingImage && {display: "none"}]}
-                                                source={{uri: opdb_img}}
-                                                onLoadStart={() => !imageLoaded && this.setState({isLoadingImage: true})}
-                                                onLoadEnd={() => this.setState({imageLoaded: true, isLoadingImage: false})}
+                                                style={[{ width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'cover', borderRadius: 10 }, isLoadingImage && { display: "none" }]}
+                                                source={{ uri: opdb_img }}
+                                                onLoadStart={() => !imageLoaded && this.setState({ isLoadingImage: true })}
+                                                onLoadEnd={() => this.setState({ imageLoaded: true, isLoadingImage: false })}
                                             />
                                             {isLoadingImage && <ActivityIndicator />}
                                         </View>
@@ -231,12 +220,12 @@ class MachineDetails extends Component {
                                         mostRecentComments.map(commentObj => {
                                             const { comment, created_at, username } = commentObj
                                             return <View
-                                                style={[s.listContainerStyle,s.hr]}
+                                                style={[s.listContainerStyle, s.hr]}
                                                 key={commentObj.id}>
-                                                <Text style={[{marginRight:5},s.conditionText]}>
+                                                <Text style={[{ marginRight: 5 }, s.conditionText]}>
                                                     {`"${comment}"`}
                                                 </Text>
-                                                <Text style={[s.subtitleStyle,s.subtitleMargin]}>
+                                                <Text style={[s.subtitleStyle, s.subtitleMargin]}>
                                                     {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
                                                 </Text>
                                             </View>
@@ -251,15 +240,15 @@ class MachineDetails extends Component {
                                     />
                                     {!!location.operator_id &&
                                         operatorHasEmail &&
-                                            <View style={[s.operatorEmail,s.operatorHasEmail]}>
-                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator receives machine comments!</Text>
-                                            </View>
+                                        <View style={[s.operatorEmail, s.operatorHasEmail]}>
+                                            <Text style={{ textAlign: 'center', color: theme.text2 }}>This operator receives machine comments!</Text>
+                                        </View>
                                     }
                                     {!!location.operator_id &&
                                         !operatorHasEmail &&
-                                            <View style={[s.operatorEmail,s.operatorNotEmail]}>
-                                                <Text style={{textAlign:'center',color:theme.text2}}>This operator does not receive machine comments</Text>
-                                            </View>
+                                        <View style={[s.operatorEmail, s.operatorNotEmail]}>
+                                            <Text style={{ textAlign: 'center', color: theme.text2 }}>This operator does not receive machine comments</Text>
+                                        </View>
                                     }
                                 </View>
                                 <View style={s.containerStyle}>
@@ -275,11 +264,11 @@ class MachineDetails extends Component {
                                     }
                                     {scores.length > 0 ?
                                         scores.map(scoreObj => {
-                                            const {id, score, created_at, username} = scoreObj
+                                            const { id, score, created_at, username } = scoreObj
 
                                             return (
                                                 <View
-                                                    style={[s.listContainerStyle,s.hr]}
+                                                    style={[s.listContainerStyle, s.hr]}
                                                     key={id}>
                                                     <Text style={s.scoreText}>
                                                         {formatNumWithCommas(score)}
@@ -358,7 +347,7 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: 35,
         borderWidth: 0,
         paddingVertical: 5,
-        textAlign:'center',
+        textAlign: 'center',
     },
     addedText: {
         textAlign: 'center',

@@ -1,10 +1,11 @@
+import 'react-native-gesture-handler'
 import { registerRootComponent } from 'expo'
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { Appearance, Platform } from 'react-native'
 import { retrieveItem } from './app/config/utils'
 import { ThemeContext } from './app/theme-context'
 import { Provider } from 'react-redux'
-import { PbmStack } from './app/config/router'
+import { NavigationContainer } from "@react-navigation/native"
 import { dark, standard } from './app/utils/themes'
 import { StatusBar } from 'expo-status-bar'
 import {
@@ -16,15 +17,17 @@ import {
 import {
     Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
-import AppLoading from 'expo-app-loading'
 import store from './app/store'
 import * as SplashScreen from 'expo-splash-screen'
 import { AppWrapper } from './app/components'
+import MapNavigator from './app/config/router'
+
+SplashScreen.preventAutoHideAsync()
 
 const defaultTheme = Appearance.getColorScheme()
 
 // https://github.com/facebook/react-native/issues/19410
-if(Platform.OS === 'android') {
+if (Platform.OS === 'android') {
     require('intl')
     require('intl/locale-data/jsonp/en-US')
 }
@@ -48,25 +51,35 @@ const App = () => {
 
     const toggleDefaultTheme = () => defaultTheme !== 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const toggleDarkTheme = () => defaultTheme === 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
-    let [fontsLoaded] = useFonts({
+    const [fontsLoaded] = useFonts({
         regularFont: Lato_400Regular,
         regularBoldFont: Lato_700Bold,
         regularItalicFont: Lato_400Regular_Italic,
         boldFont: Nunito_700Bold,
     })
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
 
     if (!fontsLoaded) {
-        return <AppLoading />
+        return null;
     }
+
     return (
         <ThemeContext.Provider value={{
             toggleDefaultTheme,
             toggleDarkTheme,
             theme: selectedTheme === 'dark' ? dark : standard
-        }}>
+        }}
+            onLayout={onLayoutRootView}
+        >
             <Provider store={store}>
                 <AppWrapper>
-                    <PbmStack theme={selectedTheme === 'dark' ? 'dark' : 'light'} />
+                    <NavigationContainer theme={selectedTheme === 'dark' ? dark : standard}>
+                        <MapNavigator />
+                    </NavigationContainer>
                 </AppWrapper>
             </Provider>
             <StatusBar style={selectedTheme === 'dark' ? 'light' : 'dark'} translucent={true} />

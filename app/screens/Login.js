@@ -31,21 +31,13 @@ let deviceHeight = Dimensions.get('window').height
 class Login extends Component {
     constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             errors: false,
             login: null,
             loginError: null,
             password: null,
             passwordError: null,
             apiErrorMsg: null,
-        }
-    }
-
-    static navigationOptions = () => {
-        return {
-            header: () => null,
-            headerLeft: () => null,
-            gestureEnabled: true
         }
     }
 
@@ -60,14 +52,14 @@ class Login extends Component {
                 if (data.errors) {
                     this.setState({ errors: true })
 
-                    if(data.errors === 'Unknown user')
+                    if (data.errors === 'Unknown user')
                         this.setState({ loginError: 'Unknown user' })
 
-                    if(data.errors === 'Incorrect password')
+                    if (data.errors === 'Incorrect password')
                         this.setState({ passwordError: 'Incorrect password' })
 
-                    if(data.errors === 'User is not yet confirmed. Please follow emailed confirmation instructions.')
-                        this.setState({ apiErrorMsg: 'User is not yet confirmed. Please follow emailed confirmation instructions.'})
+                    if (data.errors === 'User is not yet confirmed. Please follow emailed confirmation instructions.')
+                        this.setState({ apiErrorMsg: 'User is not yet confirmed. Please follow emailed confirmation instructions.' })
                 }
                 if (data.user) {
                     this.props.login(data.user)
@@ -87,19 +79,19 @@ class Login extends Component {
                         <KeyboardAwareScrollView {...Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
                             <ImageBackground source={require('../assets/images/pbm-fade-tall.png')} style={s.backgroundImage}>
                                 <View style={s.mask}>
-                                    <Pressable onPress={ () => { Keyboard.dismiss() } }>
+                                    <Pressable onPress={() => { Keyboard.dismiss() }}>
                                         <View style={s.justify}>
                                             {this.state.errors &&
-                                                    <Text style={s.errorText}>
-                                                        {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
-                                                    </Text>
+                                                <Text style={s.errorText}>
+                                                    {this.state.apiErrorMsg ? this.state.apiErrorMsg : 'There were errors trying to process your submission'}
+                                                </Text>
                                             }
                                             <Text style={s.bold}>Log In</Text>
                                             <Input
                                                 placeholder='Username or Email'
                                                 placeholderTextColor={'#9b9ebb'}
                                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
-                                                onChangeText={login => this.setState({login})}
+                                                onChangeText={login => this.setState({ login })}
                                                 value={this.state.login}
                                                 errorStyle={{ color: 'red' }}
                                                 errorMessage={this.state.loginError}
@@ -112,7 +104,7 @@ class Login extends Component {
                                                 placeholder='Password'
                                                 placeholderTextColor={'#9b9ebb'}
                                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
-                                                onChangeText={password => this.setState({password})}
+                                                onChangeText={password => this.setState({ password })}
                                                 value={this.state.password}
                                                 errorStyle={{ color: 'red' }}
                                                 errorMessage={this.state.passwordError}
@@ -129,12 +121,12 @@ class Login extends Component {
                                                 disabled={!this.state.login || !this.state.password}
                                                 disabledStyle={s.disabledStyle}
                                                 disabledTitleStyle={s.disabledTitleStyle}
-                                                containerStyle={{marginHorizontal:10,marginTop:10,marginBottom:25}}
+                                                containerStyle={{ marginHorizontal: 10, marginTop: 10, marginBottom: 25 }}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('Signup')}
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 10}}
+                                                containerStyle={{ marginBottom: 10 }}
                                                 buttonStyle={s.buttonMask}
                                                 title="Not a user? SIGN UP!"
                                             />
@@ -142,14 +134,14 @@ class Login extends Component {
                                                 onPress={() => this.props.navigation.navigate('PasswordReset')}
                                                 title="I forgot my password"
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 10}}
+                                                containerStyle={{ marginBottom: 10 }}
                                                 buttonStyle={s.buttonMask}
                                             />
                                             <Button
                                                 onPress={() => this.props.navigation.navigate('ResendConfirmation')}
                                                 title="Resend my confirmation email"
                                                 titleStyle={s.textLink}
-                                                containerStyle={{marginBottom: 10}}
+                                                containerStyle={{ marginBottom: 10 }}
                                                 buttonStyle={s.buttonMask}
                                             />
                                             <Button
@@ -198,7 +190,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 22,
         color: theme.text,
         textShadowColor: theme.white,
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 2,
     },
     inputBox: {
@@ -220,7 +212,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         color: theme.text2,
         textShadowColor: theme.white,
-        textShadowOffset: {width: -1, height: 1},
+        textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 2,
     },
     iconStyle: {
@@ -262,7 +254,7 @@ Login.propTypes = {
     getFavoriteLocations: PropTypes.func,
 }
 
-const mapStateToProps = () => ({ })
+const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch) => ({
     login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),

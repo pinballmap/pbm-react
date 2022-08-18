@@ -60,11 +60,6 @@ class Map extends Component {
         }
     }
 
-    static navigationOptions = () => ({
-        headerBackButton: () => null,
-        headerShown: false,
-    })
-
     static contextType = ThemeContext
 
     navigateToScreen = async (url) => {
@@ -85,7 +80,7 @@ class Map extends Component {
         } else if (url.indexOf('region=') > 0) {
             const regionSegment = url.split('region=')[1]
             const regionName = regionSegment.split('&')[0]
-            const region = this.props.regions.regions.find(({name}) => name.toLowerCase() === regionName.toLowerCase())
+            const region = this.props.regions.regions.find(({ name }) => name.toLowerCase() === regionName.toLowerCase())
 
             const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
             const cityName = citySegment.split('&')[0]
@@ -94,7 +89,7 @@ class Map extends Component {
                 const byCity = await getData(`/region/${regionName}/locations.json?by_city_id=${cityName}`)
                 locations = byCity.locations || []
                 if (locations.length > 0) {
-                    const {lat, lon} = locations[0]
+                    const { lat, lon } = locations[0]
                     this.props.updateCoordinatesAndGetLocations(lat, lon)
                 }
             }
@@ -112,7 +107,7 @@ class Map extends Component {
         } else if (url.indexOf('saved') > 0) {
             navigate('Saved')
         } else {
-            const region = this.props.regions.regions.find(({name}) => url.includes(name))
+            const region = this.props.regions.regions.find(({ name }) => url.includes(name))
             if (region) {
                 this.props.getLocationsByRegion(region)
             }
@@ -141,7 +136,7 @@ class Map extends Component {
             this.props.getCurrentLocation(true)
         ])
 
-        Linking.addEventListener('url', ({url}) => this.navigateToScreen(url))
+        Linking.addEventListener('url', ({ url }) => this.navigateToScreen(url))
 
         retrieveItem('auth').then(async auth => {
             if (!auth) { this.props.navigation.navigate('SignupLogin') }
@@ -185,7 +180,7 @@ class Map extends Component {
         }
 
         return (
-            <SafeAreaView edges={['right', 'left', 'top']} style={{flex:1,marginTop: -Constants.statusBarHeight}}>
+            <SafeAreaView edges={['right', 'left', 'top']} style={{ flex: 1, marginTop: -Constants.statusBarHeight }}>
                 <AppAlert />
                 <NoLocationTrackingModal />
                 <ConfirmationModal
@@ -199,7 +194,7 @@ class Map extends Component {
                     </View>
                 </ConfirmationModal>
                 <View style={s.search}>
-                    <Search navigate={navigation.navigate}/>
+                    <Search navigate={navigation.navigate} />
                 </View>
                 {isFetchingLocations ? <View style={s.loading}><Text style={s.loadingText}>Loading...</Text></View> : null}
                 {maxZoom ? <View style={s.loading}><Text style={s.loadingText}>Zoom in for updated results</Text></View> : null}
@@ -215,22 +210,22 @@ class Map extends Component {
                     showsUserLocation={true}
                     moveOnMarkerPress={false}
                     showsMyLocationButton={false}
-                    provider = { MapView.PROVIDER_GOOGLE }
+                    provider={MapView.PROVIDER_GOOGLE}
                     customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                 >
                     {mapLocations.map(l => <CustomMapMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
                 </MapView>
                 <Button
                     onPress={() => navigation.navigate('LocationList')}
-                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{fontSize: 18,color:theme.text,paddingRight:5}} />}
-                    containerStyle={[s.listButtonContainer,s.containerStyle]}
+                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.text, paddingRight: 5 }} />}
+                    containerStyle={[s.listButtonContainer, s.containerStyle]}
                     buttonStyle={s.buttonStyle}
                     titleStyle={s.buttonTitle}
                     title="List"
                     underlayColor='transparent'
                 />
                 <Pressable
-                    style={({ pressed }) => [{},s.containerStyle,s.myLocationContainer,pressed ? s.pressed : s.notPressed]}
+                    style={({ pressed }) => [{}, s.containerStyle, s.myLocationContainer, pressed ? s.pressed : s.notPressed]}
                     onPress={this.updateCurrentLocation}
                 >
                     {Platform.OS === 'ios' ?
@@ -238,13 +233,13 @@ class Map extends Component {
                             name={'location-arrow'}
                             color={theme.text2}
                             size={24}
-                            style={{justifyContent:'center',alignSelf:'center'}}
+                            style={{ justifyContent: 'center', alignSelf: 'center' }}
                         /> :
                         <MaterialIcons
                             name={'gps-fixed'}
                             color={theme.text2}
                             size={24}
-                            style={{justifyContent:'center',alignSelf:'center'}}
+                            style={{ justifyContent: 'center', alignSelf: 'center' }}
                         />
                     }
                 </Pressable>
@@ -252,15 +247,15 @@ class Map extends Component {
                     <Button
                         title={'Clear Filter'}
                         onPress={() => this.props.clearFilters()}
-                        containerStyle={[s.filterContainer,s.containerStyle]}
-                        buttonStyle={[s.buttonStyle,{backgroundColor:'#fee5e7'}]}
-                        titleStyle={{color:'#453e39',fontSize: 14}}
+                        containerStyle={[s.filterContainer, s.containerStyle]}
+                        buttonStyle={[s.buttonStyle, { backgroundColor: '#fee5e7' }]}
+                        titleStyle={{ color: '#453e39', fontSize: 14 }}
                     />
                     : null
                 }
                 {showUpdateSearch ?
                     <Pressable
-                        style={({ pressed }) => [{},s.containerStyle,s.updateContainerStyle,pressed ? s.pressed : s.notPressed]}
+                        style={({ pressed }) => [{}, s.containerStyle, s.updateContainerStyle, pressed ? s.pressed : s.notPressed]}
                         onPress={() => {
                             this.setState({ showUpdateSearch: false })
                             this.props.getLocationsConsideringZoom(curLat, curLon, latDelta, lonDelta)
@@ -268,8 +263,8 @@ class Map extends Component {
                         }}
                     >
                         {({ pressed }) => (
-                            <Text style={[ pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
-                                    Search this area
+                            <Text style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
+                                Search this area
                             </Text>
                         )}
                     </Pressable>
@@ -365,7 +360,7 @@ const getStyles = theme => StyleSheet.create({
         bottom: 10,
         right: 10,
         alignSelf: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         borderRadius: 25,
         height: 50,
         width: 50,
@@ -433,7 +428,7 @@ const mapDispatchToProps = (dispatch) => ({
     clearSearchBarText: () => dispatch(clearSearchBarText()),
     getRegions: (url) => dispatch(getRegions(url)),
     getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
-    getMachines: (url) =>  dispatch(fetchMachines(url)),
+    getMachines: (url) => dispatch(fetchMachines(url)),
     getOperators: (url) => dispatch(fetchOperators(url)),
     login: (auth) => dispatch(login(auth)),
     setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),

@@ -10,7 +10,6 @@ import { ButtonGroup } from 'react-native-elements'
 import { FontAwesome } from '@expo/vector-icons'
 import { ThemeContext } from '../theme-context'
 import {
-    HeaderBackButton,
     LocationCard,
     NotLoggedIn,
     Text
@@ -23,25 +22,6 @@ const moment = require('moment')
 export class Saved extends Component {
     state = {
         locations: this.props.user.faveLocations,
-    }
-
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: 'Saved Locations',
-            headerRight: () => <View style={{ padding: 6 }}></View>,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent',
-            },
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-        }
     }
 
     updateIndex = (buttonIndex) => this.props.selectFavoriteLocationFilterBy(buttonIndex)

@@ -16,7 +16,6 @@ import { ThemeContext } from '../theme-context'
 import {
     ActivityIndicator,
     ConfirmationModal,
-    HeaderBackButton,
     NotLoggedIn,
     PbmButton,
     Screen,
@@ -36,32 +35,13 @@ class UserProfile extends Component {
         profile_info: {},
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: 'Your Profile',
-            headerRight: () =><View style={{padding:6}}></View>,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-        }
-    };
-
     setModalVisible(visible) {
-        this.setState({modalVisible: visible})
+        this.setState({ modalVisible: visible })
     }
 
     componentDidMount() {
         //The listener will refetch user profile data every time the profile screen is navigated to
-        this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
+        this.focusListener = this.props.navigation.addListener('focus', () => {
             const id = this.props.user.id
             if (id) {
                 getData(`/users/${id}/profile_info.json`)
@@ -79,7 +59,7 @@ class UserProfile extends Component {
         return stat ? ` ${formatNumWithCommas(stat)} ` : ' 0 '
     }
 
-    render(){
+    render() {
         if (this.state.fetchingUserInfo)
             return (
                 <ActivityIndicator />
@@ -160,7 +140,7 @@ class UserProfile extends Component {
                                         </View>
                                     }
                                     <Text style={s.member}>{`Joined: ${moment(created_at).format('MMM DD, YYYY')}`}</Text>
-                                    <View style={{width:'100%',alignItems:'center'}}>
+                                    <View style={{ width: '100%', alignItems: 'center' }}>
                                         <View style={s.statItem}>
                                             <Text style={s.stat}>Total contributions:</Text>
                                             <Text style={s.statNum}>{this.getStatNum(num_total_submissions)}</Text>
@@ -196,15 +176,15 @@ class UserProfile extends Component {
                                         icon={<FontAwesome name='heart-o' style={s.savedIcon} />}
                                     />
                                     <Text style={s.bold}>Locations Edited (up to 50):</Text>
-                                    <View style={{paddingVertical:8}}>
+                                    <View style={{ paddingVertical: 8 }}>
                                         {profile_list_of_edited_locations.slice(0, 50).map(location => (
                                             <Pressable
                                                 key={location[0]}
                                                 onPress={() => this.props.navigation.navigate('LocationDetails', { id: location[0] })}
                                             >
                                                 {({ pressed }) => (
-                                                    <View style={[s.list,pressed ? s.pressed : s.notPressed]}>
-                                                        <Text style={[s.listTitleStyle,pressed ? s.textPressed : s.textNotPressed]}>
+                                                    <View style={[s.list, pressed ? s.pressed : s.notPressed]}>
+                                                        <Text style={[s.listTitleStyle, pressed ? s.textPressed : s.textNotPressed]}>
                                                             {location[1]}
                                                         </Text>
                                                     </View>
@@ -213,12 +193,12 @@ class UserProfile extends Component {
                                         ))}
                                     </View>
                                     <Text style={s.bold}>High Scores:</Text>
-                                    <View style={{paddingTop:8,paddingBottom:15}}>
+                                    <View style={{ paddingTop: 8, paddingBottom: 15 }}>
                                         {profile_list_of_high_scores.map((score, idx) => {
                                             return <ListItem
                                                 containerStyle={s.background}
                                                 key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}>
-                                                <ListItem.Content style={{marginHorizontal:5,backgroundColor:theme.white,borderRadius:15}}>
+                                                <ListItem.Content style={{ marginHorizontal: 5, backgroundColor: theme.white, borderRadius: 15 }}>
                                                     <ListItem.Title style={s.listTitleStyle}>
                                                         {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                                                     </ListItem.Title>

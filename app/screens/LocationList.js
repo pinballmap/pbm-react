@@ -11,7 +11,6 @@ import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     ConfirmationModal,
-    HeaderBackButton,
     LocationCard,
     PbmButton,
     Text
@@ -30,26 +29,6 @@ export class LocationList extends Component {
         this.state = {
             locations: this.props.locations.mapLocations,
             showNoLocationTrackingModal: false,
-        }
-    }
-
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} title="Map" />,
-            title: 'Locations on the Map',
-            headerRight: () => <View style={{ padding: 6 }}></View>,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-            gestureEnabled: true
         }
     }
 
@@ -109,49 +88,49 @@ export class LocationList extends Component {
                     const s = getStyles(theme)
                     return (
                         <>
-                        <ConfirmationModal
-                            visible={showNoLocationTrackingModal}>
-                            <View>
-                                <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
-                                <PbmButton
-                                    title={"OK"}
-                                    onPress={() => this.setState({ showNoLocationTrackingModal: false })}
-                                    accessibilityLabel="Great!"
-                                    containerStyle={s.buttonContainer}
+                            <ConfirmationModal
+                                visible={showNoLocationTrackingModal}>
+                                <View>
+                                    <Text style={s.confirmText}>Location tracking must be enabled to use this feature!</Text>
+                                    <PbmButton
+                                        title={"OK"}
+                                        onPress={() => this.setState({ showNoLocationTrackingModal: false })}
+                                        accessibilityLabel="Great!"
+                                        containerStyle={s.buttonContainer}
+                                    />
+                                </View>
+                            </ConfirmationModal>
+                            <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                                <ButtonGroup
+                                    onPress={this.updateIndex}
+                                    selectedIndex={this.props.locations.selectedLocationListFilter}
+                                    buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
+                                    containerStyle={s.buttonGroupContainer}
+                                    textStyle={s.buttonGroupInactive}
+                                    selectedButtonStyle={s.selButtonStyle}
+                                    selectedTextStyle={s.selTextStyle}
+                                    innerBorderStyle={s.innerBorderStyle}
+                                />
+                                <FlatList
+                                    data={locations}
+                                    extraData={this.state}
+                                    renderItem={({ item }) =>
+                                        <LocationCard
+                                            locationType={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id) : {}}
+                                            name={item.name}
+                                            distance={locationTrackingServicesEnabled ? getDistanceWithUnit(lat, lon, item.lat, item.lon, unitPreference) : undefined}
+                                            street={item.street}
+                                            city={item.city}
+                                            state={item.state}
+                                            zip={item.zip}
+                                            machines={item.machine_names}
+                                            navigation={this.props.navigation}
+                                            id={item.id}
+                                        />
+                                    }
+                                    keyExtractor={(item, index) => `list-item-${index}`}
                                 />
                             </View>
-                        </ConfirmationModal>
-                        <View style={{flex: 1,backgroundColor: theme.base1}}>
-                            <ButtonGroup
-                                onPress={this.updateIndex}
-                                selectedIndex={this.props.locations.selectedLocationListFilter}
-                                buttons={['Distance', 'A-Z', 'Updated', '# Machines']}
-                                containerStyle={s.buttonGroupContainer}
-                                textStyle={s.buttonGroupInactive}
-                                selectedButtonStyle={s.selButtonStyle}
-                                selectedTextStyle={s.selTextStyle}
-                                innerBorderStyle={s.innerBorderStyle}
-                            />
-                            <FlatList
-                                data={locations}
-                                extraData={this.state}
-                                renderItem={({ item }) =>
-                                    <LocationCard
-                                        locationType={item.location_type_id ? this.props.locations.locationTypes.find(location => location.id === item.location_type_id) : {}}
-                                        name={item.name}
-                                        distance={locationTrackingServicesEnabled ? getDistanceWithUnit(lat, lon, item.lat, item.lon, unitPreference) : undefined}
-                                        street={item.street}
-                                        city={item.city}
-                                        state={item.state}
-                                        zip={item.zip}
-                                        machines={item.machine_names}
-                                        navigation={this.props.navigation}
-                                        id={item.id}
-                                    />
-                                }
-                                keyExtractor={(item, index) => `list-item-${index}`}
-                            />
-                        </View>
                         </>
                     )
                 }}

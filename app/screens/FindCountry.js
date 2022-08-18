@@ -13,14 +13,14 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { FlatList } from 'react-native-gesture-handler'
 import {
-    HeaderBackButton,
     Text,
 } from '../components'
 import countries from '../utils/countries'
 
-const FindCountry = ({ navigation }) => {
+const FindCountry = ({ navigation, route }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
+    const { previous_screen } = route.params
 
     const [selectedCountries, setSelectedCountries] = useState(countries)
     const [query, setQuery] = useState('')
@@ -33,17 +33,20 @@ const FindCountry = ({ navigation }) => {
     }
 
     const _selectCountry = (countryName, countryCode) => {
-        navigation.getParam('setSelected')(countryName, countryCode)
-        navigation.goBack()
+        navigation.navigate({
+            name: previous_screen,
+            params: { setCountryName: countryName, setCountryCode: countryCode },
+            merge: true,
+        })
     }
 
-    const renderRow = ({ item, index}) => (
+    const renderRow = ({ item, index }) => (
         <Pressable
             onPress={() => _selectCountry(item.name, item.code)}
         >
             {({ pressed }) => (
-                <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3,opacity: 1}]}>
-                    <Text style={{fontSize: 18}}>{item.name}</Text>
+                <View style={[{ padding: 8 }, pressed ? { backgroundColor: theme.base4, opacity: 0.8 } : { backgroundColor: index % 2 === 0 ? theme.base1 : theme.base3, opacity: 1 }]}>
+                    <Text style={{ fontSize: 18 }}>{item.name}</Text>
                 </View>
             )}
         </Pressable>
@@ -62,16 +65,16 @@ const FindCountry = ({ navigation }) => {
                 searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
                 clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => handleSearch()} />}
                 onChangeText={handleSearch}
-                inputStyle={{color:theme.text}}
+                inputStyle={{ color: theme.text }}
                 value={query}
                 inputContainerStyle={s.filterInput}
-                containerStyle={{backgroundColor:theme.base1,borderBottomWidth:0,borderTopWidth:0}}
+                containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
             />
             <FlatList {...keyboardDismissProp}
                 data={selectedCountries}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{backgroundColor:theme.base1}}
+                style={{ backgroundColor: theme.base1 }}
             />
         </>)
 }
@@ -86,23 +89,6 @@ const getStyles = theme => StyleSheet.create({
         borderBottomWidth: 1,
         marginHorizontal: 10
     },
-})
-
-FindCountry.navigationOptions = ({ navigation, theme }) => ({
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    title: 'Select Country',
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    gestureEnabled: true
 })
 
 FindCountry.propTypes = {

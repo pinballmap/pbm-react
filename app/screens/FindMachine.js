@@ -27,7 +27,6 @@ import {
     setMachineFilter,
 } from '../actions'
 import {
-    HeaderBackButton,
     PbmButton,
     Text,
     WarningButton,
@@ -39,8 +38,8 @@ let deviceHeight = Dimensions.get('window').height
 
 const getDisplayText = (machine, theme) => (
     <Text style={{ fontSize: 18 }}>
-        <Text style={{fontFamily: 'boldFont', color: theme.text}}>{machine.name}</Text>
-        <Text style={{color: theme.text3}}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        <Text style={{ fontFamily: 'boldFont', color: theme.text }}>{machine.name}</Text>
+        <Text style={{ color: theme.text3 }}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
 )
 
@@ -59,7 +58,7 @@ class MultiSelectRow extends React.PureComponent {
         return (
             <Pressable
                 onPress={this._onPress}
-                style={({ pressed }) => [{display: 'flex', flexDirection: 'row', padding: 8},pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor,opacity: 1}]}
+                style={({ pressed }) => [{ display: 'flex', flexDirection: 'row', padding: 8 }, pressed ? { backgroundColor: theme.base4, opacity: 0.8 } : { backgroundColor, opacity: 1 }]}
             >
                 <Text style={{ fontSize: 18 }}>{getDisplayText(machine, theme)}</Text>
                 {selected ? <MaterialIcons name='cancel' size={18} color="#fd0091" style={{ paddingTop: 3, paddingLeft: 5 }} /> : null}
@@ -92,35 +91,34 @@ class FindMachine extends React.PureComponent {
         }
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: navigation.getParam('machineFilter') ? 'Select Machine to Filter' : 'Select Machine to Add',
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            title: this.props.route.params?.machineFilter ? 'Select Machine to Filter' : 'Select Machine to Add',
+            headerRight: () => this.props.route.params?.showDone ?
+                <Pressable onPress={() => this.props.navigation.goBack(null)}>
+                    {({ pressed }) => (
+                        <Text style={{ color: pressed ? '#95867c' : '#7cc5ff', fontSize: 18, fontFamily: 'boldFont', marginRight: 10 }}>
+                            Done
+                        </Text>
+                    )}
+                </Pressable>
+                : null,
+        })
+    }
+
+    componentDidUpdate() {
+        this.props.navigation.setOptions({
             headerRight: () =>
-                navigation.getParam('showDone') ?
-                    <Pressable
-                        onPress={() => navigation.goBack(null)}
-                    >
+                this.props.route.params?.showDone ?
+                    <Pressable onPress={() => this.props.navigation.goBack(null)}>
                         {({ pressed }) => (
-                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff',fontSize: 18, fontFamily: 'boldFont', marginRight: 10}}>
+                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff', fontSize: 18, fontFamily: 'boldFont', marginRight: 10 }}>
                                 Done
                             </Text>
                         )}
                     </Pressable>
-                    : <View style={{ padding: 6 }}></View>,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#ff5eba',
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            gestureEnabled: true
-        }
+                    : null,
+        })
     }
 
     static contextType = ThemeContext
@@ -160,7 +158,7 @@ class FindMachine extends React.PureComponent {
     }
 
     setSelected = machine => {
-        if (this.props.navigation.getParam('machineFilter')) {
+        if (this.props.route.params?.machineFilter) {
             this.props.setMachineFilter(machine)
             this.props.navigation.goBack()
         }
@@ -194,15 +192,15 @@ class FindMachine extends React.PureComponent {
                 onPress={() => this.setSelected(item)}
             >
                 {({ pressed }) => (
-                    <View style={[{padding: 8}, pressed ? {backgroundColor: theme.base4,opacity: 0.8} : {backgroundColor,opacity: 1}]}>
-                        <Text style={{fontSize: 18}}>{getDisplayText(item, theme)}</Text>
+                    <View style={[{ padding: 8 }, pressed ? { backgroundColor: theme.base4, opacity: 0.8 } : { backgroundColor, opacity: 1 }]}>
+                        <Text style={{ fontSize: 18 }}>{getDisplayText(item, theme)}</Text>
                     </View>
                 )}
             </Pressable>
         )
     }
 
-    renderMultiSelectRow = ({ item, index}) => (
+    renderMultiSelectRow = ({ item, index }) => (
         <MultiSelectRow
             machine={item}
             onPressItem={this.onPressMultiSelect}
@@ -234,7 +232,7 @@ class FindMachine extends React.PureComponent {
 
     render() {
         const { machineList = [] } = this.props.location
-        const multiSelect = this.props.navigation.state.params && this.props.navigation.state.params['multiSelect'] || false
+        const multiSelect = this.props.route.params && this.props.route.params['multiSelect'] || false
         const selectedIdx = this.state.machinesInView ? 1 : 0
         const theme = this.context.theme
         const s = getStyles(theme)
@@ -284,11 +282,11 @@ class FindMachine extends React.PureComponent {
                     inputStyle={{ color: theme.text }}
                     value={this.state.query}
                     inputContainerStyle={s.filterInput}
-                    containerStyle={{backgroundColor:theme.base1,borderBottomWidth:0,borderTopWidth:0}}
+                    containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
                     autoCorrect={false}
                 />
                 {!multiSelect ?
-                    <View style={{backgroundColor:theme.base1}}>
+                    <View style={{ backgroundColor: theme.base1 }}>
                         <ButtonGroup
                             onPress={this.toggleViewMachinesInMapArea}
                             selectedIndex={selectedIdx}
@@ -315,7 +313,7 @@ class FindMachine extends React.PureComponent {
                     data={this.state.machines}
                     renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                     keyExtractor={this.keyExtractor}
-                    style={{backgroundColor:theme.base1,paddingHorizontal:5}}
+                    style={{ backgroundColor: theme.base1, paddingHorizontal: 5 }}
                 />
             </>
         )

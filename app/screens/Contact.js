@@ -9,11 +9,9 @@ import {
     View,
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
     ConfirmationModal,
-    HeaderBackButton,
     PbmButton,
     Screen,
     Text,
@@ -56,7 +54,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     const { loggedIn, submittingMessage, confirmationMessage } = user
     const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
-    return(
+    return (
         <Screen {...keyboardDismissProp}>
             <ConfirmationModal visible={confirmationMessage.length > 0}>
                 <Text style={s.confirmText}>{confirmationMessage}</Text>
@@ -70,12 +68,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             </ConfirmationModal>
             {submittingMessage ?
                 <ActivityIndicator /> :
-                <View style={{marginLeft:20,marginRight:20,marginTop:10}}>
+                <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
                     <Text style={s.text}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
                     {!loggedIn ?
                         <View>
                             <TextInput
-                                style={[{height: 40},s.textInput]}
+                                style={[{ height: 40 }, s.textInput]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={name => setName(name)}
                                 value={name}
@@ -85,7 +83,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 autoCorrect={false}
                             />
                             <TextInput
-                                style={[{height: 40},s.textInput]}
+                                style={[{ height: 40 }, s.textInput]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={email => setEmail(email)}
                                 value={email}
@@ -102,7 +100,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                         placeholder={'Tell us about it...'}
                         placeholderTextColor={theme.indigo4}
                         numberOfLines={10}
-                        style={[{padding:5,height: 200},s.textInput]}
+                        style={[{ padding: 5, height: 200 }, s.textInput]}
                         value={message}
                         onChangeText={message => setMessage(message)}
                         textAlignVertical='top'
@@ -117,26 +115,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             }
         </Screen>)
 }
-
-Contact.navigationOptions = ({ navigation, theme }) => ({
-    drawerLabel: 'Contact',
-    drawerIcon: () => <MaterialCommunityIcons name='email-outline' style={{ fontSize: 24, color: '#bec2e6'}} />,
-    headerLeft: () => <HeaderBackButton navigation={navigation}/>,
-    title: 'Contact',
-    headerRight: () =><View style={{padding:6}}></View>,
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    gestureEnabled: true
-})
 
 const getStyles = theme => StyleSheet.create({
     text: {
@@ -182,7 +160,7 @@ Contact.propTypes = {
     clearMessage: PropTypes.func,
 }
 
-const mapStateToProps = ({user}) => ({user})
+const mapStateToProps = ({ user }) => ({ user })
 const mapDispatchToProps = (dispatch) => ({
     submitMessage: state => dispatch(submitMessage(state)),
     clearMessage: () => dispatch(clearMessage())

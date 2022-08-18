@@ -9,7 +9,6 @@ import { ButtonGroup } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     DropDownButton,
-    HeaderBackButton,
     Screen,
     Text,
     WarningButton,
@@ -18,7 +17,7 @@ import {
     updateNumMachinesSelected,
     updateViewFavoriteLocations,
     selectedLocationTypeFilter,
-    selectedOperatorTypeFilter,
+    selectedOperatorFilter,
     clearFilters,
     setMachineFilter,
     setMachineVersionFilter,
@@ -38,10 +37,11 @@ const FilterMap = ({
     query,
     navigation,
     selectedLocationTypeFilter,
-    selectedOperatorTypeFilter,
+    selectedOperatorFilter,
     clearFilters,
     setMachineFilter,
     setMachineVersionFilter,
+    route
 }) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -91,9 +91,37 @@ const FilterMap = ({
         setMachineVersionFilter(idx)
     }
 
+    React.useEffect(() => {
+        if (route.params?.setSelectedLocationType) {
+            selectedLocationTypeFilter(route.params?.setSelectedLocationType)
+        }
+    }, [route.params?.setSelectedLocationType, selectedLocationTypeFilter])
+
+    React.useEffect(() => {
+        if (route.params?.setSelectedOperator) {
+            selectedOperatorFilter(route.params?.setSelectedOperator)
+        }
+    }, [route.params?.setSelectedOperator, selectedOperatorFilter])
+
+    const goToFindLocationType = () => {
+        navigation.navigate('FindLocationType', {
+            previous_screen: 'FilterMap',
+            type: 'filter',
+            setSelectedLocationType: (id) => selectedLocationTypeFilter(id)
+        })
+    }
+
+    const goToFindOperator = () => {
+        navigation.navigate('FindOperator', {
+            previous_screen: 'FilterMap',
+            type: 'filter',
+            setSelectedOperator: (id) => selectedOperatorFilter(id)
+        })
+    }
+
     return (
         <Screen>
-            <View style={{marginHorizontal:10,marginBottom:10}}>
+            <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
                 <Text style={[s.sectionTitle, s.paddingFirst]}>Only show locations with this machine:</Text>
                 <DropDownButton
                     title={machine && machine.name ? machine.name : 'All'}
@@ -131,12 +159,12 @@ const FilterMap = ({
                 <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by location type:</Text>
                 <DropDownButton
                     title={locationTypeName}
-                    onPress={() => navigate('FindLocationType', { type: 'filter', setSelected: (id) => selectedLocationTypeFilter(id) })}
+                    onPress={() => goToFindLocationType()}
                 />
                 <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Filter by operator:</Text>
                 <DropDownButton
                     title={operatorName}
-                    onPress={() => navigate('FindOperator', { type: 'filter', setSelected: (id) => selectedOperatorTypeFilter(id) })}
+                    onPress={() => goToFindOperator()}
                 />
                 <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved Locations:</Text>
                 <ButtonGroup
@@ -160,25 +188,6 @@ const FilterMap = ({
     )
 
 }
-
-FilterMap.navigationOptions = ({ navigation, theme }) => ({
-    headerLeft: () => <HeaderBackButton navigation={navigation} title="Map" />,
-    title: 'Apply Filters to the Map',
-    headerRight: () =><View style={{padding:6}}></View>,
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    gestureEnabled: true
-})
-
 
 const getStyles = theme => StyleSheet.create({
     border: {
@@ -238,7 +247,7 @@ FilterMap.propTypes = {
     updateViewFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
     navigation: PropTypes.object,
-    selectedOperatorTypeFilter: PropTypes.func,
+    selectedOperatorFilter: PropTypes.func,
     selectedLocationTypeFilter: PropTypes.func,
     locationTypeName: PropTypes.string,
     hasFilterSelected: PropTypes.bool,
@@ -263,7 +272,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     updateNumMachinesSelected: idx => dispatch(updateNumMachinesSelected(idx)),
     selectedLocationTypeFilter: type => dispatch(selectedLocationTypeFilter(type)),
-    selectedOperatorTypeFilter: operator => dispatch(selectedOperatorTypeFilter(operator)),
+    selectedOperatorFilter: operator => dispatch(selectedOperatorFilter(operator)),
     clearFilters: () => dispatch(clearFilters()),
     setMachineFilter: () => dispatch(setMachineFilter()),
     updateViewFavoriteLocations: idx => dispatch(updateViewFavoriteLocations(idx)),

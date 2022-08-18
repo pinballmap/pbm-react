@@ -42,7 +42,7 @@ export const selectedLocationTypeFilter = (locationType) => dispatch => {
     dispatch({ type: SET_LOCATION_TYPE_FILTER, locationType })
     dispatch(updateFilterLocations())
 }
-export const selectedOperatorTypeFilter = (selectedOperator) => dispatch => {
+export const selectedOperatorFilter = (selectedOperator) => dispatch => {
     dispatch({ type: SET_OPERATOR_FILTER, selectedOperator })
     dispatch(updateFilterLocations())
 }

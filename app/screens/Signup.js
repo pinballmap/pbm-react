@@ -85,7 +85,7 @@ const Signup = ({ login, loginLater, navigation }) => {
 
         validateFields()
 
-        if(!errors) {
+        if (!errors) {
             const body = {
                 username,
                 email,
@@ -135,7 +135,7 @@ const Signup = ({ login, loginLater, navigation }) => {
         <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                 <View style={s.mask}>
-                    <Pressable onPress={ () => { Keyboard.dismiss() } }>
+                    <Pressable onPress={() => { Keyboard.dismiss() }}>
                         <View style={s.justify}>
                             {errors &&
                                 <Text style={s.errorText}>
@@ -149,7 +149,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 leftIcon={<MaterialIcons name='face' style={s.iconStyle} />}
                                 onChangeText={username => setUsername(username)}
                                 value={username}
-                                errorStyle={{ color : 'red' }}
+                                errorStyle={{ color: 'red' }}
                                 errorMessage={usernameError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
@@ -162,7 +162,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 leftIcon={<MaterialCommunityIcons name='email-outline' style={s.iconStyle} />}
                                 onChangeText={email => setEmail(email)}
                                 value={email}
-                                errorStyle={{ color : 'red' }}
+                                errorStyle={{ color: 'red' }}
                                 errorMessage={emailError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
@@ -176,11 +176,11 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={password => setPassword(password)}
                                 value={password}
-                                errorStyle={{ color : 'red' }}
+                                errorStyle={{ color: 'red' }}
                                 errorMessage={passwordError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
-                                secureTextEntry = {true}
+                                secureTextEntry={true}
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
@@ -190,17 +190,17 @@ const Signup = ({ login, loginLater, navigation }) => {
                                 leftIcon={<MaterialIcons name='lock-outline' style={s.iconStyle} />}
                                 onChangeText={confirm_password => setConfirmPassword(confirm_password)}
                                 value={confirm_password}
-                                errorStyle={{ color : 'red' }}
+                                errorStyle={{ color: 'red' }}
                                 errorMessage={confirm_passwordError}
                                 inputContainerStyle={s.inputBox}
                                 inputStyle={s.inputText}
-                                secureTextEntry = {true}
+                                secureTextEntry={true}
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
                             <PbmButton
                                 onPress={submit}
-                                containerStyle={{marginHorizontal:10,marginTop:10,marginBottom:25}}
+                                containerStyle={{ marginHorizontal: 10, marginTop: 10, marginBottom: 25 }}
                                 title="Sign Up"
                                 accessibilityLabel="Sign Up"
                                 disabled={!username || !email || !password || !confirm_password}
@@ -210,7 +210,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             <Button
                                 onPress={() => navigation.navigate('Login')}
                                 titleStyle={s.textLink}
-                                containerStyle={{marginBottom: 15}}
+                                containerStyle={{ marginBottom: 15 }}
                                 buttonStyle={s.buttonMask}
                                 title="Already a user? LOG IN!"
                             />
@@ -317,7 +317,7 @@ Signup.propTypes = {
     navigation: PropTypes.object,
 }
 
-const mapStateToProps = () => ({ })
+const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch) => ({
     login: credentials => dispatch(login(credentials)),
     loginLater: () => dispatch(loginLater()),

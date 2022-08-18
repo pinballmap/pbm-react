@@ -10,7 +10,6 @@ import { Input } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
 import {
     ConfirmationModal,
-    HeaderBackButton,
     PbmButton,
     Screen,
     Text,
@@ -29,13 +28,13 @@ const ResendConfirmation = ({ navigation }) => {
         setIdentificationError('')
         postData('/users/resend_confirmation.json', { identification })
             .then(() => setModalVisible(true),
-                (err) => { throw err})
+                (err) => { throw err })
             .catch(identificationError => setIdentificationError(identificationError))
     }
 
-    return(
+    return (
         <Screen>
-            <Pressable onPress={ () => { Keyboard.dismiss() } }>
+            <Pressable onPress={() => { Keyboard.dismiss() }}>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Confirmation info resent.</Text>
                     <View>
@@ -49,7 +48,7 @@ const ResendConfirmation = ({ navigation }) => {
                         />
                     </View>
                 </ConfirmationModal>
-                <View style={{marginTop:10}}>
+                <View style={{ marginTop: 10 }}>
                     <Input
                         placeholder='Username or email...'
                         placeholderTextColor={theme.indigo4}
@@ -72,24 +71,6 @@ const ResendConfirmation = ({ navigation }) => {
             </Pressable>
         </Screen>)
 }
-
-ResendConfirmation.navigationOptions = ({ navigation, theme }) => ({
-    headerLeft: () => <HeaderBackButton navigation={navigation} />,
-    headerRight: () => <View style={{padding:6}}></View>,
-    title: 'Resend Confirmation Email',
-    headerStyle: {
-        backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowColor: 'transparent'
-    },
-    headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-    headerTitleStyle: {
-        textAlign: 'center',
-        fontFamily: 'boldFont',
-    },
-    gestureEnabled: true
-})
 
 const getStyles = theme => StyleSheet.create({
     container: {

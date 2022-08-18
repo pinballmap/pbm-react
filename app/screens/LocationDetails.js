@@ -42,7 +42,6 @@ import {
     updateCoordinatesAndGetLocations,
 } from '../actions'
 import androidCustomDark from '../utils/androidCustomDark'
-import { HeaderBackButton } from 'react-navigation-stack'
 import {
     alphaSortNameObj,
     getDistanceWithUnit,
@@ -53,37 +52,23 @@ let deviceWidth = Dimensions.get('window').width
 const moment = require('moment')
 
 class LocationDetails extends Component {
-    state = {
-        id: this.props.navigation.state.params['id'],
-        showLocationToolsModal: false
-    }
 
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerLeft: () => <HeaderBackButton
-                tintColor={'#fd0091'}
-                onPress={() => {
-                    navigation.goBack(null)
-                }}
-                labelVisible={false}
-            />,
-            title: null,
-            gestureEnabled: true,
-            headerTransparent: true,
-        }
+    state = {
+        id: this.props.route.params['id'],
+        showLocationToolsModal: false
     }
 
     getTitle = (machine, s) => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year ? <Text style={[s.fontSize18,s.text2]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
+            {machine.year ? <Text style={[s.fontSize18, s.text2]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
     handleConfirmPress = (id, loggedIn) => {
         this.setShowLocationToolsModal(false)
         if (loggedIn) {
-            const {email, username, authentication_token} = this.props.user
+            const { email, username, authentication_token } = this.props.user
             const body = {
                 user_email: email,
                 user_token: authentication_token,
@@ -95,15 +80,15 @@ class LocationDetails extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (props.navigation.state.params['id'] !== this.props.navigation.state.params['id']) {
-            this.setState({ id: props.navigation.state.params['id'] }, () => {
+        if (props.route.params['id'] !== this.props.route.params['id']) {
+            this.setState({ id: props.route.params['id'] }, () => {
                 this.props.fetchLocation(this.state.id)
             })
         }
     }
 
     setShowLocationToolsModal(visible) {
-        this.setState({showLocationToolsModal: visible})
+        this.setState({ showLocationToolsModal: visible })
     }
 
     componentDidMount() {
@@ -124,7 +109,7 @@ class LocationDetails extends Component {
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
-            return {...machineDetails, ...machine}
+            return { ...machineDetails, ...machine }
         }))
         const { icon: locationIcon, library: iconLibrary, name: locationTypeName } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id) || {}
         const cityState = location.state ? `${location.city}, ${location.state}` : location.city
@@ -148,7 +133,16 @@ class LocationDetails extends Component {
                                     <View>
                                         <ListItem
                                             containerStyle={s.backgroundColor}
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            onPress={() => {
+                                                if (loggedIn) {
+                                                    this.props.navigation.navigate('FindMachine')
+                                                    this.setShowLocationToolsModal(false)
+                                                } else {
+                                                    this.props.navigation.navigate('Login')
+                                                    this.setShowLocationToolsModal(false)
+                                                }
+                                            }
+                                            }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
@@ -160,7 +154,7 @@ class LocationDetails extends Component {
                                         </ListItem>
                                         <ListItem
                                             containerStyle={s.backgroundColor}
-                                            onPress={() => this.handleConfirmPress(location.id, loggedIn) }>
+                                            onPress={() => this.handleConfirmPress(location.id, loggedIn)}>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
@@ -172,7 +166,16 @@ class LocationDetails extends Component {
                                         </ListItem>
                                         <ListItem
                                             containerStyle={s.backgroundColor}
-                                            onPress={() => loggedIn ? this.props.navigation.navigate('EditLocationDetails', {name: location.name}) && this.setShowLocationToolsModal(false) : this.props.navigation.navigate('Login') && this.setShowLocationToolsModal(false) }>
+                                            onPress={() => {
+                                                if (loggedIn) {
+                                                    this.props.navigation.navigate('EditLocationDetails')
+                                                    this.setShowLocationToolsModal(false)
+                                                } else {
+                                                    this.props.navigation.navigate('Login')
+                                                    this.setShowLocationToolsModal(false)
+                                                }
+                                            }
+                                            }>
                                             <Avatar>
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
@@ -201,7 +204,7 @@ class LocationDetails extends Component {
                                         <ListItem
                                             containerStyle={s.backgroundColor}
                                             onPress={() => {
-                                                openMap({end: `${location.name} ${location.city} ${location.state || ''} ${location.zip}`})
+                                                openMap({ end: `${location.name} ${location.city} ${location.state || ''} ${location.zip}` })
                                                 this.setShowLocationToolsModal(false)
                                             }}>
                                             <Avatar>
@@ -245,10 +248,10 @@ class LocationDetails extends Component {
                                 </ConfirmationModal>
                                 <Modal
                                     visible={errorModalVisible}
-                                    onRequestClose={()=>{}}
+                                    onRequestClose={() => { }}
                                 >
-                                    <View style={{marginTop: 100,alignItems: 'center'}}>
-                                        <Text style={{fontSize:16,color:theme.red2}}>{errorText}</Text>
+                                    <View style={{ marginTop: 100, alignItems: 'center' }}>
+                                        <Text style={{ fontSize: 16, color: theme.red2 }}>{errorText}</Text>
                                         <Button
                                             title={"OK"}
                                             onPress={this.props.clearError}
@@ -265,23 +268,23 @@ class LocationDetails extends Component {
                                         />
                                     </View>
                                     <View style={s.logoWrapper}>
-                                        <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo}/>
+                                        <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo} />
                                     </View>
                                 </ConfirmationModal>
                                 <View style={{ flex: 1, position: 'relative' }}>
                                     <Pressable
-                                        style={({ pressed }) => [{},s.plusButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login') }
+                                        style={({ pressed }) => [{}, s.plusButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login')}
                                     >
                                         <MaterialCommunityIcons
                                             name={'plus'}
                                             color={theme.text2}
                                             size={28}
-                                            style={{height:28,width:28,justifyContent:'center',alignSelf:'center'}}
+                                            style={{ height: 28, width: 28, justifyContent: 'center', alignSelf: 'center' }}
                                         />
                                     </Pressable>
                                     <Pressable
-                                        style={({ pressed }) => [{},s.saveButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        style={({ pressed }) => [{}, s.saveButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
                                     >
                                         {loggedIn && isUserFave ?
@@ -289,18 +292,18 @@ class LocationDetails extends Component {
                                                 name={'heart'}
                                                 color={theme.pink1}
                                                 size={26}
-                                                style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                                style={{ height: 26, width: 26, justifyContent: 'center', alignSelf: 'center' }}
                                             /> :
                                             <MaterialCommunityIcons
                                                 name={'heart-outline'}
                                                 color={theme.pink1}
                                                 size={26}
-                                                style={{height:26,width:26,justifyContent:'center',alignSelf:'center'}}
+                                                style={{ height: 26, width: 26, justifyContent: 'center', alignSelf: 'center' }}
                                             />
                                         }
                                     </Pressable>
                                     <Pressable
-                                        style={({ pressed }) => [{},s.shareButton,s.quickButton,pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        style={({ pressed }) => [{}, s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={async () => {
                                             await Share.share({
                                                 message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
@@ -311,7 +314,7 @@ class LocationDetails extends Component {
                                             name={'ios-share'}
                                             color={theme.text2}
                                             size={24}
-                                            style={{height:24,width:24,justifyContent:'center',alignSelf:'center'}}
+                                            style={{ height: 24, width: 24, justifyContent: 'center', alignSelf: 'center' }}
                                         />
                                     </Pressable>
 
@@ -324,7 +327,7 @@ class LocationDetails extends Component {
                                         }}
                                         showsMyLocationButton={false}
                                         style={s.mapHeight}
-                                        provider = { MapView.PROVIDER_GOOGLE }
+                                        provider={MapView.PROVIDER_GOOGLE}
                                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                     >
                                         <MapView.Marker
@@ -344,24 +347,24 @@ class LocationDetails extends Component {
                                     <View style={s.locationContainer}>
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.text2,s.fontSize16,s.marginRight,s.opacity09]}>{location.street}</Text>
+                                                <Text style={[s.text2, s.fontSize16, s.marginRight, s.opacity09]}>{location.street}</Text>
 
-                                                <Text style={[s.text2,s.fontSize16,s.marginB8,s.marginRight,s.opacity09]}>{cityState} {location.zip}</Text>
+                                                <Text style={[s.text2, s.fontSize16, s.marginB8, s.marginRight, s.opacity09]}>{cityState} {location.zip}</Text>
 
-                                                {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13,s.text3,s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
+                                                {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13, s.text3, s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
-                                                {location.phone ? <View style={{flexDirection: "row"}}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
+                                                {location.phone ? <View style={{ flexDirection: "row" }}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
 
-                                                {location.website ? <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link,s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
+                                                {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Operated by:
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by:
                                                         <Text style={s.text3}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text></View> : null
                                                 }
 
                                                 {location.date_last_updated ?
-                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2,s.fontSize13,s.marginB8,s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by` }{` ${location.last_updated_by_username}`}</Text></Text></View>
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by`}{` ${location.last_updated_by_username}`}</Text></Text></View>
                                                     : null
                                                 }
 
@@ -369,7 +372,7 @@ class LocationDetails extends Component {
 
                                             {location.location_type_id ?
                                                 <View style={s.locationTypeContainer}>
-                                                    {locationTrackingServicesEnabled && <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14,s.text2,s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
+                                                    {locationTrackingServicesEnabled && <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14, s.text2, s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
                                                     <View>
                                                         <Icon
                                                             name={locationIcon}
@@ -377,15 +380,15 @@ class LocationDetails extends Component {
                                                             color={theme.pink3}
                                                             size={46}
                                                         />
-                                                        <Text style={[{textAlign: 'center'},s.fontSize14,s.text2,s.opacity09]}>{locationTypeName}</Text>
+                                                        <Text style={[{ textAlign: 'center' }, s.fontSize14, s.text2, s.opacity09]}>{locationTypeName}</Text>
                                                     </View>
                                                 </View> : null
                                             }
                                         </View>
-                                        <View style={{width:'100%',paddingRight:10,paddingBottom:5}}>
+                                        <View style={{ width: '100%', paddingRight: 10, paddingBottom: 5 }}>
                                             {location.description ?
-                                                <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='notebook-outline' style={s.metaIcon} />
-                                                    <Text style={[s.text3,s.fontSize13]}>{location.description}</Text>
+                                                <View style={{ flexDirection: "row", paddingRight: 5 }}><MaterialCommunityIcons name='notebook-outline' style={s.metaIcon} />
+                                                    <Text style={[s.text3, s.fontSize13]}>{location.description}</Text>
                                                 </View> : null
                                             }
                                         </View>
@@ -396,20 +399,20 @@ class LocationDetails extends Component {
                                             <Pressable
                                                 key={machine.id}
                                                 onPress={() => {
-                                                    this.props.navigation.navigate('MachineDetails', {machineName: machine.name})
+                                                    this.props.navigation.navigate('MachineDetails', { machineName: machine.name })
                                                     this.props.setCurrentMachine(machine.id)
                                                 }}
                                             >
                                                 {({ pressed }) => (
-                                                    <View style={[s.machineListContainer,pressed ? s.pressed : s.notPressed]}>
+                                                    <View style={[s.machineListContainer, pressed ? s.pressed : s.notPressed]}>
                                                         {this.getTitle(machine, s)}
                                                         {machine.condition_date ?
                                                             <View style={s.condition}>
-                                                                <View style={{flexDirection: "row"}}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} />
-                                                                    {machine.condition_date ? <Text style={[s.fontSize13,s.text3]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
+                                                                <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} />
+                                                                    {machine.condition_date ? <Text style={[s.fontSize13, s.text3]}>{`Updated: ${moment(machine.condition_date, 'YYYY-MM-DD').format('MMM DD, YYYY')}`}</Text> : null}
                                                                 </View>
-                                                                <View style={{flexDirection: "row",paddingTop: 10}}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
-                                                                    {machine.condition ? <Text style={[s.text3,s.opacity09,s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
+                                                                <View style={{ flexDirection: "row", paddingTop: 10 }}><MaterialCommunityIcons name='comment-quote-outline' style={s.metaIcon} />
+                                                                    {machine.condition ? <Text style={[s.text3, s.opacity09, s.fontSize12]}>{`"${machine.condition.length < 100 ? machine.condition : `${machine.condition.substr(0, 100)}...`}"${machine.last_updated_by_username && ` - ${machine.last_updated_by_username}`}`}</Text> : null}
                                                                 </View>
                                                             </View> : null
                                                         }
@@ -421,7 +424,7 @@ class LocationDetails extends Component {
                                 </View>
                             </Screen>
                             <Pressable
-                                style={({ pressed }) => [{},s.toolsIconButton,pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
+                                style={({ pressed }) => [{}, s.toolsIconButton, pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
                                     this.setShowLocationToolsModal(true)
                                 }}
@@ -430,7 +433,7 @@ class LocationDetails extends Component {
                                     name={'tools'}
                                     color={theme.white}
                                     size={28}
-                                    style={{justifyContent:'center',alignSelf:'center'}}
+                                    style={{ justifyContent: 'center', alignSelf: 'center' }}
                                 />
                             </Pressable>
                         </View>
@@ -616,7 +619,7 @@ const getStyles = theme => StyleSheet.create({
         height: 36,
         width: 36,
         alignSelf: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         top: deviceWidth < 325 ? 80 : 120,
         shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
@@ -710,7 +713,7 @@ const getStyles = theme => StyleSheet.create({
         right: 20,
         zIndex: 100,
         alignSelf: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         borderRadius: 29,
         height: 58,
         width: 58,
@@ -756,7 +759,7 @@ LocationDetails.propTypes = {
     updateCoordinatesAndGetLocations: PropTypes.func,
 }
 
-const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user})
+const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user })
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),

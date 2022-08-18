@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Keyboard } from 'react-native'
-import { HeaderBackButton as HeaderBackButtonReactNavigation } from 'react-navigation-stack'
+import { HeaderBackButton as HeaderBackButtonReactNavigation } from '@react-navigation/stack'
 import { ThemeContext } from '../theme-context'
 
 const HeaderBackButton = ({navigation, title}) => {

@@ -14,8 +14,7 @@ import {
     ButtonGroup,
 } from 'react-native-elements'
 import { ThemeContext } from '../theme-context'
-import { MaterialIcons } from '@expo/vector-icons'
-import { HeaderBackButton, ActivityIndicator } from '../components'
+import { ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'
 
 const moment = require('moment')
@@ -33,28 +32,6 @@ class Events extends Component {
         radius: 50,
     }
 
-    static navigationOptions = ({ navigation, theme }) => {
-        return {
-            drawerLabel: 'Events',
-            drawerIcon: () => <MaterialIcons name='event-note' style={{fontSize: 24,color: '#bec2e6'}} />,
-            headerLeft: () => <HeaderBackButton navigation={navigation} />,
-            title: 'Nearby Events',
-            headerRight: () =><View style={{padding:6}}></View>,
-            headerStyle: {
-                backgroundColor: theme === 'dark' ? '#1d1c1d' : '#f5f5ff',
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowColor: 'transparent'
-            },
-            headerTitleStyle: {
-                textAlign: 'center',
-                fontFamily: 'boldFont',
-            },
-            headerTintColor: theme === 'dark' ? '#fee7f5' : '#616182',
-            gestureEnabled: true
-        }
-    }
-
     updateIdx = (selectedIdx) => {
         const radiusArray = [50, 100, 150, 200, 250]
         const radius = radiusArray[selectedIdx]
@@ -68,7 +45,7 @@ class Events extends Component {
             const data = await getIfpaData(this.state.address, radius, distanceUnit)
             this.setState({ error: false, events: data.calendar ? data.calendar : [], gettingEvents: false, refetchingEvents: false })
         }
-        catch(e) {
+        catch (e) {
             this.setState({ error: true, gettingEvents: false, refetchingEvents: false })
         }
     }
@@ -94,26 +71,26 @@ class Events extends Component {
                 this.setState({ address })
                 this.fetchEvents(50)
             })
-            .catch(() => this.setState({ error: true, gettingEvents: false}))
+            .catch(() => this.setState({ error: true, gettingEvents: false }))
     }
 
-    render(){
+    render() {
         const { events, gettingEvents, error, selectedIdx, radius, refetchingEvents } = this.state
         const distanceUnit = this.props.user.unitPreference ? 'km' : 'mi'
         const buttons = [`50 ${distanceUnit}`, `100 ${distanceUnit}`, `150 ${distanceUnit}`, `200 ${distanceUnit}`, `250 ${distanceUnit}`]
 
-        return(
+        return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <View style={{flex:1,backgroundColor: theme.base1}}>
+                        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                             {gettingEvents ?
                                 <View style={s.background}>
                                     <ActivityIndicator />
                                 </View> :
                                 error ?
-                                    <Text style={{textAlign:'center',fontFamily: 'boldFont',marginTop:15}}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
+                                    <Text style={{ textAlign: 'center', fontFamily: 'boldFont', marginTop: 15 }}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
                                     <>
                                         <View style={s.header}>
                                             <ButtonGroup
@@ -130,7 +107,7 @@ class Events extends Component {
                                         {refetchingEvents ?
                                             <ActivityIndicator /> :
                                             events.length > 0 ?
-                                                <View style={{flex: 1,backgroundColor: theme.base1}}>
+                                                <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                                                     <Text style={s.sourceText}>
                                                         These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
@@ -142,20 +119,20 @@ class Events extends Component {
                                                             const end_date = moment(item.end_date, 'YYYY-MM-DD').format('MMM DD, YYYY')
                                                             return (
                                                                 <Pressable
-                                                                    style={({ pressed }) => [{},s.cardContainer,pressed ? s.pressed : s.notPressed]}
+                                                                    style={({ pressed }) => [{}, s.cardContainer, pressed ? s.pressed : s.notPressed]}
                                                                     onPress={() => Linking.openURL(item.website)}
                                                                 >
                                                                     <View style={s.locationNameContainer}>
                                                                         <Text style={s.locationName}>{item.tournament_name}</Text>
                                                                     </View>
-                                                                    <Text style={[s.center,s.cardTextStyle,s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
-                                                                    <Text style={[s.cardTextStyle,s.margin,s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
-                                                                    <Text style={[s.address,s.margin,s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text>: ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
+                                                                    <Text style={[s.center, s.cardTextStyle, s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                    <Text style={[s.cardTextStyle, s.margin, s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
+                                                                    <Text style={[s.address, s.margin, s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text> : ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                                                 </Pressable>
                                                             )
                                                         }}
                                                         keyExtractor={event => `${event.calendar_id}`}
-                                                    /></View>  :
+                                                    /></View> :
                                                 <Text style={s.problem}>{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
                                         }
                                     </>
