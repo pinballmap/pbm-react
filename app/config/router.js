@@ -34,9 +34,6 @@ import Resources from '../screens/Resources'
 import FindCountry from '../screens/FindCountry'
 
 import { DrawerMenu } from '../components'
-import { 
-    HeaderBackButton, 
-} from '../components'
 
 const Stack = createStackNavigator()
 
@@ -52,10 +49,10 @@ const TabsOptionsStyle = {
     },
 }
 
-function MapNavigator () {
+function MapNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Map" component={Map} options={{headerShown: false}} />
+            <Stack.Screen name="Map" component={Map} options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }
@@ -63,12 +60,12 @@ function MapNavigator () {
 function SavedStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
-            <Stack.Screen 
-                name="Saved" 
-                component={Saved} 
+            <Stack.Screen
+                name="Saved"
+                component={Saved}
                 options={{
                     title: 'Saved Locations',
-                }} 
+                }}
             />
         </Stack.Navigator>
     )
@@ -77,14 +74,14 @@ function SavedStackNavigator() {
 function ActivityStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
-            <Stack.Screen 
-                name="RecentActivity" 
-                component={RecentActivity} 
+            <Stack.Screen
+                name="RecentActivity"
+                component={RecentActivity}
                 options={{
                     headerTitleAlign: 'center',
                     title: 'Recent Nearby Activity',
                 }}
-                />
+            />
         </Stack.Navigator>
     )
 }
@@ -92,8 +89,8 @@ function ActivityStackNavigator() {
 function ProfileStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
-            <Stack.Screen 
-                name="UserProfile" 
+            <Stack.Screen
+                name="UserProfile"
                 component={UserProfile}
                 options={{
                     title: 'Your Profile',
@@ -105,78 +102,79 @@ function ProfileStackNavigator() {
 
 function MenuStackNavigator() {
     return (
-    <Stack.Navigator>
-        <Stack.Screen name="Menu" component={DrawerMenu} />
-    </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="Menu" component={DrawerMenu} />
+        </Stack.Navigator>
     )
 }
 
 const Tab = createBottomTabNavigator()
 
 function BottomTabNavigator() {
-    const { colors } = useTheme();
+    const { colors } = useTheme()
 
     return (
-        <Tab.Navigator 
-            screenOptions={{ 
-                gestureEnabled: true }}            
-            >
-            <Tab.Screen 
-                name="Map" 
-                component={MapNavigator} 
+        <Tab.Navigator
+            screenOptions={{
+                gestureEnabled: true
+            }}
+        >
+            <Tab.Screen
+                name="Map"
+                component={MapNavigator}
                 options={{
                     headerShown: false,
-                    tabBarLabel:({ focused })=>(<Text style={[{color:focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont'},s.labelText]}>Map</Text>),
+                    tabBarLabel: ({ focused }) => (<Text style={[{ color: focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont' }, s.labelText]}>Map</Text>),
                     tabBarIcon: ({ focused }) => (
                         <MaterialIcons name='search' size={(focused) ? 30 : 28} color={focused ? colors.activeTab : colors.inactiveTab} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="Saved" 
-                component={SavedStackNavigator} 
+            <Tab.Screen
+                name="Saved"
+                component={SavedStackNavigator}
                 options={{
-                    headerShown: true,
-                    tabBarLabel:({ focused })=>(<Text style={[{color:focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont'},s.labelText]}>Saved</Text>),
+                    headerShown: false,
+                    tabBarLabel: ({ focused }) => (<Text style={[{ color: focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont' }, s.labelText]}>Saved</Text>),
                     tabBarIcon: ({ focused }) => (
                         <MaterialCommunityIcons name='heart-outline' size={(focused) ? 30 : 28} color={focused ? colors.activeTab : colors.inactiveTab} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="RecentActivity" 
-                component={ActivityStackNavigator} 
+            <Tab.Screen
+                name="RecentActivity"
+                component={ActivityStackNavigator}
                 options={{
-                    headerShown: true,
-                    tabBarLabel:({ focused })=>(<Text style={[{color:focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont'},s.labelText]}>Activity</Text>),
+                    headerShown: false,
+                    tabBarLabel: ({ focused }) => (<Text style={[{ color: focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont' }, s.labelText]}>Activity</Text>),
                     tabBarIcon: ({ focused }) => (
                         <MaterialCommunityIcons name='newspaper-variant-outline' size={(focused) ? 30 : 28} color={focused ? colors.activeTab : colors.inactiveTab} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="UserProfile" 
+            <Tab.Screen
+                name="UserProfile"
                 component={ProfileStackNavigator}
                 options={{
-                    headerShown: true,
-                    tabBarLabel:({ focused })=>(<Text style={[{color:focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont'},s.labelText]}>You</Text>),
+                    headerShown: false,
+                    tabBarLabel: ({ focused }) => (<Text style={[{ color: focused ? colors.activeTab : colors.inactiveTab, fontFamily: focused ? 'regularBoldFont' : 'regularFont' }, s.labelText]}>You</Text>),
                     tabBarIcon: ({ focused }) => (
                         <MaterialCommunityIcons name='account-circle-outline' size={(focused) ? 30 : 28} color={focused ? colors.activeTab : colors.inactiveTab} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="Menu" 
+            <Tab.Screen
+                name="Menu"
                 component={MenuStackNavigator}
                 listeners={({ navigation }) => ({
                     tabPress: e => {
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-              
-                      e.preventDefault()
+                        navigation.dispatch(DrawerActions.toggleDrawer())
+
+                        e.preventDefault()
                     }
                 })}
                 options={{
-                    tabBarLabel:() => (<Text style={[{color:colors.inactiveTab},s.labelText]}>More</Text>),
+                    tabBarLabel: () => (<Text style={[{ color: colors.inactiveTab }, s.labelText]}>More</Text>),
                     tabBarIcon: () => (<MaterialIcons name='more-horiz' size={28} color={colors.inactiveTab} />),
                 }}
             />
@@ -185,10 +183,11 @@ function BottomTabNavigator() {
 }
 
 function MapStack() {
+    const { colors } = useTheme()
     return (
-        <Stack.Navigator 
-            screenOptions={({ navigation }) => ({
-                headerLeft: () => (<HeaderBackButton navigation={navigation} />),
+        <Stack.Navigator
+            screenOptions={() => ({
+                headerTintColor: colors.activeTab,
                 headerTitleAlign: 'center',
                 gestureDirection: 'horizontal',
                 gestureEnabled: true,
@@ -200,36 +199,35 @@ function MapStack() {
                 headerTitleStyle: {
                     textAlign: 'center',
                     fontFamily: 'boldFont',
+                    color: colors.text
                 },
+                headerBackTitleVisible: false
             })}
         >
-            <Stack.Screen name="Map" component={BottomTabNavigator} options={{headerShown: false}} />
+            <Stack.Screen name="Map" component={BottomTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Contact" component={Contact} />
-            <Stack.Screen name="SignupLogin" component={SignupLogin} options={{headerShown: false}} />
-            <Stack.Screen name="LocationList" component={LocationList} options={{title: 'Location List'}} />
-            <Stack.Screen name="LocationDetails" component={LocationDetails} options= {{ headerTransparent: true, headerTitle: null }} />
-            <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}} />
-            <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-            <Stack.Screen name="FilterMap" component={FilterMap} options={{title: 'Apply Filters to the Map'}} />
-            <Stack.Screen name="MachineDetails" component={MachineDetails} options= {{ headerTitle: null }}/>
-            <Stack.Screen name="SuggestLocation" component={SuggestLocation} options={{title: 'Submit Location'}} />
-            <Stack.Screen name="Events" component={Events} options={{title: 'Nearby Events'}} />
+            <Stack.Screen name="SignupLogin" component={SignupLogin} options={{ headerShown: false }} />
+            <Stack.Screen name="LocationList" component={LocationList} options={{ headerBackTitleVisible: true, title: 'Location List' }} />
+            <Stack.Screen name="LocationDetails" component={LocationDetails} options={{ headerBackTitleVisible: true, headerTransparent: true, title: null }} />
+            <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="FilterMap" component={FilterMap} options={{ headerBackTitleVisible: true, title: 'Apply Filters to the Map' }} />
+            <Stack.Screen name="MachineDetails" component={MachineDetails} options={{ title: null }} />
+            <Stack.Screen name="SuggestLocation" component={SuggestLocation} options={{ title: 'Submit Location' }} />
+            <Stack.Screen name="Events" component={Events} options={{ title: 'Nearby Events' }} />
             <Stack.Screen name="FAQ" component={FAQ} />
-            <Stack.Screen name="Blog" component={Blog} /> 
-            <Stack.Screen name="Resources" component={Resources} options={{title: 'Pinball Resources'}} />
-            <Stack.Screen name="About" component={About} options={{title: 'About Pinball Map'}} />
+            <Stack.Screen name="Blog" component={Blog} />
+            <Stack.Screen name="Resources" component={Resources} options={{ title: 'Pinball Resources' }} />
+            <Stack.Screen name="About" component={About} options={{ title: 'About Pinball Map' }} />
             <Stack.Screen name="Podcast" component={Podcast} />
-            <Stack.Screen name="FindMachine" component={FindMachine} options={{
-                //title: 'Select Machine to Add'
-                //title: route.params?.machineFilter ? 'Select Machine to Filter' : 'Select Machine to Add',
-                }} />
-            <Stack.Screen name="EditLocationDetails" component={EditLocationDetails} options={{title: 'Edit Location Details'}} />
-            <Stack.Screen name="PasswordReset" component={PasswordReset} options={{title: 'Reset Your Password'}} />
-            <Stack.Screen name="ResendConfirmation" component={ResendConfirmation} options={{title: 'Resend Confirmation Email'}} />
-            <Stack.Screen name="FindOperator" component={FindOperator} options={{title: 'Select Operator'}} />
-            <Stack.Screen name="FindLocationType" component={FindLocationType} options={{title: 'Select Location Type'}} />
+            <Stack.Screen name="FindMachine" component={FindMachine} />
+            <Stack.Screen name="EditLocationDetails" component={EditLocationDetails} options={{ title: 'Edit Location Details' }} />
+            <Stack.Screen name="PasswordReset" component={PasswordReset} options={{ title: 'Reset Your Password' }} />
+            <Stack.Screen name="ResendConfirmation" component={ResendConfirmation} options={{ title: 'Resend Confirmation Email' }} />
+            <Stack.Screen name="FindOperator" component={FindOperator} options={{ title: 'Select Operator' }} />
+            <Stack.Screen name="FindLocationType" component={FindLocationType} options={{ title: 'Select Location Type' }} />
             <Stack.Screen name="Settings" component={Settings} />
-            <Stack.Screen name="FindCountry" component={FindCountry} options={{title: 'Select Country'}} />
+            <Stack.Screen name="FindCountry" component={FindCountry} options={{ title: 'Select Country' }} />
         </Stack.Navigator>
     )
 }
@@ -238,21 +236,26 @@ const Drawer = createDrawerNavigator()
 
 function DrawerNavigator() {
     return (
-        <Drawer.Navigator initialRouteName="Map" backBehavior="history" drawerPosition={'right'} drawerContent={(props) => <DrawerMenu {...props} />} > 
-            <Drawer.Screen 
-                name="Map" 
-                component={MapStack} 
+        <Drawer.Navigator initialRouteName="Map" backBehavior="history" drawerContent={(props) => <DrawerMenu {...props} />}
+            screenOptions={() => ({
+                drawerPosition: 'right',
+                drawerType: 'front'
+            })}
+        >
+            <Drawer.Screen
+                name="Map"
+                component={MapStack}
                 options={{
-                    headerShown: false, 
+                    headerShown: false,
                     gestureEnabled: true,
                     drawerIcon: () => (
-                        <MaterialIcons 
-                            name='search' 
+                        <MaterialIcons
+                            name='search'
                             size={24}
                             color={'#bec2e6'}
                         />
                     ),
-                }} 
+                }}
             />
         </Drawer.Navigator>
     )
