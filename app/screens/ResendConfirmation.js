@@ -6,7 +6,7 @@ import {
     Pressable,
     View
 } from 'react-native'
-import { Input } from 'react-native-elements'
+import { Input } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import {
     ConfirmationModal,

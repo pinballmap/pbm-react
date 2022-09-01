@@ -9,7 +9,7 @@ import {
     Text,
     View,
 } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import {
     loginLater,

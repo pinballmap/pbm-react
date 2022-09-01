@@ -7,7 +7,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { SearchBar } from 'react-native-elements'
+import { SearchBar } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'

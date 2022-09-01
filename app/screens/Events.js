@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import {
     ButtonGroup,
-} from 'react-native-elements'
+} from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import { ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'

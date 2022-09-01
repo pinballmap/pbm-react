@@ -11,7 +11,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons'
 import {
     ListItem,
-} from 'react-native-elements'
+} from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import {
     ActivityIndicator,

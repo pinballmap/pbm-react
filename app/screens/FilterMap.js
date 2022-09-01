@@ -5,7 +5,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import {
     DropDownButton,
@@ -132,7 +132,7 @@ const FilterMap = ({
                 />
                 {machine && machine.machine_group_id &&
                     <>
-                        <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine Version:</Text>
+                        <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine version:</Text>
                         <ButtonGroup
                             onPress={setFilterByMachineVersion}
                             selectedIndex={filterByMachineVersion ? 1 : 0}
@@ -166,7 +166,7 @@ const FilterMap = ({
                     title={operatorName}
                     onPress={() => goToFindOperator()}
                 />
-                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved Locations:</Text>
+                <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Only show my Saved locations:</Text>
                 <ButtonGroup
                     onPress={updateViewFavorites}
                     selectedIndex={viewByFavoriteLocations ? 1 : 0}

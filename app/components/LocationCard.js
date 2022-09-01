@@ -1,4 +1,4 @@
-import React, { useContext  } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
     StyleSheet,
@@ -6,7 +6,7 @@ import {
     Pressable,
     View,
 } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { Icon } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
@@ -29,27 +29,27 @@ const LocationCard = ({
     const { name: type, icon, library } = locationType
     const numMachines = machines.length
     const cityState = state ? `${city}, ${state}` : city
-    return(
+    return (
         <Pressable
-            style={({ pressed }) => [{},s.containerStyle,pressed ? s.pressed : s.notPressed]}
+            style={({ pressed }) => [{}, s.containerStyle, pressed ? s.pressed : s.notPressed]}
             onPress={() => navigation.navigate('LocationDetails', { id })}
         >
             <View style={s.flexi}>
-                <View style={{zIndex: 10,flex:1}}>
+                <View style={{ zIndex: 10, flex: 1 }}>
                     <View style={s.locationNameContainer}>
                         <Text style={s.locationName}>{locationName}</Text>
                     </View>
-                    <View style={{paddingHorizontal:10,paddingBottom:5}}>
-                        <Text style={[s.text2,s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                    <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
+                        <Text style={[s.text2, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
                         {type || distance ?
-                            <View style={{flexDirection: 'row',marginTop:4,marginLeft:5}}>
+                            <View style={{ flexDirection: 'row', marginTop: 4, marginLeft: 5 }}>
                                 {type ? <View style={s.vertAlign}><Icon
                                     name={icon}
                                     type={library}
                                     color={theme.indigo4}
                                     size={30}
                                     style={s.icon}
-                                /><Text style={[s.text3,s.marginH]}> {type}</Text></View> : null}
+                                /><Text style={[s.text3, s.marginH]}> {type}</Text></View> : null}
                                 {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={s.text3}> {distance}</Text></View> : null}
                             </View> : null
                         }
@@ -61,12 +61,13 @@ const LocationCard = ({
                                 const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                 return (
                                     <Text key={key} style={s.mName}>
-                                        <Text style={{fontFamily: 'boldFont',fontSize: 17}}>{title}</Text>
+                                        <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
                                         <Text style={s.text2}>{`${info}\n`}</Text>
                                     </Text>
-                                )})
+                                )
+                            })
                             }
-                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus,s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
+                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus, s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                         </View>
                     </View>
                 </View>

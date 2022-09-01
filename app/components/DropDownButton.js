@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button } from '@rneui/base'
 import { MaterialIcons } from '@expo/vector-icons'
 import { ThemeContext } from '../theme-context'
 

@@ -15,7 +15,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {
     Button,
     Input,
-} from 'react-native-elements'
+} from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'

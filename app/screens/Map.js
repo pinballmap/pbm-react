@@ -8,7 +8,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button } from '@rneui/base'
 import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'

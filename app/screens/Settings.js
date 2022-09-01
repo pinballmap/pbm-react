@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { connect } from "react-redux"
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import { Screen, Text } from '../components'
 import { retrieveItem } from '../config/utils'

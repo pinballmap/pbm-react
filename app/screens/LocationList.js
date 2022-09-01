@@ -7,7 +7,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
+import { ButtonGroup } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import {
     ConfirmationModal,

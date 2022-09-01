@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
     Input,
     ListItem,
-} from 'react-native-elements'
+} from '@rneui/base'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import { getData } from '../config/request'
@@ -36,7 +36,7 @@ import {
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { retrieveItem } from '../config/utils'
-import { ThemeContext }  from '../theme-context'
+import { ThemeContext } from '../theme-context'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import ActivityIndicator from './ActivityIndicator'
 
@@ -111,8 +111,8 @@ class Search extends Component {
             // In order to show all locations for a given city, we must determine the min/max lat/lon
             // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
             // the defined city, we make a fresh request for locations to get any locations we be missing.
-            const {maxLat, minLat, maxLon, minLon} = locations.reduce((prev, cur) => {
-                let {minLat, maxLat, minLon, maxLon} = prev
+            const { maxLat, minLat, maxLon, minLon } = locations.reduce((prev, cur) => {
+                let { minLat, maxLat, minLon, maxLon } = prev
                 if (!maxLat || cur.lat > maxLat) {
                     maxLat = parseFloat(cur.lat)
                 }
@@ -175,7 +175,7 @@ class Search extends Component {
 
     clearSearchState = (search) => {
         this.changeQuery('')
-        this.props.setSearchBarText(search.value ? search.value : search.full_name )
+        this.props.setSearchBarText(search.value ? search.value : search.full_name)
         this.setState({ searchModalVisible: false })
         if (search) {
             const duplicateIndex = this.isDuplicate(search)
@@ -208,7 +208,7 @@ class Search extends Component {
 
     renderRegionRow = (region, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
+            style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
             key={region.id}
             onPress={() => this.getLocationsByRegion(region)}
         >
@@ -227,7 +227,7 @@ class Search extends Component {
 
     renderCityRow = (location, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
+            style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
             key={location.value}
             onPress={() => this.getLocationsByCity(location)}
         >
@@ -246,7 +246,7 @@ class Search extends Component {
 
     renderLocationRow = (location, s) => (
         <Pressable
-            style={({ pressed }) => [{},pressed ? s.pressed : s.notPressed]}
+            style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
             key={location.id}
             onPress={() => this.goToLocation(location)}
         >
@@ -262,7 +262,7 @@ class Search extends Component {
 
     renderRecentSearchHistory = (s) => (
         <View>
-            <ListItem containerStyle={[{alignItems:'center'},s.listContainerStyle]}>
+            <ListItem containerStyle={[{ alignItems: 'center' }, s.listContainerStyle]}>
                 <ListItem.Content>
                     <ListItem.Title style={s.searchHistoryTitle}>
                         {'Recent Search History'}
@@ -289,8 +289,8 @@ class Search extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.searchModalVisible && !prevState.searchModalVisible) {
             retrieveItem('searchHistory')
-                .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHistory : [] }))
-                .catch(() => this.setState({ recentSearchHistory : [] }))
+                .then(recentSearchHistory => recentSearchHistory ? this.setState({ recentSearchHistory }) : this.setState({ recentSearchHistory: [] }))
+                .catch(() => this.setState({ recentSearchHistory: [] }))
         }
     }
 
@@ -348,8 +348,8 @@ class Search extends Component {
                                                 {searching ? <ActivityIndicator /> : null}
                                                 {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
                                                 {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
-                                                {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null }
-                                                {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null }
+                                                {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null}
+                                                {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null}
                                             </ScrollView>
                                         </View>
                                     </SafeAreaView>
@@ -357,14 +357,14 @@ class Search extends Component {
                             </Modal>
                             <View style={s.searchMapContainer}>
                                 <Pressable
-                                    style={({ pressed }) => [{},s.searchMap,s.searchMapChild,pressed ? s.pressed : s.notPressed]}
+                                    style={({ pressed }) => [{}, s.searchMap, s.searchMapChild, pressed ? s.pressed : s.notPressed]}
                                     onPress={() => this.setState({ searchModalVisible: true })}
                                 >
                                     <MaterialIcons name='search' size={25} style={s.searchIcon} />
                                     <Text numberOfLines={1} style={s.inputPlaceholder}>{searchBarText ? searchBarText : 'City, Address, Location...'}</Text>
                                 </Pressable>
                                 <Pressable
-                                    style={({ pressed }) => [{},s.buttonContainerStyle,s.searchMapChild,pressed ? s.filterPressed : s.filterNotPressed]}
+                                    style={({ pressed }) => [{}, s.buttonContainerStyle, s.searchMapChild, pressed ? s.filterPressed : s.filterNotPressed]}
                                     onPress={() => this.props.navigate('FilterMap')}
                                 >
                                     <Entypo name='sound-mix' size={20} style={s.filterIcon} />
