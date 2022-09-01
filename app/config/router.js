@@ -52,7 +52,7 @@ const TabsOptionsStyle = {
 function MapNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Map" component={Map} options={{ headerShown: false }} />
+            <Stack.Screen name="MapNavStack" title="Map" component={Map} options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }
@@ -61,7 +61,7 @@ function SavedStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
             <Stack.Screen
-                name="Saved"
+                name="SavedStack"
                 component={Saved}
                 options={{
                     title: 'Saved Locations',
@@ -75,7 +75,7 @@ function ActivityStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
             <Stack.Screen
-                name="RecentActivity"
+                name="RecentActivityStack"
                 component={RecentActivity}
                 options={{
                     headerTitleAlign: 'center',
@@ -90,7 +90,7 @@ function ProfileStackNavigator() {
     return (
         <Stack.Navigator screenOptions={TabsOptionsStyle}>
             <Stack.Screen
-                name="UserProfile"
+                name="UserProfileStack"
                 component={UserProfile}
                 options={{
                     title: 'Your Profile',
@@ -120,7 +120,8 @@ function BottomTabNavigator() {
             }}
         >
             <Tab.Screen
-                name="Map"
+                name="MapTab"
+                title="Map"
                 component={MapNavigator}
                 options={{
                     headerShown: false,
@@ -204,7 +205,7 @@ function MapStack() {
                 headerBackTitleVisible: false
             })}
         >
-            <Stack.Screen name="Map" component={BottomTabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="MapStack" component={BottomTabNavigator} options={{ title: "Map", headerShown: false }} />
             <Stack.Screen name="Contact" component={Contact} />
             <Stack.Screen name="SignupLogin" component={SignupLogin} options={{ headerShown: false }} />
             <Stack.Screen name="LocationList" component={LocationList} options={{ headerBackTitleVisible: true, title: 'Location List' }} />
