@@ -21,7 +21,10 @@ import { login, loginLater } from '../actions/user_actions'
 import { postData } from '../config/request'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { PbmButton } from '../components'
+import {
+    ConfirmationModal,
+    PbmButton
+} from '../components'
 
 let deviceHeight = Dimensions.get('window').height
 
@@ -74,6 +77,8 @@ const Signup = ({ login, loginLater, navigation }) => {
         }
     }
 
+    const [modalVisible, setModalVisible] = useState(false)
+
     const submit = () => {
         // Reset error states upon a submission / resubmission
         setUsernameError(null)
@@ -119,8 +124,8 @@ const Signup = ({ login, loginLater, navigation }) => {
                     }
 
                     if (data.user) {
+                        setModalVisible(true)
                         login(data.user)
-                        navigation.navigate('Map')
                     }
                 })
                 .catch(err => {
@@ -134,6 +139,19 @@ const Signup = ({ login, loginLater, navigation }) => {
     return (
         <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled">
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
+                <ConfirmationModal visible={modalVisible}>
+                    <Text style={s.confirmText}>Please check your email and confirm your account.</Text>
+                    <View>
+                        <PbmButton
+                            title={"I Will!"}
+                            onPress={() => {
+                                setModalVisible(false)
+                                navigation.navigate('MapTab')
+                            }}
+                            containerStyle={s.buttonContainer}
+                        />
+                    </View>
+                </ConfirmationModal>
                 <View style={s.mask}>
                     <Pressable onPress={() => { Keyboard.dismiss() }}>
                         <View style={s.justify}>
@@ -217,7 +235,7 @@ const Signup = ({ login, loginLater, navigation }) => {
                             <Button
                                 onPress={() => {
                                     loginLater()
-                                    navigation.navigate('Map')
+                                    navigation.navigate('MapTab')
                                 }}
                                 titleStyle={s.textLink}
                                 buttonStyle={s.buttonMask}
@@ -308,6 +326,19 @@ const getStyles = theme => StyleSheet.create({
     },
     disabledTitleStyle: {
         color: theme.pink3
+    },
+    confirmText: {
+        textAlign: 'center',
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        fontSize: 18
+    },
+    buttonContainer: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 

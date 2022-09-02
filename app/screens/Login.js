@@ -64,7 +64,7 @@ class Login extends Component {
                 if (data.user) {
                     this.props.login(data.user)
                     this.props.getFavoriteLocations(data.user.id)
-                    this.props.navigation.navigate('Map')
+                    this.props.navigation.navigate('MapTab')
                 }
             })
             .catch(err => this.setState({ errors: true, apiErrorMsg: err }))
@@ -147,7 +147,7 @@ class Login extends Component {
                                             <Button
                                                 onPress={() => {
                                                     this.props.loginLater()
-                                                    this.props.navigation.navigate('Map')
+                                                    this.props.navigation.navigate('MapTab')
                                                 }}
                                                 titleStyle={s.textLink}
                                                 buttonStyle={s.buttonMask}

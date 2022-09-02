@@ -66,7 +66,7 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                     <Button
                         onPress={() => {
                             loginLater()
-                            navigation.navigate('Map')
+                            navigation.navigate('MapTab')
                         }}
                         title="Skip signing in"
                         accessibilityLabel="Skip signing in"
