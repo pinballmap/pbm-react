@@ -189,7 +189,7 @@ class LocationDetails extends Component {
                                             containerStyle={s.backgroundColor}
                                             onPress={async () => {
                                                 await Share.share({
-                                                    message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                                    message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
                                                 }) && this.setShowLocationToolsModal(false)
                                             }}>
                                             <Avatar>
@@ -306,7 +306,7 @@ class LocationDetails extends Component {
                                         style={({ pressed }) => [{}, s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={async () => {
                                             await Share.share({
-                                                message: `Checkout this pinball map location! https://pinballmap.com/map/?by_location_id=${location.id}`,
+                                                message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
                                             })
                                         }}
                                     >
