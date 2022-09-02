@@ -144,7 +144,8 @@ const getStyles = theme => StyleSheet.create({
     skipTitle: {
         color: theme.text,
         fontSize: 14,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "regularBoldFont"
     }
 })
 
