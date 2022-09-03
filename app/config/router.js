@@ -236,11 +236,13 @@ function MapStack() {
 const Drawer = createDrawerNavigator()
 
 function DrawerNavigator() {
+    const { colors } = useTheme()
     return (
         <Drawer.Navigator initialRouteName="Map" backBehavior="history" drawerContent={(props) => <DrawerMenu {...props} />}
             screenOptions={() => ({
                 drawerPosition: 'right',
-                drawerType: 'front'
+                drawerType: 'front',
+                drawerActiveBackgroundColor: colors.background
             })}
         >
             <Drawer.Screen
