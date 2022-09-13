@@ -18,7 +18,7 @@ export default {
         updates: {
             enabled: false
         },
-        version: "5.2.11",
+        version: "5.2.12",
         slug: "pbm-app",
         name: "Pinball Map",
         scheme: "pinballmap",
@@ -26,11 +26,20 @@ export default {
         privacy: "public",
         githubUrl: "https://github.com/pinballmap/pbm-react/",
         primaryColor: "#ebecff",
+        "extra": {
+            "eas": {
+                "projectId": "7488ea00-6c89-11e9-8ab8-0157f5861c1f"
+            }
+        },
+        "plugins": [
+            "sentry-expo"
+        ],
+        "owner": "pinballmap",
         ios: {
             bundleIdentifier: "net.isaacruiz.ppm",
             userInterfaceStyle: "automatic",
             icon: "app/assets/images/ios-icon.png",
-            buildNumber: "109",
+            buildNumber: "112",
             supportsTablet: true,
             infoPlist: {
                 NSLocationWhenInUseUsageDescription: "Allow access to device location to show nearby places with pinball machines"
