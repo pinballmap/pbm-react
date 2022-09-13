@@ -142,7 +142,7 @@ const getStyles = theme => StyleSheet.create({
         height: deviceHeight
     },
     skipTitle: {
-        color: theme.text,
+        color: '#7f7fa0',
         fontSize: 14,
         textAlign: "center",
         fontFamily: "regularBoldFont"
