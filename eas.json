@@ -5,13 +5,19 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://www.pinballmap.com/api/v1"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
     "production": {
-      "distribution": "store"
+      "distribution": "store",
+      "env": {
+        "API_URL": "https://www.pinballmap.com/api/v1"
+      }
     }
   },
   "submit": {

@@ -34,7 +34,6 @@ export default {
         "plugins": [
             "sentry-expo"
         ],
-        "owner": "pinballmap",
         ios: {
             bundleIdentifier: "net.isaacruiz.ppm",
             userInterfaceStyle: "automatic",
