@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import MapView from 'react-native-maps'
+import * as MapView from 'react-native-maps'
 import {
     Dimensions,
     Image,
@@ -14,8 +14,8 @@ import Text from './PbmText'
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 let deviceWidth = Dimensions.get('window').width
 
-const MarkerDot = ({numMachines}) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines}/> : null
-const MarkerHeart = ({numMachines}) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
+const MarkerDot = ({ numMachines }) => Platform.OS === 'ios' ? <IosMarker numMachines={numMachines} /> : null
+const MarkerHeart = ({ numMachines }) => Platform.OS === 'ios' ? <IosHeartMarker numMachines={numMachines} /> : <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
 
 MarkerDot.propTypes = {
     numMachines: PropTypes.number,
@@ -45,7 +45,7 @@ const CustomMapMarker = ({ marker, navigation }) => {
                         <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${street}, ${cityState} ${zip}`}</Text>
                         {Platform.OS === 'android' ?
-                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${machine_names.length} machine${machine_names.length >1 ? 's': ''}`}</Text>
+                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${machine_names.length} machine${machine_names.length > 1 ? 's' : ''}`}</Text>
                             : null
                         }
                     </View>

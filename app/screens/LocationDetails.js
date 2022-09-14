@@ -12,7 +12,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import MapView from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import openMap from 'react-native-open-maps'
 import {
     Avatar,
@@ -327,7 +327,7 @@ class LocationDetails extends Component {
                                         }}
                                         showsMyLocationButton={false}
                                         style={s.mapHeight}
-                                        provider={MapView.PROVIDER_GOOGLE}
+                                        provider={PROVIDER_GOOGLE}
                                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                     >
                                         <MapView.Marker

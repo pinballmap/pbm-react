@@ -12,7 +12,7 @@ import { Button } from '@rneui/base'
 import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
-import MapView from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
@@ -210,7 +210,7 @@ class Map extends Component {
                     showsUserLocation={true}
                     moveOnMarkerPress={false}
                     showsMyLocationButton={false}
-                    provider={MapView.PROVIDER_GOOGLE}
+                    provider={PROVIDER_GOOGLE}
                     customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                 >
                     {mapLocations.map(l => <CustomMapMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
