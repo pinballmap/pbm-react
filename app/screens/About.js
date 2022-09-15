@@ -55,27 +55,27 @@ const About = ({ navigation, appAlert }) => {
                     </View>
                     <View style={s.child}>
                         <View style={s.appAlert}>
-                            <Text style={[{ textAlign: 'center', color: theme.text3 }, s.bold]}>Message of the Day</Text>
+                            <Text style={[{ textAlign: 'center', color: theme.text3 }, s.boldHeader]}>Message of the Day</Text>
                             <Text style={[{ color: theme.text3 }, s.text]}>{appAlert}</Text>
                         </View>
 
                         <Text style={s.text}>Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines.</Text>
 
-                        <Text style={s.text}>We currently list {formatNumWithCommas(stats.num_locations)} locations and {formatNumWithCommas(stats.num_lmxes)} machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
+                        <Text style={s.text}>We currently list <Text style={s.boldText}>{formatNumWithCommas(stats.num_locations)}</Text> locations and <Text style={s.boldText}>{formatNumWithCommas(stats.num_lmxes)}</Text> machines. You can update the map using this app or the website: <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com')}>pinballmap.com</Text>. The data is managed by over 100 administrators and thousands of active users.</Text>
 
-                        <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text>. Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/pinballmap/pbm-react')}>{`this app's code`}</Text>.</Text>
+                        <Text style={s.text}>We supply the mapping data for the <Text style={s.textLink} onPress={() => Linking.openURL('https://sternpinball.com/pinball-locator/')}>{`Stern Pinball website`}</Text>, as well as the <Text style={s.textLink} onPress={() => Linking.openURL('https://pindigo.app/')}>{`Pindigo app`}</Text>. We also collaborate with <Text style={s.textLink} onPress={() => Linking.openURL('http://pintips.net')}>{`PinTips`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('http://matchplay.events')}>{`MatchPlay Events`}</Text> and <Text style={s.textLink} onPress={() => Linking.openURL('https://scorbit.io/')}>{`Scorbit`}</Text> and more! Want to collaborate on something? <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/api/v1/docs')}>We have an API</Text>. You can also contribute to <Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/pinballmap/pbm-react')}>{`this app's code`}</Text>.</Text>
 
                         <Text style={s.text}><Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. Or you can start a discussion about anything on our <Text onPress={() => Linking.openURL('https://github.com/pinballmap/pbm/discussions')} style={s.textLink}>{`Github discussion page`}</Text>.</Text>
 
                         <Text style={s.text}><Text onPress={() => navigation.navigate('Blog')} style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
 
-                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => Linking.openURL('http://pod.pinballmap.com')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
+                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => navigation.navigate('Podcast')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
 
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
 
-                        <Text style={s.text}>We have a couple of <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>shirts for sale</Text>.</Text>
+                        <Text style={s.text}>And finally, we've compiled some <Text style={[s.textLink, s.boldText]} onPress={() => navigation.navigate('Resources')}>{`additional pinball resources`}</Text>!</Text>
 
-                        <Text style={s.bold}>App Credits:</Text>
+                        <Text style={s.boldHeader}>App Credits:</Text>
                         <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
                         <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/ryantg')}>Ryan Gratzer</Text> (Design)</Text>
                         <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/scottwainstock')}>Scott Wainstock</Text> (API)</Text>
@@ -104,7 +104,7 @@ const About = ({ navigation, appAlert }) => {
                     }
                 </View>
             </Screen>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 
 }
@@ -146,7 +146,10 @@ const getStyles = theme => StyleSheet.create({
         lineHeight: 22,
         marginBottom: 10
     },
-    bold: {
+    boldText: {
+        fontFamily: 'boldFont',
+    },
+    boldHeader: {
         fontFamily: 'boldFont',
         fontSize: 18,
         marginBottom: 10

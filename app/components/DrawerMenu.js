@@ -83,22 +83,10 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
                 onPress={() => props.navigation.navigate('Map', { screen: 'FAQ' })}
             />
             <DrawerItem
-                label="Podcast"
-                labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialCommunityIcons name='radio-tower' size={24} color={'#bec2e6'} />}
-                onPress={() => props.navigation.navigate('Map', { screen: 'Podcast' })}
-            />
-            <DrawerItem
                 label="Blog"
                 labelStyle={{ color: colors.primary }}
                 icon={() => <MaterialCommunityIcons name='book-open-variant' size={24} color={'#bec2e6'} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Blog' })}
-            />
-            <DrawerItem
-                label="Resources"
-                labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialCommunityIcons name='star-face' size={24} color={'#bec2e6'} />}
-                onPress={() => props.navigation.navigate('Map', { screen: 'Resources' })}
             />
             <DrawerItem
                 label="Settings"
