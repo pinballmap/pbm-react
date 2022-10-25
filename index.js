@@ -57,11 +57,6 @@ const App = () => {
         regularItalicFont: Lato_400Regular_Italic,
         boldFont: Nunito_700Bold,
     })
-    const onLayoutRootView = useCallback(async () => {
-        if (fontsLoaded) {
-            await SplashScreen.hideAsync()
-        }
-    }, [fontsLoaded])
 
     if (!fontsLoaded) {
         return null
@@ -73,7 +68,6 @@ const App = () => {
             toggleDarkTheme,
             theme: selectedTheme === 'dark' ? dark : standard
         }}
-        onLayout={onLayoutRootView}
         >
             <Provider store={store}>
                 <AppWrapper>
