@@ -92,6 +92,7 @@ FindLocationType.propTypes = {
     locationTypes: PropTypes.object,
     locations: PropTypes.object,
     navigation: PropTypes.object,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ locations }) => ({ locations })

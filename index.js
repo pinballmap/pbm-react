@@ -59,12 +59,12 @@ const App = () => {
     })
     const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
-            await SplashScreen.hideAsync();
+            await SplashScreen.hideAsync()
         }
-    }, [fontsLoaded]);
+    }, [fontsLoaded])
 
     if (!fontsLoaded) {
-        return null;
+        return null
     }
 
     return (
@@ -73,7 +73,7 @@ const App = () => {
             toggleDarkTheme,
             theme: selectedTheme === 'dark' ? dark : standard
         }}
-            onLayout={onLayoutRootView}
+        onLayout={onLayoutRootView}
         >
             <Provider store={store}>
                 <AppWrapper>

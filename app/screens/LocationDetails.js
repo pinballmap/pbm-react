@@ -757,6 +757,7 @@ LocationDetails.propTypes = {
     removeFavoriteLocation: PropTypes.func,
     addFavoriteLocation: PropTypes.func,
     updateCoordinatesAndGetLocations: PropTypes.func,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user })

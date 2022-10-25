@@ -253,6 +253,7 @@ FilterMap.propTypes = {
     hasFilterSelected: PropTypes.bool,
     setMachineFilter: PropTypes.func,
     setMachineVersionFilter: PropTypes.func,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {

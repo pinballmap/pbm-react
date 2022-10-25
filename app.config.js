@@ -31,9 +31,6 @@ export default {
                 "projectId": "7488ea00-6c89-11e9-8ab8-0157f5861c1f"
             }
         },
-        "plugins": [
-            "sentry-expo"
-        ],
         ios: {
             bundleIdentifier: "net.isaacruiz.ppm",
             userInterfaceStyle: "automatic",

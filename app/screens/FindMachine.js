@@ -408,6 +408,7 @@ FindMachine.propTypes = {
     multiSelect: PropTypes.bool,
     setMachineFilter: PropTypes.func,
     mapLocations: PropTypes.array,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ location, machines, locations }) => ({

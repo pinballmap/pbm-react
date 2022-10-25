@@ -36,11 +36,11 @@ function EditLocationDetails({
     setSelectedOperator,
     ...props
 }) {
-    confirmEditLocationDetails = () => {
+    const confirmEditLocationDetails = () => {
         props.updateLocationDetails(navigation.goBack, phone, website, description)
     }
 
-    acceptError = () => {
+    const acceptError = () => {
         props.clearError()
         setShowEditLocationDetailsModal(false)
     }
@@ -279,6 +279,7 @@ EditLocationDetails.propTypes = {
     setSelectedOperator: PropTypes.func,
     setSelectedLocationType: PropTypes.func,
     clearSelectedState: PropTypes.func,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ error, locations, location, operators }) => ({ error, locations, location, operators })

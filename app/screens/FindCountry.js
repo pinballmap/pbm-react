@@ -93,6 +93,7 @@ const getStyles = theme => StyleSheet.create({
 
 FindCountry.propTypes = {
     navigation: PropTypes.object,
+    route: PropTypes.object,
 }
 
 export default FindCountry

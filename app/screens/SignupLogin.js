@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -10,7 +10,6 @@ import {
     View,
 } from 'react-native'
 import { Button } from '@rneui/base'
-import { ThemeContext } from '../theme-context'
 import {
     loginLater,
 } from '../actions'
@@ -19,8 +18,7 @@ import { formatNumWithCommas } from '../utils/utilityFunctions'
 let deviceHeight = Dimensions.get('window').height
 
 const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLater }) => {
-    const { theme } = useContext(ThemeContext)
-    const s = getStyles(theme)
+    const s = getStyles()
     return (
         <ImageBackground source={require('../assets/images/app_logo.jpg')} style={s.backgroundImage}>
             <View style={[s.mask, s.justify]}>
@@ -81,7 +79,7 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
     )
 }
 
-const getStyles = theme => StyleSheet.create({
+const getStyles = () => StyleSheet.create({
     mask: {
         flex: 1,
         backgroundColor: 'rgba(255,255,255,.8)',

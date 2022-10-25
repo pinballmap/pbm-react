@@ -58,7 +58,7 @@ function SuggestLocation({
     const [description, setDescription] = useState('')
     const [showSuggestLocationModal, setShowSuggestLocationModal] = useState(false)
 
-    confirmSuggestLocationDetails = () => {
+    const confirmSuggestLocationDetails = () => {
         const locationDetails = {
             locationName,
             street,
@@ -73,14 +73,14 @@ function SuggestLocation({
         props.suggestLocation(locationDetails)
     }
 
-    getDisplayText = machine => (
+    const getDisplayText = machine => (
         <Text style={{ fontSize: 16 }}>
             <Text style={{ fontFamily: 'boldFont', }}>{machine.name}</Text>
             <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
         </Text>
     )
 
-    acceptError = () => {
+    const acceptError = () => {
         props.clearError()
         setShowSuggestLocationModal(false)
     }
@@ -527,6 +527,7 @@ SuggestLocation.propTypes = {
     setSelectedOperator: PropTypes.func,
     setSelectedLocationType: PropTypes.func,
     resetSuggestLocation: PropTypes.func,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ error, location, locations, operators, user }) => ({ error, location, locations, operators, user })

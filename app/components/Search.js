@@ -511,6 +511,7 @@ Search.propTypes = {
     setSearchBarText: PropTypes.func,
     clearSearchBarText: PropTypes.func,
     fetchLocationAndUpdateMap: PropTypes.func,
+    updateCoordinatesAndGetLocations: PropTypes.func,
 }
 
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })

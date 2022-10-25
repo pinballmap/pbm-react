@@ -93,6 +93,7 @@ const getStyles = theme => StyleSheet.create({
 FindOperator.propTypes = {
     operators: PropTypes.object,
     navigation: PropTypes.object,
+    route: PropTypes.object,
 }
 
 const mapStateToProps = ({ operators }) => ({ operators })
