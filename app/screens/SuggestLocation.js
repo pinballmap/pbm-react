@@ -43,6 +43,11 @@ function SuggestLocation({
     route,
     setSelectedLocationType,
     setSelectedOperator,
+    clearError,
+    suggestLocation,
+    resetSuggestLocation,
+    location,
+    removeMachineFromList,
     ...props
 }) {
 
@@ -68,7 +73,7 @@ function SuggestLocation({
             website,
             description,
         }
-        props.suggestLocation(locationDetails)
+        suggestLocation(locationDetails)
     }
 
     const getDisplayText = machine => (
@@ -79,7 +84,7 @@ function SuggestLocation({
     )
 
     const acceptError = () => {
-        props.clearError()
+        clearError()
         setShowSuggestLocationModal(false)
     }
 
@@ -89,7 +94,7 @@ function SuggestLocation({
     const { locationTypes } = props.locations
     const { operators } = props.operators
 
-    const { isSuggestingLocation, locationSuggested, machineList = [], operator, locationType } = props.location
+    const { isSuggestingLocation, locationSuggested, machineList = [], operator, locationType } = location
 
     const locationTypeObj = locationTypes.find(type => type.id === locationType) || {}
     const { name: locationTypeName = 'Select location type' } = locationTypeObj
@@ -170,7 +175,7 @@ function SuggestLocation({
                                                         title={"OK"}
                                                         onPress={() => {
                                                             setShowSuggestLocationModal(false)
-                                                            props.resetSuggestLocation()
+                                                            resetSuggestLocation()
                                                             navigate('Map')
                                                         }}
                                                     />
@@ -371,7 +376,7 @@ function SuggestLocation({
                                             <ListItem
                                                 key={machine.id}
                                                 containerStyle={s.listContainerStyle}
-                                                onPress={() => props.removeMachineFromList(machine)}>
+                                                onPress={() => removeMachineFromList(machine)}>
                                                 <ListItem.Content>
                                                     <Icon>
                                                         {<MaterialIcons name='cancel' size={15} color={theme.indigo4} />}

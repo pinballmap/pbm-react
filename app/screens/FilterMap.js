@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -91,23 +91,22 @@ const FilterMap = ({
         setMachineVersionFilter(idx)
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (route.params?.setSelectedLocationType) {
             selectedLocationTypeFilter(route.params?.setSelectedLocationType)
         }
-    }, [route.params?.setSelectedLocationType, selectedLocationTypeFilter])
+    }, [route.params?.setSelectedLocationType])
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (route.params?.setSelectedOperator) {
             selectedOperatorFilter(route.params?.setSelectedOperator)
         }
-    }, [route.params?.setSelectedOperator, selectedOperatorFilter])
+    }, [route.params?.setSelectedOperator])
 
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             previous_screen: 'FilterMap',
             type: 'filter',
-            setSelectedLocationType: (id) => selectedLocationTypeFilter(id)
         })
     }
 
@@ -115,7 +114,6 @@ const FilterMap = ({
         navigation.navigate('FindOperator', {
             previous_screen: 'FilterMap',
             type: 'filter',
-            setSelectedOperator: (id) => selectedOperatorFilter(id)
         })
     }
 
