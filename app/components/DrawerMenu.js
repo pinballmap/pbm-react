@@ -28,7 +28,8 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
     const { colors } = useTheme()
 
     const s = getStyles(theme)
-
+    const iconSize = 24
+    const iconColor = '#bec2e6'
     const [modalVisible, setModalVisible] = useState(false)
 
     return (
@@ -55,43 +56,43 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
             <DrawerItem
                 label="Submit Location"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='add-location' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialIcons name='add-location' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'SuggestLocation' })}
             />
             <DrawerItem
                 label="Contact"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialCommunityIcons name='email-outline' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialCommunityIcons name='email-outline' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Contact' })}
             />
             <DrawerItem
                 label="About"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='info-outline' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialIcons name='info-outline' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'About' })}
             />
             <DrawerItem
                 label="Events"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='event-note' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialIcons name='event-note' size={iconSize} color={iconColor}/>}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Events' })}
             />
             <DrawerItem
                 label="FAQ"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='question-answer' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialIcons name='question-answer' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'FAQ' })}
             />
             <DrawerItem
                 label="Blog"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialCommunityIcons name='book-open-variant' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialCommunityIcons name='book-open-variant' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Blog' })}
             />
             <DrawerItem
                 label="Settings"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='settings' size={24} color={'#bec2e6'} />}
+                icon={() => <MaterialIcons name='settings' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Settings' })}
             />
             {loggedIn ?
