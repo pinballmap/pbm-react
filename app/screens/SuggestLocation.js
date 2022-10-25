@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -102,13 +102,13 @@ function SuggestLocation({
 
     const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (route.params?.setSelectedLocationType) {
             setSelectedLocationType(route.params?.setSelectedLocationType)
         }
     }, [route.params?.setSelectedLocationType])
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (route.params?.setSelectedOperator) {
             setSelectedOperator(route.params?.setSelectedOperator)
         }
