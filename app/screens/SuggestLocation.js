@@ -43,8 +43,6 @@ function SuggestLocation({
     route,
     setSelectedLocationType,
     setSelectedOperator,
-    setCountryName,
-    setCountryCode,
     ...props
 }) {
 
@@ -108,26 +106,18 @@ function SuggestLocation({
         if (route.params?.setSelectedLocationType) {
             setSelectedLocationType(route.params?.setSelectedLocationType)
         }
-    }, [route.params?.setSelectedLocationType, setSelectedLocationType])
+    }, [route.params?.setSelectedLocationType])
 
     React.useEffect(() => {
         if (route.params?.setSelectedOperator) {
             setSelectedOperator(route.params?.setSelectedOperator)
         }
-    }, [route.params?.setSelectedOperator, setSelectedOperator])
-
-    React.useEffect(() => {
-        if (route.params?.countryName) {
-            setCountryName(route.params?.setCountryName)
-            setCountryCode(route.params?.setCountryCode)
-        }
-    }, [route.params?.setCountryName, route.params?.setCountryCode, setCountryName, setCountryCode])
+    }, [route.params?.setSelectedOperator])
 
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             type: 'search',
             previous_screen: 'SuggestLocation',
-            setSelectedLocationType: (id) => setSelectedLocationType(id)
         })
     }
 
@@ -135,7 +125,6 @@ function SuggestLocation({
         navigation.navigate('FindOperator', {
             type: 'search',
             previous_screen: 'SuggestLocation',
-            setSelectedOperator: (id) => setSelectedOperator(id)
         })
     }
 
@@ -143,8 +132,6 @@ function SuggestLocation({
         navigation.navigate('FindCountry', {
             type: 'search',
             previous_screen: 'SuggestLocation',
-            countryName: (countryName) => countryName(countryName),
-            countryCode: (countryCode) => countryCode(countryCode)
         })
     }
 
