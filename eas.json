@@ -13,6 +13,14 @@
     "preview": {
       "distribution": "internal"
     },
+    "androidapk": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://www.pinballmap.com/api/v1"
+      }
+    },
     "production": {
       "distribution": "store",
       "env": {

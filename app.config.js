@@ -20,6 +20,7 @@ export default {
         },
         version: "5.2.12",
         slug: "pbm-app",
+        "owner": "pinballmap",
         name: "Pinball Map",
         scheme: "pinballmap",
         description: "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
