@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
     Keyboard,
     Modal,
     Platform,
@@ -37,6 +38,8 @@ import {
     resetSuggestLocation,
 } from '../actions'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+
+let deviceWidth = Dimensions.get('window').width
 
 function SuggestLocation({
     navigation,
@@ -190,49 +193,62 @@ function SuggestLocation({
                                                                     : <Text style={s.pageTitleText}>Please review your submission</Text>
                                                                 }
                                                             </View>
-                                                            <Text style={s.title}>Location Name</Text>
-                                                            {locationName?.length === 0 ?
-                                                                <Text style={[s.error, s.preview]}>Include a location name</Text>
-                                                                : <Text style={s.preview}>{locationName}</Text>
-                                                            }
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Street</Text>
-                                                            <Text style={s.preview}>{street}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>City</Text>
-                                                            <Text style={s.preview}>{city}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>State</Text>
-                                                            <Text style={s.preview}>{state}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Zip</Text>
-                                                            <Text style={s.preview}>{zip}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Country</Text>
-                                                            <Text style={s.preview}>{countryName}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Phone</Text>
-                                                            <Text style={s.preview}>{phone}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Website</Text>
-                                                            <Text style={s.preview}>{website}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Location Notes</Text>
-                                                            <Text style={s.preview}>{description}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Location Type</Text>
-                                                            <Text style={s.preview}>{typeof locationType === 'number' && locationType > -1 ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Operator</Text>
-                                                            <Text style={s.preview}>{typeof operator === 'number' && operator > -1 ? operators.filter(op => op.id === operator).map(op => op.name) : 'None Selected'}</Text>
-                                                            <View style={s.hr}></View>
-                                                            <Text style={s.title}>Machine List</Text>
-                                                            {machineList.length === 0 ?
-                                                                <Text style={[s.error, s.preview]}>Include at least one machine</Text>
-                                                                : machineList.map(m =>
-                                                                    <Text style={s.preview} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
-                                                                )
-                                                            }
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Location Name</Text>
+                                                                {locationName?.length === 0 ?
+                                                                    <Text style={[s.error, s.preview]}>Include a location name</Text>
+                                                                    : <Text style={s.preview}>{locationName}</Text>
+                                                                }
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Street</Text>
+                                                                <Text style={s.preview}>{street}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>City</Text>
+                                                                <Text style={s.preview}>{city}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>State</Text>
+                                                                <Text style={s.preview}>{state}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Zip</Text>
+                                                                <Text style={s.preview}>{zip}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Country</Text>
+                                                                <Text style={s.preview}>{countryName}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Phone</Text>
+                                                                <Text style={s.preview}>{phone}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Website</Text>
+                                                                <Text style={s.preview}>{website}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Location Notes</Text>
+                                                                <Text style={s.preview}>{description}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Location Type</Text>
+                                                                <Text style={s.preview}>{typeof locationType === 'number' && locationType > -1 ? locationTypes.filter(type => type.id === locationType).map(type => type.name) : 'None Selected'}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Operator</Text>
+                                                                <Text style={s.preview}>{typeof operator === 'number' && operator > -1 ? operators.filter(op => op.id === operator).map(op => op.name) : 'None Selected'}</Text>
+                                                            </View>
+                                                            <View style={s.previewContainer}>
+                                                                <Text style={s.previewTitle}>Machine List</Text>
+                                                                {machineList.length === 0 ?
+                                                                    <Text style={[s.error, s.preview]}>Include at least one machine</Text>
+                                                                    : <View style={s.preview}>{machineList.map(m =>
+                                                                        <Text style={s.previewMachine} key={m.name}>{m.name} ({m.manufacturer}, {m.year})</Text>
+                                                                    )}</View>
+                                                                }
+                                                            </View>
                                                             <PbmButton
                                                                 title={'Submit Location'}
                                                                 onPress={() => confirmSuggestLocationDetails()}
@@ -372,23 +388,25 @@ function SuggestLocation({
                                             containerStyle={s.addMachinesContainer}
                                             buttonStyle={s.addMachinesButton}
                                         />
-                                        {machineList.map(machine =>
-                                            <ListItem
-                                                key={machine.id}
-                                                containerStyle={s.listContainerStyle}
-                                                onPress={() => removeMachineFromList(machine)}>
-                                                <ListItem.Content>
-                                                    <Icon>
-                                                        {<MaterialIcons name='cancel' size={15} color={theme.indigo4} />}
-                                                    </Icon>
-                                                    <ListItem.Title>
-                                                        {getDisplayText(machine)}
-                                                    </ListItem.Title>
-                                                </ListItem.Content>
-                                            </ListItem>
-                                        )}
+                                        {machineList.length > 0 ? <View style={s.machineContainer}>
+                                            {machineList.map(machine =>
+                                                <ListItem
+                                                    key={machine.id}
+                                                    containerStyle={s.listContainerStyle}
+                                                    onPress={() => removeMachineFromList(machine)}>
+                                                    <ListItem.Content>
+                                                        <Icon>
+                                                            {<MaterialIcons name='cancel' size={15} color={theme.indigo4} />}
+                                                        </Icon>
+                                                        <ListItem.Title>
+                                                            {getDisplayText(machine)}
+                                                        </ListItem.Title>
+                                                    </ListItem.Content>
+                                                </ListItem>
+                                            )}
+                                        </View> : null}
                                         <PbmButton
-                                            title={'Submit Location'}
+                                            title={'Review Submission'}
                                             onPress={() => setShowSuggestLocationModal(true)}
                                         />
                                     </SafeAreaView>
@@ -423,10 +441,28 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         color: theme.text2
     },
+    previewContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        marginVertical: 10,
+        alignItems: 'center',
+        flexWrap: 'wrap'
+    },
+    previewTitle: {
+        marginLeft: 25,
+        textAlign: 'left',
+        fontFamily: 'boldFont',
+        width: 80,
+    },
     preview: {
         fontSize: 15,
         marginRight: 25,
-        marginLeft: 25
+        textAlign: 'center',
+        width: deviceWidth - 130,
+    },
+    previewMachine: {
+        alignSelf: 'stretch',
+        textAlign: 'center'
     },
     pageTitle: {
         paddingVertical: 10,
@@ -436,7 +472,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'regularItalicFont',
         fontSize: 18,
-        color: theme.text3
+        color: theme.pink1
     },
     textInput: {
         backgroundColor: theme.white,
@@ -490,8 +526,15 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
     },
     listContainerStyle: {
+        backgroundColor: 'transparent',
+        paddingTop: 0,
+    },
+    machineContainer: {
+        marginHorizontal: 20,
+        borderRadius: 25,
         backgroundColor: theme.white,
-        paddingTop: 0
+        borderColor: theme.indigo4,
+        borderWidth: 1,
     },
     buttonContainer: {
         marginLeft: 20,
