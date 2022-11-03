@@ -209,7 +209,7 @@ function MapStack() {
             <Stack.Screen name="Contact" component={Contact} />
             <Stack.Screen name="SignupLogin" component={SignupLogin} options={{ headerShown: false }} />
             <Stack.Screen name="LocationList" component={LocationList} options={{ headerBackTitleVisible: true, title: 'Location List' }} />
-            <Stack.Screen name="LocationDetails" component={LocationDetails} options={{ headerBackTitleVisible: true, headerTransparent: true, title: null }} />
+            <Stack.Screen name="LocationDetails" component={LocationDetails} options={{ headerTransparent: true, title: null }} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="FilterMap" component={FilterMap} options={{ headerBackTitleVisible: true, title: 'Apply Filters to the Map' }} />
