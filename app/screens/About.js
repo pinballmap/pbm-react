@@ -73,7 +73,9 @@ const About = ({ navigation, appAlert }) => {
 
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
 
-                        <Text style={s.text}>{"And finally, we've compiled some "}<Text style={[s.textLink, s.boldText]} onPress={() => navigation.navigate('Resources')}>additional pinball resources</Text>!</Text>
+                        <Text style={s.text}>We sometimes have a few things for sale <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>on our store</Text>.</Text>
+
+                        <Text style={s.text}>{"And finally, we've compiled some "}<Text style={[s.green, s.boldText]} onPress={() => navigation.navigate('Resources')}>additional pinball resources</Text>!</Text>
 
                         <Text style={s.boldHeader}>App Credits:</Text>
                         <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
@@ -169,6 +171,11 @@ const getStyles = theme => StyleSheet.create({
         paddingRight: 10,
         paddingBottom: 0,
         backgroundColor: theme.white
+    },
+    green: {
+        color: theme.green,
+        textDecorationLine: 'underline',
+        fontSize: 16,
     }
 })
 

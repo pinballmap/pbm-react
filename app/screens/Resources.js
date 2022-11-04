@@ -82,9 +82,33 @@ const Resources = () => {
                 <Pressable onPress={() => Linking.openURL('https://scorbit.io/')} style={[s.logoWrapper]}>
                     <Image source={require('../assets/images/Resource_Scorbit.png')} style={{ width: deviceWidth - 70, height: (deviceWidth - 70) / 2.87, resizeMode: 'stretch' }} />
                 </Pressable>
-                <Text style={[s.text, { marginBottom: 20 }]}>
+                <Text style={s.text}>
                     <Text style={s.textLink} onPress={() => Linking.openURL('https://scorbit.io/')}>{`Scorbit`}</Text>
                     {` is a platform (hardware/app) for tracking scores - and much more - in real-time. Operators can use it to track earnings. It does a lot, and its compatible with many machines.`}
+                </Text>
+                <View style={s.hr}></View>
+                <Pressable onPress={() => Linking.openURL('https://www.youtube.com/channel/UCp-cSoq5qVVyts7H8rQjV-w')} style={[s.logoWrapper]}>
+                    <Image source={require('../assets/images/Resource_PAPA.jpg')} style={{ width: deviceWidth - 70, height: deviceWidth - 70, resizeMode: 'stretch' }} />
+                </Pressable>
+                <Text style={s.text}>
+                    <Text style={s.textLink} onPress={() => Linking.openURL('https://www.youtube.com/channel/UCp-cSoq5qVVyts7H8rQjV-w')}>{`PAPA Pinball`}</Text>
+                    {` produces excellent tutorial videos. They're a great way to get familiar with machines and their rules. Old and new games alike are covered.`}
+                </Text>
+                <View style={s.hr}></View>
+                <Pressable onPress={() => Linking.openURL('https://discord.com/invite/XffPx6VKTv')} style={[s.logoWrapper]}>
+                    <Image source={require('../assets/images/Resource_PinballPeople.png')} style={{ width: deviceWidth - 70, height: (deviceWidth - 70) / 1.294, resizeMode: 'stretch' }} />
+                </Pressable>
+                <Text style={s.text}>
+                    <Text style={s.textLink} onPress={() => Linking.openURL('https://discord.com/invite/XffPx6VKTv')}>{`Pinball People`}</Text>
+                    {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
+                </Text>
+                <View style={s.hr}></View>
+                <Pressable onPress={() => Linking.openURL('https://www.deadflip.com/')} style={[s.logoWrapper]}>
+                    <Image source={require('../assets/images/Resource_DeadFlip.png')} style={{ width: deviceWidth - 70, height: deviceWidth - 70, resizeMode: 'stretch' }} />
+                </Pressable>
+                <Text style={[s.text, { marginBottom: 20 }]}>
+                    <Text style={s.textLink} onPress={() => Linking.openURL('https://www.deadflip.com/')}>{`Dead Flip`}</Text>
+                    {` is the preeminent pinball streamer! The host, Jack Danger, has been promoting pinball for years and is a funny person with a big fanbase.`}
                 </Text>
             </Screen>
         </SafeAreaView>

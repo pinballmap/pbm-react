@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
     Keyboard,
     Modal,
     Platform,
@@ -28,6 +29,8 @@ import {
     updateLocationDetails,
 } from '../actions'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+
+let deviceWidth = Dimensions.get('window').width
 
 function EditLocationDetails({
     navigation,
@@ -124,22 +127,31 @@ function EditLocationDetails({
                                 <SafeAreaProvider>
                                     <SafeAreaView style={s.background}>
                                         <ScrollView style={{ backgroundColor: theme.base1 }}>
-                                            <Text style={s.title}>Phone</Text>
-                                            <Text style={s.preview}>{phone}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Website</Text>
-                                            <Text style={s.preview}>{website}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Location Notes</Text>
-                                            <Text style={s.preview}>{description}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Location Type</Text>
-                                            <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
-                                            <View style={s.hr}></View>
-                                            <Text style={s.title}>Operator</Text>
-                                            <Text style={s.preview}>{typeof operatorId === 'number' && operatorId > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                            <View style={s.pageTitle}>
+                                                <Text style={s.pageTitleText}>Please review your edits</Text>
+                                            </View>
+                                            <View style={s.previewContainer}>
+                                                <Text style={s.previewTitle}>Phone</Text>
+                                                <Text style={s.preview}>{phone}</Text>
+                                            </View>
+                                            <View style={s.previewContainer}>
+                                                <Text style={s.previewTitle}>Website</Text>
+                                                <Text style={s.preview}>{website}</Text>
+                                            </View>
+                                            <View style={s.previewContainer}>
+                                                <Text style={s.previewTitle}>Location Notes</Text>
+                                                <Text style={s.preview}>{description}</Text>
+                                            </View>
+                                            <View style={s.previewContainer}>
+                                                <Text style={s.previewTitle}>Location Type</Text>
+                                                <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
+                                            </View>
+                                            <View style={s.previewContainer}>
+                                                <Text style={s.previewTitle}>Operator</Text>
+                                                <Text style={s.preview}>{typeof operatorId === 'number' && operatorId > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
+                                            </View>
                                             <PbmButton
-                                                title={'Confirm Details'}
+                                                title={'Confirm Location Details'}
                                                 onPress={() => confirmEditLocationDetails()}
                                             />
                                             <WarningButton
@@ -204,7 +216,7 @@ function EditLocationDetails({
                                         onPress={() => goToFindOperator()}
                                     />
                                     <PbmButton
-                                        title={'Submit Location Details'}
+                                        title={'Review Location Details'}
                                         onPress={() => setShowEditLocationDetailsModal(true)}
                                     />
                                 </View>
@@ -229,6 +241,35 @@ const getStyles = theme => StyleSheet.create({
         alignItems: "center",
         marginTop: 22
     },
+    previewContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        marginVertical: 10,
+        alignItems: 'center',
+        flexWrap: 'wrap'
+    },
+    previewTitle: {
+        marginLeft: 25,
+        textAlign: 'left',
+        fontFamily: 'boldFont',
+        width: 80,
+    },
+    preview: {
+        fontSize: 15,
+        marginRight: 25,
+        textAlign: 'center',
+        width: deviceWidth - 130,
+    },
+    pageTitle: {
+        paddingVertical: 10,
+        backgroundColor: theme.pink2
+    },
+    pageTitleText: {
+        textAlign: 'center',
+        fontFamily: 'regularItalicFont',
+        fontSize: 18,
+        color: theme.pink1
+    },
     title: {
         textAlign: 'center',
         marginBottom: 5,
@@ -236,11 +277,6 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         fontFamily: 'boldFont',
         color: theme.text2
-    },
-    preview: {
-        fontSize: 14,
-        marginRight: 25,
-        marginLeft: 25
     },
     textInput: {
         backgroundColor: theme.white,
