@@ -32,6 +32,17 @@ export default {
                 "projectId": "7488ea00-6c89-11e9-8ab8-0157f5861c1f"
             }
         },
+        plugins: ["sentry-expo"],
+        hooks: {
+            postPublish: [
+                {
+                    file: "sentry-expo/upload-sourcemaps",
+                    organization: "pinball-map",
+                    project: "react-native",
+                    authToken: process.env.SENTRY_AUTH_TOKEN
+                }
+            ]
+        },
         ios: {
             bundleIdentifier: "net.isaacruiz.ppm",
             userInterfaceStyle: "automatic",
