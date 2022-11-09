@@ -6,10 +6,6 @@ export default {
         assetBundlePatterns: [
             "app/assets/images/*"
         ],
-        androidStatusBar: {
-            barStyle: "light-content",
-            backgroundColor: "#fafaff"
-        },
         splash: {
             image: "app/assets/images/pbm-splash-2022.png",
             backgroundColor: "#47475f",
@@ -31,6 +27,19 @@ export default {
             "eas": {
                 "projectId": "7488ea00-6c89-11e9-8ab8-0157f5861c1f"
             }
+        },
+        plugins: ["sentry-expo"],
+        hooks: {
+            postPublish: [
+                {
+                    file: "sentry-expo/upload-sourcemaps",
+                    "config": {
+                        organization: "pinball-map",
+                        project: "react-native",
+                        authToken: process.env.SENTRY_AUTH_TOKEN
+                    }
+                }
+            ]
         },
         ios: {
             bundleIdentifier: "net.isaacruiz.ppm",
@@ -56,9 +65,6 @@ export default {
             userInterfaceStyle: "automatic",
             config: {
                 googleMaps: {
-                    apiKey: process.env.GOOGLE_MAPS_KEY
-                },
-                googleSignIn: {
                     apiKey: process.env.GOOGLE_MAPS_KEY
                 }
             },
