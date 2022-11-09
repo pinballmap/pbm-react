@@ -57,7 +57,7 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-watch": "^3.1.4",
     "metro-react-native-babel-preset": "^0.45.0",
-    "react-native-scripts": "1.13.1"
+    "react-native-scripts": "2.0.1"
   },
   "scripts": {
     "start": "expo start -c",
