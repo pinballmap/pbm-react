@@ -12,7 +12,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import openMap from 'react-native-open-maps'
 import {
     Avatar,
@@ -330,7 +330,7 @@ class LocationDetails extends Component {
                                         provider={PROVIDER_GOOGLE}
                                         customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
                                     >
-                                        <MapView.Marker
+                                        <Marker
                                             coordinate={{
                                                 latitude: Number(location.lat),
                                                 longitude: Number(location.lon),
@@ -339,7 +339,7 @@ class LocationDetails extends Component {
                                             }}
                                         >
                                             <View style={s.markerDot}></View>
-                                        </MapView.Marker>
+                                        </Marker>
                                     </MapView>
                                     <View>
                                         <Text style={s.locationName}>{location.name}</Text>

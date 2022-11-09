@@ -45,7 +45,6 @@ const About = ({ navigation, appAlert }) => {
             isCancelled = true
         }
     })
-    console.log(this.will.cause.a.crash)
 
     return (
         <SafeAreaView edges={['right', 'bottom', 'left']} style={s.background}>
