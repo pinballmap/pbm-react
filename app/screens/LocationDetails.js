@@ -107,6 +107,7 @@ class LocationDetails extends Component {
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
+        const opWebsite = this.props.operators.operators.find(operator => operator.id === location.operator_id)?.website
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return { ...machineDetails, ...machine }
@@ -358,8 +359,7 @@ class LocationDetails extends Component {
                                                 {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
                                                 {location.operator_id ?
-                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by:
-                                                        <Text style={s.text3}> {`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by: <Text style={opWebsite ? s.link : s.text3} onPress={opWebsite ? () => Linking.openURL(opWebsite) : null}>{`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
                                                     </Text></View> : null
                                                 }
 
@@ -422,7 +422,7 @@ class LocationDetails extends Component {
                                         ))}
                                     </View>
                                 </View>
-                            </Screen>
+                            </Screen >
                             <Pressable
                                 style={({ pressed }) => [{}, s.toolsIconButton, pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
@@ -436,10 +436,11 @@ class LocationDetails extends Component {
                                     style={{ justifyContent: 'center', alignSelf: 'center' }}
                                 />
                             </Pressable>
-                        </View>
+                        </View >
                     )
-                }}
-            </ThemeContext.Consumer>
+                }
+                }
+            </ThemeContext.Consumer >
         )
     }
 }
