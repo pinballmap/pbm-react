@@ -103,11 +103,14 @@ class LocationDetails extends Component {
         }
 
         const location = this.props.location.location
+        const { operators } = this.props.operators
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
-        const opWebsite = this.props.operators.operators.find(operator => operator.id === location.operator_id)?.website
+        
+        const {website: opWebsite, name: opName} = operators.find(operator => operator.id === location.operator_id) ?? {}
+        
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return { ...machineDetails, ...machine }
@@ -358,14 +361,16 @@ class LocationDetails extends Component {
 
                                                 {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
 
-                                                {location.operator_id ?
-                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by: <Text style={opWebsite ? s.link : s.text3} onPress={opWebsite ? () => Linking.openURL(opWebsite) : null}>{`${this.props.operators.operators.find(operator => operator.id === location.operator_id).name}`}</Text>
-                                                    </Text></View> : null
+                                                {!!opName &&
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}>
+                                                        <MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by: <Text style={opWebsite ? s.link : s.text3} onPress={opWebsite ? () => Linking.openURL(opWebsite) : null}>{opName}</Text></Text>
+                                                    </View>
                                                 }
 
-                                                {location.date_last_updated ?
-                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}><MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by`}{` ${location.last_updated_by_username}`}</Text></Text></View>
-                                                    : null
+                                                {!!location.date_last_updated &&
+                                                    <View style={(location.location_type_id) ? s.narrow : s.wide}>
+                                                        <MaterialCommunityIcons name='clock-time-four-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Last updated: <Text style={s.text3}>{moment(location.date_last_updated, 'YYYY-MM-DD').format('MMM DD, YYYY')}{location.last_updated_by_username && ` by`}{` ${location.last_updated_by_username}`}</Text></Text>
+                                                    </View>
                                                 }
 
                                             </View>
@@ -422,7 +427,7 @@ class LocationDetails extends Component {
                                         ))}
                                     </View>
                                 </View>
-                            </Screen >
+                            </Screen>
                             <Pressable
                                 style={({ pressed }) => [{}, s.toolsIconButton, pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
@@ -436,11 +441,10 @@ class LocationDetails extends Component {
                                     style={{ justifyContent: 'center', alignSelf: 'center' }}
                                 />
                             </Pressable>
-                        </View >
+                        </View>
                     )
-                }
-                }
-            </ThemeContext.Consumer >
+                }}
+            </ThemeContext.Consumer>
         )
     }
 }
