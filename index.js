@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 import { registerRootComponent } from 'expo'
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Appearance, Platform } from 'react-native'
 import { retrieveItem } from './app/config/utils'
 import { ThemeContext } from './app/theme-context'

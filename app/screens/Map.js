@@ -17,6 +17,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
     AppAlert,
+    BottomSheet,
     CustomMapMarker,
     PbmButton,
     ConfirmationModal,
@@ -57,7 +58,11 @@ class Map extends Component {
 
         this.state = {
             showUpdateSearch: false,
+            bottomSheetIdx: -1,
+            marker: null,
         }
+
+        this.sheetRef = React.createRef(null)
     }
 
     static contextType = ThemeContext
@@ -157,6 +162,13 @@ class Map extends Component {
         })
     }
 
+    mapPress(event) {
+        if (event.nativeEvent.action !== 'marker-press') {
+            this.setState({marker: null})
+            this.sheetRef.current.close()
+        }
+    }
+
     render() {
         const {
             isFetchingLocations,
@@ -165,7 +177,7 @@ class Map extends Component {
             query,
         } = this.props
 
-        const { showUpdateSearch } = this.state
+        const { showUpdateSearch, bottomSheetIdx, marker } = this.state
         const { theme } = this.context
         const s = getStyles(theme)
         const { curLat, curLon, latDelta, lonDelta } = query
@@ -212,8 +224,10 @@ class Map extends Component {
                     showsMyLocationButton={false}
                     provider={PROVIDER_GOOGLE}
                     customMapStyle={theme.theme === 'dark' ? androidCustomDark : []}
+                    onPress={(event) => this.mapPress(event)}
+                    onMarkerPress={() => this.sheetRef.current.expand()}
                 >
-                    {mapLocations.map(l => <CustomMapMarker key={l.id} marker={l} navigation={navigation} s={s} />)}
+                    {mapLocations.map(marker => <CustomMapMarker marker={marker} key={marker.id} updateCurrentMarker={() => this.setState({bottomSheetIdx: 0, marker})}/>)}
                 </MapView>
                 <Button
                     onPress={() => navigation.navigate('LocationList')}
@@ -243,7 +257,7 @@ class Map extends Component {
                         />
                     }
                 </Pressable>
-                {filterApplied ?
+                {!!filterApplied &&
                     <Button
                         title={'Clear Filter'}
                         onPress={() => this.props.clearFilters()}
@@ -251,9 +265,8 @@ class Map extends Component {
                         buttonStyle={[s.buttonStyle, { backgroundColor: '#fee5e7' }]}
                         titleStyle={{ color: '#453e39', fontSize: 14 }}
                     />
-                    : null
                 }
-                {showUpdateSearch ?
+                {!!showUpdateSearch &&
                     <Pressable
                         style={({ pressed }) => [{}, s.containerStyle, s.updateContainerStyle, pressed ? s.pressed : s.notPressed]}
                         onPress={() => {
@@ -268,8 +281,8 @@ class Map extends Component {
                             </Text>
                         )}
                     </Pressable>
-                    : null
                 }
+                <BottomSheet sheetRef={this.sheetRef} index={bottomSheetIdx} navigation={navigation} location={marker} />
             </SafeAreaView>
         )
     }
