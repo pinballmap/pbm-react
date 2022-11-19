@@ -135,7 +135,6 @@ class MachineDetails extends Component {
                                                 numberOfLines={4}
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={conditionText => this.setState({ conditionText })}
-                                                value={this.state.conditionText}
                                                 style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
                                                 placeholder={'Enter machine condition...'}
                                                 placeholderTextColor={theme.indigo4}
