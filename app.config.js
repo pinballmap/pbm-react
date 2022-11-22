@@ -19,7 +19,7 @@ export default {
         "owner": "pinballmap",
         name: "Pinball Map",
         scheme: "pinballmap",
-        description: "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 20,000 pinball machines.",
+        description: "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 30,000 pinball machines.",
         privacy: "public",
         githubUrl: "https://github.com/pinballmap/pbm-react/",
         primaryColor: "#ebecff",
@@ -45,7 +45,7 @@ export default {
             bundleIdentifier: "net.isaacruiz.ppm",
             userInterfaceStyle: "automatic",
             icon: "app/assets/images/ios-icon.png",
-            buildNumber: "112",
+            buildNumber: "113",
             supportsTablet: true,
             infoPlist: {
                 NSLocationWhenInUseUsageDescription: "Allow access to device location to show nearby places with pinball machines"
@@ -75,7 +75,7 @@ export default {
                 "WRITE_EXTERNAL_STORAGE",
                 "com.google.android.providers.gsf.permission.READ_GSERVICES"
             ],
-            versionCode: 84,
+            versionCode: 86,
             adaptiveIcon: {
                 backgroundColor: "#ebecff",
                 foregroundImage: "app/assets/images/adaptive-foreground.png"

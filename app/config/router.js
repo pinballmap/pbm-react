@@ -64,6 +64,7 @@ function SavedStackNavigator() {
                 name="SavedStack"
                 component={Saved}
                 options={{
+                    headerTitleAlign: 'center',
                     title: 'Saved Locations',
                 }}
             />
@@ -93,6 +94,7 @@ function ProfileStackNavigator() {
                 name="UserProfileStack"
                 component={UserProfile}
                 options={{
+                    headerTitleAlign: 'center',
                     title: 'Your Profile',
                 }}
             />
