@@ -12,12 +12,12 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
 ### 5.2.12
-Ongoing
+November 23, 2022
 
-- Some design updates
-- Add crash reporter
-- Link to operator website if they have one
-- Behind the scenes package updates
+- Some design updates ("Review location submission", "Review location info" screens; moved Resources and Podcast to links in the About screen; Added a "check email to confirm account" message for new users; and more)
+- Added crash reporter
+- Link to operator's website if they have one
+- Many behind the scenes package updates (react navigation, Expo SDK, etc.)
 
 ### 5.2.11
 March 24, 2022
