@@ -11,11 +11,11 @@ import { SearchBar } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { FlatList } from 'react-native-gesture-handler'
 import {
     Text,
 } from '../components'
 import countries from '../utils/countries'
+import { FlashList } from "@shopify/flash-list"
 
 const FindCountry = ({ navigation, route }) => {
     const { theme } = useContext(ThemeContext)
@@ -70,11 +70,12 @@ const FindCountry = ({ navigation, route }) => {
                 inputContainerStyle={s.filterInput}
                 containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
             />
-            <FlatList {...keyboardDismissProp}
+            <FlashList {...keyboardDismissProp}
                 data={selectedCountries}
+                estimatedItemSize={selectedCountries.length}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{ backgroundColor: theme.base1 }}
+                contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}
             />
         </>)
 }

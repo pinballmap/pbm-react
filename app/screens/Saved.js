@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-    FlatList,
     StyleSheet,
     View,
 } from 'react-native'
@@ -16,6 +15,7 @@ import {
 } from '../components'
 import { getDistance, getDistanceWithUnit } from '../utils/utilityFunctions'
 import { selectFavoriteLocationFilterBy } from '../actions/user_actions'
+import { FlashList } from "@shopify/flash-list"
 
 const moment = require('moment')
 
@@ -89,7 +89,8 @@ export class Saved extends Component {
                                                 innerBorderStyle={s.innerBorderStyle}
                                             />
                                             <View style={{ flex: 1, position: 'absolute', left: 0, top: 55, bottom: 0, right: 0 }}>
-                                                <FlatList
+                                                <FlashList
+                                                    estimatedItemSize={this.state.locations.length}
                                                     data={this.state.locations}
                                                     extraData={this.state}
                                                     renderItem={({ item }) =>

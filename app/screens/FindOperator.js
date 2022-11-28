@@ -12,8 +12,8 @@ import { SearchBar } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { FlatList } from 'react-native-gesture-handler'
 import { Text } from '../components'
+import { FlashList } from "@shopify/flash-list"
 
 const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
     const { theme } = useContext(ThemeContext)
@@ -69,11 +69,12 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
                 inputContainerStyle={s.filterInput}
                 containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
             />
-            <FlatList {...keyboardDismissProp}
+            <FlashList {...keyboardDismissProp}
                 data={selectedOperators}
+                estimatedItemSize={selectedOperators.length}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{ backgroundColor: theme.base1 }}
+                contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}
             />
         </>)
 }

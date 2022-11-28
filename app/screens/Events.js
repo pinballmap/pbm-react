@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import {
-    FlatList,
     Linking,
     Pressable,
     StyleSheet,
@@ -16,6 +15,7 @@ import {
 import { ThemeContext } from '../theme-context'
 import { ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'
+import { FlashList } from "@shopify/flash-list"
 
 const moment = require('moment')
 
@@ -111,8 +111,9 @@ class Events extends Component {
                                                     <Text style={s.sourceText}>
                                                         These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
-                                                    <FlatList
+                                                    <FlashList
                                                         data={events}
+                                                        estimatedItemSize={events.length}
                                                         extraData={this.state}
                                                         renderItem={({ item }) => {
                                                             const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')

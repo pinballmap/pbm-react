@@ -12,8 +12,8 @@ import { SearchBar } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { FlatList } from 'react-native-gesture-handler'
 import { Text } from '../components'
+import { FlashList } from "@shopify/flash-list"
 
 const FindLocationType = ({ navigation, route, locations: { locationTypes = [] } }) => {
     const { theme } = useContext(ThemeContext)
@@ -67,11 +67,12 @@ const FindLocationType = ({ navigation, route, locations: { locationTypes = [] }
                 inputContainerStyle={s.filterInput}
                 containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
             />
-            <FlatList {...keyboardDismissProp}
+            <FlashList {...keyboardDismissProp}
                 data={selectedLocationTypes}
+                estimatedItemSize={selectedLocationTypes.length}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
-                style={{ backgroundColor: theme.base1, marginBottom: 20 }}
+                contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}
             />
         </>)
 }

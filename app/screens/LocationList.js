@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     Dimensions,
-    FlatList,
     StyleSheet,
     View,
 } from 'react-native'
@@ -17,6 +16,7 @@ import {
 } from '../components'
 import { getDistance, getDistanceWithUnit } from '../utils/utilityFunctions'
 import { selectLocationListFilterBy } from '../actions/locations_actions'
+import { FlashList } from "@shopify/flash-list"
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -111,7 +111,8 @@ export class LocationList extends Component {
                                     selectedTextStyle={s.selTextStyle}
                                     innerBorderStyle={s.innerBorderStyle}
                                 />
-                                <FlatList
+                                <FlashList
+                                    estimatedItemSize={locations.length}
                                     data={locations}
                                     extraData={this.state}
                                     renderItem={({ item }) =>
