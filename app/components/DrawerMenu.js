@@ -74,7 +74,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
             <DrawerItem
                 label="Events"
                 labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialIcons name='event-note' size={iconSize} color={iconColor}/>}
+                icon={() => <MaterialIcons name='event-note' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Events' })}
             />
             <DrawerItem
@@ -82,12 +82,6 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
                 labelStyle={{ color: colors.primary }}
                 icon={() => <MaterialIcons name='question-answer' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'FAQ' })}
-            />
-            <DrawerItem
-                label="Blog"
-                labelStyle={{ color: colors.primary }}
-                icon={() => <MaterialCommunityIcons name='book-open-variant' size={iconSize} color={iconColor} />}
-                onPress={() => props.navigation.navigate('Map', { screen: 'Blog' })}
             />
             <DrawerItem
                 label="Settings"

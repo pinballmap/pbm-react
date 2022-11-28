@@ -16,13 +16,11 @@ import Signup from '../screens/Signup'
 import SignupLogin from '../screens/SignupLogin'
 import UserProfile from '../screens/UserProfile'
 import MachineDetails from '../screens/MachineDetails'
-import Podcast from '../screens/Podcast'
 import FAQ from '../screens/FAQ'
 import About from '../screens/About'
 import Contact from '../screens/Contact'
 import SuggestLocation from '../screens/SuggestLocation'
 import Events from '../screens/Events'
-import Blog from '../screens/Blog'
 import FindMachine from '../screens/FindMachine'
 import EditLocationDetails from '../screens/EditLocationDetails'
 import PasswordReset from '../screens/PasswordReset'
@@ -219,10 +217,8 @@ function MapStack() {
             <Stack.Screen name="SuggestLocation" component={SuggestLocation} options={{ title: 'Submit Location' }} />
             <Stack.Screen name="Events" component={Events} options={{ title: 'Nearby Events' }} />
             <Stack.Screen name="FAQ" component={FAQ} />
-            <Stack.Screen name="Blog" component={Blog} />
             <Stack.Screen name="Resources" component={Resources} options={{ title: 'Pinball Resources' }} />
             <Stack.Screen name="About" component={About} options={{ title: 'About Pinball Map' }} />
-            <Stack.Screen name="Podcast" component={Podcast} />
             <Stack.Screen name="FindMachine" component={FindMachine} />
             <Stack.Screen name="EditLocationDetails" component={EditLocationDetails} options={{ title: 'Edit Location Details' }} />
             <Stack.Screen name="PasswordReset" component={PasswordReset} options={{ title: 'Reset Your Password' }} />

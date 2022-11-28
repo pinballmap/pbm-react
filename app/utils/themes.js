@@ -60,7 +60,7 @@ export const standard = {
     pink1: '#fd0091',
     pink2: '#fee7f5',
     pink3: '#ffa7dd',
-    green: '#63d202',
+    green: '#56b801',
     dark: false,
     colors: {
         primary: '#47475f',

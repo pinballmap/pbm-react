@@ -14,6 +14,7 @@ import { getData } from '../config/request'
 import { Screen, Text } from '../components'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import * as WebBrowser from 'expo-web-browser'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -25,6 +26,18 @@ const About = ({ navigation, appAlert }) => {
         num_locations: 0,
         num_lmxes: 0,
     })
+
+    const [result, setResult] = useState(null)
+
+    const _handleBlogButtonAsync = async () => {
+        let result = await WebBrowser.openBrowserAsync('https://blog.pinballmap.com/')
+        setResult(result);
+    }
+
+    const _handlePodcastButtonAsync = async () => {
+        let result = await WebBrowser.openBrowserAsync('https://pod.pinballmap.com/')
+        setResult(result);
+    }
 
     useEffect(() => {
         let isCancelled = false
@@ -67,15 +80,15 @@ const About = ({ navigation, appAlert }) => {
 
                         <Text style={s.text}><Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{`Contact Us`}</Text>. Or you can start a discussion about anything on our <Text onPress={() => Linking.openURL('https://github.com/pinballmap/pbm/discussions')} style={s.textLink}>{`Github discussion page`}</Text>.</Text>
 
-                        <Text style={s.text}><Text onPress={() => navigation.navigate('Blog')} style={s.textLink}>{`Read the blog`}</Text>. <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
+                        <Text style={s.text}><Text onPress={_handleBlogButtonAsync} style={s.green}>{`Read the blog`}</Text>. <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Read the FAQ (and Privacy Policy)`}</Text>.</Text>
 
-                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={() => navigation.navigate('Podcast')}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
+                        <Text style={s.text}>Listen to our podcast, <Text style={s.textLink} onPress={_handlePodcastButtonAsync}>{`Mappin' Around with Scott & Ryan`}</Text>!</Text>
 
                         <Text style={s.text}>Follow <Text style={s.textLink} onPress={() => Linking.openURL('https://twitter.com/pinballmapcom')}>@pinballmapcom</Text> on Twitter for updates and news!</Text>
 
                         <Text style={s.text}>We sometimes have a few things for sale <Text style={s.textLink} onPress={() => Linking.openURL('https://pinballmap.com/store')}>on our store</Text>.</Text>
 
-                        <Text style={s.text}>{"And finally, we've compiled some "}<Text style={[s.green, s.boldText]} onPress={() => navigation.navigate('Resources')}>additional pinball resources</Text>!</Text>
+                        <Text style={s.text}>{"And finally, we've compiled some "}<Text style={s.green} onPress={() => navigation.navigate('Resources')}>additional pinball resources</Text>!</Text>
 
                         <Text style={s.boldHeader}>App Credits:</Text>
                         <Text style={{ fontSize: 16 }}><Text style={s.textLink} onPress={() => Linking.openURL('https://github.com/bpoore')}>Beth Poore</Text> (Development)</Text>
