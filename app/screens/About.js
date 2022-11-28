@@ -27,17 +27,9 @@ const About = ({ navigation, appAlert }) => {
         num_lmxes: 0,
     })
 
-    const [result, setResult] = useState(null)
+    const _handleBlogButtonAsync = async () => await WebBrowser.openBrowserAsync('https://blog.pinballmap.com/')
 
-    const _handleBlogButtonAsync = async () => {
-        let result = await WebBrowser.openBrowserAsync('https://blog.pinballmap.com/')
-        setResult(result);
-    }
-
-    const _handlePodcastButtonAsync = async () => {
-        let result = await WebBrowser.openBrowserAsync('https://pod.pinballmap.com/')
-        setResult(result);
-    }
+    const _handlePodcastButtonAsync = async () => await WebBrowser.openBrowserAsync('https://pod.pinballmap.com/')
 
     useEffect(() => {
         let isCancelled = false
