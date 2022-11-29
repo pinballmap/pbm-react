@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     Image,
-    Linking,
     Pressable,
     StyleSheet,
     View,
@@ -25,6 +24,7 @@ import {
 import { getData } from '../config/request'
 import { logout } from '../actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
+import * as WebBrowser from 'expo-web-browser'
 
 const moment = require('moment')
 
@@ -217,7 +217,7 @@ class UserProfile extends Component {
                                     <PbmButton
                                         title={'Website Profile Page'}
                                         type="outline"
-                                        onPress={() => Linking.openURL('https://pinballmap.com/users/' + user.username + '/profile')}
+                                        onPress={() => WebBrowser.openBrowserAsync('https://pinballmap.com/users/' + user.username + '/profile')}
                                         buttonStyle={s.savedLink}
                                         titleStyle={s.buttonTitleStyle}
                                     />

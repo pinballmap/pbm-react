@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
-    Linking,
     StyleSheet,
     View,
 } from 'react-native'
@@ -11,6 +10,7 @@ import {
     Text,
 } from '../components'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import * as WebBrowser from 'expo-web-browser'
 
 const FAQ = ({ navigation, }) => {
     const { theme } = useContext(ThemeContext)
@@ -34,11 +34,11 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.bold}>{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
                         <Text style={s.text}>{`Great question! As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}</Text>
                         <Text style={s.bold}>{`How can I submit a backglass photo to the “machine details” screen?`}</Text>
-                        <Text style={s.text}>Yes! The photos we display come from the Open Pinball Database (OPDB), and so you should upload your high quality photo using <Text style={{ textDecorationLine: 'underline' }} onPress={() => Linking.openURL('https://opdb.org/images/create')}>this form</Text> (you must first create an OPDB account). The photos you upload will not immediately appear in this app.</Text>
+                        <Text style={s.text}>Yes! The photos we display come from the Open Pinball Database (OPDB), and so you should upload your high quality photo using <Text style={{ textDecorationLine: 'underline' }} onPress={() => WebBrowser.openBrowserAsync('https://opdb.org/images/create')}>this form</Text> (you must first create an OPDB account). The photos you upload will not immediately appear in this app.</Text>
                         <Text style={s.text}><Text style={{ fontFamily: 'boldFont' }}>General backglass/translite photo guidelines</Text>:
                             Take photo straight on, not at an angle. Crop image to show only artwork. Avoid glare, if possible</Text>
                         <Text style={s.bold}>{`Can you include "bat games" like SlugFest on the map?`}</Text>
-                        <Text style={s.text}>No. We used to include bat games, but found that non-pinball machines like that were a slippery slope toward including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on <Text style={{ textDecorationLine: 'underline' }} onPress={() => Linking.openURL('https://opdb.org')}>OPDB</Text> then we will not include it.</Text>
+                        <Text style={s.text}>No. We used to include bat games, but found that non-pinball machines like that were a slippery slope toward including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on <Text style={{ textDecorationLine: 'underline' }} onPress={() => WebBrowser.openBrowserAsync('https://opdb.org')}>OPDB</Text> then we will not include it.</Text>
                         <Text style={s.bold}>{`The Location List isn't showing a location that I think it should.`}</Text>
                         <Text style={s.text}>{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
                         <Text style={s.bold}>{`How do I add a new location?`}</Text>
@@ -50,9 +50,9 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.bold}>{`I can't remember my password. How do I reset it?`}</Text>
                         <Text style={s.text}>{`You can reset it via`} <Text onPress={() => navigation.navigate('PasswordReset')} style={{ textDecorationLine: 'underline' }}>{"this link"}</Text>.</Text>
                         <Text style={s.bold}>{`Can you add a feature that I want?`}</Text>
-                        <Text style={s.text}>{`Maybe! We can try. Pinball Map is an open source app. You can submit "issues" to `} <Text style={{ textDecorationLine: 'underline' }} onPress={() => Linking.openURL('https://github.com/pinballmap/pbm-react')}>{`the Github repository`}</Text>{`, and you can also directly contribute code.`}</Text>
+                        <Text style={s.text}>{`Maybe! We can try. Pinball Map is an open source app. You can submit "issues" to `} <Text style={{ textDecorationLine: 'underline' }} onPress={() => WebBrowser.openBrowserAsync('https://github.com/pinballmap/pbm-react')}>{`the Github repository`}</Text>{`, and you can also directly contribute code.`}</Text>
                         <Text style={s.bold}>{`What is your privacy policy?`}</Text>
-                        <Text style={s.text}>Please see the <Text style={{ textDecorationLine: 'underline' }} onPress={() => Linking.openURL('https://pinballmap.com/privacy')}>detailed privacy policy on our website</Text>. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.</Text>
+                        <Text style={s.text}>Please see the <Text style={{ textDecorationLine: 'underline' }} onPress={() => WebBrowser.openBrowserAsync('https://pinballmap.com/privacy')}>detailed privacy policy on our website</Text>. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.</Text>
                         <Text style={s.bold}>{`Have a question that we didn't cover here?`} <Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{"Ask us!"}</Text></Text>
                     </View>
                 </View>

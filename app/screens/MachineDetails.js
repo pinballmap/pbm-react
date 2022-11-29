@@ -5,7 +5,6 @@ import {
     Dimensions,
     Image,
     Keyboard,
-    Linking,
     Modal,
     Platform,
     Pressable,
@@ -39,6 +38,7 @@ import {
     Text,
     WarningButton,
 } from '../components'
+import * as WebBrowser from 'expo-web-browser'
 
 const moment = require('moment')
 
@@ -291,7 +291,7 @@ class MachineDetails extends Component {
                                     <Button
                                         title={'View playing tips on PinTips'}
                                         type="outline"
-                                        onPress={() => Linking.openURL(pintipsUrl)}
+                                        onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
                                         buttonStyle={s.externalLink}
                                         titleStyle={s.externalLinkTitle}
                                         iconRight
@@ -303,7 +303,7 @@ class MachineDetails extends Component {
                                 <Button
                                     title={'View on IPDB'}
                                     type="outline"
-                                    onPress={() => Linking.openURL(ipdb_link)}
+                                    onPress={() => WebBrowser.openBrowserAsync(ipdb_link)}
                                     buttonStyle={s.externalLink}
                                     titleStyle={s.externalLinkTitle}
                                     iconRight

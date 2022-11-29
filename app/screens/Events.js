@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import {
     FlatList,
-    Linking,
     Pressable,
     StyleSheet,
     Text,
@@ -16,6 +15,7 @@ import {
 import { ThemeContext } from '../theme-context'
 import { ActivityIndicator } from '../components'
 import { getIfpaData } from '../config/request'
+import * as WebBrowser from 'expo-web-browser'
 
 const moment = require('moment')
 
@@ -90,7 +90,7 @@ class Events extends Component {
                                     <ActivityIndicator />
                                 </View> :
                                 error ?
-                                    <Text style={{ textAlign: 'center', fontFamily: 'boldFont', marginTop: 15 }}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
+                                    <Text style={{ textAlign: 'center', fontFamily: 'boldFont', marginTop: 15 }}>Something went wrong. In the meantime, you can check the <Text style={s.textLink} onPress={() => WebBrowser.openBrowserAsync('https://www.ifpapinball.com/calendar/')}>IFPA calendar</Text> on their site.</Text> :
                                     <>
                                         <View style={s.header}>
                                             <ButtonGroup
@@ -109,7 +109,7 @@ class Events extends Component {
                                             events.length > 0 ?
                                                 <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                                                     <Text style={s.sourceText}>
-                                                        These events are brought to you by the <Text style={s.smallLink} onPress={() => Linking.openURL('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
+                                                        These events are brought to you by the <Text style={s.smallLink} onPress={() => WebBrowser.openBrowserAsync('https://www.ifpapinball.com/calendar/')}>International Flipper Pinball Association</Text>
                                                     </Text>
                                                     <FlatList
                                                         data={events}
@@ -120,7 +120,7 @@ class Events extends Component {
                                                             return (
                                                                 <Pressable
                                                                     style={({ pressed }) => [{}, s.cardContainer, pressed ? s.pressed : s.notPressed]}
-                                                                    onPress={() => Linking.openURL(item.website)}
+                                                                    onPress={() => WebBrowser.openBrowserAsync(item.website)}
                                                                 >
                                                                     <View style={s.locationNameContainer}>
                                                                         <Text style={s.locationName}>{item.tournament_name}</Text>

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
     Dimensions,
     Image,
-    Linking,
     Modal,
     Platform,
     Pressable,
@@ -46,6 +45,7 @@ import {
     alphaSortNameObj,
     getDistanceWithUnit,
 } from '../utils/utilityFunctions'
+import * as WebBrowser from 'expo-web-browser'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -357,13 +357,13 @@ class LocationDetails extends Component {
 
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13, s.text3, s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
-                                                {location.phone ? <View style={{ flexDirection: "row" }}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
+                                                {location.phone ? <View style={{ flexDirection: "row" }}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => WebBrowser.openBrowserAsync(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
 
-                                                {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(location.website)}>Website</Text></View> : null}
+                                                {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => WebBrowser.openBrowserAsync(location.website)}>Website</Text></View> : null}
 
                                                 {!!opName &&
                                                     <View style={(location.location_type_id) ? s.narrow : s.wide}>
-                                                        <MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by: <Text style={opWebsite ? s.link : s.text3} onPress={opWebsite ? () => Linking.openURL(opWebsite) : null}>{opName}</Text></Text>
+                                                        <MaterialCommunityIcons name='wrench-outline' style={s.metaIcon} /><Text style={[s.text2, s.fontSize13, s.marginB8, s.marginRight]}>Operated by: <Text style={opWebsite ? s.link : s.text3} onPress={opWebsite ? () => WebBrowser.openBrowserAsync(opWebsite) : null}>{opName}</Text></Text>
                                                     </View>
                                                 }
 
