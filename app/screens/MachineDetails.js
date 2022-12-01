@@ -96,8 +96,7 @@ class MachineDetails extends Component {
         const { id: userId, loggedIn } = this.props.user
         const { opdb_id, opdb_img, opdb_img_height, opdb_img_width, ipdb_link, name: machineName } = this.props.machineDetails
         const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`
-        const ipdbUrl = ipdb_link ?? `http://ipdb.org/search.pl?name=${machineName};qh=checked;searchtype=advanced`
-    
+        const ipdbUrl = ipdb_link ?? `http://ipdb.org/search.pl?name=${encodeURIComponent(machineName)};qh=checked;searchtype=advanced`
         const opdb_resized = opdb_img_width - (deviceWidth - 48)
         const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
         const opdbImgHeight = opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height
