@@ -83,6 +83,7 @@ export default {
             intentFilters: [
                 {
                     action: "VIEW",
+                    "autoVerify": true,
                     data: [
                         {
                             host: "pinballmap.com",
