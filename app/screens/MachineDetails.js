@@ -168,7 +168,7 @@ class MachineDetails extends Component {
                                                 keyboardType='numeric'
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={score => this.setState({ score })}
-                                                value={formatInputNumWithCommas(this.state.score)}
+                                                defaultValue={formatInputNumWithCommas(this.state.score)}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
                                                 placeholderTextColor={theme.indigo4}

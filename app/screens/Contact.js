@@ -76,7 +76,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 style={[{ height: 40 }, s.textInput]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={name => setName(name)}
-                                value={name}
                                 returnKeyType="done"
                                 placeholder={'Your name...'}
                                 placeholderTextColor={theme.indigo4}
@@ -86,7 +85,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                                 style={[{ height: 40 }, s.textInput]}
                                 underlineColorAndroid='transparent'
                                 onChangeText={email => setEmail(email)}
-                                value={email}
                                 returnKeyType="done"
                                 placeholder={'Your email...'}
                                 placeholderTextColor={theme.indigo4}
@@ -101,7 +99,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                         placeholderTextColor={theme.indigo4}
                         numberOfLines={10}
                         style={[{ padding: 5, height: 200 }, s.textInput]}
-                        value={message}
                         onChangeText={message => setMessage(message)}
                         textAlignVertical='top'
                         underlineColorAndroid='transparent'
