@@ -271,7 +271,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={locationName => setLocationName(locationName)}
-                                            value={locationName}
                                             returnKeyType="done"
                                             placeholder={"ex. Giovanni's Pizza"}
                                             placeholderTextColor={theme.indigo4}
@@ -283,7 +282,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={street => setStreet(street)}
-                                            value={street}
                                             returnKeyType="done"
                                             placeholder={'ex. 123 Coast Village Road'}
                                             placeholderTextColor={theme.indigo4}
@@ -295,7 +293,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={city => setCity(city)}
-                                            value={city}
                                             returnKeyType="done"
                                             placeholder={'ex. Montecito'}
                                             placeholderTextColor={theme.indigo4}
@@ -307,7 +304,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={state => setState(state)}
-                                            value={state}
                                             returnKeyType="done"
                                             placeholder={'ex. CA'}
                                             placeholderTextColor={theme.indigo4}
@@ -319,7 +315,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={zip => setZip(zip)}
-                                            value={zip}
                                             returnKeyType="done"
                                             placeholder={'ex. 93108'}
                                             placeholderTextColor={theme.indigo4}
@@ -336,7 +331,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => setPhone(phone)}
-                                            value={phone}
                                             returnKeyType="done"
                                             placeholder={phone || '(503) xxx-xxxx'}
                                             placeholderTextColor={theme.indigo4}
@@ -348,7 +342,6 @@ function SuggestLocation({
                                             style={[{ height: 40, textAlign: 'left' }, s.textInput, s.radius10]}
                                             underlineColorAndroid='transparent'
                                             onChangeText={website => setWebsite(website)}
-                                            value={website}
                                             returnKeyType="done"
                                             placeholder={'https://...'}
                                             placeholderTextColor={theme.indigo4}
@@ -362,7 +355,6 @@ function SuggestLocation({
                                             style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
                                             onChangeText={description => setDescription(description)}
                                             underlineColorAndroid='transparent'
-                                            value={description}
                                             placeholder={'Location description, hours, etc...'}
                                             placeholderTextColor={theme.indigo4}
                                             textAlignVertical='top'

@@ -94,11 +94,9 @@ class MachineDetails extends Component {
         }
 
         const { id: userId, loggedIn } = this.props.user
-        const { ipdb_link } = this.props.machineDetails
-        const { opdb_id, opdb_img, opdb_img_height, opdb_img_width } = this.props.machineDetails
-        const pintipsUrl = opdb_id ?
-            `http://pintips.net/opdb/${opdb_id}` :
-            ``
+        const { opdb_id, opdb_img, opdb_img_height, opdb_img_width, ipdb_link, name: machineName } = this.props.machineDetails
+        const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`
+        const ipdbUrl = ipdb_link ?? `http://ipdb.org/search.pl?name=${encodeURIComponent(machineName)};qh=checked;searchtype=advanced`
         const opdb_resized = opdb_img_width - (deviceWidth - 48)
         const opdb_img_height_calc = (deviceWidth - 48) * (opdb_img_height / opdb_img_width)
         const opdbImgHeight = opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height
@@ -110,7 +108,6 @@ class MachineDetails extends Component {
         const mostRecentComments = curLmx.machine_conditions.length > 0 ? curLmx.machine_conditions.slice(0, 5) : undefined
         const scores = curLmx.machine_score_xrefs.sort((a, b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0)).slice(0, 10)
         const { score: userHighScore } = curLmx.machine_score_xrefs.filter(score => score.user_id === userId).reduce((prev, current) => (prev.score > current.score) ? prev : current, -1)
-        const { name: machineName } = this.props.machineDetails
         const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
         const { isLoadingImage, imageLoaded } = this.state
 
@@ -171,7 +168,7 @@ class MachineDetails extends Component {
                                                 keyboardType='numeric'
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={score => this.setState({ score })}
-                                                value={formatInputNumWithCommas(this.state.score)}
+                                                defaultValue={formatInputNumWithCommas(this.state.score)}
                                                 returnKeyType="done"
                                                 placeholder={'123...'}
                                                 placeholderTextColor={theme.indigo4}
@@ -254,12 +251,11 @@ class MachineDetails extends Component {
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.sectionTitle}>Top Scores</Text>
                                     </View>
-                                    {userHighScore ?
+                                    {!!userHighScore &&
                                         <View>
                                             <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
                                             <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
                                         </View>
-                                        : null
                                     }
                                     {scores.length > 0 ?
                                         scores.map(scoreObj => {
@@ -287,7 +283,7 @@ class MachineDetails extends Component {
                                         }
                                     />
                                 </View>
-                                {pintipsUrl ?
+                                {!!pintipsUrl &&
                                     <Button
                                         title={'View playing tips on PinTips'}
                                         type="outline"
@@ -297,13 +293,12 @@ class MachineDetails extends Component {
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                                         containerStyle={s.margin40}
-                                    /> :
-                                    null
+                                    />
                                 }
                                 <Button
                                     title={'View on IPDB'}
                                     type="outline"
-                                    onPress={() => WebBrowser.openBrowserAsync(ipdb_link)}
+                                    onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}
                                     buttonStyle={s.externalLink}
                                     titleStyle={s.externalLinkTitle}
                                     iconRight

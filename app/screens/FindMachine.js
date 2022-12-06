@@ -254,7 +254,6 @@ class FindMachine extends React.PureComponent {
                                     placeholderTextColor={theme.indigo4}
                                     numberOfLines={2}
                                     style={[{ padding: 5, height: 50 }, s.textInput]}
-                                    value={this.state.condition}
                                     onChangeText={condition => this.setState({ condition })}
                                     textAlignVertical='top'
                                     underlineColorAndroid='transparent'
