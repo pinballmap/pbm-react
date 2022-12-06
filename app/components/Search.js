@@ -346,7 +346,7 @@ class Search extends Component {
                                             </View>
                                             <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
                                                 {searching && <ActivityIndicator />}
-                                                {q === '' && <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click Filter</Text>}
+                                                {q === '' && <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click "Filter"</Text>}
                                                 {q === '' && recentSearchHistory.length > 0 && this.renderRecentSearchHistory(s)}
                                                 {!!foundRegions && foundRegions.map(region => this.renderRegionRow(region, s))}
                                                 {!!foundCities && foundCities.map(location => this.renderCityRow(location, s))}
@@ -499,9 +499,13 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.pink2
     },
     goToFilterText: {
-        paddingHorizontal: 20,
+        marginHorizontal: 40,
+        padding: 5,
         fontFamily: 'regularItalicFont',
-        color: theme.text2,
+        lineHeight: 18,
+        color: theme.text3,
+        backgroundColor: theme.base2,
+        textAlign: 'center'
     }
 })
 
