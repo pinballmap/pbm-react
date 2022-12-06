@@ -42,15 +42,15 @@ const LocationCard = ({
                     <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
                         <Text style={[s.text2, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
                         {type || distance ?
-                            <View style={{ flexDirection: 'row', marginTop: 4, marginLeft: 5 }}>
+                            <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
                                 {type ? <View style={s.vertAlign}><Icon
                                     name={icon}
                                     type={library}
-                                    color={theme.indigo4}
+                                    color={theme.colors.text}
                                     size={30}
                                     style={s.icon}
-                                /><Text style={[s.text3, s.marginH]}> {type}</Text></View> : null}
-                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={s.text3}> {distance}</Text></View> : null}
+                                /><Text style={{ marginRight: 12, color: theme.colors.text }}> {type}</Text></View> : null}
+                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text }}> {distance}</Text></View> : null}
                             </View> : null
                         }
                         <View style={s.margin}>
@@ -62,7 +62,7 @@ const LocationCard = ({
                                 return (
                                     <Text key={key} style={s.mName}>
                                         <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
-                                        <Text style={s.text2}>{`${info}\n`}</Text>
+                                        <Text style={s.text}>{`${info}\n`}</Text>
                                     </Text>
                                 )
                             })
@@ -100,14 +100,14 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: -10,
-        color: theme.pink1
+        color: theme.pink4
     },
     plus: {
         marginBottom: 10,
         color: theme.text2
     },
     locationNameContainer: {
-        backgroundColor: theme.text3,
+        backgroundColor: "#7f7fa0",
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -121,7 +121,7 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 18,
         textAlign: 'center',
-        color: theme.base2
+        color: "#f5f5ff"
     },
     margin: {
         marginTop: 10,
@@ -131,9 +131,6 @@ const getStyles = (theme) => StyleSheet.create({
         marginTop: 3,
         marginLeft: 5
     },
-    marginH: {
-        marginRight: 12,
-    },
     vertAlign: {
         flexDirection: 'row',
         alignItems: 'center'
@@ -141,19 +138,11 @@ const getStyles = (theme) => StyleSheet.create({
     text2: {
         color: theme.text2
     },
-    text3: {
-        color: theme.text3,
+    text: {
+        color: theme.text
     },
     italic: {
         fontFamily: 'regularItalicFont',
-    },
-    iconStyle: {
-        fontSize: 32,
-        color: theme.white,
-        marginRight: 0,
-        position: "absolute",
-        right: 0,
-        zIndex: 5
     },
     pressed: {
         borderColor: theme.pink2,
@@ -171,7 +160,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     icon: {
         fontSize: 20,
-        color: theme.indigo4,
+        color: theme.colors.text,
         opacity: 0.8,
         marginRight: 1
     },

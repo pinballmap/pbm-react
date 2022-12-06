@@ -167,7 +167,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.text3,
+        color: theme.text2,
         fontSize: 14,
     },
     innerBorderStyle: {
@@ -180,11 +180,11 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.text3,
+        color: theme.text2,
         fontFamily: 'regularBoldFont',
     },
     locationNameContainer: {
-        backgroundColor: theme.text3,
+        backgroundColor: "#7f7fa0",
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
@@ -197,7 +197,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         fontSize: 16,
         textAlign: 'center',
-        color: theme.base2
+        color: "#f5f5ff"
     },
     margin: {
         marginTop: 10,

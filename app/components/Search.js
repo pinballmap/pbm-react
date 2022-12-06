@@ -450,13 +450,13 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 0,
     },
     filterTitleStyle: {
-        color: theme.text,
+        color: theme.pink1,
         fontSize: 16
     },
     filterIcon: {
         paddingRight: 5,
         fontSize: 20,
-        color: theme.text
+        color: theme.pink3
     },
     listContainerStyle: {
         borderBottomColor: theme.indigo4,

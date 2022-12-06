@@ -131,7 +131,7 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: 15
     },
     buttonGroupInactive: {
-        color: theme.text3,
+        color: theme.text2,
     },
     innerBorderStyle: {
         width: 0,
@@ -143,7 +143,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.text3,
+        color: theme.text2,
         fontFamily: 'regularBoldFont',
     },
 })

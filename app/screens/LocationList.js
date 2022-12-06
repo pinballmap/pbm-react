@@ -153,7 +153,7 @@ const getStyles = theme => StyleSheet.create({
         overflow: 'visible'
     },
     buttonGroupInactive: {
-        color: theme.text3,
+        color: theme.text2,
         fontSize: deviceWidth < 321 ? 12 : 14,
     },
     innerBorderStyle: {
@@ -166,7 +166,7 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25
     },
     selTextStyle: {
-        color: theme.text3,
+        color: theme.text2,
         fontFamily: 'regularBoldFont',
     },
     confirmText: {

@@ -108,9 +108,9 @@ class LocationDetails extends Component {
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
-        
-        const {website: opWebsite, name: opName} = operators.find(operator => operator.id === location.operator_id) ?? {}
-        
+
+        const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
+
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
             const machineDetails = this.props.machines.machines.find(m => m.id === machine.machine_id)
             return { ...machineDetails, ...machine }
