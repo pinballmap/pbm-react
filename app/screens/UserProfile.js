@@ -7,7 +7,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, EvilIcons } from '@expo/vector-icons'
 import {
     ListItem,
 } from '@rneui/base'
@@ -21,6 +21,9 @@ import {
     Text,
     WarningButton
 } from '../components'
+import {
+    Button,
+} from '@rneui/base'
 import { getData } from '../config/request'
 import { logout } from '../actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -212,14 +215,17 @@ class UserProfile extends Component {
                                         accessibilityLabel="Logout"
                                     />
                                     <View>
-                                        <Text style={s.member}>Want to update your password, or your email, or delete your account? These can be done on your Profile page on the website. Click below!</Text>
+                                        <Text style={s.member}>Want to update your password, or email, or delete your account? These can be done on your Profile page on the website. Click below!</Text>
                                     </View>
-                                    <PbmButton
-                                        title={'Website Profile Page'}
+                                    <Button
+                                        title={'Website Profile'}
                                         type="outline"
                                         onPress={() => WebBrowser.openBrowserAsync('https://pinballmap.com/users/' + user.username + '/profile')}
-                                        buttonStyle={s.savedLink}
-                                        titleStyle={s.buttonTitleStyle}
+                                        buttonStyle={s.externalLink}
+                                        titleStyle={s.externalLinkTitle}
+                                        iconRight
+                                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                                        containerStyle={s.margin40}
                                     />
                                 </View>
                             }
@@ -257,8 +263,8 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 8,
-        color: theme.text3,
-        backgroundColor: theme.base3
+        color: theme.colors.text,
+        backgroundColor: theme.pink2
     },
     savedIcon: {
         fontSize: 24,
@@ -311,13 +317,13 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 15,
         fontFamily: 'boldFont',
         opacity: 0.9,
-        color: theme.text,
+        color: theme.colors.text,
         width: 160
     },
     statNum: {
         fontFamily: 'boldFont',
-        color: theme.text,
-        backgroundColor: theme.pink2,
+        color: "#f5f5ff",
+        backgroundColor: "#7f7fa0",
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
@@ -325,6 +331,7 @@ const getStyles = theme => StyleSheet.create({
     member: {
         textAlign: "center",
         marginBottom: 10,
+        marginHorizontal: 20,
         paddingTop: 10,
         fontSize: 16,
         color: theme.text3
@@ -367,6 +374,20 @@ const getStyles = theme => StyleSheet.create({
         height: 20,
         resizeMode: 'stretch',
         marginLeft: 3
+    },
+    externalLink: {
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: theme.text3,
+        backgroundColor: theme.base3
+    },
+    externalIcon: {
+        fontSize: 24,
+        color: theme.text2
+    },
+    externalLinkTitle: {
+        color: theme.text,
+        fontSize: 16
     }
 })
 
