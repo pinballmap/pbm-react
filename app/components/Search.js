@@ -345,11 +345,12 @@ class Search extends Component {
                                                 />
                                             </View>
                                             <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
-                                                {searching ? <ActivityIndicator /> : null}
-                                                {q === '' && recentSearchHistory.length > 0 ? this.renderRecentSearchHistory(s) : null}
-                                                {foundRegions ? foundRegions.map(region => this.renderRegionRow(region, s)) : null}
-                                                {foundCities ? foundCities.map(location => this.renderCityRow(location, s)) : null}
-                                                {foundLocations ? foundLocations.map(location => this.renderLocationRow(location, s)) : null}
+                                                {searching && <ActivityIndicator />}
+                                                {q === '' && <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click Filter</Text>}
+                                                {q === '' && recentSearchHistory.length > 0 && this.renderRecentSearchHistory(s)}
+                                                {!!foundRegions && foundRegions.map(region => this.renderRegionRow(region, s))}
+                                                {!!foundCities && foundCities.map(location => this.renderCityRow(location, s))}
+                                                {!!foundLocations && foundLocations.map(location => this.renderLocationRow(location, s))}
                                             </ScrollView>
                                         </View>
                                     </SafeAreaView>
@@ -496,6 +497,11 @@ const getStyles = theme => StyleSheet.create({
     },
     filterNotPressed: {
         backgroundColor: theme.pink2
+    },
+    goToFilterText: {
+        paddingHorizontal: 20,
+        fontFamily: 'regularItalicFont',
+        color: theme.text2,
     }
 })
 
