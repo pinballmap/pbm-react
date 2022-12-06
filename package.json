@@ -45,8 +45,8 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "sentry-expo": "~5.0.0",
-    "@sentry/react-native": "4.2.2",
+    "sentry-expo": "~6.0.0",
+    "@sentry/react-native": "4.9.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
