@@ -286,6 +286,17 @@ class Search extends Component {
         </View>
     )
 
+    renderGoToFilter = (s) => {
+        const onPress = () => {
+            this.setState({searchModalVisible: false})
+            this.props.navigate('FilterMap')
+        }
+        return (
+            <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click <Text onPress={onPress} style={s.link}>Filter</Text></Text>
+        )
+    }
+
+
     componentDidUpdate(prevProps, prevState) {
         if (this.state.searchModalVisible && !prevState.searchModalVisible) {
             retrieveItem('searchHistory')
@@ -346,7 +357,7 @@ class Search extends Component {
                                             </View>
                                             <ScrollView style={{ paddingTop: 3 }} keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
                                                 {searching && <ActivityIndicator />}
-                                                {q === '' && <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click "Filter"</Text>}
+                                                {q === '' && this.renderGoToFilter(s)}
                                                 {q === '' && recentSearchHistory.length > 0 && this.renderRecentSearchHistory(s)}
                                                 {!!foundRegions && foundRegions.map(region => this.renderRegionRow(region, s))}
                                                 {!!foundCities && foundCities.map(location => this.renderCityRow(location, s))}
@@ -506,6 +517,10 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text3,
         backgroundColor: theme.base2,
         textAlign: 'center'
+    },
+    link: {
+        textDecorationLine: 'underline',
+        color: '#7cc5ff',
     }
 })
 
