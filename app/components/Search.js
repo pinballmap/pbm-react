@@ -288,11 +288,11 @@ class Search extends Component {
 
     renderGoToFilter = (s) => {
         const onPress = () => {
-            this.setState({searchModalVisible: false})
+            this.setState({ searchModalVisible: false })
             this.props.navigate('FilterMap')
         }
         return (
-            <Text style={s.goToFilterText}>Looking to search by machine? Go back to the map and click <Text onPress={onPress} style={s.link}>Filter</Text></Text>
+            <Text style={s.goToFilterText}>Looking for a particular machine? Use the <Text onPress={onPress} style={s.link}>Filter</Text></Text>
         )
     }
 
