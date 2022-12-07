@@ -4,29 +4,30 @@ import Text from './PbmText'
 import PropTypes from "prop-types"
 import markerDotHeart from '../assets/images/markerdot-heart.png'
 
-const IosHeartMarker = ({numMachines}) => {
+const IosHeartMarker = ({ numMachines }) => {
     let dotFontMargin, dotWidth
     if (numMachines < 10) {
-        dotFontMargin = 3
-        dotWidth = 36
-    } else if (numMachines < 20) {
-        dotFontMargin = 3
+        dotFontMargin = 5
         dotWidth = 40
+    } else if (numMachines < 20) {
+        dotFontMargin = 5
+        dotWidth = 44
     } else if (numMachines < 100) {
         dotFontMargin = 6
-        dotWidth = 46
+        dotWidth = 48
     } else {
-        dotFontMargin = 7
-        dotWidth = 54
+        dotFontMargin = 8
+        dotWidth = 56
     }
     return (
-        <ImageBackground style={{width: dotWidth, height: dotWidth * .875}} source={markerDotHeart} >
+        <ImageBackground style={{ width: dotWidth, height: dotWidth * .872 }} source={markerDotHeart} >
             <Text style={{
                 color: 'black',
                 fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,
-                marginTop: dotFontMargin}}>
+                marginTop: dotFontMargin
+            }}>
                 {numMachines}
             </Text>
         </ImageBackground>

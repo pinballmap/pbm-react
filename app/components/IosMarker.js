@@ -4,7 +4,7 @@ import Text from './PbmText'
 import PropTypes from "prop-types"
 import { ThemeContext } from '../theme-context'
 
-const IosMarker = ({numMachines}) => {
+const IosMarker = ({ numMachines }) => {
     const { theme } = useContext(ThemeContext)
 
     let dotFontMargin, dotWidthHeight
@@ -27,7 +27,7 @@ const IosMarker = ({numMachines}) => {
             height: dotWidthHeight,
             borderRadius: dotWidthHeight / 2,
             borderWidth: 2,
-            borderColor: theme.pink2,
+            borderColor: "#fee7f5",
             backgroundColor: theme.text2,
         }}>
             <Text style={{
@@ -35,7 +35,8 @@ const IosMarker = ({numMachines}) => {
                 fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,
-                marginTop: dotFontMargin}}>
+                marginTop: dotFontMargin
+            }}>
                 {numMachines}
             </Text>
         </View>
