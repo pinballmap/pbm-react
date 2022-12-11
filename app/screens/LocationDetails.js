@@ -103,6 +103,7 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { operators } = this.props.operators
         const { errorText } = this.props.error
+        const {navigation} = this.props
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
@@ -113,6 +114,7 @@ class LocationDetails extends Component {
         }))
         const { icon: locationIcon, library: iconLibrary, name: locationTypeName } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id) || {}
         const cityState = location.state ? `${location.city}, ${location.state}` : location.city
+
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -135,10 +137,10 @@ class LocationDetails extends Component {
                                             containerStyle={s.backgroundColor}
                                             onPress={() => {
                                                 if (loggedIn) {
-                                                    this.props.navigation.navigate('FindMachine')
+                                                    navigation.navigate('FindMachine')
                                                     this.setShowLocationToolsModal(false)
                                                 } else {
-                                                    this.props.navigation.navigate('Login')
+                                                    navigation.navigate('Login')
                                                     this.setShowLocationToolsModal(false)
                                                 }
                                             }
@@ -168,10 +170,10 @@ class LocationDetails extends Component {
                                             containerStyle={s.backgroundColor}
                                             onPress={() => {
                                                 if (loggedIn) {
-                                                    this.props.navigation.navigate('EditLocationDetails')
+                                                    navigation.navigate('EditLocationDetails')
                                                     this.setShowLocationToolsModal(false)
                                                 } else {
-                                                    this.props.navigation.navigate('Login')
+                                                    navigation.navigate('Login')
                                                     this.setShowLocationToolsModal(false)
                                                 }
                                             }
@@ -245,8 +247,8 @@ class LocationDetails extends Component {
                                 </ConfirmationModal>
                                 <View style={{ flex: 1, position: 'relative' }}>
                                     <Pressable
-                                        style={({ pressed }) => [{}, s.plusButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                        onPress={() => loggedIn ? this.props.navigation.navigate('FindMachine') : this.props.navigation.navigate('Login')}
+                                        style={({ pressed }) => [s.plusButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        onPress={() => loggedIn ? navigation.navigate('FindMachine') : navigation.navigate('Login')}
                                     >
                                         <MaterialCommunityIcons
                                             name={'plus'}
@@ -260,10 +262,10 @@ class LocationDetails extends Component {
                                         style={{...s.quickButton, ...s.saveButton}}
                                         pressedStyle={s.quickButtonPressed}
                                         notPressedStyle={s.quickButtonNotPressed}
-                                        navigation={this.props.navigation}
+                                        navigation={navigation}
                                     />
                                     <Pressable
-                                        style={({ pressed }) => [{}, s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
+                                        style={({ pressed }) => [s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={async () => {
                                             await Share.share({
                                                 message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
@@ -360,7 +362,7 @@ class LocationDetails extends Component {
                                             <Pressable
                                                 key={machine.id}
                                                 onPress={() => {
-                                                    this.props.navigation.navigate('MachineDetails', { machineName: machine.name })
+                                                    navigation.navigate('MachineDetails', { machineName: machine.name })
                                                     this.props.setCurrentMachine(machine.id)
                                                 }}
                                             >
@@ -385,7 +387,7 @@ class LocationDetails extends Component {
                                 </View>
                             </Screen>
                             <Pressable
-                                style={({ pressed }) => [{}, s.toolsIconButton, pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
+                                style={({ pressed }) => [s.toolsIconButton, pressed ? s.toolsIconPressed : s.toolsIconNotPressed]}
                                 onPress={() => {
                                     this.setShowLocationToolsModal(true)
                                 }}
