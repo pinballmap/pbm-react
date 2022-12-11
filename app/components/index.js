@@ -19,6 +19,7 @@ import CustomMapMarker from './CustomMapMarker'
 import AppAlert from './AppAlert'
 import NoLocationTrackingModal from './NoLocationTrackingModal'
 import AppWrapper from './AppWrapper'
+import FavoriteLocation from './FavoriteLocation'
 
 export {
     LocationCard,
@@ -42,4 +43,5 @@ export {
     AppAlert,
     NoLocationTrackingModal,
     AppWrapper,
+    FavoriteLocation,
 }

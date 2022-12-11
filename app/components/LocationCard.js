@@ -9,6 +9,7 @@ import {
 import { Icon } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import FavoriteLocation from './FavoriteLocation'
 
 const NUM_MACHINES_TO_SHOW = 5
 
@@ -38,6 +39,7 @@ const LocationCard = ({
                 <View style={{ zIndex: 10, flex: 1 }}>
                     <View style={s.locationNameContainer}>
                         <Text style={s.locationName}>{locationName}</Text>
+                        <FavoriteLocation locationId={id} navigation={navigation} />
                     </View>
                     <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
                         <Text style={[s.text2, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
@@ -100,11 +102,11 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: -10,
-        color: theme.pink4
+        color: theme.pink4,
     },
     plus: {
         marginBottom: 10,
-        color: theme.text2
+        color: theme.text2,
     },
     locationNameContainer: {
         backgroundColor: "#7f7fa0",
@@ -112,10 +114,11 @@ const getStyles = (theme) => StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingHorizontal: 15,
         marginTop: -2,
         marginHorizontal: -2,
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     locationName: {
         fontFamily: 'boldFont',

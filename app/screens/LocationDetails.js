@@ -25,18 +25,16 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
     ActivityIndicator,
     ConfirmationModal,
+    FavoriteLocation,
     PbmButton,
     Screen,
     Text,
 } from '../components'
 import {
-    addFavoriteLocation,
     clearError,
     closeConfirmModal,
-    closeFavoriteLocationModal,
     confirmLocationIsUpToDate,
     fetchLocation,
-    removeFavoriteLocation,
     setCurrentMachine,
     updateCoordinatesAndGetLocations,
 } from '../actions'
@@ -106,9 +104,7 @@ class LocationDetails extends Component {
         const { operators } = this.props.operators
         const { errorText } = this.props.error
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
-        const { loggedIn, faveLocations = [], favoriteModalVisible, favoriteModalText, addingFavoriteLocation, removingFavoriteLocation, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
-        const isUserFave = faveLocations.some(fave => fave.location_id === location.id)
-
+        const { loggedIn, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
 
         const sortedMachines = alphaSortNameObj(location.location_machine_xrefs.map(machine => {
@@ -222,34 +218,6 @@ class LocationDetails extends Component {
                                         </ListItem>
                                     </View>
                                 </ConfirmationModal>
-                                <ConfirmationModal visible={favoriteModalVisible}>
-                                    {addingFavoriteLocation || removingFavoriteLocation ?
-                                        <ActivityIndicator /> :
-                                        <View>
-                                            <Text style={s.confirmText}>{favoriteModalText}</Text>
-                                            <View>
-                                                <PbmButton
-                                                    title={"Great!"}
-                                                    onPress={this.props.closeFavoriteLocationModal}
-                                                    containerStyle={s.buttonContainerStyle}
-                                                    accessibilityLabel="Great!"
-                                                />
-                                                <PbmButton
-                                                    title={'View Saved Locations'}
-                                                    onPress={() => {
-                                                        this.props.closeFavoriteLocationModal()
-                                                        this.props.navigation.navigate('Saved')
-                                                    }}
-                                                    buttonStyle={s.savedLink}
-                                                    titleStyle={s.buttonTitleStyle}
-                                                    containerStyle={s.buttonContainerStyle}
-                                                    iconLeft
-                                                    icon={<MaterialCommunityIcons name="heart" style={s.savedIcon} />}
-                                                />
-                                            </View>
-                                        </View>
-                                    }
-                                </ConfirmationModal>
                                 <Modal
                                     visible={errorModalVisible}
                                     onRequestClose={() => { }}
@@ -287,25 +255,13 @@ class LocationDetails extends Component {
                                             style={{ height: 28, width: 28, justifyContent: 'center', alignSelf: 'center' }}
                                         />
                                     </Pressable>
-                                    <Pressable
-                                        style={({ pressed }) => [{}, s.saveButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                        onPress={() => !loggedIn ? this.props.navigation.navigate('Login') : isUserFave ? this.props.removeFavoriteLocation(location.id) : this.props.addFavoriteLocation(location.id)}
-                                    >
-                                        {loggedIn && isUserFave ?
-                                            <MaterialCommunityIcons
-                                                name={'heart'}
-                                                color={theme.pink1}
-                                                size={26}
-                                                style={{ height: 26, width: 26, justifyContent: 'center', alignSelf: 'center' }}
-                                            /> :
-                                            <MaterialCommunityIcons
-                                                name={'heart-outline'}
-                                                color={theme.pink1}
-                                                size={26}
-                                                style={{ height: 26, width: 26, justifyContent: 'center', alignSelf: 'center' }}
-                                            />
-                                        }
-                                    </Pressable>
+                                    <FavoriteLocation
+                                        locationId={location.id}
+                                        style={{...s.quickButton, ...s.saveButton}}
+                                        pressedStyle={s.quickButtonPressed}
+                                        notPressedStyle={s.quickButtonNotPressed}
+                                        navigation={this.props.navigation}
+                                    />
                                     <Pressable
                                         style={({ pressed }) => [{}, s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                                         onPress={async () => {
@@ -597,13 +553,6 @@ const getStyles = theme => StyleSheet.create({
         opacity: 0.8,
         fontSize: 32,
     },
-    confirmText: {
-        textAlign: 'center',
-        fontSize: 16,
-        fontFamily: 'boldFont',
-        marginLeft: 10,
-        marginRight: 10
-    },
     logo: {
         resizeMode: 'contain',
         borderColor: "#fdd4d7",
@@ -634,17 +583,14 @@ const getStyles = theme => StyleSheet.create({
     },
     saveButton: {
         right: 10,
+        position: 'absolute',
+        top: deviceWidth < 325 ? 80 : 120,
     },
     plusButton: {
         right: 110,
     },
     shareButton: {
         right: 60,
-    },
-    savedIcon: {
-        color: theme.text2,
-        fontSize: 24,
-        marginRight: 5
     },
     metaIcon: {
         paddingTop: 0,
@@ -659,23 +605,6 @@ const getStyles = theme => StyleSheet.create({
         color: theme.indigo4,
         marginRight: 3,
         opacity: 0.6
-    },
-    savedLink: {
-        borderWidth: 2,
-        width: '100%',
-        borderColor: theme.blue2,
-        borderRadius: 25,
-        backgroundColor: theme.white
-    },
-    buttonTitleStyle: {
-        fontSize: 16,
-        color: theme.text,
-        textTransform: 'capitalize',
-        fontFamily: 'boldFont',
-    },
-    buttonContainerStyle: {
-        marginHorizontal: deviceWidth < 325 ? 20 : 40,
-        marginVertical: 10
     },
     markerDot: {
         width: 30,
@@ -758,9 +687,6 @@ LocationDetails.propTypes = {
     navigation: PropTypes.object,
     clearError: PropTypes.func,
     error: PropTypes.object,
-    closeFavoriteLocationModal: PropTypes.func,
-    removeFavoriteLocation: PropTypes.func,
-    addFavoriteLocation: PropTypes.func,
     updateCoordinatesAndGetLocations: PropTypes.func,
     route: PropTypes.object,
 }
@@ -772,9 +698,6 @@ const mapDispatchToProps = (dispatch) => ({
     closeConfirmModal: () => dispatch(closeConfirmModal()),
     setCurrentMachine: id => dispatch(setCurrentMachine(id)),
     clearError: () => dispatch(clearError()),
-    removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
-    addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
-    closeFavoriteLocationModal: () => dispatch(closeFavoriteLocationModal()),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
