@@ -20,7 +20,8 @@ const FavoriteLocationHeart = ({
     removeFavoriteLocation,
     style,
     pressedStyle,
-    notPressedStyle
+    notPressedStyle,
+    removeFavorite,
 }) => {
     const { theme } = useContext(ThemeContext)
     const { loggedIn, faveLocations = []} = user
@@ -28,7 +29,7 @@ const FavoriteLocationHeart = ({
 
     const onPress = () => {
         if (!loggedIn) return navigation.navigate('Login')
-        return isUserFave ? removeFavoriteLocation(locationId) : addFavoriteLocation(locationId)
+        return isUserFave ? removeFavorite(() => removeFavoriteLocation(locationId)) : addFavoriteLocation(locationId)
     }
 
     return (
@@ -62,7 +63,8 @@ FavoriteLocationHeart.propTypes = {
     navigation: PropTypes.object,
     style: PropTypes.object,
     pressedStyle: PropTypes.object, 
-    notPressedStyle: PropTypes.object
+    notPressedStyle: PropTypes.object,
+    removeFavorite: PropTypes.func,
 }
 
 const s = StyleSheet.create({

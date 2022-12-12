@@ -263,6 +263,7 @@ class LocationDetails extends Component {
                                         pressedStyle={s.quickButtonPressed}
                                         notPressedStyle={s.quickButtonNotPressed}
                                         navigation={navigation}
+                                        removeFavorite={(cb) => cb()}
                                     />
                                     <Pressable
                                         style={({ pressed }) => [s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
