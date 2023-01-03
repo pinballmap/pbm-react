@@ -357,7 +357,7 @@ class LocationDetails extends Component {
 
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13, s.text3, s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
-                                                {location.phone ? <View style={{ flexDirection: "row" }}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => WebBrowser.openBrowserAsync(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
+                                                {location.phone ? <View style={{ flexDirection: "row" }}><MaterialIcons name='local-phone' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => Linking.openURL(`tel:${location.phone}`)}>{location.phone}</Text></View> : null}
 
                                                 {location.website ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='web' style={s.metaIcon} /><Text style={[s.link, s.marginB8]} onPress={() => WebBrowser.openBrowserAsync(location.website)}>Website</Text></View> : null}
 
