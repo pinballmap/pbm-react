@@ -5,6 +5,7 @@ import {
     Dimensions,
     Image,
     Modal,
+    Linking,
     Platform,
     Pressable,
     Share,
