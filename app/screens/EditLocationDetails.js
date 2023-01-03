@@ -172,6 +172,7 @@ function EditLocationDetails({
                                         style={[{ height: 40 }, s.textInput, s.radius10]}
                                         underlineColorAndroid='transparent'
                                         onChangeText={phone => setPhone(phone)}
+                                        value={phone}
                                         returnKeyType="done"
                                         placeholder={phone || '(503) xxx-xxxx'}
                                         placeholderTextColor={theme.indigo4}
@@ -183,6 +184,7 @@ function EditLocationDetails({
                                         style={[{ height: 40 }, s.textInput, s.radius10]}
                                         underlineColorAndroid='transparent'
                                         onChangeText={website => setWebsite(website)}
+                                        value={website}
                                         returnKeyType="done"
                                         placeholder={website || 'https://...'}
                                         placeholderTextColor={theme.indigo4}
@@ -195,6 +197,7 @@ function EditLocationDetails({
                                         numberOfLines={4}
                                         style={[{ height: 100 }, s.textInput, s.radius10]}
                                         onChangeText={description => setDescription(description)}
+                                        value={description}
                                         underlineColorAndroid='transparent'
                                         placeholder={description || 'Location description...'}
                                         placeholderTextColor={theme.indigo4}
