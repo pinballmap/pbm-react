@@ -20,6 +20,7 @@ import {
     submitMessage,
     clearMessage,
 } from '../actions'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     const { theme } = useContext(ThemeContext)
@@ -68,8 +69,10 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             </ConfirmationModal>
             {submittingMessage ?
                 <ActivityIndicator /> :
-                <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
-                    <Text style={s.text}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
+                <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} style={s.background}>
+                    <Text style={[s.text, s.blackText]}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
+                    <Text style={[s.text, s.pinkText]}>{`If you're writing to tell us that a location no longer has machines - NO NEED! Please just remove the machines from the location, and we will auto-delete it within a week.`}</Text>
+                    <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Check the FAQ for other common questions.`}</Text>
                     {!loggedIn ?
                         <View>
                             <TextInput
@@ -108,21 +111,24 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                         disabled={_disabled()}
                         onPress={submit}
                     />
-                </View>
+                </KeyboardAwareScrollView>
             }
         </Screen>)
 }
 
 const getStyles = theme => StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: theme.base1,
+        marginHorizontal: 20,
+        marginTop: 10
+    },
     text: {
         fontSize: 16,
         lineHeight: 22,
         marginTop: 5,
-        marginLeft: 20,
-        marginRight: 20,
+        marginHorizontal: 15,
         fontFamily: 'boldFont',
-        color: theme.text,
-        textAlign: 'center'
     },
     textInput: {
         backgroundColor: theme.white,
@@ -134,6 +140,20 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'left'
+    },
+    blackText: {
+        color: theme.text,
+    },
+    pinkText: {
+        color: theme.pink1,
+        marginTop: 15,
+    },
+    textLink: {
+        textDecorationLine: 'underline',
+        fontSize: 16,
+        lineHeight: 22,
+        marginTop: 15,
+        marginHorizontal: 15
     },
     confirmText: {
         textAlign: 'center',

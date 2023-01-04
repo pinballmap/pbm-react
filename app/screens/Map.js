@@ -11,7 +11,7 @@ import {
 import { Button } from '@rneui/base'
 import { retrieveItem } from '../config/utils'
 import { getData } from '../config/request'
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import {
@@ -248,8 +248,10 @@ class Map extends Component {
                         title={'Clear Filter'}
                         onPress={() => this.props.clearFilters()}
                         containerStyle={[s.filterContainer, s.containerStyle]}
-                        buttonStyle={[s.buttonStyle, { backgroundColor: '#fee5e7' }]}
-                        titleStyle={{ color: '#453e39', fontSize: 14 }}
+                        buttonStyle={s.buttonStyle}
+                        titleStyle={s.filterTitleStyle}
+                        iconLeft
+                        icon={<Ionicons name="ios-close-circle" style={s.closeIcon} />}
                     />
                     : null
                 }
@@ -264,7 +266,7 @@ class Map extends Component {
                     >
                         {({ pressed }) => (
                             <Text style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
-                                Search this area
+                                Refresh this area
                             </Text>
                         )}
                     </Pressable>
@@ -288,22 +290,16 @@ const getStyles = theme => StyleSheet.create({
     loading: {
         zIndex: 10,
         position: 'absolute',
-        top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         alignSelf: "center",
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        backgroundColor: theme.pink2,
-        borderRadius: 15
+        bottom: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: theme.text,
+        borderRadius: 25
     },
     loadingText: {
-        color: theme.text,
-        fontSize: 14,
-    },
-    clear: {
+        color: theme.pink2,
         fontSize: 16,
-        color: "#F53240",
-        padding: 5,
-        backgroundColor: theme.base1
     },
     confirmText: {
         textAlign: 'center',
@@ -312,17 +308,14 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 10
     },
     buttonStyle: {
-        paddingTop: 0,
-        paddingBottom: 0,
-        paddingLeft: 10,
-        paddingRight: 10,
-        height: 30,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 25,
         backgroundColor: theme.base1,
     },
     buttonTitle: {
         color: theme.text,
-        fontSize: 14
+        fontSize: 16
     },
     containerStyle: {
         shadowColor: theme.darkShadow,
@@ -343,16 +336,16 @@ const getStyles = theme => StyleSheet.create({
         bottom: 20,
         alignSelf: 'center',
         borderRadius: 25,
-        backgroundColor: theme.base1,
+        backgroundColor: theme.colors.text,
         paddingVertical: 10,
         paddingHorizontal: 20
     },
     updateTitleStyle: {
-        color: theme.blue4,
+        color: theme.white,
         fontSize: 16
     },
     pressedTitleStyle: {
-        color: theme.blue3,
+        color: theme.pink3,
         fontSize: 16
     },
     myLocationContainer: {
@@ -368,9 +361,19 @@ const getStyles = theme => StyleSheet.create({
     },
     filterContainer: {
         position: 'absolute',
+        alignSelf: 'center',
         top: Constants.statusBarHeight > 40 ? Constants.statusBarHeight + 100 : Constants.statusBarHeight + 80,
         right: 15,
-        borderRadius: 25
+        borderRadius: 25,
+    },
+    filterTitleStyle: {
+        color: theme.pink1,
+        fontSize: 16
+    },
+    closeIcon: {
+        paddingRight: 5,
+        fontSize: 20,
+        color: theme.pink3
     },
     pressed: {
         opacity: 0.8,

@@ -36,7 +36,6 @@ const getStyles = (theme) => StyleSheet.create({
     titleStyle: {
         color: 'white',
         fontSize: 16,
-        textTransform: 'capitalize',
         fontFamily: 'boldFont',
     },
     disabledStyle: {

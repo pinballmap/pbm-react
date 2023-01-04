@@ -281,7 +281,6 @@ const getStyles = theme => StyleSheet.create({
     buttonTitleStyle: {
         fontSize: 16,
         color: theme.text,
-        textTransform: 'capitalize',
         fontFamily: 'boldFont'
     },
     margin40: {
