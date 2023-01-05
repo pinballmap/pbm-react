@@ -59,7 +59,7 @@ export class LocationList extends Component {
                 })
             case 3:
                 return this.setState({
-                    locations: locations.sort((a, b) => b.num_machines - a.num_machines)
+                    locations: locations.sort((a, b) => b.machine_names.length - a.machine_names.length)
                 })
         }
     }
