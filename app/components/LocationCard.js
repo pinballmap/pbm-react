@@ -41,18 +41,6 @@ const LocationCard = ({
                     </View>
                     <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
                         <Text style={[s.text2, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
-                        {type || distance ?
-                            <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
-                                {type ? <View style={s.vertAlign}><Icon
-                                    name={icon}
-                                    type={library}
-                                    color={theme.colors.text}
-                                    size={30}
-                                    style={s.icon}
-                                /><Text style={{ marginRight: 12, color: theme.colors.text }}> {type}</Text></View> : null}
-                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text }}> {distance}</Text></View> : null}
-                            </View> : null
-                        }
                         <View style={s.margin}>
                             {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                 const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
@@ -70,6 +58,18 @@ const LocationCard = ({
                             {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus, s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
                         </View>
                     </View>
+                    {type || distance ?
+                        <View style={s.locationTypeContainer}>
+                            {type ? <View style={s.vertAlign}><Icon
+                                name={icon}
+                                type={library}
+                                color={theme.colors.text}
+                                size={30}
+                                style={s.icon}
+                            /><Text style={{ marginRight: 12, color: theme.colors.text, fontFamily: "boldFont" }}> {type}</Text></View> : null}
+                            {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text, fontFamily: "boldFont" }}> {distance}</Text></View> : null}
+                        </View> : null
+                    }
                 </View>
             </View>
         </Pressable>
@@ -112,8 +112,7 @@ const getStyles = (theme) => StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingHorizontal: 10,
         marginTop: -2,
         marginHorizontal: -2,
     },
@@ -122,6 +121,18 @@ const getStyles = (theme) => StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         color: "#f5f5ff"
+    },
+    locationTypeContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: -2,
+        marginHorizontal: -2,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        backgroundColor: theme.base3
     },
     margin: {
         marginTop: 10,
@@ -136,7 +147,9 @@ const getStyles = (theme) => StyleSheet.create({
         alignItems: 'center'
     },
     text2: {
-        color: theme.text2
+        color: theme.text2,
+        fontFamily: "boldFont",
+        fontSize: 15
     },
     text: {
         color: theme.text
@@ -159,7 +172,7 @@ const getStyles = (theme) => StyleSheet.create({
         elevation: 6,
     },
     icon: {
-        fontSize: 20,
+        fontSize: 30,
         color: theme.colors.text,
         opacity: 0.8,
         marginRight: 1
