@@ -7,18 +7,13 @@ import {
     LOG_OUT,
     LOGIN_LATER,
     FETCHING_FAVORITE_LOCATIONS_SUCCESS,
-    ADDING_FAVORITE_LOCATION,
-    REMOVING_FAVORITE_LOCATION,
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
-    ACKNOWLEDGE_FAVORITE_UPDATE,
     SELECT_FAVORITE_LOCATION_FILTER_BY,
     SUBMITTING_MESSAGE,
     MESSAGE_SUBMITTED,
     MESSAGE_SUBMISSION_FAILED,
     CLEAR_MESSAGE,
-    ERROR_ADDING_FAVORITE_LOCATION,
-    ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
     HIDE_NO_LOCATION_TRACKING_MODAL,
     INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
@@ -36,10 +31,6 @@ export const initialState = {
     id: null,
     username: '',
     faveLocations: [],
-    addingFavoriteLocation: false,
-    removingFavoriteLocation: false,
-    favoriteModalVisible: false,
-    favoriteModalText: '',
     selectedFavoriteLocationFilter: 0,
     submittingMessage: false,
     confirmationMessage: '',
@@ -121,29 +112,11 @@ export default (state = initialState, action) => {
                 ...state,
                 faveLocations: action.faveLocations,
             }
-        case ADDING_FAVORITE_LOCATION:
-            return {
-                ...state,
-                addingFavoriteLocation: true,
-                favoriteModalVisible: true,
-            }
-        case REMOVING_FAVORITE_LOCATION:
-            return {
-                ...state,
-                removingFavoriteLocation: true,
-                favoriteModalVisible: true,
-            }
         case FAVORITE_LOCATION_ADDED:
             return {
                 ...state,
                 addingFavoriteLocation: false,
                 favoriteModalText: 'Successfully added location to your saved list',
-            }
-        case ERROR_ADDING_FAVORITE_LOCATION:
-            return {
-                ...state,
-                addingFavoriteLocation: false,
-                favoriteModalText: action.err
             }
         case FAVORITE_LOCATION_REMOVED:
             return {
@@ -151,18 +124,6 @@ export default (state = initialState, action) => {
                 removingFavoriteLocation: false,
                 favoriteModalText: 'Successfully removed location from your saved list',
                 faveLocations: state.faveLocations.filter(location => location.location_id !== action.id)
-            }
-        case ERROR_REMOVING_FAVORITE_LOCATION:
-            return {
-                ...state,
-                removingFavoriteLocation: false,
-                favoriteModalText: action.err
-            }
-        case ACKNOWLEDGE_FAVORITE_UPDATE:
-            return {
-                ...state,
-                favoriteModalVisible: false,
-                favoriteModalText: '',
             }
         case SELECT_FAVORITE_LOCATION_FILTER_BY:
             return {

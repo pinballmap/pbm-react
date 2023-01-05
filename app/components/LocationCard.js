@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import PropTypes from 'prop-types'
 import {
+    Animated,
     StyleSheet,
     Text,
     Pressable,
@@ -9,6 +10,7 @@ import {
 import { Icon } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import FavoriteLocation from './FavoriteLocation'
 
 const NUM_MACHINES_TO_SHOW = 5
 
@@ -22,57 +24,74 @@ const LocationCard = ({
     street,
     city,
     locationType,
-    zip
+    zip,
+    saved = false,
 }) => {
     const { theme } = useContext(ThemeContext)
+    const fadeAnim = useRef(new Animated.Value(1)).current
     const s = getStyles(theme)
     const { name: type, icon, library } = locationType
     const numMachines = machines.length
     const cityState = state ? `${city}, ${state}` : city
+    const removeFavorite = (cb) => {
+        saved ?
+            Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true,
+            }).start(() => {
+                cb()
+            }) : cb()
+    }
     return (
-        <Pressable
-            style={({ pressed }) => [{}, s.containerStyle, pressed ? s.pressed : s.notPressed]}
-            onPress={() => navigation.navigate('LocationDetails', { id })}
-        >
-            <View style={s.flexi}>
-                <View style={{ zIndex: 10, flex: 1 }}>
-                    <View style={s.locationNameContainer}>
-                        <Text style={s.locationName}>{locationName}</Text>
-                    </View>
-                    <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
-                        <Text style={[s.text3, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
-                        <View style={s.margin}>
-                            {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
-                                const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
-                                const title = typeof m === 'string' ? m.slice(0, idx) : m.name
-                                const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
-                                const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
-                                return (
-                                    <Text key={key} style={s.mName}>
-                                        <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
-                                        <Text style={s.text}>{`${info}\n`}</Text>
-                                    </Text>
-                                )
-                            })
-                            }
-                            {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus, s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
+        <Animated.View style={[s.containerStyle, { opacity: fadeAnim }]}>
+            <Pressable
+                style={({ pressed }) => [pressed ? s.pressed : s.notPressed]}
+                onPress={() => navigation.navigate('LocationDetails', { id })}
+            >
+                <View style={s.flexi}>
+                    <View style={{ zIndex: 10, flex: 1 }}>
+                        <View style={s.locationNameContainer}>
+                            <View style={s.nameItem}>
+                                <Text style={s.locationName}>{locationName}</Text>
+                            </View>
+                            <FavoriteLocation locationId={id} navigation={navigation} style={s.heartIcon} removeFavorite={removeFavorite} />
                         </View>
+                        <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
+                            <Text style={[s.text3, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                            <View style={s.margin}>
+                                {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
+                                    const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
+                                    const title = typeof m === 'string' ? m.slice(0, idx) : m.name
+                                    const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
+                                    const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
+                                    return (
+                                        <Text key={key} style={s.mName}>
+                                            <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
+                                            <Text style={s.text}>{`${info}\n`}</Text>
+                                        </Text>
+                                    )
+                                })
+                                }
+                                {numMachines > NUM_MACHINES_TO_SHOW ? <Text style={[s.plus, s.italic]}>{`Plus ${numMachines - NUM_MACHINES_TO_SHOW} more!`}</Text> : null}
+                            </View>
+                        </View>
+                        {type || distance ?
+                            <View style={s.locationTypeContainer}>
+                                {type ? <View style={s.vertAlign}><Icon
+                                    name={icon}
+                                    type={library}
+                                    color={theme.colors.text}
+                                    size={30}
+                                    style={s.icon}
+                                /><Text style={{ marginRight: 12, color: theme.colors.text, fontFamily: "boldFont" }}> {type}</Text></View> : null}
+                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text, fontFamily: "boldFont" }}> {distance}</Text></View> : null}
+                            </View> : null
+                        }
                     </View>
-                    {type || distance ?
-                        <View style={s.locationTypeContainer}>
-                            {type ? <View style={s.vertAlign}><Icon
-                                name={icon}
-                                type={library}
-                                color={theme.colors.text}
-                                size={30}
-                                style={s.icon}
-                            /><Text style={{ marginRight: 12, color: theme.colors.text, fontFamily: "boldFont" }}> {type}</Text></View> : null}
-                            {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text, fontFamily: "boldFont" }}> {distance}</Text></View> : null}
-                        </View> : null
-                    }
                 </View>
-            </View>
-        </Pressable>
+            </Pressable>
+        </Animated.View>
     )
 
 }
@@ -100,11 +119,11 @@ const getStyles = (theme) => StyleSheet.create({
     },
     mName: {
         marginBottom: -10,
-        color: theme.pink4
+        color: theme.pink4,
     },
     plus: {
         marginBottom: 10,
-        color: theme.text2
+        color: theme.text2,
     },
     locationNameContainer: {
         backgroundColor: "#7f7fa0",
@@ -112,9 +131,19 @@ const getStyles = (theme) => StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         marginTop: -2,
         marginHorizontal: -2,
+        flexDirection: "row",
+    },
+    nameItem: {
+        flex: 1,
+        marginRight: -13,
+        paddingHorizontal: 15
+    },
+    heartIcon: {
+        width: 26,
     },
     locationName: {
         fontFamily: 'boldFont',
@@ -182,7 +211,6 @@ const getStyles = (theme) => StyleSheet.create({
 LocationCard.propTypes = {
     machines: PropTypes.array,
     locationType: PropTypes.object,
-
     type: PropTypes.string,
     zip: PropTypes.string,
     state: PropTypes.string,
@@ -192,6 +220,8 @@ LocationCard.propTypes = {
     street: PropTypes.string,
     city: PropTypes.string,
     navigation: PropTypes.object,
+    saved: PropTypes.bool,
+    removeFavoriteLocation: PropTypes.func,
 }
 
 export default LocationCard

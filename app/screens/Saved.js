@@ -104,9 +104,10 @@ export class Saved extends Component {
                                                             machines={item.location.machines}
                                                             navigation={this.props.navigation}
                                                             id={item.location.id}
+                                                            saved
                                                         />
                                                     }
-                                                    keyExtractor={(item, index) => `list-item-${index}`}
+                                                    keyExtractor={item => `list-item-${item.id}`}
                                                 />
                                             </View>
                                         </View> :

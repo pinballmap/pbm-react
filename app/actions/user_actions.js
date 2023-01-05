@@ -6,18 +6,13 @@ import {
     LOG_OUT,
     LOGIN_LATER,
     FETCHING_FAVORITE_LOCATIONS_SUCCESS,
-    ADDING_FAVORITE_LOCATION,
-    REMOVING_FAVORITE_LOCATION,
     FAVORITE_LOCATION_ADDED,
     FAVORITE_LOCATION_REMOVED,
-    ACKNOWLEDGE_FAVORITE_UPDATE,
     SELECT_FAVORITE_LOCATION_FILTER_BY,
     SUBMITTING_MESSAGE,
     MESSAGE_SUBMITTED,
     MESSAGE_SUBMISSION_FAILED,
     CLEAR_MESSAGE,
-    ERROR_ADDING_FAVORITE_LOCATION,
-    ERROR_REMOVING_FAVORITE_LOCATION,
     SET_UNIT_PREFERENCE,
     HIDE_NO_LOCATION_TRACKING_MODAL,
     INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
@@ -105,8 +100,6 @@ export const getFavoriteLocationsSuccess = data => {
 }
 
 export const addFavoriteLocation = location_id => (dispatch, getState) => {
-    dispatch({ type: ADDING_FAVORITE_LOCATION})
-
     const { email, authentication_token, id } = getState().user
     const body = {
         user_email: email,
@@ -117,7 +110,6 @@ export const addFavoriteLocation = location_id => (dispatch, getState) => {
     return postData(`/users/${id}/add_fave_location.json`, body)
         .then(() => dispatch(favoriteLocationAdded()), err => { throw err })
         .then(() => dispatch(getFavoriteLocations(id)))
-        .catch(err => dispatch({ type: ERROR_ADDING_FAVORITE_LOCATION, err}))
 }
 
 export const favoriteLocationAdded = () => {
@@ -127,8 +119,6 @@ export const favoriteLocationAdded = () => {
 }
 
 export const removeFavoriteLocation = location_id => (dispatch, getState) => {
-    dispatch({type: REMOVING_FAVORITE_LOCATION})
-
     const { email, authentication_token, id } = getState().user
     const body = {
         user_email: email,
@@ -138,19 +128,12 @@ export const removeFavoriteLocation = location_id => (dispatch, getState) => {
 
     return postData(`/users/${id}/remove_fave_location.json`, body)
         .then(() => dispatch(favoriteLocationRemoved(location_id)), err => { throw err })
-        .catch(err => dispatch({ type: ERROR_REMOVING_FAVORITE_LOCATION, err}))
 }
 
 export const favoriteLocationRemoved = (id) => {
     return {
         type: FAVORITE_LOCATION_REMOVED,
         id,
-    }
-}
-
-export const closeFavoriteLocationModal = () => {
-    return {
-        type: ACKNOWLEDGE_FAVORITE_UPDATE,
     }
 }
 
