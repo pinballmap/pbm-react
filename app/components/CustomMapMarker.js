@@ -26,7 +26,7 @@ MarkerHeart.propTypes = {
 }
 
 const CustomMapMarker = ({ marker, navigation }) => {
-    const { city, state, street, zip, machine_names, name, lat, lon, id, title, icon } = marker
+    const { city, state, street, zip, name, lat, lon, id, title, icon, num_machines } = marker
     const cityState = state ? `${city}, ${state}` : city
     return (
         <MapView.Marker
@@ -38,14 +38,14 @@ const CustomMapMarker = ({ marker, navigation }) => {
             title={title}
             pointerEvents="auto"
         >
-            {icon === 'dot' ? <MarkerDot numMachines={machine_names.length} /> : <MarkerHeart numMachines={machine_names.length} />}
+            {icon === 'dot' ? <MarkerDot numMachines={num_machines} /> : <MarkerHeart numMachines={num_machines} />}
             <MapView.Callout onPress={() => navigation.navigate('LocationDetails', { id })}>
                 <View>
                     <View style={s.calloutStyle}>
                         <Text style={{ marginRight: 20, color: '#000e18', fontFamily: 'boldFont' }}>{name}</Text>
                         <Text style={{ marginRight: 20, color: '#000e18', marginTop: 5 }}>{`${street}, ${cityState} ${zip}`}</Text>
                         {Platform.OS === 'android' ?
-                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${machine_names.length} machine${machine_names.length > 1 ? 's' : ''}`}</Text>
+                            <Text style={{ color: '#000e18', marginTop: 5 }}>{`${num_machines} machine${num_machines > 1 ? 's' : ''}`}</Text>
                             : null
                         }
                     </View>
