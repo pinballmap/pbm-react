@@ -352,9 +352,9 @@ class LocationDetails extends Component {
                                     <View style={s.locationContainer}>
                                         <View style={s.locationMetaContainer}>
                                             <View style={location.location_type_id ? s.locationMetaInner : s.locationMetaInner2}>
-                                                <Text style={[s.text2, s.fontSize16, s.marginRight, s.opacity09]}>{location.street}</Text>
+                                                <Text style={[s.text3, s.bold, s.fontSize15, s.marginRight, s.opacity09]}>{location.street}</Text>
 
-                                                <Text style={[s.text2, s.fontSize16, s.marginB8, s.marginRight, s.opacity09]}>{cityState} {location.zip}</Text>
+                                                <Text style={[s.text3, s.bold, s.fontSize15, s.marginB8, s.marginRight, s.opacity09]}>{cityState} {location.zip}</Text>
 
                                                 {locationTrackingServicesEnabled && !location.location_type_id ? <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.metaIcon} /><Text style={[s.fontSize13, s.text3, s.marginB8]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View> : null}
 
@@ -538,11 +538,14 @@ const getStyles = theme => StyleSheet.create({
     fontSize13: {
         fontSize: 13
     },
-    fontSize16: {
-        fontSize: 16
+    fontSize15: {
+        fontSize: 15
     },
     fontSize18: {
         fontSize: 18,
+    },
+    bold: {
+        fontFamily: "boldFont"
     },
     marginB8: {
         marginTop: Platform.OS === 'android' ? 2 : 0,

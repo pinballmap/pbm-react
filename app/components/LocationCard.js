@@ -40,7 +40,7 @@ const LocationCard = ({
                         <Text style={s.locationName}>{locationName}</Text>
                     </View>
                     <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
-                        <Text style={[s.text2, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                        <Text style={[s.text3, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
                         <View style={s.margin}>
                             {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                 const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
@@ -146,8 +146,8 @@ const getStyles = (theme) => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    text2: {
-        color: theme.text2,
+    text3: {
+        color: theme.text3,
         fontFamily: "boldFont",
         fontSize: 15
     },
