@@ -37,14 +37,14 @@ const LocationCard = ({
         saved ?
             Animated.timing(fadeAnim, {
                 toValue: 0,
-                duration: 2000,
+                duration: 1000,
                 useNativeDriver: true,
             }).start(() => {
                 cb()
             }) : cb()
     }
     return (
-        <Animated.View style={[s.containerStyle, {opacity: fadeAnim}]}>
+        <Animated.View style={[s.containerStyle, { opacity: fadeAnim }]}>
             <Pressable
                 style={({ pressed }) => [pressed ? s.pressed : s.notPressed]}
                 onPress={() => navigation.navigate('LocationDetails', { id })}
