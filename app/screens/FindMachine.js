@@ -19,7 +19,7 @@ import {
 import { ThemeContext } from '../theme-context'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlashList } from "@shopify/flash-list"
 import {
     addMachineToLocation,
     addMachineToList,
@@ -214,9 +214,15 @@ class FindMachine extends React.PureComponent {
 
         if (selected) {
             this.props.removeMachineFromList(machine)
+            this.setState({
+                refresh: !this.state.refresh
+            })
         }
         else {
             this.props.addMachineToList(machine)
+            this.setState({
+                refresh: !this.state.refresh
+            })
         }
     }
 
@@ -307,12 +313,14 @@ class FindMachine extends React.PureComponent {
                         }
                     </View> : null
                 }
-                <FlatList {...keyboardDismissProp}
+                <FlashList {...keyboardDismissProp}
+                    estimatedItemSize={this.state.machines.length}
                     keyboardShouldPersistTaps="always"
                     data={this.state.machines}
+                    extraData={this.state.refresh}
                     renderItem={multiSelect ? this.renderMultiSelectRow : this.renderRow}
                     keyExtractor={this.keyExtractor}
-                    style={{ backgroundColor: theme.base1, paddingHorizontal: 5 }}
+                    contentContainerStyle={{ backgroundColor: theme.base1 }}
                 />
             </>
         )
