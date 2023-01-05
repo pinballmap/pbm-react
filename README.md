@@ -11,6 +11,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.15
+January 5, 2023
+
+- Added the heart/save icon to the List & Saved screens for easier hearting
+- Minor design tweaks
+- Performance improvements (flashlist instead of flatlist)
+
 ### 5.2.14
 January 3, 2023
 
