@@ -100,7 +100,7 @@ export class LocationList extends Component {
                                     />
                                 </View>
                             </ConfirmationModal>
-                            <View style={{ flex: 1, backgroundColor: theme.base1, marginBottom: 20 }}>
+                            <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                                 <ButtonGroup
                                     onPress={this.updateIndex}
                                     selectedIndex={this.props.locations.selectedLocationListFilter}
