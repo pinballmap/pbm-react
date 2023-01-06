@@ -90,7 +90,7 @@ export class Saved extends Component {
                                             />
                                             <View style={{ flex: 1, position: 'absolute', left: 0, top: 55, bottom: 0, right: 0 }}>
                                                 <FlashList
-                                                    estimatedItemSize={this.state.locations.length}
+                                                    estimatedItemSize={400}
                                                     data={this.state.locations}
                                                     extraData={this.state}
                                                     renderItem={({ item }) =>

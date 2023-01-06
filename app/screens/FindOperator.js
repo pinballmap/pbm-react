@@ -71,7 +71,7 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
             />
             <FlashList {...keyboardDismissProp}
                 data={selectedOperators}
-                estimatedItemSize={selectedOperators.length}
+                estimatedItemSize={41}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
                 contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}

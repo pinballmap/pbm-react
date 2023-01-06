@@ -69,7 +69,7 @@ const FindLocationType = ({ navigation, route, locations: { locationTypes = [] }
             />
             <FlashList {...keyboardDismissProp}
                 data={selectedLocationTypes}
-                estimatedItemSize={selectedLocationTypes.length}
+                estimatedItemSize={41}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
                 contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}

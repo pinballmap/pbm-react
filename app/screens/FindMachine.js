@@ -314,7 +314,7 @@ class FindMachine extends React.PureComponent {
                     </View> : null
                 }
                 <FlashList {...keyboardDismissProp}
-                    estimatedItemSize={this.state.machines.length}
+                    estimatedItemSize={41}
                     keyboardShouldPersistTaps="always"
                     data={this.state.machines}
                     extraData={this.state.refresh}

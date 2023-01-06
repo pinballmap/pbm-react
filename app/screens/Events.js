@@ -113,7 +113,7 @@ class Events extends Component {
                                                     </Text>
                                                     <FlashList
                                                         data={events}
-                                                        estimatedItemSize={events.length}
+                                                        estimatedItemSize={214}
                                                         extraData={this.state}
                                                         renderItem={({ item }) => {
                                                             const start_date = moment(item.start_date, 'YYYY-MM-DD').format('MMM DD, YYYY')

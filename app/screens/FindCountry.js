@@ -72,7 +72,7 @@ const FindCountry = ({ navigation, route }) => {
             />
             <FlashList {...keyboardDismissProp}
                 data={selectedCountries}
-                estimatedItemSize={selectedCountries.length}
+                estimatedItemSize={41}
                 renderItem={renderRow}
                 keyExtractor={_keyExtractor}
                 contentContainerStyle={{ backgroundColor: theme.base1, paddingBottom: 20 }}

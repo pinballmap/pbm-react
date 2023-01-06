@@ -112,7 +112,7 @@ export class LocationList extends Component {
                                     innerBorderStyle={s.innerBorderStyle}
                                 />
                                 <FlashList
-                                    estimatedItemSize={locations.length}
+                                    estimatedItemSize={400}
                                     data={locations}
                                     extraData={this.state}
                                     renderItem={({ item }) =>
