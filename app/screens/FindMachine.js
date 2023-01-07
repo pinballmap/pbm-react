@@ -39,7 +39,7 @@ let deviceHeight = Dimensions.get('window').height
 const getDisplayText = (machine, theme) => (
     <Text style={{ fontSize: 18 }}>
         <Text style={{ fontFamily: 'boldFont', color: theme.text }}>{machine.name}</Text>
-        <Text style={{ color: theme.text3 }}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
+        <Text style={{ color: theme.text3, fontFamily: "mediumFont" }}>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
 )
 
@@ -375,6 +375,7 @@ const getStyles = theme => StyleSheet.create({
     buttonGroupInactive: {
         color: theme.text2,
         fontSize: 14,
+        fontFamily: "mediumFont"
     },
     innerBorderStyle: {
         width: 0,
@@ -387,7 +388,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.text2,
-        fontFamily: 'regularBoldFont',
+        fontFamily: 'boldFont',
     },
     machineName: {
         fontFamily: 'boldFont',

@@ -144,7 +144,8 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.red2,
     },
     titleStyle: {
-        color: theme.text2
+        color: theme.text2,
+        fontFamily: 'boldFont'
     },
     containerBg: {
         backgroundColor: theme.blue2

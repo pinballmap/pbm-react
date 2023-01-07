@@ -58,7 +58,7 @@ const LocationCard = ({
                             <FavoriteLocation locationId={id} navigation={navigation} style={s.heartIcon} removeFavorite={removeFavorite} />
                         </View>
                         <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
-                            <Text style={[s.text3, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                            <Text style={[s.address, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
                             <View style={s.margin}>
                                 {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
@@ -68,7 +68,7 @@ const LocationCard = ({
                                     return (
                                         <Text key={key} style={s.mName}>
                                             <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
-                                            <Text style={s.text}>{`${info}\n`}</Text>
+                                            <Text style={[s.text2, s.mediumFont]}>{`${info}\n`}</Text>
                                         </Text>
                                     )
                                 })
@@ -175,13 +175,19 @@ const getStyles = (theme) => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    text3: {
-        color: theme.text3,
+    address: {
+        color: theme.text2,
         fontFamily: "boldFont",
         fontSize: 15
     },
     text: {
         color: theme.text
+    },
+    text2: {
+        color: theme.text2
+    },
+    mediumFont: {
+        fontFamily: "mediumFont"
     },
     italic: {
         fontFamily: 'regularItalicFont',

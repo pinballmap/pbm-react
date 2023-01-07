@@ -60,7 +60,7 @@ class LocationDetails extends Component {
     getTitle = (machine, s) => (
         <Text>
             <Text style={s.machineName}>{machine.name}</Text>
-            {machine.year ? <Text style={[s.fontSize18, s.text2]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
+            {machine.year ? <Text style={[s.fontSize18, s.text2, s.mediumFont]}>{` (${machine.manufacturer && machine.manufacturer + ", "}${machine.year})`}</Text> : null}
         </Text>
     )
 
@@ -104,7 +104,7 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { operators } = this.props.operators
         const { errorText } = this.props.error
-        const {navigation} = this.props
+        const { navigation } = this.props
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
@@ -150,7 +150,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='plus-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text}>
+                                                <ListItem.Title style={[s.text2, s.bold]}>
                                                     Add Machine
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -162,7 +162,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='check-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text}>
+                                                <ListItem.Title style={[s.text2, s.bold]}>
                                                     Confirm Line-Up
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -183,7 +183,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='pencil-outline' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text}>
+                                                <ListItem.Title style={[s.text2, s.bold]}>
                                                     Edit Location Details
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -199,7 +199,7 @@ class LocationDetails extends Component {
                                                 {<MaterialIcons name='ios-share' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text}>
+                                                <ListItem.Title style={[s.text2, s.bold]}>
                                                     Share Location
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -214,7 +214,7 @@ class LocationDetails extends Component {
                                                 {<MaterialCommunityIcons name='directions' style={s.buttonIcon} />}
                                             </Avatar>
                                             <ListItem.Content>
-                                                <ListItem.Title style={s.text}>
+                                                <ListItem.Title style={[s.text2, s.bold]}>
                                                     Directions
                                                 </ListItem.Title>
                                             </ListItem.Content>
@@ -260,7 +260,7 @@ class LocationDetails extends Component {
                                     </Pressable>
                                     <FavoriteLocation
                                         locationId={location.id}
-                                        style={{...s.quickButton, ...s.saveButton}}
+                                        style={{ ...s.quickButton, ...s.saveButton }}
                                         pressedStyle={s.quickButtonPressed}
                                         notPressedStyle={s.quickButtonNotPressed}
                                         navigation={navigation}
@@ -337,7 +337,7 @@ class LocationDetails extends Component {
 
                                             {location.location_type_id ?
                                                 <View style={s.locationTypeContainer}>
-                                                    {locationTrackingServicesEnabled && <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14, s.text2, s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
+                                                    {locationTrackingServicesEnabled && <View style={{ flexDirection: "row" }}><MaterialCommunityIcons name='compass-outline' style={s.distanceIcon} /><Text style={[s.fontSize14, s.text2, s.mediumFont, s.opacity09]}>{getDistanceWithUnit(userLat, userLon, location.lat, location.lon, unitPreference)}</Text></View>}
                                                     <View>
                                                         <Icon
                                                             name={locationIcon}
@@ -345,7 +345,7 @@ class LocationDetails extends Component {
                                                             color={theme.pink3}
                                                             size={46}
                                                         />
-                                                        <Text style={[{ textAlign: 'center' }, s.fontSize14, s.text2, s.opacity09]}>{locationTypeName}</Text>
+                                                        <Text style={[{ textAlign: 'center' }, s.mediumFont, s.fontSize14, s.text2, s.opacity09]}>{locationTypeName}</Text>
                                                     </View>
                                                 </View> : null
                                             }
@@ -479,7 +479,7 @@ const getStyles = theme => StyleSheet.create({
         width: '100%'
     },
     locationTypeContainer: {
-        backgroundColor: theme.base2,
+        backgroundColor: theme.white,
         borderWidth: 2,
         borderColor: theme.base4,
         borderRadius: 10,
@@ -505,6 +505,9 @@ const getStyles = theme => StyleSheet.create({
     },
     bold: {
         fontFamily: "boldFont"
+    },
+    mediumFont: {
+        fontFamily: "mediumFont"
     },
     marginB8: {
         marginTop: Platform.OS === 'android' ? 2 : 0,

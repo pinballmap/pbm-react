@@ -15,6 +15,7 @@ import {
     Lato_700Bold,
 } from '@expo-google-fonts/lato'
 import {
+    Nunito_400Regular,
     Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
 import store from './app/store'
@@ -62,6 +63,7 @@ const App = () => {
         regularFont: Lato_400Regular,
         regularBoldFont: Lato_700Bold,
         regularItalicFont: Lato_400Regular_Italic,
+        mediumFont: Nunito_400Regular,
         boldFont: Nunito_700Bold,
     })
 

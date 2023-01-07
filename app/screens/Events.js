@@ -170,6 +170,7 @@ const getStyles = theme => StyleSheet.create({
     buttonGroupInactive: {
         color: theme.text2,
         fontSize: 14,
+        fontFamily: "mediumFont"
     },
     innerBorderStyle: {
         width: 0,
@@ -182,7 +183,7 @@ const getStyles = theme => StyleSheet.create({
     },
     selTextStyle: {
         color: theme.text2,
-        fontFamily: 'regularBoldFont',
+        fontFamily: 'boldFont',
     },
     locationNameContainer: {
         backgroundColor: "#7f7fa0",
