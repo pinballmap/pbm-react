@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
     Pressable,
     StyleSheet,
 } from 'react-native'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { ThemeContext } from '../theme-context'
 import {
     addFavoriteLocation,
     removeFavoriteLocation,
 } from '../actions'
+import LottieView from 'lottie-react-native'
 
 const FavoriteLocationHeart = ({
     user,
@@ -19,38 +19,51 @@ const FavoriteLocationHeart = ({
     addFavoriteLocation,
     removeFavoriteLocation,
     style,
-    pressedStyle,
-    notPressedStyle,
     removeFavorite,
 }) => {
+    const removeAnimation = useRef(null)
+    const addAnimation = useRef(null)
     const { theme } = useContext(ThemeContext)
     const { loggedIn, faveLocations = []} = user
     const isUserFave = faveLocations.some(fave => fave.location_id === locationId)
 
-    const onPress = () => {
+    const onAddPress = () => {
         if (!loggedIn) return navigation.navigate('Login')
-        return isUserFave ? removeFavorite(() => removeFavoriteLocation(locationId)) : addFavoriteLocation(locationId)
+        addAnimation?.current.play()
+        setTimeout(() => addFavoriteLocation(locationId), 1000)
     }
 
+    const onRemovePress = () => {
+        removeAnimation?.current.play()
+        setTimeout(() => removeFavorite(() => removeFavoriteLocation(locationId)), 1000)
+    }
+
+    if (loggedIn && isUserFave) {
+        return  (
+            <Pressable
+                style={style}
+                onPress={onRemovePress}
+            >
+                <LottieView
+                    ref={removeAnimation}
+                    style={s.icon}
+                    loop={false}
+                    source={theme.theme === 'dark' ? require('../assets/heart-break-dark.json') : require('../assets/heart-break-light.json')}
+                />
+            </Pressable>
+        )
+    }
     return (
         <Pressable
-            style={({ pressed }) => [pressed ? pressedStyle: notPressedStyle, style]}
-            onPress={onPress}
+            style={style}
+            onPress={onAddPress}
         >
-            {loggedIn && isUserFave ?
-                <MaterialCommunityIcons
-                    name={'heart'}
-                    color={theme.pink1}
-                    size={26}
-                    style={s.icon}
-                /> :
-                <MaterialCommunityIcons
-                    name={'heart-outline'}
-                    color={theme.pink1}
-                    size={26}
-                    style={s.icon}
-                />
-            }
+            <LottieView
+                ref={addAnimation}
+                style={s.icon}
+                loop={false}
+                source={theme.theme === 'dark' ? require('../assets/heart-dark.json') : require('../assets/heart-light.json')}
+            />
         </Pressable>
     )
 }
@@ -69,8 +82,8 @@ FavoriteLocationHeart.propTypes = {
 
 const s = StyleSheet.create({
     icon: {
-        height: 26,
-        width: 26,
+        height: 45,
+        width: 45,
         justifyContent: 'center',
         alignSelf: 'center',
     },

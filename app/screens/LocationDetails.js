@@ -261,8 +261,6 @@ class LocationDetails extends Component {
                                     <FavoriteLocation
                                         locationId={location.id}
                                         style={{...s.quickButton, ...s.saveButton}}
-                                        pressedStyle={s.quickButtonPressed}
-                                        notPressedStyle={s.quickButtonNotPressed}
                                         navigation={navigation}
                                         removeFavorite={(cb) => cb()}
                                     />

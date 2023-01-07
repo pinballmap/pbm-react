@@ -130,7 +130,6 @@ const getStyles = (theme) => StyleSheet.create({
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        paddingVertical: 10,
         paddingLeft: 10,
         paddingRight: 10,
         marginTop: -2,
@@ -140,10 +139,8 @@ const getStyles = (theme) => StyleSheet.create({
     nameItem: {
         flex: 1,
         marginRight: -13,
-        paddingHorizontal: 15
-    },
-    heartIcon: {
-        width: 26,
+        paddingHorizontal: 15,
+        justifyContent: "center",
     },
     locationName: {
         fontFamily: 'boldFont',
