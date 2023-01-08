@@ -24,7 +24,7 @@ const FavoriteLocationHeart = ({
     const removeAnimation = useRef(null)
     const addAnimation = useRef(null)
     const { theme } = useContext(ThemeContext)
-    const { loggedIn, faveLocations = []} = user
+    const { loggedIn, faveLocations = [] } = user
     const isUserFave = faveLocations.some(fave => fave.location_id === locationId)
 
     const onAddPress = () => {
@@ -39,7 +39,7 @@ const FavoriteLocationHeart = ({
     }
 
     if (loggedIn && isUserFave) {
-        return  (
+        return (
             <Pressable
                 style={style}
                 onPress={onRemovePress}
@@ -75,21 +75,21 @@ FavoriteLocationHeart.propTypes = {
     removeFavoriteLocation: PropTypes.func,
     navigation: PropTypes.object,
     style: PropTypes.object,
-    pressedStyle: PropTypes.object, 
+    pressedStyle: PropTypes.object,
     notPressedStyle: PropTypes.object,
     removeFavorite: PropTypes.func,
 }
 
 const s = StyleSheet.create({
     icon: {
-        height: 45,
-        width: 45,
+        height: 55,
+        width: 55,
         justifyContent: 'center',
         alignSelf: 'center',
     },
 })
 
-const mapStateToProps = ({ user }) => ({user})
+const mapStateToProps = ({ user }) => ({ user })
 const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),

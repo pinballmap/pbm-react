@@ -104,7 +104,7 @@ class LocationDetails extends Component {
         const location = this.props.location.location
         const { operators } = this.props.operators
         const { errorText } = this.props.error
-        const {navigation} = this.props
+        const { navigation } = this.props
         const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
@@ -260,7 +260,7 @@ class LocationDetails extends Component {
                                     </Pressable>
                                     <FavoriteLocation
                                         locationId={location.id}
-                                        style={{...s.quickButton, ...s.saveButton}}
+                                        style={{ ...s.quickButton, ...s.saveButton }}
                                         navigation={navigation}
                                         removeFavorite={(cb) => cb()}
                                     />
@@ -585,6 +585,7 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        backgroundColor: theme.white
     },
     saveButton: {
         right: 10,
