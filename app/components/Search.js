@@ -107,7 +107,8 @@ class Search extends Component {
     getLocationsByCity = async ({ value }) => {
         try {
             const [city, state] = value.split(', ')
-            const { locations } = await getData(`/locations?by_city_id=${city};by_state_id=${state};no_details=1`)
+            const stateParam = state ? `by_state_id=${state}` : ''
+            const { locations } = await getData(`/locations?by_city_id=${city};${stateParam};no_details=1`)
             // In order to show all locations for a given city, we must determine the min/max lat/lon
             // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
             // the defined city, we make a fresh request for locations to get any locations we be missing.
