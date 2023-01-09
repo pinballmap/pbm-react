@@ -55,7 +55,9 @@ const LocationCard = ({
                             <View style={s.nameItem}>
                                 <Text style={s.locationName}>{locationName}</Text>
                             </View>
-                            <FavoriteLocation locationId={id} navigation={navigation} style={s.heartIcon} removeFavorite={removeFavorite} />
+                            <View style={s.heartItem}>
+                                <FavoriteLocation locationId={id} navigation={navigation} removeFavorite={removeFavorite} />
+                            </View>
                         </View>
                         <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
                             <Text style={[s.address, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
@@ -135,12 +137,23 @@ const getStyles = (theme) => StyleSheet.create({
         marginTop: -2,
         marginHorizontal: -2,
         flexDirection: "row",
+        alignItems: 'center'
     },
     nameItem: {
         flex: 1,
         marginRight: -13,
         paddingHorizontal: 15,
+        paddingVertical: 10,
         justifyContent: "center",
+    },
+    heartItem: {
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: theme.base4,
+        borderRadius: 17,
+        height: 34,
+        width: 34,
+        backgroundColor: theme.base4
     },
     locationName: {
         fontFamily: 'boldFont',
