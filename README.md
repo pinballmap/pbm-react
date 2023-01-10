@@ -11,6 +11,11 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.16
+January 9, 2023
+
+- Bug fix: Issue when searching for cities that don't have states (like in Finland, Denmark, Romania)
+
 ### 5.2.15
 January 7, 2023
 
