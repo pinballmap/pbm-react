@@ -11,6 +11,12 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.17
+January 11, 2023
+
+- Bug fix: Couldn't get rid of the "zoom in further" message
+- Added animation when heart/unhearting locations
+
 ### 5.2.16
 January 9, 2023
 
