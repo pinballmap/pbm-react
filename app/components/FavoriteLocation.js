@@ -48,7 +48,7 @@ const FavoriteLocationHeart = ({
                     ref={removeAnimation}
                     style={s.icon}
                     loop={false}
-                    source={theme.theme === 'dark' ? require('../assets/heart-break-dark.json') : require('../assets/heart-break-light.json')}
+                    source={theme.theme === 'dark' ? require('../assets/Heart-Break-Dark.json') : require('../assets/Heart-Break-Light.json')}
                 />
             </Pressable>
         )
@@ -62,7 +62,7 @@ const FavoriteLocationHeart = ({
                 ref={addAnimation}
                 style={s.icon}
                 loop={false}
-                source={theme.theme === 'dark' ? require('../assets/heart-dark.json') : require('../assets/heart-light.json')}
+                source={theme.theme === 'dark' ? require('../assets/Heart-Pop-Dark.json') : require('../assets/Heart-Pop-Light.json')}
             />
         </Pressable>
     )
