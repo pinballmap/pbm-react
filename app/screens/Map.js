@@ -291,10 +291,10 @@ const getStyles = theme => StyleSheet.create({
         zIndex: 10,
         position: 'absolute',
         alignSelf: "center",
-        bottom: 20,
+        bottom: 70,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: theme.text,
+        backgroundColor: theme.text3,
         borderRadius: 25
     },
     loadingText: {
