@@ -12,46 +12,31 @@ import {
 } from '../actions'
 import LottieView from 'lottie-react-native'
 
-const FavoriteLocationHeart = ({
-    user,
-    locationId,
-    navigation,
-    addFavoriteLocation,
-    removeFavoriteLocation,
-    style,
-    removeFavorite,
-}) => {
+const FaveLocation = ({onPress, theme, style}) => {
     const removeAnimation = useRef(null)
-    const addAnimation = useRef(null)
-    const { theme } = useContext(ThemeContext)
-    const { loggedIn, faveLocations = [] } = user
-    const isUserFave = faveLocations.some(fave => fave.location_id === locationId)
-
-    const onAddPress = () => {
-        if (!loggedIn) return navigation.navigate('Login')
-        addAnimation?.current.play()
-        setTimeout(() => addFavoriteLocation(locationId), 1000)
-    }
-
     const onRemovePress = () => {
         removeAnimation?.current.play()
-        setTimeout(() => removeFavorite(() => removeFavoriteLocation(locationId)), 1000)
     }
+    return (
+        <Pressable
+            style={style}
+            onPress={onRemovePress}
+        >
+            <LottieView
+                ref={removeAnimation}
+                onAnimationFinish={onPress}
+                style={s.icon}
+                loop={false}
+                source={theme.theme === 'dark' ? require('../assets/Heart-Break-Dark.json') : require('../assets/Heart-Break-Light.json')}
+            />
+        </Pressable>
+    )
+}
 
-    if (loggedIn && isUserFave) {
-        return (
-            <Pressable
-                style={style}
-                onPress={onRemovePress}
-            >
-                <LottieView
-                    ref={removeAnimation}
-                    style={s.icon}
-                    loop={false}
-                    source={theme.theme === 'dark' ? require('../assets/Heart-Break-Dark.json') : require('../assets/Heart-Break-Light.json')}
-                />
-            </Pressable>
-        )
+const Location = ({onPress, theme, style}) => {
+    const addAnimation = useRef(null)
+    const onAddPress = () => {
+        addAnimation?.current.play()
     }
     return (
         <Pressable
@@ -60,20 +45,39 @@ const FavoriteLocationHeart = ({
         >
             <LottieView
                 ref={addAnimation}
+                onAnimationFinish={onPress}
                 style={s.icon}
                 loop={false}
                 source={theme.theme === 'dark' ? require('../assets/Heart-Pop-Dark.json') : require('../assets/Heart-Pop-Light.json')}
             />
-        </Pressable>
+        </Pressable>   
+    )}
+
+const FavoriteLocationHeart = ({
+    loggedIn,
+    isUserFave,
+    locationId,
+    addFavoriteLocation,
+    removeFavoriteLocation,
+    style,
+    removeFavorite,
+}) => {
+    const { theme } = useContext(ThemeContext)
+
+    if (loggedIn && isUserFave) {
+        return <FaveLocation onPress={() => removeFavorite(() => removeFavoriteLocation(locationId))} theme={theme} style={style} />
+    }
+    return (
+        <Location onPress={() => addFavoriteLocation(locationId)} theme={theme} style={style} />
     )
 }
 
 FavoriteLocationHeart.propTypes = {
-    user: PropTypes.object,
+    loggedIn: PropTypes.bool,
+    isUserFave: PropTypes.bool,
     locationId: PropTypes.number,
     addFavoriteLocation: PropTypes.func,
     removeFavoriteLocation: PropTypes.func,
-    navigation: PropTypes.object,
     style: PropTypes.object,
     pressedStyle: PropTypes.object,
     notPressedStyle: PropTypes.object,
@@ -89,7 +93,10 @@ const s = StyleSheet.create({
     },
 })
 
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = ({ user }, {locationId}) => ({
+    loggedIn: user?.loggedIn,
+    isUserFave: user?.faveLocations.some(fave => fave.location_id === locationId)
+})
 const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
