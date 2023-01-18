@@ -75,7 +75,7 @@ export default {
                 "WRITE_EXTERNAL_STORAGE",
                 "com.google.android.providers.gsf.permission.READ_GSERVICES"
             ],
-            versionCode: 96,
+            versionCode: 94,
             adaptiveIcon: {
                 backgroundColor: "#ebecff",
                 foregroundImage: "app/assets/images/adaptive-foreground.png"

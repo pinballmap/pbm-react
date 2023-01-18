@@ -590,6 +590,7 @@ const getStyles = theme => StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
+        backgroundColor: theme.white
     },
     saveButton: {
         right: 10,
