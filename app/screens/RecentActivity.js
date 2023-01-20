@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -16,7 +16,8 @@ import {
     Text,
 } from '../components'
 import { clearActivityFilter } from '../actions'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native'
+import {ButtonGroup} from '@rneui/base'
 
 const moment = require('moment')
 
@@ -25,24 +26,30 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
     const s = getStyles(theme)
     const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true)
     const [recentActivity, setRecentActivity] = useState([])
-    const {selectedActivity} = query
+    const [maxDistance, setMaxDistance] = useState(30)
+    const [btnIdx, setBtnIdx] = useState(0)
+    const {selectedActivity, curLat, curLon} = query
 
-    React.useEffect(() => {
+    useEffect(() => {
         navigation.setOptions({headerRight: () => <FilterRecentActivity />})
     }, [])
 
     useFocusEffect(
-        React.useCallback(() => {
-            const { curLat, curLon } = query
-            getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon}`)
+        useCallback(() => {
+            setFetchingRecentActivity(true)
+            getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon};max_distance=${maxDistance}`)
                 .then(data => {
                     setFetchingRecentActivity(false)
                     setRecentActivity(data.user_submissions)
-             
-                    }
-                )
-        }, [])
-      );
+                })
+        }, [curLat, curLon, maxDistance])
+    )
+
+    const updateIdx = (selectedIdx) => {
+        const distanceMap = [30, 75, 150]
+        setBtnIdx(selectedIdx)
+        setMaxDistance(distanceMap[selectedIdx])
+    }
 
     const getIcon= (type) => {
         switch (type) {
@@ -80,7 +87,19 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
     return (
         <Screen>
             <View style={s.header}>
-                <Text style={[s.title, s.headerText]}>30 miles, 30 days</Text>
+                <Text style={[s.title, s.headerText]}>Past 30 days</Text>
+                <View style={s.header}>
+                    <ButtonGroup
+                        onPress={updateIdx}
+                        selectedIndex={btnIdx}
+                        buttons={['30 mi', '75 mi', '150 mi']}
+                        containerStyle={s.buttonGroupContainer}
+                        textStyle={s.buttonGroupInactive}
+                        selectedButtonStyle={s.selButtonStyle}
+                        selectedTextStyle={s.selTextStyle}
+                        innerBorderStyle={s.innerBorderStyle}
+                    />
+                </View>
             </View>
             {selectedActivity ?
                 <View style={s.filterView}>
@@ -96,7 +115,7 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
             {fetchingRecentActivity ?
                 <ActivityIndicator /> :
                 recentActivity.length === 0 ?
-                    <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
+                    <Text style={s.problem}>{`No map edits in the last 30 days within ${maxDistance} miles of the map's current location`}</Text> :
                     recentActivity.filter(activity => {
                         const submissionTypeIcon = getIcon(activity.submission_type)
                         const showType = selectedActivity ?
@@ -212,7 +231,37 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0
-    }
+    },
+    buttonGroupContainer: {
+        height: 40,
+        borderWidth: 0,
+        borderRadius: 25,
+        backgroundColor: theme.base3,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
+        overflow: 'visible'
+    },
+    buttonGroupInactive: {
+        color: theme.text2,
+        fontSize: 14,
+        fontFamily: "mediumFont"
+    },
+    innerBorderStyle: {
+        width: 0,
+    },
+    selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.base4,
+        backgroundColor: theme.white,
+        borderRadius: 25
+    },
+    selTextStyle: {
+        color: theme.text2,
+        fontFamily: 'boldFont',
+    },
 })
 
 RecentActivity.propTypes = {
