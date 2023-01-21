@@ -148,12 +148,8 @@ const getStyles = (theme) => StyleSheet.create({
     },
     heartItem: {
         justifyContent: "center",
-        borderWidth: 1,
-        borderColor: theme.base4,
-        borderRadius: 17,
         height: 34,
         width: 34,
-        backgroundColor: theme.base4
     },
     locationName: {
         fontFamily: 'boldFont',

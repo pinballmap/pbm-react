@@ -27,7 +27,7 @@ const FaveLocation = ({onPress, theme, style}) => {
                 onAnimationFinish={onPress}
                 style={s.icon}
                 loop={false}
-                source={theme.theme === 'dark' ? require('../assets/Heart-Break-Dark.json') : require('../assets/Heart-Break-Light.json')}
+                source={require('../assets/Heart-Break-Dark.json')}
             />
         </Pressable>
     )
@@ -48,9 +48,9 @@ const Location = ({onPress, theme, style}) => {
                 onAnimationFinish={onPress}
                 style={s.icon}
                 loop={false}
-                source={theme.theme === 'dark' ? require('../assets/Heart-Pop-Dark.json') : require('../assets/Heart-Pop-Light.json')}
+                source={require('../assets/Heart-Pop-Dark.json')}
             />
-        </Pressable>   
+        </Pressable>
     )}
 
 const FavoriteLocationHeart = ({

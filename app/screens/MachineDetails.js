@@ -459,7 +459,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     locationNameContainer: {
-        backgroundColor: theme.pink2,
+        backgroundColor: theme.base4,
         marginBottom: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -470,7 +470,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
         textAlign: 'center',
         marginVertical: 10,
-        color: theme.text2,
+        color: theme.text,
         opacity: 0.9
     },
     imageContainer: {

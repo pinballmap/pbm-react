@@ -627,7 +627,7 @@ const getStyles = theme => StyleSheet.create({
         elevation: 1
     },
     header: {
-        backgroundColor: theme.pink2,
+        backgroundColor: theme.base4,
         marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -635,7 +635,7 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 10,
     },
     filterTitle: {
-        color: theme.pink1,
+        color: theme.text,
         textAlign: "center",
         fontSize: 16,
         fontFamily: 'boldFont',
