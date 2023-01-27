@@ -55,37 +55,37 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
             <DrawerItemList {...props} />
             <DrawerItem
                 label="Submit Location"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialIcons name='add-location' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'SuggestLocation' })}
             />
             <DrawerItem
                 label="Contact"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialCommunityIcons name='email-outline' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Contact' })}
             />
             <DrawerItem
                 label="About"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialIcons name='info-outline' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'About' })}
             />
             <DrawerItem
                 label="Events"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialIcons name='event-note' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Events' })}
             />
             <DrawerItem
                 label="FAQ"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialIcons name='question-answer' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'FAQ' })}
             />
             <DrawerItem
                 label="Settings"
-                labelStyle={{ color: colors.primary }}
+                labelStyle={s.labelStyle}
                 icon={() => <MaterialIcons name='settings' size={iconSize} color={iconColor} />}
                 onPress={() => props.navigation.navigate('Map', { screen: 'Settings' })}
             />
@@ -136,6 +136,10 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+    labelStyle: {
+        color: theme.colors.primary,
+        fontFamily: 'boldFont',
+    }
 })
 
 DrawerMenu.propTypes = {

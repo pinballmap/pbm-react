@@ -125,17 +125,17 @@ const getStyles = (theme) => StyleSheet.create({
     },
     header: {
         backgroundColor: theme.base4,
-        marginTop: -25,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
+        marginTop: -25,
         height: 40,
-        paddingVertical: 10,
+        justifyContent: 'center'
     },
     filterTitle: {
         color: theme.text,
         textAlign: "center",
-        fontSize: 16,
-        fontFamily: 'boldFont',
+        fontSize: 18,
+        fontFamily: 'extraBoldFont',
     },
     xButton: {
         position: 'absolute',
@@ -144,7 +144,7 @@ const getStyles = (theme) => StyleSheet.create({
         color: theme.red2,
     },
     titleStyle: {
-        color: theme.text2,
+        color: theme.text3,
         fontFamily: 'boldFont'
     },
     activeTitleStyle: {

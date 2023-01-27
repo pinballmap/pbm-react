@@ -10,6 +10,7 @@ import {
 import { Icon } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 import FavoriteLocation from './FavoriteLocation'
 
 const NUM_MACHINES_TO_SHOW = 5
@@ -60,7 +61,9 @@ const LocationCard = ({
                             </View>
                         </View>
                         <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
-                            <Text style={[s.address, s.marginS]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <MaterialIcons name='location-on' style={s.metaIcon} /><Text style={[s.address]} numberOfLines={1} ellipsizeMode={'tail'}>{`${street}, ${cityState} ${zip}`}</Text>
+                            </View>
                             <View style={s.margin}>
                                 {machines.slice(0, NUM_MACHINES_TO_SHOW).map(m => {
                                     const idx = typeof m === 'string' ? m.lastIndexOf('(') : -1
@@ -68,9 +71,9 @@ const LocationCard = ({
                                     const info = typeof m === 'string' ? m.slice(idx) : ` (${m.manufacturer}, ${m.year})`
                                     const key = typeof m === 'string' ? m : `${m.name}-${m.manufacturer}-${m.year}`
                                     return (
-                                        <Text key={key} style={s.mName}>
-                                            <Text style={{ fontFamily: 'boldFont', fontSize: 17 }}>{title}</Text>
-                                            <Text style={[s.text2, s.mediumFont]}>{`${info}\n`}</Text>
+                                        <Text key={key} style={s.machineName}>
+                                            <Text style={{ fontFamily: 'extraBoldFont', fontSize: 18 }}>{title}</Text>
+                                            <Text style={[s.text3, s.mediumFont]}>{`${info}\n`}</Text>
                                         </Text>
                                     )
                                 })
@@ -119,29 +122,20 @@ const getStyles = (theme) => StyleSheet.create({
         alignItems: 'center',
         alignContent: 'space-around',
     },
-    mName: {
+    machineName: {
         marginBottom: -10,
-        color: theme.pink4,
+        color: theme.pink1,
     },
     plus: {
         marginBottom: 10,
         color: theme.text2,
     },
     locationNameContainer: {
-        backgroundColor: "#7f7fa0",
-        marginBottom: 10,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginTop: -2,
-        marginHorizontal: -2,
         flexDirection: "row",
         alignItems: 'center'
     },
     nameItem: {
         flex: 1,
-        marginRight: -13,
         paddingHorizontal: 15,
         paddingVertical: 10,
         justifyContent: "center",
@@ -150,12 +144,13 @@ const getStyles = (theme) => StyleSheet.create({
         justifyContent: "center",
         height: 34,
         width: 34,
+        marginRight: 10
     },
     locationName: {
-        fontFamily: 'boldFont',
-        fontSize: 18,
-        textAlign: 'center',
-        color: "#f5f5ff"
+        fontFamily: 'blackFont',
+        fontSize: 28,
+        textAlign: 'left',
+        color: theme.purple
     },
     locationTypeContainer: {
         alignItems: 'center',
@@ -169,13 +164,17 @@ const getStyles = (theme) => StyleSheet.create({
         borderBottomRightRadius: 15,
         backgroundColor: theme.base3
     },
+    metaIcon: {
+        paddingTop: 0,
+        fontSize: 18,
+        color: theme.indigo4,
+        marginRight: 5,
+        opacity: 0.6,
+        width: 16
+    },
     margin: {
         marginTop: 10,
         marginLeft: 5,
-    },
-    marginS: {
-        marginTop: 3,
-        marginLeft: 5
     },
     vertAlign: {
         flexDirection: 'row',
@@ -184,13 +183,14 @@ const getStyles = (theme) => StyleSheet.create({
     address: {
         color: theme.text2,
         fontFamily: "boldFont",
-        fontSize: 15
+        fontSize: 15,
+        flex: 1
     },
     text: {
         color: theme.text
     },
-    text2: {
-        color: theme.text2
+    text3: {
+        color: theme.text3
     },
     mediumFont: {
         fontFamily: "mediumFont"

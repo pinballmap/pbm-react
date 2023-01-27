@@ -130,7 +130,7 @@ const FilterMap = ({
                 />
                 {machine && machine.machine_group_id &&
                     <>
-                        <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>Machine version:</Text>
+                        <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}>...And only this machine version, or all:</Text>
                         <ButtonGroup
                             onPress={setFilterByMachineVersion}
                             selectedIndex={filterByMachineVersion ? 1 : 0}
@@ -168,7 +168,7 @@ const FilterMap = ({
                 <ButtonGroup
                     onPress={updateViewFavorites}
                     selectedIndex={viewByFavoriteLocations ? 1 : 0}
-                    buttons={['All', 'My Favorites']}
+                    buttons={['All', 'My Saved']}
                     containerStyle={s.buttonGroupContainer}
                     textStyle={s.buttonGroupInactive}
                     selectedButtonStyle={s.selButtonStyle}
@@ -196,6 +196,9 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontFamily: 'boldFont',
+    },
+    pink: {
+        color: theme.pink1,
     },
     marginTop25: {
         marginTop: 25
@@ -231,7 +234,8 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 4,
         borderColor: theme.base4,
         backgroundColor: theme.white,
-        borderRadius: 25
+        borderRadius: 25,
+        fontFamily: "mediumFont"
     },
     selTextStyle: {
         color: theme.text2,

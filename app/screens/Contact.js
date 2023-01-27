@@ -139,7 +139,9 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     blackText: {
         color: theme.text,
@@ -153,14 +155,16 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         marginTop: 15,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        fontFamily: 'regularFont'
     },
     confirmText: {
         textAlign: 'center',
-        marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
+        color: theme.purple,
+        fontFamily: 'boldFont'
     },
     buttonContainer: {
         marginLeft: 20,

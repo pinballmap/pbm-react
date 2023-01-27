@@ -117,7 +117,7 @@ function EditLocationDetails({
                         >
                             {errorText ?
                                 <View style={{ marginTop: 100, alignItems: 'center' }}>
-                                    <Text style={{ fontSize: 16, color: theme.red2 }}>{errorText}</Text>
+                                    <Text style={{ fontFamily: 'regularFont', fontSize: 16, color: theme.red2 }}>{errorText}</Text>
                                     <PbmButton
                                         title={"OK"}
                                         onPress={() => acceptError()}
@@ -252,13 +252,16 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25,
         textAlign: 'left',
         fontFamily: 'boldFont',
+        fontSize: 16,
         width: 80,
+        color: theme.purple
     },
     preview: {
         fontSize: 15,
         marginRight: 25,
         textAlign: 'center',
         width: deviceWidth - 130,
+        fontFamily: 'regularFont',
     },
     pageTitle: {
         paddingVertical: 10,
@@ -276,7 +279,6 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontFamily: 'boldFont',
-        color: theme.text2
     },
     textInput: {
         backgroundColor: theme.white,
@@ -285,7 +287,9 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         marginHorizontal: 20,
         paddingHorizontal: 10,
-        paddingVertical: 5
+        paddingVertical: 5,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     radius10: {
         borderRadius: 10

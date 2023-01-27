@@ -126,7 +126,7 @@ class Events extends Component {
                                                                     <View style={s.locationNameContainer}>
                                                                         <Text style={s.locationName}>{item.tournament_name}</Text>
                                                                     </View>
-                                                                    <Text style={[s.center, s.cardTextStyle, s.margin]}>{(item.start_date === item.end_date) ? <Text>{start_date}</Text> : <Text>{start_date} - {end_date}</Text>}</Text>
+                                                                    <Text style={[s.center, s.cardTextStyle, s.margin]}>{(item.start_date === item.end_date) ? <Text style={s.bold}>{start_date}</Text> : <Text style={s.bold}>{start_date} - {end_date}</Text>}</Text>
                                                                     <Text style={[s.cardTextStyle, s.margin, s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
                                                                     <Text style={[s.address, s.margin, s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text> : ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                                                 </Pressable>
@@ -208,6 +208,9 @@ const getStyles = theme => StyleSheet.create({
         paddingHorizontal: 10,
         paddingBottom: 10
     },
+    bold: {
+        fontFamily: 'boldFont'
+    },
     problem: {
         textAlign: "center",
         color: theme.text,
@@ -222,12 +225,14 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 12,
         marginTop: 0,
         marginBottom: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        fontFamily: 'regularFont'
     },
     smallLink: {
         textDecorationLine: 'underline',
-        color: '#7cc5ff',
-        fontSize: 12
+        color: theme.purple,
+        fontSize: 12,
+        fontFamily: 'regularFont'
     },
     cardContainer: {
         padding: 0,
@@ -248,11 +253,13 @@ const getStyles = theme => StyleSheet.create({
     },
     cardTextStyle: {
         fontSize: 14,
-        color: theme.text
+        color: theme.text,
+        fontFamily: 'regularFont'
     },
     address: {
         fontSize: 12,
-        color: theme.text3
+        color: theme.text3,
+        fontFamily: 'boldFont'
     },
     pressed: {
         borderColor: theme.pink2,
@@ -272,6 +279,7 @@ const getStyles = theme => StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#7cc5ff',
         fontSize: 16,
+        fontFamily: 'regularFont'
     }
 })
 

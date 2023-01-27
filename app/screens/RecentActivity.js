@@ -148,7 +148,8 @@ class RecentActivity extends Component {
 const getStyles = theme => StyleSheet.create({
     pbmText: {
         color: theme.text,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     header: {
         paddingVertical: 10,
@@ -164,8 +165,9 @@ const getStyles = theme => StyleSheet.create({
     },
     subtitleStyle: {
         paddingTop: 3,
-        fontSize: 14,
-        color: theme.text3
+        fontSize: 16,
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
     },
     filterView: {
         backgroundColor: theme.base3,

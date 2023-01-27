@@ -217,7 +217,7 @@ class Map extends Component {
                 </MapView>
                 <Button
                     onPress={() => navigation.navigate('LocationList')}
-                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.text, paddingRight: 5 }} />}
+                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.purple, paddingRight: 5 }} />}
                     containerStyle={[s.listButtonContainer, s.containerStyle]}
                     buttonStyle={s.buttonStyle}
                     titleStyle={s.buttonTitle}
@@ -231,13 +231,13 @@ class Map extends Component {
                     {Platform.OS === 'ios' ?
                         <FontAwesome
                             name={'location-arrow'}
-                            color={theme.text2}
+                            color={theme.purple}
                             size={24}
                             style={{ justifyContent: 'center', alignSelf: 'center' }}
                         /> :
                         <MaterialIcons
                             name={'gps-fixed'}
-                            color={theme.text2}
+                            color={theme.purple}
                             size={24}
                             style={{ justifyContent: 'center', alignSelf: 'center' }}
                         />
@@ -300,22 +300,25 @@ const getStyles = theme => StyleSheet.create({
     loadingText: {
         color: theme.pink2,
         fontSize: 16,
+        fontFamily: 'regularFont'
     },
     confirmText: {
         textAlign: 'center',
         fontSize: 16,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontFamily: 'regularFont'
     },
     buttonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
         borderRadius: 25,
         backgroundColor: theme.base1,
     },
     buttonTitle: {
-        color: theme.text,
-        fontSize: 16
+        color: theme.purple,
+        fontSize: 18,
+        fontFamily: 'regularFont'
     },
     containerStyle: {
         shadowColor: theme.darkShadow,
@@ -336,7 +339,7 @@ const getStyles = theme => StyleSheet.create({
         bottom: 20,
         alignSelf: 'center',
         borderRadius: 25,
-        backgroundColor: theme.colors.text,
+        backgroundColor: theme.purple,
         paddingVertical: 10,
         paddingHorizontal: 20
     },
@@ -346,7 +349,8 @@ const getStyles = theme => StyleSheet.create({
     },
     pressedTitleStyle: {
         color: theme.pink3,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     myLocationContainer: {
         position: 'absolute',
@@ -367,8 +371,9 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
     },
     filterTitleStyle: {
-        color: theme.pink1,
-        fontSize: 16
+        color: theme.pink4,
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     closeIcon: {
         paddingRight: 5,

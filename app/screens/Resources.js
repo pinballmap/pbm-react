@@ -127,6 +127,7 @@ const getStyles = theme => StyleSheet.create({
         lineHeight: 22,
         marginLeft: 15,
         marginRight: 15,
+        fontFamily: 'regularFont'
     },
     bold: {
         fontFamily: 'boldFont',
@@ -135,6 +136,7 @@ const getStyles = theme => StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#7cc5ff',
         fontSize: 16,
+        fontFamily: 'regularFont'
     },
     hr: {
         marginLeft: 25,

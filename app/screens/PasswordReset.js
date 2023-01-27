@@ -87,13 +87,15 @@ const getStyles = theme => StyleSheet.create({
     },
     inputText: {
         color: theme.text,
+        fontFamily: 'regularFont'
     },
     confirmText: {
         textAlign: 'center',
-        marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
+        color: theme.purple,
+        fontFamily: 'boldFont'
     },
     buttonContainer: {
         marginLeft: 20,

@@ -27,7 +27,7 @@ const SignupLogin = ({ navigation, allMachinesCount, allLocationsCount, loginLat
                 </View>
                 <View style={s.outerBorder}>
                     <View style={s.textBg}>
-                        <Text style={{ fontSize: 18, textAlign: "center" }}>
+                        <Text style={{ fontFamily: 'regularFont', fontSize: 18, textAlign: "center" }}>
                             <Text>Pinball Map is a user-updated map listing</Text>
                             <Text style={s.bold}> {formatNumWithCommas(allLocationsCount)} </Text>
                             <Text>locations and</Text>

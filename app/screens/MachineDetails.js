@@ -39,6 +39,7 @@ import {
     WarningButton,
 } from '../components'
 import * as WebBrowser from 'expo-web-browser'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const moment = require('moment')
 
@@ -116,204 +117,210 @@ class MachineDetails extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <Screen>
-                            <Modal
-                                animationType="slide"
-                                transparent={false}
-                                visible={this.state.showAddConditionModal}
-                                onRequestClose={() => { }}
-                            >
-                                <Pressable onPress={() => { Keyboard.dismiss() }}>
-                                    <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
-                                        <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
-                                            <TextInput
-                                                multiline={true}
-                                                numberOfLines={4}
-                                                underlineColorAndroid='transparent'
-                                                onChangeText={conditionText => this.setState({ conditionText })}
-                                                style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-                                                placeholder={'Enter machine condition...'}
-                                                placeholderTextColor={theme.indigo4}
-                                                textAlignVertical='top'
-                                            />
-                                            {!!location.operator_id && operatorHasEmail &&
-                                                <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. In your comment, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text>
-                                            }
-                                            <PbmButton
-                                                title={'Add Condition'}
-                                                disabled={this.state.conditionText.length === 0}
-                                                onPress={() => this.addCondition(curLmx.id)}
-                                            />
-                                            <WarningButton
-                                                title={'Cancel'}
-                                                onPress={this.cancelAddCondition}
-                                            />
-                                        </View>
-                                    </KeyboardAwareScrollView>
-                                </Pressable>
-                            </Modal>
-                            <Modal
-                                animationType="slide"
-                                transparent={false}
-                                visible={this.state.showAddScoreModal}
-                                onRequestClose={() => { }}
-                            >
-                                <Pressable onPress={() => { Keyboard.dismiss() }}>
-                                    <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
-                                        <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
-                                            <TextInput
-                                                style={[{ height: 40, textAlign: 'center' }, s.textInput, s.radius10]}
-                                                keyboardType='numeric'
-                                                underlineColorAndroid='transparent'
-                                                onChangeText={score => this.setState({ score })}
-                                                defaultValue={formatInputNumWithCommas(this.state.score)}
-                                                returnKeyType="done"
-                                                placeholder={'123...'}
-                                                placeholderTextColor={theme.indigo4}
-                                                autoCapitalize="none"
-                                                autoCorrect={false}
-                                            />
-                                            <PbmButton
-                                                title={'Add Score'}
-                                                disabled={this.state.score.length === 0}
-                                                onPress={() => this.addScore(curLmx.id)}
-                                            />
-                                            <WarningButton
-                                                title={'Cancel'}
-                                                onPress={this.cancelAddScore}
-                                            />
-                                        </View>
-                                    </KeyboardAwareScrollView>
-                                </Pressable>
-                            </Modal>
-                            {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({ showRemoveMachineModal: false })} />}
-                            <ScrollView style={{ marginBottom: 20 }}>
-                                <View style={s.machineNameContainer}>
-                                    <Text style={s.machineName}>{machineName}</Text>
-                                    <Text style={s.locationName}>{location.name}</Text>
-                                </View>
-                                <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                {!!opdb_img &&
-                                    <View style={{ alignItems: "center" }}>
-                                        <View style={[s.imageContainer, { width: opdbImgWidth + 8 }]}>
-                                            <Image
-                                                style={[{ width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'cover', borderRadius: 10 }, isLoadingImage && { display: "none" }]}
-                                                source={{ uri: opdb_img }}
-                                                onLoadStart={() => !imageLoaded && this.setState({ isLoadingImage: true })}
-                                                onLoadEnd={() => this.setState({ imageLoaded: true, isLoadingImage: false })}
-                                            />
-                                            {isLoadingImage && <ActivityIndicator />}
-                                        </View>
-                                    </View>
-                                }
-                                <View style={s.containerStyle}>
-                                    <View style={s.locationNameContainer}>
-                                        <Text style={s.sectionTitle}>Machine Comments</Text>
-                                    </View>
-                                    {mostRecentComments ?
-                                        mostRecentComments.map(commentObj => {
-                                            const { comment, created_at, username } = commentObj
-                                            return <View
-                                                style={[s.listContainerStyle, s.hr]}
-                                                key={commentObj.id}>
-                                                <Text style={[{ marginRight: 5 }, s.conditionText]}>
-                                                    {`"${comment}"`}
-                                                </Text>
-                                                <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                                                    {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
-                                                </Text>
+                        <SafeAreaView edges={['right', 'left', 'top']} style={{ flex: 1 }}>
+                            <Screen>
+                                <Modal
+                                    animationType="slide"
+                                    transparent={false}
+                                    visible={this.state.showAddConditionModal}
+                                    onRequestClose={() => { }}
+                                >
+                                    <Pressable onPress={() => { Keyboard.dismiss() }}>
+                                        <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
+                                            <View style={s.verticalAlign}>
+                                                <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
+                                                <TextInput
+                                                    multiline={true}
+                                                    numberOfLines={4}
+                                                    underlineColorAndroid='transparent'
+                                                    onChangeText={conditionText => this.setState({ conditionText })}
+                                                    style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+                                                    placeholder={'Enter machine condition...'}
+                                                    placeholderTextColor={theme.indigo4}
+                                                    textAlignVertical='top'
+                                                />
+                                                {!!location.operator_id && operatorHasEmail &&
+                                                    <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. Please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text>
+                                                }
+                                                <Text style={[s.modalSubText,s.purple,s.margin8]}><Text style={s.bold}>Operators:</Text> if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you. This is getting to be an issue.</Text>
+                                                <PbmButton
+                                                    title={'Add Condition'}
+                                                    disabled={this.state.conditionText.length === 0}
+                                                    onPress={() => this.addCondition(curLmx.id)}
+                                                />
+                                                <WarningButton
+                                                    title={'Cancel'}
+                                                    onPress={this.cancelAddCondition}
+                                                />
                                             </View>
-                                        }) :
-                                        <Text style={s.noneYet}>No machine comments yet</Text>
-                                    }
-                                    <PbmButton
-                                        title={'Add a New Comment'}
-                                        onPress={loggedIn ?
-                                            () => this.setState({ showAddConditionModal: true }) :
-                                            () => this.props.navigation.navigate('Login')}
-                                    />
-                                    {!!location.operator_id &&
-                                        operatorHasEmail &&
-                                        <View style={[s.operatorEmail, s.operatorHasEmail]}>
-                                            <Text style={{ textAlign: 'center', color: theme.text2 }}>This operator receives machine comments!</Text>
-                                        </View>
-                                    }
-                                    {!!location.operator_id &&
-                                        !operatorHasEmail &&
-                                        <View style={[s.operatorEmail, s.operatorNotEmail]}>
-                                            <Text style={{ textAlign: 'center', color: theme.text2 }}>This operator does not receive machine comments</Text>
-                                        </View>
-                                    }
-                                </View>
-                                <View style={s.containerStyle}>
-                                    <View style={s.locationNameContainer}>
-                                        <Text style={s.sectionTitle}>Top Scores</Text>
+                                        </KeyboardAwareScrollView>
+                                    </Pressable>
+                                </Modal>
+                                <Modal
+                                    animationType="slide"
+                                    transparent={false}
+                                    visible={this.state.showAddScoreModal}
+                                    onRequestClose={() => { }}
+                                >
+                                    <Pressable onPress={() => { Keyboard.dismiss() }}>
+                                        <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
+                                            <View style={s.verticalAlign}>
+                                                <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
+                                                <TextInput
+                                                    style={[{ height: 40, textAlign: 'center' }, s.textInput, s.radius10]}
+                                                    keyboardType='numeric'
+                                                    underlineColorAndroid='transparent'
+                                                    onChangeText={score => this.setState({ score })}
+                                                    defaultValue={formatInputNumWithCommas(this.state.score)}
+                                                    returnKeyType="done"
+                                                    placeholder={'123...'}
+                                                    placeholderTextColor={theme.indigo4}
+                                                    autoCapitalize="none"
+                                                    autoCorrect={false}
+                                                />
+                                                <PbmButton
+                                                    title={'Add Score'}
+                                                    disabled={this.state.score.length === 0}
+                                                    onPress={() => this.addScore(curLmx.id)}
+                                                />
+                                                <WarningButton
+                                                    title={'Cancel'}
+                                                    onPress={this.cancelAddScore}
+                                                />
+                                            </View>
+                                        </KeyboardAwareScrollView>
+                                    </Pressable>
+                                </Modal>
+                                {this.state.showRemoveMachineModal && <RemoveMachineModal closeModal={() => this.setState({ showRemoveMachineModal: false })} />}
+                                <ScrollView style={{ marginBottom: 20,marginTop: Platform.OS === 'android' ? 5 : 0 }}>
+                                    <View style={s.machineNameContainer}>
+                                        <Text style={s.machineName}>{machineName}</Text>
+                                        <Text style={s.locationName}>{location.name}</Text>
                                     </View>
-                                    {!!userHighScore &&
-                                        <View>
-                                            <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
-                                            <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
+                                    <View style={s.addedContainer}>
+                                        <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
+                                        {curLmx.created_at != curLmx.updated_at ? <Text style={[s.addedText,s.updated]}>{`Last updated: ${moment(curLmx.updated_at).format('MMM DD, YYYY')}`}</Text> : ''}
+                                    </View>
+                                    {!!opdb_img &&
+                                        <View style={{ alignItems: "center" }}>
+                                            <View style={[s.imageContainer, { width: opdbImgWidth + 8 }]}>
+                                                <Image
+                                                    style={[{ width: opdbImgWidth, height: opdbImgHeight, resizeMode: 'cover', borderRadius: 10 }, isLoadingImage && { display: "none" }]}
+                                                    source={{ uri: opdb_img }}
+                                                    onLoadStart={() => !imageLoaded && this.setState({ isLoadingImage: true })}
+                                                    onLoadEnd={() => this.setState({ imageLoaded: true, isLoadingImage: false })}
+                                                />
+                                                {isLoadingImage && <ActivityIndicator />}
+                                            </View>
                                         </View>
                                     }
-                                    {scores.length > 0 ?
-                                        scores.map(scoreObj => {
-                                            const { id, score, created_at, username } = scoreObj
-
-                                            return (
-                                                <View
+                                    <View style={s.containerStyle}>
+                                        <View style={s.locationNameContainer}>
+                                            <Text style={s.sectionTitle}>Machine Comments</Text>
+                                        </View>
+                                        {mostRecentComments ?
+                                            mostRecentComments.map(commentObj => {
+                                                const { comment, created_at, username } = commentObj
+                                                return <View
                                                     style={[s.listContainerStyle, s.hr]}
-                                                    key={id}>
-                                                    <Text style={s.scoreText}>
-                                                        {formatNumWithCommas(score)}
+                                                    key={commentObj.id}>
+                                                    <Text style={[{ marginRight: 5 }, s.conditionText]}>
+                                                        {`"${comment}"`}
                                                     </Text>
-                                                    <Text style={s.subtitleStyle}>
-                                                        {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                    <Text style={[s.subtitleStyle, s.subtitleMargin]}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
                                                     </Text>
-                                                </View>)
-                                        })
-                                        : <Text style={s.noneYet}>No scores yet</Text>
-                                    }
-                                    <PbmButton
-                                        title={'Add Your Score'}
-                                        onPress={loggedIn ?
-                                            () => this.setState({ showAddScoreModal: true }) :
-                                            () => this.props.navigation.navigate('Login')
+                                                </View>
+                                            }) :
+                                            <Text style={s.noneYet}>No machine comments yet</Text>
                                         }
-                                    />
-                                </View>
-                                {!!pintipsUrl &&
+                                        <PbmButton
+                                            title={'Add a New Comment'}
+                                            onPress={loggedIn ?
+                                                () => this.setState({ showAddConditionModal: true }) :
+                                                () => this.props.navigation.navigate('Login')}
+                                        />
+                                        {!!location.operator_id &&
+                                            operatorHasEmail &&
+                                            <View style={[s.operatorEmail, s.operatorHasEmail]}>
+                                                <Text style={s.operatorComments}>This operator receives machine comments!</Text>
+                                            </View>
+                                        }
+                                        {!!location.operator_id &&
+                                            !operatorHasEmail &&
+                                            <View style={[s.operatorEmail, s.operatorNotEmail]}>
+                                                <Text style={s.operatorComments}>This operator does not receive machine comments</Text>
+                                            </View>
+                                        }
+                                    </View>
+                                    <View style={s.containerStyle}>
+                                        <View style={s.locationNameContainer}>
+                                            <Text style={s.sectionTitle}>Top Scores</Text>
+                                        </View>
+                                        {!!userHighScore &&
+                                            <View>
+                                                <Text style={s.userScoreTitle}>{`Your personal best on this machine is`}</Text>
+                                                <Text style={s.userHighScore}>{formatNumWithCommas(userHighScore)}</Text>
+                                            </View>
+                                        }
+                                        {scores.length > 0 ?
+                                            scores.map(scoreObj => {
+                                                const { id, score, created_at, username } = scoreObj
+
+                                                return (
+                                                    <View
+                                                        style={[s.listContainerStyle, s.hr]}
+                                                        key={id}>
+                                                        <Text style={s.scoreText}>
+                                                            {formatNumWithCommas(score)}
+                                                        </Text>
+                                                        <Text style={s.subtitleStyle}>
+                                                            {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                        </Text>
+                                                    </View>)
+                                            })
+                                            : <Text style={s.noneYet}>No scores yet</Text>
+                                        }
+                                        <PbmButton
+                                            title={'Add Your Score'}
+                                            onPress={loggedIn ?
+                                                () => this.setState({ showAddScoreModal: true }) :
+                                                () => this.props.navigation.navigate('Login')
+                                            }
+                                        />
+                                    </View>
+                                    {!!pintipsUrl &&
+                                        <Button
+                                            title={'View playing tips on PinTips'}
+                                            type="outline"
+                                            onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
+                                            buttonStyle={s.externalLink}
+                                            titleStyle={s.externalLinkTitle}
+                                            iconRight
+                                            icon={<EvilIcons name='external-link' style={s.externalIcon} />}
+                                            containerStyle={s.margin40}
+                                        />
+                                    }
                                     <Button
-                                        title={'View playing tips on PinTips'}
+                                        title={'View on IPDB'}
                                         type="outline"
-                                        onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
+                                        onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}
                                         buttonStyle={s.externalLink}
                                         titleStyle={s.externalLinkTitle}
                                         iconRight
                                         icon={<EvilIcons name='external-link' style={s.externalIcon} />}
                                         containerStyle={s.margin40}
                                     />
-                                }
-                                <Button
-                                    title={'View on IPDB'}
-                                    type="outline"
-                                    onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}
-                                    buttonStyle={s.externalLink}
-                                    titleStyle={s.externalLinkTitle}
-                                    iconRight
-                                    icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                    containerStyle={s.margin40}
-                                />
-                                <WarningButton
-                                    title={'Remove Machine'}
-                                    onPress={loggedIn ?
-                                        () => this.setState({ showRemoveMachineModal: true }) :
-                                        () => this.props.navigation.navigate('Login')
-                                    }
-                                />
-                            </ScrollView>
-                        </Screen>
+                                    <WarningButton
+                                        title={'Remove Machine'}
+                                        onPress={loggedIn ?
+                                            () => this.setState({ showRemoveMachineModal: true }) :
+                                            () => this.props.navigation.navigate('Login')
+                                        }
+                                    />
+                                </ScrollView>
+                            </Screen>
+                        </SafeAreaView>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -327,14 +334,16 @@ const getStyles = theme => StyleSheet.create({
     },
     machineName: {
         textAlign: 'center',
-        fontFamily: 'boldFont',
-        fontSize: 18,
+        fontFamily: 'blackFont',
+        fontSize: 24,
         color: theme.pink1
     },
     locationName: {
+        marginTop: 5,
         textAlign: 'center',
-        fontSize: 16,
-        color: theme.text3
+        fontSize: 20,
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
     },
     machineNameContainer: {
         marginBottom: 5,
@@ -343,13 +352,17 @@ const getStyles = theme => StyleSheet.create({
         paddingVertical: 5,
         textAlign: 'center',
     },
-    addedText: {
-        textAlign: 'center',
+    addedContainer: {
         marginTop: 5,
         marginBottom: 10,
-        fontSize: 14,
+    },
+    addedText: {
+        textAlign: 'center',
+        fontSize: 16,
         color: theme.text3,
-        opacity: 0.9
+        fontFamily: 'regularFont'
+    },
+    updated: {
     },
     externalLink: {
         borderRadius: 25,
@@ -363,7 +376,8 @@ const getStyles = theme => StyleSheet.create({
     },
     externalLinkTitle: {
         color: theme.text,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     margin40: {
         marginHorizontal: 40,
@@ -371,20 +385,22 @@ const getStyles = theme => StyleSheet.create({
     },
     conditionText: {
         color: theme.text2,
-        fontSize: 14,
+        fontSize: 16,
         marginTop: 5
     },
     scoreText: {
         color: theme.text2,
-        fontSize: 16,
+        fontSize: 18,
         marginTop: 5,
-        fontFamily: 'boldFont',
+        fontFamily: 'regularFont',
     },
     noneYet: {
         textAlign: 'center',
         paddingHorizontal: 15,
         color: theme.text3,
         paddingVertical: 5,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     textInput: {
         backgroundColor: theme.white,
@@ -393,6 +409,8 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         marginHorizontal: 30,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     radius10: {
         borderRadius: 10
@@ -401,13 +419,16 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 5,
-        color: theme.text2
+        color: theme.pink1,
+        fontFamily: 'regularBoldFont',
+        fontSize: 16
     },
     userHighScore: {
         textAlign: 'center',
         fontSize: 20,
         paddingBottom: 15,
-        color: theme.text2
+        color: theme.purple,
+        fontFamily: 'regularBoldFont'
     },
     verticalAlign: {
         flexDirection: 'column',
@@ -418,17 +439,28 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
         marginHorizontal: 40,
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'blackFont'
     },
     modalSubText: {
         marginHorizontal: 40,
         fontSize: 14,
-        textAlign: 'justify',
+        fontFamily: 'regularFont'
+    },
+    bold: {
+        fontFamily: 'boldFont'
+    },
+    purple: {
+        color: theme.purple
+    },
+    margin8: {
+        marginVertical: 8
     },
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
-        color: theme.text3
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
     },
     subtitleMargin: {
         marginTop: 5,
@@ -459,18 +491,14 @@ const getStyles = theme => StyleSheet.create({
         elevation: 6,
     },
     locationNameContainer: {
-        backgroundColor: theme.base4,
-        marginBottom: 10,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
         paddingVertical: 0,
     },
     sectionTitle: {
-        fontSize: 16,
-        fontFamily: 'boldFont',
+        fontSize: 20,
+        fontFamily: 'blackFont',
         textAlign: 'center',
         marginVertical: 10,
-        color: theme.text,
+        color: theme.purple,
         opacity: 0.9
     },
     imageContainer: {
@@ -492,6 +520,11 @@ const getStyles = theme => StyleSheet.create({
     },
     operatorNotEmail: {
         backgroundColor: theme.base3,
+    },
+    operatorComments: {
+        textAlign: 'center',
+        color: theme.text2,
+        fontFamily: 'regularFont'
     }
 })
 
