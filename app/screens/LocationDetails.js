@@ -45,7 +45,7 @@ import {
     getDistanceWithUnit,
 } from '../utils/utilityFunctions'
 import * as WebBrowser from 'expo-web-browser'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import Constants from 'expo-constants'
 
 let deviceWidth = Dimensions.get('window').width
 
@@ -122,7 +122,7 @@ class LocationDetails extends Component {
                 {({ theme }) => {
                     const s = getStyles(theme)
                     return (
-                        <SafeAreaView edges={['right', 'left', 'top']} style={{ flex: 1 }}>
+                        <View style={{ flex: 1 }}>
                             <Screen>
                                 <ConfirmationModal visible={this.state.showLocationToolsModal}>
                                     <View style={s.header}>
@@ -247,7 +247,7 @@ class LocationDetails extends Component {
                                         <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo} />
                                     </View>
                                 </ConfirmationModal>
-                                <View style={{ flex: 1, position: 'relative' }}>
+                                <View style={{ flex: 1, marginTop: Constants.statusBarHeight > 40 ? 50 : Platform.OS === 'android' ? 30 : Platform.OS === 'ios' ? 20 : null }}>
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
@@ -401,7 +401,7 @@ class LocationDetails extends Component {
                                 style={{ justifyContent: 'center', alignSelf: 'center' }}
                             />
                         </Pressable>
-                    </SafeAreaView>
+                    </View>
                     )
                 }}
             </ThemeContext.Consumer>
@@ -415,7 +415,7 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 10,
-        marginHorizontal: 20,
+        marginHorizontal: 20
     },
     mapViewContainer: {
         borderWidth: 2,
@@ -447,8 +447,7 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: deviceWidth < 325 ? 20 : 25,
     },
     locationNameContainer: {
-        marginLeft: Platform.OS === 'android' ? 25 : 20,
-        marginTop: Platform.OS === 'android' ? 5 : 0,
+        marginLeft: Platform.OS === 'android' ? 25 : 15,
         marginBottom: 5
     },
     locationName: {
