@@ -332,7 +332,7 @@ function SuggestLocation({
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => setPhone(phone)}
                                             returnKeyType="done"
-                                            placeholder={phone || '(503) xxx-xxxx'}
+                                            placeholder={'(805) xxx-xxxx'}
                                             placeholderTextColor={theme.indigo4}
                                             textContentType="telephoneNumber"
                                             autoCapitalize="none"
