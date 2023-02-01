@@ -141,7 +141,7 @@ class MachineDetails extends Component {
                                             {!!location.operator_id && operatorHasEmail &&
                                                 <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. Please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text>
                                             }
-                                            <Text style={[s.modalSubText,s.purple,s.margin8]}><Text style={s.bold}>Operators:</Text> if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you. This is getting to be an issue.</Text>
+                                            <Text style={[s.modalSubText,s.purple,s.margin8]}><Text style={s.bold}>Operators:</Text> if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you.</Text>
                                             <PbmButton
                                                 title={'Add Condition'}
                                                 disabled={this.state.conditionText.length === 0}
@@ -349,7 +349,7 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 0,
         paddingVertical: 5,
         textAlign: 'center',
-        marginTop: Constants.statusBarHeight > 40 ? 50 : Platform.OS === 'android' ? 30 : Platform.OS === 'ios' ? 20 : null
+        marginTop: Platform.OS === 'android' ? Constants.statusBarHeight + 6 : Constants.statusBarHeight + 1
     },
     addedContainer: {
         marginTop: 5,

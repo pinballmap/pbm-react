@@ -247,7 +247,8 @@ class LocationDetails extends Component {
                                         <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo} />
                                     </View>
                                 </ConfirmationModal>
-                                <View style={{ flex: 1, marginTop: Constants.statusBarHeight > 40 ? 50 : Platform.OS === 'android' ? 30 : Platform.OS === 'ios' ? 20 : null }}>
+                                <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? Constants.statusBarHeight + 15 : Constants.statusBarHeight + 8
+                                }}>
                                     <View style={s.locationNameContainer}>
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
@@ -447,14 +448,14 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: deviceWidth < 325 ? 20 : 25,
     },
     locationNameContainer: {
-        marginLeft: Platform.OS === 'android' ? 25 : 15,
-        marginBottom: 5
+        marginLeft: Platform.OS === 'android' ? 45 : 35,
+        marginBottom: 0
     },
     locationName: {
         fontFamily: 'blackFont',
         fontSize: 32,
+        lineHeight: 36,
         color: theme.purple,
-        marginLeft: 20
     },
     machineListContainer: {
         borderRadius: 25,
@@ -490,10 +491,9 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 20,
     },
     locationMetaContainer: {
-        paddingTop: 5,
+        paddingTop: 0,
         paddingBottom: 0,
         flex: 1,
-        backgroundColor: ''
     },
     locationMetaInner: {
         flexDirection: 'row',
