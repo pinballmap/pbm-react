@@ -482,7 +482,8 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         marginBottom: -2,
         marginTop: -2,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     searchHistoryTitle: {
         color: theme.pink3,
