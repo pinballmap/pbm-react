@@ -14,7 +14,7 @@ export default {
         updates: {
             enabled: false
         },
-        version: "5.2.17",
+        version: "5.2.18",
         slug: "pbm-app",
         "owner": "pinballmap",
         name: "Pinball Map",
@@ -75,7 +75,7 @@ export default {
                 "WRITE_EXTERNAL_STORAGE",
                 "com.google.android.providers.gsf.permission.READ_GSERVICES"
             ],
-            versionCode: 94,
+            versionCode: 96,
             adaptiveIcon: {
                 backgroundColor: "#ebecff",
                 foregroundImage: "app/assets/images/adaptive-foreground.png"
