@@ -27,6 +27,7 @@ import {
     ActivityIndicator,
     ConfirmationModal,
     FavoriteLocation,
+    LocationActivity,
     PbmButton,
     Screen,
     Text,
@@ -258,11 +259,12 @@ class LocationDetails extends Component {
                                             style={{ height: 28, width: 28, justifyContent: 'center', alignSelf: 'center' }}
                                         />
                                     </Pressable>
+                                    <LocationActivity
+                                        locationId={location.id}
+                                    />
                                     <FavoriteLocation
                                         locationId={location.id}
                                         style={{ ...s.quickButton, ...s.saveButton }}
-                                        pressedStyle={s.quickButtonPressed}
-                                        notPressedStyle={s.quickButtonNotPressed}
                                         navigation={navigation}
                                         removeFavorite={(cb) => cb()}
                                     />

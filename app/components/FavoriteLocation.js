@@ -79,8 +79,6 @@ FavoriteLocationHeart.propTypes = {
     addFavoriteLocation: PropTypes.func,
     removeFavoriteLocation: PropTypes.func,
     style: PropTypes.object,
-    pressedStyle: PropTypes.object,
-    notPressedStyle: PropTypes.object,
     removeFavorite: PropTypes.func,
 }
 

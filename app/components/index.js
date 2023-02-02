@@ -20,6 +20,7 @@ import AppAlert from './AppAlert'
 import NoLocationTrackingModal from './NoLocationTrackingModal'
 import AppWrapper from './AppWrapper'
 import FavoriteLocation from './FavoriteLocation'
+import LocationActivity from './LocationActivity'
 
 export {
     LocationCard,
@@ -44,4 +45,5 @@ export {
     NoLocationTrackingModal,
     AppWrapper,
     FavoriteLocation,
+    LocationActivity,
 }
