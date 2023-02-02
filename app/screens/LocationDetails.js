@@ -253,7 +253,7 @@ class LocationDetails extends Component {
                                         <Text style={s.locationName}>{location.name}</Text>
                                     </View>
                                     <View style={s.mapTypeContainer}>
-                                        <View style={s.mapViewContainer}>
+                                        <View style={[s.mapViewContainer, location.location_type_id ? s.mapViewContainerDuo : s.mapViewContainerSolo ]}>
                                             <MapView
                                                 region={{
                                                     latitude: Number(location.lat),
@@ -416,15 +416,21 @@ const getStyles = theme => StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 10,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        height: 100
     },
     mapViewContainer: {
         borderWidth: 2,
         borderColor: theme.base4,
         borderRadius: 10,
         height: 100,
-        width: '48%',
         overflow: 'hidden'
+    },
+    mapViewContainerDuo: {
+        width: '48%',
+    },
+    mapViewContainerSolo: {
+        width: '100%',
     },
     mapHeight: {
         height: '100%',
@@ -437,7 +443,6 @@ const getStyles = theme => StyleSheet.create({
         padding: 5,
         width: '48%',
         alignItems: 'center',
-        marginBottom: 5
     },
     backgroundColor: {
         backgroundColor: theme.base1
