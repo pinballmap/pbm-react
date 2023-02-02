@@ -87,19 +87,16 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
     return (
         <Screen>
             <View style={s.header}>
-                <Text style={[s.title, s.headerText]}>Past 30 days</Text>
-                <View style={s.header}>
-                    <ButtonGroup
-                        onPress={updateIdx}
-                        selectedIndex={btnIdx}
-                        buttons={['30 mi', '75 mi', '150 mi']}
-                        containerStyle={s.buttonGroupContainer}
-                        textStyle={s.buttonGroupInactive}
-                        selectedButtonStyle={s.selButtonStyle}
-                        selectedTextStyle={s.selTextStyle}
-                        innerBorderStyle={s.innerBorderStyle}
-                    />
-                </View>
+                <ButtonGroup
+                    onPress={updateIdx}
+                    selectedIndex={btnIdx}
+                    buttons={['30 mi', '75 mi', '150 mi']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.buttonGroupInactive}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
             </View>
             {selectedActivity ?
                 <View style={s.filterView}>
@@ -161,15 +158,6 @@ const getStyles = theme => StyleSheet.create({
     },
     header: {
         paddingVertical: 10,
-    },
-    headerText: {
-        textAlign: "center",
-        color: theme.text3
-    },
-    title: {
-        fontSize: 16,
-        fontFamily: 'regularItalicFont',
-        color: theme.text2
     },
     subtitleStyle: {
         paddingTop: 3,
