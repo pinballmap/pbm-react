@@ -76,7 +76,7 @@ class Map extends Component {
             if (location) {
                 this.props.updateCoordinatesAndGetLocations(location.lat, location.lon)
             }
-            navigate('Map')
+            navigate('MapTab')
         } else if (url.indexOf('region=') > 0) {
             const regionSegment = url.split('region=')[1]
             const regionName = regionSegment.split('&')[0]
@@ -97,7 +97,7 @@ class Map extends Component {
             if (region && locations.length === 0) {
                 this.props.getLocationsByRegion(region)
             }
-            navigate('Map')
+            navigate('MapTab')
         } else if (url.indexOf('about') > 0) {
             navigate('Contact')
         } else if (url.indexOf('events') > 0) {
@@ -111,7 +111,7 @@ class Map extends Component {
             if (region) {
                 this.props.getLocationsByRegion(region)
             }
-            navigate('Map')
+            navigate('MapTab')
         }
     }
 
