@@ -173,13 +173,13 @@ function SuggestLocation({
                                             </ScrollView> :
                                             locationSuggested ?
                                                 <ScrollView style={[{ paddingTop: 100 }, s.background]}>
-                                                    <Text style={s.success}>{`Thanks for submitting that location! We'll review the submission and add it!`}</Text>
+                                                    <Text style={s.success}>{`Thanks for submitting that location! Please allow us 0-7 days to review and add it! No need to re-submit it.`}</Text>
                                                     <PbmButton
                                                         title={"OK"}
                                                         onPress={() => {
+                                                            navigation.navigate('MapTab')
                                                             setShowSuggestLocationModal(false)
                                                             resetSuggestLocation()
-                                                            navigate('Map')
                                                         }}
                                                     />
                                                 </ScrollView>
