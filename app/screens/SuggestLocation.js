@@ -174,13 +174,15 @@ function SuggestLocation({
                                             locationSuggested ?
                                                 <ScrollView style={[{ paddingTop: 100 }, s.background]}>
                                                     <Text style={s.success}>{`Thanks for submitting that location! Please allow us 0-7 days to review and add it! No need to re-submit it.`}</Text>
-                                                    <PbmButton
-                                                        title={"OK"}
+                                                    <MaterialCommunityIcons
+                                                        name='close-circle'
+                                                        size={45}
                                                         onPress={() => {
                                                             navigation.navigate('MapTab')
                                                             setShowSuggestLocationModal(false)
                                                             resetSuggestLocation()
                                                         }}
+                                                        style={s.xButton}
                                                     />
                                                 </ScrollView>
                                                 :
@@ -530,11 +532,11 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.indigo4,
         borderWidth: 1,
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
     containerStyle: {
         marginTop: 0,

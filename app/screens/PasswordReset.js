@@ -15,6 +15,7 @@ import {
     Text,
 } from '../components'
 import { postData } from '../config/request'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const PasswordReset = ({ navigation }) => {
     const { theme } = useContext(ThemeContext)
@@ -37,16 +38,15 @@ const PasswordReset = ({ navigation }) => {
             <Pressable onPress={() => { Keyboard.dismiss() }}>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Password reset was successful. Check your email.</Text>
-                    <View>
-                        <PbmButton
-                            title={"Great!"}
-                            onPress={() => {
-                                setModalVisible(false)
-                                navigation.navigate('Login')
-                            }}
-                            containerStyle={s.buttonContainer}
-                        />
-                    </View>
+                    <MaterialCommunityIcons
+                        name='close-circle'
+                        size={45}
+                        onPress={() => {
+                            setModalVisible(false)
+                            navigation.navigate('Login')
+                        }}
+                        style={s.xButton}
+                    />
                 </ConfirmationModal>
                 <View style={{ marginTop: 10 }}>
                     <Input
@@ -97,11 +97,11 @@ const getStyles = theme => StyleSheet.create({
         color: theme.purple,
         fontFamily: 'boldFont'
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
 })
 

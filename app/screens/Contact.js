@@ -21,6 +21,7 @@ import {
     clearMessage,
 } from '../actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     const { theme } = useContext(ThemeContext)
@@ -59,13 +60,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
         <Screen {...keyboardDismissProp}>
             <ConfirmationModal visible={confirmationMessage.length > 0}>
                 <Text style={s.confirmText}>{confirmationMessage}</Text>
-                <View>
-                    <PbmButton
-                        title={"You bet!"}
-                        onPress={acknowledgeConfirmation}
-                        containerStyle={s.buttonContainer}
-                    />
-                </View>
+                <MaterialCommunityIcons
+                    name='close-circle'
+                    size={45}
+                    onPress={acknowledgeConfirmation}
+                    style={s.xButton}
+                />
             </ConfirmationModal>
             {submittingMessage ?
                 <ActivityIndicator /> :
@@ -166,11 +166,11 @@ const getStyles = theme => StyleSheet.create({
         color: theme.purple,
         fontFamily: 'boldFont'
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
 })
 
