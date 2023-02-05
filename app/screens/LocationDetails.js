@@ -236,13 +236,12 @@ class LocationDetails extends Component {
                                 </Modal>
                                 <ConfirmationModal visible={this.props.location.confirmModalVisible}>
                                     <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
-                                    <View>
-                                        <PbmButton
-                                            title={"You're Welcome"}
-                                            onPress={this.props.closeConfirmModal}
-                                            accessibilityLabel="You're Welcome"
-                                        />
-                                    </View>
+                                    <MaterialCommunityIcons
+                                        name='close-circle'
+                                        size={45}
+                                        onPress={this.props.closeConfirmModal}
+                                        style={s.xButton}
+                                    />
                                     <View style={s.logoWrapper}>
                                         <Image source={require('../assets/images/PPM-Splash-200.png')} style={s.logo} />
                                     </View>
@@ -588,7 +587,8 @@ const getStyles = theme => StyleSheet.create({
     logo: {
         resizeMode: 'contain',
         borderColor: "#fdd4d7",
-        borderWidth: 5
+        borderWidth: 10,
+        borderRadius: 15
     },
     logoWrapper: {
         paddingTop: 20,
@@ -652,8 +652,8 @@ const getStyles = theme => StyleSheet.create({
     },
     xButton: {
         position: 'absolute',
-        right: -15,
-        top: -15,
+        right: -20,
+        top: -20,
         color: theme.red2,
     },
     toolsIconButton: {
