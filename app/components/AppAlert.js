@@ -79,8 +79,8 @@ const getStyles = (theme) => StyleSheet.create({
     },
     xButton: {
         position: 'absolute',
-        right: -15,
-        top: -15,
+        right: -20,
+        top: -20,
         color: theme.red2,
     },
 })

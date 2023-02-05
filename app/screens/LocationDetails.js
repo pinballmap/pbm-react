@@ -27,7 +27,6 @@ import {
     ActivityIndicator,
     ConfirmationModal,
     FavoriteLocation,
-    PbmButton,
     Screen,
     Text,
 } from '../components'
