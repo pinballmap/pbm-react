@@ -149,6 +149,7 @@ const getStyles = (theme) => StyleSheet.create({
     locationName: {
         fontFamily: 'blackFont',
         fontSize: 28,
+        lineHeight: 34,
         textAlign: 'left',
         color: theme.purple
     },

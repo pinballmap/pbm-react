@@ -456,8 +456,8 @@ const getStyles = theme => StyleSheet.create({
     },
     locationName: {
         fontFamily: 'blackFont',
-        fontSize: 32,
-        lineHeight: 36,
+        fontSize: 28,
+        lineHeight: 34,
         color: theme.purple,
     },
     machineListContainer: {
