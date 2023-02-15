@@ -122,6 +122,10 @@ function SuggestLocation({
         }
     }, [route.params?.setSelectedOperator])
 
+    useEffect(() => {
+        return () => props.clearSelectedState()
+    }, [])
+
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             type: 'search',

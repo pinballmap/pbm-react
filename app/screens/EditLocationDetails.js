@@ -52,15 +52,16 @@ function EditLocationDetails({
     const [website, setWebsite] = useState(props.location.location.website)
     const [description, setDescription] = useState(props.location.location.description)
 
-    const { operator, locationType, name } = props.location.location
+    const { operator, locationType, name, location_type_id, operator_id } = props.location.location
     const { locationTypes } = props.locations
     const { operators } = props.operators
     const { updatingLocationDetails } = props.location.location
     const { errorText } = props.error
+    const selectedLocationType = route.params?.setSelectedLocationType
+    const selectedOperator = route.params?.setSelectedOperator
+    const locationTypeId = locationType ? locationType : selectedLocationType ? selectedLocationType : location_type_id
 
-    const locationTypeId = locationType ? locationType : route.params?.setSelectedLocationType ? route.params?.setSelectedLocationType : props.location.location.location_type_id
-
-    const operatorId = operator ? operator : route.params?.setSelectedOperator ? route.params?.setSelectedOperator : props.location.location.operator_id
+    const operatorId = operator ? operator : selectedOperator ? selectedOperator : operator_id
 
     const locationTypeObj = locationTypes.find(type => type.id === locationTypeId) || {}
     const { name: locationTypeName = locationTypeId === -1 ? 'N/A' : 'Select location type' } = locationTypeObj
@@ -73,25 +74,25 @@ function EditLocationDetails({
 
     React.useEffect(() => {
         navigation.setOptions({ title: name })
+        return () => props.clearSelectedState()
     }, [])
 
     React.useEffect(() => {
-        if (route.params?.setSelectedLocationType) {
-            setSelectedLocationType(route.params?.setSelectedLocationType)
+        if (selectedLocationType) {
+            setSelectedLocationType(selectedLocationType)
         }
-    }, [route.params?.setSelectedLocationType, setSelectedLocationType])
+    }, [selectedLocationType])
 
     React.useEffect(() => {
-        if (route.params?.setSelectedOperator) {
-            setSelectedOperator(route.params?.setSelectedOperator)
+        if (selectedOperator) {
+            setSelectedOperator(selectedOperator)
         }
-    }, [route.params?.setSelectedOperator, setSelectedOperator])
+    }, [selectedOperator])
 
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             previous_screen: 'EditLocationDetails',
             type: 'search',
-            setSelectedLocationType: (id) => setSelectedLocationType(id)
         })
     }
 
@@ -99,7 +100,6 @@ function EditLocationDetails({
         navigation.navigate('FindOperator', {
             previous_screen: 'EditLocationDetails',
             type: 'search',
-            setSelectedOperator: (id) => setSelectedOperator(id)
         })
     }
 
