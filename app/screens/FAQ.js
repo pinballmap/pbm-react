@@ -37,8 +37,6 @@ const FAQ = ({ navigation, }) => {
                         <Text style={s.text}>Yes! The photos we display come from the Open Pinball Database (OPDB), and so you should upload your high quality photo using <Text style={s.textLink} onPress={() => WebBrowser.openBrowserAsync('https://opdb.org/images/create')}>this form</Text> (you must first create an OPDB account). The photos you upload will not immediately appear in this app.</Text>
                         <Text style={s.text}><Text style={{ fontFamily: 'boldFont' }}>General backglass/translite photo guidelines</Text>:
                             Take photo straight on, not at an angle. Crop image to show only artwork. Avoid glare, if possible</Text>
-                        <Text style={s.bold}>{`Can you include "bat games" like SlugFest on the map?`}</Text>
-                        <Text style={s.text}>No. We used to include bat games, but found that non-pinball machines like that were a slippery slope toward including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on <Text style={s.textLink} onPress={() => WebBrowser.openBrowserAsync('https://opdb.org')}>OPDB</Text> then we will not include it.</Text>
                         <Text style={s.bold}>{`The Location List isn't showing a location that I think it should.`}</Text>
                         <Text style={s.text}>{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
                         <Text style={s.bold}>{`How do I add a new location?`}</Text>
