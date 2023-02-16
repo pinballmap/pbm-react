@@ -27,9 +27,8 @@ const FindCountry = ({ navigation, route }) => {
 
     const handleSearch = (search = '') => {
         const formattedQuery = search.toLowerCase()
-        const countries = selectedCountries.filter(o => o.name.toLowerCase().includes(formattedQuery))
         setQuery(search)
-        setSelectedCountries(countries)
+        setSelectedCountries(countries.filter(o => o.name.toLowerCase().includes(formattedQuery)))
     }
 
     const _selectCountry = (countryName, countryCode) => {
@@ -63,7 +62,7 @@ const FindCountry = ({ navigation, route }) => {
                 placeholderTextColor={theme.indigo4}
                 platform='default'
                 searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
-                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => handleSearch()} />}
+                clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} />}onPress={() => handleSearch()}
                 onChangeText={handleSearch}
                 inputStyle={{ color: theme.text, fontFamily: 'regularFont' }}
                 value={query}
