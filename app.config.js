@@ -147,7 +147,12 @@ export default {
                         },
                         {
                             host: "pinballmap.com",
-                            pathPrefix: "/michigan-west",
+                            pathPrefix: "/michigan-sw",
+                            scheme: "https"
+                        },
+                        {
+                            host: "pinballmap.com",
+                            pathPrefix: "/michigan-north",
                             scheme: "https"
                         },
                         {
