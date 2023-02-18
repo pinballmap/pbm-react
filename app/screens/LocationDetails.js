@@ -116,6 +116,8 @@ class LocationDetails extends Component {
         const { icon: locationIcon, library: iconLibrary, name: locationTypeName } = this.props.locations.locationTypes.find(type => type.id === location.location_type_id) || {}
         const cityState = location.state ? `${location.city}, ${location.state}` : location.city
 
+        const dateDiff = moment().diff(moment(location.date_last_updated), 'years')
+
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => {
@@ -365,7 +367,7 @@ class LocationDetails extends Component {
                                                 </View> : null
                                             }
                                         </View>
-                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>This location has not been updated in over 2 years. The information may be out of date.</Text></View>}
+                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>Last updated over {dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.</Text></View>}
                                     </View>
                                     <View style={s.backgroundColor}>
                                         {sortedMachines.map(machine => (
