@@ -447,6 +447,7 @@ const getStyles = theme => StyleSheet.create({
         color: theme.indigo4,
         paddingLeft: 5,
         flex: 1,
+        fontFamily: 'regularFont'
     },
     inputStyle: {
         color: theme.text,
