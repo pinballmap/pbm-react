@@ -227,7 +227,8 @@ class MachineDetails extends Component {
                                                     {`"${comment}"`}
                                                 </Text>
                                                 <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                                                    {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ${username}` : ''}`}
+                                                    {`${moment(created_at).format('MMM DD, YYYY')} ${username ? `by ` : ''}`}
+                                                    {!!username && <Text style={[s.subtitleStyle,s.username]}>{username}</Text>}
                                                 </Text>
                                             </View>
                                         }) :
@@ -273,8 +274,8 @@ class MachineDetails extends Component {
                                                     <Text style={s.scoreText}>
                                                         {formatNumWithCommas(score)}
                                                     </Text>
-                                                    <Text style={s.subtitleStyle}>
-                                                        {`${moment(created_at).format('MMM DD, YYYY')} by ${username}`}
+                                                    <Text style={[s.subtitleStyle, s.subtitleMargin]}>
+                                                        {`${moment(created_at).format('MMM DD, YYYY')} by `}<Text style={[s.subtitleStyle,s.username]}>{`${username}`}</Text>
                                                     </Text>
                                                 </View>)
                                         })
@@ -453,6 +454,9 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 0,
         fontSize: 14
+    },
+    username: {
+        color: theme.pink1
     },
     listContainerStyle: {
         backgroundColor: theme.white,
