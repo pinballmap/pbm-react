@@ -367,7 +367,7 @@ class LocationDetails extends Component {
                                                 </View> : null
                                             }
                                         </View>
-                                        {location.date_last_updated && moment(location.date_last_updated).unix() < moment().subtract(2, 'years').unix() && <View style={s.staleView}><Text style={s.staleText}>Last updated over {dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.</Text></View>}
+                                        {dateDiff >= 2 && <View style={s.staleView}><Text style={s.staleText}>Last updated over {dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.</Text></View>}
                                     </View>
                                     <View style={s.backgroundColor}>
                                         {sortedMachines.map(machine => (
