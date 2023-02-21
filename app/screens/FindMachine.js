@@ -53,7 +53,7 @@ class MultiSelectRow extends React.PureComponent {
     render() {
         const { index, machine, selected } = this.props
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
 
         return (
             <Pressable
@@ -186,7 +186,7 @@ class FindMachine extends React.PureComponent {
 
     renderRow = ({ item, index }) => {
         const theme = this.context.theme
-        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base3
+        const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2
         return (
             <Pressable
                 onPress={() => this.setSelected(item)}
