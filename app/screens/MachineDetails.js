@@ -289,27 +289,13 @@ class MachineDetails extends Component {
                                     />
                                 </View>
                                 {!!pintipsUrl &&
-                                    <Button
-                                        title={'View playing tips on PinTips'}
-                                        type="outline"
-                                        onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
-                                        buttonStyle={s.externalLink}
-                                        titleStyle={s.externalLinkTitle}
-                                        iconRight
-                                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                        containerStyle={s.margin40}
-                                    />
+                                    <View style={[s.externalLinkContainer,s.marginB15]}>
+                                        <Text style={s.externalLink} onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}>View playing tips on PinTips</Text><EvilIcons name='external-link' style={s.externalIcon} />
+                                    </View>
                                 }
-                                <Button
-                                    title={'View on IPDB'}
-                                    type="outline"
-                                    onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}
-                                    buttonStyle={s.externalLink}
-                                    titleStyle={s.externalLinkTitle}
-                                    iconRight
-                                    icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                    containerStyle={s.margin40}
-                                />
+                                <View style={s.externalLinkContainer}>
+                                    <Text style={s.externalLink} onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}>View on IPDB</Text><EvilIcons name='external-link' style={s.externalIcon} />
+                                </View>
                                 <WarningButton
                                     title={'Remove Machine'}
                                     onPress={loggedIn ?
@@ -361,22 +347,24 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text3,
         fontFamily: 'regularFont'
     },
-    updated: {
-    },
     externalLink: {
-        borderRadius: 25,
-        borderWidth: 2,
-        borderColor: theme.text3,
-        backgroundColor: theme.base3
+        fontSize: 16,
+        fontFamily: 'regularBoldFont',
+        color: theme.purple,
+        textAlign: 'center',
+    },
+    externalLinkContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     externalIcon: {
         fontSize: 24,
-        color: theme.text2
+        color: theme.text2,
     },
-    externalLinkTitle: {
-        color: theme.text,
-        fontSize: 16,
-        fontFamily: 'regularFont'
+    marginB15: {
+        marginBottom: 15
     },
     margin40: {
         marginHorizontal: 40,
