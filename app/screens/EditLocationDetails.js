@@ -203,6 +203,7 @@ function EditLocationDetails({
                                         placeholderTextColor={theme.indigo4}
                                         textAlignVertical='top'
                                     />
+                                    <Text style={[s.subText,s.purple,s.margin8]}>If this venue has moved to a new address (or changed names), please <Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{"contact us"}</Text> and we'll adjust. If this place has closed or no longer has machines, please remove the machines from the listing!</Text>
                                     <Text style={s.title}>Location Type</Text>
                                     <DropDownButton
                                         title={locationTypeName}
@@ -304,6 +305,21 @@ const getStyles = theme => StyleSheet.create({
     containerStyle: {
         marginTop: 0,
         marginHorizontal: 20,
+    },
+    subText: {
+        marginHorizontal: 30,
+        fontSize: 14,
+        fontFamily: 'regularFont'
+    },
+    purple: {
+        color: theme.purple
+    },
+    margin8: {
+        marginVertical: 8
+    },
+    textLink: {
+        textDecorationLine: 'underline',
+        color: theme.pink1,
     },
 
 })
