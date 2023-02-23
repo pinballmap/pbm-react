@@ -10,14 +10,16 @@ import { dark, standard } from './app/utils/themes'
 import { StatusBar } from 'expo-status-bar'
 import {
     useFonts,
-    Lato_400Regular,
-    Lato_400Regular_Italic,
-    Lato_700Bold,
-} from '@expo-google-fonts/lato'
-import {
     Nunito_400Regular,
     Nunito_700Bold,
+    Nunito_800ExtraBold,
+    Nunito_900Black
 } from '@expo-google-fonts/nunito'
+import {
+    PTSans_400Regular,
+    PTSans_400Regular_Italic,
+    PTSans_700Bold,
+} from '@expo-google-fonts/pt-sans'
 import store from './app/store'
 import * as SplashScreen from 'expo-splash-screen'
 import { AppWrapper } from './app/components'
@@ -60,11 +62,13 @@ const App = () => {
     const toggleDefaultTheme = () => defaultTheme !== 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const toggleDarkTheme = () => defaultTheme === 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const [fontsLoaded] = useFonts({
-        regularFont: Lato_400Regular,
-        regularBoldFont: Lato_700Bold,
-        regularItalicFont: Lato_400Regular_Italic,
+        regularFont: PTSans_400Regular,
+        regularBoldFont: PTSans_700Bold,
+        regularItalicFont: PTSans_400Regular_Italic,
         mediumFont: Nunito_400Regular,
         boldFont: Nunito_700Bold,
+        extraBoldFont: Nunito_800ExtraBold,
+        blackFont: Nunito_900Black,
     })
 
     if (!fontsLoaded) {

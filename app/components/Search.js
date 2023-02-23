@@ -447,9 +447,11 @@ const getStyles = theme => StyleSheet.create({
         color: theme.indigo4,
         paddingLeft: 5,
         flex: 1,
+        fontFamily: 'regularFont'
     },
     inputStyle: {
         color: theme.text,
+        fontFamily: 'regularFont'
     },
     inputContainerStyle: {
         borderWidth: 1,
@@ -463,13 +465,14 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 0,
     },
     filterTitleStyle: {
-        color: theme.pink1,
-        fontSize: 16
+        color: theme.purple,
+        fontSize: 18,
+        fontFamily: 'regularFont'
     },
     filterIcon: {
         paddingRight: 5,
         fontSize: 20,
-        color: theme.pink3
+        color: theme.purple
     },
     listContainerStyle: {
         borderBottomColor: theme.indigo4,
@@ -480,7 +483,8 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         marginBottom: -2,
         marginTop: -2,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     searchHistoryTitle: {
         color: theme.pink3,
@@ -505,7 +509,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base1
     },
     filterPressed: {
-        backgroundColor: '#ffa7dd',
+        backgroundColor: theme.pink3,
     },
     filterNotPressed: {
         backgroundColor: theme.pink2
@@ -521,7 +525,7 @@ const getStyles = theme => StyleSheet.create({
     },
     link: {
         textDecorationLine: 'underline',
-        color: '#7cc5ff',
+        color: theme.purple,
     }
 })
 

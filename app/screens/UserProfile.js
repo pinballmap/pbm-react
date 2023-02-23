@@ -298,6 +298,7 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         paddingVertical: 10,
         color: theme.text,
+        fontFamily: 'regularFont'
     },
     username: {
         fontFamily: 'boldFont',
@@ -313,10 +314,10 @@ const getStyles = theme => StyleSheet.create({
     },
     stat: {
         marginTop: 5,
-        fontSize: 15,
-        fontFamily: 'boldFont',
+        fontSize: 16,
+        fontFamily: 'regularFont',
         opacity: 0.9,
-        color: theme.colors.text,
+        color: theme.text3,
         width: 160
     },
     statNum: {
@@ -333,7 +334,8 @@ const getStyles = theme => StyleSheet.create({
         marginHorizontal: 20,
         paddingTop: 10,
         fontSize: 16,
-        color: theme.text3
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
     },
     buttonContainer: {
         marginLeft: 20,
@@ -365,7 +367,7 @@ const getStyles = theme => StyleSheet.create({
         paddingTop: 8
     },
     rankText: {
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'boldFont'
     },
     rankIcon: {
@@ -386,7 +388,8 @@ const getStyles = theme => StyleSheet.create({
     },
     externalLinkTitle: {
         color: theme.text,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     }
 })
 

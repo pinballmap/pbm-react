@@ -141,16 +141,15 @@ const Signup = ({ login, loginLater, navigation }) => {
             <ImageBackground source={require('../assets/images/t-shirt-logo.png')} style={s.backgroundImage}>
                 <ConfirmationModal visible={modalVisible}>
                     <Text style={s.confirmText}>Please check your email and confirm your account.</Text>
-                    <View>
-                        <PbmButton
-                            title={"I Will!"}
-                            onPress={() => {
-                                setModalVisible(false)
-                                navigation.navigate('MapTab')
-                            }}
-                            containerStyle={s.buttonContainer}
-                        />
-                    </View>
+                    <MaterialCommunityIcons
+                        name='close-circle'
+                        size={45}
+                        onPress={() => {
+                            setModalVisible(false)
+                            navigation.navigate('MapTab')
+                        }}
+                        style={s.xButton}
+                    />
                 </ConfirmationModal>
                 <View style={s.mask}>
                     <Pressable onPress={() => { Keyboard.dismiss() }}>
@@ -290,6 +289,7 @@ const getStyles = theme => StyleSheet.create({
     },
     inputText: {
         color: theme.text,
+        fontFamily: 'regularFont'
     },
     textLink: {
         fontSize: 14,
@@ -329,16 +329,17 @@ const getStyles = theme => StyleSheet.create({
     },
     confirmText: {
         textAlign: 'center',
-        marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
+        color: theme.purple,
+        fontFamily: 'boldFont'
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
 })
 

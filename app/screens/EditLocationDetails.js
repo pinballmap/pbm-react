@@ -52,15 +52,16 @@ function EditLocationDetails({
     const [website, setWebsite] = useState(props.location.location.website)
     const [description, setDescription] = useState(props.location.location.description)
 
-    const { operator, locationType, name } = props.location.location
+    const { operator, locationType, name, location_type_id, operator_id } = props.location.location
     const { locationTypes } = props.locations
     const { operators } = props.operators
     const { updatingLocationDetails } = props.location.location
     const { errorText } = props.error
+    const selectedLocationType = route.params?.setSelectedLocationType
+    const selectedOperator = route.params?.setSelectedOperator
+    const locationTypeId = locationType ? locationType : selectedLocationType ? selectedLocationType : location_type_id
 
-    const locationTypeId = locationType ? locationType : route.params?.setSelectedLocationType ? route.params?.setSelectedLocationType : props.location.location.location_type_id
-
-    const operatorId = operator ? operator : route.params?.setSelectedOperator ? route.params?.setSelectedOperator : props.location.location.operator_id
+    const operatorId = operator ? operator : selectedOperator ? selectedOperator : operator_id
 
     const locationTypeObj = locationTypes.find(type => type.id === locationTypeId) || {}
     const { name: locationTypeName = locationTypeId === -1 ? 'N/A' : 'Select location type' } = locationTypeObj
@@ -73,25 +74,25 @@ function EditLocationDetails({
 
     React.useEffect(() => {
         navigation.setOptions({ title: name })
+        return () => props.clearSelectedState()
     }, [])
 
     React.useEffect(() => {
-        if (route.params?.setSelectedLocationType) {
-            setSelectedLocationType(route.params?.setSelectedLocationType)
+        if (selectedLocationType) {
+            setSelectedLocationType(selectedLocationType)
         }
-    }, [route.params?.setSelectedLocationType, setSelectedLocationType])
+    }, [selectedLocationType])
 
     React.useEffect(() => {
-        if (route.params?.setSelectedOperator) {
-            setSelectedOperator(route.params?.setSelectedOperator)
+        if (selectedOperator) {
+            setSelectedOperator(selectedOperator)
         }
-    }, [route.params?.setSelectedOperator, setSelectedOperator])
+    }, [selectedOperator])
 
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             previous_screen: 'EditLocationDetails',
             type: 'search',
-            setSelectedLocationType: (id) => setSelectedLocationType(id)
         })
     }
 
@@ -99,7 +100,6 @@ function EditLocationDetails({
         navigation.navigate('FindOperator', {
             previous_screen: 'EditLocationDetails',
             type: 'search',
-            setSelectedOperator: (id) => setSelectedOperator(id)
         })
     }
 
@@ -117,7 +117,7 @@ function EditLocationDetails({
                         >
                             {errorText ?
                                 <View style={{ marginTop: 100, alignItems: 'center' }}>
-                                    <Text style={{ fontSize: 16, color: theme.red2 }}>{errorText}</Text>
+                                    <Text style={{ fontFamily: 'regularFont', fontSize: 16, color: theme.red2 }}>{errorText}</Text>
                                     <PbmButton
                                         title={"OK"}
                                         onPress={() => acceptError()}
@@ -203,6 +203,7 @@ function EditLocationDetails({
                                         placeholderTextColor={theme.indigo4}
                                         textAlignVertical='top'
                                     />
+                                    <Text style={[s.subText,s.purple,s.margin8]}>If this venue has moved to a new address (or changed names), please <Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{"contact us"}</Text> and we'll adjust. If this place has closed or no longer has machines, please remove the machines from the listing!</Text>
                                     <Text style={s.title}>Location Type</Text>
                                     <DropDownButton
                                         title={locationTypeName}
@@ -252,13 +253,16 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 25,
         textAlign: 'left',
         fontFamily: 'boldFont',
+        fontSize: 16,
         width: 80,
+        color: theme.purple
     },
     preview: {
         fontSize: 15,
         marginRight: 25,
         textAlign: 'center',
         width: deviceWidth - 130,
+        fontFamily: 'regularFont',
     },
     pageTitle: {
         paddingVertical: 10,
@@ -276,7 +280,6 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
         fontFamily: 'boldFont',
-        color: theme.text2
     },
     textInput: {
         backgroundColor: theme.white,
@@ -285,7 +288,9 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         marginHorizontal: 20,
         paddingHorizontal: 10,
-        paddingVertical: 5
+        paddingVertical: 5,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     radius10: {
         borderRadius: 10
@@ -300,6 +305,21 @@ const getStyles = theme => StyleSheet.create({
     containerStyle: {
         marginTop: 0,
         marginHorizontal: 20,
+    },
+    subText: {
+        marginHorizontal: 30,
+        fontSize: 14,
+        fontFamily: 'regularFont'
+    },
+    purple: {
+        color: theme.purple
+    },
+    margin8: {
+        marginVertical: 8
+    },
+    textLink: {
+        textDecorationLine: 'underline',
+        color: theme.pink1,
     },
 
 })

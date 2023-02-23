@@ -42,7 +42,8 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme.white
     },
     disabledTitleStyle: {
-        color: theme.pink3
+        color: theme.pink3,
+        fontFamily: 'boldFont'
     },
     margin15: {
         marginHorizontal: 40,

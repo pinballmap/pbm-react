@@ -35,7 +35,8 @@ const s = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontFamily: 'regularFont'
     },
     buttonContainer: {
         marginLeft: 20,

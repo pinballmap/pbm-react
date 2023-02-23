@@ -21,6 +21,7 @@ import {
     clearMessage,
 } from '../actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
     const { theme } = useContext(ThemeContext)
@@ -59,13 +60,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
         <Screen {...keyboardDismissProp}>
             <ConfirmationModal visible={confirmationMessage.length > 0}>
                 <Text style={s.confirmText}>{confirmationMessage}</Text>
-                <View>
-                    <PbmButton
-                        title={"You bet!"}
-                        onPress={acknowledgeConfirmation}
-                        containerStyle={s.buttonContainer}
-                    />
-                </View>
+                <MaterialCommunityIcons
+                    name='close-circle'
+                    size={45}
+                    onPress={acknowledgeConfirmation}
+                    style={s.xButton}
+                />
             </ConfirmationModal>
             {submittingMessage ?
                 <ActivityIndicator /> :
@@ -139,7 +139,9 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        textAlign: 'left'
+        textAlign: 'left',
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     blackText: {
         color: theme.text,
@@ -153,20 +155,22 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         marginTop: 15,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        fontFamily: 'regularFont'
     },
     confirmText: {
         textAlign: 'center',
-        marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
-        fontSize: 18
+        fontSize: 18,
+        color: theme.purple,
+        fontFamily: 'boldFont'
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
 })
 

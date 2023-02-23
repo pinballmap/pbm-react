@@ -50,7 +50,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                                 {<MaterialCommunityIcons name='plus-box' size={32} color='#58a467' />}
                             </Avatar>
                             <ListItem.Content>
-                                <ListItem.Title style={s.titleStyle}>
+                                <ListItem.Title style={selectedActivity === 'new_lmx' ? s.activeTitleStyle : s.titleStyle}>
                                     New Machines
                                 </ListItem.Title>
                             </ListItem.Content>
@@ -124,31 +124,35 @@ const getStyles = (theme) => StyleSheet.create({
         backgroundColor: theme.base1,
     },
     header: {
-        backgroundColor: theme.pink2,
-        marginTop: -25,
+        backgroundColor: theme.base4,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
+        marginTop: -25,
         height: 40,
-        paddingVertical: 10,
+        justifyContent: 'center'
     },
     filterTitle: {
-        color: theme.pink1,
+        color: theme.text,
         textAlign: "center",
-        fontSize: 16,
-        fontFamily: 'boldFont',
+        fontSize: 18,
+        fontFamily: 'extraBoldFont',
     },
     xButton: {
         position: 'absolute',
-        right: -15,
-        top: -15,
+        right: -20,
+        top: -20,
         color: theme.red2,
     },
     titleStyle: {
-        color: theme.text2,
+        color: theme.text3,
+        fontFamily: 'boldFont'
+    },
+    activeTitleStyle: {
+        color: theme.pink1,
         fontFamily: 'boldFont'
     },
     containerBg: {
-        backgroundColor: theme.blue2
+        backgroundColor: theme.pink2
     }
 })
 

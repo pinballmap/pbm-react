@@ -31,7 +31,7 @@ const IosMarker = ({ numMachines }) => {
             backgroundColor: theme.text2,
         }}>
             <Text style={{
-                color: theme.base2,
+                color: theme.dot,
                 fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,

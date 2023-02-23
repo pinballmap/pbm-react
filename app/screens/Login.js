@@ -205,6 +205,7 @@ const getStyles = theme => StyleSheet.create({
     },
     inputText: {
         color: theme.text,
+        fontFamily: 'regularFont'
     },
     textLink: {
         fontSize: 16,

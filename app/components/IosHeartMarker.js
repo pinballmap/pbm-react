@@ -22,7 +22,7 @@ const IosHeartMarker = ({ numMachines }) => {
     return (
         <ImageBackground style={{ width: dotWidth, height: dotWidth * .872 }} source={markerDotHeart} >
             <Text style={{
-                color: 'black',
+                color: '#66017b',
                 fontFamily: 'boldFont',
                 textAlign: 'center',
                 fontSize: 18,

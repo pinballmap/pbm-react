@@ -175,7 +175,9 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontFamily: 'regularFont',
+        color: theme.purple
     },
     buttonContainer: {
         marginLeft: 20,

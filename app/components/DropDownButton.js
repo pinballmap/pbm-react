@@ -43,6 +43,7 @@ const getStyles = (theme) => StyleSheet.create({
     titleStyle: {
         color: theme.text3,
         fontSize: 16,
+        fontFamily: 'regularFont'
     }
 })
 

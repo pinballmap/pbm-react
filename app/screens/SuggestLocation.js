@@ -122,6 +122,10 @@ function SuggestLocation({
         }
     }, [route.params?.setSelectedOperator])
 
+    useEffect(() => {
+        return () => props.clearSelectedState()
+    }, [])
+
     const goToFindLocationType = () => {
         navigation.navigate('FindLocationType', {
             type: 'search',
@@ -173,14 +177,16 @@ function SuggestLocation({
                                             </ScrollView> :
                                             locationSuggested ?
                                                 <ScrollView style={[{ paddingTop: 100 }, s.background]}>
-                                                    <Text style={s.success}>{`Thanks for submitting that location! We'll review the submission and add it!`}</Text>
-                                                    <PbmButton
-                                                        title={"OK"}
+                                                    <Text style={s.success}>{`Thanks for submitting that location! Please allow us 0-7 days to review and add it! No need to re-submit it.`}</Text>
+                                                    <MaterialCommunityIcons
+                                                        name='close-circle'
+                                                        size={45}
                                                         onPress={() => {
+                                                            navigation.navigate('MapTab')
                                                             setShowSuggestLocationModal(false)
                                                             resetSuggestLocation()
-                                                            navigate('Map')
                                                         }}
+                                                        style={s.xButton}
                                                     />
                                                 </ScrollView>
                                                 :
@@ -332,7 +338,7 @@ function SuggestLocation({
                                             underlineColorAndroid='transparent'
                                             onChangeText={phone => setPhone(phone)}
                                             returnKeyType="done"
-                                            placeholder={phone || '(503) xxx-xxxx'}
+                                            placeholder={'(805) xxx-xxxx'}
                                             placeholderTextColor={theme.indigo4}
                                             textContentType="telephoneNumber"
                                             autoCapitalize="none"
@@ -374,7 +380,7 @@ function SuggestLocation({
                                         <Text style={s.title}>Machines</Text>
                                         <PbmButton
                                             title={'Select Machines to Add'}
-                                            titleStyle={{ fontSize: 16, color: theme.text3 }}
+                                            titleStyle={{ fontSize: 16, color: theme.text3, fontFamily: 'regularFont' }}
                                             onPress={() => navigate('FindMachine', { multiSelect: true })}
                                             icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
                                             containerStyle={s.addMachinesContainer}
@@ -473,7 +479,9 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 1,
         marginHorizontal: 20,
         paddingHorizontal: 10,
-        paddingVertical: 5
+        paddingVertical: 5,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     radius10: {
         borderRadius: 10,
@@ -528,11 +536,11 @@ const getStyles = theme => StyleSheet.create({
         borderColor: theme.indigo4,
         borderWidth: 1,
     },
-    buttonContainer: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 10,
-        marginBottom: 10
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
     },
     containerStyle: {
         marginTop: 0,

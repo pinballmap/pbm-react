@@ -284,7 +284,7 @@ class FindMachine extends React.PureComponent {
                     searchIcon={<MaterialIcons name='search' size={25} color={theme.indigo4} />}
                     clearIcon={<MaterialCommunityIcons name='close-circle' size={20} color={theme.indigo4} onPress={() => this.handleSearch('')} />}
                     onChangeText={(query) => this.handleSearch(query, this.state.machinesInView)}
-                    inputStyle={{ color: theme.text }}
+                    inputStyle={{ color: theme.text, fontFamily: 'regularFont' }}
                     value={this.state.query}
                     inputContainerStyle={s.filterInput}
                     containerStyle={{ backgroundColor: theme.base1, borderBottomWidth: 0, borderTopWidth: 0 }}
@@ -348,6 +348,8 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 20,
         marginTop: 20,
         borderRadius: 10,
+        fontFamily: 'regularFont',
+        fontSize: 16
     },
     verticalAlign: {
         flexDirection: 'column',

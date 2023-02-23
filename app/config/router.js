@@ -78,7 +78,7 @@ function ActivityStackNavigator() {
                 component={RecentActivity}
                 options={{
                     headerTitleAlign: 'center',
-                    title: 'Recent Nearby Activity',
+                    title: 'Nearby Activity (30 Days)',
                 }}
             />
         </Stack.Navigator>
@@ -208,12 +208,12 @@ function MapStack() {
             <Stack.Screen name="MapStack" component={BottomTabNavigator} options={{ title: "Map", headerShown: false }} />
             <Stack.Screen name="Contact" component={Contact} />
             <Stack.Screen name="SignupLogin" component={SignupLogin} options={{ headerShown: false }} />
-            <Stack.Screen name="LocationList" component={LocationList} options={{ headerBackTitleVisible: true, title: 'Location List' }} />
+            <Stack.Screen name="LocationList" component={LocationList} options={{ headerBackTitleVisible: true, title: 'Locations on the Map' }} />
             <Stack.Screen name="LocationDetails" component={LocationDetails} options={{ headerTransparent: true, title: null }} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="FilterMap" component={FilterMap} options={{ headerBackTitleVisible: true, title: 'Apply Filters to the Map' }} />
-            <Stack.Screen name="MachineDetails" component={MachineDetails} options={{ title: null }} />
+            <Stack.Screen name="MachineDetails" component={MachineDetails} options={{ headerTransparent: true, title: null }} />
             <Stack.Screen name="SuggestLocation" component={SuggestLocation} options={{ title: 'Submit Location' }} />
             <Stack.Screen name="Events" component={Events} options={{ title: 'Nearby Events' }} />
             <Stack.Screen name="FAQ" component={FAQ} />
@@ -240,7 +240,8 @@ function DrawerNavigator() {
             screenOptions={() => ({
                 drawerPosition: 'right',
                 drawerType: 'front',
-                drawerActiveBackgroundColor: colors.background
+                drawerActiveBackgroundColor: colors.background,
+                drawerLabelStyle: { fontFamily: 'boldFont' }
             })}
         >
             <Drawer.Screen
@@ -266,8 +267,8 @@ export default DrawerNavigator
 
 const s = StyleSheet.create({
     labelText: {
-        fontSize: 11,
+        fontSize: 12,
         marginBottom: Platform.OS === 'android' ? 5 : 0,
         marginTop: Platform.OS === 'android' ? -5 : 0
-    },
+    }
 })

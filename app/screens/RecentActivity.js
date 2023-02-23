@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useContext, useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -16,16 +16,42 @@ import {
     Text,
 } from '../components'
 import { clearActivityFilter } from '../actions'
+import { useFocusEffect } from '@react-navigation/native'
+import {ButtonGroup} from '@rneui/base'
 
 const moment = require('moment')
 
-class RecentActivity extends Component {
-    state = {
-        fetchingRecentActivity: true,
-        recentActivity: [],
+const RecentActivity = ({query, clearActivityFilter, navigation}) => {
+    const { theme } = useContext(ThemeContext)
+    const s = getStyles(theme)
+    const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true)
+    const [recentActivity, setRecentActivity] = useState([])
+    const [maxDistance, setMaxDistance] = useState(30)
+    const [btnIdx, setBtnIdx] = useState(0)
+    const {selectedActivity, curLat, curLon} = query
+
+    useEffect(() => {
+        navigation.setOptions({headerRight: () => <FilterRecentActivity />})
+    }, [])
+
+    useFocusEffect(
+        useCallback(() => {
+            setFetchingRecentActivity(true)
+            getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon};max_distance=${maxDistance}`)
+                .then(data => {
+                    setFetchingRecentActivity(false)
+                    setRecentActivity(data.user_submissions)
+                })
+        }, [curLat, curLon, maxDistance])
+    )
+
+    const updateIdx = (selectedIdx) => {
+        const distanceMap = [30, 75, 150]
+        setBtnIdx(selectedIdx)
+        setMaxDistance(distanceMap[selectedIdx])
     }
 
-    getIcon(type) {
+    const getIcon= (type) => {
         switch (type) {
             case 'new_lmx':
                 return <MaterialCommunityIcons name='plus-box' size={28} color='#58a467' />
@@ -42,7 +68,7 @@ class RecentActivity extends Component {
         }
     }
 
-    getText(selectedActivity) {
+    const getText = (selectedActivity) => {
         const activity = 'Filtering by recently'
         switch (selectedActivity) {
             case 'new_lmx':
@@ -58,114 +84,86 @@ class RecentActivity extends Component {
         }
     }
 
-    componentDidMount() {
-        this.props.navigation.setOptions({
-            headerRight: () => <FilterRecentActivity />,
-        })
-        //The listener will refetch recent activity data every time this screen is navigated to
-        this.focusListener = this.props.navigation.addListener('focus', () => {
-            const { curLat, curLon } = this.props.query
-            getData(`/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon}`)
-                .then(data => {
-                    this.setState({
-                        fetchingRecentActivity: false,
-                        recentActivity: data.user_submissions,
-                    })
-                })
-        })
-    }
+    return (
+        <Screen>
+            <View style={s.header}>
+                <ButtonGroup
+                    onPress={updateIdx}
+                    selectedIndex={btnIdx}
+                    buttons={['30 mi', '75 mi', '150 mi']}
+                    containerStyle={s.buttonGroupContainer}
+                    textStyle={s.buttonGroupInactive}
+                    selectedButtonStyle={s.selButtonStyle}
+                    selectedTextStyle={s.selTextStyle}
+                    innerBorderStyle={s.innerBorderStyle}
+                />
+            </View>
+            {selectedActivity ?
+                <View style={s.filterView}>
+                    <Text style={s.filter}>{getText(selectedActivity)}</Text>
+                    <MaterialCommunityIcons
+                        name='close-circle'
+                        size={24}
+                        onPress={() => clearActivityFilter()}
+                        style={s.xButton}
+                    />
+                </View> : null
+            }
+            {fetchingRecentActivity ?
+                <ActivityIndicator /> :
+                recentActivity.length === 0 ?
+                    <Text style={s.problem}>{`No map edits in the last 30 days within ${maxDistance} miles of the map's current location`}</Text> :
+                    recentActivity.filter(activity => {
+                        const submissionTypeIcon = getIcon(activity.submission_type)
+                        const showType = selectedActivity ?
+                            selectedActivity === activity.submission_type ? true : false
+                            : true
 
-
-    render() {
-        const { recentActivity, fetchingRecentActivity } = this.state
-        const { selectedActivity } = this.props.query
-
-        return (
-            <ThemeContext.Consumer>
-                {({ theme }) => {
-                    const s = getStyles(theme)
-                    return (
-                        <Screen>
-                            <View style={s.header}>
-                                <Text style={[s.title, s.headerText]}>30 miles, 30 days</Text>
-                            </View>
-                            {selectedActivity ?
-                                <View style={s.filterView}>
-                                    <Text style={s.filter}>{this.getText(selectedActivity)}</Text>
-                                    <MaterialCommunityIcons
-                                        name='close-circle'
-                                        size={24}
-                                        onPress={() => this.props.clearActivityFilter()}
-                                        style={s.xButton}
-                                    />
-                                </View> : null
-                            }
-                            {fetchingRecentActivity ?
-                                <ActivityIndicator /> :
-                                recentActivity.length === 0 ?
-                                    <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
-                                    recentActivity.filter(activity => {
-                                        const submissionTypeIcon = this.getIcon(activity.submission_type)
-                                        const showType = selectedActivity ?
-                                            selectedActivity === activity.submission_type ? true : false
-                                            : true
-
-                                        if (submissionTypeIcon && showType) {
-                                            activity.submissionTypeIcon = submissionTypeIcon
-                                            return activity
-                                        }
-                                    }).map(activity => (
-                                        <Pressable
-                                            key={activity.id}
-                                            onPress={() => this.props.navigation.navigate('LocationDetails', { id: activity.location_id })}
-                                        >
-                                            {({ pressed }) => (
-                                                <View style={[s.list, s.flexi, pressed ? s.pressed : s.notPressed]}>
-                                                    <View style={{ width: '15%' }}>
-                                                        {activity.submissionTypeIcon}
-                                                    </View>
-                                                    <View style={{ width: '85%' }}>
-                                                        <Text style={s.pbmText}>
-                                                            {activity.submission}
-                                                        </Text>
-                                                        <Text style={s.subtitleStyle}>
-                                                            {`${moment(activity.updated_at).format('LL')}`}
-                                                        </Text>
-                                                    </View>
-                                                </View>
-                                            )}
-                                        </Pressable>
-                                    ))
-                            }
-                        </Screen>
-                    )
-                }}
-            </ThemeContext.Consumer>
-        )
-    }
+                        if (submissionTypeIcon && showType) {
+                            activity.submissionTypeIcon = submissionTypeIcon
+                            return activity
+                        }
+                    }).map(activity => (
+                        <Pressable
+                            key={activity.id}
+                            onPress={() => navigation.navigate('LocationDetails', { id: activity.location_id })}
+                        >
+                            {({ pressed }) => (
+                                <View style={[s.list, s.flexi, pressed ? s.pressed : s.notPressed]}>
+                                    <View style={{ width: '15%' }}>
+                                        {activity.submissionTypeIcon}
+                                    </View>
+                                    <View style={{ width: '85%' }}>
+                                        <Text style={s.pbmText}>
+                                            {activity.submission}
+                                        </Text>
+                                        <Text style={s.subtitleStyle}>
+                                            {`${moment(activity.updated_at).format('LL')}`}
+                                        </Text>
+                                    </View>
+                                </View>
+                            )}
+                        </Pressable>
+                    ))
+            }
+        </Screen>
+    )
 }
 
 const getStyles = theme => StyleSheet.create({
     pbmText: {
         color: theme.text,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
     header: {
         paddingVertical: 10,
     },
-    headerText: {
-        textAlign: "center",
-        color: theme.text3
-    },
-    title: {
-        fontSize: 16,
-        fontFamily: 'regularItalicFont',
-        color: theme.text2
-    },
     subtitleStyle: {
         paddingTop: 3,
-        fontSize: 14,
-        color: theme.text3
+        fontSize: 16,
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
     },
     filterView: {
         backgroundColor: theme.base3,
@@ -223,7 +221,37 @@ const getStyles = theme => StyleSheet.create({
         borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0
-    }
+    },
+    buttonGroupContainer: {
+        height: 40,
+        borderWidth: 0,
+        borderRadius: 25,
+        backgroundColor: theme.base3,
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        elevation: 6,
+        overflow: 'visible'
+    },
+    buttonGroupInactive: {
+        color: theme.text2,
+        fontSize: 14,
+        fontFamily: "mediumFont"
+    },
+    innerBorderStyle: {
+        width: 0,
+    },
+    selButtonStyle: {
+        borderWidth: 4,
+        borderColor: theme.base4,
+        backgroundColor: theme.white,
+        borderRadius: 25
+    },
+    selTextStyle: {
+        color: theme.text2,
+        fontFamily: 'boldFont',
+    },
 })
 
 RecentActivity.propTypes = {

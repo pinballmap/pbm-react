@@ -39,11 +39,11 @@ const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: l
 const getStyles = theme => StyleSheet.create({
     confirmText: {
         textAlign: 'center',
-        marginTop: 10,
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18,
-        color: theme.text,
+        color: theme.purple,
+        fontFamily: 'boldFont'
     },
     buttonContainer: {
         marginLeft: 20,
