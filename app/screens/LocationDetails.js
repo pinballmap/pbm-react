@@ -27,6 +27,7 @@ import {
     ActivityIndicator,
     ConfirmationModal,
     FavoriteLocation,
+    LocationActivity,
     Screen,
     Text,
 } from '../components'
@@ -338,6 +339,7 @@ class LocationDetails extends Component {
                                                             style={{ height: 24, width: 24, justifyContent: 'center', alignSelf: 'center' }}
                                                         />
                                                     </Pressable>
+                                                    <LocationActivity locationId={location.id} />
                                                 </View>
                                             </View>
 
@@ -508,7 +510,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
     },
     quickButtonContainer: {
-        width: 130,
+        width: 160,
         flexDirection: 'row',
     },
     fontSize12: {

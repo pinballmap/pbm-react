@@ -14,9 +14,6 @@ import {
     View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import {
-    Button,
-} from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 import { EvilIcons } from '@expo/vector-icons'
 import {
