@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-    Dimensions,
-    Modal,
     Pressable,
     ScrollView,
     StyleSheet,
@@ -10,12 +8,11 @@ import {
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ActivityIndicator } from '.'
-import { Text } from '.'
+import { ActivityIndicator, Text, ConfirmationModal } from '.'
 import { getData } from '../config/request'
+import {formatNumWithCommas} from '../utils/utilityFunctions'
+import {getIcon} from "../screens/RecentActivity"
 const moment = require('moment')
-
-let deviceWidth = Dimensions.get('window').width
 
 const LocationActivity = ({
     locationId,
@@ -37,18 +34,27 @@ const LocationActivity = ({
         }
     }, [locationActivityModalOpen])
 
-    const getIcon = (type) =>  {
-        switch (type) {
-            case 'new_lmx':
-                return <MaterialCommunityIcons name='plus-box' size={28} color='#58a467' />
-            case 'new_condition':
-                return <MaterialCommunityIcons name='comment-text' size={28} color='#6cbffe' />
-            case 'remove_machine':
-                return <MaterialCommunityIcons name='minus-box' size={28} color='#f56f79' />
-            case 'new_msx':
-                return <MaterialCommunityIcons name='numeric' size={28} color='#eeb152' />
-            case 'confirm_location':
-                return <MaterialCommunityIcons name='clipboard-check' size={28} color='#d473df' />
+    const getText = (activity) => {
+        const {submission_type, submission, high_score, machine_name, user_name, comment} = activity
+        const userNameStr = user_name ? ` - ${user_name}` : ''
+        switch (submission_type) {
+            case 'new_lmx': {
+                return `${machine_name} added${userNameStr}`
+            }
+            case 'new_condition': {
+                if (!comment) return submission
+                return `${comment} - ${machine_name}${userNameStr}`
+            }
+            case 'remove_machine': {
+                return `${machine_name} removed${userNameStr}`
+            }   
+            case 'new_msx': {
+                if (!high_score) return submission
+                return `${formatNumWithCommas(high_score)} on ${machine_name}${userNameStr}`
+            }
+            case 'confirm_location': {
+                return `${user_name} confirmed the line-up`
+            }
             default:
                 return null
         }
@@ -56,40 +62,46 @@ const LocationActivity = ({
 
     return (
         <>
-            <Modal
+            <ConfirmationModal
                 visible={locationActivityModalOpen}
                 onRequestClose={() => { }}
+                wide
             >
-                <ScrollView>
-                    {locationActivityLoading ?
-                        <ActivityIndicator /> :
-                        recentActivity.length === 0 ?
-                            <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
-                            recentActivity.map(activity => (
-                                <Pressable
-                                    key={activity.id}
-                                    onPress={() => {}}
-                                >
-                                    {({ pressed }) => (
-                                        <View style={[s.list, s.flexi, pressed ? s.pressed : s.notPressed]}>
-                                            <View style={{ width: '15%' }}>
-                                                {getIcon(activity.submission_type)}
-                                            </View>
-                                            <View style={{ width: '85%' }}>
-                                                <Text style={s.pbmText}>
-                                                    {activity.submission}
-                                                </Text>
-                                                <Text style={s.subtitleStyle}>
-                                                    {`${moment(activity.updated_at).format('LL')}`}
-                                                </Text>
-                                            </View>
+                <>
+                    <View style={s.header}>
+                        <Text style={s.title}>Location Activity</Text>
+                        <MaterialCommunityIcons
+                            name='close-circle'
+                            size={45}
+                            onPress={() => setLocationActivityModalOpen(false)}
+                            style={s.xButton}
+                        />
+                    </View>
+                    <ScrollView style={{height: "80%"}}>
+                        {locationActivityLoading ?
+                            <ActivityIndicator /> :
+                            recentActivity.length === 0 ?
+                                <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
+                                recentActivity.map(activity => (
+                                    <View key={activity.id} style={[s.list, s.flexi]}>
+                                        <View style={{ width: '15%' }}>
+                                            {getIcon(activity.submission_type)}
                                         </View>
-                                    )}
-                                </Pressable>
-                            ))
-                    }
-                </ScrollView>
-            </Modal>
+                                        <View style={{ width: '85%' }}>
+                                            <Text style={s.pbmText}>
+                                                {getText(activity)}
+                                            </Text>
+                                            <Text style={s.subtitleStyle}>
+                                                {`${moment(activity.updated_at).format('LL')}`}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                )
+                                )
+                        }
+                    </ScrollView>
+                </>
+            </ConfirmationModal>
             <Pressable
                 style={({ pressed }) => [s.activity, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
                 onPress={() =>  setLocationActivityModalOpen(true)}
@@ -115,21 +127,40 @@ LocationActivity.propTypes = {
 }
 
 const getStyles = theme =>StyleSheet.create({
+    header: {
+        backgroundColor: theme.base4,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        marginTop: -25,
+        height: 40,
+        justifyContent: 'center'
+    },
+    title: {
+        color: theme.text,
+        textAlign: "center",
+        fontSize: 18,
+        fontFamily: 'extraBoldFont',
+    },
+    xButton: {
+        position: 'absolute',
+        right: -20,
+        top: -20,
+        color: theme.red2,
+    },
     activityButton: {
         right: 60,
     },
     quickButton: {
         borderWidth: 1,
         borderColor: theme.pink2,
-        position: 'absolute',
         padding: 10,
+        marginHorizontal: 4,
         zIndex: 10,
         borderRadius: 18,
         height: 36,
         width: 36,
         alignSelf: 'center',
         justifyContent: 'center',
-        top: deviceWidth < 325 ? 80 : 120,
         shadowColor: theme.darkShadow,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
@@ -141,37 +172,10 @@ const getStyles = theme =>StyleSheet.create({
         color: theme.text,
         fontSize: 16
     },
-    header: {
-        paddingVertical: 10,
-    },
-    headerText: {
-        textAlign: "center",
-        color: theme.text3
-    },
-    title: {
-        fontSize: 16,
-        fontFamily: 'regularItalicFont',
-        color: theme.text2
-    },
     subtitleStyle: {
         paddingTop: 3,
         fontSize: 14,
         color: theme.text3
-    },
-    filterView: {
-        backgroundColor: theme.base3,
-        marginBottom: 10,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    filter: {
-        fontSize: 14,
-        textAlign: "center",
-        color: theme.text,
-        fontFamily: 'boldFont',
-        paddingVertical: 8,
     },
     flexi: {
         display: 'flex',
@@ -198,10 +202,6 @@ const getStyles = theme =>StyleSheet.create({
         color: theme.text,
         fontFamily: 'boldFont',
         marginTop: 20
-    },
-    xButton: {
-        color: theme.red2,
-        marginLeft: 8,
     },
     pressed: {
         borderColor: theme.pink2,

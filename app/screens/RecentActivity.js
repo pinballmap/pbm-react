@@ -21,6 +21,23 @@ import {ButtonGroup} from '@rneui/base'
 
 const moment = require('moment')
 
+export const getIcon= (type) => {
+    switch (type) {
+        case 'new_lmx':
+            return <MaterialCommunityIcons name='plus-box' size={28} color='#58a467' />
+        case 'new_condition':
+            return <MaterialCommunityIcons name='comment-text' size={28} color='#6cbffe' />
+        case 'remove_machine':
+            return <MaterialCommunityIcons name='minus-box' size={28} color='#f56f79' />
+        case 'new_msx':
+            return <MaterialCommunityIcons name='numeric' size={28} color='#eeb152' />
+        case 'confirm_location':
+            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#d473df' />
+        default:
+            return null
+    }
+}
+
 const RecentActivity = ({query, clearActivityFilter, navigation}) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
@@ -49,23 +66,6 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
         const distanceMap = [30, 75, 150]
         setBtnIdx(selectedIdx)
         setMaxDistance(distanceMap[selectedIdx])
-    }
-
-    const getIcon= (type) => {
-        switch (type) {
-            case 'new_lmx':
-                return <MaterialCommunityIcons name='plus-box' size={28} color='#58a467' />
-            case 'new_condition':
-                return <MaterialCommunityIcons name='comment-text' size={28} color='#6cbffe' />
-            case 'remove_machine':
-                return <MaterialCommunityIcons name='minus-box' size={28} color='#f56f79' />
-            case 'new_msx':
-                return <MaterialCommunityIcons name='numeric' size={28} color='#eeb152' />
-            case 'confirm_location':
-                return <MaterialCommunityIcons name='clipboard-check' size={28} color='#d473df' />
-            default:
-                return null
-        }
     }
 
     const getText = (selectedActivity) => {
