@@ -47,7 +47,7 @@ const LocationActivity = ({
             }
             case 'remove_machine': {
                 return `${machine_name} removed${userNameStr}`
-            }   
+            }
             case 'new_msx': {
                 if (!high_score) return submission
                 return `${formatNumWithCommas(high_score)} on ${machine_name}${userNameStr}`
@@ -81,7 +81,7 @@ const LocationActivity = ({
                         {locationActivityLoading ?
                             <ActivityIndicator /> :
                             recentActivity.length === 0 ?
-                                <Text style={s.problem}>{`No map edits in the last 30 days within 30 miles of the map's current location`}</Text> :
+                                <Text style={s.problem}>No location activity found</Text> :
                                 recentActivity.map(activity => (
                                     <View key={activity.id} style={[s.list, s.flexi]}>
                                         <View style={{ width: '15%' }}>
