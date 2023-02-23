@@ -35,25 +35,25 @@ const LocationActivity = ({
     }, [locationActivityModalOpen])
 
     const getText = (activity) => {
-        const {submission_type, submission, high_score, machine_name, user_name, comment} = activity
-        const userNameStr = user_name ? ` - ${user_name}` : ''
+        const {submission_type, submission, high_score, machine_name, user_name, comment, updated_at} = activity
+        const userNameStr = user_name ? <Text style={s.subtitleStyle}> by <Text style={[s.subtitleStyle,s.username]}>{user_name}</Text></Text> : ''
         switch (submission_type) {
             case 'new_lmx': {
-                return `${machine_name} added${userNameStr}`
+                return <View style={{ width: '85%' }}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> added</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
             }
             case 'new_condition': {
-                if (!comment) return submission
-                return `${comment} - ${machine_name}${userNameStr}`
+                if (!comment) return <View style={{ width: '85%' }}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
+                return <View style={{ width: '85%' }}><Text style={s.pbmText}>"{comment}"</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
             }
             case 'remove_machine': {
-                return `${machine_name} removed${userNameStr}`
+                return <View style={{ width: '85%' }}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> removed</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
             }
             case 'new_msx': {
-                if (!high_score) return submission
-                return `${formatNumWithCommas(high_score)} on ${machine_name}${userNameStr}`
+                if (!high_score) return <View style={{ width: '85%' }}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
+                return <View style={{ width: '85%' }}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
             }
             case 'confirm_location': {
-                return `${user_name} confirmed the line-up`
+                return <View style={{ width: '85%' }}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
             }
             default:
                 return null
@@ -87,14 +87,7 @@ const LocationActivity = ({
                                         <View style={{ width: '15%' }}>
                                             {getIcon(activity.submission_type)}
                                         </View>
-                                        <View style={{ width: '85%' }}>
-                                            <Text style={s.pbmText}>
-                                                {getText(activity)}
-                                            </Text>
-                                            <Text style={s.subtitleStyle}>
-                                                {`${moment(activity.updated_at).format('LL')}`}
-                                            </Text>
-                                        </View>
+                                        {getText(activity)}
                                     </View>
                                 )
                                 )
@@ -174,8 +167,15 @@ const getStyles = theme =>StyleSheet.create({
     },
     subtitleStyle: {
         paddingTop: 3,
-        fontSize: 14,
-        color: theme.text3
+        fontSize: 16,
+        color: theme.text3,
+        fontFamily: 'regularBoldFont'
+    },
+    username: {
+        color: theme.pink1
+    },
+    machineName: {
+        color: theme.purple
     },
     flexi: {
         display: 'flex',

@@ -324,21 +324,6 @@ class LocationDetails extends Component {
                                                         navigation={navigation}
                                                         removeFavorite={(cb) => cb()}
                                                     />
-                                                    <Pressable
-                                                        style={({ pressed }) => [s.shareButton, s.quickButton, pressed ? s.quickButtonPressed : s.quickButtonNotPressed]}
-                                                        onPress={async () => {
-                                                            await Share.share({
-                                                                message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
-                                                            })
-                                                        }}
-                                                    >
-                                                        <MaterialIcons
-                                                            name={'ios-share'}
-                                                            color={theme.text2}
-                                                            size={24}
-                                                            style={{ height: 24, width: 24, justifyContent: 'center', alignSelf: 'center' }}
-                                                        />
-                                                    </Pressable>
                                                     <LocationActivity locationId={location.id} />
                                                 </View>
                                             </View>
@@ -510,7 +495,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
     },
     quickButtonContainer: {
-        width: 160,
+        width: 130,
         flexDirection: 'row',
     },
     fontSize12: {
