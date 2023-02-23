@@ -108,10 +108,10 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
             }
             <Button
                 onPress={() => setShowModal(true)}
-                containerStyle={{ width: 60 }}
+                containerStyle={{ width: 70 }}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{ color: theme.pink1, fontSize: 16, fontFamily: 'boldFont' }}
+                titleStyle={{ color: theme.pink1, fontSize: 18, fontFamily: 'boldFont' }}
                 type="clear"
             />
         </View>
