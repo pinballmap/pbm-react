@@ -202,6 +202,9 @@ function MapStack() {
                     fontFamily: 'boldFont',
                     color: colors.text
                 },
+                headerBackTitleStyle: {
+                    fontFamily: 'regularFont'
+                },
                 headerBackTitleVisible: false
             })}
         >

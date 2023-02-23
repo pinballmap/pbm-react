@@ -217,7 +217,7 @@ class Map extends Component {
                 </MapView>
                 <Button
                     onPress={() => navigation.navigate('LocationList')}
-                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.purple, paddingRight: 5 }} />}
+                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.colors.text, paddingRight: 5 }} />}
                     containerStyle={[s.listButtonContainer, s.containerStyle]}
                     buttonStyle={s.buttonStyle}
                     titleStyle={s.buttonTitle}
@@ -316,7 +316,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base1,
     },
     buttonTitle: {
-        color: theme.purple,
+        color: theme.colors.text,
         fontSize: 18,
         fontFamily: 'regularFont'
     },

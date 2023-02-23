@@ -196,6 +196,7 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontFamily: 'boldFont',
+        color: theme.text3
     },
     pink: {
         color: theme.pink1,
