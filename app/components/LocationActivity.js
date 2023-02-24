@@ -37,24 +37,24 @@ const LocationActivity = ({
     const getText = (activity) => {
         const {submission_type, submission, high_score, machine_name, user_name, comment, updated_at} = activity
         const time = moment(updated_at).format('LL')
-        const timeAndUser = user_name ? <Text style={s.subtitleStyle}>{time} by <Text style={[s.subtitleStyle,s.username]}>{user_name}</Text></Text> : time
+        const timeAndUser = user_name ? <Text style={s.date}>{time} by <Text style={s.pink}>{user_name}</Text></Text> : <Text style={s.date}>{time}</Text>
         switch (submission_type) {
             case 'new_lmx': {
-                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> added</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={s.purple}>{machine_name}</Text> added</Text>{timeAndUser}</View>
             }
             case 'new_condition': {
-                if (!comment) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{time}</Text></View>
-                return <View style={s.textContainer}><Text style={s.pbmText}>{`"${comment}"`}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
+                if (!comment) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.date}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{`"${comment}"`}</Text><Text style={s.purple}>{machine_name}</Text>{timeAndUser}</View>
             }
             case 'remove_machine': {
-                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> removed</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={s.purple}>{machine_name}</Text> removed</Text>{timeAndUser}</View>
             }
             case 'new_msx': {
-                if (!high_score) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{time}</Text></View>
-                return <View style={s.textContainer}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
+                if (!high_score) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.date}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={s.purple}>{machine_name}</Text>{timeAndUser}</View>
             }
             case 'confirm_location': {
-                return <View style={s.textContainer}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.subtitleStyle}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.date}>{time}</Text></View>
             }
             default:
                 return null
@@ -170,19 +170,24 @@ const getStyles = theme =>StyleSheet.create({
     },
     pbmText: {
         color: theme.text,
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'regularFont'
     },
-    subtitleStyle: {
+    date: {
         paddingTop: 3,
         fontSize: 16,
         color: theme.text3,
         fontFamily: 'regularBoldFont'
     },
-    username: {
-        color: theme.pink1
+    pink: {
+        color: theme.pink1,
+        fontSize: 16,
+        fontFamily: 'regularBoldFont'
     },
-    machineName: {
-        color: theme.purple
+    purple: {
+        color: theme.purple,
+        fontSize: 16,
+        fontFamily: 'regularBoldFont'
     },
     flexi: {
         display: 'flex',
