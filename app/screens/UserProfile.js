@@ -21,9 +21,6 @@ import {
     Text,
     WarningButton
 } from '../components'
-import {
-    Button,
-} from '@rneui/base'
 import { getData } from '../config/request'
 import { logout } from '../actions'
 import { formatNumWithCommas } from '../utils/utilityFunctions'
@@ -214,19 +211,12 @@ class UserProfile extends Component {
                                         onPress={() => this.setModalVisible(true)}
                                         accessibilityLabel="Logout"
                                     />
-                                    <View>
-                                        <Text style={s.member}>Want to update your password, or email, or delete your account? These can be done on your Profile page on the website. Click below!</Text>
+                                    <View style={s.externalUpdateContainer}>
+                                        <Text style={s.externalUpdateText}>Want to update your password, or email, or delete your account? These can be done on your</Text>
+                                        <View style={s.externalLinkContainer}>
+                                            <Text style={s.externalLink} onPress={() => WebBrowser.openBrowserAsync('https://pinballmap.com/users/' + user.username + '/profile')}>Profile page on the website</Text><EvilIcons name='external-link' style={s.externalIcon} />
+                                        </View>
                                     </View>
-                                    <Button
-                                        title={'Website Profile'}
-                                        type="outline"
-                                        onPress={() => WebBrowser.openBrowserAsync('https://pinballmap.com/users/' + user.username + '/profile')}
-                                        buttonStyle={s.externalLink}
-                                        titleStyle={s.externalLinkTitle}
-                                        iconRight
-                                        icon={<EvilIcons name='external-link' style={s.externalIcon} />}
-                                        containerStyle={s.margin40}
-                                    />
                                 </View>
                             }
                         </Screen>
@@ -263,8 +253,8 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 8,
-        color: theme.colors.text,
-        backgroundColor: theme.pink2
+        color: theme.pink2,
+        backgroundColor: theme.purple
     },
     savedIcon: {
         fontSize: 24,
@@ -322,8 +312,8 @@ const getStyles = theme => StyleSheet.create({
     },
     statNum: {
         fontFamily: 'boldFont',
-        color: "#f5f5ff",
-        backgroundColor: "#7f7fa0",
+        color: theme.pink2,
+        backgroundColor: theme.purple,
         fontSize: 16,
         marginTop: 5,
         marginLeft: 10,
@@ -376,21 +366,31 @@ const getStyles = theme => StyleSheet.create({
         resizeMode: 'stretch',
         marginLeft: 3
     },
+    externalUpdateContainer: {
+        marginHorizontal: 20,
+    },
+    externalLinkContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    externalUpdateText: {
+        fontSize: 16,
+        color: theme.text3,
+        fontFamily: 'regularBoldFont',
+        textAlign: 'center'
+    },
     externalLink: {
-        borderRadius: 25,
-        borderWidth: 2,
-        borderColor: theme.text3,
-        backgroundColor: theme.base3
+        fontSize: 16,
+        fontFamily: 'regularBoldFont',
+        color: theme.purple,
     },
     externalIcon: {
         fontSize: 24,
-        color: theme.text2
+        color: theme.text2,
     },
-    externalLinkTitle: {
-        color: theme.text,
-        fontSize: 16,
-        fontFamily: 'regularFont'
-    }
 })
 
 UserProfile.propTypes = {
