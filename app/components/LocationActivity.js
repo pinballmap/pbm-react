@@ -36,24 +36,25 @@ const LocationActivity = ({
 
     const getText = (activity) => {
         const {submission_type, submission, high_score, machine_name, user_name, comment, updated_at} = activity
-        const userNameStr = user_name ? <Text style={s.subtitleStyle}> by <Text style={[s.subtitleStyle,s.username]}>{user_name}</Text></Text> : ''
+        const time = moment(updated_at).format('LL')
+        const timeAndUser = user_name ? <Text style={s.subtitleStyle}>{time} by <Text style={[s.subtitleStyle,s.username]}>{user_name}</Text></Text> : time
         switch (submission_type) {
             case 'new_lmx': {
-                return <View style={{ width: '85%' }}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> added</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> added</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
             }
             case 'new_condition': {
-                if (!comment) return <View style={{ width: '85%' }}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
-                return <View style={{ width: '85%' }}><Text style={s.pbmText}>"{comment}"</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
+                if (!comment) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{`"${comment}"`}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
             }
             case 'remove_machine': {
-                return <View style={{ width: '85%' }}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> removed</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text> removed</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
             }
             case 'new_msx': {
-                if (!high_score) return <View style={{ width: '85%' }}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
-                return <View style={{ width: '85%' }}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}{userNameStr}</Text></View>
+                if (!high_score) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.subtitleStyle}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={[s.subtitleStyle,s.machineName]}>{machine_name}</Text><Text style={s.subtitleStyle}>{timeAndUser}</Text></View>
             }
             case 'confirm_location': {
-                return <View style={{ width: '85%' }}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.subtitleStyle}>{`${moment(updated_at).format('LL')}`}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.subtitleStyle}>{time}</Text></View>
             }
             default:
                 return null
@@ -82,10 +83,16 @@ const LocationActivity = ({
                             <ActivityIndicator /> :
                             recentActivity.length === 0 ?
                                 <Text style={s.problem}>No location activity found</Text> :
-                                recentActivity.map(activity => (
+                                recentActivity.filter(activity => {
+                                    const icon = getIcon(activity.submission_type)
+                                    if (icon) {
+                                        activity.icon = icon
+                                        return activity
+                                    }
+                                }).map(activity => (
                                     <View key={activity.id} style={[s.list, s.flexi]}>
                                         <View style={{ width: '15%' }}>
-                                            {getIcon(activity.submission_type)}
+                                            {activity.icon}
                                         </View>
                                         {getText(activity)}
                                     </View>
@@ -214,6 +221,9 @@ const getStyles = theme =>StyleSheet.create({
         borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0
+    },
+    textContainer: {
+        width: "85%"
     }
 })
 
