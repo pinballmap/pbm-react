@@ -428,7 +428,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginLeft: 15,
         marginRight: 15,
-        color: theme.pink1,
+        color: theme.purple,
         textAlign: 'center'
     },
     title: {

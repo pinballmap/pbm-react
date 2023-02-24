@@ -55,8 +55,8 @@ const About = ({ navigation, appAlert }) => {
                     </View>
                     <View style={s.child}>
                         <View style={s.appAlert}>
-                            <Text style={[{ textAlign: 'center', color: theme.text3 }, s.boldHeader]}>Message of the Day</Text>
-                            <Text style={[{ color: theme.text3 }, s.text]}>{appAlert}</Text>
+                            <Text style={[{ textAlign: 'center', color: theme.pink2 }, s.boldHeader]}>Message of the Day</Text>
+                            <Text style={[{ color: theme.pink2 }, s.text, s.boldText]}>{appAlert}</Text>
                         </View>
 
                         <Text style={s.text}>Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines.</Text>
@@ -126,12 +126,12 @@ const getStyles = theme => StyleSheet.create({
         flex: 2,
         margin: "auto",
         paddingTop: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
 
     },
     logo: {
         flex: 1,
-        width: deviceWidth - 20,
+        width: deviceWidth - 30,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
         backgroundColor: '#fee7f5',
     },
@@ -141,7 +141,7 @@ const getStyles = theme => StyleSheet.create({
     },
     child: {
         margin: "auto",
-        padding: 10,
+        padding: 15,
     },
     text: {
         fontSize: 16,
@@ -162,15 +162,14 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
     },
     appAlert: {
-        borderWidth: 1,
-        borderColor: theme.text2,
+        borderWidth: 0,
         borderRadius: 10,
-        margin: 10,
+        marginBottom: 10,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 0,
-        backgroundColor: theme.white
+        backgroundColor: theme.purple
     },
     green: {
         color: theme.green,

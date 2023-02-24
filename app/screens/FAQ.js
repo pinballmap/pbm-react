@@ -86,8 +86,8 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 17,
         marginBottom: 10,
         padding: 10,
-        color: theme.purple,
-        backgroundColor: theme.base2
+        color: theme.pink2,
+        backgroundColor: theme.purple
     },
     textLink: {
         textDecorationLine: 'underline',
