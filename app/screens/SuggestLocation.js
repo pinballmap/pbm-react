@@ -176,7 +176,7 @@ function SuggestLocation({
                                                 />
                                             </ScrollView> :
                                             locationSuggested ?
-                                                <ScrollView style={[{ paddingTop: 100 }, s.background]}>
+                                                <ScrollView style={[s.successContainer, s.background]}>
                                                     <Text style={s.success}>{`Thanks for submitting that location! Please allow us 0-7 days to review and add it! No need to re-submit it.`}</Text>
                                                     <MaterialCommunityIcons
                                                         name='close-circle'
@@ -428,7 +428,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 5,
         marginLeft: 15,
         marginRight: 15,
-        color: theme.purple,
+        color: theme.pink1,
         textAlign: 'center'
     },
     title: {
@@ -504,11 +504,16 @@ const getStyles = theme => StyleSheet.create({
         marginTop: 10,
         backgroundColor: theme.indigo4
     },
+    successContainer: {
+        paddingTop: 100,
+        paddingHorizontal: 30,
+    },
     success: {
         textAlign: 'center',
         fontSize: 16,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontFamily: 'regularFont'
     },
     error: {
         color: theme.red2
@@ -539,7 +544,7 @@ const getStyles = theme => StyleSheet.create({
     xButton: {
         position: 'absolute',
         right: -20,
-        top: -20,
+        top: -30,
         color: theme.red2,
     },
     containerStyle: {

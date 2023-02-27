@@ -253,8 +253,8 @@ const getStyles = theme => StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10,
         paddingVertical: 8,
-        color: theme.pink2,
-        backgroundColor: theme.purple
+        color: theme.purple2,
+        backgroundColor: theme.base4
     },
     savedIcon: {
         fontSize: 24,

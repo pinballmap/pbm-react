@@ -86,7 +86,7 @@ const LocationCard = ({
                                 {type ? <View style={s.vertAlign}><Icon
                                     name={icon}
                                     type={library}
-                                    color={theme.colors.text}
+                                    color={theme.purple2}
                                     size={30}
                                     style={s.icon}
                                 /><Text style={{ marginRight: 12, color: theme.colors.text, fontFamily: "boldFont" }}> {type}</Text></View> : null}
@@ -215,7 +215,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     icon: {
         fontSize: 30,
-        color: theme.colors.text,
+        color: theme.purple2,
         opacity: 0.8,
         marginRight: 1
     },

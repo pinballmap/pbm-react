@@ -217,7 +217,7 @@ class Map extends Component {
                 </MapView>
                 <Button
                     onPress={() => navigation.navigate('LocationList')}
-                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={{ fontSize: 18, color: theme.colors.text, paddingRight: 5 }} />}
+                    icon={<MaterialCommunityIcons name='format-list-bulleted' style={s.buttonIcon} />}
                     containerStyle={[s.listButtonContainer, s.containerStyle]}
                     buttonStyle={s.buttonStyle}
                     titleStyle={s.buttonTitle}
@@ -232,13 +232,13 @@ class Map extends Component {
                         <FontAwesome
                             name={'location-arrow'}
                             color={theme.purple}
-                            size={24}
+                            size={26}
                             style={{ justifyContent: 'center', alignSelf: 'center' }}
                         /> :
                         <MaterialIcons
                             name={'gps-fixed'}
                             color={theme.purple}
-                            size={24}
+                            size={26}
                             style={{ justifyContent: 'center', alignSelf: 'center' }}
                         />
                     }
@@ -292,8 +292,8 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         alignSelf: "center",
         bottom: 70,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
         backgroundColor: theme.text3,
         borderRadius: 25
     },
@@ -309,14 +309,19 @@ const getStyles = theme => StyleSheet.create({
         marginRight: 10,
         fontFamily: 'regularFont'
     },
+    buttonIcon: {
+        fontSize: 18,
+        color: theme.theme == 'dark' ? theme.purple : theme.purple2,
+        paddingRight: 5
+    },
     buttonStyle: {
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 25,
-        backgroundColor: theme.base1,
+        backgroundColor: theme.pink2,
     },
     buttonTitle: {
-        color: theme.colors.text,
+        color: theme.theme == 'dark' ? theme.purple2 : theme.purple,
         fontSize: 18,
         fontFamily: 'regularFont'
     },
@@ -336,16 +341,16 @@ const getStyles = theme => StyleSheet.create({
     },
     updateContainerStyle: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 15,
         alignSelf: 'center',
         borderRadius: 25,
         backgroundColor: theme.purple,
-        paddingVertical: 10,
-        paddingHorizontal: 20
+        paddingVertical: 8,
+        paddingHorizontal: 15,
     },
     updateTitleStyle: {
         color: theme.white,
-        fontSize: 16
+        fontSize: 18
     },
     pressedTitleStyle: {
         color: theme.pink3,
@@ -358,9 +363,9 @@ const getStyles = theme => StyleSheet.create({
         right: 10,
         alignSelf: 'center',
         justifyContent: 'center',
-        borderRadius: 25,
-        height: 50,
-        width: 50,
+        borderRadius: 27,
+        height: 54,
+        width: 54,
         backgroundColor: theme.base1,
     },
     filterContainer: {
@@ -371,8 +376,8 @@ const getStyles = theme => StyleSheet.create({
         borderRadius: 25,
     },
     filterTitleStyle: {
-        color: theme.pink4,
-        fontSize: 16,
+        color: theme.pink1,
+        fontSize: 18,
         fontFamily: 'regularFont'
     },
     closeIcon: {

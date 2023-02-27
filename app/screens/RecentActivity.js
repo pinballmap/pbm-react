@@ -15,6 +15,7 @@ import {
     Screen,
     Text,
 } from '../components'
+import {formatNumWithCommas} from '../utils/utilityFunctions'
 import { clearActivityFilter } from '../actions'
 import { useFocusEffect } from '@react-navigation/native'
 import {ButtonGroup} from '@rneui/base'
@@ -84,6 +85,31 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
         }
     }
 
+    const getSubmission = (activity) => {
+        const {submission_type, city_name, high_score, location_name, machine_name, user_name, comment, updated_at} = activity
+        const time = moment(updated_at).format('LL')
+        const timeAndUser = user_name ? <Text style={s.date}>{time} by <Text style={s.pink}>{user_name}</Text></Text> : <Text style={s.date}>{time}</Text>
+        switch (submission_type) {
+            case 'new_lmx': {
+                return <View style={s.textContainer}><Text style={[s.pbmText, s.marginB8]}><Text style={s.purple2}>{machine_name}</Text> added to <Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
+            }
+            case 'new_condition': {
+                return <View style={s.textContainer}><Text style={s.pbmText}>{`"${comment}"`}</Text><Text style={[s.purple2, s.marginB8]}>{machine_name}</Text><Text style={s.pbmText}><Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
+            }
+            case 'remove_machine': {
+                return <View style={s.textContainer}><Text style={[s.pbmText, s.marginB8]}><Text style={s.purple2}>{machine_name}</Text> removed from <Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
+            }
+            case 'new_msx': {
+                return <View style={s.textContainer}><Text style={s.pbmText}>High score: {formatNumWithCommas(high_score)}</Text><Text style={[s.purple2, s.marginB8]}>{machine_name}</Text><Text style={s.pbmText}><Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
+            }
+            case 'confirm_location': {
+                return <View style={s.textContainer}><Text style={[s.pbmText, s.marginB8]}>{user_name} confirmed the line-up at <Text style={s.purple}>{location_name}</Text> in {city_name}</Text><Text style={s.date}>{time}</Text></View>
+            }
+            default:
+                return null
+        }
+    }
+
     return (
         <Screen>
             <View style={s.header}>
@@ -133,14 +159,7 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
                                     <View style={{ width: '15%' }}>
                                         {activity.submissionTypeIcon}
                                     </View>
-                                    <View style={{ width: '85%' }}>
-                                        <Text style={s.pbmText}>
-                                            {activity.submission}
-                                        </Text>
-                                        <Text style={s.subtitleStyle}>
-                                            {`${moment(activity.updated_at).format('LL')}`}
-                                        </Text>
-                                    </View>
+                                    {getSubmission(activity)}
                                 </View>
                             )}
                         </Pressable>
@@ -156,14 +175,31 @@ const getStyles = theme => StyleSheet.create({
         fontSize: 16,
         fontFamily: 'regularFont'
     },
-    header: {
-        paddingVertical: 10,
+    marginB8: {
+        marginBottom: 8
     },
-    subtitleStyle: {
-        paddingTop: 3,
+    date: {
         fontSize: 16,
         color: theme.text3,
         fontFamily: 'regularBoldFont'
+    },
+    pink: {
+        color: theme.pink1,
+        fontSize: 16,
+        fontFamily: 'regularBoldFont'
+    },
+    purple: {
+        color: theme.theme == 'dark' ? theme.purple2 : theme.purple,
+        fontSize: 16,
+        fontFamily: 'regularBoldFont'
+    },
+    purple2: {
+        color: theme.theme == 'dark' ? theme.purple : theme.purple2,
+        fontSize: 16,
+        fontFamily: 'regularBoldFont'
+    },
+    header: {
+        paddingVertical: 10,
     },
     filterView: {
         backgroundColor: theme.base3,
@@ -252,6 +288,9 @@ const getStyles = theme => StyleSheet.create({
         color: theme.text2,
         fontFamily: 'boldFont',
     },
+    textContainer: {
+        width: "85%"
+    }
 })
 
 RecentActivity.propTypes = {

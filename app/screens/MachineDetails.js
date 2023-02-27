@@ -329,7 +329,7 @@ const getStyles = theme => StyleSheet.create({
     },
     machineNameContainer: {
         marginBottom: 5,
-        marginHorizontal: 35,
+        marginHorizontal: 38,
         borderWidth: 0,
         paddingVertical: 5,
         textAlign: 'center',
@@ -348,7 +348,7 @@ const getStyles = theme => StyleSheet.create({
     externalLink: {
         fontSize: 16,
         fontFamily: 'regularBoldFont',
-        color: theme.purple,
+        color: theme.purple2,
         textAlign: 'center',
     },
     externalLinkContainer: {
@@ -493,7 +493,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 20,
         borderWidth: 4,
-        borderColor: theme.text3,
+        borderColor: theme.purple2,
         borderRadius: 14,
         alignItems: "center",
         justifyContent: "center"

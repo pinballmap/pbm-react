@@ -425,15 +425,15 @@ const getStyles = theme => StyleSheet.create({
     },
     searchMap: {
         backgroundColor: theme.white,
-        width: deviceWidth - 110,
+        width: deviceWidth - 120,
         borderBottomLeftRadius: 25,
         borderTopLeftRadius: 25,
         paddingLeft: 10,
     },
     buttonContainerStyle: {
         paddingRight: 10,
-        paddingLeft: 8,
-        width: 80,
+        paddingLeft: 10,
+        width: 90,
         borderBottomRightRadius: 25,
         borderTopRightRadius: 25,
         backgroundColor: theme.pink2,
@@ -465,14 +465,14 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 0,
     },
     filterTitleStyle: {
-        color: theme.colors.text,
+        color: theme.theme == 'dark' ? theme.purple2 : theme.purple,
         fontSize: 18,
         fontFamily: 'regularFont'
     },
     filterIcon: {
-        paddingRight: 5,
+        paddingRight: 6,
         fontSize: 20,
-        color: theme.colors.text
+        color: theme.theme == 'dark' ? theme.purple : theme.purple2
     },
     listContainerStyle: {
         borderBottomColor: theme.indigo4,
@@ -487,7 +487,7 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularFont'
     },
     searchHistoryTitle: {
-        color: theme.pink3,
+        color: theme.pink1,
         fontFamily: 'boldFont',
     },
     clear: {
@@ -500,7 +500,7 @@ const getStyles = theme => StyleSheet.create({
         position: 'absolute',
         right: 0,
         fontFamily: 'regularItalicFont',
-        color: theme.pink3
+        color: theme.pink1
     },
     pressed: {
         backgroundColor: theme.base3,
@@ -509,7 +509,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base1
     },
     filterPressed: {
-        backgroundColor: theme.pink3,
+        backgroundColor: theme.pink1,
     },
     filterNotPressed: {
         backgroundColor: theme.pink2

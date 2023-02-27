@@ -60,7 +60,7 @@ AppAlert.propTypes = {
 
 const getStyles = (theme) => StyleSheet.create({
     appAlertTitle: {
-        color: theme.text,
+        color: theme.purple2,
         textAlign: "center",
         fontSize: 18,
         fontFamily: 'boldFont',

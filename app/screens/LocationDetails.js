@@ -633,7 +633,7 @@ const getStyles = theme => StyleSheet.create({
         justifyContent: 'center'
     },
     filterTitle: {
-        color: theme.text,
+        color: theme.purple2,
         textAlign: "center",
         fontSize: 18,
         fontFamily: 'extraBoldFont',

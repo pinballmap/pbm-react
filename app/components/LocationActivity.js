@@ -51,7 +51,7 @@ const LocationActivity = ({
             }
             case 'new_msx': {
                 if (!high_score) return <View style={s.textContainer}><Text style={s.pbmText}>{submission}</Text><Text style={s.date}>{time}</Text></View>
-                return <View style={s.textContainer}><Text style={s.pbmText}>{formatNumWithCommas(high_score)}</Text><Text style={s.purple}>{machine_name}</Text>{timeAndUser}</View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>High score: {formatNumWithCommas(high_score)}</Text><Text style={s.purple}>{machine_name}</Text>{timeAndUser}</View>
             }
             case 'confirm_location': {
                 return <View style={s.textContainer}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.date}>{time}</Text></View>
@@ -136,7 +136,7 @@ const getStyles = theme =>StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        color: theme.text,
+        color: theme.purple2,
         textAlign: "center",
         fontSize: 18,
         fontFamily: 'extraBoldFont',
@@ -174,7 +174,7 @@ const getStyles = theme =>StyleSheet.create({
         fontFamily: 'regularFont'
     },
     date: {
-        paddingTop: 3,
+        paddingTop: 5,
         fontSize: 16,
         color: theme.text3,
         fontFamily: 'regularBoldFont'

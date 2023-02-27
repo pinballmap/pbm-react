@@ -37,7 +37,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                         <Text style={s.filterTitle}>Filter Recent Activity</Text>
                         <MaterialCommunityIcons
                             name='close-circle'
-                            size={34}
+                            size={45}
                             onPress={() => setShowModal(false)}
                             style={s.xButton}
                         />
@@ -51,19 +51,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                             </Avatar>
                             <ListItem.Content>
                                 <ListItem.Title style={selectedActivity === 'new_lmx' ? s.activeTitleStyle : s.titleStyle}>
-                                    New Machines
-                                </ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                        <ListItem
-                            containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
-                            onPress={() => setRecentActivityFilter('new_condition')}>
-                            <Avatar>
-                                {<MaterialCommunityIcons name='comment-text' size={32} color='#6cbffe' />}
-                            </Avatar>
-                            <ListItem.Content>
-                                <ListItem.Title style={s.titleStyle}>
-                                    New Conditions
+                                    Added Machines
                                 </ListItem.Title>
                             </ListItem.Content>
                         </ListItem>
@@ -80,6 +68,18 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                             </ListItem.Content>
                         </ListItem>
                         <ListItem
+                            containerStyle={selectedActivity === 'new_condition' ? s.containerBg : s.containerNotSelected}
+                            onPress={() => setRecentActivityFilter('new_condition')}>
+                            <Avatar>
+                                {<MaterialCommunityIcons name='comment-text' size={32} color='#6cbffe' />}
+                            </Avatar>
+                            <ListItem.Content>
+                                <ListItem.Title style={s.titleStyle}>
+                                    New Comments
+                                </ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
+                        <ListItem
                             containerStyle={selectedActivity === 'new_msx' ? s.containerBg : s.containerNotSelected}
                             onPress={() => setRecentActivityFilter('new_msx')}>
                             <Avatar>
@@ -87,7 +87,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                             </Avatar>
                             <ListItem.Content>
                                 <ListItem.Title style={s.titleStyle}>
-                                    Scores
+                                    High Scores
                                 </ListItem.Title>
                             </ListItem.Content>
                         </ListItem>
@@ -99,7 +99,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                             </Avatar>
                             <ListItem.Content>
                                 <ListItem.Title style={s.titleStyle}>
-                                    Confirmed Locations
+                                    Location Confirmations
                                 </ListItem.Title>
                             </ListItem.Content>
                         </ListItem>
@@ -111,7 +111,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 containerStyle={{ width: 70 }}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{ color: theme.pink1, fontSize: 18, fontFamily: 'boldFont' }}
+                titleStyle={{ color: theme.purple2, fontSize: 18, fontFamily: 'boldFont' }}
                 type="clear"
             />
         </View>
@@ -132,7 +132,7 @@ const getStyles = (theme) => StyleSheet.create({
         justifyContent: 'center'
     },
     filterTitle: {
-        color: theme.text,
+        color: theme.purple2,
         textAlign: "center",
         fontSize: 18,
         fontFamily: 'extraBoldFont',
