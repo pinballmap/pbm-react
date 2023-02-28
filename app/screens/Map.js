@@ -31,13 +31,8 @@ import {
     clearError,
     clearSearchBarText,
     getLocationsConsideringZoom,
-    getRegions,
-    fetchLocationTypes,
-    fetchMachines,
-    fetchOperators,
     login,
     setUnitPreference,
-    getLocationAndMachineCounts,
     updateCoordinates,
     updateCoordinatesAndGetLocations,
     getLocationsByRegion,
@@ -126,16 +121,7 @@ class Map extends Component {
         this.props.getCurrentLocation()
     }
 
-    async componentDidMount() {
-        await Promise.all([
-            this.props.getRegions('/regions.json'),
-            this.props.getLocationTypes('/location_types.json'),
-            this.props.getMachines('/machines.json'),
-            this.props.getOperators('/operators.json'),
-            this.props.getLocationAndMachineCounts('/regions/location_and_machine_counts.json'),
-            this.props.getCurrentLocation(true)
-        ])
-
+    componentDidMount() {
         Linking.addEventListener('url', ({ url }) => this.navigateToScreen(url))
 
         retrieveItem('auth').then(async auth => {
@@ -412,10 +398,6 @@ Map.propTypes = {
     regions: PropTypes.object,
     login: PropTypes.func,
     getLocationAndMachineCounts: PropTypes.func,
-    getOperators: PropTypes.func,
-    getMachines: PropTypes.func,
-    getLocationTypes: PropTypes.func,
-    getRegions: PropTypes.func,
     getLocationsByRegion: PropTypes.func,
     fetchLocationAndUpdateMap: PropTypes.func,
 }
@@ -433,19 +415,14 @@ const mapStateToProps = (state) => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getCurrentLocation: (isInitialLoad = false) => dispatch(fetchCurrentLocation(isInitialLoad)),
+    getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
     clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
     clearSearchBarText: () => dispatch(clearSearchBarText()),
-    getRegions: (url) => dispatch(getRegions(url)),
-    getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
-    getMachines: (url) => dispatch(fetchMachines(url)),
-    getOperators: (url) => dispatch(fetchOperators(url)),
     login: (auth) => dispatch(login(auth)),
     setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
-    getLocationAndMachineCounts: (url) => dispatch(getLocationAndMachineCounts(url)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
     getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
