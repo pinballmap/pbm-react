@@ -379,10 +379,11 @@ function SuggestLocation({
                                         />
                                         <Text style={s.title}>Machines</Text>
                                         <PbmButton
-                                            title={'Select Machines to Add'}
+                                            title={'Select machines'}
                                             titleStyle={{ fontSize: 16, color: theme.text3, fontFamily: 'regularFont' }}
                                             onPress={() => navigate('FindMachine', { multiSelect: true })}
                                             icon={<MaterialCommunityIcons name='plus' style={s.plusButton} />}
+                                            iconPosition="right"
                                             containerStyle={s.addMachinesContainer}
                                             buttonStyle={s.addMachinesButton}
                                         />
@@ -520,14 +521,15 @@ const getStyles = theme => StyleSheet.create({
     },
     plusButton: {
         color: theme.red2,
-        fontSize: 24
+        fontSize: 24,
+        marginLeft: 5,
     },
     addMachinesContainer: {
         marginBottom: 15,
         marginHorizontal: 20,
     },
     addMachinesButton: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.base3,
         borderRadius: 25,
     },
     listContainerStyle: {

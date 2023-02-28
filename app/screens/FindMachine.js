@@ -93,13 +93,14 @@ class FindMachine extends React.PureComponent {
 
     componentDidMount() {
         this.props.navigation.setOptions({
-            title: this.props.route.params?.machineFilter ? 'Select Machine to Filter' : 'Select Machine to Add',
+            title: this.props.route.params?.machineFilter ? 'Select Machine to Filter' : 'Select Machines',
             headerRight: () => this.props.route.params?.showDone ?
                 <Pressable onPress={() => this.props.navigation.goBack(null)}>
                     {({ pressed }) => (
-                        <Text style={{ color: pressed ? '#95867c' : '#7cc5ff', fontSize: 18, fontFamily: 'boldFont', marginRight: 10 }}>
+                        <View style={{backgroundColor: '#fec3e7', paddingHorizontal: 10, paddingVertical: 2, borderRadius: 10, marginRight: 10}}>
+                        <Text style={{ color: pressed ? '#95867c' : '#9718b1', fontSize: 18, fontFamily: 'boldFont' }}>
                             Done
-                        </Text>
+                        </Text></View>
                     )}
                 </Pressable>
                 : null,
@@ -112,9 +113,10 @@ class FindMachine extends React.PureComponent {
                 this.props.route.params?.showDone ?
                     <Pressable onPress={() => this.props.navigation.goBack(null)}>
                         {({ pressed }) => (
-                            <Text style={{ color: pressed ? '#95867c' : '#7cc5ff', fontSize: 18, fontFamily: 'boldFont', marginRight: 10 }}>
+                            <View style={{backgroundColor: '#fec3e7', paddingHorizontal: 10, paddingVertical: 2, borderRadius: 10, marginRight: 10}}>
+                            <Text style={{ color: pressed ? '#95867c' : '#9718b1', fontSize: 18, fontFamily: 'boldFont' }}>
                                 Done
-                            </Text>
+                            </Text></View>
                         )}
                     </Pressable>
                     : null,

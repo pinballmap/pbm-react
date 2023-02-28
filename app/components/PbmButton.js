@@ -6,7 +6,7 @@ import {
 import { Button } from '@rneui/base'
 import { ThemeContext } from '../theme-context'
 
-const PbmButton = ({ title, accessibilityLabel, buttonStyle, containerStyle, titleStyle, onPress, icon, disabled }) => {
+const PbmButton = ({ title, accessibilityLabel, buttonStyle, containerStyle, titleStyle, onPress, icon, iconPosition, disabled }) => {
     const { theme } = useContext(ThemeContext)
     const styles = getStyles(theme)
 
@@ -16,6 +16,7 @@ const PbmButton = ({ title, accessibilityLabel, buttonStyle, containerStyle, tit
             onPress={onPress}
             accessibilityLabel={accessibilityLabel}
             icon={icon}
+            iconPosition={iconPosition}
             disabled={disabled}
             disabledStyle={styles.disabledStyle}
             disabledTitleStyle={styles.disabledTitleStyle}
@@ -55,6 +56,7 @@ PbmButton.propTypes = {
     onPress: PropTypes.func,
     title: PropTypes.string,
     accessibilityLabel: PropTypes.string,
+    iconPosition: PropTypes.string,
     icon: PropTypes.node,
     disabled: PropTypes.bool,
     buttonStyle: PropTypes.object,
