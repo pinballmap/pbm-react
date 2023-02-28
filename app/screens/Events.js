@@ -123,10 +123,8 @@ class Events extends Component {
                                                                     style={({ pressed }) => [{}, s.cardContainer, pressed ? s.pressed : s.notPressed]}
                                                                     onPress={() => WebBrowser.openBrowserAsync(item.website)}
                                                                 >
-                                                                    <View style={s.locationNameContainer}>
-                                                                        <Text style={s.locationName}>{item.tournament_name}</Text>
-                                                                    </View>
-                                                                    <Text style={[s.center, s.cardTextStyle, s.margin]}>{(item.start_date === item.end_date) ? <Text style={s.bold}>{start_date}</Text> : <Text style={s.bold}>{start_date} - {end_date}</Text>}</Text>
+                                                                    <Text style={[s.margin, s.padding,s.locationName]}>{item.tournament_name}</Text>
+                                                                    <Text style={[s.center, s.cardTextStyle]}>{(item.start_date === item.end_date) ? <Text style={s.bold}>{start_date}</Text> : <Text style={s.bold}>{start_date} - {end_date}</Text>}</Text>
                                                                     <Text style={[s.cardTextStyle, s.margin, s.padding]}>{item.details.substring(0, 100)}{item.details.length > 99 ? '...' : ''}</Text>
                                                                     <Text style={[s.address, s.margin, s.padding]}>{item.address1}{item.city.length > 0 & item.address1.length > 0 ? <Text>, </Text> : ''}{item.city}{item.state.length > 0 ? <Text>, {item.state}</Text> : ''}</Text>
                                                                 </Pressable>
@@ -186,20 +184,14 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'boldFont',
     },
     locationNameContainer: {
-        backgroundColor: "#7f7fa0",
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        paddingVertical: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginTop: -2,
-        marginHorizontal: -2
+
     },
     locationName: {
-        fontFamily: 'boldFont',
-        fontSize: 16,
-        textAlign: 'center',
-        color: "#f5f5ff"
+        fontFamily: 'blackFont',
+        fontSize: 22,
+        lineHeight: 28,
+        textAlign: 'left',
+        color: theme.purple
     },
     margin: {
         marginTop: 10,
@@ -221,11 +213,11 @@ const getStyles = theme => StyleSheet.create({
     },
     sourceText: {
         textAlign: "center",
-        color: theme.text2,
+        color: theme.pink1,
         fontSize: 12,
         marginTop: 0,
         marginBottom: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         fontFamily: 'regularFont'
     },
     smallLink: {
@@ -257,9 +249,9 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularFont'
     },
     address: {
-        fontSize: 12,
+        fontSize: 14,
         color: theme.text3,
-        fontFamily: 'boldFont'
+        fontFamily: 'regularBoldFont'
     },
     pressed: {
         borderColor: theme.pink2,
