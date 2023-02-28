@@ -19,25 +19,9 @@ import {formatNumWithCommas} from '../utils/utilityFunctions'
 import { clearActivityFilter } from '../actions'
 import { useFocusEffect } from '@react-navigation/native'
 import {ButtonGroup} from '@rneui/base'
+import getActivityIcon from '../utils/getActivityIcon'
 
 const moment = require('moment')
-
-export const getIcon= (type) => {
-    switch (type) {
-        case 'new_lmx':
-            return <MaterialCommunityIcons name='plus-box' size={28} color='#58a467' />
-        case 'new_condition':
-            return <MaterialCommunityIcons name='comment-text' size={28} color='#6cbffe' />
-        case 'remove_machine':
-            return <MaterialCommunityIcons name='minus-box' size={28} color='#f56f79' />
-        case 'new_msx':
-            return <MaterialCommunityIcons name='numeric' size={28} color='#eeb152' />
-        case 'confirm_location':
-            return <MaterialCommunityIcons name='clipboard-check' size={28} color='#d473df' />
-        default:
-            return null
-    }
-}
 
 const RecentActivity = ({query, clearActivityFilter, navigation}) => {
     const { theme } = useContext(ThemeContext)
@@ -140,7 +124,7 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
                 recentActivity.length === 0 ?
                     <Text style={s.problem}>{`No map edits in the last 30 days within ${maxDistance} miles of the map's current location`}</Text> :
                     recentActivity.filter(activity => {
-                        const submissionTypeIcon = getIcon(activity.submission_type)
+                        const submissionTypeIcon = getActivityIcon(activity.submission_type)
                         const showType = selectedActivity ?
                             selectedActivity === activity.submission_type ? true : false
                             : true

@@ -8,10 +8,12 @@ import {
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { ActivityIndicator, Text, ConfirmationModal } from '.'
+import ActivityIndicator from './ActivityIndicator'
+import Text from './PbmText'
+import ConfirmationModal from './ConfirmationModal'
 import { getData } from '../config/request'
 import {formatNumWithCommas} from '../utils/utilityFunctions'
-import {getIcon} from "../screens/RecentActivity"
+import getActivityIcon from '../utils/getActivityIcon'
 const moment = require('moment')
 
 const LocationActivity = ({
@@ -84,7 +86,7 @@ const LocationActivity = ({
                             recentActivity.length === 0 ?
                                 <Text style={s.problem}>No location activity found</Text> :
                                 recentActivity.filter(activity => {
-                                    const icon = getIcon(activity.submission_type)
+                                    const icon = getActivityIcon(activity.submission_type)
                                     if (icon) {
                                         activity.icon = icon
                                         return activity
