@@ -45,9 +45,9 @@ const LocationCard = ({
             }) : cb()
     }
     return (
-        <Animated.View style={[s.containerStyle, { opacity: fadeAnim }]}>
+        <Animated.View style={{ opacity: fadeAnim }}>
             <Pressable
-                style={({ pressed }) => [pressed ? s.pressed : s.notPressed]}
+                style={({ pressed }) => [s.containerStyle, pressed ? s.pressed : s.notPressed]}
                 onPress={() => navigation.navigate('LocationDetails', { id })}
             >
                 <View style={s.flexi}>
@@ -104,16 +104,11 @@ const LocationCard = ({
 const getStyles = (theme) => StyleSheet.create({
     containerStyle: {
         borderRadius: 15,
-        marginBottom: 12,
-        marginTop: 12,
-        marginRight: 20,
-        marginLeft: 20,
+        marginVertical: 12,
+        marginHorizontal: 20,
         backgroundColor: theme.white,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
-        shadowRadius: 6,
-        elevation: 6,
-        shadowColor: theme.shadow,
+        borderColor: 'transparent',
+        borderWidth: 2,
     },
     flexi: {
         display: 'flex',
@@ -132,7 +127,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     locationNameContainer: {
         flexDirection: "row",
-        alignItems: 'center'
+        alignItems: 'center',
     },
     nameItem: {
         flex: 1,
@@ -200,18 +195,21 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'regularItalicFont',
     },
     pressed: {
-        borderColor: theme.pink2,
-        borderWidth: 2,
+        // borderColor: theme.pink2,
+        // borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 2,
-        shadowColor: theme.shadow,
-        opacity: 1.0,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
         elevation: 6,
+        shadowColor: theme.shadow,
+        // shadowColor: theme.shadow,
+        // opacity: 1.0,
+        // elevation: 6,
     },
     icon: {
         fontSize: 30,

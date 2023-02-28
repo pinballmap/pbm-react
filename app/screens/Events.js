@@ -229,16 +229,16 @@ const getStyles = theme => StyleSheet.create({
     cardContainer: {
         padding: 0,
         borderRadius: 15,
-        marginBottom: 12,
-        marginTop: 12,
-        marginRight: 20,
-        marginLeft: 20,
+        marginVertical: 12,
+        marginHorizontal: 20,
         backgroundColor: theme.white,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.6,
         shadowRadius: 6,
         elevation: 6,
         shadowColor: theme.shadow,
+        borderColor: 'transparent',
+        borderWidth: 2,
     },
     center: {
         textAlign: 'center'
@@ -254,15 +254,11 @@ const getStyles = theme => StyleSheet.create({
         fontFamily: 'regularBoldFont'
     },
     pressed: {
-        borderColor: theme.pink2,
-        borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
     },
     notPressed: {
-        borderColor: 'transparent',
-        borderWidth: 2,
         shadowColor: theme.shadow,
         opacity: 1.0,
         elevation: 6,
