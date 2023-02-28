@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Platform,
     StyleSheet,
     Text,
     View,
@@ -111,7 +112,7 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 containerStyle={{ width: 70 }}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{ color: theme.purple2, fontSize: 18, fontFamily: 'boldFont' }}
+                titleStyle={{ color: theme.purple2, fontSize: 18, fontFamily: 'boldFont', marginTop: Platform.OS === 'android' ? 3 : 0 }}
                 type="clear"
             />
         </View>
