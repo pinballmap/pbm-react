@@ -44,6 +44,7 @@ const TabsOptionsStyle = {
     headerTitleStyle: {
         textAlign: 'center',
         fontFamily: 'boldFont',
+        fontSize: 18
     },
 }
 
@@ -200,6 +201,7 @@ function MapStack() {
                 headerTitleStyle: {
                     textAlign: 'center',
                     fontFamily: 'boldFont',
+                    fontSize: 18,
                     color: colors.text
                 },
                 headerBackTitleStyle: {
