@@ -59,6 +59,7 @@ class Map extends Component {
 
     navigateToScreen = async (url) => {
         const { navigate } = this.props.navigation
+        const {regions: allRegions = []} = this.props.regions ?? {}
         if (url.indexOf('location_id=') > 0) {
             const idSegment = url.split('location_id=')[1]
             const id = idSegment.split('&')[0]
@@ -75,7 +76,7 @@ class Map extends Component {
         } else if (url.indexOf('region=') > 0) {
             const regionSegment = url.split('region=')[1]
             const regionName = regionSegment.split('&')[0]
-            const region = this.props.regions.regions.find(({ name }) => name.toLowerCase() === regionName.toLowerCase())
+            const region = allRegions.find(({ name }) => name.toLowerCase() === regionName.toLowerCase())
 
             const citySegment = url.indexOf('by_city_id=') > 0 ? url.split('by_city_id=')[1] : ''
             const cityName = citySegment.split('&')[0]
@@ -102,7 +103,7 @@ class Map extends Component {
         } else if (url.indexOf('saved') > 0) {
             navigate('Saved')
         } else {
-            const region = this.props.regions.regions.find(({ name }) => url.includes(name))
+            const region = allRegions.find(({ name }) => url.includes(name))
             if (region) {
                 this.props.getLocationsByRegion(region)
             }
