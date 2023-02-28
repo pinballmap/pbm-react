@@ -472,7 +472,7 @@ const getStyles = theme => StyleSheet.create({
     filterIcon: {
         paddingRight: 6,
         fontSize: 20,
-        color: theme.theme == 'dark' ? theme.purple : theme.purple2
+        color: theme.purple2
     },
     listContainerStyle: {
         borderBottomColor: theme.indigo4,

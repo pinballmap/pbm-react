@@ -25,7 +25,7 @@ const DropDownButton = ({ title, onPress, containerStyle }) => {
 
 const getStyles = (theme) => StyleSheet.create({
     dropdown: {
-        backgroundColor: theme.white,
+        backgroundColor: theme.base3,
         width: '100%',
         borderRadius: 25,
         height: 40,

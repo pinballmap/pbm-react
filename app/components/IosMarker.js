@@ -10,13 +10,13 @@ const IosMarker = ({ numMachines }) => {
     let dotFontMargin, dotWidthHeight
     if (numMachines < 10) {
         dotFontMargin = 2
-        dotWidthHeight = 32
+        dotWidthHeight = 34
     } else if (numMachines < 20) {
         dotFontMargin = 4
-        dotWidthHeight = 36
+        dotWidthHeight = 38
     } else if (numMachines < 100) {
         dotFontMargin = 6
-        dotWidthHeight = 40
+        dotWidthHeight = 42
     } else {
         dotFontMargin = 9
         dotWidthHeight = 46
@@ -26,8 +26,8 @@ const IosMarker = ({ numMachines }) => {
             width: dotWidthHeight,
             height: dotWidthHeight,
             borderRadius: dotWidthHeight / 2,
-            borderWidth: 2,
-            borderColor: "#fee7f5",
+            borderWidth: 3,
+            borderColor: theme.theme == 'dark' ? '#cf8dde' : '#e7b9f1',
             backgroundColor: theme.text2,
         }}>
             <Text style={{

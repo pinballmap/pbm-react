@@ -133,7 +133,7 @@ const getStyles = theme => StyleSheet.create({
         flex: 1,
         width: deviceWidth - 30,
         borderRadius: Platform.OS === "ios" ? 10 : 0,
-        backgroundColor: '#fee7f5',
+        backgroundColor: theme.theme == 'dark' ? '#ac9fc7' : theme.base1,
     },
     patreonLogo: {
         flex: 1,
@@ -169,7 +169,7 @@ const getStyles = theme => StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 0,
-        backgroundColor: theme.purple
+        backgroundColor: '#cf8dde'
     },
     green: {
         color: theme.green,

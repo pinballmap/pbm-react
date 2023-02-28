@@ -252,7 +252,7 @@ class MachineDetails extends Component {
                                 </View>
                                 <View style={s.containerStyle}>
                                     <View style={s.locationNameContainer}>
-                                        <Text style={s.sectionTitle}>Top Scores</Text>
+                                        <Text style={s.sectionTitle}>High Scores</Text>
                                     </View>
                                     {!!userHighScore &&
                                         <View>

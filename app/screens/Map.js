@@ -298,7 +298,7 @@ const getStyles = theme => StyleSheet.create({
     },
     buttonIcon: {
         fontSize: 18,
-        color: theme.theme == 'dark' ? theme.purple : theme.purple2,
+        color: theme.purple2,
         paddingRight: 5
     },
     buttonStyle: {

@@ -174,7 +174,7 @@ const getStyles = theme =>StyleSheet.create({
         fontFamily: 'regularFont'
     },
     date: {
-        paddingTop: 5,
+        paddingTop: 6,
         fontSize: 16,
         color: theme.text3,
         fontFamily: 'regularBoldFont'
