@@ -86,7 +86,9 @@ const getStyles = (theme) => StyleSheet.create({
 })
 
 const mapStateToProps = ({ regions }) => {
-    const motd = regions.regions.length ? regions.regions.filter(region => region.id === 1)[0].motd : ''
+    const {regions: allRegions = []} = regions ?? {}
+    const motd = allRegions.length ? allRegions.filter(region => region.id === 1)[0].motd : ''
+
     return {
         motd
     }
