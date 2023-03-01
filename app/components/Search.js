@@ -509,7 +509,7 @@ const getStyles = theme => StyleSheet.create({
         backgroundColor: theme.base1
     },
     filterPressed: {
-        backgroundColor: theme.pink1,
+        backgroundColor: theme.white,
     },
     filterNotPressed: {
         backgroundColor: theme.pink2
