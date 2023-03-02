@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { ThemeContext } from '../theme-context'
 
-const ConfirmationModal = ({children, visible, wide}) => {
+const ConfirmationModal = ({children, visible, wide, noPad}) => {
     const { theme } = useContext(ThemeContext)
     const s = getStyles(theme)
 
@@ -19,7 +19,7 @@ const ConfirmationModal = ({children, visible, wide}) => {
             visible={visible}
         >
             <View style={s.modalBg}>
-                <View style={[s.modal, wide && {width: "90%"}]}>
+                <View style={[s.modal, wide && {width: "90%"}, noPad && {paddingBottom: 0}]}>
                     {children}
                 </View>
             </View>
@@ -48,6 +48,7 @@ ConfirmationModal.propTypes = {
     visible: PropTypes.bool,
     children: PropTypes.node,
     wide: PropTypes.bool,
+    noPad: PropTypes.bool,
 }
 
 export default ConfirmationModal

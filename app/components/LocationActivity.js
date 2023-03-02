@@ -69,6 +69,7 @@ const LocationActivity = ({
                 visible={locationActivityModalOpen}
                 onRequestClose={() => { }}
                 wide
+                noPad
             >
                 <>
                     <View style={s.header}>
