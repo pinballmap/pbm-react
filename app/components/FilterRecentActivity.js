@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+    Dimensions,
     Platform,
     StyleSheet,
     Text,
@@ -16,6 +17,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ConfirmationModal from './ConfirmationModal'
 import { setSelectedActivityFilter } from '../actions'
 import { ThemeContext } from '../theme-context'
+
+let deviceWidth = Dimensions.get('window').width
 
 const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
     const { theme } = useContext(ThemeContext)
@@ -109,10 +112,10 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
             }
             <Button
                 onPress={() => setShowModal(true)}
-                containerStyle={{ width: 70 }}
+                containerStyle={{ width: deviceWidth < 325 ? 60 : 70 }}
                 title="Filter"
                 accessibilityLabel="Filter"
-                titleStyle={{ color: theme.purple2, fontSize: 18, fontFamily: 'boldFont', marginTop: Platform.OS === 'android' ? 3 : 0 }}
+                titleStyle={{ color: theme.purple2, fontSize: deviceWidth < 325 ? 16 : 18, fontFamily: 'boldFont', marginTop: Platform.OS === 'android' ? 3 : 0 }}
                 type="clear"
             />
         </View>
