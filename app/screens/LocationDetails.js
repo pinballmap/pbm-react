@@ -620,7 +620,7 @@ const getStyles = theme => StyleSheet.create({
         height: 30,
         borderRadius: 30 / 2,
         borderWidth: 2,
-        borderColor: theme.pink2,
+        borderColor: theme.theme == 'dark' ? '#d898e7' : '#ecd0f2',
         backgroundColor: theme.text2,
         elevation: 1
     },
