@@ -62,13 +62,13 @@ const App = () => {
     const toggleDefaultTheme = () => defaultTheme !== 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const toggleDarkTheme = () => defaultTheme === 'dark' && setSelectedTheme(selectedTheme === 'dark' ? '' : 'dark')
     const [fontsLoaded] = useFonts({
-        regularFont: PTSans_400Regular,
-        regularBoldFont: PTSans_700Bold,
-        regularItalicFont: PTSans_400Regular_Italic,
-        mediumFont: Nunito_400Regular,
-        boldFont: Nunito_700Bold,
-        extraBoldFont: Nunito_800ExtraBold,
-        blackFont: Nunito_900Black,
+        'regularFont': PTSans_400Regular,
+        'regularBoldFont': PTSans_700Bold,
+        'regularItalicFont': PTSans_400Regular_Italic,
+        'mediumFont': Nunito_400Regular,
+        'boldFont': Nunito_700Bold,
+        'extraBoldFont': Nunito_800ExtraBold,
+        'blackFont': Nunito_900Black,
     })
 
     if (!fontsLoaded) {
