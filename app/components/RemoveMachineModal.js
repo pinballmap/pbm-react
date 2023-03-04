@@ -21,7 +21,7 @@ const RemoveMachineModal = ({ removeMachineFromLocation, closeModal, location: l
 
     return(
         <ConfirmationModal>
-            {machineName && <Text style={s.confirmText}>{`Remove ${machineName} from ${location.name}?`}</Text>}
+            {machineName && <Text style={s.confirmText}>Remove <Text style={s.purple2}>{machineName}</Text> from <Text style={s.purple}>{location.name}</Text>?</Text>}
             <PbmButton
                 title={'Yes, Remove It'}
                 onPress={() => removeLmx(curLmx, location.id)}
@@ -42,8 +42,18 @@ const getStyles = theme => StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 18,
-        color: theme.purple,
+        color: theme.text,
         fontFamily: 'boldFont'
+    },
+    purple: {
+        color: theme.theme == 'dark' ? theme.purple2 : theme.purple,
+        fontSize: 18,
+        fontFamily: 'blackFont'
+    },
+    purple2: {
+        color: theme.theme == 'dark' ? theme.purple : theme.purple2,
+        fontSize: 18,
+        fontFamily: 'blackFont'
     },
     buttonContainer: {
         marginLeft: 20,

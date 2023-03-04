@@ -124,7 +124,7 @@ class MachineDetails extends Component {
                                 <Pressable onPress={() => { Keyboard.dismiss() }}>
                                     <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Comment on ${machineName} at ${location.name}`}</Text>
+                                            <Text style={s.modalTitle}>Comment on <Text style={s.modalPurple2}>{machineName}</Text> at <Text style={s.modalPurple}>{location.name}</Text></Text>
                                             <TextInput
                                                 multiline={true}
                                                 numberOfLines={4}
@@ -161,7 +161,7 @@ class MachineDetails extends Component {
                                 <Pressable onPress={() => { Keyboard.dismiss() }}>
                                     <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} keyboardShouldPersistTaps="handled" style={s.backgroundColor}>
                                         <View style={s.verticalAlign}>
-                                            <Text style={s.modalTitle}>{`Add your high score to ${machineName} at ${location.name}`}</Text>
+                                            <Text style={s.modalTitle}>Add your high score to <Text style={s.modalPurple2}>{machineName}</Text> at <Text style={s.modalPurple}>{location.name}</Text></Text>
                                             <TextInput
                                                 style={[{ height: 40, textAlign: 'center' }, s.textInput, s.radius10]}
                                                 keyboardType='numeric'
@@ -425,6 +425,16 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 40,
         fontSize: 18,
+        fontFamily: 'boldFont'
+    },
+    modalPurple: {
+        color: theme.theme == 'dark' ? theme.purple2 : theme.purple,
+        fontSize: 18,
+        fontFamily: 'blackFont'
+    },
+    modalPurple2: {
+        color: theme.theme == 'dark' ? theme.purple : theme.purple2,
+        fontSize: 18,
         fontFamily: 'blackFont'
     },
     modalSubText: {
@@ -493,7 +503,7 @@ const getStyles = theme => StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 20,
         borderWidth: 4,
-        borderColor: theme.purple2,
+        borderColor: '#e7b9f1',
         borderRadius: 14,
         alignItems: "center",
         justifyContent: "center"
