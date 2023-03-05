@@ -12,7 +12,7 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
 ### 5.2.18
-February xx, 2023
+March 05, 2023
 
 - Feature: Added a button on Location Details for viewing all the updates/activity at that location. Shows machines added, removed, machines comments, high scores, and line-up confirmations.
 - Feature: Added radius options to the Recent Activity screen, so you can see recent updates that are further away (helpful for rural or more sparse areas)
@@ -22,7 +22,7 @@ February xx, 2023
 - Bug Fix: After submitting a location, the app wasn't properly navigating you out of that screen, so users sometimes thought the submission didn't go through
 - Design update: Replaced Lato font with PT Sans
 - Design update: Redesigned Location Details, Location List, and Machine Details screens
-- Design update: Tweaked colors (higher constrasts to be more accessible, added purple, etc.) and other things
+- Design update: Tweaked colors (higher contrasts to be more accessible, added purple, etc.) and other things
 - Design update: Do not display most recent machine comment under each machine on the Location Details screen (instead, all comments can be viewed by clicking the machine)
 - Misc: Added little notes in some places to help guide users (on Machine Comment form and Edit Location Details screen)
 - Misc: Many other tweaks and bug fixes and performance improvements
