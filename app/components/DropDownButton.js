@@ -18,7 +18,7 @@ const DropDownButton = ({ title, onPress, containerStyle }) => {
             uppercase={false}
             icon={<MaterialIcons name='arrow-drop-down' style={s.dropdownIcon} />}
             iconPosition="right"
-            containerStyle={[{ overflow: 'visible', borderRadius: 25, shadowColor: theme.shadow, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 6, elevation: 6 }, containerStyle ? containerStyle : s.containerMargin]}
+            containerStyle={[{ overflow: 'visible', borderRadius: 25, backgroundColor: theme.base1, shadowColor: theme.shadow, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 6, elevation: 6 }, containerStyle ? containerStyle : s.containerMargin]}
         />
     )
 }

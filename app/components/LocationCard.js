@@ -195,8 +195,6 @@ const getStyles = (theme) => StyleSheet.create({
         fontFamily: 'regularItalicFont',
     },
     pressed: {
-        // borderColor: theme.pink2,
-        // borderWidth: 2,
         shadowColor: 'transparent',
         opacity: 0.8,
         elevation: 0,
@@ -207,9 +205,6 @@ const getStyles = (theme) => StyleSheet.create({
         shadowRadius: 6,
         elevation: 6,
         shadowColor: theme.shadow,
-        // shadowColor: theme.shadow,
-        // opacity: 1.0,
-        // elevation: 6,
     },
     icon: {
         fontSize: 30,
