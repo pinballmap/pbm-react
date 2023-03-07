@@ -13,7 +13,7 @@
     "@react-navigation/stack": "^6.2.3",
     "@rneui/base": "^4.0.0-rc.6",
     "@rneui/themed": "^4.0.0-rc.6",
-    "@sentry/react-native": "4.9.0",
+    "@sentry/react-native": "4.13.0",
     "@shopify/flash-list": "1.4.0",
     "dotenv": "^10.0.0",
     "enzyme-to-json": "^3.3.4",
@@ -48,7 +48,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "sentry-expo": "~6.0.0",
+    "sentry-expo": "~6.1.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
