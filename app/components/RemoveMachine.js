@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import { View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import RemoveMachineModal from './RemoveMachineModal'
+import { useNavigation } from '@react-navigation/native'
 
-const RemoveMachine = ({ user, navigation }) => {
+const RemoveMachine = ({ user }) => {
     const [showModal, setShowModal] = useState(false)
+    const navigation = useNavigation()
 
     return(
         <View>
