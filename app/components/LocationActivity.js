@@ -56,7 +56,7 @@ const LocationActivity = ({
                 return <View style={s.textContainer}><Text style={s.pbmText}>High score: {formatNumWithCommas(high_score)}</Text><Text style={s.purple}>{machine_name}</Text>{timeAndUser}</View>
             }
             case 'confirm_location': {
-                return <View style={s.textContainer}><Text style={s.pbmText}>{user_name} confirmed the line-up</Text><Text style={s.date}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={s.pbmText}>Line-up confirmed</Text>{timeAndUser}</View>
             }
             default:
                 return null

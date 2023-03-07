@@ -87,7 +87,7 @@ const RecentActivity = ({query, clearActivityFilter, navigation}) => {
                 return <View style={s.textContainer}><Text style={s.pbmText}>High score: {formatNumWithCommas(high_score)}</Text><Text style={[s.purple2, s.marginB8]}>{machine_name}</Text><Text style={s.pbmText}><Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
             }
             case 'confirm_location': {
-                return <View style={s.textContainer}><Text style={[s.pbmText, s.marginB8]}>{user_name} confirmed the line-up at <Text style={s.purple}>{location_name}</Text> in {city_name}</Text><Text style={s.date}>{time}</Text></View>
+                return <View style={s.textContainer}><Text style={[s.pbmText, s.marginB8]}>Line-up confirmed at <Text style={s.purple}>{location_name}</Text> in {city_name}</Text>{timeAndUser}</View>
             }
             default:
                 return null
