@@ -1,6 +1,5 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import PropTypes from 'prop-types'
-import * as SplashScreen from "expo-splash-screen"
 import {connect} from "react-redux"
 import {
     getRegions,
@@ -10,6 +9,7 @@ import {
     getLocationAndMachineCounts,
     fetchCurrentLocation,
 } from '../actions'
+import * as SplashScreen from 'expo-splash-screen'
 
 const AppWrapper = ({
     children,
@@ -20,6 +20,13 @@ const AppWrapper = ({
     getLocationAndMachineCounts,
     getCurrentLocation
 }) => {
+    const [loading, setIsLoading] = useState(true)
+
+    const loaded = async () => {
+        await SplashScreen.hideAsync()
+        setIsLoading(false)
+    }
+
     useEffect(() => {
         async function isLoading() {
             await Promise.all([
@@ -29,11 +36,14 @@ const AppWrapper = ({
                 getOperators('/operators.json'),
                 getLocationAndMachineCounts('/regions/location_and_machine_counts.json'),
                 getCurrentLocation()
-            ]).finally(() => SplashScreen.hideAsync())
+            ]).then(loaded)
+                .catch(loaded)
         }
 
         isLoading()
     }, [])
+
+    if (loading) return null
 
     return (
         <>
