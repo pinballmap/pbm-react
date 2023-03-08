@@ -1,18 +1,17 @@
-import React, { useContext, useRef } from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {
     Pressable,
     StyleSheet,
 } from 'react-native'
-import { ThemeContext } from '../theme-context'
 import {
     addFavoriteLocation,
     removeFavoriteLocation,
 } from '../actions'
 import LottieView from 'lottie-react-native'
 
-const FaveLocation = ({onPress, theme, style}) => {
+const FaveLocation = ({onPress, style}) => {
     const removeAnimation = useRef(null)
     const onRemovePress = () => {
         removeAnimation?.current.play()
@@ -33,10 +32,13 @@ const FaveLocation = ({onPress, theme, style}) => {
     )
 }
 
-const Location = ({onPress, theme, style}) => {
+const Location = ({onPress, style, navigation, loggedIn}) => {
     const addAnimation = useRef(null)
     const onAddPress = () => {
-        addAnimation?.current.play()
+        if (loggedIn) {
+            return addAnimation?.current.play()
+        }
+        navigation.navigate('Login')
     }
     return (
         <Pressable
@@ -61,14 +63,19 @@ const FavoriteLocationHeart = ({
     removeFavoriteLocation,
     style,
     removeFavorite,
+    navigation,
 }) => {
-    const { theme } = useContext(ThemeContext)
-
     if (loggedIn && isUserFave) {
-        return <FaveLocation onPress={() => removeFavorite(() => removeFavoriteLocation(locationId))} theme={theme} style={style} />
+        return <FaveLocation onPress={() => removeFavorite(() => removeFavoriteLocation(locationId))} style={style} />
     }
+
     return (
-        <Location onPress={() => addFavoriteLocation(locationId)} theme={theme} style={style} />
+        <Location
+            onPress={() => addFavoriteLocation(locationId)}
+            style={style}
+            loggedIn={loggedIn}
+            navigation={navigation}
+        />
     )
 }
 
@@ -80,6 +87,7 @@ FavoriteLocationHeart.propTypes = {
     removeFavoriteLocation: PropTypes.func,
     style: PropTypes.object,
     removeFavorite: PropTypes.func,
+    navigation: PropTypes.object,
 }
 
 const s = StyleSheet.create({
