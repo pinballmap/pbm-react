@@ -10,6 +10,9 @@ import {
     fetchCurrentLocation,
 } from '../actions'
 import * as SplashScreen from 'expo-splash-screen'
+import {
+    ActivityIndicator
+} from '../components'
 
 const AppWrapper = ({
     children,
@@ -43,7 +46,7 @@ const AppWrapper = ({
         isLoading()
     }, [])
 
-    if (loading) return null
+    if (loading) return <ActivityIndicator />
 
     return (
         <>
@@ -56,7 +59,7 @@ AppWrapper.propTypes = {
     children: PropTypes.node,
     getRegions: PropTypes.func,
     getLocationTypes: PropTypes.func,
-    getMachines: PropTypes.func, 
+    getMachines: PropTypes.func,
     getOperators: PropTypes.func,
     getLocationAndMachineCounts: PropTypes.func,
     getCurrentLocation: PropTypes.func,
