@@ -286,7 +286,7 @@ class LocationDetails extends Component {
                                                     <Icon
                                                         name={locationIcon}
                                                         type={iconLibrary}
-                                                        color={theme.pink3}
+                                                        color={theme.purple}
                                                         size={46}
                                                     />
                                                     <Text style={[{ textAlign: 'center' }, s.mediumFont, s.fontSize15, s.text2, s.opacity09]}>{locationTypeName}</Text>
@@ -368,6 +368,7 @@ class LocationDetails extends Component {
                                                 {({ pressed }) => (
                                                     <View style={[s.machineListContainer, pressed ? s.pressed : s.notPressed]}>
                                                         {this.getTitle(machine, s)}
+                                                        {machine.created_at != machine.updated_at ? <Text style={[s.addedText,s.updated]}>{`Last updated: ${moment(machine.updated_at).format('MMM DD, YYYY')}`}</Text> : ''}
                                                     </View>
                                                 )}
                                             </Pressable>
@@ -609,7 +610,6 @@ const getStyles = theme => StyleSheet.create({
         opacity: 0.6
     },
     distanceIcon: {
-        marginTop: -1,
         fontSize: 18,
         color: theme.indigo4,
         marginRight: 3,
@@ -681,6 +681,12 @@ const getStyles = theme => StyleSheet.create({
         color: theme.purple,
         fontFamily: 'boldFont'
     },
+    updated: {
+        fontSize: 14,
+        color: theme.text3,
+        fontFamily: 'regularFont',
+        marginTop: 6
+    }
 })
 
 LocationDetails.propTypes = {

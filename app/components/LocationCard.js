@@ -86,11 +86,11 @@ const LocationCard = ({
                                 {type ? <View style={s.vertAlign}><Icon
                                     name={icon}
                                     type={library}
-                                    color={theme.purple2}
+                                    color={theme.text3}
                                     size={30}
                                     style={s.icon}
-                                /><Text style={{ marginRight: 12, color: theme.colors.text, fontFamily: "boldFont" }}> {type}</Text></View> : null}
-                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.colors.text, fontFamily: "boldFont" }}> {distance}</Text></View> : null}
+                                /><Text style={{ marginRight: 12, color: theme.text2, fontFamily: "boldFont" }}> {type}</Text></View> : null}
+                                {distance ? <View style={s.vertAlign}><MaterialCommunityIcons name='compass-outline' style={s.icon} /><Text style={{ color: theme.text2, fontFamily: "boldFont" }}> {distance}</Text></View> : null}
                             </View> : null
                         }
                     </View>
@@ -208,7 +208,7 @@ const getStyles = (theme) => StyleSheet.create({
     },
     icon: {
         fontSize: 30,
-        color: theme.purple2,
+        color: theme.text3,
         opacity: 0.8,
         marginRight: 1
     },

@@ -195,7 +195,7 @@ class MachineDetails extends Component {
                                 </View>
                                 <View style={s.addedContainer}>
                                     <Text style={s.addedText}>{`Added: ${moment(curLmx.created_at).format('MMM DD, YYYY')}`}</Text>
-                                    {curLmx.created_at != curLmx.updated_at ? <Text style={[s.addedText,s.updated]}>{`Last updated: ${moment(curLmx.updated_at).format('MMM DD, YYYY')}`}</Text> : ''}
+                                    {curLmx.created_at != curLmx.updated_at ? <Text style={s.addedText}>{`Last updated: ${moment(curLmx.updated_at).format('MMM DD, YYYY')}`}</Text> : ''}
                                 </View>
                                 {!!opdb_img &&
                                     <View style={{ alignItems: "center" }}>
