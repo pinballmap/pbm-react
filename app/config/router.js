@@ -189,7 +189,7 @@ function MapStack() {
     return (
         <Stack.Navigator
             screenOptions={() => ({
-                headerTintColor: colors.activeTab,
+                headerTintColor: colors.text,
                 headerTitleAlign: 'center',
                 gestureDirection: 'horizontal',
                 gestureEnabled: true,
@@ -205,7 +205,7 @@ function MapStack() {
                     color: colors.text
                 },
                 headerBackTitleStyle: {
-                    fontFamily: 'regularFont'
+                    fontFamily: 'boldFont'
                 },
                 headerBackTitleVisible: false
             })}
