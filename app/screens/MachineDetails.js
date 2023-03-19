@@ -131,14 +131,14 @@ class MachineDetails extends Component {
                                                 underlineColorAndroid='transparent'
                                                 onChangeText={conditionText => this.setState({ conditionText })}
                                                 style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-                                                placeholder={"Leave a comment! And please don't comment saying a machine is gone. Just remove it!"}
+                                                placeholder={"Leave a comment! And please don't comment saying a machine is gone; just remove it instead!"}
                                                 placeholderTextColor={theme.indigo4}
                                                 textAlignVertical='top'
                                             />
-                                            {!!location.operator_id && operatorHasEmail &&
-                                                <Text style={s.modalSubText}>This operator has elected to be notified about machine comments. Please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines!</Text>
-                                            }
-                                            <Text style={[s.modalSubText,s.purple,s.margin8]}><Text style={s.bold}>Operators:</Text> if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you.</Text>
+                                            <Text style={s.modalSubText}><Text style={s.bold}>Everyone:</Text> Please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines. {!!location.operator_id && operatorHasEmail &&
+                                                <Text style={s.bold}>This operator is signed up to be notified about machine comments.</Text>
+                                            }</Text>
+                                            <Text style={[s.modalSubText,s.margin8]}><Text style={s.bold}>Operators:</Text> if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you.</Text>
                                             <PbmButton
                                                 title={'Add Condition'}
                                                 disabled={this.state.conditionText.length === 0}
@@ -440,7 +440,7 @@ const getStyles = theme => StyleSheet.create({
     modalSubText: {
         marginHorizontal: 40,
         fontSize: 14,
-        fontFamily: 'regularFont'
+        fontFamily: 'mediumFont'
     },
     bold: {
         fontFamily: 'boldFont'
