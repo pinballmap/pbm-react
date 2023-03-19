@@ -14,7 +14,8 @@
       }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview"
     },
     "androidapk": {
       "android": {
@@ -26,6 +27,7 @@
     },
     "production": {
       "distribution": "store",
+      "channel": "production",
       "ios": {
         "resourceClass": "m1-medium"
       },
