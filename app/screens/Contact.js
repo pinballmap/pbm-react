@@ -71,7 +71,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
                 <ActivityIndicator /> :
                 <KeyboardAwareScrollView {...keyboardDismissProp} enableResetScrollToCoords={false} style={s.background}>
                     <Text style={[s.text, s.blackText]}>{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
-                    <Text style={[s.text, s.pinkText]}>{`If you're writing to tell us that a location no longer has machines - NO NEED! Please just remove the machines from the location, and we will auto-delete it within a week.`}</Text>
+                    <Text style={[s.text, s.mediumText]}>If a venue no longer has machines - <Text style={s.boldText}>NO NEED to tell us!</Text> Please just remove the machines from the location, and we will auto-delete the location within a week.</Text>
                     <Text onPress={() => navigation.navigate('FAQ')} style={s.textLink}>{`Check the FAQ for other common questions.`}</Text>
                     {!loggedIn ?
                         <View>
@@ -146,9 +146,13 @@ const getStyles = theme => StyleSheet.create({
     blackText: {
         color: theme.text,
     },
-    pinkText: {
-        color: theme.pink1,
+    mediumText: {
+        fontFamily: 'mediumFont',
         marginTop: 15,
+    },
+    boldText: {
+        fontFamily: 'boldFont',
+        color: theme.purple
     },
     textLink: {
         textDecorationLine: 'underline',
@@ -156,7 +160,8 @@ const getStyles = theme => StyleSheet.create({
         lineHeight: 22,
         marginTop: 15,
         marginHorizontal: 15,
-        fontFamily: 'regularFont'
+        fontFamily: 'regularFont',
+        color: theme.purple2
     },
     confirmText: {
         textAlign: 'center',
