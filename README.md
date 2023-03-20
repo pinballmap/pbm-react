@@ -11,6 +11,11 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.21
+March 19, 2023
+
+- Minor update: adjusted some text and design
+
 ### 5.2.20
 March 15, 2023
 
