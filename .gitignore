@@ -16,5 +16,6 @@ __snapshots__/
 
 # Expo
 .expo/
+dist/
 
 .env
