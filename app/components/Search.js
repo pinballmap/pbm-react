@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { debounce } from 'throttle-debounce'
 import Geocode from 'react-geocode'
 import {
+    Alert,
     Dimensions,
     Keyboard,
     Modal,
@@ -24,7 +25,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import { getData } from '../config/request'
 import {
-    displayError,
     getLocationsByRegion,
     updateCoordinatesAndGetLocations,
     updateCoordinates,
@@ -32,7 +32,7 @@ import {
     getLocationsFailure,
     setSearchBarText,
     clearSearchBarText,
-    fetchLocationAndUpdateMap,
+    fetchLocation,
 } from '../actions'
 import withThemeHOC from './withThemeHOC'
 import { retrieveItem } from '../config/utils'
@@ -95,8 +95,7 @@ class Search extends Component {
                 const { lat, lng } = response.results[0].geometry.location
                 this.props.updateCoordinatesAndGetLocations(lat, lng)
             }, error => {
-                console.log(error)
-                this.props.displayError('An error occurred geocoding.')
+                Alert.alert('An error occurred geocoding.')
             })
             .then(() => {
                 this.changeQuery('')
@@ -163,10 +162,16 @@ class Search extends Component {
         }
     }
 
-    goToLocation = (location) => {
+    goToLocation = async (location) => {
+        try {
+        const data = await this.props.dispatch(fetchLocation(location.id))
+        const { lat, lon } = data.location
+        this.props.dispatch(updateCoordinatesAndGetLocations(lat, lon))
         this.props.navigate('LocationDetails', { id: location.id })
-        this.props.fetchLocationAndUpdateMap(location.id)
         this.clearSearchState(location)
+        } catch (e) {
+            Alert.alert("Something went wrong")
+        }
     }
 
     getLocationsByRegion = (region) => {
@@ -530,7 +535,6 @@ const getStyles = theme => StyleSheet.create({
 })
 
 Search.propTypes = {
-    displayError: PropTypes.func,
     navigate: PropTypes.func,
     regions: PropTypes.object,
     query: PropTypes.object,
@@ -540,13 +544,11 @@ Search.propTypes = {
     getLocationsFailure: PropTypes.func,
     setSearchBarText: PropTypes.func,
     clearSearchBarText: PropTypes.func,
-    fetchLocationAndUpdateMap: PropTypes.func,
     updateCoordinatesAndGetLocations: PropTypes.func,
 }
 
 const mapStateToProps = ({ regions, query, user }) => ({ regions, query, user })
 const mapDispatchToProps = (dispatch) => ({
-    displayError: error => dispatch(displayError(error)),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
     updateCoordinates: (lat, lon, latDelta, lonDelta) => dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
@@ -554,6 +556,6 @@ const mapDispatchToProps = (dispatch) => ({
     getLocationsFailure: () => dispatch(getLocationsFailure()),
     setSearchBarText: (searchBarText) => dispatch(setSearchBarText(searchBarText)),
     clearSearchBarText: () => dispatch(clearSearchBarText()),
-    fetchLocationAndUpdateMap: (locationId) => dispatch(fetchLocationAndUpdateMap(locationId)),
+    dispatch,
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withThemeHOC(Search))

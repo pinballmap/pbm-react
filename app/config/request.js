@@ -78,7 +78,7 @@ export const getData = uri => {
 
             throw new Error('API response was not ok')
         })
-        .catch(err => err)
+        .catch(err => Promise.reject(err))
 }
 
 export const getIfpaData = (address, radius, distanceUnit) => {

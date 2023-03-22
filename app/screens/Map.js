@@ -28,7 +28,6 @@ import {
     fetchCurrentLocation,
     getFavoriteLocations,
     clearFilters,
-    clearError,
     clearSearchBarText,
     getLocationsConsideringZoom,
     login,
@@ -156,7 +155,6 @@ class Map extends Component {
         const { theme } = this.context
         const s = getStyles(theme)
         const { curLat, curLon, latDelta, lonDelta } = query
-        const { errorText = false } = this.props.error
         const { machineId = false, locationType = false, numMachines = false, selectedOperator = false, viewByFavoriteLocations, maxZoom } = this.props.query
         const filterApplied = machineId || locationType || numMachines || selectedOperator || viewByFavoriteLocations ? true : false
 
@@ -170,16 +168,6 @@ class Map extends Component {
             <SafeAreaView edges={['right', 'left', 'top']} style={{ flex: 1, marginTop: -Constants.statusBarHeight }}>
                 <AppAlert />
                 <NoLocationTrackingModal />
-                <ConfirmationModal
-                    visible={errorText ? true : false}>
-                    <View>
-                        <Text style={s.confirmText}>{errorText}</Text>
-                        <PbmButton
-                            title={"OK"}
-                            onPress={() => this.props.clearError()}
-                        />
-                    </View>
-                </ConfirmationModal>
                 <View style={s.search}>
                     <Search navigate={navigation.navigate} />
                 </View>
@@ -389,8 +377,6 @@ Map.propTypes = {
     navigation: PropTypes.object,
     getFavoriteLocations: PropTypes.func,
     clearFilters: PropTypes.func,
-    clearError: PropTypes.func,
-    error: PropTypes.object,
     getLocationsConsideringZoom: PropTypes.func,
     clearSearchBarText: PropTypes.func,
     setUnitPreference: PropTypes.func,
@@ -404,11 +390,10 @@ Map.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    const { error, locations, query, regions } = state
+    const { locations, query, regions } = state
     const mapLocations = getMapLocations(state)
 
     return {
-        error,
         query,
         regions,
         mapLocations,
@@ -419,7 +404,6 @@ const mapDispatchToProps = (dispatch) => ({
     getCurrentLocation: () => dispatch(fetchCurrentLocation()),
     getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
     clearFilters: () => dispatch(clearFilters()),
-    clearError: () => dispatch(clearError()),
     getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) => dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
     clearSearchBarText: () => dispatch(clearSearchBarText()),
     login: (auth) => dispatch(login(auth)),

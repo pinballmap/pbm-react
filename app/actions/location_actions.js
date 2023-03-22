@@ -1,7 +1,6 @@
 import {
     FETCHING_LOCATION,
     FETCHING_LOCATION_SUCCESS,
-    FETCHING_LOCATION_FAILURE,
     LOCATION_DETAILS_CONFIRMED,
     CLOSE_CONFIRM_MODAL,
     SET_SELECTED_LMX,
@@ -33,25 +32,12 @@ export const fetchLocation = id => dispatch => {
 
     return getData(`/locations/${id}.json`)
         .then(data => dispatch(getLocationSuccess(data)))
-        .catch(err => dispatch(getLocationFailure(err)))
-}
-
-export const fetchLocationAndUpdateMap = id => async dispatch => {
-    const data = await dispatch(fetchLocation(id))
-    const { lat, lon } = data.location
-    dispatch(updateCoordinatesAndGetLocations(lat, lon))
 }
 
 export const getLocationSuccess = (data) => {
     return {
         type: FETCHING_LOCATION_SUCCESS,
         location: data,
-    }
-}
-
-export const getLocationFailure = () => {
-    return {
-        type: FETCHING_LOCATION_FAILURE
     }
 }
 
