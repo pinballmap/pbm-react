@@ -11,7 +11,8 @@
       "distribution": "internal",
       "env": {
         "API_URL": "https://www.pinballmap.com/api/v1"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
@@ -23,7 +24,8 @@
       },
       "env": {
         "API_URL": "https://www.pinballmap.com/api/v1"
-      }
+      },
+      "channel": "androidapk"
     },
     "production": {
       "distribution": "store",
