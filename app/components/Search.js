@@ -166,6 +166,7 @@ class Search extends Component {
         try {
         const data = await this.props.dispatch(fetchLocation(location.id))
         const { lat, lon } = data.location
+        if (!lat) throw new Error()
         this.props.dispatch(updateCoordinatesAndGetLocations(lat, lon))
         this.props.navigate('LocationDetails', { id: location.id })
         this.clearSearchState(location)
