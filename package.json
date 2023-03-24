@@ -58,7 +58,8 @@
     "eslint": "^8.27.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-watch": "^8.0.0",
-    "metro-react-native-babel-preset": "^0.45.0"
+    "metro-react-native-babel-preset": "^0.45.0",
+    "prettier": "2.8.7"
   },
   "scripts": {
     "start": "expo start -c",

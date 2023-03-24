@@ -31,7 +31,7 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 
 //     it('dispatched the expected actions when requesting location types fails', (done) => {
@@ -39,7 +39,7 @@
 //         const firstAction = { type: types.FETCHING_LOCATION_TYPES }
 
 //         const secondAction = {
-//             type: types.FETCHING_LOCATION_TYPES_FAILURE,  
+//             type: types.FETCHING_LOCATION_TYPES_FAILURE,
 //         }
 
 //         getData.mockImplementationOnce(() => Promise.reject({  }))
@@ -55,7 +55,7 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 
 //     it('dispatched the expected actions when successfully requesting locations', (done) => {
@@ -86,7 +86,7 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 
 //     it('dispatched the expected actions when requesting location types fails', (done) => {
@@ -94,7 +94,7 @@
 //         const firstAction = { type: types.FETCHING_LOCATIONS }
 
 //         const secondAction = {
-//             type: types.FETCHING_LOCATIONS_FAILURE,  
+//             type: types.FETCHING_LOCATIONS_FAILURE,
 //         }
 
 //         getData.mockImplementationOnce(() => Promise.reject({  }))
@@ -110,7 +110,7 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 
 //     it('dispatched the expected action when requesting a refetch of locations', () => {

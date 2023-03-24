@@ -1,4 +1,4 @@
 {
-    "javascript.suggest.autoImports": false,
-    "editor.wordWrap": "on"
+  "javascript.suggest.autoImports": false,
+  "editor.wordWrap": "on"
 }

@@ -7,32 +7,38 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 </p>
 
 ## Overview of 5+ releases
+
 (prior to version 5, we were using different code bases for the app):
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
 ### 5.2.22
+
 March 24, 2023
 
 - Bug fixes: better error handling. One example is when you click on a location name in your "Recent Search History" but that location has since been deleted - now you get a simple error message.
 
 ### 5.2.21
+
 March 19, 2023
 
 - Minor update: adjusted some text and design
 
 ### 5.2.20
+
 March 15, 2023
 
 - Include "Last Updated" text under the machines listed on Location Details screen
 - Minor color tweaks
 
 ### 5.2.19
+
 March 08, 2023
 
 - Bug fixes: mostly related to the splash screen
 
 ### 5.2.18
+
 March 05, 2023
 
 - Feature: Added a button on Location Details for viewing all the updates/activity at that location. Shows machines added, removed, machines comments, high scores, and line-up confirmations.
@@ -49,16 +55,19 @@ March 05, 2023
 - Misc: Many other tweaks and bug fixes and performance improvements
 
 ### 5.2.17
+
 January 11, 2023
 
 - Bug fix: Couldn't dismiss the "zoom in more" message
 
 ### 5.2.16
+
 January 9, 2023
 
 - Bug fix: Issue when searching for cities that don't have states (like in Finland, Denmark, Romania)
 
 ### 5.2.15
+
 January 7, 2023
 
 - Added the heart/save icon to the List & Saved screens for easier hearting
@@ -66,12 +75,14 @@ January 7, 2023
 - Performance improvements (flashlist instead of flatlist)
 
 ### 5.2.14
+
 January 3, 2023
 
 - Bug fixes (phone number crash; edit location info text)
 - Minor design tweaks (button adjustments on map; text on Contact screen)
 
 ### 5.2.13
+
 December 7, 2022
 
 - Bux fixes (notably, some broken ipdb links)
@@ -80,6 +91,7 @@ December 7, 2022
 - Added some "how to search by machine" text to the Search screen
 
 ### 5.2.12
+
 November 23, 2022
 
 - Some design updates ("Review location submission", "Review location info" screens; moved Resources and Podcast to links in the About screen; Added a "check email to confirm account" message for new users; and more)
@@ -88,6 +100,7 @@ November 23, 2022
 - Many behind the scenes package updates (react navigation, Expo SDK, etc.)
 
 ### 5.2.11
+
 March 24, 2022
 
 - Show backglass image (from OPDB) on machine screen
@@ -97,6 +110,7 @@ March 24, 2022
 - Bug fixes and stuff
 
 ### 5.2.10
+
 February 8, 2022
 
 - Refined the City search so that it pulls up all results in that city
@@ -105,6 +119,7 @@ February 8, 2022
 - Fixed an issue on Android where commas weren't being added when entering a high score
 
 ### 5.2.9
+
 December 20, 2021
 
 - Fixed a bug where you couldn't remove an operator from a location
@@ -112,6 +127,7 @@ December 20, 2021
 - Other minor enhancements
 
 ### 5.2.8
+
 November 11, 2021
 
 - "Last updated" wasn't always showing the correct info
@@ -119,6 +135,7 @@ November 11, 2021
 - Code enhancements and performance improvements
 
 ### 5.2.7
+
 September 29, 2021
 
 - Updated theme colors, as well as redesigned some elements, especially on the Location Details screen
@@ -129,18 +146,21 @@ September 29, 2021
 - Code enhancements and performance improvements (lots of behind the scenes updates, like how we store secrets, and where the root of the app is, etc)
 
 ### 5.2.6
+
 September 5, 2021
 
 - Fixed that bug more better with the "my location" button on some devices
 - Fixed issue with deep links not always working correctly
 
 ### 5.2.5
+
 August 30, 2021
 
 - Fixed a bug with the "my location" button on some devices
 - Fixed/tweaked some design things
 
 ### 5.2.4
+
 August 18, 2021
 
 - Update the "country" picker in the Location Suggestion form
@@ -148,6 +168,7 @@ August 18, 2021
 - Minor design tweaks, including a new splash screen logo
 
 ### 5.2.3
+
 August 12, 2021
 
 - Added an option in the Settings page for using Miles or Kilometers as the distance unit
@@ -155,17 +176,20 @@ August 12, 2021
 - Styled the Events page (missed this in the 5.2.0 update), and added a more descriptive message when Events cannot be fetched from the IFPA calendar
 
 ### 5.2.2
+
 July 28, 2021
 
 - Fixed a bug: when submitting multiple locations in a row, sometimes the 2nd+ locations weren't submitting correctly (but the user probably wouldn't know).
 
 ### 5.2.1
+
 July 15, 2021
 
 - Adjusted deep links
 - Fixed a couple button styles
 
 ### 5.2.0
+
 July 8, 2021
 
 - Universal links (aka deep links), so a url hyperlink will open up that location on the app
@@ -183,6 +207,7 @@ July 8, 2021
 - Lots of bug fixes and code enhancements
 
 ### 5.1.5
+
 Mar 30, 2020
 
 - New Settings page where you can manually choose either dark or light mode
@@ -192,6 +217,7 @@ Mar 30, 2020
 - Misc fixes
 
 ### 5.1.3
+
 Feb 7, 2020
 
 - New feature! Recently Search History. When you click the search bar, you'll see your last 10 searches.
@@ -199,6 +225,7 @@ Feb 7, 2020
 - Misc bug fixes and code enhancements.
 
 ### 5.1.2
+
 Dec 31, 2019
 
 - Bug fix: Sometimes when you search for a city, the map would go to that city and then a second later jump back to the previous extent. This has been fixed.
@@ -206,6 +233,7 @@ Dec 31, 2019
 - General code updates and maintenance.
 
 ### 5.1.1
+
 Dec 23, 2019
 
 - Dark Mode (Android) (for devices that have this mode)
@@ -213,6 +241,7 @@ Dec 23, 2019
 - Misc bug fixes and code updates
 
 ### 5.1.0
+
 Nov 14, 2019
 
 - Support for Dark Mode (iOS)
@@ -221,33 +250,39 @@ Nov 14, 2019
 - Many bug fixes and code enhancements
 
 ### 5.0.6
+
 Sept 28, 2019
 
 - Fixed blog and podcast screens (on Android).
 
 ### 5.0.5
+
 Sept 25, 2019
 
 - Minor bug fixes
 - Code maintenance
 
 ### 5.0.4
+
 Aug 30, 2019
 
 - Resolving intermittent DNS-related issue.
 
 ### 5.0.3
+
 Aug 20, 2019
 
 - Removed the link to our Patreon page, per the app store (iOS) guidelines.
 - Updated the 5.5" device screenshots in the (iOS) app store.
 
 ### 5.0.2
+
 Jul 26, 2019
 
 - Fixed: Added the city name to the Saved locations list
 
 ### 5.0.1
+
 June 22, 2019
 
 - Type “region” in the search bar to see a list of regions!
@@ -264,6 +299,7 @@ June 22, 2019
 - Additional design adjustments and bug fixes
 
 ### 5.0.0
+
 Jun 17, 2019
 
 React Native app released.

@@ -1,162 +1,172 @@
-import React, { useContext, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import {
-    StyleSheet,
-    View,
-} from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { connect } from "react-redux"
-import { ButtonGroup } from '@rneui/base'
-import { ThemeContext } from '../theme-context'
-import { Screen, Text } from '../components'
-import { retrieveItem } from '../config/utils'
-import { setUnitPreference } from "../actions"
+import React, { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+import { ButtonGroup } from "@rneui/base";
+import { ThemeContext } from "../theme-context";
+import { Screen, Text } from "../components";
+import { retrieveItem } from "../config/utils";
+import { setUnitPreference } from "../actions";
 
 const Settings = ({ user, setUnitPreference }) => {
-    const { toggleDefaultTheme, toggleDarkTheme, theme } = useContext(ThemeContext)
-    const s = getStyles(theme)
+  const { toggleDefaultTheme, toggleDarkTheme, theme } =
+    useContext(ThemeContext);
+  const s = getStyles(theme);
 
-    const [selectedDefault, updateSelectedDefault] = useState(0)
-    const [selectedDark, updateSelectedDark] = useState(1)
+  const [selectedDefault, updateSelectedDefault] = useState(0);
+  const [selectedDark, updateSelectedDark] = useState(1);
 
-    useEffect(() => {
-        retrieveItem('defaultThemeOverride')
-            .then(defaultThemeOverride => defaultThemeOverride && updateSelectedDefault(1))
+  useEffect(() => {
+    retrieveItem("defaultThemeOverride").then(
+      (defaultThemeOverride) =>
+        defaultThemeOverride && updateSelectedDefault(1),
+    );
 
-        retrieveItem('darkThemeOverride')
-            .then(darkThemeOverride => darkThemeOverride && updateSelectedDark(0))
-    })
+    retrieveItem("darkThemeOverride").then(
+      (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
+    );
+  });
 
-    const updateDefaultPref = (idx) => {
-        if (idx === selectedDefault)
-            return
+  const updateDefaultPref = (idx) => {
+    if (idx === selectedDefault) return;
 
-        updateSelectedDefault(idx)
-        AsyncStorage.setItem('defaultThemeOverride', JSON.stringify(idx === 1))
-        toggleDefaultTheme()
-    }
+    updateSelectedDefault(idx);
+    AsyncStorage.setItem("defaultThemeOverride", JSON.stringify(idx === 1));
+    toggleDefaultTheme();
+  };
 
-    const updateDarkPref = (idx) => {
-        if (idx === selectedDark)
-            return
+  const updateDarkPref = (idx) => {
+    if (idx === selectedDark) return;
 
-        updateSelectedDark(idx)
-        AsyncStorage.setItem('darkThemeOverride', JSON.stringify(idx === 0))
-        toggleDarkTheme()
-    }
+    updateSelectedDark(idx);
+    AsyncStorage.setItem("darkThemeOverride", JSON.stringify(idx === 0));
+    toggleDarkTheme();
+  };
 
-    const updateUnitPref = (idx) => {
-        setUnitPreference(idx)
-    }
+  const updateUnitPref = (idx) => {
+    setUnitPreference(idx);
+  };
 
-    return (
-        <Screen>
-            <View style={s.background}>
-                <View style={s.pageTitle}><Text style={s.pageTitleText}>Standard Theme</Text></View>
-                <ButtonGroup
-                    onPress={updateDefaultPref}
-                    selectedIndex={selectedDefault}
-                    buttons={['Standard', 'Dark']}
-                    containerStyle={s.buttonGroupContainer}
-                    textStyle={s.buttonGroupInactive}
-                    selectedButtonStyle={s.selButtonStyle}
-                    selectedTextStyle={s.selTextStyle}
-                    innerBorderStyle={s.innerBorderStyle}
-                />
-                <Text style={s.text}>{`When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.`}</Text>
-                <View style={s.pageTitle}><Text style={s.pageTitleText}>Dark Mode Theme</Text></View>
-                <ButtonGroup
-                    onPress={updateDarkPref}
-                    selectedIndex={selectedDark}
-                    buttons={['Standard', 'Dark']}
-                    containerStyle={s.buttonGroupContainer}
-                    textStyle={s.buttonGroupInactive}
-                    selectedButtonStyle={s.selButtonStyle}
-                    selectedTextStyle={s.selTextStyle}
-                    innerBorderStyle={s.innerBorderStyle}
-                />
-                <Text style={s.text}>{`When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.`}</Text>
-                <View style={s.pageTitle}><Text style={s.pageTitleText}>Distance Unit</Text></View>
-                <ButtonGroup
-                    onPress={updateUnitPref}
-                    selectedIndex={user.unitPreference ? 1 : 0}
-                    buttons={['Miles', 'Kilometers']}
-                    containerStyle={s.buttonGroupContainer}
-                    textStyle={s.buttonGroupInactive}
-                    selectedButtonStyle={s.selButtonStyle}
-                    selectedTextStyle={s.selTextStyle}
-                    innerBorderStyle={s.innerBorderStyle}
-                />
-            </View>
-        </Screen>
-    )
+  return (
+    <Screen>
+      <View style={s.background}>
+        <View style={s.pageTitle}>
+          <Text style={s.pageTitleText}>Standard Theme</Text>
+        </View>
+        <ButtonGroup
+          onPress={updateDefaultPref}
+          selectedIndex={selectedDefault}
+          buttons={["Standard", "Dark"]}
+          containerStyle={s.buttonGroupContainer}
+          textStyle={s.buttonGroupInactive}
+          selectedButtonStyle={s.selButtonStyle}
+          selectedTextStyle={s.selTextStyle}
+          innerBorderStyle={s.innerBorderStyle}
+        />
+        <Text
+          style={s.text}
+        >{`When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.`}</Text>
+        <View style={s.pageTitle}>
+          <Text style={s.pageTitleText}>Dark Mode Theme</Text>
+        </View>
+        <ButtonGroup
+          onPress={updateDarkPref}
+          selectedIndex={selectedDark}
+          buttons={["Standard", "Dark"]}
+          containerStyle={s.buttonGroupContainer}
+          textStyle={s.buttonGroupInactive}
+          selectedButtonStyle={s.selButtonStyle}
+          selectedTextStyle={s.selTextStyle}
+          innerBorderStyle={s.innerBorderStyle}
+        />
+        <Text
+          style={s.text}
+        >{`When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.`}</Text>
+        <View style={s.pageTitle}>
+          <Text style={s.pageTitleText}>Distance Unit</Text>
+        </View>
+        <ButtonGroup
+          onPress={updateUnitPref}
+          selectedIndex={user.unitPreference ? 1 : 0}
+          buttons={["Miles", "Kilometers"]}
+          containerStyle={s.buttonGroupContainer}
+          textStyle={s.buttonGroupInactive}
+          selectedButtonStyle={s.selButtonStyle}
+          selectedTextStyle={s.selTextStyle}
+          innerBorderStyle={s.innerBorderStyle}
+        />
+      </View>
+    </Screen>
+  );
+};
 
-}
-
-const getStyles = theme => StyleSheet.create({
+const getStyles = (theme) =>
+  StyleSheet.create({
     background: {
-        flex: 1,
-        backgroundColor: theme.base1,
-        marginBottom: 15,
-        paddingHorizontal: 10
+      flex: 1,
+      backgroundColor: theme.base1,
+      marginBottom: 15,
+      paddingHorizontal: 10,
     },
     pageTitle: {
-        paddingTop: 10,
+      paddingTop: 10,
     },
     pageTitleText: {
-        textAlign: 'center',
-        fontSize: 18,
-        fontFamily: 'boldFont',
-        color: theme.text
+      textAlign: "center",
+      fontSize: 18,
+      fontFamily: "boldFont",
+      color: theme.text,
     },
     text: {
-        fontSize: 14,
-        color: theme.text2,
-        fontFamily: 'regularItalicFont',
-        lineHeight: 22,
-        marginLeft: 15,
-        marginRight: 15,
+      fontSize: 14,
+      color: theme.text2,
+      fontFamily: "regularItalicFont",
+      lineHeight: 22,
+      marginLeft: 15,
+      marginRight: 15,
     },
     buttonGroupContainer: {
-        height: 40,
-        borderWidth: 0,
-        borderRadius: 25,
-        backgroundColor: theme.base3,
-        shadowColor: theme.shadow,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
-        shadowRadius: 6,
-        elevation: 6,
-        overflow: 'visible',
-        marginHorizontal: 15
+      height: 40,
+      borderWidth: 0,
+      borderRadius: 25,
+      backgroundColor: theme.base3,
+      shadowColor: theme.shadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      elevation: 6,
+      overflow: "visible",
+      marginHorizontal: 15,
     },
     buttonGroupInactive: {
-        color: theme.text2,
-        fontFamily: "mediumFont"
+      color: theme.text2,
+      fontFamily: "mediumFont",
     },
     innerBorderStyle: {
-        width: 0,
+      width: 0,
     },
     selButtonStyle: {
-        borderWidth: 4,
-        borderColor: theme.base4,
-        backgroundColor: theme.white,
-        borderRadius: 25
+      borderWidth: 4,
+      borderColor: theme.base4,
+      backgroundColor: theme.white,
+      borderRadius: 25,
     },
     selTextStyle: {
-        color: theme.text2,
-        fontFamily: 'boldFont',
+      color: theme.text2,
+      fontFamily: "boldFont",
     },
-})
+  });
 
 Settings.propTypes = {
-    navigation: PropTypes.object,
-    user: PropTypes.object,
-    setUnitPreference: PropTypes.func,
-}
+  navigation: PropTypes.object,
+  user: PropTypes.object,
+  setUnitPreference: PropTypes.func,
+};
 
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = ({ user }) => ({ user });
 const mapDispatchToProps = (dispatch) => ({
-    setUnitPreference: unitPreference => dispatch(setUnitPreference((unitPreference))),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+  setUnitPreference: (unitPreference) =>
+    dispatch(setUnitPreference(unitPreference)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
