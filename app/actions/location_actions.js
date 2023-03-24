@@ -10,7 +10,6 @@ import {
   ADDING_MACHINE_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION_FAILURE,
-  DISPLAY_ERROR,
   UPDATING_LOCATION_DETAILS,
   LOCATION_DETAILS_UPDATED,
   FAILED_LOCATION_DETAILS_UPDATE,
@@ -49,7 +48,7 @@ export const confirmLocationIsUpToDate = (body, id, username) => (dispatch) => {
         throw err;
       },
     )
-    .catch((err) => dispatch({ type: DISPLAY_ERROR, err }));
+    .catch((err) => console.log(err));
 };
 
 const locationDetailsConfirmed = (msg, username, id) => {
@@ -143,7 +142,7 @@ export const removeMachineFromLocation =
           throw err;
         },
       )
-      .catch((err) => dispatch({ type: DISPLAY_ERROR, err }));
+      .catch((err) => console.log(err));
   };
 
 export const locationMachineRemoved = (
@@ -192,8 +191,7 @@ const machineAddedToLocation = (location_id, machine) => (dispatch) => {
   dispatch(fetchLocation(location_id));
 };
 
-export const addMachineToLocationFailure = (err) => (dispatch) => {
-  dispatch({ type: DISPLAY_ERROR, err });
+export const addMachineToLocationFailure = () => (dispatch) => {
   dispatch({ type: MACHINE_ADDED_TO_LOCATION_FAILURE });
 };
 
@@ -234,8 +232,7 @@ export const locationDetailsUpdated =
     goBack();
   };
 
-export const updateLocationDetailsFailure = (err) => (dispatch) => {
-  dispatch({ type: DISPLAY_ERROR, err });
+export const updateLocationDetailsFailure = () => (dispatch) => {
   dispatch({ type: FAILED_LOCATION_DETAILS_UPDATE });
 };
 
@@ -320,8 +317,7 @@ export const locationSuggested = () => (dispatch) => {
   dispatch({ type: LOCATION_SUGGESTED });
 };
 
-export const suggestLocationFailure = (err) => (dispatch) => {
-  dispatch({ type: DISPLAY_ERROR, err });
+export const suggestLocationFailure = () => (dispatch) => {
   dispatch({ type: RESET_SUGGEST_LOCATION });
 };
 

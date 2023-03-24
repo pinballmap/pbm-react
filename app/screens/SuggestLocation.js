@@ -26,7 +26,6 @@ import {
   Text,
 } from "../components";
 import {
-  clearError,
   clearSelectedState,
   removeMachineFromList,
   setSelectedLocationType,
@@ -43,7 +42,6 @@ function SuggestLocation({
   route,
   setSelectedLocationType,
   setSelectedOperator,
-  clearError,
   suggestLocation,
   resetSuggestLocation,
   location,
@@ -83,14 +81,8 @@ function SuggestLocation({
     </Text>
   );
 
-  const acceptError = () => {
-    clearError();
-    setShowSuggestLocationModal(false);
-  };
-
   const { navigate } = navigation;
   const { loggedIn } = props.user;
-  const { errorText } = props.error;
   const { locationTypes } = props.locations;
   const { operators } = props.operators;
 
@@ -183,11 +175,6 @@ function SuggestLocation({
                 >
                   {isSuggestingLocation ? (
                     <ActivityIndicator />
-                  ) : errorText ? (
-                    <ScrollView style={[{ paddingTop: 100 }, s.background]}>
-                      <Text style={[s.error, s.success]}>{errorText}</Text>
-                      <PbmButton title={"OK"} onPress={() => acceptError()} />
-                    </ScrollView>
                   ) : locationSuggested ? (
                     <ScrollView style={[s.successContainer, s.background]}>
                       <Text
@@ -667,13 +654,11 @@ const getStyles = (theme) =>
   });
 
 SuggestLocation.propTypes = {
-  error: PropTypes.object,
   locations: PropTypes.object,
   operators: PropTypes.object,
   user: PropTypes.object,
   navigation: PropTypes.object,
   location: PropTypes.object,
-  clearError: PropTypes.func,
   removeMachineFromList: PropTypes.func,
   clearSelectedState: PropTypes.func,
   suggestLocation: PropTypes.func,
@@ -683,15 +668,13 @@ SuggestLocation.propTypes = {
   route: PropTypes.object,
 };
 
-const mapStateToProps = ({ error, location, locations, operators, user }) => ({
-  error,
+const mapStateToProps = ({ location, locations, operators, user }) => ({
   location,
   locations,
   operators,
   user,
 });
 const mapDispatchToProps = (dispatch) => ({
-  clearError: () => dispatch(clearError()),
   removeMachineFromList: (machine) => dispatch(removeMachineFromList(machine)),
   clearSelectedState: () => dispatch(clearSelectedState()),
   suggestLocation: (goBack, locationDetails) =>

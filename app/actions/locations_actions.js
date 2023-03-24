@@ -7,7 +7,6 @@ import {
   FETCHING_LOCATIONS_SUCCESS,
   FETCHING_LOCATIONS_FAILURE,
   SELECT_LOCATION_LIST_FILTER_BY,
-  DISPLAY_ERROR,
   SET_MAX_ZOOM,
   UPDATE_COORDINATES,
 } from "./types";
@@ -173,10 +172,6 @@ export const getLocationsSuccess = (
 
 export const getLocationsFailure = () => (dispatch) => {
   dispatch({ type: FETCHING_LOCATIONS_FAILURE });
-  dispatch({
-    type: DISPLAY_ERROR,
-    err: "Unable to get locations. Please try again later.",
-  });
 };
 
 export const selectLocationListFilterBy = (idx) => {
