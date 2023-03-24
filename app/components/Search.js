@@ -75,10 +75,11 @@ class Search extends Component {
     _fetch = async (query) => {
         this.waitingFor = query
         this.setState({ searching: true })
+        const {regions = []} = this.props.regions ?? {}
         if (query === '') {
             await this.setState({ foundLocations: [], foundCities: [], foundRegions: [], searching: false })
         } else {
-            const foundRegions = query.toLowerCase() === 'region' ? this.props.regions.regions : this.props.regions.regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
+            const foundRegions = query.toLowerCase() === 'region' ? regions : regions.filter(r => r.full_name.toLowerCase().includes(query.toLowerCase()))
             const foundLocations = await getData(`/locations/autocomplete?name=${encodeURIComponent(query)}`)
             let foundCities = await getData(`/locations/autocomplete_city.json?name=${encodeURIComponent(query)}`)
             if (query === this.waitingFor) {
