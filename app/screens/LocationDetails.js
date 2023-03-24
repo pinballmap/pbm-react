@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   Image,
-  Modal,
   Linking,
   Platform,
   Pressable,
@@ -14,7 +13,7 @@ import {
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import openMap from "react-native-open-maps";
-import { Avatar, Button, ListItem, Icon } from "@rneui/base";
+import { Avatar, ListItem, Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -588,11 +587,9 @@ class LocationDetails extends Component {
                     </View>
                     {dateDiff >= 2 && (
                       <View style={s.staleView}>
-                        <Text style={s.staleText}>
-                          Last updated over {dateDiff} years ago! The listing
-                          may be out of date. Please remove the machines if
-                          they're gone.
-                        </Text>
+                        <Text
+                          style={s.staleText}
+                        >{`Last updated over ${dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.`}</Text>
                       </View>
                     )}
                   </View>

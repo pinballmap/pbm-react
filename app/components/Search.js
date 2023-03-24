@@ -114,7 +114,7 @@ class Search extends Component {
           const { lat, lng } = response.results[0].geometry.location;
           this.props.updateCoordinatesAndGetLocations(lat, lng);
         },
-        (error) => {
+        () => {
           Alert.alert("An error occurred geocoding.");
         },
       )

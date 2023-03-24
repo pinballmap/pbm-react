@@ -10,21 +10,17 @@ export const postData = (uri, body) => {
     body: JSON.stringify(body),
   })
     .then(async (response) => {
-      try {
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.errors) {
-          throw data.errors;
-        }
-
-        if (data.error) {
-          throw data.error;
-        }
-
-        if (response.ok) return data;
-      } catch (e) {
-        throw e;
+      if (data.errors) {
+        throw data.errors;
       }
+
+      if (data.error) {
+        throw data.error;
+      }
+
+      if (response.ok) return data;
     })
     .catch((err) => {
       const errorText = typeof err === "object" ? err.toString() : err;
@@ -42,21 +38,17 @@ export const putData = (uri, body) => {
     body: JSON.stringify(body),
   })
     .then(async (response) => {
-      try {
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.errors) {
-          throw data.errors;
-        }
-
-        if (data.error) {
-          throw data.error;
-        }
-
-        if (response.ok) return data;
-      } catch (e) {
-        throw e;
+      if (data.errors) {
+        throw data.errors;
       }
+
+      if (data.error) {
+        throw data.error;
+      }
+
+      if (response.ok) return data;
     })
     .catch((err) => {
       const errorText = typeof err === "object" ? err.toString() : err;

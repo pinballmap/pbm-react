@@ -23,7 +23,6 @@ import {
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
 } from "./types";
-import { updateCoordinatesAndGetLocations } from "./locations_actions";
 
 import { getData, postData, putData, deleteData } from "../config/request";
 

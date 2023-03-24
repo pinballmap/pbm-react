@@ -6,7 +6,6 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { useTheme } from "@react-navigation/native";
 import {
   Dimensions,
   Platform,
@@ -25,8 +24,6 @@ let deviceWidth = Dimensions.get("window").width;
 
 const DrawerMenu = ({ loggedIn, logout, ...props }) => {
   const { theme } = useContext(ThemeContext);
-  const { colors } = useTheme();
-
   const s = getStyles(theme);
   const iconSize = 24;
   const iconColor = "#bec2e6";

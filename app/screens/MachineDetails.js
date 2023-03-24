@@ -202,10 +202,8 @@ class MachineDetails extends Component {
                         )}
                       </Text>
                       <Text style={[s.modalSubText, s.margin8]}>
-                        <Text style={s.bold}>Operators:</Text> if you've fixed
-                        an issue, please leave a comment saying so. But please
-                        do not comment simply to "whitewash" people's comments
-                        that bother you.
+                        <Text style={s.bold}>Operators:</Text>
+                        {` if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you.`}
                       </Text>
                       <PbmButton
                         title={"Add Condition"}

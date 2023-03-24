@@ -22,7 +22,6 @@ import {
   WarningButton,
 } from "../components";
 import {
-  clearError,
   clearSelectedState,
   setSelectedOperator,
   setSelectedLocationType,
@@ -43,11 +42,6 @@ function EditLocationDetails({
     props.updateLocationDetails(navigation.goBack, phone, website, description);
   };
 
-  const acceptError = () => {
-    props.clearError();
-    setShowEditLocationDetailsModal(false);
-  };
-
   const [phone, setPhone] = useState(props.location.location.phone);
   const [website, setWebsite] = useState(props.location.location.website);
   const [description, setDescription] = useState(
@@ -59,7 +53,6 @@ function EditLocationDetails({
   const { locationTypes } = props.locations;
   const { operators } = props.operators;
   const { updatingLocationDetails } = props.location.location;
-  const { errorText } = props.error;
   const selectedLocationType = route.params?.setSelectedLocationType;
   const selectedOperator = route.params?.setSelectedOperator;
   const locationTypeId = locationType
@@ -136,73 +129,58 @@ function EditLocationDetails({
               visible={showEditLocationDetailsModal}
               onRequestClose={() => {}}
             >
-              {errorText ? (
-                <View style={{ marginTop: 100, alignItems: "center" }}>
-                  <Text
-                    style={{
-                      fontFamily: "regularFont",
-                      fontSize: 16,
-                      color: theme.red2,
-                    }}
-                  >
-                    {errorText}
-                  </Text>
-                  <PbmButton title={"OK"} onPress={() => acceptError()} />
-                </View>
-              ) : (
-                <SafeAreaProvider>
-                  <SafeAreaView style={s.background}>
-                    <ScrollView style={{ backgroundColor: theme.base1 }}>
-                      <View style={s.pageTitle}>
-                        <Text style={s.pageTitleText}>
-                          Please review your edits
-                        </Text>
-                      </View>
-                      <View style={s.previewContainer}>
-                        <Text style={s.previewTitle}>Phone</Text>
-                        <Text style={s.preview}>{phone}</Text>
-                      </View>
-                      <View style={s.previewContainer}>
-                        <Text style={s.previewTitle}>Website</Text>
-                        <Text style={s.preview}>{website}</Text>
-                      </View>
-                      <View style={s.previewContainer}>
-                        <Text style={s.previewTitle}>Location Notes</Text>
-                        <Text style={s.preview}>{description}</Text>
-                      </View>
-                      <View style={s.previewContainer}>
-                        <Text style={s.previewTitle}>Location Type</Text>
-                        <Text style={s.preview}>
-                          {typeof locationTypeId === "number" &&
-                          locationTypeId > -1
-                            ? locationTypes
-                                .filter((type) => type.id === locationTypeId)
-                                .map((type) => type.name)
-                            : "None Selected"}
-                        </Text>
-                      </View>
-                      <View style={s.previewContainer}>
-                        <Text style={s.previewTitle}>Operator</Text>
-                        <Text style={s.preview}>
-                          {typeof operatorId === "number" && operatorId > -1
-                            ? operators
-                                .filter((op) => op.id === operatorId)
-                                .map((operator) => operator.name)
-                            : "None Selected"}
-                        </Text>
-                      </View>
-                      <PbmButton
-                        title={"Confirm Location Details"}
-                        onPress={() => confirmEditLocationDetails()}
-                      />
-                      <WarningButton
-                        title={"Cancel"}
-                        onPress={() => setShowEditLocationDetailsModal(false)}
-                      />
-                    </ScrollView>
-                  </SafeAreaView>
-                </SafeAreaProvider>
-              )}
+              <SafeAreaProvider>
+                <SafeAreaView style={s.background}>
+                  <ScrollView style={{ backgroundColor: theme.base1 }}>
+                    <View style={s.pageTitle}>
+                      <Text style={s.pageTitleText}>
+                        Please review your edits
+                      </Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Phone</Text>
+                      <Text style={s.preview}>{phone}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Website</Text>
+                      <Text style={s.preview}>{website}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Notes</Text>
+                      <Text style={s.preview}>{description}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Type</Text>
+                      <Text style={s.preview}>
+                        {typeof locationTypeId === "number" &&
+                        locationTypeId > -1
+                          ? locationTypes
+                              .filter((type) => type.id === locationTypeId)
+                              .map((type) => type.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Operator</Text>
+                      <Text style={s.preview}>
+                        {typeof operatorId === "number" && operatorId > -1
+                          ? operators
+                              .filter((op) => op.id === operatorId)
+                              .map((operator) => operator.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <PbmButton
+                      title={"Confirm Location Details"}
+                      onPress={() => confirmEditLocationDetails()}
+                    />
+                    <WarningButton
+                      title={"Cancel"}
+                      onPress={() => setShowEditLocationDetailsModal(false)}
+                    />
+                  </ScrollView>
+                </SafeAreaView>
+              </SafeAreaProvider>
             </Modal>
             {updatingLocationDetails ? (
               <ActivityIndicator />
@@ -268,9 +246,8 @@ function EditLocationDetails({
                       style={s.textLink}
                     >
                       {"contact us"}
-                    </Text>{" "}
-                    and we'll fix it (include the location name in your
-                    message).
+                    </Text>
+                    {` and we'll fix it (include the location name in your message).`}
                   </Text>
                   <Text style={s.title}>Location Type</Text>
                   <DropDownButton
@@ -395,9 +372,7 @@ EditLocationDetails.propTypes = {
   locations: PropTypes.object,
   location: PropTypes.object,
   operators: PropTypes.object,
-  error: PropTypes.object,
   updateLocationDetails: PropTypes.func,
-  clearError: PropTypes.func,
   navigation: PropTypes.object,
   setSelectedOperator: PropTypes.func,
   setSelectedLocationType: PropTypes.func,
@@ -405,8 +380,7 @@ EditLocationDetails.propTypes = {
   route: PropTypes.object,
 };
 
-const mapStateToProps = ({ error, locations, location, operators }) => ({
-  error,
+const mapStateToProps = ({ locations, location, operators }) => ({
   locations,
   location,
   operators,
@@ -414,7 +388,6 @@ const mapStateToProps = ({ error, locations, location, operators }) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateLocationDetails: (goBack, phone, website, description) =>
     dispatch(updateLocationDetails(goBack, phone, website, description)),
-  clearError: () => dispatch(clearError()),
   setSelectedOperator: (id) => dispatch(setSelectedOperator(id)),
   setSelectedLocationType: (id) => dispatch(setSelectedLocationType(id)),
   clearSelectedState: () => dispatch(clearSelectedState()),
