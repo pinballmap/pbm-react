@@ -65,7 +65,7 @@ class UserProfile extends Component {
                 <ActivityIndicator />
             )
         const { user } = this.props
-        const profileInfo = this.state.profile_info
+        const profileInfo = this.state.profile_info ?? {}
         const {
             profile_list_of_edited_locations = [],
             profile_list_of_high_scores = [],
