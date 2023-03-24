@@ -121,7 +121,7 @@ class Events extends Component {
                     marginTop: 15,
                   }}
                 >
-                  Something went wrong. In the meantime, you can check the{" "}
+                  {`Something went wrong. In the meantime, you can check the `}
                   <Text
                     style={s.textLink}
                     onPress={() =>
@@ -131,8 +131,8 @@ class Events extends Component {
                     }
                   >
                     IFPA calendar
-                  </Text>{" "}
-                  on their site.
+                  </Text>
+                  {` on their site.`}
                 </Text>
               ) : (
                 <>
