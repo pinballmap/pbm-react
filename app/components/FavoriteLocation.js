@@ -99,10 +99,13 @@ const s = StyleSheet.create({
     },
 })
 
-const mapStateToProps = ({ user }, {locationId}) => ({
-    loggedIn: user?.loggedIn,
-    isUserFave: user?.faveLocations.some(fave => fave.location_id === locationId)
-})
+const mapStateToProps = ({ user }, {locationId}) => {
+    const {loggedIn, faveLocations = []} = user ?? {}
+    return {
+        loggedIn,
+        isUserFave: faveLocations.some(fave => fave.location_id === locationId)
+    }
+}
 const mapDispatchToProps = (dispatch) => ({
     removeFavoriteLocation: (id) => dispatch(removeFavoriteLocation(id)),
     addFavoriteLocation: (id) => dispatch(addFavoriteLocation(id)),
