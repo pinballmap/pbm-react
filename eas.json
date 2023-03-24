@@ -5,7 +5,7 @@
   "build": {
     "development": {
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       },
       "developmentClient": true,
       "distribution": "internal",
@@ -31,7 +31,7 @@
       "distribution": "store",
       "channel": "production",
       "ios": {
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       },
       "env": {
         "API_URL": "https://www.pinballmap.com/api/v1"
