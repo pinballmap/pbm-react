@@ -32,7 +32,6 @@ import {
     Text,
 } from '../components'
 import {
-    clearError,
     closeConfirmModal,
     confirmLocationIsUpToDate,
     fetchLocation,
@@ -104,9 +103,7 @@ class LocationDetails extends Component {
 
         const location = this.props.location.location
         const { operators } = this.props.operators
-        const { errorText } = this.props.error
         const { navigation } = this.props
-        const errorModalVisible = errorText && errorText.length > 0 ? true : false
         const { loggedIn, lat: userLat, lon: userLon, locationTrackingServicesEnabled, unitPreference } = this.props.user
         const { website: opWebsite, name: opName } = operators.find(operator => operator.id === location.operator_id) ?? {}
 
@@ -224,18 +221,6 @@ class LocationDetails extends Component {
                                         </ListItem>
                                     </View>
                                 </ConfirmationModal>
-                                <Modal
-                                    visible={errorModalVisible}
-                                    onRequestClose={() => { }}
-                                >
-                                    <View style={{ marginTop: 100, alignItems: 'center' }}>
-                                        <Text style={{ fontSize: 16, color: theme.red2, fontFamily: 'regularFont' }}>{errorText}</Text>
-                                        <Button
-                                            title={"OK"}
-                                            onPress={this.props.clearError}
-                                        />
-                                    </View>
-                                </Modal>
                                 <ConfirmationModal visible={this.props.location.confirmModalVisible}>
                                     <Text style={s.confirmText}>{this.props.location.confirmationMessage}</Text>
                                     <MaterialCommunityIcons
@@ -700,19 +685,16 @@ LocationDetails.propTypes = {
     closeConfirmModal: PropTypes.func,
     setCurrentMachine: PropTypes.func,
     navigation: PropTypes.object,
-    clearError: PropTypes.func,
-    error: PropTypes.object,
     updateCoordinatesAndGetLocations: PropTypes.func,
     route: PropTypes.object,
 }
 
-const mapStateToProps = ({ application, error, location, locations, operators, machines, user }) => ({ application, error, location, locations, operators, machines, user })
+const mapStateToProps = ({ application, location, locations, operators, machines, user }) => ({ application, location, locations, operators, machines, user })
 const mapDispatchToProps = (dispatch) => ({
     fetchLocation: url => dispatch(fetchLocation(url)),
     confirmLocationIsUpToDate: (body, id, username) => dispatch(confirmLocationIsUpToDate(body, id, username)),
     closeConfirmModal: () => dispatch(closeConfirmModal()),
     setCurrentMachine: id => dispatch(setCurrentMachine(id)),
-    clearError: () => dispatch(clearError()),
     updateCoordinatesAndGetLocations: (lat, lon) => dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails)
