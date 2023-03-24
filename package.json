@@ -59,6 +59,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-watch": "^8.0.0",
     "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "metro-react-native-babel-preset": "^0.45.0",
     "prettier": "2.8.7"
   },
@@ -66,12 +67,17 @@
     "start": "expo start -c",
     "test": "jest",
     "lint": "eslint \"**/*.js\"",
-    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'",
+    "prepare": "husky install"
   },
   "jest": {
     "preset": "jest-expo",
     "setupFiles": [
       "./setupJest.js"
     ]
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
