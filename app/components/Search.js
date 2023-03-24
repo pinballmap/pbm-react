@@ -172,7 +172,7 @@ class Search extends Component {
         this.props.navigate('LocationDetails', { id: location.id })
         this.clearSearchState(location)
         } catch (e) {
-            Alert.alert("Something went wrong")
+            Alert.alert("Location not found")
         }
     }
 

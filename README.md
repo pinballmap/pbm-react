@@ -11,6 +11,11 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.22
+March 24, 2023
+
+- Bug fixes: better error handling. One example is when you click on a location name in your "Recent Search History" but that location has since been deleted - now you get a simple error message.
+
 ### 5.2.21
 March 19, 2023
 
