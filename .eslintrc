@@ -1,8 +1,5 @@
 {
-  "plugins": [
-    "react",
-    "react-native"
-  ],
+  "plugins": ["react", "react-native"],
   "settings": {
     "react": {
       "version": "detect" // React version. "detect" automatically picks the version you have installed.
@@ -23,28 +20,14 @@
     "jest": true,
     "react-native/react-native": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "react-native/no-unused-styles": "off",
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 0,
     "react-native/no-color-literals": 0,
-    "semi": [
-      "error",
-      "never"
-    ],
-    "no-console": "off",
-    "indent": [
-      "error",
-      4,
-      {
-        "SwitchCase": 1
-      }
-    ],
     "react/display-name": "off",
-    "no-extra-boolean-cast": "off"
+    "no-extra-boolean-cast": "off",
+    "react/prop-types": 0
   }
 }

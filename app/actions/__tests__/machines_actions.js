@@ -34,7 +34,7 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 
 //     it('dispatched the expected actions when requesting machines fails', (done) => {
@@ -42,7 +42,7 @@
 //         const firstAction = { type: types.FETCHING_MACHINES }
 
 //         const secondAction = {
-//             type: types.FETCHING_MACHINES_FAILURE,  
+//             type: types.FETCHING_MACHINES_FAILURE,
 //         }
 
 //         getData.mockImplementationOnce(() => Promise.reject({  }))
@@ -58,6 +58,6 @@
 //                 expect(dispatch.mock.calls[0][0]).toEqual(firstAction)
 //                 expect(dispatch.mock.calls[1][0]).toEqual(secondAction)
 //                 done()
-//             }) 
+//             })
 //     })
 // })

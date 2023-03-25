@@ -1,350 +1,398 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
-    Dimensions,
-    Keyboard,
-    Modal,
-    Platform,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-    View,
-} from 'react-native'
-import { ThemeContext } from '../theme-context'
+  Dimensions,
+  Keyboard,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
+import { ThemeContext } from "../theme-context";
 import {
-    ActivityIndicator,
-    DropDownButton,
-    PbmButton,
-    Screen,
-    Text,
-    WarningButton,
-} from '../components'
+  ActivityIndicator,
+  DropDownButton,
+  PbmButton,
+  Screen,
+  Text,
+  WarningButton,
+} from "../components";
 import {
-    clearError,
-    clearSelectedState,
-    setSelectedOperator,
-    setSelectedLocationType,
-    updateLocationDetails,
-} from '../actions'
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+  clearSelectedState,
+  setSelectedOperator,
+  setSelectedLocationType,
+  updateLocationDetails,
+} from "../actions";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
-let deviceWidth = Dimensions.get('window').width
+let deviceWidth = Dimensions.get("window").width;
 
 function EditLocationDetails({
-    navigation,
-    route,
-    setSelectedLocationType,
-    setSelectedOperator,
-    ...props
+  navigation,
+  route,
+  setSelectedLocationType,
+  setSelectedOperator,
+  ...props
 }) {
-    const confirmEditLocationDetails = () => {
-        props.updateLocationDetails(navigation.goBack, phone, website, description)
+  const confirmEditLocationDetails = () => {
+    props.updateLocationDetails(navigation.goBack, phone, website, description);
+  };
+
+  const [phone, setPhone] = useState(props.location.location.phone);
+  const [website, setWebsite] = useState(props.location.location.website);
+  const [description, setDescription] = useState(
+    props.location.location.description,
+  );
+
+  const { operator, locationType, name, location_type_id, operator_id } =
+    props.location.location;
+  const { locationTypes } = props.locations;
+  const { operators } = props.operators;
+  const { updatingLocationDetails } = props.location.location;
+  const selectedLocationType = route.params?.setSelectedLocationType;
+  const selectedOperator = route.params?.setSelectedOperator;
+  const locationTypeId = locationType
+    ? locationType
+    : selectedLocationType
+    ? selectedLocationType
+    : location_type_id;
+
+  const operatorId = operator
+    ? operator
+    : selectedOperator
+    ? selectedOperator
+    : operator_id;
+
+  const locationTypeObj =
+    locationTypes.find((type) => type.id === locationTypeId) || {};
+  const {
+    name: locationTypeName = locationTypeId === -1
+      ? "N/A"
+      : "Select location type",
+  } = locationTypeObj;
+
+  const operatorObj = operators.find((op) => op.id === operatorId) || {};
+  const { name: operatorName = operator === -1 ? "N/A" : "Select operator" } =
+    operatorObj;
+  const keyboardDismissProp =
+    Platform.OS === "ios"
+      ? { keyboardDismissMode: "on-drag" }
+      : { onScrollBeginDrag: Keyboard.dismiss };
+
+  const [showEditLocationDetailsModal, setShowEditLocationDetailsModal] =
+    useState(false);
+
+  React.useEffect(() => {
+    navigation.setOptions({ title: name });
+    return () => props.clearSelectedState();
+  }, []);
+
+  React.useEffect(() => {
+    if (selectedLocationType) {
+      setSelectedLocationType(selectedLocationType);
     }
+  }, [selectedLocationType]);
 
-    const acceptError = () => {
-        props.clearError()
-        setShowEditLocationDetailsModal(false)
+  React.useEffect(() => {
+    if (selectedOperator) {
+      setSelectedOperator(selectedOperator);
     }
+  }, [selectedOperator]);
 
-    const [phone, setPhone] = useState(props.location.location.phone)
-    const [website, setWebsite] = useState(props.location.location.website)
-    const [description, setDescription] = useState(props.location.location.description)
+  const goToFindLocationType = () => {
+    navigation.navigate("FindLocationType", {
+      previous_screen: "EditLocationDetails",
+      type: "search",
+    });
+  };
 
-    const { operator, locationType, name, location_type_id, operator_id } = props.location.location
-    const { locationTypes } = props.locations
-    const { operators } = props.operators
-    const { updatingLocationDetails } = props.location.location
-    const { errorText } = props.error
-    const selectedLocationType = route.params?.setSelectedLocationType
-    const selectedOperator = route.params?.setSelectedOperator
-    const locationTypeId = locationType ? locationType : selectedLocationType ? selectedLocationType : location_type_id
+  const goToFindOperator = () => {
+    navigation.navigate("FindOperator", {
+      previous_screen: "EditLocationDetails",
+      type: "search",
+    });
+  };
 
-    const operatorId = operator ? operator : selectedOperator ? selectedOperator : operator_id
-
-    const locationTypeObj = locationTypes.find(type => type.id === locationTypeId) || {}
-    const { name: locationTypeName = locationTypeId === -1 ? 'N/A' : 'Select location type' } = locationTypeObj
-
-    const operatorObj = operators.find(op => op.id === operatorId) || {}
-    const { name: operatorName = operator === -1 ? 'N/A' : 'Select operator' } = operatorObj
-    const keyboardDismissProp = Platform.OS === "ios" ? { keyboardDismissMode: "on-drag" } : { onScrollBeginDrag: Keyboard.dismiss }
-
-    const [showEditLocationDetailsModal, setShowEditLocationDetailsModal] = useState(false)
-
-    React.useEffect(() => {
-        navigation.setOptions({ title: name })
-        return () => props.clearSelectedState()
-    }, [])
-
-    React.useEffect(() => {
-        if (selectedLocationType) {
-            setSelectedLocationType(selectedLocationType)
-        }
-    }, [selectedLocationType])
-
-    React.useEffect(() => {
-        if (selectedOperator) {
-            setSelectedOperator(selectedOperator)
-        }
-    }, [selectedOperator])
-
-    const goToFindLocationType = () => {
-        navigation.navigate('FindLocationType', {
-            previous_screen: 'EditLocationDetails',
-            type: 'search',
-        })
-    }
-
-    const goToFindOperator = () => {
-        navigation.navigate('FindOperator', {
-            previous_screen: 'EditLocationDetails',
-            type: 'search',
-        })
-    }
-
-    return (
-        <ThemeContext.Consumer>
-            {({ theme }) => {
-                const s = getStyles(theme)
-                return (
-                    <Screen keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            visible={showEditLocationDetailsModal}
-                            onRequestClose={() => { }}
-                        >
-                            {errorText ?
-                                <View style={{ marginTop: 100, alignItems: 'center' }}>
-                                    <Text style={{ fontFamily: 'regularFont', fontSize: 16, color: theme.red2 }}>{errorText}</Text>
-                                    <PbmButton
-                                        title={"OK"}
-                                        onPress={() => acceptError()}
-                                    />
-                                </View>
-                                :
-                                <SafeAreaProvider>
-                                    <SafeAreaView style={s.background}>
-                                        <ScrollView style={{ backgroundColor: theme.base1 }}>
-                                            <View style={s.pageTitle}>
-                                                <Text style={s.pageTitleText}>Please review your edits</Text>
-                                            </View>
-                                            <View style={s.previewContainer}>
-                                                <Text style={s.previewTitle}>Phone</Text>
-                                                <Text style={s.preview}>{phone}</Text>
-                                            </View>
-                                            <View style={s.previewContainer}>
-                                                <Text style={s.previewTitle}>Website</Text>
-                                                <Text style={s.preview}>{website}</Text>
-                                            </View>
-                                            <View style={s.previewContainer}>
-                                                <Text style={s.previewTitle}>Location Notes</Text>
-                                                <Text style={s.preview}>{description}</Text>
-                                            </View>
-                                            <View style={s.previewContainer}>
-                                                <Text style={s.previewTitle}>Location Type</Text>
-                                                <Text style={s.preview}>{typeof locationTypeId === 'number' && locationTypeId > -1 ? locationTypes.filter(type => type.id === locationTypeId).map(type => type.name) : 'None Selected'}</Text>
-                                            </View>
-                                            <View style={s.previewContainer}>
-                                                <Text style={s.previewTitle}>Operator</Text>
-                                                <Text style={s.preview}>{typeof operatorId === 'number' && operatorId > -1 ? operators.filter(op => op.id === operatorId).map(operator => operator.name) : 'None Selected'}</Text>
-                                            </View>
-                                            <PbmButton
-                                                title={'Confirm Location Details'}
-                                                onPress={() => confirmEditLocationDetails()}
-                                            />
-                                            <WarningButton
-                                                title={'Cancel'}
-                                                onPress={() => setShowEditLocationDetailsModal(false)}
-                                            />
-                                        </ScrollView>
-                                    </SafeAreaView>
-                                </SafeAreaProvider>
-                            }
-                        </Modal>
-                        {updatingLocationDetails ?
-                            <ActivityIndicator /> :
-                            <Pressable onPress={() => { Keyboard.dismiss() }}>
-                                <View style={{ marginLeft: 10, marginRight: 10 }}>
-                                    <Text style={s.title}>Phone</Text>
-                                    <TextInput
-                                        style={[{ height: 40 }, s.textInput, s.radius10]}
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={phone => setPhone(phone)}
-                                        value={phone}
-                                        returnKeyType="done"
-                                        placeholder={phone || '(503) xxx-xxxx'}
-                                        placeholderTextColor={theme.indigo4}
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
-                                    <Text style={s.title}>Website</Text>
-                                    <TextInput
-                                        style={[{ height: 40 }, s.textInput, s.radius10]}
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={website => setWebsite(website)}
-                                        value={website}
-                                        returnKeyType="done"
-                                        placeholder={website || 'https://...'}
-                                        placeholderTextColor={theme.indigo4}
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
-                                    <Text style={s.title}>Location Notes</Text>
-                                    <TextInput
-                                        multiline={true}
-                                        numberOfLines={4}
-                                        style={[{ height: 100 }, s.textInput, s.radius10]}
-                                        onChangeText={description => setDescription(description)}
-                                        value={description}
-                                        underlineColorAndroid='transparent'
-                                        placeholder={description || 'Location description...'}
-                                        placeholderTextColor={theme.indigo4}
-                                        textAlignVertical='top'
-                                    />
-                                    <Text style={[s.subText,s.margin8]}>If this venue is <Text style={{fontFamily: 'boldFont'}}>closed or no longer has machines</Text>, simply remove the machines from the listing! No need to note this above.</Text>
-                                    <Text style={[s.subText,s.margin8]}>If this venue has <Text style={{fontFamily: 'boldFont'}}>moved to a new address</Text> (or changed names), please <Text onPress={() => navigation.navigate('Contact')} style={s.textLink}>{"contact us"}</Text> and we'll fix it (include the location name in your message).</Text>
-                                    <Text style={s.title}>Location Type</Text>
-                                    <DropDownButton
-                                        title={locationTypeName}
-                                        containerStyle={[s.containerStyle]}
-                                        onPress={() => goToFindLocationType()}
-                                    />
-                                    <Text style={s.title}>Operator</Text>
-                                    <DropDownButton
-                                        title={operatorName}
-                                        containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
-                                        onPress={() => goToFindOperator()}
-                                    />
-                                    <PbmButton
-                                        title={'Review Location Details'}
-                                        onPress={() => setShowEditLocationDetailsModal(true)}
-                                    />
-                                </View>
-                            </Pressable>
-                        }
-                    </Screen>
-                )
-            }}
-        </ThemeContext.Consumer>
-    )
-
+  return (
+    <ThemeContext.Consumer>
+      {({ theme }) => {
+        const s = getStyles(theme);
+        return (
+          <Screen keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={showEditLocationDetailsModal}
+              onRequestClose={() => {}}
+            >
+              <SafeAreaProvider>
+                <SafeAreaView style={s.background}>
+                  <ScrollView style={{ backgroundColor: theme.base1 }}>
+                    <View style={s.pageTitle}>
+                      <Text style={s.pageTitleText}>
+                        Please review your edits
+                      </Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Phone</Text>
+                      <Text style={s.preview}>{phone}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Website</Text>
+                      <Text style={s.preview}>{website}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Notes</Text>
+                      <Text style={s.preview}>{description}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Type</Text>
+                      <Text style={s.preview}>
+                        {typeof locationTypeId === "number" &&
+                        locationTypeId > -1
+                          ? locationTypes
+                              .filter((type) => type.id === locationTypeId)
+                              .map((type) => type.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Operator</Text>
+                      <Text style={s.preview}>
+                        {typeof operatorId === "number" && operatorId > -1
+                          ? operators
+                              .filter((op) => op.id === operatorId)
+                              .map((operator) => operator.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <PbmButton
+                      title={"Confirm Location Details"}
+                      onPress={() => confirmEditLocationDetails()}
+                    />
+                    <WarningButton
+                      title={"Cancel"}
+                      onPress={() => setShowEditLocationDetailsModal(false)}
+                    />
+                  </ScrollView>
+                </SafeAreaView>
+              </SafeAreaProvider>
+            </Modal>
+            {updatingLocationDetails ? (
+              <ActivityIndicator />
+            ) : (
+              <Pressable
+                onPress={() => {
+                  Keyboard.dismiss();
+                }}
+              >
+                <View style={{ marginLeft: 10, marginRight: 10 }}>
+                  <Text style={s.title}>Phone</Text>
+                  <TextInput
+                    style={[{ height: 40 }, s.textInput, s.radius10]}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(phone) => setPhone(phone)}
+                    value={phone}
+                    returnKeyType="done"
+                    placeholder={phone || "(503) xxx-xxxx"}
+                    placeholderTextColor={theme.indigo4}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={s.title}>Website</Text>
+                  <TextInput
+                    style={[{ height: 40 }, s.textInput, s.radius10]}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(website) => setWebsite(website)}
+                    value={website}
+                    returnKeyType="done"
+                    placeholder={website || "https://..."}
+                    placeholderTextColor={theme.indigo4}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={s.title}>Location Notes</Text>
+                  <TextInput
+                    multiline={true}
+                    numberOfLines={4}
+                    style={[{ height: 100 }, s.textInput, s.radius10]}
+                    onChangeText={(description) => setDescription(description)}
+                    value={description}
+                    underlineColorAndroid="transparent"
+                    placeholder={description || "Location description..."}
+                    placeholderTextColor={theme.indigo4}
+                    textAlignVertical="top"
+                  />
+                  <Text style={[s.subText, s.margin8]}>
+                    If this venue is{" "}
+                    <Text style={{ fontFamily: "boldFont" }}>
+                      closed or no longer has machines
+                    </Text>
+                    , simply remove the machines from the listing! No need to
+                    note this above.
+                  </Text>
+                  <Text style={[s.subText, s.margin8]}>
+                    If this venue has{" "}
+                    <Text style={{ fontFamily: "boldFont" }}>
+                      moved to a new address
+                    </Text>{" "}
+                    (or changed names), please{" "}
+                    <Text
+                      onPress={() => navigation.navigate("Contact")}
+                      style={s.textLink}
+                    >
+                      {"contact us"}
+                    </Text>
+                    {` and we'll fix it (include the location name in your message).`}
+                  </Text>
+                  <Text style={s.title}>Location Type</Text>
+                  <DropDownButton
+                    title={locationTypeName}
+                    containerStyle={[s.containerStyle]}
+                    onPress={() => goToFindLocationType()}
+                  />
+                  <Text style={s.title}>Operator</Text>
+                  <DropDownButton
+                    title={operatorName}
+                    containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
+                    onPress={() => goToFindOperator()}
+                  />
+                  <PbmButton
+                    title={"Review Location Details"}
+                    onPress={() => setShowEditLocationDetailsModal(true)}
+                  />
+                </View>
+              </Pressable>
+            )}
+          </Screen>
+        );
+      }}
+    </ThemeContext.Consumer>
+  );
 }
 
-const getStyles = theme => StyleSheet.create({
+const getStyles = (theme) =>
+  StyleSheet.create({
     background: {
-        flex: 1,
-        backgroundColor: theme.base1
+      flex: 1,
+      backgroundColor: theme.base1,
     },
     centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22,
     },
     previewContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        marginVertical: 10,
-        alignItems: 'center',
-        flexWrap: 'wrap'
+      flexDirection: "row",
+      width: "100%",
+      marginVertical: 10,
+      alignItems: "center",
+      flexWrap: "wrap",
     },
     previewTitle: {
-        marginLeft: 25,
-        textAlign: 'left',
-        fontFamily: 'boldFont',
-        fontSize: 16,
-        width: 80,
-        color: theme.purple
+      marginLeft: 25,
+      textAlign: "left",
+      fontFamily: "boldFont",
+      fontSize: 16,
+      width: 80,
+      color: theme.purple,
     },
     preview: {
-        fontSize: 15,
-        marginRight: 25,
-        textAlign: 'center',
-        width: deviceWidth - 130,
-        fontFamily: 'regularFont',
+      fontSize: 15,
+      marginRight: 25,
+      textAlign: "center",
+      width: deviceWidth - 130,
+      fontFamily: "regularFont",
     },
     pageTitle: {
-        paddingVertical: 10,
-        backgroundColor: theme.pink2
+      paddingVertical: 10,
+      backgroundColor: theme.pink2,
     },
     pageTitleText: {
-        textAlign: 'center',
-        fontFamily: 'regularItalicFont',
-        fontSize: 18,
-        color: theme.pink1
+      textAlign: "center",
+      fontFamily: "regularItalicFont",
+      fontSize: 18,
+      color: theme.pink1,
     },
     title: {
-        textAlign: 'center',
-        marginBottom: 5,
-        marginTop: 10,
-        fontSize: 16,
-        fontFamily: 'boldFont',
+      textAlign: "center",
+      marginBottom: 5,
+      marginTop: 10,
+      fontSize: 16,
+      fontFamily: "boldFont",
     },
     textInput: {
-        backgroundColor: theme.white,
-        borderColor: theme.indigo4,
-        color: theme.text,
-        borderWidth: 1,
-        marginHorizontal: 20,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        fontFamily: 'regularFont',
-        fontSize: 16
+      backgroundColor: theme.white,
+      borderColor: theme.indigo4,
+      color: theme.text,
+      borderWidth: 1,
+      marginHorizontal: 20,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      fontFamily: "regularFont",
+      fontSize: 16,
     },
     radius10: {
-        borderRadius: 10
+      borderRadius: 10,
     },
     hr: {
-        marginLeft: 25,
-        marginRight: 25,
-        height: 2,
-        marginTop: 10,
-        backgroundColor: theme.indigo4
+      marginLeft: 25,
+      marginRight: 25,
+      height: 2,
+      marginTop: 10,
+      backgroundColor: theme.indigo4,
     },
     containerStyle: {
-        marginTop: 0,
-        marginHorizontal: 20,
+      marginTop: 0,
+      marginHorizontal: 20,
     },
     subText: {
-        marginHorizontal: 30,
-        fontSize: 14,
-        fontFamily: 'mediumFont'
+      marginHorizontal: 30,
+      fontSize: 14,
+      fontFamily: "mediumFont",
     },
     purple: {
-        color: theme.purple
+      color: theme.purple,
     },
     margin8: {
-        marginVertical: 8
+      marginVertical: 8,
     },
     textLink: {
-        textDecorationLine: 'underline',
-        color: theme.pink1,
+      textDecorationLine: "underline",
+      color: theme.pink1,
     },
-
-})
+  });
 
 EditLocationDetails.propTypes = {
-    locations: PropTypes.object,
-    location: PropTypes.object,
-    operators: PropTypes.object,
-    error: PropTypes.object,
-    updateLocationDetails: PropTypes.func,
-    clearError: PropTypes.func,
-    navigation: PropTypes.object,
-    setSelectedOperator: PropTypes.func,
-    setSelectedLocationType: PropTypes.func,
-    clearSelectedState: PropTypes.func,
-    route: PropTypes.object,
-}
+  locations: PropTypes.object,
+  location: PropTypes.object,
+  operators: PropTypes.object,
+  updateLocationDetails: PropTypes.func,
+  navigation: PropTypes.object,
+  setSelectedOperator: PropTypes.func,
+  setSelectedLocationType: PropTypes.func,
+  clearSelectedState: PropTypes.func,
+  route: PropTypes.object,
+};
 
-const mapStateToProps = ({ error, locations, location, operators }) => ({ error, locations, location, operators })
-const mapDispatchToProps = dispatch => ({
-    updateLocationDetails: (goBack, phone, website, description) => dispatch(updateLocationDetails(goBack, phone, website, description)),
-    clearError: () => dispatch(clearError()),
-    setSelectedOperator: id => dispatch(setSelectedOperator(id)),
-    setSelectedLocationType: id => dispatch(setSelectedLocationType(id)),
-    clearSelectedState: () => dispatch(clearSelectedState()),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(EditLocationDetails)
+const mapStateToProps = ({ locations, location, operators }) => ({
+  locations,
+  location,
+  operators,
+});
+const mapDispatchToProps = (dispatch) => ({
+  updateLocationDetails: (goBack, phone, website, description) =>
+    dispatch(updateLocationDetails(goBack, phone, website, description)),
+  setSelectedOperator: (id) => dispatch(setSelectedOperator(id)),
+  setSelectedLocationType: (id) => dispatch(setSelectedLocationType(id)),
+  clearSelectedState: () => dispatch(clearSelectedState()),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditLocationDetails);

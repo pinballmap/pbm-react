@@ -1,294 +1,340 @@
 import {
-    FETCHING_LOCATION,
-    FETCHING_LOCATION_SUCCESS,
-    LOCATION_DETAILS_CONFIRMED,
-    CLOSE_CONFIRM_MODAL,
-    SET_SELECTED_LMX,
-    MACHINE_CONDITION_UPDATED,
-    MACHINE_SCORE_ADDED,
-    LOCATION_MACHINE_REMOVED,
-    ADDING_MACHINE_TO_LOCATION,
-    MACHINE_ADDED_TO_LOCATION,
-    MACHINE_ADDED_TO_LOCATION_FAILURE,
-    DISPLAY_ERROR,
-    UPDATING_LOCATION_DETAILS,
-    LOCATION_DETAILS_UPDATED,
-    FAILED_LOCATION_DETAILS_UPDATE,
-    ADD_MACHINE_TO_LIST,
-    REMOVE_MACHINE_FROM_LIST,
-    CLEAR_SELECTED_STATE,
-    SUGGESTING_LOCATION,
-    LOCATION_SUGGESTED,
-    RESET_SUGGEST_LOCATION,
-    SET_SELECTED_OPERATOR,
-    SET_SELECTED_LOCATION_TYPE,
-} from './types'
-import { updateCoordinatesAndGetLocations } from './locations_actions'
+  FETCHING_LOCATION,
+  FETCHING_LOCATION_SUCCESS,
+  LOCATION_DETAILS_CONFIRMED,
+  CLOSE_CONFIRM_MODAL,
+  SET_SELECTED_LMX,
+  MACHINE_CONDITION_UPDATED,
+  MACHINE_SCORE_ADDED,
+  LOCATION_MACHINE_REMOVED,
+  ADDING_MACHINE_TO_LOCATION,
+  MACHINE_ADDED_TO_LOCATION,
+  MACHINE_ADDED_TO_LOCATION_FAILURE,
+  UPDATING_LOCATION_DETAILS,
+  LOCATION_DETAILS_UPDATED,
+  FAILED_LOCATION_DETAILS_UPDATE,
+  ADD_MACHINE_TO_LIST,
+  REMOVE_MACHINE_FROM_LIST,
+  CLEAR_SELECTED_STATE,
+  SUGGESTING_LOCATION,
+  LOCATION_SUGGESTED,
+  RESET_SUGGEST_LOCATION,
+  SET_SELECTED_OPERATOR,
+  SET_SELECTED_LOCATION_TYPE,
+} from "./types";
 
-import { getData, postData, putData, deleteData } from '../config/request'
+import { getData, postData, putData, deleteData } from "../config/request";
 
-export const fetchLocation = id => dispatch => {
-    dispatch({type: FETCHING_LOCATION})
+export const fetchLocation = (id) => (dispatch) => {
+  dispatch({ type: FETCHING_LOCATION });
 
-    return getData(`/locations/${id}.json`)
-        .then(data => dispatch(getLocationSuccess(data)))
-}
+  return getData(`/locations/${id}.json`).then((data) =>
+    dispatch(getLocationSuccess(data)),
+  );
+};
 
 export const getLocationSuccess = (data) => {
-    return {
-        type: FETCHING_LOCATION_SUCCESS,
-        location: data,
-    }
-}
+  return {
+    type: FETCHING_LOCATION_SUCCESS,
+    location: data,
+  };
+};
 
-export const confirmLocationIsUpToDate = (body, id, username) => dispatch => {
-    return putData(`/locations/${id}/confirm.json`, body)
-        .then(data => dispatch(locationDetailsConfirmed(data.msg, username, id)),
-            err => {throw err }
-        )
-        .catch(err => dispatch({type: DISPLAY_ERROR, err}))
-}
+export const confirmLocationIsUpToDate = (body, id, username) => (dispatch) => {
+  return putData(`/locations/${id}/confirm.json`, body)
+    .then(
+      (data) => dispatch(locationDetailsConfirmed(data.msg, username, id)),
+      (err) => {
+        throw err;
+      },
+    )
+    .catch((err) => console.log(err));
+};
 
 const locationDetailsConfirmed = (msg, username, id) => {
-    return {
-        type: LOCATION_DETAILS_CONFIRMED,
-        msg,
-        username,
-        id,
-    }
-}
+  return {
+    type: LOCATION_DETAILS_CONFIRMED,
+    msg,
+    username,
+    id,
+  };
+};
 
 export const closeConfirmModal = () => {
-    return {
-        type: CLOSE_CONFIRM_MODAL,
-    }
-}
+  return {
+    type: CLOSE_CONFIRM_MODAL,
+  };
+};
 
-export const setCurrentMachine = id => (dispatch, getState) => {
-    const { location } = getState().location
-    const location_machine_xrefs = location.location_machine_xrefs ? location.location_machine_xrefs : []
-    const lmx = location_machine_xrefs.find(machine => machine.id === id)
+export const setCurrentMachine = (id) => (dispatch, getState) => {
+  const { location } = getState().location;
+  const location_machine_xrefs = location.location_machine_xrefs
+    ? location.location_machine_xrefs
+    : [];
+  const lmx = location_machine_xrefs.find((machine) => machine.id === id);
 
-    // TODO: Error handling for if no lmx comes back
-    return dispatch({ type: SET_SELECTED_LMX, lmx })
-}
+  // TODO: Error handling for if no lmx comes back
+  return dispatch({ type: SET_SELECTED_LMX, lmx });
+};
 
 export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
-    const { email, authentication_token, username } = getState().user
-    const body = {
-        user_email: email,
-        user_token: authentication_token,
-        condition,
-    }
+  const { email, authentication_token, username } = getState().user;
+  const body = {
+    user_email: email,
+    user_token: authentication_token,
+    condition,
+  };
 
-    return putData(`/location_machine_xrefs/${lmx}.json`, body)
-        .then(data => dispatch(machineConditionUpdated(data, username)))
-        .catch(err => console.log(err))
-}
+  return putData(`/location_machine_xrefs/${lmx}.json`, body)
+    .then((data) => dispatch(machineConditionUpdated(data, username)))
+    .catch((err) => console.log(err));
+};
 
 export const machineConditionUpdated = (data, username) => {
-    return {
-        type: MACHINE_CONDITION_UPDATED,
-        machine: data.location_machine,
-        username,
-    }
-}
+  return {
+    type: MACHINE_CONDITION_UPDATED,
+    machine: data.location_machine,
+    username,
+  };
+};
 
 export const addMachineScore = (score, lmx) => (dispatch, getState) => {
-    const { email, authentication_token } = getState().user
-    const body = {
-        user_email: email,
-        user_token: authentication_token,
-        score,
-        location_machine_xref_id: lmx
-    }
+  const { email, authentication_token } = getState().user;
+  const body = {
+    user_email: email,
+    user_token: authentication_token,
+    score,
+    location_machine_xref_id: lmx,
+  };
 
-    return postData(`/machine_score_xrefs.json`, body)
-        .then(data => dispatch(machineScoreAdded(data)))
-        .catch(err => console.log(err))
-}
+  return postData(`/machine_score_xrefs.json`, body)
+    .then((data) => dispatch(machineScoreAdded(data)))
+    .catch((err) => console.log(err));
+};
 
 export const machineScoreAdded = (data) => {
-    return {
-        type: MACHINE_SCORE_ADDED,
-        score: data.machine_score_xref,
-    }
-}
+  return {
+    type: MACHINE_SCORE_ADDED,
+    score: data.machine_score_xref,
+  };
+};
 
-export const removeMachineFromLocation = (curLmx, location_id) => (dispatch, getState) => {
-    const { id: lmx, machine_id } = curLmx
-    const { email, authentication_token, username } = getState().user
+export const removeMachineFromLocation =
+  (curLmx, location_id) => (dispatch, getState) => {
+    const { id: lmx, machine_id } = curLmx;
+    const { email, authentication_token, username } = getState().user;
     const body = {
-        user_email: email,
-        user_token: authentication_token,
-    }
-    const { machines } = getState().machines
-    const nameManYear = machines.find(machine => machine.id === machine_id).nameManYear
+      user_email: email,
+      user_token: authentication_token,
+    };
+    const { machines } = getState().machines;
+    const nameManYear = machines.find(
+      (machine) => machine.id === machine_id,
+    ).nameManYear;
 
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
-        .then(() => dispatch(locationMachineRemoved(lmx, nameManYear, location_id, username)),
-            err => { throw err })
-        .catch(err => dispatch({type: DISPLAY_ERROR, err}))
-}
+      .then(
+        () =>
+          dispatch(
+            locationMachineRemoved(lmx, nameManYear, location_id, username),
+          ),
+        (err) => {
+          throw err;
+        },
+      )
+      .catch((err) => console.log(err));
+  };
 
-export const locationMachineRemoved = (lmx, nameManYear, location_id, username) => {
-    return {
-        type: LOCATION_MACHINE_REMOVED,
-        lmx,
-        nameManYear,
-        location_id,
-        username,
-    }
-}
+export const locationMachineRemoved = (
+  lmx,
+  nameManYear,
+  location_id,
+  username,
+) => {
+  return {
+    type: LOCATION_MACHINE_REMOVED,
+    lmx,
+    nameManYear,
+    location_id,
+    username,
+  };
+};
 
-export const addMachineToLocation = (machine, condition) => (dispatch, getState) => {
-    dispatch({type: ADDING_MACHINE_TO_LOCATION})
+export const addMachineToLocation =
+  (machine, condition) => (dispatch, getState) => {
+    dispatch({ type: ADDING_MACHINE_TO_LOCATION });
 
-    const { id: machine_id } = machine
-    const { email, authentication_token } = getState().user
-    const { id: location_id } = getState().location.location
+    const { id: machine_id } = machine;
+    const { email, authentication_token } = getState().user;
+    const { id: location_id } = getState().location.location;
     const body = {
-        user_email: email,
-        user_token: authentication_token,
-        location_id,
-        machine_id,
-    }
+      user_email: email,
+      user_token: authentication_token,
+      location_id,
+      machine_id,
+    };
 
-    if (condition)
-        body.condition = condition
+    if (condition) body.condition = condition;
 
     return postData(`/location_machine_xrefs.json`, body)
-        .then(() =>
-            dispatch(machineAddedToLocation(location_id, machine)),
-        err => { throw err })
-        .catch(err => dispatch(addMachineToLocationFailure(err)))
-}
+      .then(
+        () => dispatch(machineAddedToLocation(location_id, machine)),
+        (err) => {
+          throw err;
+        },
+      )
+      .catch((err) => dispatch(addMachineToLocationFailure(err)));
+  };
 
-const machineAddedToLocation = (location_id, machine) => dispatch => {
-    dispatch({type: MACHINE_ADDED_TO_LOCATION, location_id, machine})
-    dispatch(fetchLocation(location_id))
-}
+const machineAddedToLocation = (location_id, machine) => (dispatch) => {
+  dispatch({ type: MACHINE_ADDED_TO_LOCATION, location_id, machine });
+  dispatch(fetchLocation(location_id));
+};
 
-export const addMachineToLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err})
-    dispatch({type: MACHINE_ADDED_TO_LOCATION_FAILURE})
-}
+export const addMachineToLocationFailure = () => (dispatch) => {
+  dispatch({ type: MACHINE_ADDED_TO_LOCATION_FAILURE });
+};
 
-export const updateLocationDetails = (goBack, phone, website, description) => (dispatch, getState) => {
-    dispatch({ type: UPDATING_LOCATION_DETAILS })
+export const updateLocationDetails =
+  (goBack, phone, website, description) => (dispatch, getState) => {
+    dispatch({ type: UPDATING_LOCATION_DETAILS });
 
-    const { email, authentication_token, username } = getState().user
-    const { locationType, operator, location } = getState().location
-    const location_type = locationType === -1 ? '' : locationType ? locationType : location.location_type_id
-    const operator_id = operator === -1 ? '' : operator ? operator : location.operator_id
+    const { email, authentication_token, username } = getState().user;
+    const { locationType, operator, location } = getState().location;
+    const location_type =
+      locationType === -1
+        ? ""
+        : locationType
+        ? locationType
+        : location.location_type_id;
+    const operator_id =
+      operator === -1 ? "" : operator ? operator : location.operator_id;
 
-    const { id } = location
+    const { id } = location;
     const body = {
-        user_email: email,
-        user_token: authentication_token,
-        phone,
-        website,
-        description,
-        location_type,
-        operator_id,
-    }
+      user_email: email,
+      user_token: authentication_token,
+      phone,
+      website,
+      description,
+      location_type,
+      operator_id,
+    };
 
     return putData(`/locations/${id}.json`, body)
-        .then(data => dispatch(locationDetailsUpdated(goBack, data, username)))
-        .catch(err => dispatch(updateLocationDetailsFailure(err)))
-}
+      .then((data) => dispatch(locationDetailsUpdated(goBack, data, username)))
+      .catch((err) => dispatch(updateLocationDetailsFailure(err)));
+  };
 
-export const locationDetailsUpdated = (goBack, data, username) => dispatch => {
-    dispatch({type: LOCATION_DETAILS_UPDATED, data, username})
-    goBack()
-}
+export const locationDetailsUpdated =
+  (goBack, data, username) => (dispatch) => {
+    dispatch({ type: LOCATION_DETAILS_UPDATED, data, username });
+    goBack();
+  };
 
-export const updateLocationDetailsFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err})
-    dispatch({type: FAILED_LOCATION_DETAILS_UPDATE})
-}
+export const updateLocationDetailsFailure = () => (dispatch) => {
+  dispatch({ type: FAILED_LOCATION_DETAILS_UPDATE });
+};
 
-export const addMachineToList = machine => ({ type: ADD_MACHINE_TO_LIST, machine })
-export const removeMachineFromList = machine => ({ type: REMOVE_MACHINE_FROM_LIST, machine })
-export const clearSelectedState = () => ({ type: CLEAR_SELECTED_STATE })
+export const addMachineToList = (machine) => ({
+  type: ADD_MACHINE_TO_LIST,
+  machine,
+});
+export const removeMachineFromList = (machine) => ({
+  type: REMOVE_MACHINE_FROM_LIST,
+  machine,
+});
+export const clearSelectedState = () => ({ type: CLEAR_SELECTED_STATE });
 
 export const suggestLocation = (locationDetails) => (dispatch, getState) => {
-    dispatch({ type: SUGGESTING_LOCATION })
+  dispatch({ type: SUGGESTING_LOCATION });
 
-    const { email, authentication_token, lat, lon, locationTrackingServicesEnabled  } = getState().user
-    const { machineList, operator, locationType } = getState().location
+  const {
+    email,
+    authentication_token,
+    lat,
+    lon,
+    locationTrackingServicesEnabled,
+  } = getState().user;
+  const { machineList, operator, locationType } = getState().location;
 
-    const {
-        locationName: location_name,
-        street: location_street,
-        city: location_city,
-        state: location_state,
-        zip: location_zip,
-        country: location_country,
-        phone: location_phone,
-        website: location_website,
-        description: location_comments,
-    } = locationDetails
+  const {
+    locationName: location_name,
+    street: location_street,
+    city: location_city,
+    state: location_state,
+    zip: location_zip,
+    country: location_country,
+    phone: location_phone,
+    website: location_website,
+    description: location_comments,
+  } = locationDetails;
 
-    const location_type = locationType > -1 ? locationType : null
-    const location_operator = operator > -1 ? operator : null
-    const location_machines = `${machineList.map(m => m.nameManYear).join(', ')},`
+  const location_type = locationType > -1 ? locationType : null;
+  const location_operator = operator > -1 ? operator : null;
+  const location_machines = `${machineList
+    .map((m) => m.nameManYear)
+    .join(", ")},`;
 
-    const body = {
-        user_email: email,
-        user_token: authentication_token,
-        location_name,
-        location_street,
-        location_city,
-        location_state,
-        location_zip,
-        location_country,
-        location_phone,
-        location_website,
-        location_comments,
-        location_type,
-        location_operator,
-        location_machines,
-    }
+  const body = {
+    user_email: email,
+    user_token: authentication_token,
+    location_name,
+    location_street,
+    location_city,
+    location_state,
+    location_zip,
+    location_country,
+    location_phone,
+    location_website,
+    location_comments,
+    location_type,
+    location_operator,
+    location_machines,
+  };
 
-    if (locationTrackingServicesEnabled) {
-        body.lat = lat
-        body.lon = lon
-    }
+  if (locationTrackingServicesEnabled) {
+    body.lat = lat;
+    body.lon = lon;
+  }
 
-    return postData(`/locations/suggest.json`, body)
-        .then(response => {
-            if (response.errors) {
-                throw new Error(response.errors)
-            }
-            dispatch(locationSuggested())
-        }, err => { throw err })
-        .catch(err => dispatch(suggestLocationFailure(err)))
-}
+  return postData(`/locations/suggest.json`, body)
+    .then(
+      (response) => {
+        if (response.errors) {
+          throw new Error(response.errors);
+        }
+        dispatch(locationSuggested());
+      },
+      (err) => {
+        throw err;
+      },
+    )
+    .catch((err) => dispatch(suggestLocationFailure(err)));
+};
 
-export const locationSuggested = () => dispatch => {
-    dispatch({type: LOCATION_SUGGESTED })
-}
+export const locationSuggested = () => (dispatch) => {
+  dispatch({ type: LOCATION_SUGGESTED });
+};
 
-export const suggestLocationFailure = (err) => dispatch => {
-    dispatch({type: DISPLAY_ERROR, err})
-    dispatch({type: RESET_SUGGEST_LOCATION})
-}
+export const suggestLocationFailure = () => (dispatch) => {
+  dispatch({ type: RESET_SUGGEST_LOCATION });
+};
 
 export const resetSuggestLocation = () => ({
-    type: RESET_SUGGEST_LOCATION
-})
+  type: RESET_SUGGEST_LOCATION,
+});
 
-export const setSelectedOperator = id => {
-    return {
-        type: SET_SELECTED_OPERATOR,
-        id
-    }
-}
+export const setSelectedOperator = (id) => {
+  return {
+    type: SET_SELECTED_OPERATOR,
+    id,
+  };
+};
 
-export const setSelectedLocationType = id => {
-    return {
-        type: SET_SELECTED_LOCATION_TYPE,
-        id
-    }
-}
+export const setSelectedLocationType = (id) => {
+  return {
+    type: SET_SELECTED_LOCATION_TYPE,
+    id,
+  };
+};

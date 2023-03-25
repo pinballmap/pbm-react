@@ -1,11 +1,12 @@
-//TODO: determine how to more usefully test this component. 
-import React from 'react'
-import { shallow} from 'enzyme'
-import toJson from 'enzyme-to-json'
-import renderer from 'react-test-renderer'
-import { LocationList }  from '../LocationList'
+//TODO: determine how to more usefully test this component.
+import React from "react";
+import { shallow } from "enzyme";
+import toJson from "enzyme-to-json";
+import renderer from "react-test-renderer";
+import { LocationList } from "../LocationList";
 
-const locations = [{
+const locations = [
+  {
     id: 1636,
     name: "Metreon",
     street: "101 4th Street",
@@ -30,14 +31,15 @@ const locations = [{
     distance: 0.147559812071013,
     bearing: "122.454988406905",
     machine_names: [
-        "2001 (Gottlieb, 1971)",
-        "Batman: The Dark Knight (Stern, 2008)",
-        "Family Guy (Stern, 2006)",
-        "Lord of the Rings (Stern, 2003)",
-        "The Simpsons ball Party (Stern, 2003)",
-        "Spider-Man (Stern, 2007)",
+      "2001 (Gottlieb, 1971)",
+      "Batman: The Dark Knight (Stern, 2008)",
+      "Family Guy (Stern, 2006)",
+      "Lord of the Rings (Stern, 2003)",
+      "The Simpsons ball Party (Stern, 2003)",
+      "Spider-Man (Stern, 2007)",
     ],
-}, {
+  },
+  {
     id: 4768,
     name: "Golden Gate Tap Room",
     street: "525 Sutter Street #2",
@@ -61,21 +63,20 @@ const locations = [{
     distance: 0.255099575480627,
     bearing: "320.666824811979",
     machine_names: [],
-}]
+  },
+];
 
-describe('testing LocationList screen', () => {
-    it('renders the locationList properly when there are no locations in the search area', () => {
-    
-        const wrapper = shallow(<LocationList locations={[]} />)
-        expect(toJson(wrapper)).toMatchSnapshot()
-    })
+describe("testing LocationList screen", () => {
+  it("renders the locationList properly when there are no locations in the search area", () => {
+    const wrapper = shallow(<LocationList locations={[]} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
 
-    it('renders the locationList properly when there are locations in the search area', () => {
-    
-        const wrapper = renderer.create(<LocationList />).root
-        const instance = wrapper.instance
-        instance.setState({locations: locations})
-        instance.setState({buttonIndex: 1})
+  it("renders the locationList properly when there are locations in the search area", () => {
+    const wrapper = renderer.create(<LocationList />).root;
+    const instance = wrapper.instance;
+    instance.setState({ locations: locations });
+    instance.setState({ buttonIndex: 1 });
     //console.log(instance.state)
-    })
-})
+  });
+});
