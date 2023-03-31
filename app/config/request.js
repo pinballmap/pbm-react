@@ -124,7 +124,7 @@ const fetchGPSLocation = async () => {
 
   if (location) return Promise.resolve(location);
 
-  return Promise.reject("Unable to determin location");
+  return Promise.reject("Unable to determine your location");
 };
 
 export const getCurrentLocation = async () => {
