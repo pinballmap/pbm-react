@@ -19,7 +19,6 @@ const AppWrapper = ({
   getMachines,
   getOperators,
   getLocationAndMachineCounts,
-  getCurrentLocation,
 }) => {
   const [loading, setIsLoading] = useState(true);
 
@@ -30,18 +29,30 @@ const AppWrapper = ({
 
   useEffect(() => {
     async function isLoading() {
-      await Promise.all([
-        getRegions("/regions.json"),
-        getLocationTypes("/location_types.json"),
-        getMachines("/machines.json"),
-        getOperators("/operators.json"),
-        getLocationAndMachineCounts(
-          "/regions/location_and_machine_counts.json",
-        ),
-        getCurrentLocation(),
-      ])
-        .then(loaded)
-        .catch(loaded);
+      const allSettled = (promises) => {
+        return Promise.all(
+          promises.map((promise) =>
+            promise
+              .then((value) => ({ status: "fulfilled", value }))
+              .catch((reason) => ({ status: "rejected", reason })),
+          ),
+        );
+      };
+
+      try {
+        await allSettled([
+          getRegions("/regions.json"),
+          getLocationTypes("/location_types.json"),
+          getMachines("/machines.json"),
+          getOperators("/operators.json"),
+          getLocationAndMachineCounts(
+            "/regions/location_and_machine_counts.json",
+          ),
+        ]);
+        loaded();
+      } catch (e) {
+        loaded();
+      }
     }
 
     isLoading();

@@ -120,10 +120,11 @@ class Map extends Component {
   };
 
   updateCurrentLocation = () => {
-    this.props.getCurrentLocation();
+    this.props.getCurrentLocation(false);
   };
 
   componentDidMount() {
+    this.props.getCurrentLocation(true);
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
 
     retrieveItem("auth").then(async (auth) => {
@@ -460,7 +461,8 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  getCurrentLocation: () => dispatch(fetchCurrentLocation()),
+  getCurrentLocation: (isInitialLoad) =>
+    dispatch(fetchCurrentLocation(isInitialLoad)),
   getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
   clearFilters: () => dispatch(clearFilters()),
   getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
