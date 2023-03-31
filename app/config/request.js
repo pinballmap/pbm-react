@@ -98,12 +98,39 @@ export const deleteData = (uri, body) => {
     .catch((err) => Promise.reject(err));
 };
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const fetchGPSLocation = async () => {
+  let location;
+  let tries = 1;
+  const MAX_NUMBER_OF_TRIES = 3;
+  do {
+    location = await Promise.race([
+      sleep(3000),
+      Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Lowest,
+      }),
+    ]);
+    if (location) return Promise.resolve(location);
+
+    tries++;
+  } while (!location && tries < MAX_NUMBER_OF_TRIES);
+
+  await Location.getLastKnownPositionAsync();
+  location = await Promise.race([
+    sleep(3000),
+    Location.getLastKnownPositionAsync(),
+  ]);
+
+  if (location) return Promise.resolve(location);
+
+  return Promise.reject("Unable to determine your location");
+};
+
 export const getCurrentLocation = async () => {
   try {
     await Location.requestForegroundPermissionsAsync();
-    const position = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Lowest,
-    });
+    const position = await fetchGPSLocation();
     return position;
   } catch (e) {
     return Promise.reject(e);
