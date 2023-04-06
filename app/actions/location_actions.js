@@ -24,6 +24,7 @@ import {
 } from "./types";
 
 import { getData, postData, putData, deleteData } from "../config/request";
+import { updateCoordinatesAndGetLocations } from "./locations_actions";
 
 export const fetchLocation = (id) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION });
@@ -31,6 +32,12 @@ export const fetchLocation = (id) => (dispatch) => {
   return getData(`/locations/${id}.json`).then((data) =>
     dispatch(getLocationSuccess(data)),
   );
+};
+
+export const fetchLocationAndUpdateMap = (id) => async (dispatch) => {
+  const data = await dispatch(fetchLocation(id));
+  const { lat, lon } = data.location;
+  dispatch(updateCoordinatesAndGetLocations(lat, lon));
 };
 
 export const getLocationSuccess = (data) => {
