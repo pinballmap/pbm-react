@@ -49,7 +49,7 @@ function SuggestLocation({
   removeMachineFromList,
   ...props
 }) {
-  const ref = useRef();
+  const autoCompleteRef = useRef();
   const [locationName, setLocationName] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -160,7 +160,7 @@ function SuggestLocation({
     setPhone(details.formatted_phone_number);
     setWebsite(details.website);
     setLocationName(details.name);
-    ref.current.setAddressText(details.name);
+    autoCompleteRef.current.setAddressText(details.name);
     let streetNum = "";
     let locationStreet = "";
     Object.values(details.address_components).map((component) => {
@@ -195,6 +195,13 @@ function SuggestLocation({
       }
     });
     setStreet(`${streetNum} ${locationStreet}`);
+  };
+
+  const reviewSubmission = () => {
+    // Set location name in case the user has typed something that didn't
+    // resolve to a location via autocomplete selection
+    setLocationName(autoCompleteRef.current.getAddressText());
+    setShowSuggestLocationModal(true);
   };
 
   return (
@@ -361,7 +368,7 @@ function SuggestLocation({
                     >{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                     <Text style={s.title}>Location Name</Text>
                     <GooglePlacesAutocomplete
-                      ref={ref}
+                      ref={autoCompleteRef}
                       placeholder="ex. Giovanni's Pizza"
                       onPress={(data, details = null) => {
                         setLocation(details);
@@ -559,7 +566,7 @@ function SuggestLocation({
                     ) : null}
                     <PbmButton
                       title={"Review Submission"}
-                      onPress={() => setShowSuggestLocationModal(true)}
+                      onPress={reviewSubmission}
                     />
                   </SafeAreaView>
                 </Pressable>
