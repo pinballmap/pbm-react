@@ -212,6 +212,7 @@ function SuggestLocation({
           <KeyboardAwareScrollView
             {...keyboardDismissProp}
             enableResetScrollToCoords={false}
+            keyboardShouldPersistTaps="handled"
             style={s.background}
           >
             {!loggedIn ? (
