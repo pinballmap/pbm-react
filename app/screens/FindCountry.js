@@ -28,7 +28,7 @@ const FindCountry = ({ navigation, route }) => {
   const _selectCountry = (countryName, countryCode) => {
     navigation.navigate({
       name: previous_screen,
-      params: { setCountryName: countryName, setCountryCode: countryCode },
+      params: { countryName, countryCode },
       merge: true,
     });
   };

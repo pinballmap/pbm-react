@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -34,6 +34,7 @@ import {
   resetSuggestLocation,
 } from "../actions";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -48,6 +49,7 @@ function SuggestLocation({
   removeMachineFromList,
   ...props
 }) {
+  const autoCompleteRef = useRef();
   const [locationName, setLocationName] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -58,6 +60,17 @@ function SuggestLocation({
   const [description, setDescription] = useState("");
   const [showSuggestLocationModal, setShowSuggestLocationModal] =
     useState(false);
+  const [countryName, setCountryName] = useState("United States");
+  const [countryCode, setCountryCode] = useState("US");
+
+  useEffect(() => {
+    if (route.params?.countryCode) {
+      setCountryCode(route.params?.countryCode);
+    }
+    if (route.params?.countryName) {
+      setCountryName(route.params?.countryName);
+    }
+  }, [route.params?.countryCode, route.params?.countryName]);
 
   const confirmSuggestLocationDetails = () => {
     const locationDetails = {
@@ -101,13 +114,6 @@ function SuggestLocation({
   const operatorObj = operators.find((op) => op.id === operator) || {};
   const { name: operatorName = "Select operator" } = operatorObj;
 
-  const countryCode = route.params?.setCountryCode
-    ? route.params?.setCountryCode
-    : "US";
-  const countryName = route.params?.setCountryName
-    ? route.params?.setCountryName
-    : "United States";
-
   const keyboardDismissProp =
     Platform.OS === "ios"
       ? { keyboardDismissMode: "on-drag" }
@@ -150,6 +156,54 @@ function SuggestLocation({
     });
   };
 
+  const setLocation = (details) => {
+    setPhone(details.formatted_phone_number);
+    setWebsite(details.website);
+    setLocationName(details.name);
+    autoCompleteRef.current.setAddressText(details.name);
+    let streetNum = "";
+    let locationStreet = "";
+    Object.values(details.address_components).map((component) => {
+      const componentType = component.types[0];
+
+      switch (componentType) {
+        case "street_number": {
+          streetNum = component.long_name;
+          break;
+        }
+        case "route": {
+          locationStreet = component.short_name;
+          break;
+        }
+        case "locality": {
+          setCity(component.long_name);
+          break;
+        }
+        case "administrative_area_level_1": {
+          setState(component.short_name);
+          break;
+        }
+        case "country": {
+          setCountryCode(component.short_name);
+          setCountryName(component.long_name);
+          break;
+        }
+        case "postal_code": {
+          setZip(component.long_name);
+          break;
+        }
+      }
+    });
+    setStreet(`${streetNum} ${locationStreet}`);
+  };
+
+  const reviewSubmission = () => {
+    // Set location name in case the user has typed something that didn't
+    // resolve to a location via autocomplete selection
+    setLocationName(autoCompleteRef.current.getAddressText());
+    setShowSuggestLocationModal(true);
+  };
+
   return (
     <ThemeContext.Consumer>
       {({ theme }) => {
@@ -158,6 +212,7 @@ function SuggestLocation({
           <KeyboardAwareScrollView
             {...keyboardDismissProp}
             enableResetScrollToCoords={false}
+            keyboardShouldPersistTaps="handled"
             style={s.background}
           >
             {!loggedIn ? (
@@ -313,21 +368,40 @@ function SuggestLocation({
                       style={[{ marginTop: 10 }, s.text]}
                     >{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
                     <Text style={s.title}>Location Name</Text>
-                    <TextInput
-                      style={[
-                        { height: 40, textAlign: "left" },
-                        s.textInput,
-                        s.radius10,
-                      ]}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(locationName) =>
-                        setLocationName(locationName)
-                      }
-                      returnKeyType="done"
-                      placeholder={"ex. Giovanni's Pizza"}
-                      placeholderTextColor={theme.indigo4}
-                      textContentType="organizationName"
-                      autoCapitalize="words"
+                    <GooglePlacesAutocomplete
+                      ref={autoCompleteRef}
+                      minLength={2}
+                      placeholder="ex. Giovanni's Pizza"
+                      textInputProps={{
+                        placeholderTextColor: theme.indigo4,
+                        style: [
+                          {
+                            fontFamily: "regularFont",
+                            height: 40,
+                            width: deviceWidth - 40,
+                          },
+                          s.textInput,
+                          s.radius10,
+                        ],
+                      }}
+                      onPress={(data, details = null) => {
+                        setLocation(details);
+                      }}
+                      fetchDetails
+                      query={{
+                        key: process.env.GOOGLE_MAPS_KEY,
+                        language: "en",
+                      }}
+                      styles={{
+                        row: {
+                          width: deviceWidth,
+                          overflow: "hidden",
+                        },
+                        description: {
+                          fontFamily: "regularFont",
+                        },
+                      }}
+                      disableScroll
                     />
                     <Text style={s.title}>Street</Text>
                     <TextInput
@@ -343,6 +417,7 @@ function SuggestLocation({
                       placeholderTextColor={theme.indigo4}
                       textContentType="streetAddressLine1"
                       autoCapitalize="words"
+                      value={street}
                     />
                     <Text style={s.title}>City</Text>
                     <TextInput
@@ -358,6 +433,7 @@ function SuggestLocation({
                       placeholderTextColor={theme.indigo4}
                       textContentType="addressCity"
                       autoCapitalize="words"
+                      value={city}
                     />
                     <Text style={s.title}>State</Text>
                     <TextInput
@@ -373,6 +449,7 @@ function SuggestLocation({
                       placeholderTextColor={theme.indigo4}
                       textContentType="addressState"
                       autoCapitalize="characters"
+                      value={state}
                     />
                     <Text style={s.title}>Zip Code</Text>
                     <TextInput
@@ -387,6 +464,7 @@ function SuggestLocation({
                       placeholder={"ex. 93108"}
                       placeholderTextColor={theme.indigo4}
                       textContentType="postalCode"
+                      value={zip}
                     />
                     <Text style={s.title}>Country</Text>
                     <DropDownButton
@@ -408,6 +486,7 @@ function SuggestLocation({
                       placeholderTextColor={theme.indigo4}
                       textContentType="telephoneNumber"
                       autoCapitalize="none"
+                      value={phone}
                     />
                     <Text style={s.title}>Website</Text>
                     <TextInput
@@ -423,6 +502,7 @@ function SuggestLocation({
                       placeholderTextColor={theme.indigo4}
                       textContentType="URL"
                       autoCapitalize="none"
+                      value={website}
                     />
                     <Text style={s.title}>Location Notes</Text>
                     <TextInput
@@ -502,7 +582,7 @@ function SuggestLocation({
                     ) : null}
                     <PbmButton
                       title={"Review Submission"}
-                      onPress={() => setShowSuggestLocationModal(true)}
+                      onPress={reviewSubmission}
                     />
                   </SafeAreaView>
                 </Pressable>
