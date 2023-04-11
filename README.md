@@ -12,6 +12,19 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.24
+
+April 11, 2023
+
+- Feature: Added Google Places autocomplete to the Submit Location form. Start typing in a venue name, choose one, and many of the form's fields will be filled in!
+- Various bug fixes (deep linking, etc.)
+
+### 5.2.23
+
+March 30, 2023
+
+- Bug fix: Fixed an issue where the splash screen was getting stuck trying to obtain your current location.
+
 ### 5.2.22
 
 March 24, 2023
