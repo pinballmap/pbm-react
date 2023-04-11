@@ -370,21 +370,36 @@ function SuggestLocation({
                     <Text style={s.title}>Location Name</Text>
                     <GooglePlacesAutocomplete
                       ref={autoCompleteRef}
+                      minLength={2}
                       placeholder="ex. Giovanni's Pizza"
+                      textInputProps={{
+                        placeholderTextColor: theme.indigo4,
+                        style: [
+                          {
+                            fontFamily: "regularFont",
+                            height: 40,
+                            width: deviceWidth - 40,
+                          },
+                          s.textInput,
+                          s.radius10,
+                        ],
+                      }}
                       onPress={(data, details = null) => {
                         setLocation(details);
-                      }}
-                      styles={{
-                        textInput: {
-                          ...s.textInput,
-                          ...s.radius10,
-                          ...{ height: 40 },
-                        },
                       }}
                       fetchDetails
                       query={{
                         key: process.env.GOOGLE_MAPS_KEY,
                         language: "en",
+                      }}
+                      styles={{
+                        row: {
+                          width: deviceWidth,
+                          overflow: "hidden",
+                        },
+                        description: {
+                          fontFamily: "regularFont",
+                        },
                       }}
                       disableScroll
                     />
