@@ -485,7 +485,7 @@ class LocationDetails extends Component {
                           <Text
                             style={[s.fontSize15, s.link, s.marginB8]}
                             onPress={() =>
-                              Linking.openURL(`tel:${location.phone}`)
+                              Linking.openURL(`tel://${location.phone}`)
                             }
                           >
                             {location.phone}
