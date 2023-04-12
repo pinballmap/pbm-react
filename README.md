@@ -12,6 +12,12 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.25
+
+April 13, 2023
+
+- Bug fix: Fix issue with some phone numbers not opening your call app.
+
 ### 5.2.24
 
 April 11, 2023
