@@ -13,7 +13,6 @@ import {
 } from "../components";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import { clearActivityFilter } from "../actions";
-import { useFocusEffect } from "@react-navigation/native";
 import { ButtonGroup } from "@rneui/base";
 import getActivityIcon from "../utils/getActivityIcon";
 
@@ -26,28 +25,46 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [maxDistance, setMaxDistance] = useState(30);
   const [btnIdx, setBtnIdx] = useState(0);
+  const [shouldRefresh, setShouldRefresh] = useState(true);
   const { selectedActivity, curLat, curLon } = query;
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      setFetchingRecentActivity(true);
-      getData(
-        `/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon};max_distance=${maxDistance}`,
-      ).then((data) => {
-        setFetchingRecentActivity(false);
-        setRecentActivity(data.user_submissions);
-      });
-    }, [curLat, curLon, maxDistance]),
+  const fetchData = useCallback(
+    (_, distance) => {
+      // Once the recent activity screen is mounted, it never unmounts for the app. With that in mind, we typically
+      // want to get a fresh request of the recent activity when the screen is focused with the caveat being if the
+      // user has come from navigating to a location detail screen via the recent activity list.
+      // To accomplish this behavior, we have to now explicitly call fetchData when the user updates the search radius
+      // and we must track if the data should be refreshed (i.e. not coming back from location details)
+      if (distance || shouldRefresh) {
+        setFetchingRecentActivity(true);
+        getData(
+          `/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon};max_distance=${
+            distance || maxDistance
+          }`,
+        ).then((data) => {
+          setFetchingRecentActivity(false);
+          setRecentActivity(data.user_submissions);
+        });
+      }
+      setShouldRefresh(true);
+    },
+    [curLat, curLon, maxDistance, shouldRefresh],
+  );
+
+  useEffect(
+    () => navigation.addListener("focus", fetchData),
+    [navigation, curLat, curLon, maxDistance, shouldRefresh],
   );
 
   const updateIdx = (selectedIdx) => {
     const distanceMap = [30, 75, 150];
     setBtnIdx(selectedIdx);
     setMaxDistance(distanceMap[selectedIdx]);
+    fetchData(null, distanceMap[selectedIdx]);
   };
 
   const getText = (selectedActivity) => {
@@ -201,11 +218,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
           .map((activity) => (
             <Pressable
               key={activity.id}
-              onPress={() =>
+              onPress={() => {
+                setShouldRefresh(false);
                 navigation.navigate("LocationDetails", {
                   id: activity.location_id,
-                })
-              }
+                });
+              }}
             >
               {({ pressed }) => (
                 <View
