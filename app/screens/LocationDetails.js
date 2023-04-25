@@ -703,7 +703,7 @@ const getStyles = (theme) =>
       fontFamily: "blackFont",
       fontSize: 28,
       lineHeight: 34,
-      color: theme.purple,
+      color: theme.purpleLight,
     },
     machineListContainer: {
       borderRadius: 25,

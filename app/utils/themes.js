@@ -24,6 +24,7 @@ export const dark = {
   pink3: "#fec3e7",
   purple: "#cf8dde",
   purple2: "#e7b9f1",
+  purpleLight: "#f7eef9",
   green: "#74f700",
   dark: true,
   colors: {
@@ -64,6 +65,7 @@ export const standard = {
   pink3: "#ffa7dd",
   purple: "#66017b",
   purple2: "#9718b1",
+  purpleLight: "#66017b",
   green: "#56b801",
   dark: false,
   colors: {
