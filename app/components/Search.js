@@ -412,12 +412,12 @@ class Search extends Component {
                         />
                         <Input
                           placeholder="City, Address, Location..."
-                          placeholderTextColor={theme.indigo4}
+                          placeholderTextColor={theme.base4}
                           leftIcon={
                             <MaterialIcons
                               name="search"
                               size={25}
-                              color={theme.purple}
+                              color={theme.indigo4}
                               style={{ marginLeft: 10, marginRight: 0 }}
                             />
                           }
@@ -426,7 +426,7 @@ class Search extends Component {
                               <MaterialCommunityIcons
                                 name="close-circle"
                                 size={20}
-                                color={theme.indigo4}
+                                color={theme.purple}
                                 style={{ marginRight: 2 }}
                                 onPress={() => this.changeQuery("")}
                               />
@@ -565,11 +565,11 @@ const getStyles = (theme) =>
     },
     searchIcon: {
       paddingLeft: 5,
-      color: theme.purple,
+      color: theme.indigo4,
     },
     inputPlaceholder: {
       fontSize: deviceWidth < 321 ? 14 : 16,
-      color: theme.indigo4,
+      color: theme.base4,
       paddingLeft: 5,
       flex: 1,
       fontFamily: "regularFont",
