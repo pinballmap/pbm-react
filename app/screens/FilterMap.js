@@ -50,11 +50,11 @@ const FilterMap = ({
     switch (value) {
       case "2":
         return 1;
-      case "3":
-        return 2;
-      case "4":
-        return 3;
       case "5":
+        return 2;
+      case "10":
+        return 3;
+      case "20":
         return 4;
       default:
         return 0;
@@ -66,11 +66,11 @@ const FilterMap = ({
       case 1:
         return "2";
       case 2:
-        return "3";
-      case 3:
-        return "4";
-      case 4:
         return "5";
+      case 3:
+        return "10";
+      case 4:
+        return "20";
       default:
         return "";
     }
@@ -152,7 +152,7 @@ const FilterMap = ({
         <ButtonGroup
           onPress={setNumMachinesSelected}
           selectedIndex={getIdx(numMachines)}
-          buttons={["All", "2+", "3+", "4+", "5+"]}
+          buttons={["All", "2+", "5+", "10+", "20+"]}
           containerStyle={s.buttonGroupContainer}
           textStyle={s.buttonGroupInactive}
           selectedButtonStyle={s.selButtonStyle}

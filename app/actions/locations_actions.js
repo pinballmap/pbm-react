@@ -50,8 +50,15 @@ export const getFilterState = (filterState) => {
     !!selectedOperator ||
     !!viewByFavoriteLocations;
   const filteringByTwoMachines = !filtersNoMachines && numMachines === "2";
+  const filteringByMoreMachines = !filtersNoMachines && numMachines > 2;
   const filterApplied = filtersNoMachines || numMachines > 0;
-  return filteringByTwoMachines ? 300 : filterApplied ? 500 : 200;
+  return filteringByTwoMachines
+    ? 300
+    : filteringByMoreMachines
+    ? numMachines * 100
+    : filterApplied
+    ? 500
+    : 200;
 };
 
 export const getLocations =
