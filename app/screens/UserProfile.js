@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { FontAwesome, EvilIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 import { ListItem } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import {
@@ -116,23 +116,25 @@ class UserProfile extends Component {
                       containerStyle={s.buttonContainer}
                     />
                   </ConfirmationModal>
-                  <Text style={s.username}>{user.username}</Text>
-                  {!!admin_rank_int && (
-                    <View style={s.rankView}>
-                      <Text style={s.rankText}>{admin_title}</Text>
-                      <Image source={admin_icon} style={s.rankIcon} />
-                    </View>
-                  )}
-                  {!admin_rank_int && !!contributor_rank_int && (
-                    <View style={s.rankView}>
-                      <Text style={s.rankText}>{contributor_rank}</Text>
-                      <Image source={contributor_icon} style={s.rankIcon} />
-                    </View>
-                  )}
+                  <View style={s.usernameContainer}>
+                    <Text style={s.username}>{user.username}</Text>
+                    {!!admin_rank_int && (
+                      <View style={s.rankView}>
+                        <Text style={s.rankText}>{admin_title}</Text>
+                        <Image source={admin_icon} style={s.rankIcon} />
+                      </View>
+                    )}
+                    {!admin_rank_int && !!contributor_rank_int && (
+                      <View style={s.rankView}>
+                        <Text style={s.rankText}>{contributor_rank}</Text>
+                        <Image source={contributor_icon} style={s.rankIcon} />
+                      </View>
+                    )}
+                  </View>
                   <Text style={s.member}>{`Joined: ${moment(created_at).format(
                     "MMM DD, YYYY",
                   )}`}</Text>
-                  <View style={{ width: "100%", alignItems: "center" }}>
+                  <View style={s.statContainer}>
                     <View style={s.statItem}>
                       <Text style={s.stat}>Total contributions:</Text>
                       <Text style={s.statNum}>
@@ -170,15 +172,14 @@ class UserProfile extends Component {
                       </Text>
                     </View>
                   </View>
-                  <PbmButton
-                    title={"View Saved Locations"}
-                    type="outline"
-                    onPress={() => this.props.navigation.navigate("Saved")}
-                    buttonStyle={s.savedLink}
-                    titleStyle={s.buttonTitleStyle}
-                    iconLeft
-                    icon={<FontAwesome name="heart-o" style={s.savedIcon} />}
-                  />
+                  <View style={s.savedLinkContainer}>
+                    <Text
+                      style={s.savedLink}
+                      onPress={() => this.props.navigation.navigate("Saved")}
+                    >
+                      View saved locations
+                    </Text>
+                  </View>
                   <Text style={s.bold}>Locations Edited (up to 50):</Text>
                   <View style={{ paddingVertical: 8 }}>
                     {profile_list_of_edited_locations
@@ -298,20 +299,23 @@ const getStyles = (theme) =>
       textAlign: "center",
       paddingHorizontal: 10,
       paddingVertical: 8,
-      color: theme.purple2,
-      backgroundColor: theme.base4,
+      color: theme.text,
+      backgroundColor: theme.base2,
     },
     savedIcon: {
       fontSize: 24,
       color: theme.text3,
       marginRight: 5,
     },
+    savedLinkContainer: {
+      marginVertical: 15,
+    },
     savedLink: {
-      borderWidth: 2,
-      width: "100%",
-      borderRadius: 25,
-      borderColor: theme.base4,
-      backgroundColor: theme.base3,
+      fontSize: 16,
+      fontFamily: "regularBoldFont",
+      color: theme.purple2,
+      textAlign: "center",
+      textDecorationLine: "underline",
     },
     buttonTitleStyle: {
       fontSize: 16,
@@ -335,13 +339,22 @@ const getStyles = (theme) =>
       color: theme.text,
       fontFamily: "regularFont",
     },
+    usernameContainer: {
+      padding: 10,
+      backgroundColor: theme.base2,
+    },
     username: {
       fontFamily: "boldFont",
       fontSize: 18,
-      padding: 10,
       color: theme.pink1,
-      backgroundColor: theme.base2,
       textAlign: "center",
+    },
+    statContainer: {
+      alignItems: "center",
+      backgroundColor: "#540064",
+      marginHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 20,
     },
     statItem: {
       flexDirection: "row",
@@ -350,15 +363,15 @@ const getStyles = (theme) =>
     stat: {
       marginTop: 5,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "mediumFont",
       opacity: 0.9,
-      color: theme.text3,
+      color: "#fee7f5",
       width: 160,
     },
     statNum: {
       fontFamily: "boldFont",
-      color: theme.pink2,
-      backgroundColor: theme.purple,
+      color: "#17001c",
+      backgroundColor: "#cf8dde",
       fontSize: 16,
       marginTop: 5,
       marginLeft: 10,
@@ -369,8 +382,8 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingTop: 10,
       fontSize: 16,
-      color: theme.text3,
-      fontFamily: "regularBoldFont",
+      color: theme.text2,
+      fontFamily: "mediumFont",
     },
     buttonContainer: {
       marginLeft: 20,
@@ -402,14 +415,15 @@ const getStyles = (theme) =>
       paddingTop: 8,
     },
     rankText: {
-      fontSize: 18,
+      fontSize: 16,
       fontFamily: "boldFont",
+      color: theme.text3,
     },
     rankIcon: {
       width: 20,
       height: 20,
       resizeMode: "stretch",
-      marginLeft: 3,
+      marginLeft: 5,
     },
     externalUpdateContainer: {
       marginHorizontal: 20,
