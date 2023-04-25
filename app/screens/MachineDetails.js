@@ -98,12 +98,12 @@ class MachineDetails extends Component {
       opdb_img,
       opdb_img_height,
       opdb_img_width,
-      ipdb_link,
+      ipdb_id,
       name: machineName,
     } = this.props.machineDetails;
     const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`;
     const ipdbUrl =
-      ipdb_link ??
+      ipdb_id ??
       `http://ipdb.org/search.pl?name=${encodeURIComponent(
         machineName,
       )};qh=checked;searchtype=advanced`;
