@@ -406,7 +406,7 @@ function DrawerNavigator() {
         drawerPosition: "right",
         drawerType: "front",
         drawerActiveBackgroundColor: colors.background,
-        drawerLabelStyle: { fontFamily: "boldFont" },
+        drawerLabelStyle: { fontFamily: "boldFont", fontSize: 16 },
       })}
     >
       <Drawer.Screen

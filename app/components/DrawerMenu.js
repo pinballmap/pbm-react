@@ -158,7 +158,7 @@ const getStyles = (theme) =>
     text: {
       color: theme.colors.activeTab,
       fontFamily: "boldFont",
-      fontSize: 14,
+      fontSize: 16,
       position: "absolute",
       paddingLeft: 75,
       paddingRight: 120,
@@ -173,6 +173,7 @@ const getStyles = (theme) =>
     labelStyle: {
       color: theme.colors.primary,
       fontFamily: "boldFont",
+      fontSize: 16,
     },
   });
 
