@@ -300,7 +300,7 @@ const getStyles = (theme) =>
       paddingHorizontal: 10,
       paddingVertical: 8,
       color: theme.text,
-      backgroundColor: theme.base2,
+      backgroundColor: theme.theme == "dark" ? "#312433" : theme.base2,
     },
     savedIcon: {
       fontSize: 24,
@@ -351,7 +351,7 @@ const getStyles = (theme) =>
     },
     statContainer: {
       alignItems: "center",
-      backgroundColor: "#540064",
+      backgroundColor: theme.theme == "dark" ? "#251b27" : "#efe9f0",
       marginHorizontal: 20,
       paddingVertical: 10,
       borderRadius: 20,
@@ -365,13 +365,13 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "mediumFont",
       opacity: 0.9,
-      color: "#fee7f5",
+      color: theme.theme == "dark" ? "#fee7f5" : theme.text,
       width: 160,
     },
     statNum: {
       fontFamily: "boldFont",
       color: "#17001c",
-      backgroundColor: "#cf8dde",
+      backgroundColor: theme.theme == "dark" ? "#cf8dde" : theme.pink2,
       fontSize: 16,
       marginTop: 5,
       marginLeft: 10,

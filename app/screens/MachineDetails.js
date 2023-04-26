@@ -652,7 +652,7 @@ const getStyles = (theme) =>
       fontFamily: "blackFont",
       textAlign: "center",
       marginVertical: 10,
-      color: theme.purple,
+      color: theme.purpleLight,
       opacity: 0.9,
     },
     imageContainer: {

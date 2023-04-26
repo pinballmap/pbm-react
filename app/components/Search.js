@@ -590,14 +590,14 @@ const getStyles = (theme) =>
       paddingLeft: 0,
     },
     filterTitleStyle: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
       fontFamily: "regularFont",
     },
     filterIcon: {
       paddingRight: 6,
       fontSize: 20,
-      color: theme.purple2,
+      color: theme.theme == "dark" ? theme.text3 : theme.purple2,
     },
     listContainerStyle: {
       borderBottomColor: theme.indigo4,

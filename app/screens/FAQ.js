@@ -205,7 +205,7 @@ const getStyles = (theme) =>
       marginBottom: 10,
       padding: 10,
       color: "#ede8fe",
-      backgroundColor: "#727290",
+      backgroundColor: "#4e3a52",
     },
     textLink: {
       textDecorationLine: "underline",

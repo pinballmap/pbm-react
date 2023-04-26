@@ -284,13 +284,12 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontFamily: "boldFont",
     },
-    locationNameContainer: {},
     locationName: {
       fontFamily: "blackFont",
       fontSize: 22,
       lineHeight: 28,
       textAlign: "left",
-      color: theme.purple,
+      color: theme.purpleLight,
     },
     margin: {
       marginTop: 10,
