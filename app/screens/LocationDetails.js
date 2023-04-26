@@ -54,7 +54,7 @@ class LocationDetails extends Component {
     <Text>
       <Text style={s.machineName}>{machine.name}</Text>
       {machine.year ? (
-        <Text style={[s.fontSize18, s.text3, s.mediumFont]}>{` (${
+        <Text style={[s.fontSize18, s.pink1, s.mediumFont]}>{` (${
           machine.manufacturer && machine.manufacturer + ", "
         }${machine.year})`}</Text>
       ) : null}
@@ -409,7 +409,7 @@ class LocationDetails extends Component {
                                 s.text,
                                 s.bold,
                                 s.fontSize15,
-                                s.marginB8,
+                                s.marginB,
                                 s.marginRight,
                                 s.opacity09,
                               ]}
@@ -464,7 +464,7 @@ class LocationDetails extends Component {
                             name="compass-outline"
                             style={s.metaIcon}
                           />
-                          <Text style={[s.fontSize15, s.text3, s.marginB8]}>
+                          <Text style={[s.fontSize15, s.text3, s.marginB]}>
                             {getDistanceWithUnit(
                               userLat,
                               userLon,
@@ -483,7 +483,7 @@ class LocationDetails extends Component {
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize15, s.link, s.marginB8]}
+                            style={[s.fontSize15, s.link, s.marginB]}
                             onPress={() =>
                               Linking.openURL(`tel://${location.phone}`)
                             }
@@ -500,7 +500,7 @@ class LocationDetails extends Component {
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize15, s.link, s.marginB8]}
+                            style={[s.fontSize15, s.link, s.marginB]}
                             onPress={() =>
                               WebBrowser.openBrowserAsync(location.website)
                             }
@@ -518,9 +518,9 @@ class LocationDetails extends Component {
                           />
                           <Text
                             style={[
-                              s.text2,
+                              s.text,
                               s.fontSize15,
-                              s.marginB8,
+                              s.marginB,
                               s.marginRight,
                             ]}
                           >
@@ -547,20 +547,25 @@ class LocationDetails extends Component {
                           />
                           <Text
                             style={[
-                              s.text2,
+                              s.text,
                               s.fontSize15,
-                              s.marginB8,
+                              s.marginB,
                               s.marginRight,
                             ]}
                           >
-                            Last updated:{" "}
+                            Updated:{" "}
                             <Text style={s.text3}>
                               {moment(
                                 location.date_last_updated,
                                 "YYYY-MM-DD",
                               ).format("MMM DD, YYYY")}
                               {location.last_updated_by_username && ` by`}
-                              {` ${location.last_updated_by_username}`}
+                              <Text
+                                style={{
+                                  fontFamily: "regularBoldFont",
+                                  color: theme.pink1,
+                                }}
+                              >{` ${location.last_updated_by_username}`}</Text>
                             </Text>
                           </Text>
                         </View>
@@ -613,11 +618,19 @@ class LocationDetails extends Component {
                           >
                             {this.getTitle(machine, s)}
                             {machine.created_at != machine.updated_at ? (
-                              <Text
-                                style={[s.addedText, s.updated]}
-                              >{`Last updated: ${moment(
-                                machine.updated_at,
-                              ).format("MMM DD, YYYY")}`}</Text>
+                              <View
+                                style={{ flexDirection: "row", marginTop: 6 }}
+                              >
+                                <MaterialCommunityIcons
+                                  name="clock-time-four-outline"
+                                  style={s.metaIcon}
+                                />
+                                <Text style={s.updated}>
+                                  {`Updated: ${moment(
+                                    machine.updated_at,
+                                  ).format("MMM DD, YYYY")}`}
+                                </Text>
+                              </View>
                             ) : (
                               ""
                             )}
@@ -734,7 +747,7 @@ const getStyles = (theme) =>
       elevation: 6,
     },
     machineName: {
-      color: theme.pink1,
+      color: theme.theme == "dark" ? theme.text : theme.pink1,
       fontFamily: "extraBoldFont",
       fontSize: 20,
     },
@@ -775,9 +788,9 @@ const getStyles = (theme) =>
     mediumFont: {
       fontFamily: "mediumFont",
     },
-    marginB8: {
+    marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
-      marginBottom: 8,
+      marginBottom: 10,
     },
     marginRight: {
       marginRight: 10,
@@ -797,6 +810,10 @@ const getStyles = (theme) =>
     },
     text3: {
       color: theme.text3,
+      fontFamily: "regularFont",
+    },
+    pink1: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.text,
       fontFamily: "regularFont",
     },
     italic: {
@@ -940,7 +957,6 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "regularFont",
-      marginTop: 6,
     },
   });
 

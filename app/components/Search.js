@@ -412,7 +412,7 @@ class Search extends Component {
                         />
                         <Input
                           placeholder="City, Address, Location..."
-                          placeholderTextColor={theme.base4}
+                          placeholderTextColor={"#af9eb1"}
                           leftIcon={
                             <MaterialIcons
                               name="search"
@@ -569,7 +569,7 @@ const getStyles = (theme) =>
     },
     inputPlaceholder: {
       fontSize: deviceWidth < 321 ? 14 : 16,
-      color: theme.base4,
+      color: "#af9eb1",
       paddingLeft: 5,
       flex: 1,
       fontFamily: "regularFont",
@@ -641,16 +641,13 @@ const getStyles = (theme) =>
     },
     goToFilterText: {
       marginHorizontal: 40,
-      padding: 5,
       fontFamily: "regularItalicFont",
-      lineHeight: 18,
       color: theme.text3,
-      backgroundColor: theme.base2,
       textAlign: "center",
     },
     link: {
       textDecorationLine: "underline",
-      color: theme.purple,
+      color: theme.purple2,
     },
   });
 

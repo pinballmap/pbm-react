@@ -54,13 +54,13 @@ const About = ({ navigation, appAlert }) => {
             <View style={s.appAlert}>
               <Text
                 style={[
-                  { textAlign: "center", color: theme.pink2 },
+                  { textAlign: "center", color: theme.pink1 },
                   s.boldHeader,
                 ]}
               >
                 Message of the Day
               </Text>
-              <Text style={[{ color: theme.pink2 }, s.text, s.boldText]}>
+              <Text style={[{ color: theme.text3 }, s.text, s.boldText]}>
                 {appAlert}
               </Text>
             </View>
@@ -397,7 +397,7 @@ const getStyles = (theme) =>
       paddingLeft: 10,
       paddingRight: 10,
       paddingBottom: 0,
-      backgroundColor: "#cf8dde",
+      backgroundColor: theme.theme == "dark" ? theme.base3 : "#efe9f0",
     },
     green: {
       color: theme.green,

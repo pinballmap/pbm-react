@@ -341,17 +341,16 @@ const getStyles = (theme) =>
     },
     usernameContainer: {
       padding: 10,
-      backgroundColor: theme.base2,
     },
     username: {
-      fontFamily: "boldFont",
-      fontSize: 18,
+      fontFamily: "extraBoldFont",
+      fontSize: 22,
       color: theme.pink1,
       textAlign: "center",
     },
     statContainer: {
       alignItems: "center",
-      backgroundColor: theme.theme == "dark" ? "#251b27" : "#efe9f0",
+      backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
       marginHorizontal: 20,
       paddingVertical: 10,
       borderRadius: 20,
@@ -382,7 +381,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingTop: 10,
       fontSize: 16,
-      color: theme.text2,
+      color: theme.text3,
       fontFamily: "mediumFont",
     },
     buttonContainer: {

@@ -91,7 +91,9 @@ const LocationCard = ({
                       >
                         {title}
                       </Text>
-                      <Text style={[s.text3, s.mediumFont]}>{`${info}\n`}</Text>
+                      <Text
+                        style={[s.manufacturer, s.mediumFont]}
+                      >{`${info}\n`}</Text>
                     </Text>
                   );
                 })}
@@ -166,8 +168,8 @@ const getStyles = (theme) =>
       alignContent: "space-around",
     },
     machineName: {
-      marginBottom: -10,
-      color: theme.pink1,
+      marginBottom: -7,
+      color: theme.theme == "dark" ? theme.text : theme.pink1,
     },
     plus: {
       marginBottom: 10,
@@ -191,8 +193,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "blackFont",
-      fontSize: 28,
-      lineHeight: 34,
+      fontSize: 26,
+      lineHeight: 32,
       textAlign: "left",
       color: theme.purpleLight,
     },
@@ -225,16 +227,22 @@ const getStyles = (theme) =>
       alignItems: "center",
     },
     address: {
-      color: theme.text2,
-      fontFamily: "boldFont",
+      color: theme.text3,
+      fontFamily: "mediumFont",
       fontSize: 15,
       flex: 1,
+      marginBottom: 3,
     },
     text: {
       color: theme.text,
     },
     text3: {
       color: theme.text3,
+    },
+    manufacturer: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
+      fontFamily: "mediumFont",
+      fontSize: 15,
     },
     mediumFont: {
       fontFamily: "mediumFont",

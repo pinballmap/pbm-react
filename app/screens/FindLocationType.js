@@ -51,7 +51,7 @@ const FindLocationType = ({
             pressed
               ? { backgroundColor: theme.base4, opacity: 0.8 }
               : {
-                  backgroundColor: index % 2 === 0 ? theme.base2 : theme.base3,
+                  backgroundColor: index % 2 === 0 ? theme.base1 : theme.base2,
                   opacity: 1,
                 },
           ]}
