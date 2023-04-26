@@ -15,7 +15,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.2.25",
+    version: "5.2.26",
     slug: "pbm-app",
     owner: "pinballmap",
     name: "Pinball Map",
@@ -46,7 +46,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "133",
+      buildNumber: "134",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -78,7 +78,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 112,
+      versionCode: 113,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

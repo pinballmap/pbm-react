@@ -12,6 +12,14 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.26
+
+April 26, 2023
+
+- Fix: When you go "back" to the Activity screen, results will not automatically refresh (so you don't lose where you were scrollin' to)
+- Design tweaks: especially to Dark Mode. Kinda toned down some colors.
+- Changed the "Filter by Number of Machines" options. Now 2+, 5+, 10+, 20+. And you can zoom out further when filtering more.
+
 ### 5.2.25
 
 April 13, 2023
