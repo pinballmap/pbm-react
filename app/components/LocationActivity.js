@@ -196,7 +196,7 @@ LocationActivity.propTypes = {
 const getStyles = (theme) =>
   StyleSheet.create({
     header: {
-      backgroundColor: theme.base4,
+      backgroundColor: theme.base2,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,

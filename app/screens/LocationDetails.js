@@ -897,7 +897,7 @@ const getStyles = (theme) =>
       elevation: 1,
     },
     header: {
-      backgroundColor: theme.base4,
+      backgroundColor: theme.base2,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,
