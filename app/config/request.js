@@ -1,4 +1,5 @@
 import * as Location from "expo-location";
+import * as Application from "expo-application";
 
 export const postData = (uri, body) => {
   return fetch(process.env.API_URL + uri, {
@@ -6,6 +7,7 @@ export const postData = (uri, body) => {
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
+      AppVersion: Application.nativeApplicationVersion,
     },
     body: JSON.stringify(body),
   })
