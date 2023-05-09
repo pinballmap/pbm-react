@@ -24,7 +24,7 @@ import { getData } from "../config/request";
 import {
   getLocationsByRegion,
   updateCoordinatesAndGetLocations,
-  updateCoordinates,
+  updateBounds,
   getLocationsConsideringZoom,
   getLocationsFailure,
   setSearchBarText,
@@ -36,6 +36,7 @@ import { retrieveItem } from "../config/utils";
 import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
+import { coordsToBounds } from "../utils/utilityFunctions";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -132,60 +133,30 @@ class Search extends Component {
         `/locations?by_city_id=${city};${stateParam};no_details=1`,
       );
       // In order to show all locations for a given city, we must determine the min/max lat/lon
-      // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
-      // the defined city, we make a fresh request for locations to get any locations we be missing.
-      const { maxLat, minLat, maxLon, minLon } = locations.reduce(
-        (prev, cur) => {
-          let { minLat, maxLat, minLon, maxLon } = prev;
-          if (!maxLat || cur.lat > maxLat) {
-            maxLat = parseFloat(cur.lat);
-          }
-          if (!minLat || cur.lat < minLat) {
-            minLat = parseFloat(cur.lat);
-          }
-          if (!maxLon || cur.lon > maxLon) {
-            maxLon = parseFloat(cur.lon);
-          }
-          if (!minLon || cur.lon < minLon) {
-            minLon = parseFloat(cur.lon);
-          }
-          return {
-            maxLat,
-            minLat,
-            maxLon,
-            minLon,
-          };
-        },
-        {},
-      );
+      // such that we can come up with an appropriate bounds to place the map.
+      const bounds = locations.reduce((prev, cur) => {
+        let { swLat, swLon, neLat, neLon } = prev;
+        if (!neLat || cur.lat > neLat) {
+          neLat = parseFloat(cur.lat);
+        }
+        if (!swLat || cur.lat < swLat) {
+          swLat = parseFloat(cur.lat);
+        }
+        if (!neLon || cur.lon > neLon) {
+          neLon = parseFloat(cur.lon);
+        }
+        if (!swLon || cur.lon < swLon) {
+          swLon = parseFloat(cur.lon);
+        }
+        return {
+          swLat,
+          swLon,
+          neLon,
+          neLat,
+        };
+      }, {});
 
-      // Determine the delta
-      let latDelta = Math.abs(maxLat - minLat);
-      let lonDelta = Math.abs(maxLon - minLon);
-
-      // Account for min/max zoom
-      if (latDelta < 0.07) {
-        latDelta = 0.07;
-      } else if (latDelta > 3) {
-        latDelta = 3;
-      }
-      if (lonDelta < 0.07) {
-        lonDelta = 0.07;
-      } else if (lonDelta > 3) {
-        lonDelta = 3;
-      }
-
-      // Place the center of the map and request for the avg of the coordinates
-      const latAvg = (maxLat + minLat) / 2;
-      const lonAvg = (maxLon + minLon) / 2;
-
-      this.props.updateCoordinates(latAvg, lonAvg, latDelta, lonDelta);
-      this.props.getLocationsConsideringZoom(
-        latAvg,
-        lonAvg,
-        latDelta,
-        lonDelta,
-      );
+      this.props.updateBounds(bounds);
       this.clearSearchState({ value });
     } catch (e) {
       this.props.getLocationsFailure();
@@ -198,7 +169,11 @@ class Search extends Component {
       const data = await this.props.dispatch(fetchLocation(location.id));
       const { lat, lon } = data.location;
       if (!lat) throw new Error();
-      this.props.dispatch(updateCoordinatesAndGetLocations(lat, lon));
+      const bounds = coordsToBounds({
+        lat: parseFloat(lat),
+        lon: parseFloat(lon),
+      });
+      this.props.updateBounds(bounds);
       this.props.navigate("LocationDetails", { id: location.id });
       this.clearSearchState(location);
     } catch (e) {
@@ -651,19 +626,6 @@ const getStyles = (theme) =>
     },
   });
 
-Search.propTypes = {
-  navigate: PropTypes.func,
-  regions: PropTypes.object,
-  query: PropTypes.object,
-  updateCoordinates: PropTypes.func,
-  getLocationsConsideringZoom: PropTypes.func,
-  getLocationsByRegion: PropTypes.func,
-  getLocationsFailure: PropTypes.func,
-  setSearchBarText: PropTypes.func,
-  clearSearchBarText: PropTypes.func,
-  updateCoordinatesAndGetLocations: PropTypes.func,
-};
-
 const mapStateToProps = ({ regions, query, user }) => ({
   regions,
   query,
@@ -672,8 +634,7 @@ const mapStateToProps = ({ regions, query, user }) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateCoordinatesAndGetLocations: (lat, lon) =>
     dispatch(updateCoordinatesAndGetLocations(lat, lon)),
-  updateCoordinates: (lat, lon, latDelta, lonDelta) =>
-    dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
+  updateBounds: (bounds) => dispatch(updateBounds(bounds)),
   getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
     dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),

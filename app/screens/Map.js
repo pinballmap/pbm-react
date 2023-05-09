@@ -108,16 +108,22 @@ class Map extends Component {
   };
 
   onRegionChange = async (region, { isGesture }) => {
+    const { northEast, southWest } = await this.mapRef.getMapBoundaries();
+    const bounds = {
+      swLat: southWest.latitude,
+      swLon: southWest.longitude,
+      neLat: northEast.latitude,
+      neLon: northEast.longitude,
+    };
     if (isGesture) {
-      const { northEast, southWest } = await this.mapRef.getMapBoundaries();
       this.setState({ showUpdateSearch: true });
-      this.props.updateBounds({
-        swLat: southWest.latitude,
-        swLon: southWest.longitude,
-        neLat: northEast.latitude,
-        neLon: northEast.longitude,
-      });
+      this.props.updateBounds(bounds);
+      return;
     }
+    // If the map is moved by updating the coordinates elsewhere, we need to make the
+    // new request for locations here to account for the viewable bounds on the screen
+    // rather than the min/max coords determined otherwise
+    this.props.getLocationsByBounds(bounds);
   };
 
   updateCurrentLocation = () => {

@@ -20,6 +20,18 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
+export const coordsToBounds = ({
+  lat,
+  lon,
+  latDelta = 0.05,
+  lonDelta = 0.05,
+}) => ({
+  swLat: lat - latDelta,
+  swLon: lon - lonDelta,
+  neLat: lat + latDelta,
+  neLon: lon + lonDelta,
+});
+
 export const formatNumWithCommas = (num) => {
   if (!num) return "";
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
