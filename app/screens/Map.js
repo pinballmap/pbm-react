@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import { Button } from "@rneui/base";
@@ -24,7 +23,8 @@ import {
   getLocationsConsideringZoom,
   login,
   setUnitPreference,
-  updateCoordinates,
+  updateBounds,
+  getLocationsByBounds,
   updateCoordinatesAndGetLocations,
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
@@ -36,9 +36,9 @@ import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 class Map extends Component {
+  mapRef = null;
   constructor(props) {
     super(props);
-
     this.state = {
       showUpdateSearch: false,
     };
@@ -107,15 +107,16 @@ class Map extends Component {
     }
   };
 
-  onRegionChange = (region, { isGesture }) => {
+  onRegionChange = async (region, { isGesture }) => {
     if (isGesture) {
+      const { northEast, southWest } = await this.mapRef.getMapBoundaries();
       this.setState({ showUpdateSearch: true });
-      this.props.updateCoordinates(
-        region.latitude,
-        region.longitude,
-        region.latitudeDelta,
-        region.longitudeDelta,
-      );
+      this.props.updateBounds({
+        swLat: southWest.latitude,
+        swLon: southWest.longitude,
+        neLat: northEast.latitude,
+        neLon: northEast.longitude,
+      });
     }
   };
 
@@ -153,7 +154,11 @@ class Map extends Component {
     const { showUpdateSearch } = this.state;
     const { theme } = this.context;
     const s = getStyles(theme);
-    const { curLat, curLon, latDelta, lonDelta } = query;
+    const { swLat, swLon, neLat, neLon } = query;
+    const latitude = (swLat + neLat) / 2;
+    const longitude = (swLon + neLon) / 2;
+    const latitudeDelta = Math.abs(neLat - swLat);
+    const longitudeDelta = Math.abs(neLon - swLon);
     const {
       machineId = false,
       locationType = false,
@@ -171,7 +176,7 @@ class Map extends Component {
         ? true
         : false;
 
-    if (!curLat) {
+    if (!latitude) {
       return <ActivityIndicator />;
     }
 
@@ -196,11 +201,12 @@ class Map extends Component {
           </View>
         ) : null}
         <MapView
+          ref={(ref) => (this.mapRef = ref)}
           region={{
-            latitude: curLat,
-            longitude: curLon,
-            latitudeDelta: latDelta,
-            longitudeDelta: lonDelta,
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
           }}
           style={s.map}
           onRegionChangeComplete={this.onRegionChange}
@@ -279,12 +285,7 @@ class Map extends Component {
             ]}
             onPress={() => {
               this.setState({ showUpdateSearch: false });
-              this.props.getLocationsConsideringZoom(
-                curLat,
-                curLon,
-                latDelta,
-                lonDelta,
-              );
+              this.props.getLocationsByBounds({ swLat, swLon, neLat, neLon });
               this.props.clearSearchBarText();
             }}
           >
@@ -429,26 +430,6 @@ const getStyles = (theme) =>
     },
   });
 
-Map.propTypes = {
-  isFetchingLocations: PropTypes.bool,
-  mapLocations: PropTypes.array,
-  query: PropTypes.object,
-  getCurrentLocation: PropTypes.func,
-  navigation: PropTypes.object,
-  getFavoriteLocations: PropTypes.func,
-  clearFilters: PropTypes.func,
-  getLocationsConsideringZoom: PropTypes.func,
-  clearSearchBarText: PropTypes.func,
-  setUnitPreference: PropTypes.func,
-  updateCoordinates: PropTypes.func,
-  updateCoordinatesAndGetLocations: PropTypes.func,
-  regions: PropTypes.object,
-  login: PropTypes.func,
-  getLocationAndMachineCounts: PropTypes.func,
-  getLocationsByRegion: PropTypes.func,
-  fetchLocationAndUpdateMap: PropTypes.func,
-};
-
 const mapStateToProps = (state) => {
   const { locations, query, regions } = state;
   const mapLocations = getMapLocations(state);
@@ -470,8 +451,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearSearchBarText: () => dispatch(clearSearchBarText()),
   login: (auth) => dispatch(login(auth)),
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
-  updateCoordinates: (lat, lon, latDelta, lonDelta) =>
-    dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
+  updateBounds: (bounds) => dispatch(updateBounds(bounds)),
+  getLocationsByBounds: (bounds) => dispatch(getLocationsByBounds(bounds)),
   updateCoordinatesAndGetLocations: (lat, lon) =>
     dispatch(updateCoordinatesAndGetLocations(lat, lon)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),

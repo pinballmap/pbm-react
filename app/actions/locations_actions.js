@@ -9,6 +9,7 @@ import {
   SELECT_LOCATION_LIST_FILTER_BY,
   SET_MAX_ZOOM,
   UPDATE_COORDINATES,
+  UPDATE_BOUNDS,
 } from "./types";
 import { getData } from "../config/request";
 import { getDistance } from "../utils/utilityFunctions";
@@ -60,6 +61,18 @@ export const getFilterState = (filterState) => {
     ? 500
     : 200;
 };
+
+export const getLocationsByBounds =
+  ({ swLat, swLon, neLat, neLon }) =>
+  (dispatch) => {
+    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon}`;
+
+    return getData(url)
+      .then((data) => {
+        dispatch(getLocationsSuccess(data));
+      })
+      .catch((err) => dispatch(getLocationsFailure(err)));
+  };
 
 export const getLocations =
   (lat = "", lon = "", distance = STANDARD_DISTANCE) =>
@@ -152,6 +165,10 @@ export const updateCoordinates =
   (dispatch) => {
     dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta });
   };
+
+export const updateBounds = (bounds) => (dispatch) => {
+  dispatch({ type: UPDATE_BOUNDS, bounds });
+};
 
 export const updateCoordinatesAndGetLocations =
   (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>
