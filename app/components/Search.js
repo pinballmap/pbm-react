@@ -25,7 +25,6 @@ import {
   getLocationsByRegion,
   updateCoordinatesAndGetLocations,
   updateBounds,
-  getLocationsConsideringZoom,
   getLocationsFailure,
   setSearchBarText,
   clearSearchBarText,
@@ -635,8 +634,6 @@ const mapDispatchToProps = (dispatch) => ({
   updateCoordinatesAndGetLocations: (lat, lon) =>
     dispatch(updateCoordinatesAndGetLocations(lat, lon)),
   updateBounds: (bounds) => dispatch(updateBounds(bounds)),
-  getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
-    dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   getLocationsFailure: () => dispatch(getLocationsFailure()),
   setSearchBarText: (searchBarText) =>

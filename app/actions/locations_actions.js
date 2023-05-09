@@ -12,7 +12,7 @@ import {
   UPDATE_BOUNDS,
 } from "./types";
 import { getData } from "../config/request";
-import { getDistance } from "../utils/utilityFunctions";
+import { getDistance, coordsToBounds } from "../utils/utilityFunctions";
 
 const STANDARD_DISTANCE = 5.5;
 
@@ -235,14 +235,14 @@ export const getLocationsByRegion = (region) => (dispatch) => {
   };
 
   const delta = getDelta();
-  dispatch({
-    type: UPDATE_COORDINATES,
-    lat,
-    lon,
+  const bounds = coordsToBounds({
+    lat: parseFloat(lat),
+    lon: parseFloat(lon),
     latDelta: delta,
     lonDelta: delta,
   });
-  dispatch(
-    getLocationsConsideringZoom(lat, lon, delta, delta, effective_radius),
-  );
+  dispatch({
+    type: UPDATE_BOUNDS,
+    bounds,
+  });
 };
