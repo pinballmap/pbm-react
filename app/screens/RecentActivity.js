@@ -263,12 +263,12 @@ const getStyles = (theme) =>
       fontFamily: "regularBoldFont",
     },
     purple: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 16,
       fontFamily: "regularBoldFont",
     },
     purple2: {
-      color: theme.theme == "dark" ? theme.purple : theme.purple2,
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 16,
       fontFamily: "regularBoldFont",
     },

@@ -584,12 +584,12 @@ const getStyles = (theme) =>
       fontFamily: "boldFont",
     },
     modalPurple: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 18,
       fontFamily: "blackFont",
     },
     modalPurple2: {
-      color: theme.theme == "dark" ? theme.purple : theme.purple2,
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 18,
       fontFamily: "blackFont",
     },
