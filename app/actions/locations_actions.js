@@ -64,12 +64,29 @@ export const getFilterState = (filterState) => {
 
 export const getLocationsByBounds =
   ({ swLat, swLon, neLat, neLon }) =>
-  (dispatch) => {
-    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon}`;
+  (dispatch, getState) => {
+    const {
+      machineId,
+      locationType,
+      numMachines,
+      selectedOperator,
+      filterByMachineVersion,
+    } = getState().query;
+    const machineQueryString = machineId ? `by_machine_id=${machineId};` : "";
+    const locationTypeQueryString = locationType
+      ? `by_type_id=${locationType};`
+      : "";
+    const numMachinesQueryString = numMachines
+      ? `by_at_least_n_machines_type=${numMachines};`
+      : "";
+    const byOperator = selectedOperator
+      ? `by_operator_id=${selectedOperator};`
+      : "";
+    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}`;
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
-        dispatch(getLocationsSuccess(data));
+        dispatch(getLocationsSuccess(data, machineId, filterByMachineVersion));
       })
       .catch((err) => dispatch(getLocationsFailure(err)));
   };
