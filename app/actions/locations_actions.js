@@ -66,7 +66,7 @@ export const getLocationsByBounds =
   ({ swLat, swLon, neLat, neLon }) =>
   (dispatch) => {
     const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon}`;
-
+    dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
         dispatch(getLocationsSuccess(data));
@@ -170,6 +170,10 @@ export const updateBounds = (bounds) => (dispatch) => {
   dispatch({ type: UPDATE_BOUNDS, bounds });
 };
 
+export const triggerUpdateBounds = (bounds) => (dispatch) => {
+  dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
+};
+
 export const updateCoordinatesAndGetLocations =
   (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>
   (dispatch) => {
@@ -241,8 +245,5 @@ export const getLocationsByRegion = (region) => (dispatch) => {
     latDelta: delta,
     lonDelta: delta,
   });
-  dispatch({
-    type: UPDATE_BOUNDS,
-    bounds,
-  });
+  dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
 };

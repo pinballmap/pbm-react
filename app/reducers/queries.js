@@ -37,6 +37,7 @@ export const initialState = {
   viewByFavoriteLocations: false,
   filterByMachineVersion: false,
   searchBarText: "",
+  triggerUpdateBounds: false,
 };
 
 export default (state = initialState, action) => {
@@ -53,12 +54,14 @@ export default (state = initialState, action) => {
       };
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
+      const { triggerUpdateBounds = false } = action;
       return {
         ...state,
         swLat,
         swLon,
         neLat,
         neLon,
+        triggerUpdateBounds,
       };
     }
     case SET_MACHINE_FILTER: {

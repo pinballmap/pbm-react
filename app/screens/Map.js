@@ -107,23 +107,22 @@ class Map extends Component {
     }
   };
 
-  onRegionChange = async (region, { isGesture }) => {
+  getBounds = async () => {
     const { northEast, southWest } = await this.mapRef.getMapBoundaries();
-    const bounds = {
+    return {
       swLat: southWest.latitude,
       swLon: southWest.longitude,
       neLat: northEast.latitude,
       neLon: northEast.longitude,
     };
+  };
+
+  onRegionChange = async (region, { isGesture }) => {
     if (isGesture) {
+      const bounds = await this.getBounds();
       this.setState({ showUpdateSearch: true });
       this.props.updateBounds(bounds);
-      return;
     }
-    // If the map is moved by updating the coordinates elsewhere, we need to make the
-    // new request for locations here to account for the viewable bounds on the screen
-    // rather than the min/max coords determined otherwise
-    this.props.getLocationsByBounds(bounds);
   };
 
   updateCurrentLocation = () => {
@@ -152,6 +151,17 @@ class Map extends Component {
         this.props.setUnitPreference(true);
       }
     });
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (
+      this.props.query.swLat !== prevProps.query.swLat &&
+      this.props.query.triggerUpdateBounds
+    ) {
+      const bounds = await this.getBounds();
+      this.props.updateBounds(bounds);
+      this.props.getLocationsByBounds(bounds);
+    }
   }
 
   render() {

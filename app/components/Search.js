@@ -24,7 +24,7 @@ import { getData } from "../config/request";
 import {
   getLocationsByRegion,
   updateCoordinatesAndGetLocations,
-  updateBounds,
+  triggerUpdateBounds,
   getLocationsFailure,
   setSearchBarText,
   clearSearchBarText,
@@ -155,7 +155,7 @@ class Search extends Component {
         };
       }, {});
 
-      this.props.updateBounds(bounds);
+      this.props.triggerUpdateBounds(bounds);
       this.clearSearchState({ value });
     } catch (e) {
       this.props.getLocationsFailure();
@@ -172,7 +172,7 @@ class Search extends Component {
         lat: parseFloat(lat),
         lon: parseFloat(lon),
       });
-      this.props.updateBounds(bounds);
+      this.props.triggerUpdateBounds(bounds);
       this.props.navigate("LocationDetails", { id: location.id });
       this.clearSearchState(location);
     } catch (e) {
@@ -633,7 +633,7 @@ const mapStateToProps = ({ regions, query, user }) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateCoordinatesAndGetLocations: (lat, lon) =>
     dispatch(updateCoordinatesAndGetLocations(lat, lon)),
-  updateBounds: (bounds) => dispatch(updateBounds(bounds)),
+  triggerUpdateBounds: (bounds) => dispatch(triggerUpdateBounds(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   getLocationsFailure: () => dispatch(getLocationsFailure()),
   setSearchBarText: (searchBarText) =>
