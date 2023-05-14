@@ -14,6 +14,7 @@ import {
   SET_MACHINE_VERSION_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
+  UPDATE_IGNORE_MAX_ZOOM,
 } from "../actions/types";
 
 export const initialState = {
@@ -60,6 +61,12 @@ export default (state = initialState, action) => {
         neLat,
         neLon,
         triggerUpdateBounds,
+      };
+    }
+    case UPDATE_IGNORE_MAX_ZOOM: {
+      return {
+        ...state,
+        ignoreZoom: action.ignoreZoom,
       };
     }
     case SET_MACHINE_FILTER: {

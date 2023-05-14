@@ -9,11 +9,10 @@ import {
   SELECT_LOCATION_LIST_FILTER_BY,
   SET_MAX_ZOOM,
   UPDATE_BOUNDS,
+  UPDATE_IGNORE_MAX_ZOOM,
 } from "./types";
 import { getData } from "../config/request";
-import { getDistance, coordsToBounds } from "../utils/utilityFunctions";
-
-const STANDARD_DISTANCE = 5.5;
+import { coordsToBounds } from "../utils/utilityFunctions";
 
 Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
 
@@ -43,6 +42,7 @@ export const getFilterState = (filterState) => {
     numMachines,
     selectedOperator,
     viewByFavoriteLocations,
+    ignoreZoom,
   } = filterState;
   const filtersNoMachines =
     !!machineId ||
@@ -52,13 +52,17 @@ export const getFilterState = (filterState) => {
   const filteringByTwoMachines = !filtersNoMachines && numMachines === "2";
   const filteringByMoreMachines = !filtersNoMachines && numMachines > 2;
   const filterApplied = filtersNoMachines || numMachines > 0;
-  return filteringByTwoMachines
-    ? 300
+  const maxDelta = filteringByTwoMachines
+    ? 4.5
     : filteringByMoreMachines
-    ? numMachines * 100
+    ? numMachines * 1.25
     : filterApplied
-    ? 500
-    : 200;
+    ? 7
+    : 3;
+  return {
+    maxDelta,
+    ignoreZoom,
+  };
 };
 
 export const getLocationsByBounds =
@@ -90,89 +94,30 @@ export const getLocationsByBounds =
       .catch((err) => dispatch(getLocationsFailure(err)));
   };
 
-export const getLocations =
-  (lat = "", lon = "", distance = STANDARD_DISTANCE) =>
-  (dispatch, getState) => {
-    dispatch({ type: FETCHING_LOCATIONS });
+export const getLocationsConsideringZoom = (bounds) => (dispatch, getState) => {
+  const { neLat, neLon, swLat, swLon } = bounds;
+  const { maxDelta, ignoreZoom } = getFilterState(getState().query);
+  const latDelta = Math.abs(neLat - swLat);
+  const lonDelta = Math.abs(neLon - swLon);
+  const maxZoom = latDelta > maxDelta || lonDelta > maxDelta;
 
-    const {
-      machineId,
-      locationType,
-      numMachines,
-      selectedOperator,
-      curLat,
-      curLon,
-      filterByMachineVersion,
-    } = getState().query;
-    const machineQueryString = machineId ? `by_machine_id=${machineId};` : "";
-    const locationTypeQueryString = locationType
-      ? `by_type_id=${locationType};`
-      : "";
-    const numMachinesQueryString = numMachines
-      ? `by_at_least_n_machines_type=${numMachines};`
-      : "";
-    const byOperator = selectedOperator
-      ? `by_operator_id=${selectedOperator};`
-      : "";
-    const url = `/locations/closest_by_lat_lon.json?lat=${
-      lat ? lat : curLat
-    };lon=${
-      lon ? lon : curLon
-    };${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}max_distance=${distance};send_all_within_distance=1;no_details=1`;
-
-    return getData(url)
-      .then((data) =>
-        dispatch(getLocationsSuccess(data, machineId, filterByMachineVersion)),
-      )
-      .catch((err) => dispatch(getLocationsFailure(err)));
-  };
-
-export const getLocationsConsideringZoom =
-  (lat, lon, latDelta = 0.1, lonDelta = 0.1, distance) =>
-  (dispatch, getState) => {
-    const viewableMax = getFilterState(getState().query);
-    const viewableLat = getDistance(
-      lat - 0.5 * latDelta,
-      lon,
-      lat + 0.5 * latDelta,
-      lon,
-    );
-    const viewableLon = getDistance(
-      lat,
-      lon - 0.5 * lonDelta,
-      lat,
-      lon + 0.5 * lonDelta,
-    );
-    const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon;
-    const maxZoom = viewableLat > viewableMax || viewableLon > viewableMax;
-
-    dispatch({ type: SET_MAX_ZOOM, maxZoom });
-    if (distance || !maxZoom) {
-      dispatch(getLocations(lat, lon, distance ? distance : viewableDist));
-    }
-  };
+  dispatch({ type: SET_MAX_ZOOM, maxZoom });
+  if (ignoreZoom || !maxZoom) {
+    ignoreZoom && dispatch({ type: UPDATE_IGNORE_MAX_ZOOM, ignoreZoom: false });
+    dispatch(getLocationsByBounds(bounds));
+  }
+};
 
 export const updateFilterLocations = () => (dispatch, getState) => {
-  const viewableMax = getFilterState(getState().query);
-  const { curLat, curLon, latDelta, lonDelta } = getState().query;
-  const viewableLat = getDistance(
-    curLat - 0.5 * latDelta,
-    curLon,
-    curLat + 0.5 * latDelta,
-    curLon,
-  );
-  const viewableLon = getDistance(
-    curLat,
-    curLon - 0.5 * lonDelta,
-    curLat,
-    curLon + 0.5 * lonDelta,
-  );
-  const viewableDist = viewableLat > viewableLon ? viewableLat : viewableLon;
-  const maxZoom = viewableLat > viewableMax || viewableLon > viewableMax;
+  const { swLat, swLon, neLat, neLon } = getState().query;
+  const { maxDelta } = getFilterState(getState().query);
+  const latDelta = Math.abs(neLat - swLat);
+  const lonDelta = Math.abs(neLon - swLon);
+  const maxZoom = latDelta > maxDelta || lonDelta > maxDelta;
 
   dispatch({ type: SET_MAX_ZOOM, maxZoom });
   if (!maxZoom) {
-    dispatch(getLocations(curLat, curLon, viewableDist));
+    dispatch(getLocationsByBounds({ neLat, neLon, swLat, swLon }));
   }
 };
 
@@ -249,4 +194,5 @@ export const getLocationsByRegion = (region) => (dispatch) => {
     lonDelta: delta,
   });
   dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
+  dispatch({ type: UPDATE_IGNORE_MAX_ZOOM, ignoreZoom: true });
 };

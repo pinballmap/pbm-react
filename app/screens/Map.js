@@ -20,13 +20,13 @@ import {
   getFavoriteLocations,
   clearFilters,
   clearSearchBarText,
-  getLocationsConsideringZoom,
   login,
   setUnitPreference,
   updateBounds,
   getLocationsByBounds,
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
+  getLocationsConsideringZoom,
 } from "../actions";
 import { getMapLocations } from "../selectors";
 import androidCustomDark from "../utils/androidCustomDark";
@@ -162,13 +162,14 @@ class Map extends Component {
   }
 
   async componentDidUpdate(prevProps) {
+    const { triggerUpdateBounds } = this.props.query;
     if (
       this.props.query.swLat !== prevProps.query.swLat &&
-      this.props.query.triggerUpdateBounds
+      triggerUpdateBounds
     ) {
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
-      this.props.getLocationsByBounds(bounds);
+      this.props.getLocationsConsideringZoom(bounds);
     }
   }
 
@@ -309,7 +310,12 @@ class Map extends Component {
             ]}
             onPress={() => {
               this.setState({ showUpdateSearch: false });
-              this.props.getLocationsByBounds({ swLat, swLon, neLat, neLon });
+              this.props.getLocationsConsideringZoom({
+                swLat,
+                swLon,
+                neLat,
+                neLon,
+              });
               this.props.clearSearchBarText();
             }}
           >
@@ -470,13 +476,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchCurrentLocation(isInitialLoad)),
   getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
   clearFilters: () => dispatch(clearFilters()),
-  getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
-    dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),
   login: (auth) => dispatch(login(auth)),
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
   updateBounds: (bounds) => dispatch(updateBounds(bounds)),
   getLocationsByBounds: (bounds) => dispatch(getLocationsByBounds(bounds)),
+  getLocationsConsideringZoom: (bounds) =>
+    dispatch(getLocationsConsideringZoom(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   fetchLocationAndUpdateMap: (locationId) =>
     dispatch(fetchLocationAndUpdateMap(locationId)),
