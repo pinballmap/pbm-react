@@ -8,7 +8,6 @@ import {
   FETCHING_LOCATIONS_FAILURE,
   SELECT_LOCATION_LIST_FILTER_BY,
   SET_MAX_ZOOM,
-  UPDATE_COORDINATES,
   UPDATE_BOUNDS,
 } from "./types";
 import { getData } from "../config/request";
@@ -177,12 +176,6 @@ export const updateFilterLocations = () => (dispatch, getState) => {
   }
 };
 
-export const updateCoordinates =
-  (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>
-  (dispatch) => {
-    dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta });
-  };
-
 export const updateBounds = (bounds) => (dispatch) => {
   dispatch({ type: UPDATE_BOUNDS, bounds });
 };
@@ -190,13 +183,6 @@ export const updateBounds = (bounds) => (dispatch) => {
 export const triggerUpdateBounds = (bounds) => (dispatch) => {
   dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
 };
-
-export const updateCoordinatesAndGetLocations =
-  (lat, lon, latDelta = 0.1, lonDelta = 0.1) =>
-  (dispatch) => {
-    dispatch({ type: UPDATE_COORDINATES, lat, lon, latDelta, lonDelta });
-    dispatch(getLocations(lat, lon));
-  };
 
 export const getLocationsSuccess = (
   data,

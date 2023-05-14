@@ -1,5 +1,4 @@
 import {
-  UPDATE_COORDINATES,
   UPDATE_BOUNDS,
   CLEAR_FILTERS,
   SET_SELECTED_ACTIVITY_FILTER,
@@ -42,7 +41,6 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_COORDINATES:
     case FETCHING_LOCATION_TRACKING_SUCCESS:
     case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
       return {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from "throttle-debounce";
@@ -23,7 +22,6 @@ import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { getData } from "../config/request";
 import {
   getLocationsByRegion,
-  updateCoordinatesAndGetLocations,
   triggerUpdateBounds,
   getLocationsFailure,
   setSearchBarText,
@@ -112,7 +110,8 @@ class Search extends Component {
       .then(
         (response) => {
           const { lat, lng } = response.results[0].geometry.location;
-          this.props.updateCoordinatesAndGetLocations(lat, lng);
+          const bounds = coordsToBounds({ lat, lon: lng });
+          this.props.triggerUpdateBounds(bounds);
         },
         () => {
           Alert.alert("An error occurred geocoding.");
@@ -490,10 +489,6 @@ class Search extends Component {
   }
 }
 
-Search.propTypes = {
-  theme: PropTypes.string,
-};
-
 const getStyles = (theme) =>
   StyleSheet.create({
     background: {
@@ -631,8 +626,6 @@ const mapStateToProps = ({ regions, query, user }) => ({
   user,
 });
 const mapDispatchToProps = (dispatch) => ({
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
   triggerUpdateBounds: (bounds) => dispatch(triggerUpdateBounds(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   getLocationsFailure: () => dispatch(getLocationsFailure()),

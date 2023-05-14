@@ -25,7 +25,6 @@ import {
   setUnitPreference,
   updateBounds,
   getLocationsByBounds,
-  updateCoordinatesAndGetLocations,
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
 } from "../actions";
@@ -34,6 +33,7 @@ import androidCustomDark from "../utils/androidCustomDark";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { coordsToBounds } from "../utils/utilityFunctions";
 
 class Map extends Component {
   mapRef = null;
@@ -61,7 +61,11 @@ class Map extends Component {
         `/locations/closest_by_address.json?address=${address};no_details=1`,
       );
       if (location) {
-        this.props.updateCoordinatesAndGetLocations(location.lat, location.lon);
+        const bounds = coordsToBounds({
+          lat: parseFloat(location.lat),
+          lon: parseFloat(location.lon),
+        });
+        this.props.triggerUpdateBounds(bounds);
       }
       navigate("MapTab");
     } else if (url.indexOf("region=") > 0) {
@@ -82,7 +86,11 @@ class Map extends Component {
         locations = byCity.locations || [];
         if (locations.length > 0) {
           const { lat, lon } = locations[0];
-          this.props.updateCoordinatesAndGetLocations(lat, lon);
+          const bounds = coordsToBounds({
+            lat: parseFloat(lat),
+            lon: parseFloat(lon),
+          });
+          this.props.triggerUpdateBounds(bounds);
         }
       }
       // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
@@ -469,8 +477,6 @@ const mapDispatchToProps = (dispatch) => ({
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
   updateBounds: (bounds) => dispatch(updateBounds(bounds)),
   getLocationsByBounds: (bounds) => dispatch(getLocationsByBounds(bounds)),
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   fetchLocationAndUpdateMap: (locationId) =>
     dispatch(fetchLocationAndUpdateMap(locationId)),

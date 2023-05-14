@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
@@ -30,7 +29,6 @@ import {
   confirmLocationIsUpToDate,
   fetchLocation,
   setCurrentMachine,
-  updateCoordinatesAndGetLocations,
 } from "../actions";
 import androidCustomDark from "../utils/androidCustomDark";
 import {
@@ -960,21 +958,6 @@ const getStyles = (theme) =>
     },
   });
 
-LocationDetails.propTypes = {
-  confirmLocationIsUpToDate: PropTypes.func,
-  fetchLocation: PropTypes.func,
-  location: PropTypes.object,
-  locations: PropTypes.object,
-  operators: PropTypes.object,
-  machines: PropTypes.object,
-  user: PropTypes.object,
-  closeConfirmModal: PropTypes.func,
-  setCurrentMachine: PropTypes.func,
-  navigation: PropTypes.object,
-  updateCoordinatesAndGetLocations: PropTypes.func,
-  route: PropTypes.object,
-};
-
 const mapStateToProps = ({
   application,
   location,
@@ -989,7 +972,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(confirmLocationIsUpToDate(body, id, username)),
   closeConfirmModal: () => dispatch(closeConfirmModal()),
   setCurrentMachine: (id) => dispatch(setCurrentMachine(id)),
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails);
