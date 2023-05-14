@@ -32,6 +32,11 @@ export const coordsToBounds = ({
   neLon: lon + lonDelta,
 });
 
+export const boundsToCoords = ({ swLat, swLon, neLat, neLon }) => ({
+  lat: (swLat + neLat) / 2,
+  lon: (swLon + neLon) / 2,
+});
+
 export const formatNumWithCommas = (num) => {
   if (!num) return "";
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");

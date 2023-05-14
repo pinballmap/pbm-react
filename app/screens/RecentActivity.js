@@ -11,7 +11,7 @@ import {
   Screen,
   Text,
 } from "../components";
-import { formatNumWithCommas } from "../utils/utilityFunctions";
+import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
 import { clearActivityFilter } from "../actions";
 import { ButtonGroup } from "@rneui/base";
 import getActivityIcon from "../utils/getActivityIcon";
@@ -26,7 +26,8 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [maxDistance, setMaxDistance] = useState(30);
   const [btnIdx, setBtnIdx] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
-  const { selectedActivity, curLat, curLon } = query;
+  const { selectedActivity, swLat, swLon, neLat, neLon } = query;
+  const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
@@ -42,7 +43,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       if (distance || shouldRefresh) {
         setFetchingRecentActivity(true);
         getData(
-          `/user_submissions/list_within_range.json?lat=${curLat};lon=${curLon};max_distance=${
+          `/user_submissions/list_within_range.json?lat=${lat};lon=${lon};max_distance=${
             distance || maxDistance
           }`,
         ).then((data) => {
@@ -52,12 +53,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       }
       setShouldRefresh(true);
     },
-    [curLat, curLon, maxDistance, shouldRefresh],
+    [lat, lon, maxDistance, shouldRefresh],
   );
 
   useEffect(
     () => navigation.addListener("focus", fetchData),
-    [navigation, curLat, curLon, maxDistance, shouldRefresh],
+    [navigation, lat, lon, maxDistance, shouldRefresh],
   );
 
   const updateIdx = (selectedIdx) => {

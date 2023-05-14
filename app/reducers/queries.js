@@ -8,8 +8,6 @@ import {
   SET_VIEW_FAVORITE_LOCATIONS_FILTER,
   SET_LOCATION_TYPE_FILTER,
   SET_OPERATOR_FILTER,
-  FETCHING_LOCATION_TRACKING_SUCCESS,
-  INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_MAX_ZOOM,
   SET_MACHINE_VERSION_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
@@ -19,10 +17,6 @@ import {
 
 export const initialState = {
   locationName: "",
-  curLat: "",
-  curLon: "",
-  latDelta: "",
-  lonDelta: "",
   swLat: 45.61322,
   swLon: -122.7587,
   neLat: 45.41322,
@@ -42,15 +36,6 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCHING_LOCATION_TRACKING_SUCCESS:
-    case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
-      return {
-        ...state,
-        curLat: Number(action.lat),
-        curLon: Number(action.lon),
-        latDelta: Number(action.latDelta ? action.latDelta : 0.1),
-        lonDelta: Number(action.lonDelta ? action.lonDelta : 0.1),
-      };
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
       const { triggerUpdateBounds = false } = action;
