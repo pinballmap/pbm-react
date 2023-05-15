@@ -12,6 +12,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.2.28
+
+May 15, 2023
+
+- Bug fix: Fixed problem when sorting on the Saved screen.
+- Minor dark mode color tweaks.
+
 ### 5.2.27
 
 April 29, 2023
