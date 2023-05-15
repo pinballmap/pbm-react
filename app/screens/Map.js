@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
+import PropTypes from "prop-types";
 import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
 import { getData } from "../config/request";
@@ -459,6 +460,26 @@ const getStyles = (theme) =>
       opacity: 1.0,
     },
   });
+
+Map.propTypes = {
+  isFetchingLocations: PropTypes.bool,
+  mapLocations: PropTypes.array,
+  query: PropTypes.object,
+  getCurrentLocation: PropTypes.func,
+  navigation: PropTypes.object,
+  getFavoriteLocations: PropTypes.func,
+  clearFilters: PropTypes.func,
+  getLocationsConsideringZoom: PropTypes.func,
+  clearSearchBarText: PropTypes.func,
+  setUnitPreference: PropTypes.func,
+  updateCoordinates: PropTypes.func,
+  updateCoordinatesAndGetLocations: PropTypes.func,
+  regions: PropTypes.object,
+  login: PropTypes.func,
+  getLocationAndMachineCounts: PropTypes.func,
+  getLocationsByRegion: PropTypes.func,
+  fetchLocationAndUpdateMap: PropTypes.func,
+};
 
 const mapStateToProps = (state) => {
   const { locations, query, regions } = state;

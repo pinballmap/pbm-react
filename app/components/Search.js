@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from "throttle-debounce";
 import Geocode from "react-geocode";
@@ -619,6 +620,19 @@ const getStyles = (theme) =>
       color: theme.purple2,
     },
   });
+
+Search.propTypes = {
+  navigate: PropTypes.func,
+  regions: PropTypes.object,
+  query: PropTypes.object,
+  updateCoordinates: PropTypes.func,
+  getLocationsConsideringZoom: PropTypes.func,
+  getLocationsByRegion: PropTypes.func,
+  getLocationsFailure: PropTypes.func,
+  setSearchBarText: PropTypes.func,
+  clearSearchBarText: PropTypes.func,
+  updateCoordinatesAndGetLocations: PropTypes.func,
+};
 
 const mapStateToProps = ({ regions, query, user }) => ({
   regions,

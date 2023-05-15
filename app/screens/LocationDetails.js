@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   Dimensions,
   Image,
@@ -957,6 +958,21 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
     },
   });
+
+LocationDetails.propTypes = {
+  confirmLocationIsUpToDate: PropTypes.func,
+  fetchLocation: PropTypes.func,
+  location: PropTypes.object,
+  locations: PropTypes.object,
+  operators: PropTypes.object,
+  machines: PropTypes.object,
+  user: PropTypes.object,
+  closeConfirmModal: PropTypes.func,
+  setCurrentMachine: PropTypes.func,
+  navigation: PropTypes.object,
+  updateCoordinatesAndGetLocations: PropTypes.func,
+  route: PropTypes.object,
+};
 
 const mapStateToProps = ({
   application,
