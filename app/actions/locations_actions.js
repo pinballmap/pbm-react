@@ -12,7 +12,7 @@ import {
   UPDATE_IGNORE_MAX_ZOOM,
 } from "./types";
 import { getData } from "../config/request";
-import { coordsToBounds } from "../utils/utilityFunctions";
+import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
 
 Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
 
@@ -126,7 +126,11 @@ export const updateBounds = (bounds) => (dispatch) => {
 };
 
 export const triggerUpdateBounds = (bounds) => (dispatch) => {
-  dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
+  dispatch({
+    type: UPDATE_BOUNDS,
+    bounds: atLeastMinZoom(bounds),
+    triggerUpdateBounds: true,
+  });
 };
 
 export const getLocationsSuccess = (
