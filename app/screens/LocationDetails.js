@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   Dimensions,
   Image,
@@ -30,7 +30,6 @@ import {
   confirmLocationIsUpToDate,
   fetchLocation,
   setCurrentMachine,
-  updateCoordinatesAndGetLocations,
 } from "../actions";
 import androidCustomDark from "../utils/androidCustomDark";
 import {
@@ -989,7 +988,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(confirmLocationIsUpToDate(body, id, username)),
   closeConfirmModal: () => dispatch(closeConfirmModal()),
   setCurrentMachine: (id) => dispatch(setCurrentMachine(id)),
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails);

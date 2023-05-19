@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from "throttle-debounce";
 import Geocode from "react-geocode";
@@ -23,9 +23,7 @@ import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { getData } from "../config/request";
 import {
   getLocationsByRegion,
-  updateCoordinatesAndGetLocations,
-  updateCoordinates,
-  getLocationsConsideringZoom,
+  triggerUpdateBounds,
   getLocationsFailure,
   setSearchBarText,
   clearSearchBarText,
@@ -36,6 +34,7 @@ import { retrieveItem } from "../config/utils";
 import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
+import { coordsToBounds } from "../utils/utilityFunctions";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -112,7 +111,8 @@ class Search extends Component {
       .then(
         (response) => {
           const { lat, lng } = response.results[0].geometry.location;
-          this.props.updateCoordinatesAndGetLocations(lat, lng);
+          const bounds = coordsToBounds({ lat, lon: lng });
+          this.props.triggerUpdateBounds(bounds);
         },
         () => {
           Alert.alert("An error occurred geocoding.");
@@ -132,60 +132,30 @@ class Search extends Component {
         `/locations?by_city_id=${city};${stateParam};no_details=1`,
       );
       // In order to show all locations for a given city, we must determine the min/max lat/lon
-      // such that we can come up with an appropriate map zoom. As the zoom may expose locations outside
-      // the defined city, we make a fresh request for locations to get any locations we be missing.
-      const { maxLat, minLat, maxLon, minLon } = locations.reduce(
-        (prev, cur) => {
-          let { minLat, maxLat, minLon, maxLon } = prev;
-          if (!maxLat || cur.lat > maxLat) {
-            maxLat = parseFloat(cur.lat);
-          }
-          if (!minLat || cur.lat < minLat) {
-            minLat = parseFloat(cur.lat);
-          }
-          if (!maxLon || cur.lon > maxLon) {
-            maxLon = parseFloat(cur.lon);
-          }
-          if (!minLon || cur.lon < minLon) {
-            minLon = parseFloat(cur.lon);
-          }
-          return {
-            maxLat,
-            minLat,
-            maxLon,
-            minLon,
-          };
-        },
-        {},
-      );
+      // such that we can come up with an appropriate bounds to place the map.
+      const bounds = locations.reduce((prev, cur) => {
+        let { swLat, swLon, neLat, neLon } = prev;
+        if (!neLat || cur.lat > neLat) {
+          neLat = parseFloat(cur.lat);
+        }
+        if (!swLat || cur.lat < swLat) {
+          swLat = parseFloat(cur.lat);
+        }
+        if (!neLon || cur.lon > neLon) {
+          neLon = parseFloat(cur.lon);
+        }
+        if (!swLon || cur.lon < swLon) {
+          swLon = parseFloat(cur.lon);
+        }
+        return {
+          swLat,
+          swLon,
+          neLon,
+          neLat,
+        };
+      }, {});
 
-      // Determine the delta
-      let latDelta = Math.abs(maxLat - minLat);
-      let lonDelta = Math.abs(maxLon - minLon);
-
-      // Account for min/max zoom
-      if (latDelta < 0.07) {
-        latDelta = 0.07;
-      } else if (latDelta > 3) {
-        latDelta = 3;
-      }
-      if (lonDelta < 0.07) {
-        lonDelta = 0.07;
-      } else if (lonDelta > 3) {
-        lonDelta = 3;
-      }
-
-      // Place the center of the map and request for the avg of the coordinates
-      const latAvg = (maxLat + minLat) / 2;
-      const lonAvg = (maxLon + minLon) / 2;
-
-      this.props.updateCoordinates(latAvg, lonAvg, latDelta, lonDelta);
-      this.props.getLocationsConsideringZoom(
-        latAvg,
-        lonAvg,
-        latDelta,
-        lonDelta,
-      );
+      this.props.triggerUpdateBounds(bounds);
       this.clearSearchState({ value });
     } catch (e) {
       this.props.getLocationsFailure();
@@ -198,7 +168,11 @@ class Search extends Component {
       const data = await this.props.dispatch(fetchLocation(location.id));
       const { lat, lon } = data.location;
       if (!lat) throw new Error();
-      this.props.dispatch(updateCoordinatesAndGetLocations(lat, lon));
+      const bounds = coordsToBounds({
+        lat: parseFloat(lat),
+        lon: parseFloat(lon),
+      });
+      this.props.triggerUpdateBounds(bounds);
       this.props.navigate("LocationDetails", { id: location.id });
       this.clearSearchState(location);
     } catch (e) {
@@ -516,10 +490,6 @@ class Search extends Component {
   }
 }
 
-Search.propTypes = {
-  theme: PropTypes.string,
-};
-
 const getStyles = (theme) =>
   StyleSheet.create({
     background: {
@@ -670,12 +640,7 @@ const mapStateToProps = ({ regions, query, user }) => ({
   user,
 });
 const mapDispatchToProps = (dispatch) => ({
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
-  updateCoordinates: (lat, lon, latDelta, lonDelta) =>
-    dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
-  getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
-    dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
+  triggerUpdateBounds: (bounds) => dispatch(triggerUpdateBounds(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   getLocationsFailure: () => dispatch(getLocationsFailure()),
   setSearchBarText: (searchBarText) =>

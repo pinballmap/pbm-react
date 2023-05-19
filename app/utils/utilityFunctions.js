@@ -20,6 +20,42 @@ function toRad(Value) {
   return (Value * Math.PI) / 180;
 }
 
+export const coordsToBounds = ({
+  lat,
+  lon,
+  latDelta = 0.05,
+  lonDelta = 0.05,
+}) => ({
+  swLat: lat - latDelta,
+  swLon: lon - lonDelta,
+  neLat: lat + latDelta,
+  neLon: lon + lonDelta,
+});
+
+export const boundsToCoords = ({ swLat, swLon, neLat, neLon }) => ({
+  lat: (swLat + neLat) / 2,
+  lon: (swLon + neLon) / 2,
+});
+
+export const atLeastMinZoom = (bounds) => {
+  const { swLat, swLon, neLat, neLon } = bounds;
+  // If a search resolves a small set of coords, enforce a minimum zoom. Otherwise,
+  // add a negligible buffer.
+  const minZoom = 0.025;
+  const buffer = 0.0015;
+  const offSet =
+    Math.abs(swLat - neLat) < minZoom || Math.abs(swLon - neLon) < minZoom
+      ? minZoom
+      : buffer;
+
+  return {
+    swLat: swLat - offSet,
+    swLon: swLon - offSet,
+    neLat: neLat + offSet,
+    neLon: neLon + offSet,
+  };
+};
+
 export const formatNumWithCommas = (num) => {
   if (!num) return "";
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");

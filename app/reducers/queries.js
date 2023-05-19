@@ -1,5 +1,5 @@
 import {
-  UPDATE_COORDINATES,
+  UPDATE_BOUNDS,
   CLEAR_FILTERS,
   SET_SELECTED_ACTIVITY_FILTER,
   CLEAR_ACTIVITY_FILTER,
@@ -8,20 +8,19 @@ import {
   SET_VIEW_FAVORITE_LOCATIONS_FILTER,
   SET_LOCATION_TYPE_FILTER,
   SET_OPERATOR_FILTER,
-  FETCHING_LOCATION_TRACKING_SUCCESS,
-  INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_MAX_ZOOM,
   SET_MACHINE_VERSION_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
+  UPDATE_IGNORE_MAX_ZOOM,
 } from "../actions/types";
 
 export const initialState = {
   locationName: "",
-  curLat: "",
-  curLon: "",
-  latDelta: "",
-  lonDelta: "",
+  swLat: 45.61322,
+  swLon: -122.7587,
+  neLat: 45.41322,
+  neLon: -122.5587,
   machineId: "",
   locationType: "",
   numMachines: 0,
@@ -32,20 +31,29 @@ export const initialState = {
   viewByFavoriteLocations: false,
   filterByMachineVersion: false,
   searchBarText: "",
+  triggerUpdateBounds: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_COORDINATES:
-    case FETCHING_LOCATION_TRACKING_SUCCESS:
-    case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
+    case UPDATE_BOUNDS: {
+      const { swLat, swLon, neLat, neLon } = action.bounds;
+      const { triggerUpdateBounds = false } = action;
       return {
         ...state,
-        curLat: Number(action.lat),
-        curLon: Number(action.lon),
-        latDelta: Number(action.latDelta ? action.latDelta : 0.1),
-        lonDelta: Number(action.lonDelta ? action.lonDelta : 0.1),
+        swLat,
+        swLon,
+        neLat,
+        neLon,
+        triggerUpdateBounds,
       };
+    }
+    case UPDATE_IGNORE_MAX_ZOOM: {
+      return {
+        ...state,
+        ignoreZoom: action.ignoreZoom,
+      };
+    }
     case SET_MACHINE_FILTER: {
       if (!action.machine) {
         return {

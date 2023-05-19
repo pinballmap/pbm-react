@@ -9,6 +9,7 @@ import { ActivityIndicator } from "../components";
 import { getIfpaData } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
 import { FlashList } from "@shopify/flash-list";
+import { boundsToCoords } from "../utils/utilityFunctions";
 
 const moment = require("moment");
 
@@ -53,7 +54,13 @@ class Events extends Component {
 
   componentDidMount() {
     const { lat, lon } = this.props.user;
-    const { curLat, curLon } = this.props.query;
+    const { neLat, neLon, swLat, swLon } = this.props.query;
+    const { lat: mapLat, lon: mapLon } = boundsToCoords({
+      neLat,
+      neLon,
+      swLat,
+      swLon,
+    });
     const { mapLocations = [] } = this.props.locations;
 
     let promise;
@@ -67,8 +74,8 @@ class Events extends Component {
     } else {
       promise = () =>
         Geocode.fromLatLng(
-          curLat !== null ? curLat : lat,
-          curLon !== null ? curLon : lon,
+          mapLat !== null ? mapLat : lat,
+          mapLon !== null ? mapLon : lon,
         ).then(
           (response) => response.results[0].formatted_address,
           (error) => {

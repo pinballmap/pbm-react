@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
+import PropTypes from "prop-types";
 import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
 import { getData } from "../config/request";
@@ -21,24 +21,26 @@ import {
   getFavoriteLocations,
   clearFilters,
   clearSearchBarText,
-  getLocationsConsideringZoom,
   login,
   setUnitPreference,
-  updateCoordinates,
-  updateCoordinatesAndGetLocations,
+  updateBounds,
+  getLocationsByBounds,
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
+  getLocationsConsideringZoom,
+  triggerUpdateBounds,
 } from "../actions";
 import { getMapLocations } from "../selectors";
 import androidCustomDark from "../utils/androidCustomDark";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { coordsToBounds } from "../utils/utilityFunctions";
 
 class Map extends Component {
+  mapRef = null;
   constructor(props) {
     super(props);
-
     this.state = {
       showUpdateSearch: false,
     };
@@ -61,7 +63,11 @@ class Map extends Component {
         `/locations/closest_by_address.json?address=${address};no_details=1`,
       );
       if (location) {
-        this.props.updateCoordinatesAndGetLocations(location.lat, location.lon);
+        const bounds = coordsToBounds({
+          lat: parseFloat(location.lat),
+          lon: parseFloat(location.lon),
+        });
+        this.props.triggerUpdate(bounds);
       }
       navigate("MapTab");
     } else if (url.indexOf("region=") > 0) {
@@ -82,7 +88,11 @@ class Map extends Component {
         locations = byCity.locations || [];
         if (locations.length > 0) {
           const { lat, lon } = locations[0];
-          this.props.updateCoordinatesAndGetLocations(lat, lon);
+          const bounds = coordsToBounds({
+            lat: parseFloat(lat),
+            lon: parseFloat(lon),
+          });
+          this.props.triggerUpdate(bounds);
         }
       }
       // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
@@ -107,15 +117,21 @@ class Map extends Component {
     }
   };
 
-  onRegionChange = (region, { isGesture }) => {
+  getBounds = async () => {
+    const { northEast, southWest } = await this.mapRef.getMapBoundaries();
+    return {
+      swLat: southWest.latitude,
+      swLon: southWest.longitude,
+      neLat: northEast.latitude,
+      neLon: northEast.longitude,
+    };
+  };
+
+  onRegionChange = async (region, { isGesture }) => {
     if (isGesture) {
+      const bounds = await this.getBounds();
       this.setState({ showUpdateSearch: true });
-      this.props.updateCoordinates(
-        region.latitude,
-        region.longitude,
-        region.latitudeDelta,
-        region.longitudeDelta,
-      );
+      this.props.updateBounds(bounds);
     }
   };
 
@@ -147,13 +163,29 @@ class Map extends Component {
     });
   }
 
+  async componentDidUpdate(prevProps) {
+    const { triggerUpdateBounds } = this.props.query;
+    if (
+      this.props.query.swLat !== prevProps.query.swLat &&
+      triggerUpdateBounds
+    ) {
+      const bounds = await this.getBounds();
+      this.props.updateBounds(bounds);
+      this.props.getLocationsConsideringZoom(bounds);
+    }
+  }
+
   render() {
     const { isFetchingLocations, mapLocations, navigation, query } = this.props;
 
     const { showUpdateSearch } = this.state;
     const { theme } = this.context;
     const s = getStyles(theme);
-    const { curLat, curLon, latDelta, lonDelta } = query;
+    const { swLat, swLon, neLat, neLon } = query;
+    const latitude = (swLat + neLat) / 2;
+    const longitude = (swLon + neLon) / 2;
+    const latitudeDelta = Math.abs(neLat - swLat);
+    const longitudeDelta = Math.abs(neLon - swLon);
     const {
       machineId = false,
       locationType = false,
@@ -171,7 +203,7 @@ class Map extends Component {
         ? true
         : false;
 
-    if (!curLat) {
+    if (!latitude) {
       return <ActivityIndicator />;
     }
 
@@ -196,11 +228,12 @@ class Map extends Component {
           </View>
         ) : null}
         <MapView
+          ref={(ref) => (this.mapRef = ref)}
           region={{
-            latitude: curLat,
-            longitude: curLon,
-            latitudeDelta: latDelta,
-            longitudeDelta: lonDelta,
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta,
           }}
           style={s.map}
           onRegionChangeComplete={this.onRegionChange}
@@ -279,12 +312,12 @@ class Map extends Component {
             ]}
             onPress={() => {
               this.setState({ showUpdateSearch: false });
-              this.props.getLocationsConsideringZoom(
-                curLat,
-                curLon,
-                latDelta,
-                lonDelta,
-              );
+              this.props.getLocationsConsideringZoom({
+                swLat,
+                swLon,
+                neLat,
+                neLon,
+              });
               this.props.clearSearchBarText();
             }}
           >
@@ -465,18 +498,17 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchCurrentLocation(isInitialLoad)),
   getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
   clearFilters: () => dispatch(clearFilters()),
-  getLocationsConsideringZoom: (lat, lon, latDelta, lonDelta) =>
-    dispatch(getLocationsConsideringZoom(lat, lon, latDelta, lonDelta)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),
   login: (auth) => dispatch(login(auth)),
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
-  updateCoordinates: (lat, lon, latDelta, lonDelta) =>
-    dispatch(updateCoordinates(lat, lon, latDelta, lonDelta)),
-  updateCoordinatesAndGetLocations: (lat, lon) =>
-    dispatch(updateCoordinatesAndGetLocations(lat, lon)),
+  updateBounds: (bounds) => dispatch(updateBounds(bounds)),
+  getLocationsByBounds: (bounds) => dispatch(getLocationsByBounds(bounds)),
+  getLocationsConsideringZoom: (bounds) =>
+    dispatch(getLocationsConsideringZoom(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   fetchLocationAndUpdateMap: (locationId) =>
     dispatch(fetchLocationAndUpdateMap(locationId)),
+  triggerUpdate: (bounds) => dispatch(triggerUpdateBounds(bounds)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
