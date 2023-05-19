@@ -53,12 +53,12 @@ export const getFilterState = (filterState) => {
   const filteringByMoreMachines = !filtersNoMachines && numMachines > 2;
   const filterApplied = filtersNoMachines || numMachines > 0;
   const maxDelta = filteringByTwoMachines
-    ? 4.5
-    : filteringByMoreMachines
-    ? numMachines * 1.25
-    : filterApplied
     ? 7
-    : 3;
+    : filteringByMoreMachines
+    ? numMachines * 2
+    : filterApplied
+    ? 10
+    : 5;
   return {
     maxDelta,
     ignoreZoom,
