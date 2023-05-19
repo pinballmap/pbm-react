@@ -28,6 +28,7 @@ import {
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
   getLocationsConsideringZoom,
+  triggerUpdateBounds,
 } from "../actions";
 import { getMapLocations } from "../selectors";
 import androidCustomDark from "../utils/androidCustomDark";
@@ -66,7 +67,7 @@ class Map extends Component {
           lat: parseFloat(location.lat),
           lon: parseFloat(location.lon),
         });
-        this.props.triggerUpdateBounds(bounds);
+        this.props.triggerUpdate(bounds);
       }
       navigate("MapTab");
     } else if (url.indexOf("region=") > 0) {
@@ -91,7 +92,7 @@ class Map extends Component {
             lat: parseFloat(lat),
             lon: parseFloat(lon),
           });
-          this.props.triggerUpdateBounds(bounds);
+          this.props.triggerUpdate(bounds);
         }
       }
       // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
@@ -507,6 +508,7 @@ const mapDispatchToProps = (dispatch) => ({
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
   fetchLocationAndUpdateMap: (locationId) =>
     dispatch(fetchLocationAndUpdateMap(locationId)),
+  triggerUpdate: (bounds) => dispatch(triggerUpdateBounds(bounds)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

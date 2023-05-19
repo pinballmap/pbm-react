@@ -39,15 +39,21 @@ export const boundsToCoords = ({ swLat, swLon, neLat, neLon }) => ({
 
 export const atLeastMinZoom = (bounds) => {
   const { swLat, swLon, neLat, neLon } = bounds;
+  // If a search resolves a small set of coords, enforce a minimum zoom. Otherwise,
+  // add a negligible buffer.
   const minZoom = 0.025;
-  if (Math.abs(swLat - neLat) < minZoom || Math.abs(swLon - neLon) < minZoom) {
-    return {
-      swLat: swLat - minZoom,
-      swLon: swLon - minZoom,
-      neLat: neLat + minZoom,
-      neLon: neLon + minZoom,
-    };
-  } else return bounds;
+  const buffer = 0.0015;
+  const offSet =
+    Math.abs(swLat - neLat) < minZoom || Math.abs(swLon - neLon) < minZoom
+      ? minZoom
+      : buffer;
+
+  return {
+    swLat: swLat - offSet,
+    swLon: swLon - offSet,
+    neLat: neLat + offSet,
+    neLon: neLon + offSet,
+  };
 };
 
 export const formatNumWithCommas = (num) => {
