@@ -21,6 +21,7 @@ import {
   RESET_SUGGEST_LOCATION,
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
+  IC_ENABLED_UPDATED,
 } from "./types";
 
 import { getData, postData, putData, deleteData } from "../config/request";
@@ -125,6 +126,27 @@ export const machineScoreAdded = (data) => {
   return {
     type: MACHINE_SCORE_ADDED,
     score: data.machine_score_xref,
+  };
+};
+
+export const updateIcEnabled = (id) => (dispatch, getState) => {
+  const { email, authentication_token, username } = getState().user;
+  const body = {
+    user_email: email,
+    user_token: authentication_token,
+    id,
+  };
+
+  return putData(`/location_machine_xrefs/${id}/ic_toggle.json'`, body)
+    .then((data) => dispatch(icEnabledUpdated(data, username)))
+    .catch((err) => console.log(err));
+};
+
+export const icEnabledUpdated = (data, username) => {
+  return {
+    type: IC_ENABLED_UPDATED,
+    machine: data.location_machine,
+    username,
   };
 };
 

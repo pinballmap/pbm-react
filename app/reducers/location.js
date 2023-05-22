@@ -21,6 +21,7 @@ import {
   RESET_SUGGEST_LOCATION,
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
+  IC_ENABLED_UPDATED,
 } from "../actions/types";
 
 const moment = require("moment");
@@ -149,6 +150,20 @@ export default (state = initialState, action) => {
           last_updated_by_username: action.username,
           date_last_updated: moment().format("YYYY-MM-DD"),
           location_machine_xrefs,
+        },
+      };
+    }
+    case IC_ENABLED_UPDATED: {
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          ...action.machine,
+        },
+        location: {
+          ...state.location,
+          last_updated_by_username: action.username,
+          date_last_updated: moment().format("YYYY-MM-DD"),
         },
       };
     }
