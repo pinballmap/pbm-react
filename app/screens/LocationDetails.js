@@ -523,7 +523,7 @@ class LocationDetails extends Component {
                               s.marginRight,
                             ]}
                           >
-                            Operated by:{" "}
+                            Operator:{" "}
                             <Text
                               style={opWebsite ? s.link : s.text3}
                               onPress={

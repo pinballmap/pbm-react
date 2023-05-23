@@ -44,7 +44,7 @@ const LocationActivity = ({ locationId }) => {
     const time = moment(updated_at).format("LL");
     const timeAndUser = user_name ? (
       <Text style={s.date}>
-        {time} by <Text style={s.pink}>{user_name}</Text>
+        {time} <Text style={s.pink}>{user_name}</Text>
       </Text>
     ) : (
       <Text style={s.date}>{time}</Text>
@@ -245,7 +245,7 @@ const getStyles = (theme) =>
       paddingTop: 6,
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "regularBoldFont",
+      fontFamily: "regularItalicFont",
     },
     pink: {
       color: theme.pink1,
