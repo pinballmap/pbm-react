@@ -18,6 +18,7 @@ import { ThemeContext } from "../theme-context";
 import {
   EvilIcons,
   FontAwesome5,
+  Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import {
@@ -335,6 +336,11 @@ class MachineDetails extends Component {
                   </View>
                 )}
                 {!!ic_eligible && (
+                  <Text style={{ textAlign: "center" }}>
+                    Click to toggle Stern Insider Connected status
+                  </Text>
+                )}
+                {!!ic_eligible && (
                   <PbmButton
                     title={`${
                       ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
@@ -344,24 +350,35 @@ class MachineDetails extends Component {
                         ? () => this.props.updateIcEnabled(curLmx.id)
                         : () => this.props.navigation.navigate("Login")
                     }
+                    titleStyle={s.titleStyle}
+                    buttonStyle={
+                      ic_enabled === null
+                        ? s.nullIC
+                        : ic_enabled
+                        ? s.yesIC
+                        : s.noIC
+                    }
                     icon={
                       ic_enabled === null ? (
                         <FontAwesome5
                           name="question-circle"
                           size={24}
-                          color="black"
+                          color="#665b50"
+                          style={{ marginRight: 8 }}
                         />
                       ) : ic_enabled ? (
-                        <FontAwesome5
-                          name="check-circle"
-                          size={24}
-                          color="black"
+                        <Ionicons
+                          name="qr-code"
+                          size={22}
+                          color="#66017b"
+                          style={{ marginRight: 8 }}
                         />
                       ) : (
                         <MaterialCommunityIcons
                           name="close-circle-outline"
                           size={24}
-                          color="black"
+                          color="#533a3a"
+                          style={{ marginRight: 8 }}
                         />
                       )
                     }
@@ -719,6 +736,26 @@ const getStyles = (theme) =>
       textAlign: "center",
       color: theme.text2,
       fontFamily: "regularFont",
+    },
+    titleStyle: {
+      color: "#392f3a",
+      fontSize: 16,
+      fontFamily: "boldFont",
+    },
+    nullIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#e4dddd",
+    },
+    yesIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#ecbcf5",
+    },
+    noIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#e7c8c8",
     },
   });
 
