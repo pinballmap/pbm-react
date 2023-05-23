@@ -326,21 +326,20 @@ class FindMachine extends React.PureComponent {
               style={s.background}
             >
               <View style={s.verticalAlign}>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    marginTop: 10,
-                    marginLeft: 15,
-                    marginRight: 15,
-                    fontSize: 18,
-                  }}
-                >{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
+                <Text style={s.modalTitle}>
+                  Add{" "}
+                  <Text style={s.modalPurple2}>{this.state.machine.name}</Text>{" "}
+                  to{" "}
+                  <Text style={s.modalPurple}>
+                    {this.props.location.location.name}
+                  </Text>
+                </Text>
                 <TextInput
                   multiline={true}
                   placeholder={"You can also include a machine comment..."}
                   placeholderTextColor={theme.indigo4}
-                  numberOfLines={2}
-                  style={[{ padding: 5, height: 50 }, s.textInput]}
+                  numberOfLines={3}
+                  style={[{ padding: 5, height: 70 }, s.textInput]}
                   onChangeText={(condition) => this.setState({ condition })}
                   textAlignVertical="top"
                   underlineColorAndroid="transparent"
@@ -443,12 +442,13 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: theme.indigo4,
       borderWidth: 1,
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 20,
+      marginHorizontal: 30,
+      marginTop: 15,
+      marginBottom: 10,
       borderRadius: 10,
       fontFamily: "regularFont",
       fontSize: 16,
+      color: theme.text,
     },
     verticalAlign: {
       flexDirection: "column",
@@ -504,6 +504,22 @@ const getStyles = (theme) =>
     },
     notPressed: {
       backgroundColor: "transparent",
+    },
+    modalTitle: {
+      textAlign: "center",
+      marginHorizontal: 40,
+      fontSize: 18,
+      fontFamily: "boldFont",
+    },
+    modalPurple: {
+      color: theme.theme == "dark" ? theme.purple : theme.purple2,
+      fontSize: 18,
+      fontFamily: "blackFont",
+    },
+    modalPurple2: {
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      fontSize: 18,
+      fontFamily: "blackFont",
     },
   });
 
