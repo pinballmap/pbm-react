@@ -356,18 +356,30 @@ class FindMachine extends React.PureComponent {
                   underlineColorAndroid="transparent"
                 />
                 {this.state.machine.ic_eligible && (
-                  <View style={{ flexDirection: "row" }}>
-                    <Text>Insider Connected?</Text>
-                    <CheckBox
-                      checked={this.state.ic_enabled}
-                      title="Yes"
-                      onPress={() => this.onIcEnabledPressed(true)}
-                    />
-                    <CheckBox
-                      checked={this.state.ic_enabled === false}
-                      title="No"
-                      onPress={() => this.onIcEnabledPressed(false)}
-                    />
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text>Does this machine have Stern Insider Connected?</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <CheckBox
+                        checked={this.state.ic_enabled}
+                        title="Yes"
+                        onPress={() => this.onIcEnabledPressed(true)}
+                        containerStyle={{ backgroundColor: theme.base1 }}
+                        fontFamily={"boldFont"}
+                        textStyle={{ fontSize: 16, color: theme.text }}
+                        checkedColor={theme.purple}
+                      />
+                      <CheckBox
+                        checked={this.state.ic_enabled === false}
+                        title="No"
+                        onPress={() => this.onIcEnabledPressed(false)}
+                        containerStyle={{ backgroundColor: theme.base1 }}
+                        fontFamily={"boldFont"}
+                        textStyle={{ fontSize: 16, color: theme.text }}
+                        checkedColor={theme.purple}
+                      />
+                    </View>
                   </View>
                 )}
                 <PbmButton title={"Add"} onPress={this.addMachine} />
