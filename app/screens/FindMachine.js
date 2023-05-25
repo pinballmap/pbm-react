@@ -24,6 +24,7 @@ import {
   setMachineFilter,
 } from "../actions";
 import { PbmButton, Text, WarningButton } from "../components";
+import { CheckBox } from "@rneui/themed";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
 
@@ -97,6 +98,7 @@ class FindMachine extends React.PureComponent {
       condition: "",
       machineList: props.location.machineList,
       machinesInView: false,
+      ic_enabled: undefined,
     };
   }
 
@@ -218,7 +220,11 @@ class FindMachine extends React.PureComponent {
   };
 
   addMachine = () => {
-    this.props.addMachineToLocation(this.state.machine, this.state.condition);
+    this.props.addMachineToLocation(
+      this.state.machine,
+      this.state.condition,
+      this.state.ic_enabled,
+    );
     this.setState({ showModal: false });
     this.props.navigation.goBack();
   };
@@ -281,6 +287,10 @@ class FindMachine extends React.PureComponent {
 
   keyExtractor = (machine) => `${machine.id}`;
 
+  onIcEnabledPressed = (enabled) => {
+    this.setState({ ic_enabled: enabled });
+  };
+
   UNSAFE_componentWillReceiveProps(props) {
     if (
       this.props.location.machineList.length === 0 &&
@@ -307,6 +317,7 @@ class FindMachine extends React.PureComponent {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
+
     return (
       <>
         <Modal
@@ -344,6 +355,21 @@ class FindMachine extends React.PureComponent {
                   textAlignVertical="top"
                   underlineColorAndroid="transparent"
                 />
+                {this.state.machine.ic_eligible && (
+                  <View style={{ flexDirection: "row" }}>
+                    <Text>Insider Connected?</Text>
+                    <CheckBox
+                      checked={this.state.ic_enabled}
+                      title="Yes"
+                      onPress={() => this.onIcEnabledPressed(true)}
+                    />
+                    <CheckBox
+                      checked={this.state.ic_enabled === false}
+                      title="No"
+                      onPress={() => this.onIcEnabledPressed(false)}
+                    />
+                  </View>
+                )}
                 <PbmButton title={"Add"} onPress={this.addMachine} />
                 <WarningButton
                   title={"Cancel"}
@@ -542,8 +568,8 @@ const mapStateToProps = ({ location, machines, locations }) => ({
   mapLocations: locations.mapLocations || {},
 });
 const mapDispatchToProps = (dispatch) => ({
-  addMachineToLocation: (machine, condition) =>
-    dispatch(addMachineToLocation(machine, condition)),
+  addMachineToLocation: (machine, condition, ic_enabled) =>
+    dispatch(addMachineToLocation(machine, condition, ic_enabled)),
   addMachineToList: (machine) => dispatch(addMachineToList(machine)),
   removeMachineFromList: (machine) => dispatch(removeMachineFromList(machine)),
   setMachineFilter: (machine) => dispatch(setMachineFilter(machine)),

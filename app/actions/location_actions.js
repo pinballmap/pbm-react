@@ -129,15 +129,14 @@ export const machineScoreAdded = (data) => {
   };
 };
 
-export const updateIcEnabled = (id) => (dispatch, getState) => {
+export const updateIcEnabled = (id, ic_enabled) => (dispatch, getState) => {
   const { email, authentication_token, username } = getState().user;
   const body = {
     user_email: email,
     user_token: authentication_token,
-    id,
+    ...(ic_enabled !== undefined && { ic_enabled }),
   };
-
-  return putData(`/location_machine_xrefs/${id}/ic_toggle.json'`, body)
+  return putData(`/location_machine_xrefs/${id}/ic_toggle.json`, body)
     .then((data) => dispatch(icEnabledUpdated(data, username)))
     .catch((err) => console.log(err));
 };
@@ -192,7 +191,7 @@ export const locationMachineRemoved = (
 };
 
 export const addMachineToLocation =
-  (machine, condition) => (dispatch, getState) => {
+  (machine, condition, ic_enabled) => (dispatch, getState) => {
     dispatch({ type: ADDING_MACHINE_TO_LOCATION });
 
     const { id: machine_id } = machine;
@@ -209,7 +208,12 @@ export const addMachineToLocation =
 
     return postData(`/location_machine_xrefs.json`, body)
       .then(
-        () => dispatch(machineAddedToLocation(location_id, machine)),
+        ({ location_machine }) => {
+          dispatch(machineAddedToLocation(location_id, machine));
+          if (ic_enabled !== undefined) {
+            dispatch(updateIcEnabled(location_machine.id, ic_enabled));
+          }
+        },
         (err) => {
           throw err;
         },

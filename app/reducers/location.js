@@ -154,6 +154,16 @@ export default (state = initialState, action) => {
       };
     }
     case IC_ENABLED_UPDATED: {
+      const location_machine_xrefs = state.location.location_machine_xrefs.map(
+        (m) => {
+          if (m.id === action.machine.id) {
+            m["ic_enabled"] = action.machine.ic_enabled;
+            return m;
+          }
+          return m;
+        },
+      );
+
       return {
         ...state,
         curLmx: {
@@ -162,6 +172,7 @@ export default (state = initialState, action) => {
         },
         location: {
           ...state.location,
+          location_machine_xrefs,
           last_updated_by_username: action.username,
           date_last_updated: moment().format("YYYY-MM-DD"),
         },
