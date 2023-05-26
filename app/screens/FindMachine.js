@@ -287,8 +287,17 @@ class FindMachine extends React.PureComponent {
 
   keyExtractor = (machine) => `${machine.id}`;
 
-  onIcEnabledPressed = (enabled) => {
-    this.setState({ ic_enabled: enabled });
+  onIcEnabledPressed = (ic_enabled) => {
+    const prevState = this.state.ic_enabled;
+    // uncheck if pressing the currently checked box
+    if (
+      (!!prevState && !!ic_enabled) ||
+      (prevState === false && ic_enabled === false)
+    ) {
+      return this.setState({ ic_enabled: undefined });
+    }
+
+    this.setState({ ic_enabled });
   };
 
   UNSAFE_componentWillReceiveProps(props) {
@@ -366,7 +375,7 @@ class FindMachine extends React.PureComponent {
                         title="Yes"
                         onPress={() => this.onIcEnabledPressed(true)}
                         containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily={"boldFont"}
+                        fontFamily="boldFont"
                         textStyle={{ fontSize: 16, color: theme.text }}
                         checkedColor={theme.purple}
                       />
@@ -375,7 +384,7 @@ class FindMachine extends React.PureComponent {
                         title="No"
                         onPress={() => this.onIcEnabledPressed(false)}
                         containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily={"boldFont"}
+                        fontFamily="boldFont"
                         textStyle={{ fontSize: 16, color: theme.text }}
                         checkedColor={theme.purple}
                       />
