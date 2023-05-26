@@ -336,53 +336,53 @@ class MachineDetails extends Component {
                   </View>
                 )}
                 {!!ic_eligible && (
-                  <Text style={{ textAlign: "center" }}>
-                    Click to toggle Stern Insider Connected status
-                  </Text>
-                )}
-                {!!ic_eligible && (
-                  <PbmButton
-                    title={`${
-                      ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                    } Insider Connected`}
-                    onPress={
-                      loggedIn
-                        ? () => this.props.updateIcEnabled(curLmx.id)
-                        : () => this.props.navigation.navigate("Login")
-                    }
-                    titleStyle={s.titleStyle}
-                    buttonStyle={
-                      ic_enabled === null
-                        ? s.nullIC
-                        : ic_enabled
-                        ? s.yesIC
-                        : s.noIC
-                    }
-                    icon={
-                      ic_enabled === null ? (
-                        <FontAwesome5
-                          name="question-circle"
-                          size={24}
-                          color="#665b50"
-                          style={{ marginRight: 8 }}
-                        />
-                      ) : ic_enabled ? (
-                        <Ionicons
-                          name="qr-code"
-                          size={22}
-                          color="#66017b"
-                          style={{ marginRight: 8 }}
-                        />
-                      ) : (
-                        <MaterialCommunityIcons
-                          name="close-circle-outline"
-                          size={24}
-                          color="#533a3a"
-                          style={{ marginRight: 8 }}
-                        />
-                      )
-                    }
-                  />
+                  <>
+                    <Text style={{ textAlign: "center" }}>
+                      Click to toggle Stern Insider Connected status
+                    </Text>
+                    <PbmButton
+                      title={`${
+                        ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
+                      } Insider Connected`}
+                      onPress={
+                        loggedIn
+                          ? () => this.props.updateIcEnabled(curLmx.id)
+                          : () => this.props.navigation.navigate("Login")
+                      }
+                      titleStyle={s.titleStyle}
+                      buttonStyle={
+                        ic_enabled === null
+                          ? s.nullIC
+                          : ic_enabled
+                          ? s.yesIC
+                          : s.noIC
+                      }
+                      icon={
+                        ic_enabled === null ? (
+                          <FontAwesome5
+                            name="question-circle"
+                            size={24}
+                            color="#665b50"
+                            style={{ marginRight: 8 }}
+                          />
+                        ) : ic_enabled ? (
+                          <Ionicons
+                            name="qr-code"
+                            size={22}
+                            color="#66017b"
+                            style={{ marginRight: 8 }}
+                          />
+                        ) : (
+                          <MaterialCommunityIcons
+                            name="close-circle-outline"
+                            size={24}
+                            color="#533a3a"
+                            style={{ marginRight: 8 }}
+                          />
+                        )
+                      }
+                    />
+                  </>
                 )}
                 <View style={s.containerStyle}>
                   <View style={s.locationNameContainer}>
