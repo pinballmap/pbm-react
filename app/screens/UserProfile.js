@@ -154,7 +154,7 @@ class UserProfile extends Component {
                       </Text>
                     </View>
                     <View style={s.statItem}>
-                      <Text style={s.stat}>Machines comments:</Text>
+                      <Text style={s.stat}>Machine comments:</Text>
                       <Text style={s.statNum}>
                         {this.getStatNum(num_lmx_comments_left)}
                       </Text>
@@ -370,7 +370,7 @@ const getStyles = (theme) =>
     statNum: {
       fontFamily: "boldFont",
       color: "#17001c",
-      backgroundColor: theme.theme == "dark" ? "#cf8dde" : theme.pink2,
+      backgroundColor: theme.theme == "dark" ? "#fee7f5" : "#FFFFFF",
       fontSize: 16,
       marginTop: 5,
       marginLeft: 10,
