@@ -136,7 +136,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "regularBoldFont" : "regularFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -163,7 +163,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "regularBoldFont" : "regularFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -190,7 +190,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "regularBoldFont" : "regularFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -217,7 +217,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "regularBoldFont" : "regularFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -246,7 +246,15 @@ function BottomTabNavigator() {
         })}
         options={{
           tabBarLabel: () => (
-            <Text style={[{ color: colors.inactiveTab }, s.labelText]}>
+            <Text
+              style={[
+                {
+                  color: colors.inactiveTab,
+                  fontFamily: "boldFont",
+                },
+                s.labelText,
+              ]}
+            >
               More
             </Text>
           ),
