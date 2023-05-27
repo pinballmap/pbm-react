@@ -98,7 +98,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
     const time = moment(updated_at).format("LL");
     const timeAndUser = user_name ? (
       <Text style={s.date}>
-        {time} <Text style={s.pink}>{user_name}</Text>
+        {time} by <Text style={s.pink}>{user_name}</Text>
       </Text>
     ) : (
       <Text style={s.date}>{time}</Text>
@@ -254,13 +254,12 @@ const getStyles = (theme) =>
       marginBottom: 8,
     },
     date: {
-      fontSize: 16,
+      fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularItalicFont",
+      fontFamily: "regularFont",
     },
     pink: {
       color: theme.pink1,
-      fontSize: 16,
       fontFamily: "regularBoldFont",
     },
     purple: {

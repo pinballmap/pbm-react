@@ -343,7 +343,9 @@ class MachineDetails extends Component {
                             {`"${comment}"`}
                           </Text>
                           <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            {`${moment(created_at).format("MMM DD, YYYY")} `}
+                            {`${moment(created_at).format("MMM DD, YYYY")} ${
+                              username ? `by ` : ""
+                            }`}
                             {!!username && (
                               <Text style={[s.subtitleStyle, s.username]}>
                                 {username}
