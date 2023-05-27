@@ -85,7 +85,7 @@ export const getLocationsByBounds =
     const byOperator = selectedOperator
       ? `by_operator_id=${selectedOperator};`
       : "";
-    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}`;
+    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator};no_details=1`;
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
