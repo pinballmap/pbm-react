@@ -24,7 +24,6 @@ import {
   login,
   setUnitPreference,
   updateBounds,
-  getLocationsByBounds,
   getLocationsByRegion,
   fetchLocationAndUpdateMap,
   getLocationsConsideringZoom,
@@ -502,7 +501,6 @@ const mapDispatchToProps = (dispatch) => ({
   login: (auth) => dispatch(login(auth)),
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
   updateBounds: (bounds) => dispatch(updateBounds(bounds)),
-  getLocationsByBounds: (bounds) => dispatch(getLocationsByBounds(bounds)),
   getLocationsConsideringZoom: (bounds) =>
     dispatch(getLocationsConsideringZoom(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),

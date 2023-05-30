@@ -18,7 +18,7 @@ import {
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
-import { updateBounds, getLocationsByBounds } from "./locations_actions";
+import { triggerUpdateBounds } from "./locations_actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 
@@ -40,8 +40,7 @@ export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
     )
     .then(({ lat, lon }) => {
       const bounds = coordsToBounds({ lat, lon });
-      dispatch(updateBounds(bounds));
-      dispatch(getLocationsByBounds(bounds));
+      dispatch(triggerUpdateBounds(bounds));
     })
     .catch((err) => console.log(err));
 };

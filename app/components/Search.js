@@ -625,13 +625,10 @@ Search.propTypes = {
   navigate: PropTypes.func,
   regions: PropTypes.object,
   query: PropTypes.object,
-  updateCoordinates: PropTypes.func,
-  getLocationsConsideringZoom: PropTypes.func,
   getLocationsByRegion: PropTypes.func,
   getLocationsFailure: PropTypes.func,
   setSearchBarText: PropTypes.func,
   clearSearchBarText: PropTypes.func,
-  updateCoordinatesAndGetLocations: PropTypes.func,
 };
 
 const mapStateToProps = ({ regions, query, user }) => ({
