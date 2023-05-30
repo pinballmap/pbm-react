@@ -15,11 +15,17 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ThemeContext } from "../theme-context";
-import { EvilIcons } from "@expo/vector-icons";
+import {
+  EvilIcons,
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import {
   addMachineCondition,
   addMachineScore,
   removeMachineFromLocation,
+  updateIcEnabled,
 } from "../actions/location_actions";
 import {
   formatInputNumWithCommas,
@@ -92,6 +98,7 @@ class MachineDetails extends Component {
       return <ActivityIndicator />;
     }
 
+    const { ic_enabled } = curLmx;
     const { id: userId, loggedIn } = this.props.user;
     const {
       opdb_id,
@@ -100,6 +107,7 @@ class MachineDetails extends Component {
       opdb_img_width,
       ipdb_id,
       name: machineName,
+      ic_eligible,
     } = this.props.machineDetails;
     const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`;
     const ipdbUrl = ipdb_id
@@ -326,6 +334,55 @@ class MachineDetails extends Component {
                       {isLoadingImage && <ActivityIndicator />}
                     </View>
                   </View>
+                )}
+                {!!ic_eligible && (
+                  <>
+                    <Text style={{ textAlign: "center" }}>
+                      Click to toggle Stern Insider Connected status
+                    </Text>
+                    <PbmButton
+                      title={`${
+                        ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
+                      } Insider Connected`}
+                      onPress={
+                        loggedIn
+                          ? () => this.props.updateIcEnabled(curLmx.id)
+                          : () => this.props.navigation.navigate("Login")
+                      }
+                      titleStyle={s.titleStyle}
+                      buttonStyle={
+                        ic_enabled === null
+                          ? s.nullIC
+                          : ic_enabled
+                          ? s.yesIC
+                          : s.noIC
+                      }
+                      icon={
+                        ic_enabled === null ? (
+                          <FontAwesome5
+                            name="question-circle"
+                            size={24}
+                            color="#665b50"
+                            style={{ marginRight: 8 }}
+                          />
+                        ) : ic_enabled ? (
+                          <Ionicons
+                            name="qr-code"
+                            size={22}
+                            color="#66017b"
+                            style={{ marginRight: 8 }}
+                          />
+                        ) : (
+                          <MaterialCommunityIcons
+                            name="close-circle-outline"
+                            size={24}
+                            color="#533a3a"
+                            style={{ marginRight: 8 }}
+                          />
+                        )
+                      }
+                    />
+                  </>
                 )}
                 <View style={s.containerStyle}>
                   <View style={s.locationNameContainer}>
@@ -680,6 +737,26 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontFamily: "regularFont",
     },
+    titleStyle: {
+      color: "#392f3a",
+      fontSize: 16,
+      fontFamily: "boldFont",
+    },
+    nullIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#e4dddd",
+    },
+    yesIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#ecbcf5",
+    },
+    noIC: {
+      width: "100%",
+      borderRadius: 25,
+      backgroundColor: "#e7c8c8",
+    },
   });
 
 MachineDetails.propTypes = {
@@ -704,5 +781,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addMachineCondition(condition, lmx)),
   addMachineScore: (score, lmx) => dispatch(addMachineScore(score, lmx)),
   removeMachineFromLocation: (lmx) => dispatch(removeMachineFromLocation(lmx)),
+  updateIcEnabled: (id) => dispatch(updateIcEnabled(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MachineDetails);

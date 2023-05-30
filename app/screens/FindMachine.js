@@ -24,6 +24,7 @@ import {
   setMachineFilter,
 } from "../actions";
 import { PbmButton, Text, WarningButton } from "../components";
+import { CheckBox } from "@rneui/themed";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
 
@@ -97,6 +98,7 @@ class FindMachine extends React.PureComponent {
       condition: "",
       machineList: props.location.machineList,
       machinesInView: false,
+      ic_enabled: undefined,
     };
   }
 
@@ -218,7 +220,11 @@ class FindMachine extends React.PureComponent {
   };
 
   addMachine = () => {
-    this.props.addMachineToLocation(this.state.machine, this.state.condition);
+    this.props.addMachineToLocation(
+      this.state.machine,
+      this.state.condition,
+      this.state.ic_enabled,
+    );
     this.setState({ showModal: false });
     this.props.navigation.goBack();
   };
@@ -281,6 +287,19 @@ class FindMachine extends React.PureComponent {
 
   keyExtractor = (machine) => `${machine.id}`;
 
+  onIcEnabledPressed = (ic_enabled) => {
+    const prevState = this.state.ic_enabled;
+    // uncheck if pressing the currently checked box
+    if (
+      (!!prevState && !!ic_enabled) ||
+      (prevState === false && ic_enabled === false)
+    ) {
+      return this.setState({ ic_enabled: undefined });
+    }
+
+    this.setState({ ic_enabled });
+  };
+
   UNSAFE_componentWillReceiveProps(props) {
     if (
       this.props.location.machineList.length === 0 &&
@@ -307,6 +326,7 @@ class FindMachine extends React.PureComponent {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
+
     return (
       <>
         <Modal
@@ -326,25 +346,51 @@ class FindMachine extends React.PureComponent {
               style={s.background}
             >
               <View style={s.verticalAlign}>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    marginTop: 10,
-                    marginLeft: 15,
-                    marginRight: 15,
-                    fontSize: 18,
-                  }}
-                >{`Add ${this.state.machine.name} to ${this.props.location.location.name}?`}</Text>
+                <Text style={s.modalTitle}>
+                  Add{" "}
+                  <Text style={s.modalPurple2}>{this.state.machine.name}</Text>{" "}
+                  to{" "}
+                  <Text style={s.modalPurple}>
+                    {this.props.location.location.name}
+                  </Text>
+                </Text>
                 <TextInput
                   multiline={true}
                   placeholder={"You can also include a machine comment..."}
                   placeholderTextColor={theme.indigo4}
-                  numberOfLines={2}
-                  style={[{ padding: 5, height: 50 }, s.textInput]}
+                  numberOfLines={3}
+                  style={[{ padding: 5, height: 70 }, s.textInput]}
                   onChangeText={(condition) => this.setState({ condition })}
                   textAlignVertical="top"
                   underlineColorAndroid="transparent"
                 />
+                {this.state.machine.ic_eligible && (
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text>Does this machine have Stern Insider Connected?</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <CheckBox
+                        checked={this.state.ic_enabled}
+                        title="Yes"
+                        onPress={() => this.onIcEnabledPressed(true)}
+                        containerStyle={{ backgroundColor: theme.base1 }}
+                        fontFamily="boldFont"
+                        textStyle={{ fontSize: 16, color: theme.text }}
+                        checkedColor={theme.purple}
+                      />
+                      <CheckBox
+                        checked={this.state.ic_enabled === false}
+                        title="No"
+                        onPress={() => this.onIcEnabledPressed(false)}
+                        containerStyle={{ backgroundColor: theme.base1 }}
+                        fontFamily="boldFont"
+                        textStyle={{ fontSize: 16, color: theme.text }}
+                        checkedColor={theme.purple}
+                      />
+                    </View>
+                  </View>
+                )}
                 <PbmButton title={"Add"} onPress={this.addMachine} />
                 <WarningButton
                   title={"Cancel"}
@@ -443,12 +489,13 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: theme.indigo4,
       borderWidth: 1,
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 20,
+      marginHorizontal: 30,
+      marginTop: 15,
+      marginBottom: 10,
       borderRadius: 10,
       fontFamily: "regularFont",
       fontSize: 16,
+      color: theme.text,
     },
     verticalAlign: {
       flexDirection: "column",
@@ -505,6 +552,22 @@ const getStyles = (theme) =>
     notPressed: {
       backgroundColor: "transparent",
     },
+    modalTitle: {
+      textAlign: "center",
+      marginHorizontal: 40,
+      fontSize: 18,
+      fontFamily: "boldFont",
+    },
+    modalPurple: {
+      color: theme.theme == "dark" ? theme.purple : theme.purple2,
+      fontSize: 18,
+      fontFamily: "blackFont",
+    },
+    modalPurple2: {
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      fontSize: 18,
+      fontFamily: "blackFont",
+    },
   });
 
 FindMachine.propTypes = {
@@ -526,8 +589,8 @@ const mapStateToProps = ({ location, machines, locations }) => ({
   mapLocations: locations.mapLocations || {},
 });
 const mapDispatchToProps = (dispatch) => ({
-  addMachineToLocation: (machine, condition) =>
-    dispatch(addMachineToLocation(machine, condition)),
+  addMachineToLocation: (machine, condition, ic_enabled) =>
+    dispatch(addMachineToLocation(machine, condition, ic_enabled)),
   addMachineToList: (machine) => dispatch(addMachineToList(machine)),
   removeMachineFromList: (machine) => dispatch(removeMachineFromList(machine)),
   setMachineFilter: (machine) => dispatch(setMachineFilter(machine)),
