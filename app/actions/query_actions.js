@@ -50,9 +50,9 @@ export const selectedOperatorFilter = (selectedOperator) => (dispatch) => {
   dispatch(updateFilterLocations());
 };
 
-export const setSelectedActivityFilter = (selectedActivity) => ({
+export const setSelectedActivitiesFilter = (selectedActivities) => ({
   type: SET_SELECTED_ACTIVITY_FILTER,
-  selectedActivity,
+  selectedActivities,
 });
 
 export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER });

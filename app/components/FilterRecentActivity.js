@@ -5,23 +5,28 @@ import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import { Avatar, Button, ListItem } from "@rneui/base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ConfirmationModal from "./ConfirmationModal";
-import { setSelectedActivityFilter } from "../actions";
+import { setSelectedActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
+import PbmButton from "./PbmButton";
 
 let deviceWidth = Dimensions.get("window").width;
 
-const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
+const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
   const [showModal, setShowModal] = useState(false);
 
-  const setRecentActivityFilter = (activity) => {
-    setShowModal(false);
-    setSelectedActivityFilter(activity);
-  };
+  const { selectedActivities = [] } = query;
 
-  const { selectedActivity } = query;
+  const setRecentActivitiesFilter = (activity) => {
+    const origLength = selectedActivities.length;
+    const activities = selectedActivities.filter((a) => a !== activity);
+    if (activities.length === origLength) {
+      activities.push(activity);
+    }
+    setSelectedActivitiesFilter(activities);
+  };
 
   return (
     <View>
@@ -39,11 +44,11 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
           <View>
             <ListItem
               containerStyle={
-                selectedActivity === "new_lmx"
+                selectedActivities.find((activity) => activity === "new_lmx")
                   ? s.containerBg
                   : s.containerNotSelected
               }
-              onPress={() => setRecentActivityFilter("new_lmx")}
+              onPress={() => setRecentActivitiesFilter("new_lmx")}
             >
               <Avatar>
                 {
@@ -57,7 +62,9 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
               <ListItem.Content>
                 <ListItem.Title
                   style={
-                    selectedActivity === "new_lmx"
+                    selectedActivities.find(
+                      (activity) => activity === "new_lmx",
+                    )
                       ? s.activeTitleStyle
                       : s.titleStyle
                   }
@@ -68,11 +75,13 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
             </ListItem>
             <ListItem
               containerStyle={
-                selectedActivity === "remove_machine"
+                selectedActivities.find(
+                  (activity) => activity === "remove_machine",
+                )
                   ? s.containerBg
                   : s.containerNotSelected
               }
-              onPress={() => setRecentActivityFilter("remove_machine")}
+              onPress={() => setRecentActivitiesFilter("remove_machine")}
             >
               <Avatar>
                 {
@@ -84,18 +93,28 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 }
               </Avatar>
               <ListItem.Content>
-                <ListItem.Title style={s.titleStyle}>
+                <ListItem.Title
+                  style={
+                    selectedActivities.find(
+                      (activity) => activity === "remove_machine",
+                    )
+                      ? s.activeTitleStyle
+                      : s.titleStyle
+                  }
+                >
                   Removed Machines
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
               containerStyle={
-                selectedActivity === "new_condition"
+                selectedActivities.find(
+                  (activity) => activity === "new_condition",
+                )
                   ? s.containerBg
                   : s.containerNotSelected
               }
-              onPress={() => setRecentActivityFilter("new_condition")}
+              onPress={() => setRecentActivitiesFilter("new_condition")}
             >
               <Avatar>
                 {
@@ -107,18 +126,26 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 }
               </Avatar>
               <ListItem.Content>
-                <ListItem.Title style={s.titleStyle}>
+                <ListItem.Title
+                  style={
+                    selectedActivities.find(
+                      (activity) => activity === "new_condition",
+                    )
+                      ? s.activeTitleStyle
+                      : s.titleStyle
+                  }
+                >
                   New Comments
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
               containerStyle={
-                selectedActivity === "new_msx"
+                selectedActivities.find((activity) => activity === "new_msx")
                   ? s.containerBg
                   : s.containerNotSelected
               }
-              onPress={() => setRecentActivityFilter("new_msx")}
+              onPress={() => setRecentActivitiesFilter("new_msx")}
             >
               <Avatar>
                 {
@@ -130,18 +157,28 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 }
               </Avatar>
               <ListItem.Content>
-                <ListItem.Title style={s.titleStyle}>
+                <ListItem.Title
+                  style={
+                    selectedActivities.find(
+                      (activity) => activity === "new_msx",
+                    )
+                      ? s.activeTitleStyle
+                      : s.titleStyle
+                  }
+                >
                   High Scores
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
               containerStyle={
-                selectedActivity === "confirm_location"
+                selectedActivities.find(
+                  (activity) => activity === "confirm_location",
+                )
                   ? s.containerBg
                   : s.containerNotSelected
               }
-              onPress={() => setRecentActivityFilter("confirm_location")}
+              onPress={() => setRecentActivitiesFilter("confirm_location")}
             >
               <Avatar>
                 {
@@ -153,11 +190,23 @@ const FilterRecentActivity = ({ setSelectedActivityFilter, query }) => {
                 }
               </Avatar>
               <ListItem.Content>
-                <ListItem.Title style={s.titleStyle}>
+                <ListItem.Title
+                  style={
+                    selectedActivities.find(
+                      (activity) => activity === "confirm_location",
+                    )
+                      ? s.activeTitleStyle
+                      : s.titleStyle
+                  }
+                >
                   Location Confirmations
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
+            <PbmButton
+              title="Apply Filters"
+              onPress={() => setShowModal(false)}
+            />
           </View>
         </ConfirmationModal>
       )}
@@ -223,8 +272,8 @@ FilterRecentActivity.propTypes = {
 
 const mapStateToProps = ({ query }) => ({ query });
 const mapDispatchToProps = (dispatch) => ({
-  setSelectedActivityFilter: (activity) =>
-    dispatch(setSelectedActivityFilter(activity)),
+  setSelectedActivitiesFilter: (activity) =>
+    dispatch(setSelectedActivitiesFilter(activity)),
 });
 export default connect(
   mapStateToProps,

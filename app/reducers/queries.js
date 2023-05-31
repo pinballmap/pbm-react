@@ -25,7 +25,7 @@ export const initialState = {
   locationType: "",
   numMachines: 0,
   selectedOperator: "",
-  selectedActivity: "",
+  selectedActivities: [],
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
@@ -103,12 +103,12 @@ export default (state = initialState, action) => {
     case SET_SELECTED_ACTIVITY_FILTER:
       return {
         ...state,
-        selectedActivity: action.selectedActivity,
+        selectedActivities: action.selectedActivities,
       };
     case CLEAR_ACTIVITY_FILTER:
       return {
         ...state,
-        selectedActivity: "",
+        selectedActivities: [],
       };
     case SET_MAX_ZOOM:
       return {

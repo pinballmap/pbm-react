@@ -26,7 +26,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [maxDistance, setMaxDistance] = useState(30);
   const [btnIdx, setBtnIdx] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
-  const { selectedActivity, swLat, swLon, neLat, neLon } = query;
+  const { selectedActivities, swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
 
   useEffect(() => {
@@ -66,22 +66,6 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
     setBtnIdx(selectedIdx);
     setMaxDistance(distanceMap[selectedIdx]);
     fetchData(null, distanceMap[selectedIdx]);
-  };
-
-  const getText = (selectedActivity) => {
-    const activity = "Filtering by recently";
-    switch (selectedActivity) {
-      case "new_lmx":
-        return `${activity} added machines`;
-      case "new_condition":
-        return `${activity} added conditions`;
-      case "remove_machine":
-        return `${activity} removed machines`;
-      case "new_msx":
-        return `${activity} added scores`;
-      case "confirm_location":
-        return `${activity} confirmed locations`;
-    }
   };
 
   const getSubmission = (activity) => {
@@ -182,9 +166,9 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
           innerBorderStyle={s.innerBorderStyle}
         />
       </View>
-      {selectedActivity ? (
+      {selectedActivities.length ? (
         <View style={s.filterView}>
-          <Text style={s.filter}>{getText(selectedActivity)}</Text>
+          <Text style={s.filter}>Clear Applied Filters</Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={24}
@@ -205,10 +189,9 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
             const submissionTypeIcon = getActivityIcon(
               activity.submission_type,
             );
-            const showType = selectedActivity
-              ? selectedActivity === activity.submission_type
-                ? true
-                : false
+
+            const showType = selectedActivities.length
+              ? selectedActivities.find((a) => a === activity.submission_type)
               : true;
 
             if (submissionTypeIcon && showType) {
