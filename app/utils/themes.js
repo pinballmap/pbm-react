@@ -25,7 +25,6 @@ export const dark = {
   purple: "#cf8dde",
   purple2: "#e7b9f1",
   purpleLight: "#f7eef9",
-  green: "#74f700",
   dark: true,
   colors: {
     primary: "#d9d9e0",
@@ -66,7 +65,6 @@ export const standard = {
   purple: "#66017b",
   purple2: "#9718b1",
   purpleLight: "#66017b",
-  green: "#56b801",
   dark: false,
   colors: {
     primary: "#47475f",

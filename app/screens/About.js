@@ -175,7 +175,7 @@ const About = ({ navigation, appAlert }) => {
                 onPress={() =>
                   WebBrowser.openBrowserAsync("https://blog.pinballmap.com/")
                 }
-                style={s.green}
+                style={s.pink}
               >{`Read the blog`}</Text>
               .{" "}
               <Text
@@ -227,7 +227,7 @@ const About = ({ navigation, appAlert }) => {
             <Text style={s.text}>
               {"And finally, we've compiled some "}
               <Text
-                style={s.green}
+                style={s.pink}
                 onPress={() => navigation.navigate("Resources")}
               >
                 additional pinball resources
@@ -386,8 +386,9 @@ const getStyles = (theme) =>
     },
     textLink: {
       textDecorationLine: "underline",
-      color: theme.pink1,
+      color: theme.purple,
       fontSize: 16,
+      fontFamily: "mediumFont",
     },
     appAlert: {
       borderWidth: 0,
@@ -399,10 +400,11 @@ const getStyles = (theme) =>
       paddingBottom: 0,
       backgroundColor: theme.theme == "dark" ? theme.base3 : "#efe9f0",
     },
-    green: {
-      color: theme.green,
+    pink: {
+      color: theme.pink1,
       textDecorationLine: "underline",
       fontSize: 16,
+      fontFamily: "mediumFont",
     },
   });
 

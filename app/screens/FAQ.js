@@ -209,7 +209,8 @@ const getStyles = (theme) =>
     },
     textLink: {
       textDecorationLine: "underline",
-      color: theme.pink1,
+      color: theme.purple,
+      fontFamily: "mediumFont",
     },
   });
 
