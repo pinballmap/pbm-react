@@ -54,17 +54,17 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.text,
-      fontFamily: "boldFont",
+      fontFamily: "semiBoldFont",
     },
     purple: {
       color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
     purple2: {
       color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
     buttonContainer: {
       marginLeft: 20,

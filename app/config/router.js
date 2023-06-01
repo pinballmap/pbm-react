@@ -250,7 +250,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: colors.inactiveTab,
-                  fontFamily: "boldFont",
+                  fontFamily: "semiBoldFont",
                 },
                 s.labelText,
               ]}

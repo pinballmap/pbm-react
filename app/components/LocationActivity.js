@@ -97,7 +97,8 @@ const LocationActivity = ({ locationId }) => {
         return (
           <View style={s.textContainer}>
             <Text style={s.pbmText}>
-              High score: {formatNumWithCommas(high_score)}
+              High score:{" "}
+              <Text style={s.score}>{formatNumWithCommas(high_score)}</Text>
             </Text>
             <Text style={s.purple}>{machine_name}</Text>
             {timeAndUser}
@@ -241,6 +242,9 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "regularFont",
     },
+    score: {
+      fontFamily: "semiBoldFont",
+    },
     date: {
       paddingTop: 6,
       fontSize: 14,
@@ -249,12 +253,12 @@ const getStyles = (theme) =>
     },
     pink: {
       color: theme.pink1,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     purple: {
       color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     flexi: {
       display: "flex",

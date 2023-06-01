@@ -185,7 +185,7 @@ const getStyles = () =>
       color: "#7f7fa0",
       fontSize: 14,
       textAlign: "center",
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
   });
 

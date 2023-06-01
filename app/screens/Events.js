@@ -356,7 +356,7 @@ const getStyles = (theme) =>
     address: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     pressed: {
       shadowColor: "transparent",

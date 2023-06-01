@@ -610,7 +610,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     goToFilterText: {
-      marginHorizontal: 40,
+      marginHorizontal: 30,
       fontFamily: "regularItalicFont",
       color: theme.text3,
       textAlign: "center",

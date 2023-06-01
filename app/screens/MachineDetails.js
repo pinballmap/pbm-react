@@ -535,7 +535,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 20,
       color: theme.text3,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     machineNameContainer: {
       marginBottom: 5,
@@ -556,11 +556,11 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "regularItalicFont",
     },
     externalLink: {
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
       color: theme.purple2,
       textAlign: "center",
     },
@@ -590,7 +590,7 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontSize: 18,
       marginTop: 5,
-      fontFamily: "regularFont",
+      fontFamily: "semiBoldFont",
     },
     noneYet: {
       textAlign: "center",
@@ -618,7 +618,7 @@ const getStyles = (theme) =>
       marginTop: 5,
       marginBottom: 5,
       color: theme.pink1,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
       fontSize: 16,
     },
     userHighScore: {
@@ -626,7 +626,7 @@ const getStyles = (theme) =>
       fontSize: 20,
       paddingBottom: 15,
       color: theme.purple,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     verticalAlign: {
       flexDirection: "column",
@@ -638,17 +638,17 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "semiBoldFont",
     },
     modalPurple: {
       color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
     modalPurple2: {
       color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
     modalSubText: {
       marginHorizontal: 40,
@@ -668,7 +668,7 @@ const getStyles = (theme) =>
       paddingTop: 3,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
     },
     subtitleMargin: {
       marginTop: 5,

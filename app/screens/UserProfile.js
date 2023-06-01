@@ -312,7 +312,7 @@ const getStyles = (theme) =>
     },
     savedLink: {
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",
@@ -337,7 +337,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       paddingVertical: 10,
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "mediumFont",
     },
     usernameContainer: {
       padding: 10,
@@ -382,7 +382,7 @@ const getStyles = (theme) =>
       paddingTop: 10,
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "mediumFont",
+      fontFamily: "regularItalicFont",
     },
     buttonContainer: {
       marginLeft: 20,
@@ -415,7 +415,7 @@ const getStyles = (theme) =>
     },
     rankText: {
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "semiBoldFont",
       color: theme.text3,
     },
     rankIcon: {
@@ -437,12 +437,12 @@ const getStyles = (theme) =>
     externalUpdateText: {
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
       textAlign: "center",
     },
     externalLink: {
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "semiBoldFont",
       color: theme.purple,
     },
     externalIcon: {

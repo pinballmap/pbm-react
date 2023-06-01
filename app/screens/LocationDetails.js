@@ -463,7 +463,7 @@ class LocationDetails extends Component {
                             name="compass-outline"
                             style={s.metaIcon}
                           />
-                          <Text style={[s.fontSize15, s.text3, s.marginB]}>
+                          <Text style={[s.fontSize14, s.text3, s.marginB]}>
                             {getDistanceWithUnit(
                               userLat,
                               userLon,
@@ -482,7 +482,7 @@ class LocationDetails extends Component {
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize15, s.link, s.marginB]}
+                            style={[s.fontSize14, s.link, s.marginB]}
                             onPress={() =>
                               Linking.openURL(`tel://${location.phone}`)
                             }
@@ -499,7 +499,7 @@ class LocationDetails extends Component {
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize15, s.link, s.marginB]}
+                            style={[s.fontSize14, s.link, s.marginB]}
                             onPress={() =>
                               WebBrowser.openBrowserAsync(location.website)
                             }
@@ -550,6 +550,7 @@ class LocationDetails extends Component {
                               s.fontSize15,
                               s.marginB,
                               s.marginRight,
+                              s.italic,
                             ]}
                           >
                             Updated:{" "}
@@ -561,7 +562,7 @@ class LocationDetails extends Component {
                               {location.last_updated_by_username && ` by`}
                               <Text
                                 style={{
-                                  fontFamily: "regularBoldFont",
+                                  fontFamily: "semiBoldFont",
                                   color: theme.pink1,
                                 }}
                               >{` ${location.last_updated_by_username}`}</Text>
@@ -583,7 +584,7 @@ class LocationDetails extends Component {
                             name="notebook-outline"
                             style={s.metaIcon}
                           />
-                          <Text style={[s.text3, s.fontSize15]}>
+                          <Text style={[s.text3, s.fontSize14]}>
                             {location.description}
                           </Text>
                         </View>
@@ -955,7 +956,7 @@ const getStyles = (theme) =>
     updated: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "regularItalicFont",
     },
   });
 

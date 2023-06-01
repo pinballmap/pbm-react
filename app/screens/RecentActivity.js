@@ -231,7 +231,7 @@ const getStyles = (theme) =>
     pbmText: {
       color: theme.text,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "mediumFont",
     },
     marginB8: {
       marginBottom: 8,
@@ -243,17 +243,17 @@ const getStyles = (theme) =>
     },
     pink: {
       color: theme.pink1,
-      fontFamily: "regularBoldFont",
+      fontFamily: "mediumFont",
     },
     purple: {
       color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "mediumFont",
     },
     purple2: {
       color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 16,
-      fontFamily: "regularBoldFont",
+      fontFamily: "boldFont",
     },
     header: {
       paddingVertical: 10,

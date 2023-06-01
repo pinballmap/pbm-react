@@ -556,17 +556,17 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "semiBoldFont",
     },
     modalPurple: {
       color: theme.theme == "dark" ? theme.purple : theme.purple2,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
     modalPurple2: {
       color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 18,
-      fontFamily: "blackFont",
+      fontFamily: "boldFont",
     },
   });
 

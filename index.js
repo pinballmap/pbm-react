@@ -11,15 +11,13 @@ import { StatusBar } from "expo-status-bar";
 import {
   useFonts,
   Nunito_400Regular,
+  Nunito_400Regular_Italic,
+  Nunito_500Medium,
+  Nunito_600SemiBold,
   Nunito_700Bold,
   Nunito_800ExtraBold,
   Nunito_900Black,
 } from "@expo-google-fonts/nunito";
-import {
-  PTSans_400Regular,
-  PTSans_400Regular_Italic,
-  PTSans_700Bold,
-} from "@expo-google-fonts/pt-sans";
 import store from "./app/store";
 import * as SplashScreen from "expo-splash-screen";
 import { AppWrapper } from "./app/components";
@@ -73,10 +71,10 @@ const App = () => {
     defaultTheme === "dark" &&
     setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
   const [fontsLoaded] = useFonts({
-    regularFont: PTSans_400Regular,
-    regularBoldFont: PTSans_700Bold,
-    regularItalicFont: PTSans_400Regular_Italic,
-    mediumFont: Nunito_400Regular,
+    regularFont: Nunito_400Regular,
+    regularItalicFont: Nunito_400Regular_Italic,
+    mediumFont: Nunito_500Medium,
+    semiBoldFont: Nunito_600SemiBold,
     boldFont: Nunito_700Bold,
     extraBoldFont: Nunito_800ExtraBold,
     blackFont: Nunito_900Black,
