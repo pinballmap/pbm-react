@@ -51,27 +51,14 @@ const mapLocations = ({ locations }) => locations.mapLocations;
 const faveLocations = ({ user }) => user.faveLocations;
 
 export const getMapLocations = createSelector(
-  [mapLocations, faveLocations, queryState],
-  (locations = [], faveLocations = [], query) => {
-    if (query.viewByFavoriteLocations) {
-      return locations.filter((loc) => {
-        if (
-          faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1
-        ) {
-          return {
-            ...loc,
-            icon: "heart",
-          };
-        }
-      });
-    } else {
-      return locations.map((loc) => ({
-        ...loc,
-        icon:
-          faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1
-            ? "heart"
-            : "dot",
-      }));
-    }
+  [mapLocations, faveLocations],
+  (locations = [], faveLocations = []) => {
+    return locations.map((loc) => ({
+      ...loc,
+      icon:
+        faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1
+          ? "heart"
+          : "dot",
+    }));
   },
 );

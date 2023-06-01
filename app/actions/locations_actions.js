@@ -76,7 +76,9 @@ export const getLocationsByBounds =
       numMachines,
       selectedOperator,
       filterByMachineVersion,
+      viewByFavoriteLocations,
     } = getState().query;
+    const { id: userId } = getState().user;
     const machineQueryString = machineId ? `by_machine_id=${machineId};` : "";
     const locationTypeQueryString = locationType
       ? `by_type_id=${locationType};`
@@ -87,7 +89,9 @@ export const getLocationsByBounds =
     const byOperator = selectedOperator
       ? `by_operator_id=${selectedOperator};`
       : "";
-    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator};no_details=1`;
+    const byUserFaved =
+      viewByFavoriteLocations && userId ? `user_faved=${userId};` : "";
+    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved};no_details=1`;
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
