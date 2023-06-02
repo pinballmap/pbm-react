@@ -400,9 +400,10 @@ class MachineDetails extends Component {
                             {`"${comment}"`}
                           </Text>
                           <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            {`${moment(created_at).format("MMM DD, YYYY")} ${
-                              username ? `by ` : ""
-                            }`}
+                            <Text style={s.italic}>
+                              {moment(created_at).format("MMM DD, YYYY")}
+                            </Text>
+                            {username ? ` by ` : ""}
                             {!!username && (
                               <Text style={[s.subtitleStyle, s.username]}>
                                 {username}
@@ -462,7 +463,10 @@ class MachineDetails extends Component {
                             {formatNumWithCommas(score)}
                           </Text>
                           <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            {`${moment(created_at).format("MMM DD, YYYY")} by `}
+                            <Text style={s.italic}>
+                              {moment(created_at).format("MMM DD, YYYY")}
+                            </Text>{" "}
+                            {`by `}
                             <Text
                               style={[s.subtitleStyle, s.username]}
                             >{`${username}`}</Text>
@@ -756,6 +760,9 @@ const getStyles = (theme) =>
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e7c8c8",
+    },
+    italic: {
+      fontFamily: "regularItalicFont",
     },
   });
 

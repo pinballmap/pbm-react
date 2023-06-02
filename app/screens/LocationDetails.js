@@ -394,7 +394,7 @@ class LocationDetails extends Component {
                           <View>
                             <Text
                               style={[
-                                s.text,
+                                s.text2,
                                 s.bold,
                                 s.fontSize15,
                                 s.marginRight,
@@ -405,7 +405,7 @@ class LocationDetails extends Component {
                             </Text>
                             <Text
                               style={[
-                                s.text,
+                                s.text2,
                                 s.bold,
                                 s.fontSize15,
                                 s.marginB,
@@ -555,10 +555,12 @@ class LocationDetails extends Component {
                           >
                             Updated:{" "}
                             <Text style={s.text3}>
-                              {moment(
-                                location.date_last_updated,
-                                "YYYY-MM-DD",
-                              ).format("MMM DD, YYYY")}
+                              <Text style={s.italic}>
+                                {moment(
+                                  location.date_last_updated,
+                                  "YYYY-MM-DD",
+                                ).format("MMM DD, YYYY")}
+                              </Text>
                               {location.last_updated_by_username && ` by`}
                               <Text
                                 style={{

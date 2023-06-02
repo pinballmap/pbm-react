@@ -82,10 +82,11 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
     const time = moment(updated_at).format("LL");
     const timeAndUser = user_name ? (
       <Text style={s.date}>
-        {time} by <Text style={s.pink}>{user_name}</Text>
+        <Text style={s.italic}>{time}</Text> by{" "}
+        <Text style={s.pink}>{user_name}</Text>
       </Text>
     ) : (
-      <Text style={s.date}>{time}</Text>
+      <Text style={[s.date, s.italic]}>{time}</Text>
     );
     switch (submission_type) {
       case "new_lmx": {
@@ -240,6 +241,9 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "regularFont",
+    },
+    italic: {
+      fontFamily: "regularItalicFont",
     },
     pink: {
       color: theme.pink1,
