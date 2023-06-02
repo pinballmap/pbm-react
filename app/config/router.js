@@ -136,7 +136,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -163,7 +163,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -190,7 +190,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -217,7 +217,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "extraBoldFont" : "boldFont",
                 },
                 s.labelText,
               ]}
@@ -250,7 +250,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: colors.inactiveTab,
-                  fontFamily: "semiBoldFont",
+                  fontFamily: "boldFont",
                 },
                 s.labelText,
               ]}
