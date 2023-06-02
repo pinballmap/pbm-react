@@ -45,22 +45,23 @@ export const getFilterState = (filterState) => {
     ignoreZoom,
   } = filterState;
   const noFilterNeeded = !!selectedOperator || !!viewByFavoriteLocations;
-  const filtersNoMachines = !!machineId || !!locationType;
+  const filteringMachineOrType = !!machineId || !!locationType;
   const multipleFilters =
-    (!!machineId && !!locationType) || (filtersNoMachines && numMachines > 1);
+    (!!machineId && !!locationType) ||
+    (filteringMachineOrType && numMachines > 1);
   const filteringByTwoMachines = numMachines === "2";
   const filteringByMoreMachines = numMachines > 2;
   const maxDelta = noFilterNeeded
-    ? 80 // A large number so that all locations are included for Operator and Fave Locations
+    ? 100 // A large number so that all locations are included for Operator and Fave Locations
     : multipleFilters
-    ? 40 // A pretty large delta when multiple filters are applied
+    ? 80 // A pretty large delta when multiple filters are applied
     : filteringByTwoMachines
-    ? 7
+    ? 12
     : filteringByMoreMachines
-    ? numMachines * 2
-    : filtersNoMachines
-    ? 10
-    : 5;
+    ? numMachines * 4
+    : filteringMachineOrType
+    ? 40
+    : 6;
   return {
     maxDelta,
     ignoreZoom,
