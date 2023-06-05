@@ -7,7 +7,6 @@ import {
   Keyboard,
   Modal,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -37,16 +36,15 @@ import {
   PbmButton,
   RemoveMachineModal,
   RemoveMachine,
-  Screen,
   Text,
   WarningButton,
 } from "../components";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 const moment = require("moment");
 
-let deviceHeight = Dimensions.get("window").height;
 let deviceWidth = Dimensions.get("window").width;
 
 class MachineDetails extends Component {
@@ -156,25 +154,27 @@ class MachineDetails extends Component {
         {({ theme }) => {
           const s = getStyles(theme);
           return (
-            <Screen>
+            <KeyboardAwareScrollView
+              {...keyboardDismissProp}
+              enableResetScrollToCoords={false}
+              keyboardShouldPersistTaps="handled"
+              style={s.backgroundColor}
+            >
               <Modal
                 animationType="slide"
                 transparent={false}
                 visible={this.state.showAddConditionModal}
                 onRequestClose={() => {}}
               >
-                <Pressable
-                  onPress={() => {
-                    Keyboard.dismiss();
-                  }}
-                >
-                  <KeyboardAwareScrollView
-                    {...keyboardDismissProp}
-                    enableResetScrollToCoords={false}
-                    keyboardShouldPersistTaps="handled"
-                    style={s.backgroundColor}
-                  >
-                    <View style={s.verticalAlign}>
+                <SafeAreaProvider>
+                  <SafeAreaView style={[{ flex: 1 }, s.background]}>
+                    <ScrollView
+                      style={s.background}
+                      contentContainerStyle={{
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
                       <Text style={s.modalTitle}>
                         Comment on{" "}
                         <Text style={s.modalPurple2}>{machineName}</Text> at{" "}
@@ -193,15 +193,18 @@ class MachineDetails extends Component {
                           s.radius10,
                         ]}
                         placeholder={
-                          "Leave a comment! And please don't comment saying a machine is gone; just remove it instead!"
+                          "(note: if this machine is gone, please just remove it. no need to leave a comment saying it is gone)"
                         }
                         placeholderTextColor={theme.indigo4}
                         textAlignVertical="top"
                       />
                       <Text style={s.modalSubText}>
-                        <Text style={s.bold}>Everyone:</Text> Please be
-                        descriptive about machine issues and also considerate of
-                        the time and effort needed to maintain machines.{" "}
+                        <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
+                        {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
+                        {"\n\n"}
+                        That said, please be descriptive about machine issues
+                        and also considerate of the time and effort needed to
+                        maintain machines.{" "}
                         {!!location.operator_id && operatorHasEmail && (
                           <Text style={s.bold}>
                             This operator is signed up to be notified about
@@ -210,8 +213,8 @@ class MachineDetails extends Component {
                         )}
                       </Text>
                       <Text style={[s.modalSubText, s.margin8]}>
-                        <Text style={s.bold}>Operators:</Text>
-                        {` if you've fixed an issue, please leave a comment saying so. But please do not comment simply to "whitewash" people's comments that bother you.`}
+                        <Text style={[s.bold, s.purple]}>Operators:</Text>
+                        {`if you've fixed an issue, please leave a comment saying so.`}
                       </Text>
                       <PbmButton
                         title={"Add Condition"}
@@ -222,9 +225,9 @@ class MachineDetails extends Component {
                         title={"Cancel"}
                         onPress={this.cancelAddCondition}
                       />
-                    </View>
-                  </KeyboardAwareScrollView>
-                </Pressable>
+                    </ScrollView>
+                  </SafeAreaView>
+                </SafeAreaProvider>
               </Modal>
               <Modal
                 animationType="slide"
@@ -232,53 +235,52 @@ class MachineDetails extends Component {
                 visible={this.state.showAddScoreModal}
                 onRequestClose={() => {}}
               >
-                <Pressable
-                  onPress={() => {
-                    Keyboard.dismiss();
-                  }}
-                >
-                  <KeyboardAwareScrollView
-                    {...keyboardDismissProp}
-                    enableResetScrollToCoords={false}
-                    keyboardShouldPersistTaps="handled"
-                    style={s.backgroundColor}
-                  >
-                    <View style={s.verticalAlign}>
-                      <Text style={s.modalTitle}>
-                        Add your high score to{" "}
-                        <Text style={s.modalPurple2}>{machineName}</Text> at{" "}
-                        <Text style={s.modalPurple}>{location.name}</Text>
-                      </Text>
-                      <TextInput
-                        style={[
-                          { height: 40, textAlign: "center" },
-                          s.textInput,
-                          s.radius10,
-                        ]}
-                        keyboardType="numeric"
-                        underlineColorAndroid="transparent"
-                        onChangeText={(score) => this.setState({ score })}
-                        defaultValue={formatInputNumWithCommas(
-                          this.state.score,
-                        )}
-                        returnKeyType="done"
-                        placeholder={"123..."}
-                        placeholderTextColor={theme.indigo4}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                      />
-                      <PbmButton
-                        title={"Add Score"}
-                        disabled={this.state.score.length === 0}
-                        onPress={() => this.addScore(curLmx.id)}
-                      />
-                      <WarningButton
-                        title={"Cancel"}
-                        onPress={this.cancelAddScore}
-                      />
-                    </View>
-                  </KeyboardAwareScrollView>
-                </Pressable>
+                <SafeAreaProvider>
+                  <SafeAreaView style={[{ flex: 1 }, s.background]}>
+                    <ScrollView
+                      style={s.background}
+                      contentContainerStyle={{
+                        flex: 1,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <View style={s.verticalAlign}>
+                        <Text style={s.modalTitle}>
+                          Add your high score to{" "}
+                          <Text style={s.modalPurple2}>{machineName}</Text> at{" "}
+                          <Text style={s.modalPurple}>{location.name}</Text>
+                        </Text>
+                        <TextInput
+                          style={[
+                            { height: 40, textAlign: "center" },
+                            s.textInput,
+                            s.radius10,
+                          ]}
+                          keyboardType="numeric"
+                          underlineColorAndroid="transparent"
+                          onChangeText={(score) => this.setState({ score })}
+                          defaultValue={formatInputNumWithCommas(
+                            this.state.score,
+                          )}
+                          returnKeyType="done"
+                          placeholder={"123..."}
+                          placeholderTextColor={theme.indigo4}
+                          autoCapitalize="none"
+                          autoCorrect={false}
+                        />
+                        <PbmButton
+                          title={"Add Score"}
+                          disabled={this.state.score.length === 0}
+                          onPress={() => this.addScore(curLmx.id)}
+                        />
+                        <WarningButton
+                          title={"Cancel"}
+                          onPress={this.cancelAddScore}
+                        />
+                      </View>
+                    </ScrollView>
+                  </SafeAreaView>
+                </SafeAreaProvider>
               </Modal>
               {this.state.showRemoveMachineModal && (
                 <RemoveMachineModal
@@ -515,7 +517,7 @@ class MachineDetails extends Component {
                   }
                 />
               </ScrollView>
-            </Screen>
+            </KeyboardAwareScrollView>
           );
         }}
       </ThemeContext.Consumer>
@@ -633,9 +635,8 @@ const getStyles = (theme) =>
       fontFamily: "semiBoldFont",
     },
     verticalAlign: {
-      flexDirection: "column",
+      flex: 1,
       justifyContent: "center",
-      height: deviceHeight,
     },
     modalTitle: {
       textAlign: "center",

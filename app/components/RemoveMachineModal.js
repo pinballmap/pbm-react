@@ -42,6 +42,10 @@ const RemoveMachineModal = ({
         onPress={() => closeModal()}
         containerStyle={s.buttonContainer}
       />
+      <Text style={s.modalSubText}>
+        Please do not remove the machine just to clear out comments and then
+        re-add it.
+      </Text>
     </ConfirmationModal>
   );
 };
@@ -71,6 +75,11 @@ const getStyles = (theme) =>
       marginRight: 20,
       marginTop: 10,
       marginBottom: 10,
+    },
+    modalSubText: {
+      marginHorizontal: 18,
+      fontSize: 14,
+      fontFamily: "mediumFont",
     },
   });
 
