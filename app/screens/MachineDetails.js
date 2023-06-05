@@ -198,22 +198,20 @@ class MachineDetails extends Component {
                         placeholderTextColor={theme.indigo4}
                         textAlignVertical="top"
                       />
-                      <Text style={s.modalSubText}>
+                      <Text style={[s.modalSubText, s.margin4]}>
                         <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
                         {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
-                        {"\n\n"}
-                        That said, please be descriptive about machine issues
-                        and also considerate of the time and effort needed to
-                        maintain machines.{" "}
-                        {!!location.operator_id && operatorHasEmail && (
-                          <Text style={s.bold}>
-                            This operator is signed up to be notified about
-                            machine comments.
-                          </Text>
-                        )}
                       </Text>
-                      <Text style={[s.modalSubText, s.margin8]}>
-                        <Text style={[s.bold, s.purple]}>Operators:</Text>
+                      <Text style={[s.modalSubText, s.margin4]}>
+                        {`That said, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines.`}
+                      </Text>
+                      {!!location.operator_id && operatorHasEmail && (
+                        <Text style={[s.modalSubText, s.margin4, s.bold]}>
+                          {`This operator is signed up to be notified about machine comments.`}
+                        </Text>
+                      )}
+                      <Text style={[s.modalSubText, s.margin4]}>
+                        <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
                         {`if you've fixed an issue, please leave a comment saying so.`}
                       </Text>
                       <PbmButton
@@ -666,8 +664,8 @@ const getStyles = (theme) =>
     purple: {
       color: theme.purple,
     },
-    margin8: {
-      marginVertical: 8,
+    margin4: {
+      marginVertical: 4,
     },
     subtitleStyle: {
       paddingTop: 3,
