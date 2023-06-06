@@ -111,14 +111,14 @@ const LocationCard = ({
                     <Icon
                       name={icon}
                       type={library}
-                      color={theme.text3}
+                      color={theme.indigo4}
                       size={30}
                       style={s.icon}
                     />
                     <Text
                       style={{
                         marginRight: 12,
-                        color: theme.text2,
+                        color: theme.text3,
                         fontFamily: "boldFont",
                       }}
                     >
@@ -134,7 +134,7 @@ const LocationCard = ({
                       style={s.icon}
                     />
                     <Text
-                      style={{ color: theme.text2, fontFamily: "boldFont" }}
+                      style={{ color: theme.text3, fontFamily: "boldFont" }}
                     >
                       {" "}
                       {distance}
@@ -264,7 +264,7 @@ const getStyles = (theme) =>
     },
     icon: {
       fontSize: 30,
-      color: theme.text3,
+      color: theme.indigo4,
       opacity: 0.8,
       marginRight: 1,
     },
