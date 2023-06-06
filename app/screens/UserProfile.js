@@ -292,13 +292,13 @@ const getStyles = (theme) =>
       marginVertical: 6,
     },
     section: {
-      fontFamily: "mediumFont",
+      fontFamily: "boldFont",
       fontSize: 16,
       textAlign: "center",
       paddingHorizontal: 10,
-      paddingVertical: 8,
-      color: theme.text,
-      backgroundColor: theme.base3,
+      paddingTop: 2,
+      paddingBottom: 0,
+      color: theme.text3,
     },
     savedLink: {
       fontSize: 16,
@@ -309,7 +309,7 @@ const getStyles = (theme) =>
     },
     locationName: {
       marginHorizontal: 10,
-      fontSize: 20,
+      fontSize: 18,
       paddingVertical: 10,
       fontFamily: "boldFont",
     },
@@ -399,7 +399,7 @@ const getStyles = (theme) =>
       marginTop: 8,
     },
     rankText: {
-      fontSize: 16,
+      fontSize: 18,
       fontFamily: "boldFont",
       color: theme.text3,
     },

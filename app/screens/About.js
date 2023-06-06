@@ -130,6 +130,13 @@ const About = ({ navigation, appAlert }) => {
                   WebBrowser.openBrowserAsync("https://scorbit.io/")
                 }
               >{`Scorbit`}</Text>{" "}
+              and{" "}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync("https://kineticist.co/")
+                }
+              >{`Kineticist`}</Text>{" "}
               and more! Want to collaborate on something?{" "}
               <Text
                 style={s.textLink}
