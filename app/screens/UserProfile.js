@@ -130,10 +130,16 @@ class UserProfile extends Component {
                         <Image source={contributor_icon} style={s.rankIcon} />
                       </View>
                     )}
+                    <Text style={s.joined}>
+                      {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
+                    </Text>
+                    <Text
+                      style={s.savedLink}
+                      onPress={() => this.props.navigation.navigate("Saved")}
+                    >
+                      View saved locations
+                    </Text>
                   </View>
-                  <Text style={s.member}>{`Joined: ${moment(created_at).format(
-                    "MMM DD, YYYY",
-                  )}`}</Text>
                   <View style={s.statContainer}>
                     <View style={s.statItem}>
                       <Text style={s.stat}>Total contributions:</Text>
@@ -172,15 +178,7 @@ class UserProfile extends Component {
                       </Text>
                     </View>
                   </View>
-                  <View style={s.savedLinkContainer}>
-                    <Text
-                      style={s.savedLink}
-                      onPress={() => this.props.navigation.navigate("Saved")}
-                    >
-                      View saved locations
-                    </Text>
-                  </View>
-                  <Text style={s.bold}>Locations Edited (up to 50):</Text>
+                  <Text style={s.section}>Some recently edited locations</Text>
                   <View style={{ paddingVertical: 8 }}>
                     {profile_list_of_edited_locations
                       .slice(0, 50)
@@ -202,7 +200,7 @@ class UserProfile extends Component {
                             >
                               <Text
                                 style={[
-                                  s.listTitleStyle,
+                                  s.locationName,
                                   pressed ? s.textPressed : s.textNotPressed,
                                 ]}
                               >
@@ -213,7 +211,7 @@ class UserProfile extends Component {
                         </Pressable>
                       ))}
                   </View>
-                  <Text style={s.bold}>High Scores:</Text>
+                  <Text style={s.section}>High scores</Text>
                   <View style={{ paddingTop: 8, paddingBottom: 15 }}>
                     {profile_list_of_high_scores.map((score, idx) => {
                       return (
@@ -228,7 +226,7 @@ class UserProfile extends Component {
                               borderRadius: 15,
                             }}
                           >
-                            <ListItem.Title style={s.listTitleStyle}>
+                            <ListItem.Title style={s.scoreTitle}>
                               {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
                             </ListItem.Title>
                           </ListItem.Content>
@@ -280,11 +278,11 @@ const getStyles = (theme) =>
       paddingHorizontal: 10,
     },
     list: {
-      borderRadius: 15,
-      paddingVertical: 5,
+      borderRadius: 25,
+      paddingVertical: 2,
       paddingHorizontal: 10,
       borderWidth: 0,
-      backgroundColor: theme.white,
+      backgroundColor: theme.theme == "dark" ? "#312433" : theme.base3,
       shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.6,
@@ -293,22 +291,14 @@ const getStyles = (theme) =>
       marginHorizontal: 15,
       marginVertical: 6,
     },
-    bold: {
-      fontFamily: "boldFont",
+    section: {
+      fontFamily: "mediumFont",
       fontSize: 16,
       textAlign: "center",
       paddingHorizontal: 10,
       paddingVertical: 8,
       color: theme.text,
-      backgroundColor: theme.theme == "dark" ? "#312433" : theme.base2,
-    },
-    savedIcon: {
-      fontSize: 24,
-      color: theme.text3,
-      marginRight: 5,
-    },
-    savedLinkContainer: {
-      marginVertical: 15,
+      backgroundColor: theme.base3,
     },
     savedLink: {
       fontSize: 16,
@@ -317,22 +307,13 @@ const getStyles = (theme) =>
       textAlign: "center",
       textDecorationLine: "underline",
     },
-    buttonTitleStyle: {
-      fontSize: 16,
-      color: theme.text,
+    locationName: {
+      marginHorizontal: 10,
+      fontSize: 20,
+      paddingVertical: 10,
       fontFamily: "boldFont",
     },
-    margin40: {
-      marginLeft: 40,
-      marginRight: 40,
-      marginTop: 15,
-      marginBottom: 15,
-    },
-    titleStyle: {
-      color: theme.text3,
-      fontSize: 16,
-    },
-    listTitleStyle: {
+    scoreTitle: {
       marginHorizontal: 10,
       fontSize: 16,
       paddingVertical: 10,
@@ -340,19 +321,25 @@ const getStyles = (theme) =>
       fontFamily: "mediumFont",
     },
     usernameContainer: {
-      padding: 10,
+      paddingTop: 10,
+      paddingBottom: 14,
+      backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
+      marginHorizontal: 20,
+      borderRadius: 20,
     },
     username: {
-      fontFamily: "extraBoldFont",
       fontSize: 22,
-      color: theme.pink1,
       textAlign: "center",
+      fontFamily: "blackFont",
+      lineHeight: 32,
+      color: theme.purpleLight,
     },
     statContainer: {
       alignItems: "center",
       backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
-      marginHorizontal: 20,
-      paddingVertical: 10,
+      margin: 20,
+      paddingTop: 10,
+      paddingBottom: 14,
       borderRadius: 20,
     },
     statItem: {
@@ -362,7 +349,7 @@ const getStyles = (theme) =>
     stat: {
       marginTop: 5,
       fontSize: 16,
-      fontFamily: "mediumFont",
+      fontFamily: "semiBoldFont",
       opacity: 0.9,
       color: theme.theme == "dark" ? "#fee7f5" : theme.text,
       width: 160,
@@ -375,11 +362,9 @@ const getStyles = (theme) =>
       marginTop: 5,
       marginLeft: 10,
     },
-    member: {
+    joined: {
       textAlign: "center",
-      marginBottom: 10,
-      marginHorizontal: 20,
-      paddingTop: 10,
+      marginVertical: 8,
       fontSize: 16,
       color: theme.text3,
       fontFamily: "regularItalicFont",
@@ -401,28 +386,28 @@ const getStyles = (theme) =>
       elevation: 2,
     },
     textPressed: {
-      color: theme.text3,
+      color: theme.purple2,
     },
     textNotPressed: {
-      color: theme.text,
+      color: theme.purpleLight,
     },
     rankView: {
       flex: 1,
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      paddingTop: 8,
+      marginTop: 8,
     },
     rankText: {
       fontSize: 16,
-      fontFamily: "semiBoldFont",
+      fontFamily: "boldFont",
       color: theme.text3,
     },
     rankIcon: {
       width: 20,
       height: 20,
       resizeMode: "stretch",
-      marginLeft: 5,
+      marginLeft: 8,
     },
     externalUpdateContainer: {
       marginHorizontal: 20,
@@ -435,15 +420,16 @@ const getStyles = (theme) =>
       marginBottom: 15,
     },
     externalUpdateText: {
-      fontSize: 16,
+      fontSize: 14,
       color: theme.text3,
-      fontFamily: "semiBoldFont",
+      fontFamily: "mediumFont",
       textAlign: "center",
     },
     externalLink: {
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: "semiBoldFont",
-      color: theme.purple,
+      textDecorationLine: "underline",
+      color: theme.pink1,
     },
     externalIcon: {
       fontSize: 24,
