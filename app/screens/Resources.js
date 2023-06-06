@@ -277,6 +277,40 @@ const Resources = () => {
           >{`Dead Flip`}</Text>
           {` is the preeminent pinball streamer! The host, Jack Danger, has been promoting pinball for years and is a funny person with a big fanbase.`}
         </Text>
+
+        <Pressable
+          onPress={() =>
+            WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+          }
+          style={[s.logoWrapper]}
+        >
+          <Image
+            source={require("../assets/images/Resource_Kineticist.png")}
+            style={{
+              width: deviceWidth - 70,
+              height: (deviceWidth - 70) / 2.994,
+              resizeMode: "stretch",
+            }}
+          />
+        </Pressable>
+        <Text style={[s.text, { marginBottom: 20 }]}>
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+            }
+          >{`Kineticist`}</Text>
+          {` is a digital publication and community resource for the pinball and physical gaming communities. And we have a monthly `}
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://www.kineticist.co/author/ryan-tg",
+              )
+            }
+          >{`Pinball Map New Locations Update`}</Text>
+          {` article series on the site!`}
+        </Text>
       </Screen>
     </SafeAreaView>
   );
