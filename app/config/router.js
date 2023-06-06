@@ -136,7 +136,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "extraBoldFont" : "boldFont",
+                  fontFamily: focused ? "boldFont" : "semiBoldFont",
                 },
                 s.labelText,
               ]}
@@ -147,7 +147,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="search"
-              size={focused ? 30 : 28}
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -163,7 +163,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "extraBoldFont" : "boldFont",
+                  fontFamily: focused ? "boldFont" : "semiBoldFont",
                 },
                 s.labelText,
               ]}
@@ -174,7 +174,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="heart-outline"
-              size={focused ? 30 : 28}
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -190,7 +190,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "extraBoldFont" : "boldFont",
+                  fontFamily: focused ? "boldFont" : "semiBoldFont",
                 },
                 s.labelText,
               ]}
@@ -201,7 +201,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="newspaper-variant-outline"
-              size={focused ? 30 : 28}
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -217,7 +217,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "extraBoldFont" : "boldFont",
+                  fontFamily: focused ? "boldFont" : "semiBoldFont",
                 },
                 s.labelText,
               ]}
@@ -228,7 +228,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="account-circle-outline"
-              size={focused ? 30 : 28}
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -250,7 +250,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: colors.inactiveTab,
-                  fontFamily: "boldFont",
+                  fontFamily: "semiBoldFont",
                 },
                 s.labelText,
               ]}
