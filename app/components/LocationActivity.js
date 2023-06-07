@@ -45,7 +45,7 @@ const LocationActivity = ({ locationId }) => {
     const timeAndUser = user_name ? (
       <Text style={s.date}>
         <Text style={s.italic}>{time}</Text> by{" "}
-        <Text style={s.pink}>{user_name}</Text>
+        <Text style={s.username}>{user_name}</Text>
       </Text>
     ) : (
       <Text style={s.date}>{time}</Text>
@@ -55,7 +55,7 @@ const LocationActivity = ({ locationId }) => {
         return (
           <View style={s.textContainer}>
             <Text style={s.pbmText}>
-              <Text style={s.purple}>{machine_name}</Text> added
+              <Text style={s.machineName}>{machine_name}</Text> added
             </Text>
             {timeAndUser}
           </View>
@@ -72,7 +72,7 @@ const LocationActivity = ({ locationId }) => {
         return (
           <View style={s.textContainer}>
             <Text style={s.pbmText}>{`"${comment}"`}</Text>
-            <Text style={s.purple}>{machine_name}</Text>
+            <Text style={s.machineName}>{machine_name}</Text>
             {timeAndUser}
           </View>
         );
@@ -81,7 +81,7 @@ const LocationActivity = ({ locationId }) => {
         return (
           <View style={s.textContainer}>
             <Text style={s.pbmText}>
-              <Text style={s.purple}>{machine_name}</Text> removed
+              <Text style={s.machineName}>{machine_name}</Text> removed
             </Text>
             {timeAndUser}
           </View>
@@ -101,7 +101,7 @@ const LocationActivity = ({ locationId }) => {
               High score:{" "}
               <Text style={s.score}>{formatNumWithCommas(high_score)}</Text>
             </Text>
-            <Text style={s.purple}>{machine_name}</Text>
+            <Text style={s.machineName}>{machine_name}</Text>
             {timeAndUser}
           </View>
         );
@@ -239,7 +239,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     pbmText: {
-      color: theme.text,
+      color: theme.text2,
       fontSize: 16,
       fontFamily: "regularFont",
     },
@@ -254,13 +254,14 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "regularItalicFont",
+      color: theme.text3,
     },
-    pink: {
-      color: theme.pink1,
+    username: {
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
       fontFamily: "semiBoldFont",
     },
-    purple: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+    machineName: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 16,
       fontFamily: "semiBoldFont",
     },
