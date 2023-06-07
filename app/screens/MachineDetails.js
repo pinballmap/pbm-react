@@ -177,8 +177,8 @@ class MachineDetails extends Component {
                     >
                       <Text style={s.modalTitle}>
                         Comment on{" "}
-                        <Text style={s.modalPurple2}>{machineName}</Text> at{" "}
-                        <Text style={s.modalPurple}>{location.name}</Text>
+                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
+                        <Text style={s.modalLocationName}>{location.name}</Text>
                       </Text>
                       <TextInput
                         multiline={true}
@@ -245,8 +245,11 @@ class MachineDetails extends Component {
                       <View style={s.verticalAlign}>
                         <Text style={s.modalTitle}>
                           Add your high score to{" "}
-                          <Text style={s.modalPurple2}>{machineName}</Text> at{" "}
-                          <Text style={s.modalPurple}>{location.name}</Text>
+                          <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+                          at{" "}
+                          <Text style={s.modalLocationName}>
+                            {location.name}
+                          </Text>
                         </Text>
                         <TextInput
                           style={[
@@ -641,15 +644,15 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
+      fontFamily: "regularFont",
+    },
+    modalLocationName: {
+      color: theme.text,
+      fontSize: 18,
       fontFamily: "semiBoldFont",
     },
-    modalPurple: {
-      color: theme.theme == "dark" ? theme.purple : theme.purple2,
-      fontSize: 18,
-      fontFamily: "boldFont",
-    },
-    modalPurple2: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+    modalMachineName: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "boldFont",
     },

@@ -28,8 +28,8 @@ const RemoveMachineModal = ({
     <ConfirmationModal>
       {machineName && (
         <Text style={s.confirmText}>
-          Remove <Text style={s.purple2}>{machineName}</Text> from{" "}
-          <Text style={s.purple}>{location.name}</Text>?
+          Remove <Text style={s.machineName}>{machineName}</Text> from{" "}
+          <Text style={s.locationName}>{location.name}</Text>?
         </Text>
       )}
       <PbmButton
@@ -43,8 +43,8 @@ const RemoveMachineModal = ({
         containerStyle={s.buttonContainer}
       />
       <Text style={s.modalSubText}>
-        Please do not remove the machine just to clear out comments and then
-        re-add it.
+        Please do not remove and re-add the same machine because you want to
+        clear out comments.
       </Text>
     </ConfirmationModal>
   );
@@ -58,15 +58,15 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.text,
+      fontFamily: "regularFont",
+    },
+    locationName: {
+      color: theme.text,
+      fontSize: 18,
       fontFamily: "semiBoldFont",
     },
-    purple: {
-      color: theme.theme == "dark" ? theme.purple : theme.purple2,
-      fontSize: 18,
-      fontFamily: "boldFont",
-    },
-    purple2: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+    machineName: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "boldFont",
     },

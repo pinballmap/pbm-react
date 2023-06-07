@@ -348,9 +348,11 @@ class FindMachine extends React.PureComponent {
               <View style={s.verticalAlign}>
                 <Text style={s.modalTitle}>
                   Add{" "}
-                  <Text style={s.modalPurple2}>{this.state.machine.name}</Text>{" "}
+                  <Text style={s.modalMachineName}>
+                    {this.state.machine.name}
+                  </Text>{" "}
                   to{" "}
-                  <Text style={s.modalPurple}>
+                  <Text style={s.modalLocationName}>
                     {this.props.location.location.name}
                   </Text>
                 </Text>
@@ -556,15 +558,15 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginHorizontal: 40,
       fontSize: 18,
+      fontFamily: "regularFont",
+    },
+    modalLocationName: {
+      color: theme.text,
+      fontSize: 18,
       fontFamily: "semiBoldFont",
     },
-    modalPurple: {
-      color: theme.theme == "dark" ? theme.purple : theme.purple2,
-      fontSize: 18,
-      fontFamily: "boldFont",
-    },
-    modalPurple2: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+    modalMachineName: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "boldFont",
     },
