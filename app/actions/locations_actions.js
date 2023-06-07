@@ -76,12 +76,12 @@ export const getLocationsByBounds =
       locationType,
       numMachines,
       selectedOperator,
-      filterByMachineGroup,
+      machineGroupId,
       viewByFavoriteLocations,
     } = getState().query;
     const { id: userId } = getState().user;
-    const machineQueryString = filterByMachineGroup
-      ? `by_machine_group_id=${filterByMachineGroup};`
+    const machineQueryString = machineGroupId
+      ? `by_machine_group_id=${machineGroupId};`
       : machineId
       ? `by_machine_single_id=${machineId};`
       : "";

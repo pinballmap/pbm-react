@@ -26,7 +26,7 @@ export const setMachineFilter = (machine) => (dispatch) => {
 export const setMachineVersionFilter = (machine_group_id) => (dispatch) => {
   dispatch({
     type: SET_MACHINE_VERSION_FILTER,
-    filterByMachineGroup: machine_group_id,
+    machineGroupId: machine_group_id,
   });
   dispatch(updateFilterLocations());
 };

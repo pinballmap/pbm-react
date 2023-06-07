@@ -38,12 +38,8 @@ const FilterMap = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
-  const {
-    machine,
-    numMachines,
-    viewByFavoriteLocations,
-    filterByMachineGroup,
-  } = query;
+  const { machine, numMachines, viewByFavoriteLocations, machineGroupId } =
+    query;
   const { navigate } = navigation;
 
   const getIdx = (value) => {
@@ -85,7 +81,7 @@ const FilterMap = ({
   };
 
   const setFilterByMachineVersion = (idx, machine_group_id) => {
-    setMachineVersionFilter(idx === 0 ? machine_group_id : 0);
+    setMachineVersionFilter(idx === 0 ? machine_group_id : undefined);
   };
 
   useEffect(() => {
@@ -138,7 +134,7 @@ const FilterMap = ({
               onPress={(idx) =>
                 setFilterByMachineVersion(idx, machine.machine_group_id)
               }
-              selectedIndex={filterByMachineGroup ? 0 : 1}
+              selectedIndex={machineGroupId ? 0 : 1}
               buttons={["All Versions", "Selected Version"]}
               containerStyle={s.buttonGroupContainer}
               textStyle={s.buttonGroupInactive}

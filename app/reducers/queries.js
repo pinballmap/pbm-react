@@ -29,7 +29,7 @@ export const initialState = {
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
-  filterByMachineGroup: 0,
+  machineGroupId: undefined,
   searchBarText: "",
   triggerUpdateBounds: false,
 };
@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
           ...state,
           machineId: action.machine.id,
           machine: action.machine,
-          filterByMachineGroup: action.machine.machine_group_id,
+          machineGroupId: action.machine.machine_group_id,
         };
       }
     }
@@ -100,6 +100,7 @@ export default (state = initialState, action) => {
         selectedOperator: "",
         machine: {},
         viewByFavoriteLocations: false,
+        machineGroupId: undefined,
       };
     case SET_SELECTED_ACTIVITY_FILTER:
       return {
@@ -119,7 +120,7 @@ export default (state = initialState, action) => {
     case SET_MACHINE_VERSION_FILTER:
       return {
         ...state,
-        filterByMachineGroup: action.filterByMachineGroup,
+        machineGroupId: action.machineGroupId,
       };
     case SET_SEARCH_BAR_TEXT:
       return {
