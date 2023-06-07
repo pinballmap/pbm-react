@@ -42,7 +42,7 @@ const FilterMap = ({
     machine,
     numMachines,
     viewByFavoriteLocations,
-    filterByMachineVersion,
+    filterByMachineGroup,
   } = query;
   const { navigate } = navigation;
 
@@ -84,8 +84,8 @@ const FilterMap = ({
     updateViewFavoriteLocations(idx);
   };
 
-  const setFilterByMachineVersion = (idx) => {
-    setMachineVersionFilter(idx);
+  const setFilterByMachineVersion = (idx, machine_group_id) => {
+    setMachineVersionFilter(idx === 0 ? machine_group_id : 0);
   };
 
   useEffect(() => {
@@ -135,8 +135,10 @@ const FilterMap = ({
               ...And only this machine version, or all:
             </Text>
             <ButtonGroup
-              onPress={setFilterByMachineVersion}
-              selectedIndex={filterByMachineVersion ? 1 : 0}
+              onPress={(idx) =>
+                setFilterByMachineVersion(idx, machine.machine_group_id)
+              }
+              selectedIndex={filterByMachineGroup ? 0 : 1}
               buttons={["All Versions", "Selected Version"]}
               containerStyle={s.buttonGroupContainer}
               textStyle={s.buttonGroupInactive}
@@ -292,6 +294,7 @@ const mapDispatchToProps = (dispatch) => ({
   setMachineFilter: () => dispatch(setMachineFilter()),
   updateViewFavoriteLocations: (idx) =>
     dispatch(updateViewFavoriteLocations(idx)),
-  setMachineVersionFilter: (idx) => dispatch(setMachineVersionFilter(idx)),
+  setMachineVersionFilter: (machine_group_id) =>
+    dispatch(setMachineVersionFilter(machine_group_id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMap);

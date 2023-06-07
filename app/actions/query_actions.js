@@ -23,10 +23,10 @@ export const setMachineFilter = (machine) => (dispatch) => {
   dispatch({ type: SET_MACHINE_FILTER, machine });
   dispatch(updateFilterLocations());
 };
-export const setMachineVersionFilter = (idx) => (dispatch) => {
+export const setMachineVersionFilter = (machine_group_id) => (dispatch) => {
   dispatch({
     type: SET_MACHINE_VERSION_FILTER,
-    filterByMachineVersion: Boolean(idx),
+    filterByMachineGroup: machine_group_id,
   });
   dispatch(updateFilterLocations());
 };

@@ -76,11 +76,15 @@ export const getLocationsByBounds =
       locationType,
       numMachines,
       selectedOperator,
-      filterByMachineVersion,
+      filterByMachineGroup,
       viewByFavoriteLocations,
     } = getState().query;
     const { id: userId } = getState().user;
-    const machineQueryString = machineId ? `by_machine_id=${machineId};` : "";
+    const machineQueryString = filterByMachineGroup
+      ? `by_machine_group_id=${filterByMachineGroup};`
+      : machineId
+      ? `by_machine_single_id=${machineId};`
+      : "";
     const locationTypeQueryString = locationType
       ? `by_type_id=${locationType};`
       : "";
@@ -96,7 +100,7 @@ export const getLocationsByBounds =
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
-        dispatch(getLocationsSuccess(data, machineId, filterByMachineVersion));
+        dispatch(getLocationsSuccess(data));
       })
       .catch((err) => dispatch(getLocationsFailure(err)));
   };
@@ -140,20 +144,10 @@ export const triggerUpdateBounds = (bounds) => (dispatch) => {
   });
 };
 
-export const getLocationsSuccess = (
-  data,
-  machineId,
-  filterByMachineVersion,
-) => {
-  let locations = data.locations ? data.locations : [];
-  if (machineId && filterByMachineVersion) {
-    locations = locations.filter((location) =>
-      location.machine_ids.includes(machineId),
-    );
-  }
+export const getLocationsSuccess = (data) => {
   return {
     type: FETCHING_LOCATIONS_SUCCESS,
-    locations,
+    locations: data.locations ?? [],
   };
 };
 

@@ -29,7 +29,7 @@ export const initialState = {
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
-  filterByMachineVersion: false,
+  filterByMachineGroup: 0,
   searchBarText: "",
   triggerUpdateBounds: false,
 };
@@ -66,6 +66,7 @@ export default (state = initialState, action) => {
           ...state,
           machineId: action.machine.id,
           machine: action.machine,
+          filterByMachineGroup: action.machine.machine_group_id,
         };
       }
     }
@@ -118,7 +119,7 @@ export default (state = initialState, action) => {
     case SET_MACHINE_VERSION_FILTER:
       return {
         ...state,
-        filterByMachineVersion: action.filterByMachineVersion,
+        filterByMachineGroup: action.filterByMachineGroup,
       };
     case SET_SEARCH_BAR_TEXT:
       return {
