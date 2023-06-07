@@ -7,7 +7,6 @@ import {
   fetchMachines,
   fetchOperators,
   getLocationAndMachineCounts,
-  fetchCurrentLocation,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
@@ -70,7 +69,6 @@ AppWrapper.propTypes = {
   getMachines: PropTypes.func,
   getOperators: PropTypes.func,
   getLocationAndMachineCounts: PropTypes.func,
-  getCurrentLocation: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -80,6 +78,5 @@ const mapDispatchToProps = (dispatch) => ({
   getOperators: (url) => dispatch(fetchOperators(url)),
   getLocationAndMachineCounts: (url) =>
     dispatch(getLocationAndMachineCounts(url)),
-  getCurrentLocation: () => dispatch(fetchCurrentLocation(true)),
 });
 export default connect(null, mapDispatchToProps)(AppWrapper);

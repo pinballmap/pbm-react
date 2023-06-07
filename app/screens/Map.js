@@ -163,11 +163,18 @@ class Map extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const { triggerUpdateBounds } = this.props.query;
-    if (
-      this.props.query.swLat !== prevProps.query.swLat &&
-      triggerUpdateBounds
-    ) {
+    const { triggerUpdateBounds, swLat, swLon, neLat, neLon } =
+      this.props.query;
+
+    // When the map initially loads the coords go from null->values. The map needs a moment
+    // to get its bounds set accordingly otherwise we get the globe.
+    if (swLat && !prevProps.query.swLat) {
+      return setTimeout(() => {
+        this.props.triggerUpdate({ swLat, swLon, neLat, neLon });
+      }, 500);
+    }
+
+    if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
       this.props.getLocationsConsideringZoom(bounds);

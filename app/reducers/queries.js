@@ -17,10 +17,10 @@ import {
 
 export const initialState = {
   locationName: "",
-  swLat: 45.61322,
-  swLon: -122.7587,
-  neLat: 45.41322,
-  neLon: -122.5587,
+  swLat: null,
+  swLon: null,
+  neLat: null,
+  neLon: null,
   machineId: "",
   locationType: "",
   numMachines: 0,
