@@ -80,6 +80,7 @@ const getStyles = (theme) =>
       marginHorizontal: 18,
       fontSize: 14,
       fontFamily: "mediumFont",
+      color: theme.text3,
     },
   });
 

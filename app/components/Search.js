@@ -563,6 +563,7 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
       fontFamily: "regularFont",
+      marginTop: Platform.OS === "ios" ? 0 : -2,
     },
     filterIcon: {
       paddingRight: 6,
