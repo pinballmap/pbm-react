@@ -38,6 +38,7 @@ export const getLocationTypeFailure = () => ({
 export const getFilterState = (filterState) => {
   const {
     machineId,
+    machineGroupId,
     locationType,
     numMachines,
     selectedOperator,
@@ -59,6 +60,8 @@ export const getFilterState = (filterState) => {
     ? 12
     : filteringByMoreMachines
     ? numMachines * 4
+    : !!machineGroupId
+    ? 20
     : filteringMachineOrType
     ? 40
     : 6;
