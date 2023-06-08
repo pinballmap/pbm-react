@@ -10,7 +10,6 @@ import {
   LOCATION_MACHINE_REMOVED,
   MACHINE_ADDED_TO_LOCATION,
 } from "../actions/types";
-import { alphaSort } from "../utils/utilityFunctions";
 
 const moment = require("moment");
 
@@ -78,16 +77,15 @@ export default (state = initialState, action) => {
       };
     }
     case LOCATION_MACHINE_REMOVED: {
-      const { nameManYear, location_id } = action;
+      const { machine_id, location_id } = action;
       const mapLocations = state.mapLocations.map((loc) => {
         if (loc.id === location_id) {
-          const machine_names = loc.machine_names.filter(
-            (name) => name !== nameManYear,
-          );
+          const machine_ids = loc.machine_ids.filter((id) => id !== machine_id);
           return {
             ...loc,
             updated_at: moment.utc().format(),
-            machine_names,
+            num_machines: loc.num_machines - 1,
+            machine_ids,
           };
         }
         return loc;
@@ -99,16 +97,15 @@ export default (state = initialState, action) => {
       };
     }
     case MACHINE_ADDED_TO_LOCATION: {
-      const { machine, location_id } = action;
+      const { machine_id, location_id } = action;
       const mapLocations = state.mapLocations.map((loc) => {
         if (loc.id === location_id) {
-          const machine_names = alphaSort(
-            [machine.nameManYear].concat(loc.machine_names),
-          );
+          const machine_ids = loc.machine_ids.concat(machine_id);
           return {
             ...loc,
             updated_at: moment.utc().format(),
-            machine_names,
+            num_machines: loc.num_machines + 1,
+            machine_ids,
           };
         }
         return loc;

@@ -157,16 +157,11 @@ export const removeMachineFromLocation =
       user_email: email,
       user_token: authentication_token,
     };
-    const { machines } = getState().machines;
-    const nameManYear = machines.find(
-      (machine) => machine.id === machine_id,
-    ).nameManYear;
-
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
       .then(
         () =>
           dispatch(
-            locationMachineRemoved(lmx, nameManYear, location_id, username),
+            locationMachineRemoved(lmx, machine_id, location_id, username),
           ),
         (err) => {
           throw err;
@@ -177,14 +172,14 @@ export const removeMachineFromLocation =
 
 export const locationMachineRemoved = (
   lmx,
-  nameManYear,
+  machine_id,
   location_id,
   username,
 ) => {
   return {
     type: LOCATION_MACHINE_REMOVED,
     lmx,
-    nameManYear,
+    machine_id,
     location_id,
     username,
   };
@@ -209,7 +204,7 @@ export const addMachineToLocation =
     return postData(`/location_machine_xrefs.json`, body)
       .then(
         ({ location_machine }) => {
-          dispatch(machineAddedToLocation(location_id, machine));
+          dispatch(machineAddedToLocation(location_id, machine_id));
           if (ic_enabled !== undefined) {
             dispatch(updateIcEnabled(location_machine.id, ic_enabled));
           }
@@ -221,8 +216,8 @@ export const addMachineToLocation =
       .catch((err) => dispatch(addMachineToLocationFailure(err)));
   };
 
-const machineAddedToLocation = (location_id, machine) => (dispatch) => {
-  dispatch({ type: MACHINE_ADDED_TO_LOCATION, location_id, machine });
+const machineAddedToLocation = (location_id, machine_id) => (dispatch) => {
+  dispatch({ type: MACHINE_ADDED_TO_LOCATION, location_id, machine_id });
   dispatch(fetchLocation(location_id));
 };
 
