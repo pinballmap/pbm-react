@@ -503,7 +503,7 @@ const mapDispatchToProps = (dispatch) => ({
   getCurrentLocation: (isInitialLoad) =>
     dispatch(fetchCurrentLocation(isInitialLoad)),
   getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
-  clearFilters: () => dispatch(clearFilters()),
+  clearFilters: () => dispatch(clearFilters(true)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),
   login: (auth) => dispatch(login(auth)),
   setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),

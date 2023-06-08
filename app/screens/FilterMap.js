@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
@@ -13,6 +13,7 @@ import {
   clearFilters,
   setMachineFilter,
   setMachineVersionFilter,
+  updateFilterLocations,
 } from "../actions";
 import {
   getLocationTypeName,
@@ -37,10 +38,23 @@ const FilterMap = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const dispatch = useDispatch();
 
   const { machine, numMachines, viewByFavoriteLocations, machineGroupId } =
     query;
   const { navigate } = navigation;
+
+  useEffect(
+    () =>
+      navigation.addListener("blur", () => {
+        // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
+        // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
+        if (navigation.getState().routes.length === 1) {
+          dispatch(updateFilterLocations());
+        }
+      }),
+    [navigation],
+  );
 
   const getIdx = (value) => {
     switch (value) {
