@@ -167,9 +167,8 @@ class MachineDetails extends Component {
                 onRequestClose={() => {}}
               >
                 <SafeAreaProvider>
-                  <SafeAreaView style={[{ flex: 1 }, s.background]}>
+                  <SafeAreaView style={[{ flex: 1 }, s.backgroundColor]}>
                     <ScrollView
-                      style={s.background}
                       contentContainerStyle={{
                         flex: 1,
                         justifyContent: "center",
@@ -234,9 +233,8 @@ class MachineDetails extends Component {
                 onRequestClose={() => {}}
               >
                 <SafeAreaProvider>
-                  <SafeAreaView style={[{ flex: 1 }, s.background]}>
+                  <SafeAreaView style={[{ flex: 1 }, s.backgroundColor]}>
                     <ScrollView
-                      style={s.background}
                       contentContainerStyle={{
                         flex: 1,
                         justifyContent: "center",
@@ -340,7 +338,13 @@ class MachineDetails extends Component {
                 )}
                 {!!ic_eligible && (
                   <>
-                    <Text style={{ textAlign: "center" }}>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 12,
+                        color: theme.text3,
+                      }}
+                    >
                       Click to toggle Stern Insider Connected status
                     </Text>
                     <PbmButton
@@ -624,16 +628,17 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginTop: 5,
       marginBottom: 5,
-      color: theme.pink1,
+      color: theme.purpleLight,
       fontFamily: "semiBoldFont",
-      fontSize: 16,
+      fontSize: 13,
+      textTransform: "uppercase",
     },
     userHighScore: {
       textAlign: "center",
-      fontSize: 20,
+      fontSize: 24,
       paddingBottom: 15,
       color: theme.purple,
-      fontFamily: "semiBoldFont",
+      fontFamily: "extraBoldFont",
     },
     verticalAlign: {
       flex: 1,
