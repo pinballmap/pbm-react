@@ -379,7 +379,7 @@ const getStyles = (theme) =>
     },
     buttonIcon: {
       fontSize: 18,
-      color: theme.theme == "dark" ? theme.text3 : theme.purple2,
+      color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
       paddingRight: 5,
     },
     buttonStyle: {
@@ -389,7 +389,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     buttonTitle: {
-      color: theme.theme == "dark" ? theme.text2 : theme.purple,
+      color: theme.theme == "dark" ? theme.text3 : theme.purple,
       fontSize: 18,
       fontFamily: "regularFont",
     },
@@ -450,14 +450,14 @@ const getStyles = (theme) =>
       borderRadius: 25,
     },
     filterTitleStyle: {
-      color: theme.pink1,
+      color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
       fontSize: 18,
       fontFamily: "regularFont",
     },
     closeIcon: {
       paddingRight: 5,
       fontSize: 20,
-      color: theme.theme == "dark" ? theme.purple : theme.pink1,
+      color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
     },
     pressed: {
       opacity: 0.8,
