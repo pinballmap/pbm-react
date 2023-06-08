@@ -27,19 +27,8 @@ MarkerHeart.propTypes = {
 };
 
 const CustomMapMarker = ({ marker, navigation }) => {
-  const {
-    city,
-    state,
-    street,
-    zip,
-    name,
-    num_machines,
-    lat,
-    lon,
-    id,
-    title,
-    icon,
-  } = marker;
+  const { city, state, street, zip, name, num_machines, lat, lon, id, icon } =
+    marker;
   const cityState = state ? `${city}, ${state}` : city;
   return (
     <MapView.Marker
@@ -48,7 +37,6 @@ const CustomMapMarker = ({ marker, navigation }) => {
         latitude: Number(lat),
         longitude: Number(lon),
       }}
-      title={title}
       pointerEvents="auto"
     >
       {icon === "dot" ? (

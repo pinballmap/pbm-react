@@ -249,14 +249,29 @@ class Map extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
-          {mapLocations.map((l) => (
-            <CustomMapMarker
-              key={l.id}
-              marker={l}
-              navigation={navigation}
-              s={s}
-            />
-          ))}
+          {mapLocations.map((l) => {
+            const marker = {
+              city: l.city,
+              state: l.state,
+              street: l.street,
+              zip: l.zip,
+              name: l.name,
+              num_machines: l.num_machines,
+              lat: l.lat,
+              lon: l.lon,
+              id: l.id,
+              icon: l.icon,
+            };
+
+            return (
+              <CustomMapMarker
+                key={l.id}
+                marker={marker}
+                navigation={navigation}
+                s={s}
+              />
+            );
+          })}
         </MapView>
         <Button
           onPress={() => navigation.navigate("LocationList")}
