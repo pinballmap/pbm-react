@@ -110,10 +110,10 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     filterInput: {
-      height: 35,
+      height: 40,
       backgroundColor: theme.white,
       borderRadius: 25,
-      borderColor: theme.indigo4,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       borderBottomWidth: 1,
       marginHorizontal: 10,

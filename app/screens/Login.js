@@ -236,7 +236,7 @@ const getStyles = (theme) =>
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
-      borderColor: theme.indigo4,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       marginTop: 5,
       marginBottom: 5,
       paddingLeft: 10,

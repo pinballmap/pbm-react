@@ -653,7 +653,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.indigo4,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginHorizontal: 20,
@@ -718,7 +718,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderRadius: 25,
       backgroundColor: theme.white,
-      borderColor: theme.indigo4,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
     },
     xButton: {

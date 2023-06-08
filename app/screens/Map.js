@@ -389,7 +389,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     buttonTitle: {
-      color: theme.theme == "dark" ? theme.text3 : theme.purple,
+      color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
       fontFamily: "regularFont",
     },

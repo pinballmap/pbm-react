@@ -208,10 +208,6 @@ const FilterMap = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    border: {
-      borderWidth: 2,
-      borderColor: theme.indigo4,
-    },
     sectionTitle: {
       textAlign: "center",
       fontSize: 16,

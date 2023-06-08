@@ -292,13 +292,14 @@ const getStyles = (theme) =>
       marginVertical: 6,
     },
     section: {
-      fontFamily: "boldFont",
-      fontSize: 16,
+      fontFamily: "mediumFont",
+      fontSize: 14,
       textAlign: "center",
       paddingHorizontal: 10,
       paddingTop: 2,
       paddingBottom: 0,
       color: theme.text3,
+      textTransform: "uppercase",
     },
     savedLink: {
       fontSize: 16,
