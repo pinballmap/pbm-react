@@ -73,9 +73,7 @@ export class LocationList extends Component {
         });
       case 3:
         return this.setState({
-          locations: locations.sort(
-            (a, b) => b.machine_names.length - a.machine_names.length,
-          ),
+          locations: locations.sort((a, b) => b.num_machines - a.num_machines),
         });
     }
   }
@@ -175,9 +173,10 @@ export class LocationList extends Component {
                       city={item.city}
                       state={item.state}
                       zip={item.zip}
-                      machines={item.machine_names}
+                      machines={item.machine_names_first}
                       navigation={this.props.navigation}
                       id={item.id}
+                      numMachines={item.num_machines}
                     />
                   )}
                   keyExtractor={(item, index) => `list-item-${index}`}
