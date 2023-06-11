@@ -41,6 +41,19 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
+            >{`I am an operator, and people are leaving annoying comments on my machines. Can you make them stop, or disable comments on my machines?`}</Text>
+            <Text style={s.text}>
+              {`We can't control the comments that people make, nor will we disable comments at an individual venue. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments. On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone. Our suggestions to operators (and regular users):\n\n`}
+              {`\u2022 A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. \n\n`}
+              {`\u2022 Users definitely notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators simply write a note saying the issue is fixed! This history is actually really valuable. \n\n`}
+              {`\u2022 `}
+              <Text style={{ fontFamily: "boldFont" }}>
+                To regular users leaving comments:
+              </Text>{" "}
+              {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and creates a burden for the operator to then write a comment about the issue being fixed.`}
+            </Text>
+            <Text
+              style={s.bold}
             >{`How do I remove a machine from a location?`}</Text>
             <Text
               style={s.text}
@@ -51,6 +64,12 @@ const FAQ = ({ navigation }) => {
             <Text
               style={s.text}
             >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
+            <Text
+              style={s.bold}
+            >{`This location has moved. Should I remove the machines from it and re-submit?`}</Text>
+            <Text
+              style={s.text}
+            >{`No. Administrators can change the address. Please let us know if a location has moved. It's preferable to simply change the address because that retains the location history.`}</Text>
             <Text
               style={s.bold}
             >{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
@@ -117,6 +136,22 @@ const FAQ = ({ navigation }) => {
                 {"contact us"}
               </Text>
               {` so we can fix them.`}
+            </Text>
+            <Text style={s.bold}>{`Why was my comment removed?`}</Text>
+            <Text style={s.text}>
+              {`Our administrators may deem your machine or location comment to be inappropriate because:\n\n`}
+
+              {`\u2022 It contains a personal attack\n\n`}
+
+              {`\u2022 It isn't relevant (for example, promoting a tournament in a machine comment) or constructive\n\n`}
+
+              {`\u2022 It is offensive`}
+            </Text>
+            <Text style={s.bold}>{`Why was my account disabled?`}</Text>
+            <Text style={s.text}>
+              {`\u2022 If your account has been used to mess with data on the site, then we may ban it. Bad behavior includes, but is not limited to: deleting machines that are at a location; adding machines that are not at a location; leaving lots of inappropriate/abusive comments.\n\n`}
+
+              {`\u2022 You created a sockpuppet account to hype your location and/or disparage the competition. This is unethical and it makes the site worse. Don't do this. Look in the mirror.`}
             </Text>
             <Text
               style={s.bold}
@@ -209,7 +244,7 @@ const getStyles = (theme) =>
     },
     textLink: {
       textDecorationLine: "underline",
-      color: theme.purple,
+      color: theme.theme == "dark" ? theme.purple : theme.pink1,
       fontFamily: "mediumFont",
     },
   });
