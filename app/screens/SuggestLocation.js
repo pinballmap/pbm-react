@@ -231,21 +231,36 @@ function SuggestLocation({
                   {isSuggestingLocation ? (
                     <ActivityIndicator />
                   ) : locationSuggested ? (
-                    <ScrollView style={[s.successContainer, s.background]}>
-                      <Text
-                        style={s.success}
-                      >{`Thanks for submitting that location! Please allow us 0-7 days to review and add it! No need to re-submit it.`}</Text>
-                      <MaterialCommunityIcons
-                        name="close-circle"
-                        size={45}
-                        onPress={() => {
-                          navigation.navigate("MapTab");
-                          setShowSuggestLocationModal(false);
-                          resetSuggestLocation();
-                        }}
-                        style={s.xButton}
-                      />
-                    </ScrollView>
+                    <SafeAreaProvider>
+                      <SafeAreaView
+                        style={{ flex: 1, backgroundColor: theme.base1 }}
+                      >
+                        <ScrollView
+                          style={[s.successContainer, s.background]}
+                          contentContainerStyle={{
+                            flex: 1,
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text style={s.success}>
+                            <Text style={s.successBanner}>
+                              {`Thanks for submitting that location!\n\n`}
+                            </Text>
+                            {`Please allow us 0-7 days to review and add it. No need to re-submit it or remind us (unless it's opening day!).\n\nNote: you usually won't get a message from us confirming that it's been added.`}
+                          </Text>
+                          <MaterialCommunityIcons
+                            name="close-circle"
+                            size={45}
+                            onPress={() => {
+                              navigation.navigate("MapTab");
+                              setShowSuggestLocationModal(false);
+                              resetSuggestLocation();
+                            }}
+                            style={s.xButton}
+                          />
+                        </ScrollView>
+                      </SafeAreaView>
+                    </SafeAreaProvider>
                   ) : (
                     <SafeAreaProvider>
                       <SafeAreaView style={[{ flex: 1 }, s.background]}>
@@ -684,7 +699,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.indigo4,
     },
     successContainer: {
-      paddingTop: 100,
       paddingHorizontal: 30,
     },
     success: {
@@ -693,6 +707,11 @@ const getStyles = (theme) =>
       marginLeft: 10,
       marginRight: 10,
       fontFamily: "regularFont",
+    },
+    successBanner: {
+      fontSize: 20,
+      fontFamily: "boldFont",
+      color: theme.purple,
     },
     error: {
       color: theme.red2,
@@ -722,9 +741,7 @@ const getStyles = (theme) =>
       borderWidth: 1,
     },
     xButton: {
-      position: "absolute",
-      right: -20,
-      top: -30,
+      textAlign: "right",
       color: theme.red2,
     },
     containerStyle: {
