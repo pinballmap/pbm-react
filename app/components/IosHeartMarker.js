@@ -4,7 +4,7 @@ import Text from "./PbmText";
 import PropTypes from "prop-types";
 import markerDotHeart from "../assets/images/markerdot-heart.png";
 
-const IosHeartMarker = ({ numMachines }) => {
+const IosHeartMarker = React.memo(({ numMachines }) => {
   let dotFontMargin, dotWidth;
   if (numMachines < 10) {
     dotFontMargin = 5;
@@ -37,7 +37,7 @@ const IosHeartMarker = ({ numMachines }) => {
       </Text>
     </ImageBackground>
   );
-};
+});
 
 IosHeartMarker.propTypes = {
   numMachines: PropTypes.number,

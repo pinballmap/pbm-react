@@ -54,7 +54,15 @@ export const getMapLocations = createSelector(
   [mapLocations, faveLocations],
   (locations = [], faveLocations = []) => {
     return locations.map((loc) => ({
-      ...loc,
+      city: loc.city,
+      state: loc.state,
+      street: loc.street,
+      zip: loc.zip,
+      name: loc.name,
+      num_machines: loc.num_machines,
+      lat: loc.lat,
+      lon: loc.lon,
+      id: loc.id,
       icon:
         faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1
           ? "heart"

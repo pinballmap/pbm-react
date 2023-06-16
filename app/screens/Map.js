@@ -11,7 +11,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
   ActivityIndicator,
   AppAlert,
-  CustomMapMarker,
+  CustomMapMarkers,
   Search,
   Text,
   NoLocationTrackingModal,
@@ -29,7 +29,6 @@ import {
   getLocationsConsideringZoom,
   triggerUpdateBounds,
 } from "../actions";
-import { getMapLocations } from "../selectors";
 import androidCustomDark from "../utils/androidCustomDark";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
@@ -249,29 +248,10 @@ class Map extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
-          {mapLocations.map((l) => {
-            const marker = {
-              city: l.city,
-              state: l.state,
-              street: l.street,
-              zip: l.zip,
-              name: l.name,
-              num_machines: l.num_machines,
-              lat: l.lat,
-              lon: l.lon,
-              id: l.id,
-              icon: l.icon,
-            };
-
-            return (
-              <CustomMapMarker
-                key={l.id}
-                marker={marker}
-                navigation={navigation}
-                s={s}
-              />
-            );
-          })}
+          <CustomMapMarkers
+            mapLocations={mapLocations}
+            navigation={navigation}
+          />
         </MapView>
         <Button
           onPress={() => navigation.navigate("LocationList")}
@@ -505,12 +485,10 @@ Map.propTypes = {
 
 const mapStateToProps = (state) => {
   const { locations, query, regions } = state;
-  const mapLocations = getMapLocations(state);
 
   return {
     query,
     regions,
-    mapLocations,
     isFetchingLocations: locations.isFetchingLocations,
   };
 };

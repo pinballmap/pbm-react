@@ -4,9 +4,8 @@ import Text from "./PbmText";
 import PropTypes from "prop-types";
 import { ThemeContext } from "../theme-context";
 
-const IosMarker = ({ numMachines }) => {
+const IosMarker = React.memo(({ numMachines }) => {
   const { theme } = useContext(ThemeContext);
-
   let dotFontMargin, dotWidthHeight;
   if (numMachines < 10) {
     dotFontMargin = 2;
@@ -45,7 +44,7 @@ const IosMarker = ({ numMachines }) => {
       </Text>
     </View>
   );
-};
+});
 
 IosMarker.propTypes = {
   numMachines: PropTypes.number,

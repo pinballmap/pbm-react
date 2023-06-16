@@ -21,6 +21,7 @@ import NoLocationTrackingModal from "./NoLocationTrackingModal";
 import AppWrapper from "./AppWrapper";
 import FavoriteLocation from "./FavoriteLocation";
 import LocationActivity from "./LocationActivity";
+import CustomMapMarkers from "./CustomMapMarkers";
 
 export {
   LocationCard,
@@ -46,4 +47,5 @@ export {
   AppWrapper,
   FavoriteLocation,
   LocationActivity,
+  CustomMapMarkers,
 };

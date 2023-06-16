@@ -9,14 +9,16 @@ import Text from "./PbmText";
 import markerDotHeart from "../assets/images/markerdot-heart.png";
 let deviceWidth = Dimensions.get("window").width;
 
-const MarkerDot = ({ numMachines }) =>
-  Platform.OS === "ios" ? <IosMarker numMachines={numMachines} /> : null;
-const MarkerHeart = ({ numMachines }) =>
+const MarkerDot = React.memo(({ numMachines }) =>
+  Platform.OS === "ios" ? <IosMarker numMachines={numMachines} /> : null,
+);
+const MarkerHeart = React.memo(({ numMachines }) =>
   Platform.OS === "ios" ? (
     <IosHeartMarker numMachines={numMachines} />
   ) : (
     <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
-  );
+  ),
+);
 
 MarkerDot.propTypes = {
   numMachines: PropTypes.number,
@@ -26,10 +28,11 @@ MarkerHeart.propTypes = {
   numMachines: PropTypes.number,
 };
 
-const CustomMapMarker = ({ marker, navigation }) => {
+const CustomMapMarker = React.memo(({ marker, navigation }) => {
   const { city, state, street, zip, name, num_machines, lat, lon, id, icon } =
     marker;
   const cityState = state ? `${city}, ${state}` : city;
+
   return (
     <MapView.Marker
       key={id}
@@ -37,7 +40,6 @@ const CustomMapMarker = ({ marker, navigation }) => {
         latitude: Number(lat),
         longitude: Number(lon),
       }}
-      pointerEvents="auto"
     >
       {icon === "dot" ? (
         <MarkerDot numMachines={num_machines} />
@@ -75,12 +77,11 @@ const CustomMapMarker = ({ marker, navigation }) => {
       </MapView.Callout>
     </MapView.Marker>
   );
-};
+});
 
 CustomMapMarker.propTypes = {
   marker: PropTypes.object,
   navigation: PropTypes.object,
-  s: PropTypes.object,
 };
 
 const s = StyleSheet.create({
