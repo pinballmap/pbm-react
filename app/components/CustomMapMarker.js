@@ -1,30 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as MapView from "react-native-maps";
-import { Dimensions, Image, Platform, StyleSheet, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import IosHeartMarker from "./IosHeartMarker";
 import IosMarker from "./IosMarker";
 import Text from "./PbmText";
-import markerDotHeart from "../assets/images/markerdot-heart.png";
 let deviceWidth = Dimensions.get("window").width;
 
-const MarkerDot = React.memo(({ numMachines }) =>
-  Platform.OS === "ios" ? <IosMarker numMachines={numMachines} /> : null,
-);
-const MarkerHeart = React.memo(({ numMachines }) =>
-  Platform.OS === "ios" ? (
-    <IosHeartMarker numMachines={numMachines} />
+const MarkerDot = React.memo(({ numMachines, icon }) =>
+  icon === "dot" ? (
+    <IosMarker numMachines={numMachines} />
   ) : (
-    <Image source={markerDotHeart} style={{ height: 28, width: 32 }} />
+    <IosHeartMarker numMachines={numMachines} />
   ),
 );
 
 MarkerDot.propTypes = {
-  numMachines: PropTypes.number,
-};
-
-MarkerHeart.propTypes = {
   numMachines: PropTypes.number,
 };
 
@@ -41,11 +33,7 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
         longitude: Number(lon),
       }}
     >
-      {icon === "dot" ? (
-        <MarkerDot numMachines={num_machines} />
-      ) : (
-        <MarkerHeart numMachines={num_machines} />
-      )}
+      <MarkerDot numMachines={num_machines} icon={icon} />
       <MapView.Callout
         onPress={() => navigation.navigate("LocationDetails", { id })}
       >
