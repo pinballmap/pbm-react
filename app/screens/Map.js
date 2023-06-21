@@ -164,6 +164,7 @@ class Map extends Component {
   componentDidMount() {
     this.props.getCurrentLocation(true);
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
+    Mapbox.setTelemetryEnabled(false);
 
     retrieveItem("auth").then(async (auth) => {
       if (!auth) {
@@ -279,6 +280,7 @@ class Map extends Component {
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
+          // onCameraChanged={this.onMapIdle}
           onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"

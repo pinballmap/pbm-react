@@ -89,6 +89,7 @@ class LocationDetails extends Component {
 
   componentDidMount() {
     this.props.fetchLocation(this.state.id);
+    Mapbox.setTelemetryEnabled(false);
   }
 
   render() {
