@@ -285,9 +285,6 @@ class Map extends Component {
               ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
               : Mapbox.StyleURL.Street
           }
-          // SHOWUSERLOCATION DOES NOT SEEM TO WORK
-          showUserLocation={true}
-
           // OLD STUFF
           // onMapIdle={this.onRegionChange}
           // onRegionChangeComplete={this.onRegionChange}
@@ -301,7 +298,7 @@ class Map extends Component {
             animationMode="none"
             animationDuration={0}
           />
-
+          <Mapbox.UserLocation visible renderMode="normal" />
           <CustomMapMarkers
             mapLocations={mapLocations}
             navigation={navigation}
