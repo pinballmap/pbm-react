@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Text from "./PbmText";
 import PropTypes from "prop-types";
 import { ThemeContext } from "../theme-context";
@@ -37,7 +37,7 @@ const IosMarker = React.memo(({ numMachines }) => {
           fontFamily: "boldFont",
           textAlign: "center",
           fontSize: 18,
-          marginTop: dotFontMargin,
+          marginTop: Platform.OS === "ios" ? dotFontMargin : dotFontMargin - 1,
         }}
       >
         {numMachines}

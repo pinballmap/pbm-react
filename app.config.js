@@ -15,7 +15,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.2.28",
+    version: "5.3.0",
     slug: "pbm-app",
     owner: "pinballmap",
     name: "Pinball Map",
@@ -30,7 +30,16 @@ export default {
         projectId: "7488ea00-6c89-11e9-8ab8-0157f5861c1f",
       },
     },
-    plugins: ["sentry-expo"],
+    plugins: [
+      [
+        "@rnmapbox/maps",
+        {
+          RNMapboxMapsImpl: "mapbox",
+          RNMapboxMapsDownloadToken: process.env.MAPBOX_DOWNLOAD,
+        },
+      ],
+      "sentry-expo",
+    ],
     hooks: {
       postPublish: [
         {
@@ -46,7 +55,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "136",
+      buildNumber: "139",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -78,7 +87,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 115,
+      versionCode: 119,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

@@ -1,41 +1,49 @@
-import React from "react";
-import { ImageBackground } from "react-native";
+import React, { useContext } from "react";
+import { Platform, View } from "react-native";
 import Text from "./PbmText";
 import PropTypes from "prop-types";
-import markerDotHeart from "../assets/images/markerdot-heart.png";
+// import markerDotHeart from "../assets/images/markerdot-heart.png";
+import { ThemeContext } from "../theme-context";
 
 const IosHeartMarker = React.memo(({ numMachines }) => {
-  let dotFontMargin, dotWidth;
+  const { theme } = useContext(ThemeContext);
+  let dotFontMargin, dotWidthHeight;
   if (numMachines < 10) {
-    dotFontMargin = 5;
-    dotWidth = 40;
+    dotFontMargin = 2;
+    dotWidthHeight = 34;
   } else if (numMachines < 20) {
-    dotFontMargin = 5;
-    dotWidth = 44;
+    dotFontMargin = 4;
+    dotWidthHeight = 38;
   } else if (numMachines < 100) {
     dotFontMargin = 6;
-    dotWidth = 48;
+    dotWidthHeight = 42;
   } else {
-    dotFontMargin = 8;
-    dotWidth = 56;
+    dotFontMargin = 9;
+    dotWidthHeight = 46;
   }
   return (
-    <ImageBackground
-      style={{ width: dotWidth, height: dotWidth * 0.872 }}
-      source={markerDotHeart}
+    <View
+      style={{
+        width: dotWidthHeight,
+        height: dotWidthHeight,
+        borderRadius: dotWidthHeight / 2,
+        borderWidth: 3,
+        borderColor: theme.purpleLight,
+        backgroundColor: theme.pink1,
+      }}
     >
       <Text
         style={{
-          color: "#66017b",
+          color: theme.dot,
           fontFamily: "boldFont",
           textAlign: "center",
           fontSize: 18,
-          marginTop: dotFontMargin,
+          marginTop: Platform.OS === "ios" ? dotFontMargin : dotFontMargin - 1,
         }}
       >
         {numMachines}
       </Text>
-    </ImageBackground>
+    </View>
   );
 });
 

@@ -11,7 +11,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
 import { Avatar, ListItem, Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
@@ -31,13 +31,14 @@ import {
   fetchLocation,
   setCurrentMachine,
 } from "../actions";
-import androidCustomDark from "../utils/androidCustomDark";
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
 } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
+
+Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -312,31 +313,43 @@ class LocationDetails extends Component {
                           : s.mapViewContainerSolo,
                       ]}
                     >
-                      <MapView
-                        region={{
-                          latitude: Number(location.lat),
-                          longitude: Number(location.lon),
-                          latitudeDelta: 0.03,
-                          longitudeDelta: 0.03,
-                        }}
-                        showsMyLocationButton={false}
-                        style={s.mapHeight}
-                        provider={PROVIDER_GOOGLE}
-                        customMapStyle={
-                          theme.theme === "dark" ? androidCustomDark : []
+                      <Mapbox.MapView
+                        scaleBarEnabled={false}
+                        attributionEnabled={false}
+                        pitchEnabled={false}
+                        rotateEnabled={false}
+                        logoEnabled={false}
+                        styleURL={
+                          theme.theme === "dark"
+                            ? Mapbox.StyleURL.Dark
+                            : Mapbox.StyleURL.Street
                         }
+                        // region={{
+                        //   latitude: Number(location.lat),
+                        //   longitude: Number(location.lon),
+                        //   latitudeDelta: 0.03,
+                        //   longitudeDelta: 0.03,
+                        // }}
+                        style={s.mapHeight}
                       >
-                        <Marker
-                          coordinate={{
-                            latitude: Number(location.lat),
-                            longitude: Number(location.lon),
-                            latitudeDelta: 0.03,
-                            longitudeDelta: 0.03,
-                          }}
+                        <Mapbox.Camera
+                          zoomLevel={11}
+                          centerCoordinate={[
+                            Number(location.lon),
+                            Number(location.lat),
+                          ]}
+                          animationMode="moveTo"
+                        />
+                        <Mapbox.PointAnnotation
+                          id="userLocation"
+                          coordinate={[
+                            Number(location.lon),
+                            Number(location.lat),
+                          ]}
                         >
                           <View style={s.markerDot}></View>
-                        </Marker>
-                      </MapView>
+                        </Mapbox.PointAnnotation>
+                      </Mapbox.MapView>
                     </View>
                     {location.location_type_id ? (
                       <View style={s.locationTypeContainer}>

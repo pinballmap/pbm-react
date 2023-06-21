@@ -100,6 +100,7 @@ export const getLocationsByBounds =
     const byUserFaved =
       viewByFavoriteLocations && userId ? `user_faved=${userId};` : "";
     const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved};no_details=1`;
+    console.log("url " + url);
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {

@@ -6,7 +6,7 @@ import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
 import { getData } from "../config/request";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import Mapbox from "@rnmapbox/maps";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
   ActivityIndicator,
@@ -29,16 +29,18 @@ import {
   getLocationsConsideringZoom,
   triggerUpdateBounds,
 } from "../actions";
-import androidCustomDark from "../utils/androidCustomDark";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
 
+Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
+
 class Map extends Component {
   mapRef = null;
   constructor(props) {
     super(props);
+    this.onMapIdle = this.onMapIdle.bind(this);
     this.state = {
       showUpdateSearch: false,
     };
@@ -116,19 +118,41 @@ class Map extends Component {
   };
 
   getBounds = async () => {
-    const { northEast, southWest } = await this.mapRef.getMapBoundaries();
+    const currentBounds = await this._map.getVisibleBounds();
+    console.log(currentBounds);
     return {
-      swLat: southWest.latitude,
-      swLon: southWest.longitude,
-      neLat: northEast.latitude,
-      neLon: northEast.longitude,
+      swLat: currentBounds[1][1],
+      swLon: currentBounds[1][0],
+      neLat: currentBounds[0][1],
+      neLon: currentBounds[0][0],
     };
   };
 
-  onRegionChange = async (region, { isGesture }) => {
-    if (isGesture) {
-      const bounds = await this.getBounds();
+  // ANOTHER WAY I TRIED
+  // getBounds = async () => {
+  //   const currentBounds = await this._map.getVisibleBounds();
+  //   console.log(currentBounds);
+  //     swLat = currentBounds[1][1]
+  //     swLon = currentBounds[1][0]
+  //     neLat = currentBounds[0][1]
+  //     neLon = currentBounds[0][0]
+  // };
+
+  // OLD STUFF
+  // onRegionChange = async (region) => {
+  //   if (isGesture) {
+  //     const bounds = await this.getBounds();
+  //     this.setState({ showUpdateSearch: true });
+  //     this.props.updateBounds(bounds);
+  //   }
+  // };
+
+  // onCameraChanged IS ALSO AN OPTION INSTEAD OF ONMAPIDLE https://github.com/rnmapbox/maps/blob/main/docs/MapView.md#oncamerachanged
+  onMapIdle = async ({ gestures, region }) => {
+    if (gestures?.isGestureActive) {
+      console.log("onMapIdle. region =", region);
       this.setState({ showUpdateSearch: true });
+      const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
     }
   };
@@ -169,7 +193,7 @@ class Map extends Component {
     // to get its bounds set accordingly otherwise we get the globe.
     if (swLat && !prevProps.query.swLat) {
       return setTimeout(() => {
-        this.props.triggerUpdate({ swLat, swLon, neLat, neLon });
+        this.props.triggerUpdate({ neLon, neLat, swLon, swLat });
       }, 500);
     }
 
@@ -211,6 +235,16 @@ class Map extends Component {
     if (!latitude) {
       return <ActivityIndicator />;
     }
+    console.log(
+      "swLAT " +
+        swLat +
+        " swLON " +
+        swLon +
+        " neLAT " +
+        neLat +
+        " neLON " +
+        neLon,
+    );
 
     return (
       <SafeAreaView
@@ -232,8 +266,9 @@ class Map extends Component {
             <Text style={s.loadingText}>Zoom in for updated results</Text>
           </View>
         ) : null}
-        <MapView
-          ref={(ref) => (this.mapRef = ref)}
+        <Mapbox.MapView
+          // ref={(ref) => (this.mapRef = ref)}
+          ref={(c) => (this._map = c)} // SAW THIS REF IN AN EXAMPLE. OLD ONE ABOVE...
           region={{
             latitude,
             longitude,
@@ -241,18 +276,37 @@ class Map extends Component {
             longitudeDelta,
           }}
           style={s.map}
-          onRegionChangeComplete={this.onRegionChange}
-          showsUserLocation={true}
-          moveOnMarkerPress={false}
-          showsMyLocationButton={false}
-          provider={PROVIDER_GOOGLE}
-          customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
+          scaleBarEnabled={false}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          onMapIdle={this.onMapIdle}
+          styleURL={
+            theme.theme === "dark"
+              ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
+              : Mapbox.StyleURL.Street
+          }
+          // SHOWUSERLOCATION DOES NOT SEEM TO WORK
+          showUserLocation={true}
+
+          // OLD STUFF
+          // onMapIdle={this.onRegionChange}
+          // onRegionChangeComplete={this.onRegionChange}
+          // moveOnMarkerPress={false}
+          // showsMyLocationButton={false}
+          // customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
+          <Mapbox.Camera
+            // zoomLevel={11} // NEED TO FIGURE OUT AN INITIAL LOAD ZOOM. WITH A ZOOM SET HERE, THE MAP RE-ZOOMS TO THIS VALUE WHEN YOU ZOOM IN OR OUT
+            centerCoordinate={[longitude, latitude]}
+            animationMode="none"
+            animationDuration={0}
+          />
+
           <CustomMapMarkers
             mapLocations={mapLocations}
             navigation={navigation}
           />
-        </MapView>
+        </Mapbox.MapView>
         <Button
           onPress={() => navigation.navigate("LocationList")}
           icon={
