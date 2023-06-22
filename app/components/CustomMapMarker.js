@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import {
   Dimensions,
   Platform,
+  Pressable,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from "react-native";
 // import { Ionicons } from "@expo/vector-icons";
@@ -88,7 +88,7 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
               marginBottom: 13,
             }}
           >
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 console.log("Marker View Button pressed!");
                 navigation.navigate("LocationDetails", { id });
@@ -108,7 +108,7 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
                   style={{ marginRight: 20, color: "#000e18", marginTop: 5 }}
                 >{`${street}, ${cityState} ${zip}`}</Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
             <View
               style={{
                 alignItems: "center",
