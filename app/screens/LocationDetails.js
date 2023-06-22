@@ -339,7 +339,8 @@ class LocationDetails extends Component {
                             Number(location.lon),
                             Number(location.lat),
                           ]}
-                          animationMode="moveTo"
+                          animationMode="none"
+                          animationDuration={0}
                         />
                         <Mapbox.PointAnnotation
                           id="userLocation"
