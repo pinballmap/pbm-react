@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Dimensions, Platform, StyleSheet, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+// import { Ionicons } from "@expo/vector-icons";
 import Mapbox from "@rnmapbox/maps";
 import IosHeartMarker from "./IosHeartMarker";
 import IosMarker from "./IosMarker";
@@ -30,51 +36,20 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
   // const CustomMarker = () => (
   //   <Mapbox.Image source={require('../assets/images/markerdot-heart.png')} />
   // );
-
-  // SHAPESOURCE / SYMBOLLAYER SEEMS TO BE THE BEST MARKER SOLUTION, BUT IS MORE COMPLEX. DATA NEEDS TO BE GEOJSON
-
-  // let featuresObject = []
-
-  //     featuresObject[marker] = { // CONSTRUCTING GEOJSON FROM API DATA
-  //         type: "Feature",
-  //         geometry: {
-  //             type: "Point",
-  //             coordinates: [lon, lat]
-  //         }
-  //     }
+  const [selectedLocation, setSelectedLocation] = useState(false);
 
   return (
-    // <>
-    //   <Mapbox.ShapeSource
-    //     key='icon'
-    //     id='customMarkerSource'
-    //     existing
-    //     onPress={this._onMarkerPress}
-    //     shape={{type: "FeatureCollection", features: featuresObject }}
-    //     type='geojson'
-    //     //images={CustomMarker}
-    // >
-    //     <Mapbox.SymbolLayer
-    //         id='customMarkerLayer'
-    //         style={{ iconImage: 'badge', iconSize: 0.5 }}
-    //     />
-    //     <Mapbox.Images>
-    //       <Mapbox.Image name="badge">
-    //         <View style={{ justifyContent: 'center', alignItems: 'center', width: 12, height: 12 }}>
-    //           <View style={{ width: 6, height: 6, borderColor: 'black', borderWidth: 1, borderRadius: 6, backgroundColor: 'white' }} />
-    //         </View>
-    //       </Mapbox.Image>
-    //     </Mapbox.Images>
-    // </Mapbox.ShapeSource>
-    // </>
+    <>
+      <Mapbox.PointAnnotation
+        id={JSON.stringify(id)}
+        key={id}
+        coordinate={[Number(lon), Number(lat)]}
+        anchor={{ x: 0.5, y: 0.5 }}
+        onSelected={() => setSelectedLocation(marker)}
+      >
+        <MarkerDot numMachines={num_machines} icon={icon} />
 
-    <Mapbox.PointAnnotation
-      id={JSON.stringify(id)}
-      key={id}
-      coordinate={[Number(lon), Number(lat)]}
-    >
-      <MarkerDot numMachines={num_machines} icon={icon} />
-      <Mapbox.Callout
+        {/* <Mapbox.Callout
         style={s.calloutStyle}
         onPress={() => navigation.navigate("LocationDetails", { id })} // ONPRESS DOES NOT SEEM TO WORK IN A CALLOUT
       >
@@ -96,8 +71,60 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
             name="ios-arrow-forward-circle-outline"
           />
         </View>
-      </Mapbox.Callout>
-    </Mapbox.PointAnnotation>
+      </Mapbox.Callout> */}
+      </Mapbox.PointAnnotation>
+      {/* AN ATTEMPT AT A CUSTOM CALLOUT. BASICALLY IT WAS AN ATTEMPT TO GET TOUCHABLEOPACITY TO WORK
+    BUT IT DOES NOT. I ALSO TRIED PRESSABLE. I CAN'T GET THE CALLOUTS TO BE CLICKABLE! */}
+      {selectedLocation && (
+        <Mapbox.MarkerView
+          id="locationView"
+          coordinate={[Number(lon), Number(lat)]}
+          anchor={{ x: 0.5, y: 1 }}
+        >
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 13,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                console.log("Marker View Button pressed!");
+                navigation.navigate("LocationDetails", { id });
+              }}
+            >
+              <View style={s.calloutStyle}>
+                <Text
+                  style={{
+                    marginRight: 20,
+                    color: "#000e18",
+                    fontFamily: "boldFont",
+                  }}
+                >
+                  {name}
+                </Text>
+                <Text
+                  style={{ marginRight: 20, color: "#000e18", marginTop: 5 }}
+                >{`${street}, ${cityState} ${zip}`}</Text>
+              </View>
+            </TouchableOpacity>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                borderTopWidth: 15,
+                borderLeftWidth: 10,
+                borderRightWidth: 10,
+                borderTopColor: "#FFF",
+                borderLeftColor: "transparent",
+                borderRightColor: "transparent",
+              }}
+            />
+          </View>
+        </Mapbox.MarkerView>
+      )}
+    </>
   );
 });
 

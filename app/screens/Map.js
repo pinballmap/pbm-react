@@ -128,16 +128,6 @@ class Map extends Component {
     };
   };
 
-  // ANOTHER WAY I TRIED
-  // getBounds = async () => {
-  //   const currentBounds = await this._map.getVisibleBounds();
-  //   console.log(currentBounds);
-  //     swLat = currentBounds[1][1]
-  //     swLon = currentBounds[1][0]
-  //     neLat = currentBounds[0][1]
-  //     neLon = currentBounds[0][0]
-  // };
-
   // OLD STUFF
   // onRegionChange = async (region) => {
   //   if (isGesture) {
@@ -147,12 +137,23 @@ class Map extends Component {
   //   }
   // };
 
-  // onCameraChanged IS ALSO AN OPTION INSTEAD OF ONMAPIDLE https://github.com/rnmapbox/maps/blob/main/docs/MapView.md#oncamerachanged
+  onCameraChanged = async (gestures) => {
+    if (gestures?.isGestureActive) {
+      // IN ANDROID, IT SEEMS THAT isGestureActive IS ONLY true DURING THE ACTUAL GESTURE.
+      // BUT WHEN USING onMapIdle (below) WE WANT TO KNOW IF THE MOVEMENT THAT JUST COMPLETED WAS DONE BY THE USER.
+      // SO I WAS THINKING WE TRACK CAMERA CHANGES AND STORE IF THE GESTURE WAS MADE BY THE USER.
+      // THEN onMapIdle WILL USE THAT FOR THE IF... ?
+    }
+  };
+
   onMapIdle = async ({ gestures, region }) => {
     if (gestures?.isGestureActive) {
-      console.log("onMapIdle. region =", region);
-      this.setState({ showUpdateSearch: true });
+      // SIDE NOTE THAT THIS REGION ARRAY (?) CONTAINED VALUES AT SOME POINT, BUT THEN ALL OF A SUDDEN IS ALWAYS UNDEFINED AND I'M NOT SURE WHY
+      console.log("onMapIdle. region =", region, gestures?.isGestureActive);
+      // GETBOUNDS AT THIS POINT IS CAUSING ZOOM ISSUES. IT MIGHT BE BETTER TO MOVE THIS AND UPDATEBOUNDS TO THE ACTUAL
+      // REFRESH ONPRESS. I TRIED BUT COULD NOT FIGURE IT OUT.
       const bounds = await this.getBounds();
+      this.setState({ showUpdateSearch: true });
       this.props.updateBounds(bounds);
     }
   };
@@ -280,7 +281,7 @@ class Map extends Component {
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
-          // onCameraChanged={this.onMapIdle}
+          // onCameraChanged={this.onCameraChanged}
           onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
@@ -295,7 +296,7 @@ class Map extends Component {
           // customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
           <Mapbox.Camera
-            // zoomLevel={11} // NEED TO FIGURE OUT AN INITIAL LOAD ZOOM. WITH A ZOOM SET HERE, THE MAP RE-ZOOMS TO THIS VALUE WHEN YOU ZOOM IN OR OUT
+            zoomLevel={11} // NEED TO FIGURE OUT AN INITIAL LOAD ZOOM. WITH A ZOOM SET HERE, THE MAP RE-ZOOMS TO THIS VALUE WHEN YOU ZOOM IN OR OUT
             centerCoordinate={[longitude, latitude]}
             animationMode="none"
             animationDuration={0}
