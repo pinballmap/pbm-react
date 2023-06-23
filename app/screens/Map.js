@@ -289,8 +289,8 @@ class Map extends Component {
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
-          // onCameraChanged CURRENY CRASHES IOS. HOW TO MAKE THIS ANDROID ONLY?
-          onCameraChanged={this.onCameraChanged}
+          // onCameraChanged CURRENTLY CRASHES IOS. HOW TO MAKE THIS ANDROID ONLY?
+          // onCameraChanged={this.onCameraChanged}
           onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
