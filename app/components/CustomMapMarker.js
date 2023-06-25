@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 // import { Ionicons } from "@expo/vector-icons";
 import Mapbox from "@rnmapbox/maps";
-import IosHeartMarker from "./IosHeartMarker";
+// import IosHeartMarker from "./IosHeartMarker";
 import IosMarker from "./IosMarker";
 import Text from "./PbmText";
 let deviceWidth = Dimensions.get("window").width;
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
-const MarkerDot = React.memo(({ numMachines, icon }) =>
-  icon === "dot" ? (
-    <IosMarker numMachines={numMachines} />
-  ) : (
-    <IosHeartMarker numMachines={numMachines} />
+const MarkerDot = React.memo(
+  ({ numMachines, icon }) => (
+    // icon === "dot" ? (
+    <IosMarker numMachines={numMachines} icon={icon} />
   ),
+  // ) : (
+  // <IosHeartMarker numMachines={numMachines} />
+  // ),
 );
 
 MarkerDot.propTypes = {
@@ -36,7 +32,8 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
   // const CustomMarker = () => (
   //   <Mapbox.Image source={require('../assets/images/markerdot-heart.png')} />
   // );
-  const [selectedLocation, setSelectedLocation] = useState(false);
+
+  // const [selectedLocation, setSelectedLocation] = useState(false);
 
   return (
     <>
@@ -45,42 +42,43 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
         key={id}
         coordinate={[Number(lon), Number(lat)]}
         anchor={{ x: 0.5, y: 0.5 }}
-        onSelected={() => setSelectedLocation(marker)}
+        // onSelected={() => setSelectedLocation(id)}
+        // THIS ONSELECTED IS DEFINITELY VERY BUGGY
       >
         <MarkerDot numMachines={num_machines} icon={icon} />
 
-        {/* <Mapbox.Callout
-        style={s.calloutStyle}
-        onPress={() => navigation.navigate("LocationDetails", { id })} // ONPRESS DOES NOT SEEM TO WORK IN A CALLOUT
-      >
-        <View>
-          <Text
-            style={{
-              marginRight: 20,
-              color: "#000e18",
-              fontFamily: "boldFont",
-            }}
-          >
-            {name}
-          </Text>
-          <Text
-            style={{ marginRight: 20, color: "#000e18", marginTop: 5 }}
-          >{`${street}, ${cityState} ${zip}`}</Text>
-          <Ionicons
+        <Mapbox.Callout
+          style={s.calloutStyle}
+          onPress={() => navigation.navigate("LocationDetails", { id })} // ONPRESS DOES NOT SEEM TO WORK IN A CALLOUT
+        >
+          <View>
+            <Text
+              style={{
+                marginRight: 20,
+                color: "#000e18",
+                fontFamily: "boldFont",
+              }}
+            >
+              {name}
+            </Text>
+            <Text
+              style={{ marginRight: 20, color: "#000e18", marginTop: 5 }}
+            >{`${street}, ${cityState} ${zip}`}</Text>
+            {/* <Ionicons
             style={s.iconStyle}
             name="ios-arrow-forward-circle-outline"
-          />
-        </View>
-      </Mapbox.Callout> */}
+          /> */}
+          </View>
+        </Mapbox.Callout>
       </Mapbox.PointAnnotation>
-      {selectedLocation && (
+      {/* {selectedLocation && (
         <Mapbox.MarkerView
           id="locationView"
           coordinate={[Number(lon), Number(lat)]}
           anchor={{ x: 0.5, y: 1 }}
         >
           <TouchableOpacity
-            onPressIn={() => {
+            onPressIn={() => { //ONPRESSIN IS THE ONLY ONPRESS THAT WORKS WITH IOS, BUT IT'S EASY TO ACCIDENTALLY CLICK IT.
               navigation.navigate("LocationDetails", { id });
             }}
           >
@@ -121,7 +119,7 @@ const CustomMapMarker = React.memo(({ marker, navigation }) => {
             </View>
           </TouchableOpacity>
         </Mapbox.MarkerView>
-      )}
+      )} */}
     </>
   );
 });
