@@ -38,9 +38,11 @@ Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
 class Map extends Component {
   mapRef = null;
+  mapCenter = null;
   constructor(props) {
     super(props);
     this.onMapIdle = this.onMapIdle.bind(this);
+    this.cameraRef = React.createRef(null);
     this.state = {
       showUpdateSearch: false,
       hasMovedMap: false,
@@ -120,7 +122,6 @@ class Map extends Component {
 
   getBounds = async () => {
     const currentBounds = await this._map.getVisibleBounds();
-    console.log(currentBounds);
     return {
       swLat: currentBounds[1][1],
       swLon: currentBounds[1][0],
@@ -128,15 +129,6 @@ class Map extends Component {
       neLon: currentBounds[0][0],
     };
   };
-
-  // OLD STUFF
-  // onRegionChange = async (region) => {
-  //   if (isGesture) {
-  //     const bounds = await this.getBounds();
-  //     this.setState({ showUpdateSearch: true });
-  //     this.props.updateBounds(bounds);
-  //   }
-  // };
 
   // THIS SHOULD BE ANDROID ONLY!
   onCameraChanged = async ({ gestures }) => {
@@ -148,7 +140,7 @@ class Map extends Component {
     }
   };
 
-  onMapIdle = async ({ gestures, region }) => {
+  onMapIdle = async ({ gestures, properties }) => {
     // THIS SHOULD ONLY BE TRUE ON ANDROID
     if (this.state.hasMovedMap === true) {
       console.log("idle and gesture yes");
@@ -156,13 +148,21 @@ class Map extends Component {
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
     } else if (gestures?.isGestureActive) {
-      // SIDE NOTE THAT THIS REGION ARRAY (?) CONTAINED VALUES AT SOME POINT, BUT THEN ALL OF A SUDDEN IS ALWAYS UNDEFINED AND I'M NOT SURE WHY
-      console.log("onMapIdle. region =", region, gestures?.isGestureActive);
-      // GETBOUNDS AT THIS POINT IS CAUSING ZOOM ISSUES. IT MIGHT BE BETTER TO MOVE THIS AND UPDATEBOUNDS TO THE ACTUAL
-      // REFRESH ONPRESS. I TRIED BUT COULD NOT FIGURE IT OUT.
-      const bounds = await this.getBounds();
       this.setState({ showUpdateSearch: true });
-      this.props.updateBounds(bounds);
+      this.mapCenter = properties?.center;
+    }
+  };
+
+  refreshResults = async (mapCenter) => {
+    const bounds = await this.getBounds();
+    this.props.updateBounds(bounds);
+    this.props.getLocationsConsideringZoom(bounds);
+    if (this.cameraRef.current) {
+      this.cameraRef.current.setCamera({
+        bounds: {
+          centerCoordinate: mapCenter,
+        },
+      });
     }
   };
 
@@ -245,16 +245,6 @@ class Map extends Component {
     if (!latitude) {
       return <ActivityIndicator />;
     }
-    console.log(
-      "swLAT " +
-        swLat +
-        " swLON " +
-        swLon +
-        " neLAT " +
-        neLat +
-        " neLON " +
-        neLon,
-    );
 
     return (
       <SafeAreaView
@@ -291,7 +281,10 @@ class Map extends Component {
           rotateEnabled={false}
           // onCameraChanged CURRENTLY CRASHES IOS. HOW TO MAKE THIS ANDROID ONLY?
           // onCameraChanged={this.onCameraChanged}
-          onMapIdle={this.onMapIdle}
+          // onMapIdle={this.onMapIdle}
+          onMapIdle={(data) => {
+            this.onMapIdle(data);
+          }}
           styleURL={
             theme.theme === "dark"
               ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
@@ -304,8 +297,12 @@ class Map extends Component {
           // customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
           <Mapbox.Camera
+            ref={this.cameraRef}
             zoomLevel={11}
-            centerCoordinate={[longitude, latitude]}
+            defaultSettings={{
+              centerCoordinate: [longitude, latitude],
+              zoomLevel: 11,
+            }}
             animationMode="none"
             animationDuration={0}
           />
@@ -376,12 +373,7 @@ class Map extends Component {
             onPress={() => {
               this.setState({ showUpdateSearch: false });
               this.setState({ hasMovedMap: false });
-              this.props.getLocationsConsideringZoom({
-                swLat,
-                swLon,
-                neLat,
-                neLon,
-              });
+              this.refreshResults();
               this.props.clearSearchBarText();
             }}
           >

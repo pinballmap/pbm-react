@@ -6,9 +6,6 @@ import { getMapLocations } from "../selectors";
 
 const CustomMapMarkers = React.memo(({ navigation }) => {
   const mapLocations = useSelector(getMapLocations);
-  {
-    console.log("mapLocations Size " + mapLocations.length);
-  }
   return mapLocations.map((l) => {
     {
       console.log("mapLocations ID " + l.id);
