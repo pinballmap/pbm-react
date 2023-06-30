@@ -38,7 +38,7 @@ Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
 class Map extends Component {
   mapRef = null;
-  mapCenter = null;
+  // mapCenter = null;
   constructor(props) {
     super(props);
     this.onMapIdle = this.onMapIdle.bind(this);
@@ -134,36 +134,32 @@ class Map extends Component {
   onCameraChanged = async ({ gestures }) => {
     if (gestures?.isGestureActive) {
       this.setState({ hasMovedMap: true });
-      console.log("hasMovedMap " + this.state.hasMovedMap);
-    } else {
-      console.log("Not user " + this.state.hasMovedMap);
     }
   };
 
-  onMapIdle = async ({ gestures, properties }) => {
-    // THIS SHOULD ONLY BE TRUE ON ANDROID
+  onMapIdle = async ({ gestures }) => {
+    // THIS SHOULD ONLY BE TRUE ON ANDROID - though the next rnmapbox should support this for iOS
     if (this.state.hasMovedMap === true) {
-      console.log("idle and gesture yes");
       this.setState({ showUpdateSearch: true });
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
     } else if (gestures?.isGestureActive) {
       this.setState({ showUpdateSearch: true });
-      this.mapCenter = properties?.center;
+      // this.mapCenter = properties?.center;
     }
   };
 
-  refreshResults = async (mapCenter) => {
+  refreshResults = async () => {
     const bounds = await this.getBounds();
     this.props.updateBounds(bounds);
     this.props.getLocationsConsideringZoom(bounds);
-    if (this.cameraRef.current) {
-      this.cameraRef.current.setCamera({
-        bounds: {
-          centerCoordinate: mapCenter,
-        },
-      });
-    }
+    // if (this.cameraRef.current) {
+    //   this.cameraRef.current.setCamera({
+    //     bounds: {
+    //       centerCoordinate: mapCenter,
+    //     },
+    //   });
+    // }
   };
 
   updateCurrentLocation = () => {
@@ -208,6 +204,14 @@ class Map extends Component {
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
+      // Move the map using mapbox's setCamera, then 50ms timeout before getBounds.
+      this.cameraRef?.current?.setCamera({
+        zoomLevel: 11,
+        animationDuration: 0,
+        centerCoordinate: [(swLon + neLon) / 2, (swLat + neLat) / 2],
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, 50));
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
       this.props.getLocationsConsideringZoom(bounds);
@@ -290,17 +294,11 @@ class Map extends Component {
               ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
               : Mapbox.StyleURL.Street
           }
-          // OLD STUFF
-          // onRegionChangeComplete={this.onRegionChange}
-          // moveOnMarkerPress={false}
-          // showsMyLocationButton={false}
-          // customMapStyle={theme.theme === "dark" ? androidCustomDark : []}
         >
           <Mapbox.Camera
             ref={this.cameraRef}
-            zoomLevel={11}
+            centerCoordinate={[longitude, latitude]}
             defaultSettings={{
-              centerCoordinate: [longitude, latitude],
               zoomLevel: 11,
             }}
             animationMode="none"

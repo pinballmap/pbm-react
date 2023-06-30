@@ -38,8 +38,8 @@ export const fetchLocation = (id) => (dispatch) => {
 
 export const fetchLocationAndUpdateMap = (id) => async (dispatch) => {
   const data = await dispatch(fetchLocation(id));
-  const { lat, lon } = data.location;
-  const bounds = coordsToBounds({ lat: parseFloat(lat), lon: parseFloat(lon) });
+  const { lon, lat } = data.location;
+  const bounds = coordsToBounds({ lon: parseFloat(lon), lat: parseFloat(lat) });
   dispatch(triggerUpdateBounds(bounds));
 };
 

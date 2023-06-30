@@ -38,9 +38,9 @@ export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
         return coords;
       },
     )
-    .then(({ lat, lon }) => {
-      if (lat && lon) {
-        const bounds = coordsToBounds({ lat, lon });
+    .then(({ lon, lat }) => {
+      if (lon && lat) {
+        const bounds = coordsToBounds({ lon, lat });
         dispatch(
           isInitialLoad ? updateBounds(bounds) : triggerUpdateBounds(bounds),
         );
