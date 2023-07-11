@@ -9,6 +9,8 @@ import {
   LOCATION_DETAILS_CONFIRMED,
   LOCATION_MACHINE_REMOVED,
   MACHINE_ADDED_TO_LOCATION,
+  SET_SELECTED_MAP_LOCATION,
+  SET_SELECTED_MAP_MARKER,
 } from "../actions/types";
 
 const moment = require("moment");
@@ -19,6 +21,7 @@ export const initialState = {
   isFetchingLocations: false,
   mapLocations: [],
   selectedLocationListFilter: 0,
+  selectedMapLocation: null,
 };
 
 export default (state = initialState, action) => {
@@ -114,6 +117,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mapLocations,
+      };
+    }
+    case SET_SELECTED_MAP_LOCATION: {
+      return {
+        ...state,
+        selectedMapLocation: action.id,
+        isBlocking: true,
+      };
+    }
+    case SET_SELECTED_MAP_MARKER: {
+      return {
+        ...state,
+        isBlocking: false,
       };
     }
     default:

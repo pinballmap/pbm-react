@@ -10,6 +10,8 @@ import {
   SET_MAX_ZOOM,
   UPDATE_BOUNDS,
   UPDATE_IGNORE_MAX_ZOOM,
+  SET_SELECTED_MAP_LOCATION,
+  SET_SELECTED_MAP_MARKER,
 } from "./types";
 import { getData } from "../config/request";
 import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
@@ -100,7 +102,6 @@ export const getLocationsByBounds =
     const byUserFaved =
       viewByFavoriteLocations && userId ? `user_faved=${userId};` : "";
     const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved};no_details=1`;
-    console.log("url " + url);
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {
@@ -204,4 +205,17 @@ export const getLocationsByRegion = (region) => (dispatch) => {
   });
   dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
   dispatch({ type: UPDATE_IGNORE_MAX_ZOOM, ignoreZoom: true });
+};
+
+export const setSelectedMapLocation = (id) => (dispatch) => {
+  dispatch({
+    type: SET_SELECTED_MAP_LOCATION,
+    id,
+  });
+};
+
+export const setSelectedMapMarker = () => (dispatch) => {
+  dispatch({
+    type: SET_SELECTED_MAP_MARKER,
+  });
 };

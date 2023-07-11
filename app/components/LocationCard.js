@@ -27,7 +27,6 @@ const LocationCard = ({
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const s = getStyles(theme);
   const { name: type, icon, library } = locationType;
-  // const numMachines = num_machines;
   const cityState = state ? `${city}, ${state}` : city;
   const removeFavorite = (cb) => {
     saved

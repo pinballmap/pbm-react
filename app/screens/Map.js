@@ -4,6 +4,7 @@ import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
+import { sleep } from "../utils";
 import { getData } from "../config/request";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Mapbox from "@rnmapbox/maps";
@@ -15,6 +16,7 @@ import {
   Search,
   Text,
   NoLocationTrackingModal,
+  LocationBottomSheet,
 } from "../components";
 import {
   fetchCurrentLocation,
@@ -28,6 +30,7 @@ import {
   fetchLocationAndUpdateMap,
   getLocationsConsideringZoom,
   triggerUpdateBounds,
+  setSelectedMapLocation,
 } from "../actions";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
@@ -38,7 +41,7 @@ Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
 class Map extends Component {
   mapRef = null;
-  // mapCenter = null;
+
   constructor(props) {
     super(props);
     this.onMapIdle = this.onMapIdle.bind(this);
@@ -130,7 +133,6 @@ class Map extends Component {
     };
   };
 
-  // THIS SHOULD BE ANDROID ONLY!
   onCameraChanged = async ({ gestures }) => {
     if (gestures?.isGestureActive) {
       this.setState({ hasMovedMap: true });
@@ -138,32 +140,25 @@ class Map extends Component {
   };
 
   onMapIdle = async ({ gestures }) => {
-    // THIS SHOULD ONLY BE TRUE ON ANDROID - though the next rnmapbox should support this for iOS
-    if (this.state.hasMovedMap === true) {
+    if (this.state.hasMovedMap === true || gestures?.isGestureActive) {
       this.setState({ showUpdateSearch: true });
-      const bounds = await this.getBounds();
-      this.props.updateBounds(bounds);
-    } else if (gestures?.isGestureActive) {
-      this.setState({ showUpdateSearch: true });
-      // this.mapCenter = properties?.center;
     }
   };
 
   refreshResults = async () => {
+    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    this.props.clearSearchBarText();
     const bounds = await this.getBounds();
     this.props.updateBounds(bounds);
     this.props.getLocationsConsideringZoom(bounds);
-    // if (this.cameraRef.current) {
-    //   this.cameraRef.current.setCamera({
-    //     bounds: {
-    //       centerCoordinate: mapCenter,
-    //     },
-    //   });
-    // }
   };
 
   updateCurrentLocation = () => {
     this.props.getCurrentLocation(false);
+  };
+
+  mapPress = () => {
+    this.props.dispatch(setSelectedMapLocation(null));
   };
 
   componentDidMount() {
@@ -204,14 +199,14 @@ class Map extends Component {
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
-      // Move the map using mapbox's setCamera, then 50ms timeout before getBounds.
+      await sleep(500);
       this.cameraRef?.current?.setCamera({
         zoomLevel: 11,
         animationDuration: 0,
         centerCoordinate: [(swLon + neLon) / 2, (swLat + neLat) / 2],
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await sleep(50);
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
       this.props.getLocationsConsideringZoom(bounds);
@@ -219,7 +214,7 @@ class Map extends Component {
   }
 
   render() {
-    const { isFetchingLocations, mapLocations, navigation, query } = this.props;
+    const { isFetchingLocations, navigation, query } = this.props;
 
     const { showUpdateSearch } = this.state;
     const { theme } = this.context;
@@ -227,8 +222,6 @@ class Map extends Component {
     const { swLat, swLon, neLat, neLon } = query;
     const latitude = (swLat + neLat) / 2;
     const longitude = (swLon + neLon) / 2;
-    const latitudeDelta = Math.abs(neLat - swLat);
-    const longitudeDelta = Math.abs(neLon - swLon);
     const {
       machineId = false,
       locationType = false,
@@ -271,29 +264,21 @@ class Map extends Component {
           </View>
         ) : null}
         <Mapbox.MapView
-          // ref={(ref) => (this.mapRef = ref)}
-          ref={(c) => (this._map = c)} // SAW THIS REF IN AN EXAMPLE. OLD ONE ABOVE...
-          region={{
-            latitude,
-            longitude,
-            latitudeDelta,
-            longitudeDelta,
-          }}
+          ref={(c) => (this._map = c)}
           style={s.map}
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
-          // onCameraChanged CURRENTLY CRASHES IOS. HOW TO MAKE THIS ANDROID ONLY?
-          // onCameraChanged={this.onCameraChanged}
-          // onMapIdle={this.onMapIdle}
-          onMapIdle={(data) => {
-            this.onMapIdle(data);
-          }}
+          onCameraChanged={
+            Platform.OS === "android" ? this.onCameraChanged : null
+          }
+          onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
               ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
               : Mapbox.StyleURL.Street
           }
+          onPress={this.mapPress}
         >
           <Mapbox.Camera
             ref={this.cameraRef}
@@ -305,10 +290,7 @@ class Map extends Component {
             animationDuration={0}
           />
           <Mapbox.UserLocation visible renderMode="normal" />
-          <CustomMapMarkers
-            mapLocations={mapLocations}
-            navigation={navigation}
-          />
+          <CustomMapMarkers navigation={navigation} />
         </Mapbox.MapView>
         <Button
           onPress={() => navigation.navigate("LocationList")}
@@ -363,17 +345,11 @@ class Map extends Component {
         {showUpdateSearch ? (
           <Pressable
             style={({ pressed }) => [
-              {},
               s.containerStyle,
               s.updateContainerStyle,
               pressed ? s.pressed : s.notPressed,
             ]}
-            onPress={() => {
-              this.setState({ showUpdateSearch: false });
-              this.setState({ hasMovedMap: false });
-              this.refreshResults();
-              this.props.clearSearchBarText();
-            }}
+            onPress={this.refreshResults}
           >
             {({ pressed }) => (
               <Text
@@ -384,6 +360,7 @@ class Map extends Component {
             )}
           </Pressable>
         ) : null}
+        <LocationBottomSheet navigation={navigation} />
       </SafeAreaView>
     );
   }
@@ -518,7 +495,6 @@ const getStyles = (theme) =>
 
 Map.propTypes = {
   isFetchingLocations: PropTypes.bool,
-  mapLocations: PropTypes.array,
   query: PropTypes.object,
   getCurrentLocation: PropTypes.func,
   navigation: PropTypes.object,
@@ -560,6 +536,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchLocationAndUpdateMap: (locationId) =>
     dispatch(fetchLocationAndUpdateMap(locationId)),
   triggerUpdate: (bounds) => dispatch(triggerUpdateBounds(bounds)),
+  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

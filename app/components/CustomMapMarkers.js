@@ -2,20 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomMapMarker from "./CustomMapMarker";
 import { useSelector } from "react-redux";
-import { getMapLocations } from "../selectors";
+import { getMapLocations, selectedMapLocation } from "../selectors";
 
-const CustomMapMarkers = React.memo(({ navigation }) => {
+const CustomMapMarkers = React.memo(() => {
   const mapLocations = useSelector(getMapLocations);
+  const selectedMarkerId = useSelector(selectedMapLocation);
+
   return mapLocations.map((l) => {
-    {
-      console.log("mapLocations ID " + l.id);
-    }
+    const id = selectedMarkerId === l.id ? `${l.id}-selected` : l.id;
     return (
       <CustomMapMarker
-        id={`${l.id}_${Date.now()}`}
-        key={`${l.id}_${Date.now()}`}
+        id={id}
+        key={id}
         marker={l}
-        navigation={navigation}
+        selectedLocation={selectedMarkerId === l.id}
       />
     );
   });

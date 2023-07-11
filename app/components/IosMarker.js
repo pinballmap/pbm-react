@@ -4,7 +4,7 @@ import Text from "./PbmText";
 import PropTypes from "prop-types";
 import { ThemeContext } from "../theme-context";
 
-const IosMarker = React.memo(({ numMachines, icon }) => {
+const IosMarker = React.memo(({ numMachines, selected }) => {
   const { theme } = useContext(ThemeContext);
   let dotFontMargin, dotWidthHeight;
   if (numMachines < 10) {
@@ -28,7 +28,7 @@ const IosMarker = React.memo(({ numMachines, icon }) => {
         borderRadius: dotWidthHeight / 2,
         borderWidth: 3,
         borderColor: theme.theme == "dark" ? "#d898e7" : "#ecd0f2",
-        backgroundColor: icon === "dot" ? theme.text2 : theme.pink1,
+        backgroundColor: selected ? theme.pink1 : theme.text2,
       }}
     >
       <Text

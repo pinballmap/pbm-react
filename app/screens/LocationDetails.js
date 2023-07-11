@@ -30,6 +30,7 @@ import {
   confirmLocationIsUpToDate,
   fetchLocation,
   setCurrentMachine,
+  setSelectedMapLocation,
 } from "../actions";
 import {
   alphaSortNameObj,
@@ -89,6 +90,7 @@ class LocationDetails extends Component {
 
   componentDidMount() {
     this.props.fetchLocation(this.state.id);
+    this.props.dispatch(setSelectedMapLocation(null));
     Mapbox.setTelemetryEnabled(false);
   }
 
@@ -1006,5 +1008,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(confirmLocationIsUpToDate(body, id, username)),
   closeConfirmModal: () => dispatch(closeConfirmModal()),
   setCurrentMachine: (id) => dispatch(setCurrentMachine(id)),
+  dispatch,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LocationDetails);

@@ -22,6 +22,7 @@ import AppWrapper from "./AppWrapper";
 import FavoriteLocation from "./FavoriteLocation";
 import LocationActivity from "./LocationActivity";
 import CustomMapMarkers from "./CustomMapMarkers";
+import LocationBottomSheet from "./LocationBottomSheet";
 
 export {
   LocationCard,
@@ -48,4 +49,5 @@ export {
   FavoriteLocation,
   LocationActivity,
   CustomMapMarkers,
+  LocationBottomSheet,
 };

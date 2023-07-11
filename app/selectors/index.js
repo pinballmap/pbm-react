@@ -47,7 +47,6 @@ export const filterSelected = createSelector(queryState, (query) =>
 );
 
 const mapLocations = ({ locations }) => locations.mapLocations;
-
 const faveLocations = ({ user }) => user.faveLocations;
 
 export const getMapLocations = createSelector(
@@ -68,5 +67,20 @@ export const getMapLocations = createSelector(
           ? "heart"
           : "dot",
     }));
+  },
+);
+
+export const selectedMapLocation = ({ locations }) =>
+  locations.selectedMapLocation;
+export const selectingMapMarker = ({ locations }) => locations.isBlocking;
+
+export const getSelectedMapLocation = createSelector(
+  [mapLocations, selectedMapLocation],
+  (locations = [], selectedMapLocation) => {
+    if (!selectedMapLocation) {
+      return null;
+    }
+    const location = locations.find((l) => l.id === selectedMapLocation);
+    return location;
   },
 );
