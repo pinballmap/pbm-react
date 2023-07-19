@@ -270,6 +270,7 @@ class Map extends Component {
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
+          attributionPosition={{ bottom: 6, left: 85 }}
           onCameraChanged={
             Platform.OS === "android" ? this.onCameraChanged : null
           }
