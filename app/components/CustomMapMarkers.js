@@ -9,7 +9,12 @@ const CustomMapMarkers = React.memo(() => {
   const selectedMarkerId = useSelector(selectedMapLocation);
 
   return mapLocations.map((l) => {
-    const id = selectedMarkerId === l.id ? `${l.id}-selected` : l.id;
+    // To trigger the pins to re-rerender upon selecting a location or hearting/unhearting we need to trigger an id change
+    const id =
+      selectedMarkerId === l.id
+        ? `${l.id}-${l.icon}-selected`
+        : `${l.id}-${l.icon}`;
+
     return (
       <CustomMapMarker
         id={id}
