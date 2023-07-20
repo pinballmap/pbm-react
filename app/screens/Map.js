@@ -149,7 +149,6 @@ class Map extends Component {
     this.setState({ showUpdateSearch: false, hasMovedMap: false });
     this.props.clearSearchBarText();
     const bounds = await this.getBounds();
-    this.props.updateBounds(bounds);
     this.props.getLocationsConsideringZoom(bounds);
   };
 
