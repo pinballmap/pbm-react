@@ -139,8 +139,8 @@ class Map extends Component {
     }
   };
 
-  onMapIdle = async ({ gestures }) => {
-    if (this.state.hasMovedMap === true || gestures?.isGestureActive) {
+  onMapIdle = async () => {
+    if (this.state.hasMovedMap === true) {
       this.setState({ showUpdateSearch: true });
     }
   };
@@ -279,9 +279,7 @@ class Map extends Component {
           pitchEnabled={false}
           rotateEnabled={false}
           attributionPosition={{ bottom: 6, left: 85 }}
-          onCameraChanged={
-            Platform.OS === "android" ? this.onCameraChanged : null
-          }
+          onCameraChanged={this.onCameraChanged}
           onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
