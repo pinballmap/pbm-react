@@ -14,7 +14,6 @@ import Screen from "./Screen";
 import withThemeHOC from "./withThemeHOC";
 import ActivityIndicator from "./ActivityIndicator";
 import IosMarker from "./IosMarker";
-import IosHeartMarker from "./IosHeartMarker";
 import CustomMapMarker from "./CustomMapMarker";
 import AppAlert from "./AppAlert";
 import NoLocationTrackingModal from "./NoLocationTrackingModal";
@@ -41,7 +40,6 @@ export {
   withThemeHOC,
   ActivityIndicator,
   IosMarker,
-  IosHeartMarker,
   CustomMapMarker,
   AppAlert,
   NoLocationTrackingModal,
