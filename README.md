@@ -12,6 +12,19 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.0
+
+July XX, 2023
+
+- Switched map library to RNMapbox. This results in better map performance; fixes a bug when displaying lots of markers; and allows us to use custom markers in Android (previously not used due to performance issues).
+- Show the map marker callouts in a bottom sheet, rather than floating near the marker. More standardized, and looks nicer.
+- Majorly adjusted how the map display markers. There are no longer results "off the screen" to the left and right. So the "List" more accurately shows what is on the map. This saves resources and allows us to:
+- Tweak the "max zoom" limits. You can zoom further out now. These limits differ depending on if you are filtering results, and what you are filtering.
+- Added ability to select more than one filter item in Recent Activity.
+- Added a Stern Insider Connected flag on eligible machines. If a machine has IC, no need to comment saying so - just tag it!
+- Removed PT Sans font in favor of more Nunito weights. And tweaked some colors.
+- Bug fixes!
+
 ### 5.2.28
 
 May 15, 2023
