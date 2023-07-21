@@ -186,8 +186,14 @@ class Map extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const { triggerUpdateBounds, swLat, swLon, neLat, neLon } =
-      this.props.query;
+    const {
+      triggerUpdateBounds,
+      toCurrentLocation,
+      swLat,
+      swLon,
+      neLat,
+      neLon,
+    } = this.props.query;
     // When the map initially loads the coords go from null->values. The map needs a moment
     // to get its bounds set accordingly otherwise we get the globe.
     if (swLat && !prevProps.query.swLat) {
@@ -197,7 +203,10 @@ class Map extends Component {
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
-      await sleep(500);
+      // Intentional delay when coming from search for map to move.
+      // Ignore when pressing the current location button as the map retains focus
+      if (!toCurrentLocation) await sleep(500);
+
       this.cameraRef?.current?.setCamera({
         animationDuration: 0,
         bounds: {

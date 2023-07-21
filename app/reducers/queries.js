@@ -32,13 +32,14 @@ export const initialState = {
   machineGroupId: undefined,
   searchBarText: "",
   triggerUpdateBounds: false,
+  toCurrentLocation: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
-      const { triggerUpdateBounds = false } = action;
+      const { triggerUpdateBounds = false, toCurrentLocation = false } = action;
       return {
         ...state,
         swLat,
@@ -46,6 +47,7 @@ export default (state = initialState, action) => {
         neLat,
         neLon,
         triggerUpdateBounds,
+        toCurrentLocation,
       };
     }
     case UPDATE_IGNORE_MAX_ZOOM: {
