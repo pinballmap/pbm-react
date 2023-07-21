@@ -385,7 +385,7 @@ class Search extends Component {
                           style={s.clear}
                         />
                         <Input
-                          placeholder="City, Address, Location..."
+                          placeholder="City, Region, Venue..."
                           placeholderTextColor={"#af9eb1"}
                           leftIcon={
                             <MaterialIcons
@@ -464,9 +464,7 @@ class Search extends Component {
                 >
                   <MaterialIcons name="search" size={25} style={s.searchIcon} />
                   <Text numberOfLines={1} style={s.inputPlaceholder}>
-                    {searchBarText
-                      ? searchBarText
-                      : "City, Address, Location..."}
+                    {searchBarText ? searchBarText : "City, Region, Venue..."}
                   </Text>
                 </Pressable>
                 <Pressable
@@ -519,7 +517,6 @@ const getStyles = (theme) =>
       height: 40,
     },
     searchMap: {
-      backgroundColor: theme.white,
       width: deviceWidth - 120,
       borderBottomLeftRadius: 25,
       borderTopLeftRadius: 25,
@@ -602,7 +599,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base3,
     },
     notPressed: {
-      backgroundColor: theme.base1,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base1,
     },
     filterPressed: {
       backgroundColor: theme.white,

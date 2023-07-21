@@ -328,14 +328,14 @@ class Map extends Component {
           {Platform.OS === "ios" ? (
             <FontAwesome
               name={"location-arrow"}
-              color={theme.purple}
+              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
               size={26}
               style={{ justifyContent: "center", alignSelf: "center" }}
             />
           ) : (
             <MaterialIcons
               name={"gps-fixed"}
-              color={theme.purple}
+              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
               size={26}
               style={{ justifyContent: "center", alignSelf: "center" }}
             />
@@ -472,7 +472,7 @@ const getStyles = (theme) =>
       borderRadius: 27,
       height: 54,
       width: 54,
-      backgroundColor: theme.base1,
+      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base1,
     },
     filterContainer: {
       position: "absolute",

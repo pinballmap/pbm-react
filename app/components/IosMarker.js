@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Platform, View } from "react-native";
 import Text from "./PbmText";
 import PropTypes from "prop-types";
-import { ThemeContext } from "../theme-context";
 
 const IosMarker = React.memo(({ numMachines, selected, icon }) => {
-  const { theme } = useContext(ThemeContext);
   let dotFontMargin, dotWidthHeight;
   if (numMachines < 10) {
     dotFontMargin = 2;
@@ -21,12 +19,16 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
     dotWidthHeight = 46;
   }
 
-  const borderColor = selected ? "blue" : icon === "heart" ? "pink" : "black";
-  const backgroundColor = selected
-    ? "blue"
+  const borderColor = selected
+    ? "#daffd3"
     : icon === "heart"
-    ? "pink"
-    : "black";
+    ? "#f8e5fd"
+    : "#ecd0f2";
+  const backgroundColor = selected
+    ? "#60aa51"
+    : icon === "heart"
+    ? "#fe46b0"
+    : "#5f4d61";
 
   return (
     <View
@@ -41,7 +43,7 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
     >
       <Text
         style={{
-          color: theme.dot,
+          color: "#f5f5ff",
           fontFamily: "boldFont",
           textAlign: "center",
           fontSize: 18,
