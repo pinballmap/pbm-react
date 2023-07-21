@@ -20,7 +20,7 @@ const LocationBottomSheet = React.memo(({ navigation }) => {
     (async () => {
       if (isBlocking) {
         setLoading(true);
-        await sleep(500);
+        await sleep(250);
         dispatch(setSelectedMapMarker());
         setLoading(false);
       }

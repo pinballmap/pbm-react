@@ -28,6 +28,7 @@ import {
   setSearchBarText,
   clearSearchBarText,
   fetchLocation,
+  setSelectedMapLocation,
 } from "../actions";
 import withThemeHOC from "./withThemeHOC";
 import { retrieveItem } from "../config/utils";
@@ -328,6 +329,9 @@ class Search extends Component {
             : this.setState({ recentSearchHistory: [] }),
         )
         .catch(() => this.setState({ recentSearchHistory: [] }));
+
+      // Clear out selected map location to close bottom sheet modal
+      this.props.dispatch(setSelectedMapLocation(null));
     }
   }
 
