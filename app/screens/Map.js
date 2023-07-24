@@ -49,6 +49,7 @@ class Map extends Component {
     this.state = {
       showUpdateSearch: false,
       hasMovedMap: false,
+      isFirstLoad: true,
     };
   }
 
@@ -149,6 +150,7 @@ class Map extends Component {
     this.setState({ showUpdateSearch: false, hasMovedMap: false });
     this.props.clearSearchBarText();
     const bounds = await this.getBounds();
+    this.props.updateBounds(bounds);
     this.props.getLocationsConsideringZoom(bounds);
   };
 
@@ -194,18 +196,23 @@ class Map extends Component {
       neLat,
       neLon,
     } = this.props.query;
+    const { isFirstLoad } = this.state;
     // When the map initially loads the coords go from null->values. The map needs a moment
     // to get its bounds set accordingly otherwise we get the globe.
     if (swLat && !prevProps.query.swLat) {
       return setTimeout(() => {
         this.props.triggerUpdate({ neLon, neLat, swLon, swLat });
+        this.setState({ isFirstLoad: true });
       }, 500);
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
-      // Intentional delay when coming from search for map to move.
+      // Intentional delay when coming from search or initial app load for map to move.
       // Ignore when pressing the current location button as the map retains focus
-      if (!toCurrentLocation) await sleep(500);
+      if (!toCurrentLocation || isFirstLoad) {
+        this.setState({ isFirstLoad: false });
+        await sleep(500);
+      }
 
       this.cameraRef?.current?.setCamera({
         animationDuration: 0,
@@ -290,9 +297,9 @@ class Map extends Component {
         >
           <Mapbox.Camera
             ref={this.cameraRef}
-            centerCoordinate={[longitude, latitude]}
             defaultSettings={{
               zoomLevel: 11,
+              centerCoordinate: [longitude, latitude],
             }}
             animationMode="none"
             animationDuration={0}
