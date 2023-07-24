@@ -20,6 +20,7 @@ import {
 } from "@expo-google-fonts/nunito";
 import store from "./app/store";
 import * as SplashScreen from "expo-splash-screen";
+import * as ScreenOrientation from "expo-screen-orientation";
 import { AppWrapper } from "./app/components";
 import MapNavigator from "./app/config/router";
 import * as Sentry from "sentry-expo";
@@ -58,9 +59,16 @@ const App = () => {
         defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
     );
 
+    async function lockOrientation() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP,
+      );
+    }
+
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
+    lockOrientation();
     prepare();
   }, []);
 
