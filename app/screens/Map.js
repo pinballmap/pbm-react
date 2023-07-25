@@ -290,7 +290,7 @@ class Map extends Component {
           onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
-              ? "mapbox://styles/mapbox/navigation-guidance-night-v2"
+              ? "mapbox://styles/ryantg/clkiol1u0004301q2epahaa78"
               : Mapbox.StyleURL.Street
           }
           onPress={this.mapPress}
