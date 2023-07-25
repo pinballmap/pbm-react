@@ -291,7 +291,7 @@ class Map extends Component {
           styleURL={
             theme.theme === "dark"
               ? "mapbox://styles/ryantg/clkiol1u0004301q2epahaa78"
-              : Mapbox.StyleURL.Street
+              : "mapbox://styles/ryantg/clkiqhxrx003q01pyd8lgbz6m"
           }
           onPress={this.mapPress}
         >
