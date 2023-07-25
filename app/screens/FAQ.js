@@ -41,16 +41,15 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`I am an operator, and people are leaving annoying comments on my machines. Can you make them stop, or disable comments on my machines?`}</Text>
+            >{`I am an operator, and people are leaving bad comments on my machines. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
-              {`We can't control the comments that people make, nor will we disable comments at an individual venue. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments. On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone. Our suggestions to operators (and regular users):\n\n`}
-              {`\u2022 A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. \n\n`}
-              {`\u2022 Users definitely notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators simply write a note saying the issue is fixed! This history is actually really valuable. \n\n`}
-              {`\u2022 `}
+              {`We can't control the comments that people make, nor will we disable comments at an individual venue. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone.\n\n`}
               <Text style={{ fontFamily: "boldFont" }}>
-                To regular users leaving comments:
+                To users leaving comments:
               </Text>{" "}
-              {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and creates a burden for the operator to then write a comment about the issue being fixed.`}
+              {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
+              <Text style={{ fontFamily: "boldFont" }}>To operators:</Text>{" "}
+              {`Users notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators try to keep a level head amidst comments they don't like, and leave a note saying the issue is fixed. It's better in the long term and this comment history is actually really valuable.`}
             </Text>
             <Text
               style={s.bold}

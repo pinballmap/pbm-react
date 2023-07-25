@@ -202,7 +202,7 @@ class MachineDetails extends Component {
                         {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
                       </Text>
                       <Text style={[s.modalSubText, s.margin4]}>
-                        {`That said, please be descriptive and factual about machine issues, and also considerate of the time and effort needed to maintain machines.`}
+                        {`That said, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines.`}
                       </Text>
                       {!!location.operator_id && operatorHasEmail && (
                         <Text style={[s.modalSubText, s.margin4, s.bold]}>
