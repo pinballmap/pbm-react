@@ -28,7 +28,6 @@ import {
   setSearchBarText,
   clearSearchBarText,
   fetchLocation,
-  setSelectedMapLocation,
 } from "../actions";
 import withThemeHOC from "./withThemeHOC";
 import { retrieveItem } from "../config/utils";
@@ -320,20 +319,18 @@ class Search extends Component {
     );
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.searchModalVisible && !prevState.searchModalVisible) {
-      retrieveItem("searchHistory")
-        .then((recentSearchHistory) =>
-          recentSearchHistory
-            ? this.setState({ recentSearchHistory })
-            : this.setState({ recentSearchHistory: [] }),
-        )
-        .catch(() => this.setState({ recentSearchHistory: [] }));
+  openSearch = () => {
+    this.setState({ searchModalVisible: true });
+    this.props.onOpenSearch();
 
-      // Clear out selected map location to close bottom sheet modal
-      this.props.dispatch(setSelectedMapLocation(null));
-    }
-  }
+    retrieveItem("searchHistory")
+      .then((recentSearchHistory) =>
+        recentSearchHistory
+          ? this.setState({ recentSearchHistory })
+          : this.setState({ recentSearchHistory: [] }),
+      )
+      .catch(() => this.setState({ recentSearchHistory: [] }));
+  };
 
   render() {
     const {
@@ -464,7 +461,7 @@ class Search extends Component {
                     s.searchMapChild,
                     pressed ? s.pressed : s.notPressed,
                   ]}
-                  onPress={() => this.setState({ searchModalVisible: true })}
+                  onPress={this.openSearch}
                 >
                   <MaterialIcons name="search" size={25} style={s.searchIcon} />
                   <Text numberOfLines={1} style={s.inputPlaceholder}>

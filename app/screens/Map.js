@@ -141,9 +141,14 @@ class Map extends Component {
   };
 
   onMapIdle = async () => {
-    if (this.state.hasMovedMap === true) {
+    if (this.state.hasMovedMap) {
       this.setState({ showUpdateSearch: true });
     }
+  };
+
+  onOpenSearch = () => {
+    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    this.props.dispatch(setSelectedMapLocation(null));
   };
 
   refreshResults = async () => {
@@ -267,7 +272,10 @@ class Map extends Component {
         <AppAlert />
         <NoLocationTrackingModal />
         <View style={s.search}>
-          <Search navigate={navigation.navigate} />
+          <Search
+            navigate={navigation.navigate}
+            onOpenSearch={this.onOpenSearch}
+          />
         </View>
         {isFetchingLocations ? (
           <View style={s.loading}>
