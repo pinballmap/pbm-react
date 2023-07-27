@@ -186,13 +186,8 @@ const LocationActivity = ({ locationId }) => {
 };
 
 LocationActivity.propTypes = {
-  loggedIn: PropTypes.bool,
-  isUserFave: PropTypes.bool,
   locationId: PropTypes.number,
-  addFavoriteLocation: PropTypes.func,
-  removeFavoriteLocation: PropTypes.func,
   style: PropTypes.object,
-  removeFavorite: PropTypes.func,
 };
 
 const getStyles = (theme) =>
