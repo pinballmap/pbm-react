@@ -51,8 +51,6 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
     (location) => location.id === location_type_id,
   );
 
-  const machineNames = machine_names_first.join(", ");
-
   return (
     <View style={s.container}>
       {loading ? (
@@ -89,7 +87,24 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                   >{`${street}, ${cityState} ${zip}`}</Text>
                 </View>
                 <View style={s.margin}>
-                  <Text>{machineNames}</Text>
+                  <Text>
+                    {machine_names_first.map((m) => {
+                      const idx =
+                        typeof m === "string" ? m.lastIndexOf("(") : -1;
+                      const title =
+                        typeof m === "string" ? m.slice(0, idx) : m.name;
+                      const key = typeof m === "string" ? m : m.name;
+                      return (
+                        <Text key={key} style={s.machineName}>
+                          <Text
+                            style={{ fontFamily: "semiBoldFont", fontSize: 14 }}
+                          >
+                            {title}
+                          </Text>
+                        </Text>
+                      );
+                    })}
+                  </Text>
                   {num_machines > NUM_MACHINES_TO_SHOW ? (
                     <Text style={[s.plus, s.italic]}>{`Plus ${
                       num_machines - NUM_MACHINES_TO_SHOW
