@@ -204,21 +204,6 @@ const About = ({ navigation, appAlert }) => {
             </Text>
 
             <Text style={s.text}>
-              Follow{" "}
-              <Text
-                style={s.textLink}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    "https://twitter.com/pinballmapcom",
-                  )
-                }
-              >
-                @pinballmapcom
-              </Text>{" "}
-              on Twitter for updates and news!
-            </Text>
-
-            <Text style={s.text}>
               We sometimes have a few things for sale{" "}
               <Text
                 style={s.textLink}
