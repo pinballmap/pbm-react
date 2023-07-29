@@ -88,7 +88,7 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                 </View>
                 <View style={s.margin}>
                   <Text>
-                    {machine_names_first.map((m) => {
+                    {machine_names_first.map((m, index) => {
                       const idx =
                         typeof m === "string" ? m.lastIndexOf("(") : -1;
                       const title =
@@ -99,7 +99,11 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                           <Text
                             style={{ fontFamily: "semiBoldFont", fontSize: 14 }}
                           >
-                            {title}
+                            {`${title.trim()}${
+                              index !== machine_names_first.length - 1
+                                ? ", "
+                                : ""
+                            }`}
                           </Text>
                         </Text>
                       );
