@@ -57,10 +57,7 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
         <ActivityIndicator />
       ) : (
         <Pressable
-          style={({ pressed }) => [
-            s.containerStyle,
-            pressed ? s.pressed : s.notPressed,
-          ]}
+          style={({ pressed }) => (pressed ? s.pressed : s.notPressed)}
           onPress={() => navigation.navigate("LocationDetails", { id })}
         >
           <View style={s.flexi}>
@@ -77,7 +74,7 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                   />
                 </View>
               </View>
-              <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
+              <View style={{ paddingHorizontal: 10, marginBottom: 8 }}>
                 <View style={{ flexDirection: "row" }}>
                   <MaterialIcons name="location-on" style={s.metaIcon} />
                   <Text
@@ -95,10 +92,8 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                         typeof m === "string" ? m.slice(0, idx) : m.name;
                       const key = typeof m === "string" ? m : m.name;
                       return (
-                        <Text key={key} style={s.machineName}>
-                          <Text
-                            style={{ fontFamily: "semiBoldFont", fontSize: 14 }}
-                          >
+                        <Text key={key}>
+                          <Text style={s.machineName}>
                             {`${title.trim()}${
                               index !== machine_names_first.length - 1
                                 ? ", "
@@ -108,12 +103,12 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                         </Text>
                       );
                     })}
+                    {num_machines > NUM_MACHINES_TO_SHOW ? (
+                      <Text style={[s.plus, s.italic]}>{`  ...plus ${
+                        num_machines - NUM_MACHINES_TO_SHOW
+                      } more!`}</Text>
+                    ) : null}
                   </Text>
-                  {num_machines > NUM_MACHINES_TO_SHOW ? (
-                    <Text style={[s.plus, s.italic]}>{`Plus ${
-                      num_machines - NUM_MACHINES_TO_SHOW
-                    } more!`}</Text>
-                  ) : null}
                 </View>
               </View>
               <View style={s.locationTypeContainer}>
@@ -121,15 +116,15 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                   <Icon
                     name={locationType.icon}
                     type={locationType.library}
-                    color={theme.indigo4}
+                    color={theme.colors.inactiveTab}
                     size={30}
                     style={s.icon}
                   />
                   <Text
                     style={{
-                      marginRight: 12,
+                      marginRight: 13,
                       color: theme.text3,
-                      fontFamily: "boldFont",
+                      fontFamily: "semiBoldFont",
                     }}
                   >
                     {" "}
@@ -152,14 +147,12 @@ const getStyles = (theme) =>
       bottom: 0,
       alignSelf: "center",
       justifyContent: "center",
-      backgroundColor: theme.base1,
-      width: "100%",
-      height: 210,
-    },
-    containerStyle: {
       backgroundColor: theme.white,
-      borderColor: "transparent",
-      borderWidth: 2,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      width: "100%",
+      minHeight: 130,
+      height: "auto",
     },
     flexi: {
       display: "flex",
@@ -167,14 +160,12 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       alignContent: "space-around",
-    },
-    machineName: {
-      marginBottom: -7,
-      color: theme.theme == "dark" ? theme.text : theme.pink1,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
     },
     plus: {
-      marginBottom: 10,
-      color: theme.text2,
+      color: theme.text3,
     },
     locationNameContainer: {
       flexDirection: "row",
@@ -183,7 +174,8 @@ const getStyles = (theme) =>
     nameItem: {
       flex: 1,
       paddingHorizontal: 15,
-      paddingVertical: 10,
+      paddingTop: 10,
+      paddingBottom: 5,
       justifyContent: "center",
     },
     heartItem: {
@@ -202,7 +194,7 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "row",
-      paddingVertical: 8,
+      paddingVertical: 4,
       backgroundColor: theme.base3,
     },
     metaIcon: {
@@ -214,7 +206,7 @@ const getStyles = (theme) =>
       width: 16,
     },
     margin: {
-      marginTop: 10,
+      marginTop: 2,
       marginLeft: 5,
     },
     vertAlign: {
@@ -223,24 +215,15 @@ const getStyles = (theme) =>
     },
     address: {
       color: theme.text3,
-      fontFamily: "mediumFont",
+      fontFamily: "regularFont",
       fontSize: 15,
       flex: 1,
-      marginBottom: 3,
+      marginBottom: 4,
     },
-    text: {
-      color: theme.text,
-    },
-    text3: {
-      color: theme.text3,
-    },
-    manufacturer: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
-      fontFamily: "mediumFont",
+    machineName: {
+      fontFamily: "semiBoldFont",
       fontSize: 15,
-    },
-    mediumFont: {
-      fontFamily: "mediumFont",
+      color: theme.text2,
     },
     italic: {
       fontFamily: "regularItalicFont",
@@ -259,9 +242,8 @@ const getStyles = (theme) =>
     },
     icon: {
       fontSize: 30,
-      color: theme.indigo4,
-      opacity: 0.8,
-      marginRight: 1,
+      opacity: 0.6,
+      marginRight: 5,
     },
   });
 

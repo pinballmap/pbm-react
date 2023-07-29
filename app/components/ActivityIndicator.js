@@ -1,24 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { ThemeContext } from "../theme-context";
 
 const styledActivityIndicator = () => {
-  const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const s = getStyles();
 
   return (
     <View style={s.container}>
-      <ActivityIndicator color="#1e9dff" />
+      <ActivityIndicator color="#fe46b0" />
     </View>
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = () =>
   StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: theme.base1,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
