@@ -74,7 +74,7 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                   />
                 </View>
               </View>
-              <View style={{ paddingHorizontal: 10, marginBottom: 8 }}>
+              <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
                 <View style={{ flexDirection: "row" }}>
                   <MaterialIcons name="location-on" style={s.metaIcon} />
                   <Text
@@ -147,7 +147,7 @@ const getStyles = (theme) =>
       bottom: 0,
       alignSelf: "center",
       justifyContent: "center",
-      backgroundColor: theme.white,
+      backgroundColor: "transparent",
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: "100%",
@@ -175,7 +175,7 @@ const getStyles = (theme) =>
       flex: 1,
       paddingHorizontal: 15,
       paddingTop: 10,
-      paddingBottom: 5,
+      paddingBottom: 6,
       justifyContent: "center",
     },
     heartItem: {
@@ -194,7 +194,7 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "row",
-      paddingVertical: 4,
+      paddingVertical: 6,
       backgroundColor: theme.base3,
     },
     metaIcon: {
@@ -218,7 +218,7 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
       fontSize: 15,
       flex: 1,
-      marginBottom: 4,
+      marginBottom: 5,
     },
     machineName: {
       fontFamily: "semiBoldFont",
