@@ -147,7 +147,7 @@ const getStyles = (theme) =>
       bottom: 0,
       alignSelf: "center",
       justifyContent: "center",
-      backgroundColor: "transparent",
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: "100%",
