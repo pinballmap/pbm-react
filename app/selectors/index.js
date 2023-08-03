@@ -72,7 +72,6 @@ export const getMapLocations = createSelector(
 
 export const selectedMapLocation = ({ locations }) =>
   locations.selectedMapLocation;
-export const selectingMapMarker = ({ locations }) => locations.isBlocking;
 
 export const getSelectedMapLocation = createSelector(
   [mapLocations, selectedMapLocation],

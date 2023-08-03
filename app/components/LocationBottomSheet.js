@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector, connect } from "react-redux";
-import { getSelectedMapLocation, selectingMapMarker } from "../selectors";
-import { setSelectedMapMarker } from "../actions";
+import { useSelector, connect } from "react-redux";
+import { getSelectedMapLocation } from "../selectors";
 import { sleep } from "../utils";
 import { ThemeContext } from "../theme-context";
 import ActivityIndicator from "./ActivityIndicator";
@@ -17,20 +16,18 @@ const NUM_MACHINES_TO_SHOW = 5;
 const LocationBottomSheet = React.memo(({ navigation, locations }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
-  const dispatch = useDispatch();
   const location = useSelector(getSelectedMapLocation);
-  const isBlocking = useSelector(selectingMapMarker);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    // When the location changes add a loading state. In the event multiple markers were touched, the
+    // bottom sheet will flash with different locations as it cycles through, so we hide data while it cycles
     (async () => {
-      if (isBlocking) {
-        setLoading(true);
-        await sleep(250);
-        dispatch(setSelectedMapMarker());
-        setLoading(false);
-      }
+      setLoading(true);
+      await sleep(250);
+      setLoading(false);
     })();
-  }, [isBlocking]);
+  }, [location]);
 
   if (!location) return null;
 

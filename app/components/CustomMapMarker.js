@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Mapbox from "@rnmapbox/maps";
 import IosMarker from "./IosMarker";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSelectedMapLocation } from "../actions";
-import { selectingMapMarker } from "../selectors";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -21,7 +20,6 @@ MarkerDot.propTypes = {
 const CustomMapMarker = React.memo(({ marker, selectedLocation }) => {
   const { num_machines, lat, lon, id, icon } = marker;
   const dispatch = useDispatch();
-  const isBlocking = useSelector(selectingMapMarker);
 
   return (
     <>
@@ -29,7 +27,7 @@ const CustomMapMarker = React.memo(({ marker, selectedLocation }) => {
         id={JSON.stringify(id)}
         coordinate={[Number(lon), Number(lat)]}
         anchor={{ x: 0.5, y: 0.5 }}
-        onSelected={() => !isBlocking && dispatch(setSelectedMapLocation(id))}
+        onSelected={() => dispatch(setSelectedMapLocation(id))}
       >
         <MarkerDot
           numMachines={num_machines}
