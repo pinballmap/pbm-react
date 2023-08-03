@@ -10,7 +10,6 @@ import {
   LOCATION_MACHINE_REMOVED,
   MACHINE_ADDED_TO_LOCATION,
   SET_SELECTED_MAP_LOCATION,
-  SET_SELECTED_MAP_MARKER,
 } from "../actions/types";
 
 const moment = require("moment");
@@ -123,13 +122,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedMapLocation: action.id,
-        isBlocking: true,
-      };
-    }
-    case SET_SELECTED_MAP_MARKER: {
-      return {
-        ...state,
-        isBlocking: false,
       };
     }
     default:

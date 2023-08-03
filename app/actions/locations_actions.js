@@ -11,7 +11,6 @@ import {
   UPDATE_BOUNDS,
   UPDATE_IGNORE_MAX_ZOOM,
   SET_SELECTED_MAP_LOCATION,
-  SET_SELECTED_MAP_MARKER,
 } from "./types";
 import { getData } from "../config/request";
 import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
@@ -214,11 +213,5 @@ export const setSelectedMapLocation = (id) => (dispatch) => {
   dispatch({
     type: SET_SELECTED_MAP_LOCATION,
     id,
-  });
-};
-
-export const setSelectedMapMarker = () => (dispatch) => {
-  dispatch({
-    type: SET_SELECTED_MAP_MARKER,
   });
 };
