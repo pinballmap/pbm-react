@@ -293,7 +293,7 @@ class Map extends Component {
           scaleBarEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}
-          attributionPosition={{ bottom: 6, left: 85 }}
+          attributionPosition={{ bottom: 6, left: 90 }}
           onCameraChanged={this.onCameraChanged}
           onMapIdle={this.onMapIdle}
           styleURL={
