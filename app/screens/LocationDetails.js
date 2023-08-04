@@ -324,15 +324,9 @@ class LocationDetails extends Component {
                         logoEnabled={false}
                         styleURL={
                           theme.theme === "dark"
-                            ? Mapbox.StyleURL.Dark
+                            ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
                             : Mapbox.StyleURL.Street
                         }
-                        // region={{
-                        //   latitude: Number(location.lat),
-                        //   longitude: Number(location.lon),
-                        //   latitudeDelta: 0.03,
-                        //   longitudeDelta: 0.03,
-                        // }}
                         style={s.mapHeight}
                       >
                         <Mapbox.Camera
@@ -907,12 +901,12 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     markerDot: {
-      width: 30,
-      height: 30,
-      borderRadius: 30 / 2,
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? "#d898e7" : "#ecd0f2",
-      backgroundColor: theme.text2,
+      width: 24,
+      height: 24,
+      borderRadius: 24 / 2,
+      borderWidth: 3,
+      borderColor: "#ecd0f2",
+      backgroundColor: "#5f4d61",
       elevation: 1,
     },
     header: {
