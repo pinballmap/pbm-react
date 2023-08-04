@@ -244,7 +244,7 @@ const getStyles = (theme) =>
     address: {
       color: theme.text3,
       fontFamily: "regularFont",
-      fontSize: 15,
+      fontSize: 14,
       flex: 1,
       marginBottom: 5,
     },
