@@ -10,10 +10,12 @@ import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Icon } from "@rneui/base";
+import { getDistanceWithUnit } from "../utils/utilityFunctions";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
-const LocationBottomSheet = React.memo(({ navigation, locations }) => {
+const LocationBottomSheet = React.memo(({ navigation, locations, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const location = useSelector(getSelectedMapLocation);
@@ -41,6 +43,8 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
     num_machines,
     street,
     location_type_id,
+    lat,
+    lon,
   } = location;
   const cityState = state ? `${city}, ${state}` : city;
 
@@ -108,27 +112,54 @@ const LocationBottomSheet = React.memo(({ navigation, locations }) => {
                   </Text>
                 </View>
               </View>
-              <View style={s.locationTypeContainer}>
-                <View style={s.vertAlign}>
-                  <Icon
-                    name={locationType.icon}
-                    type={locationType.library}
-                    color={theme.colors.inactiveTab}
-                    size={30}
-                    style={s.icon}
-                  />
-                  <Text
-                    style={{
-                      marginRight: 13,
-                      color: theme.text3,
-                      fontFamily: "semiBoldFont",
-                    }}
-                  >
-                    {" "}
-                    {locationType.name}
-                  </Text>
+              {locationType || user.locationTrackingServicesEnabled ? (
+                <View style={s.locationTypeContainer}>
+                  {locationType ? (
+                    <View style={s.vertAlign}>
+                      <Icon
+                        name={locationType.icon}
+                        type={locationType.library}
+                        color={theme.colors.inactiveTab}
+                        size={30}
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          marginRight: 15,
+                          color: theme.text3,
+                          fontFamily: "semiBoldFont",
+                        }}
+                      >
+                        {" "}
+                        {locationType.name}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {user.locationTrackingServicesEnabled ? (
+                    <View style={s.vertAlign}>
+                      <MaterialCommunityIcons
+                        name="compass-outline"
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          color: theme.text3,
+                          fontFamily: "semiBoldFont",
+                        }}
+                      >
+                        {" "}
+                        {getDistanceWithUnit(
+                          user.lat,
+                          user.lon,
+                          lat,
+                          lon,
+                          user.unitPreference,
+                        )}
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
-              </View>
+              ) : null}
             </View>
           </View>
         </Pressable>
@@ -240,16 +271,18 @@ const getStyles = (theme) =>
     icon: {
       fontSize: 30,
       opacity: 0.6,
-      marginRight: 5,
+      marginRight: 3,
+      color: theme.colors.inactiveTab,
     },
   });
 
 LocationBottomSheet.propTypes = {
   sheetRef: PropTypes.object,
   index: PropTypes.number,
+  user: PropTypes.object,
   navigation: PropTypes.object,
   location: PropTypes.object,
 };
 
-const mapStateToProps = ({ locations }) => ({ locations });
+const mapStateToProps = ({ locations, user }) => ({ locations, user });
 export default connect(mapStateToProps)(LocationBottomSheet);
