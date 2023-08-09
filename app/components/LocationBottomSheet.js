@@ -216,7 +216,7 @@ const getStyles = (theme) =>
       fontFamily: "blackFont",
       fontSize: 20,
       textAlign: "left",
-      color: theme.purpleLight,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     locationTypeContainer: {
       alignItems: "center",
@@ -249,9 +249,9 @@ const getStyles = (theme) =>
       marginBottom: 5,
     },
     machineName: {
-      fontFamily: "semiBoldFont",
+      fontFamily: "boldFont",
       fontSize: 15,
-      color: theme.text2,
+      color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     italic: {
       fontFamily: "regularItalicFont",

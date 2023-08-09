@@ -539,7 +539,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontFamily: "blackFont",
       fontSize: 24,
-      color: theme.pink1,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
     locationName: {
       marginTop: 5,

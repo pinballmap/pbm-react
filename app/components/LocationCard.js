@@ -168,8 +168,8 @@ const getStyles = (theme) =>
       alignContent: "space-around",
     },
     machineName: {
-      marginBottom: -7,
-      color: theme.theme == "dark" ? theme.text : theme.pink1,
+      marginBottom: -10,
+      color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     plus: {
       marginBottom: 10,
@@ -196,7 +196,7 @@ const getStyles = (theme) =>
       fontSize: 26,
       lineHeight: 32,
       textAlign: "left",
-      color: theme.purpleLight,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     locationTypeContainer: {
       alignItems: "center",

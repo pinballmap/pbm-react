@@ -729,7 +729,7 @@ const getStyles = (theme) =>
       fontFamily: "blackFont",
       fontSize: 28,
       lineHeight: 34,
-      color: theme.purpleLight,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     machineListContainer: {
       borderRadius: 25,
@@ -760,7 +760,7 @@ const getStyles = (theme) =>
       elevation: 6,
     },
     machineName: {
-      color: theme.theme == "dark" ? theme.text : theme.pink1,
+      color: theme.theme == "dark" ? theme.text : theme.purple,
       fontFamily: "extraBoldFont",
       fontSize: 20,
     },
@@ -826,7 +826,7 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
     },
     pink1: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text,
+      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "regularFont",
     },
     italic: {
