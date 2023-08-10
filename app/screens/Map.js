@@ -202,13 +202,14 @@ class Map extends Component {
       neLon,
     } = this.props.query;
     const { isFirstLoad } = this.state;
-    // When the map initially loads the coords go from null->values. The map needs a moment
-    // to get its bounds set accordingly otherwise we get the globe.
+    // On initial load we can not use setCamera as the map may not be in focus causing zoom and placement chaos
     if (swLat && !prevProps.query.swLat) {
-      return setTimeout(() => {
-        this.props.triggerUpdate({ neLon, neLat, swLon, swLat });
-        this.setState({ isFirstLoad: true });
-      }, 500);
+      this.props.getLocationsConsideringZoom({
+        swLat: swLat - 0.05,
+        swLon: swLon - 0.05,
+        neLat: neLat + 0.05,
+        neLon: neLon + 0.05,
+      });
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
