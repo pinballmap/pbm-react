@@ -161,6 +161,7 @@ class Map extends Component {
 
   updateCurrentLocation = () => {
     this.props.getCurrentLocation(false);
+    this.setState({ showUpdateSearch: false, hasMovedMap: false });
   };
 
   mapPress = () => {
