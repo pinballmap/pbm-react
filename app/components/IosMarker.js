@@ -42,6 +42,7 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
       }}
     >
       <Text
+        maxFontSizeMultiplier={1}
         style={{
           color: "#f5f5ff",
           fontFamily: "boldFont",

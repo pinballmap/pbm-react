@@ -478,7 +478,9 @@ class Search extends Component {
                   onPress={() => this.props.navigate("FilterMap")}
                 >
                   <Entypo name="sound-mix" size={20} style={s.filterIcon} />
-                  <Text style={s.filterTitleStyle}>Filter</Text>
+                  <Text maxFontSizeMultiplier={1.1} style={s.filterTitleStyle}>
+                    Filter
+                  </Text>
                 </Pressable>
               </View>
             </View>
