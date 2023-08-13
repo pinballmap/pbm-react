@@ -169,7 +169,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       </View>
       {selectedActivities.length ? (
         <View style={s.filterView}>
-          <Text style={s.filter}>Clear Applied Filters</Text>
+          <Text style={s.filter}>Clear applied filters</Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={24}
