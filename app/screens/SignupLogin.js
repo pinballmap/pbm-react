@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -12,6 +12,8 @@ import {
 import { Button } from "@rneui/base";
 import { loginLater } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
+import { retrieveItem } from "../config/utils";
+import { ActivityIndicator } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
 
@@ -22,6 +24,30 @@ const SignupLogin = ({
   loginLater,
 }) => {
   const s = getStyles();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    retrieveItem("auth")
+      .then(async (auth) => {
+        if (auth) {
+          navigation.navigate("MapStack");
+          if (auth.id) {
+            this.props.login(auth);
+            this.props.getFavoriteLocations(auth.id);
+          }
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch(async () => {
+        setLoading(false);
+      });
+  });
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <ImageBackground
       source={require("../assets/images/app_logo.jpg")}
@@ -105,7 +131,7 @@ const SignupLogin = ({
           <Button
             onPress={() => {
               loginLater();
-              navigation.navigate("MapTab");
+              navigation.navigate("MapStack");
             }}
             title="Skip signing in"
             accessibilityLabel="Skip signing in"

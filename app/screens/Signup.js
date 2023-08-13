@@ -152,7 +152,7 @@ const Signup = ({ login, loginLater, navigation }) => {
             size={45}
             onPress={() => {
               setModalVisible(false);
-              navigation.navigate("MapTab");
+              navigation.navigate("MapStack");
             }}
             style={s.xButton}
           />
@@ -261,7 +261,7 @@ const Signup = ({ login, loginLater, navigation }) => {
               <Button
                 onPress={() => {
                   loginLater();
-                  navigation.navigate("MapTab");
+                  navigation.navigate("MapStack");
                 }}
                 titleStyle={s.textLink}
                 buttonStyle={s.buttonMask}

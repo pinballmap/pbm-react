@@ -173,19 +173,6 @@ class Map extends Component {
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
     Mapbox.setTelemetryEnabled(false);
 
-    retrieveItem("auth").then(async (auth) => {
-      if (!auth) {
-        this.props.navigation.navigate("SignupLogin");
-      } else {
-        const initialUrl = (await Linking.getInitialURL()) || "";
-        if (auth.id) {
-          this.props.login(auth);
-          this.props.getFavoriteLocations(auth.id);
-        }
-        this.navigateToScreen(initialUrl);
-      }
-    });
-
     retrieveItem("unitPreference").then((unitPreference) => {
       if (unitPreference) {
         this.props.setUnitPreference(true);
@@ -203,14 +190,13 @@ class Map extends Component {
       neLon,
     } = this.props.query;
     const { isFirstLoad } = this.state;
-    // On initial load we can not use setCamera as the map may not be in focus causing zoom and placement chaos
+    // When the map initially loads the coords go from null->values. The map needs a moment
+    // to get its bounds set accordingly otherwise we get the globe.
     if (swLat && !prevProps.query.swLat) {
-      this.props.getLocationsConsideringZoom({
-        swLat: swLat - 0.05,
-        swLon: swLon - 0.05,
-        neLat: neLat + 0.05,
-        neLon: neLon + 0.05,
-      });
+      return setTimeout(() => {
+        this.props.triggerUpdate({ neLon, neLat, swLon, swLat });
+        this.setState({ isFirstLoad: true });
+      }, 500);
     }
 
     if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
