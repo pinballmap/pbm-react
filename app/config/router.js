@@ -69,6 +69,7 @@ function SavedStackNavigator() {
         component={Saved}
         options={{
           headerTitleAlign: "center",
+          headerLeft: null,
           title: "Saved Locations",
         }}
       />
@@ -85,6 +86,7 @@ function ActivityStackNavigator() {
         options={{
           headerTitleAlign: "center",
           title: "Nearby Activity (30 Days)",
+          headerLeft: null,
         }}
       />
     </Stack.Navigator>
@@ -100,6 +102,7 @@ function ProfileStackNavigator() {
         options={{
           headerTitleAlign: "center",
           title: "Your Profile",
+          headerLeft: null,
         }}
       />
     </Stack.Navigator>
