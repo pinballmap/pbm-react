@@ -320,7 +320,7 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
     },
     textLink: {
-      fontSize: 14,
+      fontSize: 16,
       textAlign: "center",
       fontFamily: "boldFont",
       color: theme.text2,

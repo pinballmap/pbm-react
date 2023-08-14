@@ -122,7 +122,7 @@ const SignupLogin = ({
             title="New user? Sign up"
             accessibilityLabel="Sign up"
             containerStyle={{
-              marginTop: 15,
+              marginTop: 20,
               marginBottom: 20,
               overflow: "hidden",
               borderRadius: 25,
@@ -133,10 +133,10 @@ const SignupLogin = ({
               loginLater();
               navigation.navigate("MapStack");
             }}
-            title="Skip signing in"
+            title="Or? Skip signing in"
             accessibilityLabel="Skip signing in"
             raised
-            titleStyle={s.skipTitle}
+            titleStyle={s.titleStyle}
             buttonStyle={s.buttonWhite}
             containerStyle={{ overflow: "hidden", borderRadius: 25 }}
           />
@@ -183,22 +183,22 @@ const getStyles = () =>
       resizeMode: "contain",
     },
     buttonPink: {
-      backgroundColor: "#fdd4d7",
+      backgroundColor: "#8e83ce",
       elevation: 0,
       borderRadius: 25,
     },
     buttonBlue: {
-      backgroundColor: "#D3ECFF",
+      backgroundColor: "#cf8dde",
       elevation: 0,
       borderRadius: 25,
     },
     buttonWhite: {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: "#514953",
       elevation: 0,
       borderRadius: 25,
     },
     titleStyle: {
-      color: "#616182",
+      color: "#fafaff",
       fontSize: 16,
       fontFamily: "boldFont",
     },
@@ -206,12 +206,6 @@ const getStyles = () =>
       flexDirection: "column",
       justifyContent: "center",
       height: deviceHeight,
-    },
-    skipTitle: {
-      color: "#7f7fa0",
-      fontSize: 14,
-      textAlign: "center",
-      fontFamily: "semiBoldFont",
     },
   });
 
