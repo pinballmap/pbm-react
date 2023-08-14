@@ -63,7 +63,7 @@ const getStyles = (theme) =>
       fontFamily: "boldFont",
     },
     appAlertHeader: {
-      backgroundColor: theme.base4,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       marginTop: -25,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,

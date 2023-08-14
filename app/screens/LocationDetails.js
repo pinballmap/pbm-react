@@ -910,7 +910,7 @@ const getStyles = (theme) =>
       elevation: 1,
     },
     header: {
-      backgroundColor: theme.base2,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,
