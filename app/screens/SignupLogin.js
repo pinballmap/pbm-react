@@ -133,7 +133,7 @@ const SignupLogin = ({
               loginLater();
               navigation.navigate("MapStack");
             }}
-            title="Or? Skip signing in"
+            title="Or skip signing in"
             accessibilityLabel="Skip signing in"
             raised
             titleStyle={s.titleStyle}
