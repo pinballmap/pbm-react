@@ -193,7 +193,7 @@ const About = ({ navigation, appAlert }) => {
             </Text>
 
             <Text style={s.text}>
-              Listen to our podcast,{" "}
+              Listen to our old podcast,{" "}
               <Text
                 style={s.textLink}
                 onPress={() =>
@@ -201,6 +201,21 @@ const About = ({ navigation, appAlert }) => {
                 }
               >{`Mappin' Around with Scott & Ryan`}</Text>
               !
+            </Text>
+
+            <Text style={s.text}>
+              Follow{" "}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://fosstodon.org/@pinballmap",
+                  )
+                }
+              >
+                @pinballmap
+              </Text>{" "}
+              on Mastodon!
             </Text>
 
             <Text style={s.text}>
