@@ -424,11 +424,9 @@ function DrawerNavigator() {
         name="Map"
         component={MapStack}
         options={{
+          drawerItemStyle: { display: "none" },
           headerShown: false,
           gestureEnabled: true,
-          drawerIcon: () => (
-            <MaterialIcons name="search" size={24} color={"#bec2e6"} />
-          ),
         }}
       />
     </Drawer.Navigator>

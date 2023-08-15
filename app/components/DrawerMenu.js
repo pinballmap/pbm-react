@@ -51,6 +51,14 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
       </ConfirmationModal>
       <DrawerItemList {...props} />
       <DrawerItem
+        label="Map"
+        labelStyle={s.labelStyle}
+        icon={() => (
+          <MaterialIcons name="search" size={iconSize} color={iconColor} />
+        )}
+        onPress={() => props.navigation.navigate("MapTab")}
+      />
+      <DrawerItem
         label="Submit Location"
         labelStyle={s.labelStyle}
         icon={() => (
