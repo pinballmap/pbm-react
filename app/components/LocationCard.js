@@ -193,8 +193,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "blackFont",
-      fontSize: 26,
-      lineHeight: 32,
+      fontSize: 22,
+      lineHeight: 26,
       textAlign: "left",
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
