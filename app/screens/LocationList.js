@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, Linking, StyleSheet, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import {
-  ConfirmationModal,
-  LocationCard,
-  PbmButton,
-  Text,
-} from "../components";
+import { ConfirmationModal, LocationCard, Text } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
 import { FlashList } from "@shopify/flash-list";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -120,13 +116,19 @@ export class LocationList extends Component {
                   <Text style={s.confirmText}>
                     Location tracking must be enabled to use this feature!
                   </Text>
-                  <PbmButton
-                    title={"OK"}
+                  <Text
+                    style={[s.confirmText, s.link, s.margin10]}
+                    onPress={() => Linking.openSettings()}
+                  >
+                    Go to phone settings to enable.
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={45}
                     onPress={() =>
                       this.setState({ showNoLocationTrackingModal: false })
                     }
-                    accessibilityLabel="Great!"
-                    containerStyle={s.buttonContainer}
+                    style={s.xButton}
                   />
                 </View>
               </ConfirmationModal>
@@ -230,11 +232,20 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
       color: theme.purple,
     },
-    buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
+    xButton: {
+      position: "absolute",
+      right: -20,
+      top: -40,
+      color: theme.red2,
+    },
+    margin10: {
       marginTop: 10,
-      marginBottom: 10,
+      marginBottom: 5,
+    },
+    link: {
+      textDecorationLine: "underline",
+      color: theme.blue4,
+      fontFamily: "regularFont",
     },
   });
 
