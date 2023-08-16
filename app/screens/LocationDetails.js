@@ -375,7 +375,13 @@ class LocationDetails extends Component {
                             </Text>
                           </View>
                         )}
-                        <View>
+                        <View
+                          style={[
+                            locationTrackingServicesEnabled
+                              ? null
+                              : s.noTrackingMargin,
+                          ]}
+                        >
                           <Icon
                             name={locationIcon}
                             type={iconLibrary}
@@ -803,7 +809,7 @@ const getStyles = (theme) =>
     },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
-      marginBottom: 10,
+      marginBottom: 8,
     },
     marginRight: {
       marginRight: 10,
@@ -970,6 +976,9 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "regularItalicFont",
+    },
+    noTrackingMargin: {
+      marginTop: 12,
     },
   });
 
