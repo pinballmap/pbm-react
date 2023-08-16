@@ -34,7 +34,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: (deviceWidth - 70) / 8.08,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -60,7 +59,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: (deviceWidth - 70) / 3.53,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -83,7 +81,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 50,
               height: (deviceWidth - 50) / 4.07,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -108,7 +105,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 50,
               height: (deviceWidth - 50) / 2.85,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -140,7 +136,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 50,
               height: (deviceWidth - 50) / 7.63,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -164,7 +159,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: (deviceWidth - 70) / 6.6,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -177,6 +171,65 @@ const Resources = () => {
         </Text>
         <View style={s.hr}></View>
         <Pressable
+          onPress={() =>
+            WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+          }
+          style={[s.logoWrapper]}
+        >
+          <Image
+            source={require("../assets/images/Resource_Kineticist.png")}
+            style={{
+              width: deviceWidth - 70,
+              height: (deviceWidth - 70) / 2.994,
+            }}
+          />
+        </Pressable>
+        <Text style={s.text}>
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+            }
+          >{`Kineticist`}</Text>
+          {` is a digital publication and community resource for the pinball and physical gaming communities. And we have a monthly `}
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://www.kineticist.co/blog-category/pinball-map-update",
+              )
+            }
+          >{`Pinball Map New Locations Update`}</Text>
+          {` article series on the site!`}
+        </Text>
+        <View style={s.hr}></View>
+        <Pressable
+          onPress={() =>
+            WebBrowser.openBrowserAsync("https://discord.com/invite/XffPx6VKTv")
+          }
+          style={[s.logoWrapper]}
+        >
+          <Image
+            source={require("../assets/images/Resource_PinballPeople.png")}
+            style={{
+              width: deviceWidth - 70,
+              height: (deviceWidth - 70) / 1.294,
+            }}
+          />
+        </Pressable>
+        <Text style={s.text}>
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://discord.com/invite/XffPx6VKTv",
+              )
+            }
+          >{`Pinball People`}</Text>
+          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
+        </Text>
+        <View style={s.hr}></View>
+        <Pressable
           onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
           style={[s.logoWrapper]}
         >
@@ -185,7 +238,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: (deviceWidth - 70) / 2.87,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -210,7 +262,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: deviceWidth - 70,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -228,33 +279,6 @@ const Resources = () => {
         <View style={s.hr}></View>
         <Pressable
           onPress={() =>
-            WebBrowser.openBrowserAsync("https://discord.com/invite/XffPx6VKTv")
-          }
-          style={[s.logoWrapper]}
-        >
-          <Image
-            source={require("../assets/images/Resource_PinballPeople.png")}
-            style={{
-              width: deviceWidth - 70,
-              height: (deviceWidth - 70) / 1.294,
-              resizeMode: "stretch",
-            }}
-          />
-        </Pressable>
-        <Text style={s.text}>
-          <Text
-            style={s.textLink}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                "https://discord.com/invite/XffPx6VKTv",
-              )
-            }
-          >{`Pinball People`}</Text>
-          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
-        </Text>
-        <View style={s.hr}></View>
-        <Pressable
-          onPress={() =>
             WebBrowser.openBrowserAsync("https://www.deadflip.com/")
           }
           style={[s.logoWrapper]}
@@ -264,7 +288,6 @@ const Resources = () => {
             style={{
               width: deviceWidth - 70,
               height: deviceWidth - 70,
-              resizeMode: "stretch",
             }}
           />
         </Pressable>
@@ -275,41 +298,7 @@ const Resources = () => {
               WebBrowser.openBrowserAsync("https://www.deadflip.com/")
             }
           >{`Dead Flip`}</Text>
-          {` is the preeminent pinball streamer! The host, Jack Danger, has been promoting pinball for years and is a funny person with a big fanbase.`}
-        </Text>
-
-        <Pressable
-          onPress={() =>
-            WebBrowser.openBrowserAsync("https://www.kineticist.co/")
-          }
-          style={[s.logoWrapper]}
-        >
-          <Image
-            source={require("../assets/images/Resource_Kineticist.png")}
-            style={{
-              width: deviceWidth - 70,
-              height: (deviceWidth - 70) / 2.994,
-              resizeMode: "stretch",
-            }}
-          />
-        </Pressable>
-        <Text style={[s.text, { marginBottom: 20 }]}>
-          <Text
-            style={s.textLink}
-            onPress={() =>
-              WebBrowser.openBrowserAsync("https://www.kineticist.co/")
-            }
-          >{`Kineticist`}</Text>
-          {` is a digital publication and community resource for the pinball and physical gaming communities. And we have a monthly `}
-          <Text
-            style={s.textLink}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                "https://www.kineticist.co/author/ryan-tg",
-              )
-            }
-          >{`Pinball Map New Locations Update`}</Text>
-          {` article series on the site!`}
+          {` is the preeminent pinball streamer (less active now, but still good content)! The host, Jack Danger, has been promoting pinball for years and is a funny person with a big fanbase.`}
         </Text>
       </Screen>
     </SafeAreaView>
