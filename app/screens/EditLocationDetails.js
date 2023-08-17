@@ -232,8 +232,7 @@ function EditLocationDetails({
                     <Text style={{ fontFamily: "boldFont" }}>
                       closed or no longer has machines
                     </Text>
-                    , simply remove the machines from the listing! No need to
-                    note this above.
+                    , simply remove the machines from the listing!
                   </Text>
                   <Text style={[s.subText, s.margin8]}>
                     If this venue has{" "}
@@ -247,7 +246,11 @@ function EditLocationDetails({
                     >
                       {"contact us"}
                     </Text>
-                    {` and we'll fix it (include the location name in your message).`}
+                    {` and we'll fix it `}
+                    <Text
+                      style={{ fontFamily: "boldFont", color: theme.pink1 }}
+                    >{`(include the location name in your message)`}</Text>
+                    .
                   </Text>
                   <Text style={s.title}>Location Type</Text>
                   <DropDownButton

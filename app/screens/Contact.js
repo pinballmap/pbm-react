@@ -67,18 +67,21 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
           style={s.background}
         >
           <Text
-            style={[s.text, s.blackText]}
+            style={[s.text, s.boldFont]}
           >{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
-          <Text style={[s.text, s.mediumText]}>
+          <Text style={[s.text, s.regularFont]}>
             If a venue no longer has machines -{" "}
-            <Text style={s.boldText}>NO NEED to tell us!</Text> Please just
-            remove the machines from the location, and we will auto-delete the
-            location within a week.
+            <Text style={[s.pinkText, s.boldFont]}>NO NEED to tell us!</Text>{" "}
+            {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
+          </Text>
+          <Text style={[s.text, s.regularFont]}>
+            {`If you're writing about a specific location, `}
+            <Text style={[s.pinkText, s.boldFont]}>tell us the location!</Text>
           </Text>
           <Text
             onPress={() => navigation.navigate("FAQ")}
             style={s.textLink}
-          >{`Check the FAQ for other common questions.`}</Text>
+          >{`Check the FAQ first for common questions.`}</Text>
           {!loggedIn ? (
             <View>
               <TextInput
@@ -104,7 +107,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
           ) : null}
           <TextInput
             multiline={true}
-            placeholder={"Tell us about it..."}
+            placeholder={"Your words..."}
             placeholderTextColor={theme.indigo4}
             numberOfLines={10}
             style={[{ padding: 5, height: 200 }, s.textInput]}
@@ -131,8 +134,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       lineHeight: 22,
       marginTop: 5,
-      marginHorizontal: 15,
-      fontFamily: "boldFont",
+      marginHorizontal: 5,
     },
     textInput: {
       backgroundColor: theme.white,
@@ -147,23 +149,26 @@ const getStyles = (theme) =>
       fontFamily: "regularFont",
       fontSize: 16,
     },
+    regularFont: {
+      fontFamily: "regularFont",
+      marginTop: 15,
+      fontSize: 15,
+    },
+    boldFont: {
+      fontFamily: "boldFont",
+    },
     blackText: {
       color: theme.text,
     },
-    mediumText: {
-      fontFamily: "mediumFont",
-      marginTop: 15,
-    },
-    boldText: {
-      fontFamily: "boldFont",
-      color: theme.purple,
+    pinkText: {
+      color: theme.pink1,
     },
     textLink: {
       textDecorationLine: "underline",
       fontSize: 16,
       lineHeight: 22,
       marginTop: 15,
-      marginHorizontal: 15,
+      textAlign: "center",
       fontFamily: "regularFont",
       color: theme.purple2,
     },
