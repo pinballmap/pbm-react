@@ -441,8 +441,8 @@ const getStyles = (theme) =>
       position: "absolute",
       top:
         Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 100
-          : Constants.statusBarHeight + 80,
+          ? Constants.statusBarHeight + 110
+          : Constants.statusBarHeight + 90,
       left: 15,
       borderRadius: 25,
     },
@@ -480,8 +480,8 @@ const getStyles = (theme) =>
       alignSelf: "center",
       top:
         Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 100
-          : Constants.statusBarHeight + 80,
+          ? Constants.statusBarHeight + 110
+          : Constants.statusBarHeight + 90,
       right: 15,
       borderRadius: 25,
     },

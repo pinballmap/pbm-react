@@ -126,6 +126,10 @@ function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         gestureEnabled: true,
+        tabBarStyle: {
+          backgroundColor: colors.tabBar,
+          borderTopWidth: 0,
+        },
       }}
     >
       <Tab.Screen

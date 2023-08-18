@@ -33,6 +33,7 @@ export const dark = {
     notification: "green",
     activeTab: "#f5c9fd",
     inactiveTab: "#d9d9e0",
+    tabBar: "#303041",
   },
 };
 
@@ -71,5 +72,6 @@ export const standard = {
     notification: "yellow",
     activeTab: "#9718b1",
     inactiveTab: "#685d6b",
+    tabBar: "#fafaff",
   },
 };
