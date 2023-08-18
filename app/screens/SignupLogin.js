@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { Button } from "@rneui/base";
-import { loginLater } from "../actions";
+import { getFavoriteLocations, login, loginLater } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import { ActivityIndicator } from "../components";
@@ -22,24 +22,26 @@ const SignupLogin = ({
   allMachinesCount,
   allLocationsCount,
   loginLater,
+  login,
+  getFavoriteLocations,
 }) => {
   const s = getStyles();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     retrieveItem("auth")
-      .then(async (auth) => {
+      .then((auth) => {
         if (auth) {
-          navigation.navigate("MapStack");
           if (auth.id) {
-            this.props.login(auth);
-            this.props.getFavoriteLocations(auth.id);
+            login(auth);
+            getFavoriteLocations(auth.id);
           }
+          navigation.navigate("MapStack");
         } else {
           setLoading(false);
         }
       })
-      .catch(async () => {
+      .catch(() => {
         setLoading(false);
       });
   });
@@ -228,6 +230,8 @@ const mapStateToProps = ({ regions }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginLater: () => dispatch(loginLater()),
+  login: (credentials) => dispatch(login(credentials)),
+  getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin);
