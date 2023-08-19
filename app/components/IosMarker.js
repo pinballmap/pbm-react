@@ -33,26 +33,42 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
   return (
     <View
       style={{
-        width: dotWidthHeight,
-        height: dotWidthHeight,
-        borderRadius: dotWidthHeight / 2,
-        borderWidth: 3,
-        borderColor,
-        backgroundColor,
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        width: dotWidthHeight + 8,
+        height: dotWidthHeight + 8,
+        shadowColor: "#1d1c1d",
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+        elevation: 6,
       }}
     >
-      <Text
-        maxFontSizeMultiplier={1}
+      <View
         style={{
-          color: "#f5f5ff",
-          fontFamily: "boldFont",
-          textAlign: "center",
-          fontSize: 18,
-          marginTop: Platform.OS === "ios" ? dotFontMargin : dotFontMargin - 1,
+          width: dotWidthHeight,
+          height: dotWidthHeight,
+          borderRadius: dotWidthHeight / 2,
+          borderWidth: 3,
+          borderColor,
+          backgroundColor,
         }}
       >
-        {numMachines}
-      </Text>
+        <Text
+          maxFontSizeMultiplier={1}
+          style={{
+            color: "#f5f5ff",
+            fontFamily: "boldFont",
+            textAlign: "center",
+            fontSize: 18,
+            marginTop:
+              Platform.OS === "ios" ? dotFontMargin : dotFontMargin - 1,
+          }}
+        >
+          {numMachines}
+        </Text>
+      </View>
     </View>
   );
 });

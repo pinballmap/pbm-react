@@ -208,7 +208,7 @@ const getStyles = (theme) =>
       paddingHorizontal: 10,
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
-      backgroundColor: theme.base3,
+      backgroundColor: theme.base2,
     },
     metaIcon: {
       paddingTop: 0,
