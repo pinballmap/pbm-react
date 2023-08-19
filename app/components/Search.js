@@ -506,7 +506,7 @@ const getStyles = (theme) =>
       alignItems: "center",
       width: deviceWidth - 30,
       flexDirection: "row",
-      height: 50,
+      height: 45,
     },
     searchMapChild: {
       flexDirection: "row",
@@ -517,7 +517,7 @@ const getStyles = (theme) =>
       shadowRadius: 6,
       elevation: 6,
       margin: "auto",
-      height: 50,
+      height: 45,
     },
     searchMap: {
       width: deviceWidth - 120,
@@ -554,7 +554,7 @@ const getStyles = (theme) =>
       borderRadius: 25,
       width: deviceWidth - 60,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      height: 50,
+      height: 45,
       display: "flex",
       flexDirection: "row",
       paddingLeft: 0,
@@ -590,7 +590,7 @@ const getStyles = (theme) =>
       color: theme.text2,
       marginLeft: 5,
       marginRight: -5,
-      marginTop: 12,
+      marginTop: 10,
     },
     cityRegionRow: {
       position: "absolute",
@@ -603,12 +603,18 @@ const getStyles = (theme) =>
     },
     notPressed: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      borderWidth: theme.theme == "dark" ? 1 : 0,
+      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
+      borderRightWidth: 0,
     },
     filterPressed: {
       backgroundColor: theme.white,
     },
     filterNotPressed: {
       backgroundColor: theme.pink2,
+      borderWidth: theme.theme == "dark" ? 1 : 0,
+      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
+      borderLeftWidth: 0,
     },
     goToFilterText: {
       marginHorizontal: 30,

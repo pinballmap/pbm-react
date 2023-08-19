@@ -181,6 +181,10 @@ const getStyles = (theme) =>
       width: "100%",
       minHeight: 130,
       height: "auto",
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
     },
     flexi: {
       display: "flex",
