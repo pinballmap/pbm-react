@@ -256,11 +256,11 @@ const getStyles = (theme) =>
       elevation: 0,
     },
     notPressed: {
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
       shadowRadius: 6,
       elevation: 6,
-      shadowColor: theme.shadow,
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
     },
     icon: {
       fontSize: 30,

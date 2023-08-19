@@ -25,10 +25,10 @@ const WarningButton = ({
         {
           overflow: "visible",
           borderRadius: 25,
-          shadowColor: theme.shadow,
-          backgroundColor: theme.base1,
+          shadowColor: theme.darkShadow,
           shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.6,
+          shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
+          backgroundColor: theme.base1,
           shadowRadius: 6,
           elevation: 6,
         },

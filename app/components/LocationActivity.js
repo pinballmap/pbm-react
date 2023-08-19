@@ -233,6 +233,12 @@ const getStyles = (theme) =>
       elevation: 6,
       backgroundColor: theme.white,
     },
+    quickButtonPressed: {
+      backgroundColor: theme.blue2,
+    },
+    quickButtonNotPressed: {
+      backgroundColor: theme.white,
+    },
     pbmText: {
       color: theme.text2,
       fontSize: 16,
@@ -274,9 +280,9 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.white,
-      shadowColor: theme.shadow,
+      shadowColor: theme.darkShadow,
       shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
+      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
       shadowRadius: 6,
       elevation: 6,
     },
@@ -285,18 +291,6 @@ const getStyles = (theme) =>
       color: theme.text,
       fontFamily: "boldFont",
       marginTop: 20,
-    },
-    pressed: {
-      borderColor: theme.pink2,
-      borderWidth: 2,
-      shadowColor: "transparent",
-      opacity: 0.8,
-    },
-    notPressed: {
-      borderColor: "transparent",
-      borderWidth: 2,
-      shadowColor: theme.shadow,
-      opacity: 1.0,
     },
     textContainer: {
       width: "85%",

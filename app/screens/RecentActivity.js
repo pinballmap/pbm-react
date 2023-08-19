@@ -292,9 +292,9 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.white,
-      shadowColor: theme.shadow,
+      shadowColor: theme.darkShadow,
       shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
+      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
       shadowRadius: 6,
       elevation: 6,
     },
@@ -317,7 +317,7 @@ const getStyles = (theme) =>
     notPressed: {
       borderColor: "transparent",
       borderWidth: 2,
-      shadowColor: theme.shadow,
+      shadowColor: theme.darkShadow,
       opacity: 1.0,
     },
     buttonGroupContainer: {

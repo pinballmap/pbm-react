@@ -690,7 +690,7 @@ const getStyles = (theme) =>
       color: theme.pink1,
     },
     listContainerStyle: {
-      backgroundColor: theme.white,
+      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
       paddingTop: 5,
       paddingBottom: 10,
@@ -705,12 +705,7 @@ const getStyles = (theme) =>
       marginTop: 0,
       marginHorizontal: 20,
       borderWidth: 0,
-      backgroundColor: theme.white,
-      shadowColor: theme.shadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
     },
     locationNameContainer: {
       paddingVertical: 0,
