@@ -40,7 +40,7 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
         height: dotWidthHeight + 8,
         shadowColor: "#1d1c1d",
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
+        shadowOpacity: 0.4,
         shadowRadius: 3,
         elevation: 6,
       }}
