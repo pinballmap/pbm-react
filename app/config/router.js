@@ -130,6 +130,7 @@ function BottomTabNavigator() {
           backgroundColor: colors.tabBar,
           borderTopWidth: 0,
         },
+        tabBarLabelPosition: "below-icon",
       }}
     >
       <Tab.Screen
