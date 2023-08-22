@@ -524,6 +524,9 @@ const getStyles = (theme) =>
       borderBottomLeftRadius: 25,
       borderTopLeftRadius: 25,
       paddingLeft: 10,
+      borderWidth: theme.theme == "dark" ? 1 : 0,
+      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
+      borderRightWidth: 0,
     },
     buttonContainerStyle: {
       paddingRight: 10,
@@ -603,9 +606,6 @@ const getStyles = (theme) =>
     },
     notPressed: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
-      borderWidth: theme.theme == "dark" ? 1 : 0,
-      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
-      borderRightWidth: 0,
     },
     filterPressed: {
       backgroundColor: theme.white,
