@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
 import * as Application from "expo-application";
+// import { useState } from 'react';
 
 export const postData = (uri, body) => {
   return fetch(process.env.API_URL + uri, {
@@ -108,7 +109,7 @@ const fetchGPSLocation = async () => {
   const MAX_NUMBER_OF_TRIES = 3;
   do {
     location = await Promise.race([
-      sleep(3000),
+      sleep(1500),
       Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Lowest,
       }),
@@ -120,7 +121,7 @@ const fetchGPSLocation = async () => {
 
   await Location.getLastKnownPositionAsync();
   location = await Promise.race([
-    sleep(3000),
+    sleep(1500),
     Location.getLastKnownPositionAsync(),
   ]);
 
