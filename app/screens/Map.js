@@ -32,6 +32,7 @@ import {
   triggerUpdateBounds,
   setSelectedMapLocation,
 } from "../actions";
+import { getSelectedMapLocation } from "../selectors";
 import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -223,7 +224,8 @@ class Map extends Component {
   }
 
   render() {
-    const { isFetchingLocations, navigation, query } = this.props;
+    const { isFetchingLocations, navigation, query, selectedLocation } =
+      this.props;
 
     const { showUpdateSearch } = this.state;
     const { theme } = this.context;
@@ -371,7 +373,12 @@ class Map extends Component {
             )}
           </Pressable>
         ) : null}
-        <LocationBottomSheet navigation={navigation} />
+        {!!selectedLocation && (
+          <LocationBottomSheet
+            navigation={navigation}
+            location={selectedLocation}
+          />
+        )}
       </SafeAreaView>
     );
   }
@@ -525,11 +532,12 @@ Map.propTypes = {
 
 const mapStateToProps = (state) => {
   const { locations, query, regions } = state;
-
+  const selectedLocation = getSelectedMapLocation(state);
   return {
     query,
     regions,
     isFetchingLocations: locations.isFetchingLocations,
+    selectedLocation,
   };
 };
 const mapDispatchToProps = (dispatch) => ({
