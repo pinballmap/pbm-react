@@ -96,6 +96,7 @@ export default (state = initialState, action) => {
         email: "",
         id: null,
         username: "",
+        faveLocations: [],
       };
     }
     case LOGIN_LATER: {
