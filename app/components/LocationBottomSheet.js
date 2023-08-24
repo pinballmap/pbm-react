@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { Platform, StyleSheet, View, Pressable } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { sleep } from "../utils";
@@ -24,9 +24,11 @@ const LocationBottomSheet = React.memo(
       // When the location changes add a loading state. In the event multiple markers were touched, the
       // bottom sheet will flash with different locations as it cycles through, so we hide data while it cycles
       (async () => {
-        setLoading(true);
-        await sleep(250);
-        setLoading(false);
+        if (Platform.OS === "ios") {
+          setLoading(true);
+          await sleep(250);
+          setLoading(false);
+        }
       })();
     }, [location]);
 
