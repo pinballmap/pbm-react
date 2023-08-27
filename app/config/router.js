@@ -306,14 +306,14 @@ function MapStack() {
       })}
     >
       <Stack.Screen
-        name="SignupLogin"
-        component={SignupLogin}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="MapStack"
         component={BottomTabNavigator}
         options={{ title: "Map", headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignupLogin"
+        component={SignupLogin}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="Contact" component={Contact} />
       <Stack.Screen

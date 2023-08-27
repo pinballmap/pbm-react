@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -10,10 +10,8 @@ import {
   View,
 } from "react-native";
 import { Button } from "@rneui/base";
-import { getFavoriteLocations, login, loginLater } from "../actions";
+import { loginLater } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
-import { retrieveItem } from "../config/utils";
-import { ActivityIndicator } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
 
@@ -22,33 +20,8 @@ const SignupLogin = ({
   allMachinesCount,
   allLocationsCount,
   loginLater,
-  login,
-  getFavoriteLocations,
 }) => {
   const s = getStyles();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    retrieveItem("auth")
-      .then((auth) => {
-        if (auth) {
-          if (auth.id) {
-            login(auth);
-            getFavoriteLocations(auth.id);
-          }
-          navigation.navigate("MapStack");
-        } else {
-          setLoading(false);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  });
-
-  if (loading) {
-    return <ActivityIndicator />;
-  }
 
   return (
     <ImageBackground
@@ -133,7 +106,7 @@ const SignupLogin = ({
           <Button
             onPress={() => {
               loginLater();
-              navigation.navigate("MapStack");
+              navigation.navigate("MapTab");
             }}
             title="Or skip signing in"
             accessibilityLabel="Skip signing in"
@@ -230,8 +203,6 @@ const mapStateToProps = ({ regions }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginLater: () => dispatch(loginLater()),
-  login: (credentials) => dispatch(login(credentials)),
-  getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin);
