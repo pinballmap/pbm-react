@@ -14,7 +14,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.0
 
-July XX, 2023
+August 28, 2023
 
 - Switched map library to RNMapbox. This results in better map performance; fixes a bug when displaying lots of markers; and allows us to use custom markers in Android (previously not used due to performance issues).
 - Show the map marker callouts in a bottom sheet, rather than floating near the marker. More standardized, and looks nicer.
