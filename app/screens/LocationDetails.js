@@ -718,6 +718,7 @@ const getStyles = (theme) =>
       padding: 5,
       width: "48%",
       alignItems: "center",
+      justifyContent: "center",
     },
     backgroundColor: {
       backgroundColor: theme.base1,
