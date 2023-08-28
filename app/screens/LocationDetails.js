@@ -734,8 +734,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "blackFont",
-      fontSize: 28,
-      lineHeight: 34,
+      fontSize: deviceWidth < 325 ? 24 : 28,
+      lineHeight: deviceWidth < 325 ? 30 : 34,
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     machineListContainer: {
