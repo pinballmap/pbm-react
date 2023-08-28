@@ -189,10 +189,18 @@ const FAQ = ({ navigation }) => {
               >
                 detailed privacy policy on our website
               </Text>
-              . The overview: We do not track or store user locations, nor store
-              any personal information. We do not sell any user data. We do not
-              use third-party analytics. This site is not monetized. We keep a
-              log of map edits that users make.
+              {`. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.\n\nThis app uses Mapbox for the map, and they seem to enable telemetry by default. It is used to improve their data, and not for ads. We cannot disable it en masse. You can `}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://www.mapbox.com/telemetry/",
+                  )
+                }
+              >
+                read more about it here
+              </Text>
+              {`, and you should be able to disable it in the app by clicking the (i) icon on the map.`}
             </Text>
             <Text style={s.bold}>
               {`Have a question that we didn't cover here?`}{" "}

@@ -318,10 +318,10 @@ class LocationDetails extends Component {
                     >
                       <Mapbox.MapView
                         scaleBarEnabled={false}
-                        attributionEnabled={false}
                         pitchEnabled={false}
                         rotateEnabled={false}
                         logoEnabled={false}
+                        attributionPosition={{ bottom: 4, right: -4 }}
                         styleURL={
                           theme.theme === "dark"
                             ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
