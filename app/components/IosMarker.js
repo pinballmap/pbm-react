@@ -38,7 +38,7 @@ const IosMarker = React.memo(({ numMachines, selected, icon }) => {
         alignItems: "center",
         width: dotWidthHeight + 8,
         height: dotWidthHeight + 8,
-        shadowColor: "#1d1c1d",
+        shadowColor: "#3d3b3d",
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.4,
         shadowRadius: 3,

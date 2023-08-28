@@ -343,6 +343,7 @@ class MachineDetails extends Component {
                         textAlign: "center",
                         fontSize: 12,
                         color: theme.text3,
+                        marginBottom: -8,
                       }}
                     >
                       Click to toggle Stern Insider Connected status
