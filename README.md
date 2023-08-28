@@ -14,7 +14,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.0
 
-August 28, 2023
+August 29, 2023
 
 - Switched map library to RNMapbox. This results in better map performance; fixes a bug when displaying lots of markers; and allows us to use custom markers in Android (previously not used due to performance issues).
 - Show the map marker callouts in a bottom sheet, rather than floating near the marker. More standardized, and looks nicer.
@@ -23,6 +23,7 @@ August 28, 2023
 - Added ability to select more than one filter item in Recent Activity.
 - Added a Stern Insider Connected flag on eligible machines. If a machine has IC, no need to comment saying so - just tag it!
 - Removed PT Sans font in favor of more Nunito weights. And tweaked some colors.
+- Tablets can switch between portrait and landscape orientation.
 - Bug fixes!
 
 ### 5.2.28
