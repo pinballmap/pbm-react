@@ -198,13 +198,15 @@ class Map extends Component {
       this.setState({ loadOnFocus: true });
     });
 
-    retrieveItem("auth").then((auth) => {
+    retrieveItem("auth").then(async (auth) => {
       if (auth) {
+        const initialUrl = (await Linking.getInitialURL()) || "";
         if (auth.id) {
-          login(auth);
-          getFavoriteLocations(auth.id);
+          this.props.login(auth);
+          this.props.getFavoriteLocations(auth.id);
         }
         this.props.getCurrentLocation(true);
+        this.navigateToScreen(initialUrl);
       } else {
         this.setState({ isFirstEverLoad: true });
         this.props.navigation.navigate("SignupLogin");
