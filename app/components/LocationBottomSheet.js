@@ -215,6 +215,7 @@ const getStyles = (theme) =>
     locationName: {
       fontFamily: "blackFont",
       fontSize: 20,
+      lineHeight: 24,
       textAlign: "left",
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
