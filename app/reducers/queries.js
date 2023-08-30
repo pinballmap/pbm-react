@@ -13,6 +13,7 @@ import {
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   UPDATE_IGNORE_MAX_ZOOM,
+  TRIGGER_UPDATE_BOUNDS,
 } from "../actions/types";
 
 export const initialState = {
@@ -32,6 +33,7 @@ export const initialState = {
   machineGroupId: undefined,
   searchBarText: "",
   triggerUpdateBounds: false,
+  forceTriggerUpdateBounds: false,
   toCurrentLocation: false,
 };
 
@@ -39,7 +41,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
-      const { triggerUpdateBounds = false, toCurrentLocation = false } = action;
+      const {
+        triggerUpdateBounds = false,
+        toCurrentLocation = false,
+        forceTriggerUpdateBounds = false,
+      } = action;
       return {
         ...state,
         swLat,
@@ -48,6 +54,13 @@ export default (state = initialState, action) => {
         neLon,
         triggerUpdateBounds,
         toCurrentLocation,
+        forceTriggerUpdateBounds,
+      };
+    }
+    case TRIGGER_UPDATE_BOUNDS: {
+      return {
+        ...state,
+        forceTriggerUpdateBounds: true,
       };
     }
     case UPDATE_IGNORE_MAX_ZOOM: {

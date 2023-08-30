@@ -32,6 +32,7 @@ import {
   setCurrentMachine,
   setSelectedMapLocation,
 } from "../actions";
+import { TRIGGER_UPDATE_BOUNDS } from "../actions/types";
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
@@ -75,6 +76,10 @@ class LocationDetails extends Component {
       this.props.navigation.navigate("Login");
     }
   };
+
+  componentWillUnmount() {
+    this.props.dispatch({ type: TRIGGER_UPDATE_BOUNDS });
+  }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (props.route.params["id"] !== this.props.route.params["id"]) {

@@ -176,16 +176,6 @@ class Map extends Component {
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
     Mapbox.setTelemetryEnabled(false);
 
-    this.props.navigation.addListener("focus", () => {
-      if (this.state.willMoveMapToLocation) {
-        this.props.fetchLocationAndUpdateMap(this.state.moveMapToLocation);
-        this.setState({
-          willMoveMapToLocation: false,
-          moveMapToLocation: null,
-        });
-      }
-    });
-
     retrieveItem("auth").then(async (auth) => {
       if (auth) {
         const initialUrl = (await Linking.getInitialURL()) || "";
@@ -207,11 +197,21 @@ class Map extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const { triggerUpdateBounds, swLat, swLon, neLat, neLon } =
-      this.props.query;
+    const {
+      triggerUpdateBounds,
+      swLat,
+      swLon,
+      neLat,
+      neLon,
+      forceTriggerUpdateBounds,
+    } = this.props.query;
     const { loadAgain } = this.state;
 
-    if ((swLat !== prevProps.query.swLat && triggerUpdateBounds) || loadAgain) {
+    if (
+      (swLat !== prevProps.query.swLat && triggerUpdateBounds) ||
+      loadAgain ||
+      forceTriggerUpdateBounds
+    ) {
       if (!this.cameraRef?.current) {
         await sleep(500);
         return this.setState({ loadAgain: true });
