@@ -51,9 +51,6 @@ class Map extends Component {
       showUpdateSearch: false,
       hasMovedMap: false,
       isFirstLoad: true,
-      isFirstEverLoad: false,
-      loadOnFocus: false,
-      loading: false,
       willMoveMapToLocation: false,
       moveMapToLocation: null,
     };
@@ -174,28 +171,19 @@ class Map extends Component {
     this.props.dispatch(setSelectedMapLocation(null));
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getCurrentLocation(true);
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
     Mapbox.setTelemetryEnabled(false);
 
     this.props.navigation.addListener("focus", () => {
-      if (this.state.isFirstEverLoad && this.state.loadOnFocus) {
-        this.props.getCurrentLocation(false);
-        this.setState({
-          loadOnFocus: false,
-          isFirstEverLoad: false,
-          loading: true,
-        });
-      }
-
       if (this.state.willMoveMapToLocation) {
         this.props.fetchLocationAndUpdateMap(this.state.moveMapToLocation);
-        this.setState({ willMoveMapToLocation: false });
+        this.setState({
+          willMoveMapToLocation: false,
+          moveMapToLocation: null,
+        });
       }
-    });
-
-    this.props.navigation.addListener("blur", () => {
-      this.setState({ loadOnFocus: true });
     });
 
     retrieveItem("auth").then(async (auth) => {
@@ -205,10 +193,8 @@ class Map extends Component {
           this.props.login(auth);
           this.props.getFavoriteLocations(auth.id);
         }
-        this.props.getCurrentLocation(true);
         this.navigateToScreen(initialUrl);
       } else {
-        this.setState({ isFirstEverLoad: true });
         this.props.navigation.navigate("SignupLogin");
       }
     });
@@ -221,25 +207,14 @@ class Map extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const {
-      triggerUpdateBounds,
-      toCurrentLocation,
-      swLat,
-      swLon,
-      neLat,
-      neLon,
-    } = this.props.query;
-    const { isFirstLoad, loading } = this.state;
+    const { triggerUpdateBounds, swLat, swLon, neLat, neLon } =
+      this.props.query;
+    const { loadAgain } = this.state;
 
-    if (swLat !== prevProps.query.swLat && triggerUpdateBounds) {
-      // Intentional delay when coming from search or initial app load for map to move.
-      // Ignore when pressing the current location button as the map retains focus
-      if (!toCurrentLocation || isFirstLoad) {
-        if (loading && Platform.OS === "android") {
-          await sleep(4500);
-        }
-        this.setState({ isFirstLoad: false, loading: false });
+    if ((swLat !== prevProps.query.swLat && triggerUpdateBounds) || loadAgain) {
+      if (!this.cameraRef?.current) {
         await sleep(500);
+        return this.setState({ loadAgain: true });
       }
 
       this.cameraRef?.current?.setCamera({
@@ -249,8 +224,12 @@ class Map extends Component {
           sw: [swLon, swLat],
         },
       });
-
-      await sleep(50);
+      if (this.state.loadAgain) {
+        await sleep(500);
+        this.setState({ loadAgain: false });
+      } else {
+        await sleep(50);
+      }
       const bounds = await this.getBounds();
       this.props.updateBounds(bounds);
       this.props.getLocationsConsideringZoom(bounds);
@@ -261,7 +240,7 @@ class Map extends Component {
     const { isFetchingLocations, navigation, query, selectedLocation } =
       this.props;
 
-    const { showUpdateSearch, isFirstEverLoad } = this.state;
+    const { showUpdateSearch } = this.state;
     const { theme } = this.context;
     const s = getStyles(theme);
     const { swLat, swLon, neLat, neLon } = query;
@@ -284,7 +263,7 @@ class Map extends Component {
         ? true
         : false;
 
-    if (!latitude || isFirstEverLoad) {
+    if (!latitude) {
       return <ActivityIndicator />;
     }
 
