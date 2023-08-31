@@ -34,18 +34,14 @@ export const initialState = {
   searchBarText: "",
   triggerUpdateBounds: false,
   forceTriggerUpdateBounds: false,
-  toCurrentLocation: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
-      const {
-        triggerUpdateBounds = false,
-        toCurrentLocation = false,
-        forceTriggerUpdateBounds = false,
-      } = action;
+      const { triggerUpdateBounds = false, forceTriggerUpdateBounds = false } =
+        action;
       return {
         ...state,
         swLat,
@@ -53,7 +49,6 @@ export default (state = initialState, action) => {
         neLat,
         neLon,
         triggerUpdateBounds,
-        toCurrentLocation,
         forceTriggerUpdateBounds,
       };
     }

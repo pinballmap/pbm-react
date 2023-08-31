@@ -140,16 +140,13 @@ export const updateBounds = (bounds) => (dispatch) => {
   dispatch({ type: UPDATE_BOUNDS, bounds });
 };
 
-export const triggerUpdateBounds =
-  (bounds, toCurrentLocation = false) =>
-  (dispatch) => {
-    dispatch({
-      type: UPDATE_BOUNDS,
-      bounds: atLeastMinZoom(bounds),
-      triggerUpdateBounds: true,
-      toCurrentLocation,
-    });
-  };
+export const triggerUpdateBounds = (bounds) => (dispatch) => {
+  dispatch({
+    type: UPDATE_BOUNDS,
+    bounds: atLeastMinZoom(bounds),
+    triggerUpdateBounds: true,
+  });
+};
 
 export const getLocationsSuccess = (data) => {
   return {

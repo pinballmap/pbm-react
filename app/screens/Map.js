@@ -164,7 +164,11 @@ class Map extends Component {
 
   updateCurrentLocation = () => {
     this.props.getCurrentLocation(false);
-    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    this.setState({
+      showUpdateSearch: false,
+      hasMovedMap: false,
+      toCurrentLocation: true,
+    });
   };
 
   mapPress = () => {
@@ -205,7 +209,7 @@ class Map extends Component {
       neLon,
       forceTriggerUpdateBounds,
     } = this.props.query;
-    const { loadAgain } = this.state;
+    const { loadAgain, toCurrentLocation } = this.state;
 
     if (
       (swLat !== prevProps.query.swLat && triggerUpdateBounds) ||
@@ -215,6 +219,12 @@ class Map extends Component {
       if (!this.cameraRef?.current) {
         await sleep(500);
         return this.setState({ loadAgain: true });
+      }
+
+      if (!toCurrentLocation) {
+        await sleep(500);
+      } else {
+        this.setState({ toCurrentLocation: false });
       }
 
       this.cameraRef?.current?.setCamera({
