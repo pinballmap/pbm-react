@@ -50,7 +50,8 @@
     "reselect": "^4.0.0",
     "sentry-expo": "~7.0.0",
     "throttle-debounce": "^2.1.0",
-    "expo-screen-orientation": "~6.0.3"
+    "expo-screen-orientation": "~6.0.3",
+    "expo-insights": "~0.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
