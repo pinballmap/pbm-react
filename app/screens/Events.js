@@ -126,6 +126,7 @@ class Events extends Component {
                     textAlign: "center",
                     fontFamily: "boldFont",
                     marginTop: 15,
+                    color: theme.text2,
                   }}
                 >
                   {`Something went wrong. In the meantime, you can check the `}
