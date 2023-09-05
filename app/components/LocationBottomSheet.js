@@ -96,7 +96,7 @@ const LocationBottomSheet = React.memo(
                             <Text style={s.machineName}>
                               {`${title.trim()}${
                                 index !== machine_names_first.length - 1
-                                  ? ", "
+                                  ? " \u2022 "
                                   : ""
                               }`}
                             </Text>
