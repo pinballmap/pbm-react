@@ -12,6 +12,14 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.1
+
+August 7, 2023
+
+- Fixed issue with the map unnecessarily moving when you go back from a location
+- and an issue when going back from the Filter screen
+- Lil design tweaks
+
 ### 5.3.0
 
 August 29, 2023
