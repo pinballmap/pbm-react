@@ -343,7 +343,7 @@ class Search extends Component {
       showSubmitButton,
       searching,
     } = this.state;
-    const { query, clearSearchBarText } = this.props;
+    const { query, clearSearchBarText, onPressFilter } = this.props;
     const { searchBarText } = query;
     const submitButton =
       foundLocations.length === 0 &&
@@ -475,7 +475,7 @@ class Search extends Component {
                     s.searchMapChild,
                     pressed ? s.filterPressed : s.filterNotPressed,
                   ]}
-                  onPress={() => this.props.navigate("FilterMap")}
+                  onPress={onPressFilter}
                 >
                   <Entypo name="sound-mix" size={20} style={s.filterIcon} />
                   <Text maxFontSizeMultiplier={1.1} style={s.filterTitleStyle}>

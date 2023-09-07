@@ -149,16 +149,26 @@ class Map extends Component {
     }
   };
 
+  setToCurrentBounds = async () => {
+    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    const bounds = await this.getBounds();
+    this.props.updateBounds(bounds);
+    return bounds;
+  };
+
   onOpenSearch = () => {
     this.setState({ showUpdateSearch: false, hasMovedMap: false });
     this.props.dispatch(setSelectedMapLocation(null));
   };
 
+  onPressFilter = async () => {
+    await this.setToCurrentBounds();
+    this.props.navigation.navigate("FilterMap");
+  };
+
   refreshResults = async () => {
-    this.setState({ showUpdateSearch: false, hasMovedMap: false });
     this.props.clearSearchBarText();
-    const bounds = await this.getBounds();
-    this.props.updateBounds(bounds);
+    const bounds = await this.setToCurrentBounds();
     this.props.getLocationsConsideringZoom(bounds);
   };
 
@@ -288,6 +298,7 @@ class Map extends Component {
           <Search
             navigate={navigation.navigate}
             onOpenSearch={this.onOpenSearch}
+            onPressFilter={this.onPressFilter}
           />
         </View>
         {isFetchingLocations ? (
@@ -400,6 +411,7 @@ class Map extends Component {
           <LocationBottomSheet
             navigation={navigation}
             location={selectedLocation}
+            setToCurrentBounds={this.setToCurrentBounds}
           />
         )}
       </SafeAreaView>

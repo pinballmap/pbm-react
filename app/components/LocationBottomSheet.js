@@ -15,7 +15,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 const NUM_MACHINES_TO_SHOW = 5;
 
 const LocationBottomSheet = React.memo(
-  ({ navigation, location, locations, user }) => {
+  ({ navigation, location, locations, user, setToCurrentBounds }) => {
     const { theme } = useContext(ThemeContext);
     const s = getStyles(theme);
     const [loading, setLoading] = useState(false);
@@ -51,6 +51,11 @@ const LocationBottomSheet = React.memo(
       (location) => location.id === location_type_id,
     );
 
+    const onPress = async () => {
+      await setToCurrentBounds();
+      navigation.navigate("LocationDetails", { id });
+    };
+
     return (
       <View style={s.container}>
         {loading ? (
@@ -58,7 +63,7 @@ const LocationBottomSheet = React.memo(
         ) : (
           <Pressable
             style={({ pressed }) => (pressed ? s.pressed : s.notPressed)}
-            onPress={() => navigation.navigate("LocationDetails", { id })}
+            onPress={onPress}
           >
             <View style={s.flexi}>
               <View style={{ zIndex: 10, flex: 1 }}>
