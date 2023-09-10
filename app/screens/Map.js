@@ -308,7 +308,7 @@ class Map extends Component {
         ) : null}
         {maxZoom ? (
           <View style={s.loading}>
-            <Text style={s.loadingText}>Zoom in for updated results</Text>
+            <Text style={s.loadingText}>Zoom in to update results</Text>
           </View>
         ) : null}
         <Mapbox.MapView

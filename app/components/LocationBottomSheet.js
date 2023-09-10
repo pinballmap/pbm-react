@@ -186,6 +186,7 @@ const getStyles = (theme) =>
       width: "100%",
       minHeight: 130,
       height: "auto",
+      zIndex: 11,
     },
     flexi: {
       display: "flex",
