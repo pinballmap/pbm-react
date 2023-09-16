@@ -12,6 +12,14 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.2
+
+August 16, 2023
+
+- Fixed the "zoom in" message being above the map callout bottom sheet.
+- Added the "Directions" button to the lil mini map on the location details screen.
+- Replaced the "tools" and "more" icons with a hamburger menu icon.
+
 ### 5.3.1
 
 August 7, 2023
