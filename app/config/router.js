@@ -208,7 +208,7 @@ function BottomTabNavigator() {
           ),
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
-              name="newspaper-variant-outline"
+              name="newspaper-variant-multiple-outline"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
@@ -267,8 +267,8 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: () => (
-            <MaterialIcons
-              name="more-horiz"
+            <MaterialCommunityIcons
+              name="menu"
               size={28}
               color={colors.inactiveTab}
             />

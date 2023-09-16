@@ -151,7 +151,7 @@ class LocationDetails extends Component {
               <Screen>
                 <ConfirmationModal visible={this.state.showLocationToolsModal}>
                   <View style={s.header}>
-                    <Text style={s.filterTitle}>Location Editing Tools</Text>
+                    <Text style={s.filterTitle}>Location Tools</Text>
                     <MaterialCommunityIcons
                       name="close-circle"
                       size={45}
@@ -703,7 +703,7 @@ class LocationDetails extends Component {
                 }}
               >
                 <MaterialCommunityIcons
-                  name={"tools"}
+                  name={"menu"}
                   color={theme.white}
                   size={28}
                   style={{ justifyContent: "center", alignSelf: "center" }}

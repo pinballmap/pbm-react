@@ -170,7 +170,7 @@ const LocationActivity = ({ locationId }) => {
         onPress={() => setLocationActivityModalOpen(true)}
       >
         <MaterialCommunityIcons
-          name="newspaper-variant-outline"
+          name="newspaper-variant-multiple-outline"
           color={theme.text2}
           size={24}
           style={{
