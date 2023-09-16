@@ -321,6 +321,35 @@ class LocationDetails extends Component {
                           : s.mapViewContainerSolo,
                       ]}
                     >
+                      <Pressable
+                        style={({ pressed }) => [
+                          s.directionsButton,
+                          s.quickButton,
+                          pressed
+                            ? s.quickButtonPressed
+                            : s.quickButtonNotPressed,
+                        ]}
+                        onPress={() => {
+                          openMap({
+                            end: `${location.name} ${location.city} ${
+                              location.state || ""
+                            } ${location.zip}`,
+                          });
+                          this.setShowLocationToolsModal(false);
+                        }}
+                      >
+                        <MaterialCommunityIcons
+                          name={"directions"}
+                          color={theme.text2}
+                          size={28}
+                          style={{
+                            height: 28,
+                            width: 28,
+                            justifyContent: "center",
+                            alignSelf: "center",
+                          }}
+                        />
+                      </Pressable>
                       <Mapbox.MapView
                         scaleBarEnabled={false}
                         pitchEnabled={false}
@@ -442,7 +471,6 @@ class LocationDetails extends Component {
                         <View style={s.quickButtonContainer}>
                           <Pressable
                             style={({ pressed }) => [
-                              s.plusButton,
                               s.quickButton,
                               pressed
                                 ? s.quickButtonPressed
@@ -897,6 +925,11 @@ const getStyles = (theme) =>
       shadowRadius: 6,
       elevation: 6,
       backgroundColor: theme.white,
+    },
+    directionsButton: {
+      position: "absolute",
+      bottom: 3,
+      left: 0,
     },
     metaIcon: {
       paddingTop: 0,
