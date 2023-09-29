@@ -23,6 +23,20 @@ const FAQ = ({ navigation }) => {
             >{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}</Text>
             <Text
               style={s.bold}
+            >{`I get an error every time I try to add a machine, or comment, or anything.`}</Text>
+            <Text style={s.text}>
+              {`You probably haven't confirmed your account. You should have received an email (check your spam!) `}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  this.props.navigation.navigate("ResendConfirmation")
+                }
+              >
+                {"Or go here to have it resent."}
+              </Text>
+            </Text>
+            <Text
+              style={s.bold}
             >{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
             <Text
               style={s.text}
