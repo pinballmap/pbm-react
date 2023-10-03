@@ -59,6 +59,7 @@ export const getMapLocations = createSelector(
         id: loc.id,
         properties: {
           order: index,
+          num_machines: loc.num_machines,
         },
         geometry: {
           type: "Point",

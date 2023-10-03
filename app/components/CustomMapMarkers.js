@@ -30,6 +30,10 @@ const CustomMapMarkers = React.memo(() => {
   return (
     <Mapbox.ShapeSource id={"shape-source-id-0"} shape={features}>
       <Mapbox.CircleLayer id={"circle-layer"} style={circleStyles} />
+      <Mapbox.SymbolLayer
+        id={"symbol-id"}
+        style={{ textField: ["get", "num_machines"] }}
+      />
     </Mapbox.ShapeSource>
   );
 });
