@@ -47,26 +47,25 @@ export const filterSelected = createSelector(queryState, (query) =>
 );
 
 const mapLocations = ({ locations }) => locations.mapLocations;
-const faveLocations = ({ user }) => user.faveLocations;
+//const faveLocations = ({ user }) => user.faveLocations;
 
 export const getMapLocations = createSelector(
-  [mapLocations, faveLocations],
-  (locations = [], faveLocations = []) => {
-    return locations.map((loc) => ({
-      city: loc.city,
-      state: loc.state,
-      street: loc.street,
-      zip: loc.zip,
-      name: loc.name,
-      num_machines: loc.num_machines,
-      lat: loc.lat,
-      lon: loc.lon,
-      id: loc.id,
-      icon:
-        faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1
-          ? "heart"
-          : "dot",
-    }));
+  [mapLocations],
+  (locations = []) => {
+    return locations.map((loc, index) => {
+      console.log(loc);
+      return {
+        type: "Feature",
+        id: loc.id,
+        properties: {
+          order: index,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [Number(loc.lon), Number(loc.lat)],
+        },
+      };
+    });
   },
 );
 

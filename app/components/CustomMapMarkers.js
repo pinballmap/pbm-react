@@ -1,29 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CustomMapMarker from "./CustomMapMarker";
+import Mapbox from "@rnmapbox/maps";
 import { useSelector } from "react-redux";
-import { getMapLocations, selectedMapLocation } from "../selectors";
+import { getMapLocations } from "../selectors";
+
+const circleStyles = {
+  circleColor: [
+    "match",
+    ["get", "val"],
+    "foo",
+    "#6FBF73",
+    "bar",
+    "#FF784E",
+    "baz",
+    "#FFAC33",
+    "#ccc",
+  ],
+  circleSortKey: ["step", ["get", "order"], 1.0, 1, 5.0, 2, 10.0, 3, 1],
+  circleRadius: 20,
+};
 
 const CustomMapMarkers = React.memo(() => {
-  const mapLocations = useSelector(getMapLocations);
-  const selectedMarkerId = useSelector(selectedMapLocation);
+  const locations = useSelector(getMapLocations);
+  const features = {
+    type: "FeatureCollection",
+    features: locations,
+  };
 
-  return mapLocations.map((l) => {
-    // To trigger the pins to re-rerender upon selecting a location or hearting/unhearting we need to trigger an id change
-    const id =
-      selectedMarkerId === l.id
-        ? `${l.id}-${l.icon}-selected`
-        : `${l.id}-${l.icon}`;
-
-    return (
-      <CustomMapMarker
-        id={id}
-        key={id}
-        marker={l}
-        selectedLocation={selectedMarkerId === l.id}
-      />
-    );
-  });
+  return (
+    <Mapbox.ShapeSource id={"shape-source-id-0"} shape={features}>
+      <Mapbox.CircleLayer id={"circle-layer"} style={circleStyles} />
+    </Mapbox.ShapeSource>
+  );
 });
 
 CustomMapMarkers.propTypes = {
