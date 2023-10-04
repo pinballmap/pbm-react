@@ -20,11 +20,9 @@ import {
 } from "@expo-google-fonts/nunito";
 import store from "./app/store";
 import * as SplashScreen from "expo-splash-screen";
-import * as ScreenOrientation from "expo-screen-orientation";
 import { AppWrapper } from "./app/components";
 import MapNavigator from "./app/config/router";
 import * as Sentry from "sentry-expo";
-import * as Device from "expo-device";
 
 Sentry.init({
   dsn: "https://057bae9b04f2410db6e4f1bd8d3eff2c@o1352308.ingest.sentry.io/6633526",
@@ -60,22 +58,9 @@ const App = () => {
         defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
     );
 
-    async function lockOrientation() {
-      if (Device.deviceType.TABLET) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.ALL,
-        );
-      } else {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.PORTRAIT_UP,
-        );
-      }
-    }
-
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
-    lockOrientation();
     prepare();
   }, []);
 

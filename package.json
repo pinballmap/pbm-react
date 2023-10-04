@@ -26,7 +26,6 @@
     "expo-font": "~11.4.0",
     "expo-insights": "~0.2.0",
     "expo-location": "~16.1.0",
-    "expo-screen-orientation": "~6.0.3",
     "expo-splash-screen": "~0.20.4",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.12",

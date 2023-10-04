@@ -2,6 +2,7 @@ import "dotenv/config";
 
 export default {
   expo: {
+    orientation: "portrait",
     assetBundlePatterns: ["app/assets/images/*"],
     splash: {
       image: "app/assets/images/pbm-splash-2022.png",
@@ -14,7 +15,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.2",
+    version: "5.3.3",
     slug: "pbm-app",
     owner: "pinballmap",
     name: "Pinball Map",
@@ -54,7 +55,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "151",
+      buildNumber: "154",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -86,7 +87,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 130,
+      versionCode: 132,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
