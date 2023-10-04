@@ -25,12 +25,10 @@ const FAQ = ({ navigation }) => {
               style={s.bold}
             >{`I get an error every time I try to add a machine, or comment, or anything.`}</Text>
             <Text style={s.text}>
-              {`You probably haven't confirmed your account. You should have received an email (check your spam!) `}
+              {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
               <Text
                 style={s.textLink}
-                onPress={() =>
-                  this.props.navigation.navigate("ResendConfirmation")
-                }
+                onPress={() => navigation.navigate("ResendConfirmation")}
               >
                 {"Or go here to have it resent."}
               </Text>
@@ -265,7 +263,7 @@ const getStyles = (theme) =>
     },
     textLink: {
       textDecorationLine: "underline",
-      color: theme.theme == "dark" ? theme.purple : theme.pink1,
+      color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
       fontFamily: "mediumFont",
     },
   });
