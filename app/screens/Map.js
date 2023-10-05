@@ -257,8 +257,13 @@ class Map extends Component {
   }
 
   render() {
-    const { isFetchingLocations, navigation, query, selectedLocation } =
-      this.props;
+    const {
+      isFetchingLocations,
+      navigation,
+      query,
+      selectedLocation,
+      numLocations,
+    } = this.props;
 
     const { showUpdateSearch } = this.state;
     const { theme } = this.context;
@@ -306,6 +311,11 @@ class Map extends Component {
             <Text style={s.loadingText}>Loading...</Text>
           </View>
         ) : null}
+        {numLocations === 0 && !isFetchingLocations && (
+          <View style={s.loading}>
+            <Text style={s.loadingText}>No Results</Text>
+          </View>
+        )}
         {maxZoom ? (
           <View style={s.loading}>
             <Text style={s.loadingText}>Zoom in to update results</Text>
@@ -568,11 +578,14 @@ Map.propTypes = {
 const mapStateToProps = (state) => {
   const { locations, query, regions } = state;
   const selectedLocation = getSelectedMapLocation(state);
+  const numLocations = locations.mapLocations.length;
+
   return {
     query,
     regions,
     isFetchingLocations: locations.isFetchingLocations,
     selectedLocation,
+    numLocations,
   };
 };
 const mapDispatchToProps = (dispatch) => ({
