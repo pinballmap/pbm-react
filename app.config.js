@@ -2,7 +2,6 @@ import "dotenv/config";
 
 export default {
   expo: {
-    orientation: "portrait",
     assetBundlePatterns: ["app/assets/images/*"],
     splash: {
       image: "app/assets/images/pbm-splash-2022.png",
@@ -55,7 +54,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "156",
+      buildNumber: "157",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -87,7 +86,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 132,
+      versionCode: 133,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
