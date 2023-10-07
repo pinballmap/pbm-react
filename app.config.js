@@ -15,7 +15,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.3",
+    version: "5.3.4",
     slug: "pbm-app",
     owner: "pinballmap",
     name: "Pinball Map",
@@ -55,7 +55,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "154",
+      buildNumber: "156",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
