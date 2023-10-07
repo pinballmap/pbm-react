@@ -8,7 +8,6 @@ import {
   fetchOperators,
   getLocationAndMachineCounts,
 } from "../actions";
-import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
 
 const AppWrapper = ({
@@ -20,11 +19,6 @@ const AppWrapper = ({
   getLocationAndMachineCounts,
 }) => {
   const [loading, setIsLoading] = useState(true);
-
-  const loaded = async () => {
-    await SplashScreen.hideAsync();
-    setIsLoading(false);
-  };
 
   useEffect(() => {
     async function isLoading() {
@@ -48,9 +42,9 @@ const AppWrapper = ({
             "/regions/location_and_machine_counts.json",
           ),
         ]);
-        loaded();
+        setIsLoading(false);
       } catch (e) {
-        loaded();
+        setIsLoading(false);
       }
     }
 

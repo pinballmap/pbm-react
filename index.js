@@ -57,11 +57,6 @@ const App = () => {
       (darkThemeOverride) =>
         defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
     );
-
-    async function prepare() {
-      await SplashScreen.preventAutoHideAsync();
-    }
-    prepare();
   }, []);
 
   const toggleDefaultTheme = () =>
@@ -79,6 +74,14 @@ const App = () => {
     extraBoldFont: Nunito_800ExtraBold,
     blackFont: Nunito_900Black,
   });
+
+  useEffect(() => {
+    const hideSplash = async () => await SplashScreen.hideAsync();
+
+    if (fontsLoaded) {
+      hideSplash();
+    }
+  }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;
