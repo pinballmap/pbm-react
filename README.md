@@ -12,6 +12,18 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.4
+
+- Fixed the splash screen bug
+- Added a "none found" message when the map is showing an area (or filtered search) that contains no locations
+- Updated the FAQ
+
+### 5.3.3
+
+October 4, 2023
+
+- (iOS-only release): Attempt to fix a bug that caused the splash screen to get stuck on cold starts.
+
 ### 5.3.2
 
 August 16, 2023
