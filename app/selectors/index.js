@@ -53,7 +53,6 @@ export const getMapLocations = createSelector(
   [mapLocations],
   (locations = []) => {
     return locations.map((loc, index) => {
-      console.log(loc);
       return {
         type: "Feature",
         id: loc.id,
@@ -61,6 +60,7 @@ export const getMapLocations = createSelector(
           order: index,
           num_machines: loc.num_machines,
           location_type_id: loc.location_type_id,
+          name: loc.name,
         },
         geometry: {
           type: "Point",
