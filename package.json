@@ -12,7 +12,7 @@
     "@react-navigation/stack": "^6.2.3",
     "@rneui/base": "^4.0.0-rc.6",
     "@rneui/themed": "^4.0.0-rc.6",
-    "@rnmapbox/maps": "^10.0.12",
+    "@rnmapbox/maps": "^10.0.15",
     "@sentry/react-native": "5.5.0",
     "@shopify/flash-list": "1.4.3",
     "dotenv": "^10.0.0",
@@ -25,6 +25,7 @@
     "expo-device": "~5.4.0",
     "expo-font": "~11.4.0",
     "expo-location": "~16.1.0",
+    "expo-screen-orientation": "~6.0.5",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.16",
@@ -49,8 +50,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "sentry-expo": "~7.0.0",
-    "throttle-debounce": "^2.1.0",
-    "expo-screen-orientation": "~6.0.5"
+    "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
