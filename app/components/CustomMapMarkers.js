@@ -9,9 +9,9 @@ import { useDispatch } from "react-redux";
 const iconStyles = {
   iconImage: ["step", ["get", "num_machines"], "one", 10, "moreOne"],
   iconAllowOverlap: true,
-  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.1, 24, 0.2],
+  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.8],
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 32],
-  iconOffset: [0, -80],
+  iconOffset: [0, -20],
   iconOpacity: ["step", ["get", "num_machines"], 0.8, 2, 0.85],
   symbolSortKey: ["get", "num_machines"],
   textField: ["get", "num_machines"],
@@ -61,8 +61,8 @@ const CustomMapMarkers = React.memo(() => {
       <Mapbox.SymbolLayer id={"symbol-id1"} style={iconStyles} />
       <Mapbox.Images
         images={{
-          one: require("../assets/marker-draft5.png"),
-          moreOne: require("../assets/marker-draft4.png"),
+          one: require("../assets/marker-one.png"),
+          moreOne: require("../assets/marker-more.png"),
         }}
       />
       <Mapbox.SymbolLayer
