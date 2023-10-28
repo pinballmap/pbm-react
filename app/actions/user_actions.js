@@ -201,7 +201,7 @@ export const messageSubmissionFailed = (err) => {
 };
 
 export const setUnitPreference = (unitPreference) => {
-  AsyncStorage.setItem("unitPreference", JSON.stringify(unitPreference === 1));
+  AsyncStorage.setItem("unitPreference", JSON.stringify(!!unitPreference));
   return {
     type: SET_UNIT_PREFERENCE,
     unitPreference,
