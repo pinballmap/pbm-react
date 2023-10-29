@@ -13,8 +13,6 @@ import DrawerMenu from "./DrawerMenu";
 import Screen from "./Screen";
 import withThemeHOC from "./withThemeHOC";
 import ActivityIndicator from "./ActivityIndicator";
-import IosMarker from "./IosMarker";
-import CustomMapMarker from "./CustomMapMarker";
 import AppAlert from "./AppAlert";
 import NoLocationTrackingModal from "./NoLocationTrackingModal";
 import AppWrapper from "./AppWrapper";
@@ -39,8 +37,6 @@ export {
   Screen,
   withThemeHOC,
   ActivityIndicator,
-  IosMarker,
-  CustomMapMarker,
   AppAlert,
   NoLocationTrackingModal,
   AppWrapper,
