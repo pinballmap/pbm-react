@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Platform, StyleSheet, View, Pressable } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, View, Pressable } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { sleep } from "../utils";
 import { ThemeContext } from "../theme-context";
-import ActivityIndicator from "./ActivityIndicator";
 import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -18,19 +16,6 @@ const LocationBottomSheet = React.memo(
   ({ navigation, location, locations, user, setToCurrentBounds }) => {
     const { theme } = useContext(ThemeContext);
     const s = getStyles(theme);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-      // When the location changes add a loading state. In the event multiple markers were touched, the
-      // bottom sheet will flash with different locations as it cycles through, so we hide data while it cycles
-      (async () => {
-        if (Platform.OS === "ios") {
-          setLoading(true);
-          await sleep(250);
-          setLoading(false);
-        }
-      })();
-    }, [location]);
 
     const {
       city,
@@ -58,116 +43,112 @@ const LocationBottomSheet = React.memo(
 
     return (
       <View style={s.container}>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <Pressable
-            style={({ pressed }) => (pressed ? s.pressed : s.notPressed)}
-            onPress={onPress}
-          >
-            <View style={s.flexi}>
-              <View style={{ zIndex: 10, flex: 1 }}>
-                <View style={s.locationNameContainer}>
-                  <View style={s.nameItem}>
-                    <Text style={s.locationName}>{name}</Text>
-                  </View>
-                  <View style={s.heartItem}>
-                    <FavoriteLocation
-                      locationId={id}
-                      navigation={navigation}
-                      removeFavorite={(cb) => cb()}
-                    />
-                  </View>
+        <Pressable
+          style={({ pressed }) => (pressed ? s.pressed : s.notPressed)}
+          onPress={onPress}
+        >
+          <View style={s.flexi}>
+            <View style={{ zIndex: 10, flex: 1 }}>
+              <View style={s.locationNameContainer}>
+                <View style={s.nameItem}>
+                  <Text style={s.locationName}>{name}</Text>
                 </View>
-                <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
-                  <View style={{ flexDirection: "row" }}>
-                    <MaterialIcons name="location-on" style={s.metaIcon} />
-                    <Text
-                      style={[s.address]}
-                      numberOfLines={1}
-                      ellipsizeMode={"tail"}
-                    >{`${street}, ${cityState} ${zip}`}</Text>
-                  </View>
-                  <View style={s.margin}>
-                    <Text>
-                      {machine_names_first.map((m, index) => {
-                        const idx =
-                          typeof m === "string" ? m.lastIndexOf("(") : -1;
-                        const title =
-                          typeof m === "string" ? m.slice(0, idx) : m.name;
-                        const key = typeof m === "string" ? m : m.name;
-                        return (
-                          <Text key={key}>
-                            <Text style={s.machineName}>
-                              {`${title.trim()}${
-                                index !== machine_names_first.length - 1
-                                  ? " \u2022 "
-                                  : ""
-                              }`}
-                            </Text>
-                          </Text>
-                        );
-                      })}
-                      {num_machines > NUM_MACHINES_TO_SHOW ? (
-                        <Text style={[s.plus, s.italic]}>{`  ...plus ${
-                          num_machines - NUM_MACHINES_TO_SHOW
-                        } more!`}</Text>
-                      ) : null}
-                    </Text>
-                  </View>
+                <View style={s.heartItem}>
+                  <FavoriteLocation
+                    locationId={id}
+                    navigation={navigation}
+                    removeFavorite={(cb) => cb()}
+                  />
                 </View>
-                {locationType || user.locationTrackingServicesEnabled ? (
-                  <View style={s.locationTypeContainer}>
-                    {locationType ? (
-                      <View style={s.vertAlign}>
-                        <Icon
-                          name={locationType.icon}
-                          type={locationType.library}
-                          color={theme.colors.inactiveTab}
-                          size={30}
-                          style={s.icon}
-                        />
-                        <Text
-                          style={{
-                            marginRight: 15,
-                            color: theme.text3,
-                            fontFamily: "semiBoldFont",
-                          }}
-                        >
-                          {" "}
-                          {locationType.name}
-                        </Text>
-                      </View>
-                    ) : null}
-                    {user.locationTrackingServicesEnabled ? (
-                      <View style={s.vertAlign}>
-                        <MaterialCommunityIcons
-                          name="compass-outline"
-                          style={s.icon}
-                        />
-                        <Text
-                          style={{
-                            color: theme.text3,
-                            fontFamily: "semiBoldFont",
-                          }}
-                        >
-                          {" "}
-                          {getDistanceWithUnit(
-                            user.lat,
-                            user.lon,
-                            lat,
-                            lon,
-                            user.unitPreference,
-                          )}
-                        </Text>
-                      </View>
-                    ) : null}
-                  </View>
-                ) : null}
               </View>
+              <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
+                <View style={{ flexDirection: "row" }}>
+                  <MaterialIcons name="location-on" style={s.metaIcon} />
+                  <Text
+                    style={[s.address]}
+                    numberOfLines={1}
+                    ellipsizeMode={"tail"}
+                  >{`${street}, ${cityState} ${zip}`}</Text>
+                </View>
+                <View style={s.margin}>
+                  <Text>
+                    {machine_names_first.map((m, index) => {
+                      const idx =
+                        typeof m === "string" ? m.lastIndexOf("(") : -1;
+                      const title =
+                        typeof m === "string" ? m.slice(0, idx) : m.name;
+                      const key = typeof m === "string" ? m : m.name;
+                      return (
+                        <Text key={key}>
+                          <Text style={s.machineName}>
+                            {`${title.trim()}${
+                              index !== machine_names_first.length - 1
+                                ? " \u2022 "
+                                : ""
+                            }`}
+                          </Text>
+                        </Text>
+                      );
+                    })}
+                    {num_machines > NUM_MACHINES_TO_SHOW ? (
+                      <Text style={[s.plus, s.italic]}>{`  ...plus ${
+                        num_machines - NUM_MACHINES_TO_SHOW
+                      } more!`}</Text>
+                    ) : null}
+                  </Text>
+                </View>
+              </View>
+              {locationType || user.locationTrackingServicesEnabled ? (
+                <View style={s.locationTypeContainer}>
+                  {locationType ? (
+                    <View style={s.vertAlign}>
+                      <Icon
+                        name={locationType.icon}
+                        type={locationType.library}
+                        color={theme.colors.inactiveTab}
+                        size={30}
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          marginRight: 15,
+                          color: theme.text3,
+                          fontFamily: "semiBoldFont",
+                        }}
+                      >
+                        {" "}
+                        {locationType.name}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {user.locationTrackingServicesEnabled ? (
+                    <View style={s.vertAlign}>
+                      <MaterialCommunityIcons
+                        name="compass-outline"
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          color: theme.text3,
+                          fontFamily: "semiBoldFont",
+                        }}
+                      >
+                        {" "}
+                        {getDistanceWithUnit(
+                          user.lat,
+                          user.lon,
+                          lat,
+                          lon,
+                          user.unitPreference,
+                        )}
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
+              ) : null}
             </View>
-          </Pressable>
-        )}
+          </View>
+        </Pressable>
       </View>
     );
   },
