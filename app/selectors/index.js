@@ -47,12 +47,24 @@ export const filterSelected = createSelector(queryState, (query) =>
 );
 
 const mapLocations = ({ locations }) => locations.mapLocations;
-//const faveLocations = ({ user }) => user.faveLocations;
+const faveLocations = ({ user }) => user.faveLocations;
+export const selectedMapLocation = ({ locations }) =>
+  locations.selectedMapLocation;
 
 export const getMapLocations = createSelector(
-  [mapLocations],
-  (locations = []) => {
+  [mapLocations, faveLocations, selectedMapLocation],
+  (locations = [], faveLocations = [], selectedMapLocation) => {
     return locations.map((loc, index) => {
+      const getIcon = () => {
+        if (loc.id === selectedMapLocation) {
+          return loc.num_machines < 10 ? "oneSelected" : "moreOneSelected";
+        }
+        const isFave =
+          faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
+        return loc.num_machines < 10
+          ? `one${isFave ? "Heart" : ""}`
+          : `moreOne${isFave ? "Heart" : ""}`;
+      };
       return {
         type: "Feature",
         id: loc.id,
@@ -61,6 +73,7 @@ export const getMapLocations = createSelector(
           num_machines: loc.num_machines,
           location_type_id: loc.location_type_id,
           name: loc.name,
+          icon: getIcon(),
         },
         geometry: {
           type: "Point",
@@ -70,9 +83,6 @@ export const getMapLocations = createSelector(
     });
   },
 );
-
-export const selectedMapLocation = ({ locations }) =>
-  locations.selectedMapLocation;
 
 export const getSelectedMapLocation = createSelector(
   [mapLocations, selectedMapLocation],

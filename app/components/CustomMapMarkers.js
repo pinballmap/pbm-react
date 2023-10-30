@@ -7,7 +7,7 @@ import { setSelectedMapLocation } from "../actions";
 import { useDispatch } from "react-redux";
 
 const iconStyles = {
-  iconImage: ["step", ["get", "num_machines"], "one", 10, "moreOne"],
+  iconImage: ["get", "icon"],
   iconAllowOverlap: true,
   iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.8],
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 32],
@@ -63,6 +63,10 @@ const CustomMapMarkers = React.memo(() => {
         images={{
           one: require("../assets/marker-one.png"),
           moreOne: require("../assets/marker-more.png"),
+          oneHeart: require("../assets/marker-one-heart.png"),
+          moreOneHeart: require("../assets/marker-more-heart.png"),
+          oneSelected: require("../assets/marker-one-selected.png"),
+          moreOneSelected: require("../assets/marker-more-selected.png"),
         }}
       />
       <Mapbox.SymbolLayer
