@@ -54,33 +54,36 @@ export const selectedMapLocation = ({ locations }) =>
 export const getMapLocations = createSelector(
   [mapLocations, faveLocations, selectedMapLocation],
   (locations = [], faveLocations = [], selectedMapLocation) => {
-    return locations.map((loc, index) => {
-      const getIcon = () => {
-        if (loc.id === selectedMapLocation) {
-          return loc.num_machines < 10 ? "oneSelected" : "moreOneSelected";
-        }
-        const isFave =
-          faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
-        return loc.num_machines < 10
-          ? `one${isFave ? "Heart" : ""}`
-          : `moreOne${isFave ? "Heart" : ""}`;
-      };
-      return {
-        type: "Feature",
-        id: loc.id,
-        properties: {
-          order: index,
-          num_machines: loc.num_machines,
-          location_type_id: loc.location_type_id,
-          name: loc.name,
-          icon: getIcon(),
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [Number(loc.lon), Number(loc.lat)],
-        },
-      };
-    });
+    return locations
+      .sort((a, b) => b.num_machines - a.num_machines)
+      .reverse()
+      .map((loc, index) => {
+        const getIcon = () => {
+          if (loc.id === selectedMapLocation) {
+            return loc.num_machines < 10 ? "oneSelected" : "moreOneSelected";
+          }
+          const isFave =
+            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
+          return loc.num_machines < 10
+            ? `one${isFave ? "Heart" : ""}`
+            : `moreOne${isFave ? "Heart" : ""}`;
+        };
+        return {
+          type: "Feature",
+          id: loc.id,
+          properties: {
+            order: index,
+            num_machines: loc.num_machines,
+            location_type_id: loc.location_type_id,
+            name: loc.name,
+            icon: getIcon(),
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [Number(loc.lon), Number(loc.lat)],
+          },
+        };
+      });
   },
 );
 
