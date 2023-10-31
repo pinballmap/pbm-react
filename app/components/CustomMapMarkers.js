@@ -13,7 +13,7 @@ const iconStyles = {
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 32],
   iconOffset: [0, -20],
   iconOpacity: ["step", ["get", "num_machines"], 0.8, 2, 0.85],
-  symbolSortKey: ["get", "num_machines"],
+  symbolSortKey: ["get", "order"],
   textField: ["get", "num_machines"],
   textAllowOverlap: true,
   textColor: "#ffffff",
