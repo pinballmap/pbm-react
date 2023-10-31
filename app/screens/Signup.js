@@ -14,7 +14,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import { login, loginLater } from "../actions/user_actions";
+import { loginLater } from "../actions/user_actions";
 import { postData } from "../config/request";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -22,7 +22,7 @@ import { ConfirmationModal, PbmButton } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
 
-const Signup = ({ login, loginLater, navigation }) => {
+const Signup = ({ loginLater, navigation }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -119,7 +119,6 @@ const Signup = ({ login, loginLater, navigation }) => {
 
           if (data.user) {
             setModalVisible(true);
-            login(data.user);
           }
         })
         .catch((err) => {
@@ -152,7 +151,7 @@ const Signup = ({ login, loginLater, navigation }) => {
             size={45}
             onPress={() => {
               setModalVisible(false);
-              navigation.navigate("MapTab");
+              navigation.navigate("Login");
             }}
             style={s.xButton}
           />
@@ -372,14 +371,12 @@ const getStyles = (theme) =>
   });
 
 Signup.propTypes = {
-  login: PropTypes.func,
   loginLater: PropTypes.func,
   navigation: PropTypes.object,
 };
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => ({
-  login: (credentials) => dispatch(login(credentials)),
   loginLater: () => dispatch(loginLater()),
 });
 

@@ -7,9 +7,11 @@ import {
   fetchMachines,
   fetchOperators,
   getLocationAndMachineCounts,
+  setUnitPreference,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
+import { retrieveItem } from "../config/utils";
 
 const AppWrapper = ({
   children,
@@ -18,6 +20,7 @@ const AppWrapper = ({
   getMachines,
   getOperators,
   getLocationAndMachineCounts,
+  setUnitPreference,
 }) => {
   const [loading, setIsLoading] = useState(true);
 
@@ -37,6 +40,10 @@ const AppWrapper = ({
           ),
         );
       };
+
+      retrieveItem("unitPreference").then((unitPreference) =>
+        setUnitPreference(!!unitPreference),
+      );
 
       try {
         await allSettled([
@@ -78,5 +85,6 @@ const mapDispatchToProps = (dispatch) => ({
   getOperators: (url) => dispatch(fetchOperators(url)),
   getLocationAndMachineCounts: (url) =>
     dispatch(getLocationAndMachineCounts(url)),
+  setUnitPreference: (pref) => dispatch(setUnitPreference(pref)),
 });
 export default connect(null, mapDispatchToProps)(AppWrapper);
