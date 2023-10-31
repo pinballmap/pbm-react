@@ -40,7 +40,7 @@ const textFloat = (theme) => ({
   textColor: theme === "dark" ? "#e4c4c4" : "#553a3a",
   textFont: ["Nunito Sans SemiBold"],
   iconAllowOverlap: false,
-  symbolSortKey: ["get", "order"],
+  symbolSortKey: ["get", "textOrder"],
 });
 
 const CustomMapMarkers = React.memo(() => {

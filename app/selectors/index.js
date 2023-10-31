@@ -55,8 +55,7 @@ export const getMapLocations = createSelector(
   [mapLocations, faveLocations, selectedMapLocation],
   (locations = [], faveLocations = [], selectedMapLocation) => {
     return locations
-      .sort((a, b) => b.num_machines - a.num_machines)
-      .reverse()
+      .sort((a, b) => a.num_machines - b.num_machines)
       .map((loc, index) => {
         const getIcon = () => {
           if (loc.id === selectedMapLocation) {
@@ -73,6 +72,7 @@ export const getMapLocations = createSelector(
           id: loc.id,
           properties: {
             order: index,
+            textOrder: locations.length - index,
             num_machines: loc.num_machines,
             location_type_id: loc.location_type_id,
             name: loc.name,
