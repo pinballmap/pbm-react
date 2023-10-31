@@ -13,7 +13,7 @@ const iconStyles = {
   iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.8],
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 32],
   iconOffset: [0, -20],
-  iconOpacity: ["step", ["get", "num_machines"], 0.8, 2, 0.85],
+  iconOpacity: ["step", ["get", "num_machines"], 0.85, 2, 0.9],
   symbolSortKey: ["get", "order"],
   textField: ["get", "num_machines"],
   textAllowOverlap: true,
@@ -37,9 +37,10 @@ const textFloat = (theme) => ({
   textJustify: "center",
   textAnchor: "bottom",
   textAllowOverlap: false,
-  textColor: theme === "dark" ? "white" : "#cc8c8c",
+  textColor: theme === "dark" ? "#e4c4c4" : "#553a3a",
   textFont: ["Nunito Sans SemiBold"],
   iconAllowOverlap: false,
+  symbolSortKey: ["get", "order"],
 });
 
 const CustomMapMarkers = React.memo(() => {
