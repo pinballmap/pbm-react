@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Mapbox from "@rnmapbox/maps";
+import { useTheme } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { getMapLocations } from "../selectors";
 import { setSelectedMapLocation } from "../actions";
@@ -21,7 +22,7 @@ const iconStyles = {
   textFont: ["Nunito Sans Bold"],
 };
 
-const textFloat = {
+const textFloat = (theme) => ({
   textField: [
     "step",
     ["zoom"],
@@ -36,12 +37,13 @@ const textFloat = {
   textJustify: "center",
   textAnchor: "bottom",
   textAllowOverlap: false,
-  textColor: "#cc8c8c",
+  textColor: theme === "dark" ? "white" : "#cc8c8c",
   textFont: ["Nunito Sans SemiBold"],
   iconAllowOverlap: false,
-};
+});
 
 const CustomMapMarkers = React.memo(() => {
+  const theme = useTheme();
   const locations = useSelector(getMapLocations);
   const features = {
     type: "FeatureCollection",
@@ -71,7 +73,7 @@ const CustomMapMarkers = React.memo(() => {
       />
       <Mapbox.SymbolLayer
         id={"symbol-id2"}
-        style={textFloat}
+        style={textFloat(theme.theme)}
         minZoomLevel={11}
         maxZoomLevel={24}
       />
