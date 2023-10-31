@@ -5,14 +5,24 @@
   "build": {
     "development": {
       "ios": {
-        "resourceClass": "m-medium"
+        "resourceClass": "m-medium",
       },
       "developmentClient": true,
       "distribution": "internal",
       "env": {
         "API_URL": "https://www.pinballmap.com/api/v1"
       },
-      "channel": "development"
+    },
+    "developmentSim": {
+      "ios": {
+        "resourceClass": "m-medium",
+        "simulator": true
+      },
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://www.pinballmap.com/api/v1"
+      },
     },
     "preview": {
       "distribution": "internal",

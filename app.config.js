@@ -54,7 +54,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "158",
+      buildNumber: "159",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
