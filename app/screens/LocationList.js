@@ -29,6 +29,7 @@ export class LocationList extends Component {
       this.setState({ showNoLocationTrackingModal: true });
     }
     this.props.selectLocationListFilterBy(buttonIndex);
+    this.sortLocations(this.state.locations, buttonIndex);
   };
 
   sortLocations(locations, idx) {
@@ -71,25 +72,6 @@ export class LocationList extends Component {
         return this.setState({
           locations: locations.sort((a, b) => b.num_machines - a.num_machines),
         });
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(props) {
-    if (this.state.locations !== props.locations.mapLocations) {
-      this.sortLocations(
-        props.locations.mapLocations,
-        this.props.locations.selectedLocationListFilter,
-      );
-    }
-
-    if (
-      this.props.locations.selectedLocationListFilter !==
-      props.locations.selectedLocationListFilter
-    ) {
-      this.sortLocations(
-        this.state.locations,
-        props.locations.selectedLocationListFilter,
-      );
     }
   }
 
