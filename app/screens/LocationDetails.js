@@ -355,7 +355,7 @@ class LocationDetails extends Component {
                         pitchEnabled={false}
                         rotateEnabled={false}
                         logoEnabled={false}
-                        attributionPosition={{ bottom: 4, right: -4 }}
+                        attributionPosition={{ bottom: 4, right: 0 }}
                         styleURL={
                           theme.theme === "dark"
                             ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"

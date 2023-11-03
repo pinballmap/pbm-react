@@ -368,7 +368,7 @@ class Map extends Component {
             {},
             s.containerStyle,
             s.myLocationContainer,
-            pressed ? s.pressed : s.notPressed,
+            pressed ? s.pressedMyLocation : s.notPressed,
           ]}
           onPress={this.updateCurrentLocation}
         >
@@ -503,17 +503,17 @@ const getStyles = (theme) =>
       bottom: 15,
       alignSelf: "center",
       borderRadius: 25,
-      backgroundColor: theme.purple,
+      backgroundColor: "#66017b",
       paddingVertical: 8,
       paddingHorizontal: 15,
     },
     updateTitleStyle: {
-      color: theme.white,
+      color: "#FFFFFF",
       fontSize: 18,
     },
     pressedTitleStyle: {
       color: theme.pink3,
-      fontSize: 16,
+      fontSize: 17,
       fontFamily: "regularFont",
     },
     myLocationContainer: {
@@ -548,7 +548,10 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
     },
     pressed: {
-      opacity: 0.8,
+      opacity: 0.9,
+    },
+    pressedMyLocation: {
+      opacity: 0.9,
       backgroundColor: theme.pink2,
     },
     notPressed: {

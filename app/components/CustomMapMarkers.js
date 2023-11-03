@@ -18,7 +18,7 @@ const iconStyles = {
   textField: ["get", "num_machines"],
   textAllowOverlap: true,
   textColor: "#ffffff",
-  textOffset: [0, -0.65],
+  textOffset: [0, -0.66],
   textFont: ["Nunito Sans Bold"],
 };
 
