@@ -12,7 +12,18 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.5
+
+November 3, 2023
+
+- New map marker styles, as well as location name labels becoming visible as you zoom
+- Map markers with more machines will appear above those with fewer
+- Fix bug where setting distance unit to km was resetting back to miles
+- Require users to confirm account via email before logging in after account creation
+
 ### 5.3.4
+
+October 6, 2023
 
 - Fixed the splash screen bug
 - Added a "none found" message when the map is showing an area (or filtered search) that contains no locations
