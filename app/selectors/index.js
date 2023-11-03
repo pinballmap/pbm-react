@@ -74,7 +74,6 @@ export const getMapLocations = createSelector(
             order: index,
             textOrder: locations.length - index,
             num_machines: loc.num_machines,
-            location_type_id: loc.location_type_id,
             name: loc.name,
             icon: getIcon(),
           },
