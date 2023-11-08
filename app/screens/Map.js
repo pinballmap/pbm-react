@@ -346,7 +346,10 @@ class Map extends Component {
             animationMode="none"
             animationDuration={0}
           />
-          <Mapbox.UserLocation visible renderMode="native" />
+          <Mapbox.UserLocation
+            visible
+            renderMode={Platform.OS === "ios" ? "native" : "normal"}
+          />
           <CustomMapMarkers navigation={navigation} />
         </Mapbox.MapView>
         <Button
