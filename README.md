@@ -12,6 +12,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.6
+
+November 7, 2023
+
+- Made it so the map doesn't unnecessarily "auto refresh" results when you go to it after viewing a location
+- Fixed (or at least improved) issue with the user location marker getting in the way of clicking map markers
+
 ### 5.3.5
 
 November 3, 2023
