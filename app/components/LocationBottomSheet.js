@@ -13,7 +13,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 const NUM_MACHINES_TO_SHOW = 5;
 
 const LocationBottomSheet = React.memo(
-  ({ navigation, location, locations, user, setToCurrentBounds }) => {
+  ({
+    navigation,
+    location,
+    locations,
+    user,
+    setToCurrentBounds,
+    triggerUpdate,
+  }) => {
     const { theme } = useContext(ThemeContext);
     const s = getStyles(theme);
 
@@ -37,7 +44,8 @@ const LocationBottomSheet = React.memo(
     );
 
     const onPress = async () => {
-      await setToCurrentBounds();
+      const bounds = await setToCurrentBounds();
+      await triggerUpdate(bounds);
       navigation.navigate("LocationDetails", { id });
     };
 

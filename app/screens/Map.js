@@ -64,7 +64,7 @@ class Map extends Component {
     if (url.indexOf("location_id=") > 0) {
       const idSegment = url.split("location_id=")[1];
       const id = idSegment.split("&")[0];
-      navigate("LocationDetails", { id });
+      navigate("LocationDetails", { id, refreshMap: true });
       this.setState({ moveMapToLocation: id, willMoveMapToLocation: true });
     } else if (url.indexOf("address=") > 0) {
       const decoded = decodeURIComponent(url);
@@ -422,6 +422,7 @@ class Map extends Component {
             navigation={navigation}
             location={selectedLocation}
             setToCurrentBounds={this.setToCurrentBounds}
+            triggerUpdate={this.props.triggerUpdate}
           />
         )}
       </SafeAreaView>

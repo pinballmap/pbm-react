@@ -173,7 +173,10 @@ class Search extends Component {
         lon: parseFloat(lon),
       });
       this.props.triggerUpdateBounds(bounds);
-      this.props.navigate("LocationDetails", { id: location.id });
+      this.props.navigate("LocationDetails", {
+        id: location.id,
+        refreshMap: true,
+      });
       this.clearSearchState(location);
     } catch (e) {
       Alert.alert("Location not found");

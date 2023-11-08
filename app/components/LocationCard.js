@@ -46,7 +46,12 @@ const LocationCard = ({
           s.containerStyle,
           pressed ? s.pressed : s.notPressed,
         ]}
-        onPress={() => navigation.navigate("LocationDetails", { id })}
+        onPress={() =>
+          navigation.navigate("LocationDetails", {
+            id,
+            ...(saved && { refreshMap: true }),
+          })
+        }
       >
         <View style={s.flexi}>
           <View style={{ zIndex: 10, flex: 1 }}>

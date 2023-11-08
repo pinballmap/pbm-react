@@ -78,7 +78,9 @@ class LocationDetails extends Component {
   };
 
   componentWillUnmount() {
-    this.props.dispatch({ type: TRIGGER_UPDATE_BOUNDS });
+    if (!!this.props.route.params["refreshMap"]) {
+      this.props.dispatch({ type: TRIGGER_UPDATE_BOUNDS });
+    }
   }
 
   UNSAFE_componentWillReceiveProps(props) {
