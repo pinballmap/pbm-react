@@ -119,15 +119,14 @@ const FAQ = ({ navigation }) => {
             >{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
             <Text style={s.bold}>{`How do I add a new location?`}</Text>
             <Text style={s.text}>
-              {`Fill out`}{" "}
+              {`Fill out `}
               <Text
                 onPress={() => navigation.navigate("SuggestLocation")}
                 style={s.textLink}
               >
                 {"this form"}
               </Text>
-              !{" "}
-              {`You can also reach the submission form by clicking the menu icon in the lower right, and choosing "Submit Location". Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added!`}
+              {` (or go to the menu icon in the lower right of the map screen and choose "Submit Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added!`}
             </Text>
             <Text
               style={s.bold}
@@ -162,7 +161,7 @@ const FAQ = ({ navigation }) => {
             <Text style={s.text}>
               {`\u2022 If your account has been used to mess with data on the site, then we may ban it. Bad behavior includes, but is not limited to: deleting machines that are at a location; adding machines that are not at a location; leaving lots of inappropriate/abusive comments.\n\n`}
 
-              {`\u2022 You created a sockpuppet account to hype your location and/or disparage the competition. This is unethical and it makes the site worse. Don't do this. Look in the mirror.`}
+              {`\u2022 You created a sockpuppet account to hype your location and/or disparage the competition. This is unethical and it makes the site worse. Don't do this. Look in the mirror.\n\n`}
 
               {`\u2022 You signed up with a disposable email account. We sometimes have legitimate reasons for contacting you individually. Disposable emails are most often used by people who abuse the site.`}
             </Text>
