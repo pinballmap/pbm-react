@@ -31,6 +31,7 @@ import {
   fetchLocation,
   setCurrentMachine,
   setSelectedMapLocation,
+  updateMap,
 } from "../actions";
 import { TRIGGER_UPDATE_BOUNDS } from "../actions/types";
 import {
@@ -50,6 +51,7 @@ class LocationDetails extends Component {
   state = {
     id: this.props.route.params["id"],
     showLocationToolsModal: false,
+    navigateToMap: false,
   };
 
   getTitle = (machine, s) => (
@@ -77,9 +79,20 @@ class LocationDetails extends Component {
     }
   };
 
+  onMapPress = () => {
+    this.props.navigation.navigate("MapTab");
+    this.setState({ navigateToMap: true });
+  };
+
   componentWillUnmount() {
     if (!!this.props.route.params["refreshMap"]) {
       this.props.dispatch({ type: TRIGGER_UPDATE_BOUNDS });
+    }
+
+    if (this.state.navigateToMap) {
+      const { lat, lon, id } = this.props.location.location;
+      this.props.dispatch(updateMap(lat, lon));
+      this.props.dispatch(setSelectedMapLocation(id));
     }
   }
 
@@ -357,6 +370,7 @@ class LocationDetails extends Component {
                         pitchEnabled={false}
                         rotateEnabled={false}
                         logoEnabled={false}
+                        onPress={this.onMapPress}
                         attributionPosition={{ bottom: 4, right: 0 }}
                         styleURL={
                           theme.theme === "dark"

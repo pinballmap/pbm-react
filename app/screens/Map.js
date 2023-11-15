@@ -27,7 +27,6 @@ import {
   setUnitPreference,
   updateBounds,
   getLocationsByRegion,
-  fetchLocationAndUpdateMap,
   getLocationsConsideringZoom,
   triggerUpdateBounds,
   setSelectedMapLocation,
@@ -579,7 +578,6 @@ Map.propTypes = {
   login: PropTypes.func,
   getLocationAndMachineCounts: PropTypes.func,
   getLocationsByRegion: PropTypes.func,
-  fetchLocationAndUpdateMap: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -607,8 +605,6 @@ const mapDispatchToProps = (dispatch) => ({
   getLocationsConsideringZoom: (bounds) =>
     dispatch(getLocationsConsideringZoom(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
-  fetchLocationAndUpdateMap: (locationId) =>
-    dispatch(fetchLocationAndUpdateMap(locationId)),
   triggerUpdate: (bounds) => dispatch(triggerUpdateBounds(bounds)),
   dispatch,
 });
