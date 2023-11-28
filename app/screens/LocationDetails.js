@@ -395,7 +395,16 @@ class LocationDetails extends Component {
                             Number(location.lat),
                           ]}
                         >
-                          <View style={s.markerDot}></View>
+                          <View style={s.markerDot}>
+                            <Text
+                              style={{
+                                textAlign: "center",
+                                fontFamily: "semiBoldFont",
+                              }}
+                            >
+                              {location.num_machines}
+                            </Text>
+                          </View>
                         </Mapbox.PointAnnotation>
                       </Mapbox.MapView>
                     </View>
@@ -961,13 +970,16 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     markerDot: {
-      width: 24,
+      width: 40,
       height: 24,
-      borderRadius: 24 / 2,
-      borderWidth: 3,
+      borderRadius: 15,
+      borderWidth: 1,
       borderColor: "#ecd0f2",
       backgroundColor: "#5f4d61",
       elevation: 1,
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
     },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
