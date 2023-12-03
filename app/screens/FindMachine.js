@@ -319,6 +319,7 @@ class FindMachine extends React.PureComponent {
     const multiSelect =
       (this.props.route.params && this.props.route.params["multiSelect"]) ||
       false;
+    const isFiltering = this.props.route.params?.machineFilter;
     const selectedIdx = this.state.machinesInView ? 1 : 0;
     const theme = this.context.theme;
     const s = getStyles(theme);
@@ -431,7 +432,7 @@ class FindMachine extends React.PureComponent {
           }}
           autoCorrect={false}
         />
-        {!multiSelect ? (
+        {isFiltering ? (
           <View style={{ backgroundColor: theme.base1 }}>
             <ButtonGroup
               onPress={this.toggleViewMachinesInMapArea}
