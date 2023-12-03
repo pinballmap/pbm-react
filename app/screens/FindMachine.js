@@ -106,7 +106,7 @@ class FindMachine extends React.PureComponent {
     this.props.navigation.setOptions({
       title: this.props.route.params?.machineFilter
         ? "Select Machine to Filter"
-        : "Select Machines",
+        : `Select Machine${this.props.route.params?.multiSelect ? "s" : ""}`,
       headerRight: () =>
         this.props.route.params?.showDone ? (
           <Pressable onPress={() => this.props.navigation.goBack(null)}>
