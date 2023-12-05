@@ -12,6 +12,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.8
+
+December X, 2012
+
+- Show number of machines on the mini-map on the location details screen
+- Don't show "machines in this area" option when adding a machine to a location.
+
 ### 5.3.7
 
 November 16, 2023
