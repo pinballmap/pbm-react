@@ -398,8 +398,10 @@ class LocationDetails extends Component {
                           <View style={s.markerDot}>
                             <Text
                               style={{
-                                textAlign: "center",
                                 fontFamily: "semiBoldFont",
+                                color: "#f5f5ff",
+                                fontSize: 15,
+                                marginTop: Platform.OS === "android" ? -2 : 1,
                               }}
                             >
                               {location.num_machines}
@@ -970,12 +972,12 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     markerDot: {
-      width: 40,
+      width: 42,
       height: 24,
       borderRadius: 15,
       borderWidth: 1,
-      borderColor: "#ecd0f2",
-      backgroundColor: "#5f4d61",
+      borderColor: "#632071",
+      backgroundColor: "#ab63bb",
       elevation: 1,
       flex: 1,
       alignItems: "center",
