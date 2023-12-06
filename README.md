@@ -14,7 +14,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.8
 
-December X, 2012
+December 5, 2023
 
 - Show number of machines on the mini-map on the location details screen
 - Don't show "machines in this area" option when adding a machine to a location.
