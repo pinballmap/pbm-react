@@ -345,7 +345,7 @@ class Map extends Component {
             animationMode="none"
             animationDuration={0}
           />
-          <Mapbox.UserLocation
+          <Mapbox.LocationPuck
             visible
             renderMode={Platform.OS === "ios" ? "native" : "normal"}
           />
