@@ -212,11 +212,15 @@ class Search extends Component {
   isDuplicate = (search) => {
     const isDuplicate = this.state.recentSearchHistory.findIndex((entry) => {
       if (entry.full_name) {
-        if (search.full_name === entry.full_name) return true;
+        return search.full_name === entry.full_name;
+      }
+
+      if (entry.label) {
+        return search.label === entry.label;
       }
 
       if (entry.value) {
-        if (search.value === entry.value) return true;
+        return search.value === entry.value;
       }
 
       return false;
