@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   UPDATE_BOUNDS,
   CLEAR_FILTERS,
@@ -15,6 +16,7 @@ import {
   UPDATE_IGNORE_MAX_ZOOM,
   TRIGGER_UPDATE_BOUNDS,
 } from "../actions/types";
+import { boundsToCoords } from "../utils/utilityFunctions";
 
 export const initialState = {
   locationName: "",
@@ -40,8 +42,11 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
+      const coords = boundsToCoords(action.bounds);
       const { triggerUpdateBounds = false, forceTriggerUpdateBounds = false } =
         action;
+
+      AsyncStorage.setItem("lastCoords", JSON.stringify(coords));
       return {
         ...state,
         swLat,

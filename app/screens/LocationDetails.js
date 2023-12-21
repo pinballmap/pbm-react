@@ -1061,7 +1061,6 @@ LocationDetails.propTypes = {
   closeConfirmModal: PropTypes.func,
   setCurrentMachine: PropTypes.func,
   navigation: PropTypes.object,
-  updateCoordinatesAndGetLocations: PropTypes.func,
   route: PropTypes.object,
 };
 

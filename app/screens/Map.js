@@ -572,8 +572,6 @@ Map.propTypes = {
   getLocationsConsideringZoom: PropTypes.func,
   clearSearchBarText: PropTypes.func,
   setUnitPreference: PropTypes.func,
-  updateCoordinates: PropTypes.func,
-  updateCoordinatesAndGetLocations: PropTypes.func,
   regions: PropTypes.object,
   login: PropTypes.func,
   getLocationAndMachineCounts: PropTypes.func,

@@ -53,14 +53,15 @@ export default (state = initialState, action) => {
         lon: Number(action.lon),
         locationTrackingServicesEnabled: true,
       };
-    case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE:
+    case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE: {
       return {
         ...state,
         isFetchingLocationTrackingEnabled: false,
-        lat: 45.51322,
-        lon: -122.6587,
+        lat: Number(action.lat),
+        lon: Number(action.lon),
         locationTrackingServicesEnabled: false,
       };
+    }
     case FETCHING_LOCATION_TRACKING_FAILURE:
       return {
         ...state,
