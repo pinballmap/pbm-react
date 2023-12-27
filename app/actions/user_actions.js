@@ -16,12 +16,14 @@ import {
   SET_UNIT_PREFERENCE,
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
+  SET_LOCATION_SERVICES_ENABLED,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
+import * as Location from "expo-location";
 
 export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
@@ -30,6 +32,12 @@ export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
     .then(
       (data) => dispatch(getLocationTrackingEnabledSuccess(data)),
       async () => {
+        const isLocationServicesEnabled =
+          await Location.hasServicesEnabledAsync();
+        dispatch({
+          type: SET_LOCATION_SERVICES_ENABLED,
+          isLocationServicesEnabled,
+        });
         let coords = {};
         if (isInitialLoad) {
           const coordsFromStorage = (await retrieveItem("lastCoords")) ?? {};

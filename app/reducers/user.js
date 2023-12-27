@@ -17,6 +17,7 @@ import {
   SET_UNIT_PREFERENCE,
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
+  SET_LOCATION_SERVICES_ENABLED,
 } from "../actions/types";
 
 export const initialState = {
@@ -36,10 +37,16 @@ export const initialState = {
   confirmationMessage: "",
   unitPreference: 0,
   showNoLocationTrackingModal: false,
+  isLocationServicesEnabled: true,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_LOCATION_SERVICES_ENABLED:
+      return {
+        ...state,
+        isLocationServicesEnabled: action.isFetchingLocationTrackingEnabled,
+      };
     case FETCHING_LOCATION_TRACKING_ENABLED:
       return {
         ...state,
@@ -52,6 +59,7 @@ export default (state = initialState, action) => {
         lat: Number(action.lat),
         lon: Number(action.lon),
         locationTrackingServicesEnabled: true,
+        isLocationServicesEnabled: true,
       };
     case INITIAL_FETCHING_LOCATION_TRACKING_FAILURE: {
       return {
@@ -66,6 +74,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         showNoLocationTrackingModal: true,
+        locationTrackingServicesEnabled: false,
       };
     case HIDE_NO_LOCATION_TRACKING_MODAL:
       return {
