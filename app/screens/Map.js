@@ -262,6 +262,8 @@ class Map extends Component {
       query,
       selectedLocation,
       numLocations,
+      isLocationServicesEnabled,
+      locationTrackingServicesEnabled,
     } = this.props;
 
     const { showUpdateSearch, isFirstLoad } = this.state;
@@ -345,10 +347,12 @@ class Map extends Component {
             animationMode="none"
             animationDuration={0}
           />
-          <Mapbox.LocationPuck
-            visible
-            renderMode={Platform.OS === "ios" ? "native" : "normal"}
-          />
+          {isLocationServicesEnabled && (
+            <Mapbox.LocationPuck
+              visible
+              renderMode={Platform.OS === "ios" ? "native" : "normal"}
+            />
+          )}
           <CustomMapMarkers navigation={navigation} />
         </Mapbox.MapView>
         <Button
@@ -374,16 +378,33 @@ class Map extends Component {
           ]}
           onPress={this.updateCurrentLocation}
         >
-          {Platform.OS === "ios" ? (
+          {Platform.OS === "ios" && locationTrackingServicesEnabled && (
             <FontAwesome
               name={"location-arrow"}
               color={theme.theme == "dark" ? theme.purple2 : theme.purple}
               size={26}
               style={{ justifyContent: "center", alignSelf: "center" }}
             />
-          ) : (
+          )}
+          {Platform.OS === "ios" && !locationTrackingServicesEnabled && (
+            <MaterialIcons
+              name={"location-off"}
+              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+              size={26}
+              style={{ justifyContent: "center", alignSelf: "center" }}
+            />
+          )}
+          {Platform.OS !== "ios" && locationTrackingServicesEnabled && (
             <MaterialIcons
               name={"gps-fixed"}
+              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+              size={26}
+              style={{ justifyContent: "center", alignSelf: "center" }}
+            />
+          )}
+          {Platform.OS !== "ios" && !locationTrackingServicesEnabled && (
+            <MaterialIcons
+              name={"location-disabled"}
               color={theme.theme == "dark" ? theme.purple2 : theme.purple}
               size={26}
               style={{ justifyContent: "center", alignSelf: "center" }}
@@ -572,8 +593,6 @@ Map.propTypes = {
   getLocationsConsideringZoom: PropTypes.func,
   clearSearchBarText: PropTypes.func,
   setUnitPreference: PropTypes.func,
-  updateCoordinates: PropTypes.func,
-  updateCoordinatesAndGetLocations: PropTypes.func,
   regions: PropTypes.object,
   login: PropTypes.func,
   getLocationAndMachineCounts: PropTypes.func,
@@ -581,9 +600,10 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { locations, query, regions } = state;
+  const { locations, query, regions, user } = state;
   const selectedLocation = getSelectedMapLocation(state);
   const numLocations = locations.mapLocations.length;
+  const { locationTrackingServicesEnabled, isLocationServicesEnabled } = user;
 
   return {
     query,
@@ -591,6 +611,8 @@ const mapStateToProps = (state) => {
     isFetchingLocations: locations.isFetchingLocations,
     selectedLocation,
     numLocations,
+    isLocationServicesEnabled,
+    locationTrackingServicesEnabled,
   };
 };
 const mapDispatchToProps = (dispatch) => ({

@@ -16,22 +16,38 @@ import {
   SET_UNIT_PREFERENCE,
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
+  SET_LOCATION_SERVICES_ENABLED,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import { retrieveItem } from "../config/utils";
+import * as Location from "expo-location";
 
-export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
+export const fetchCurrentLocation = (isInitialLoad) => async (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
+  const isLocationServicesEnabled = await Location.hasServicesEnabledAsync();
+  dispatch({
+    type: SET_LOCATION_SERVICES_ENABLED,
+    isLocationServicesEnabled,
+  });
+  const promise = isLocationServicesEnabled
+    ? getCurrentLocation
+    : () => Promise.reject();
 
-  return getCurrentLocation()
+  return promise()
     .then(
       (data) => dispatch(getLocationTrackingEnabledSuccess(data)),
-      () => {
+      async () => {
         let coords = {};
         if (isInitialLoad) {
-          coords = dispatch(getInitialLocationTrackingEnabledFailure());
+          const coordsFromStorage = (await retrieveItem("lastCoords")) ?? {};
+          coords =
+            coordsFromStorage.lat && coordsFromStorage.lon
+              ? coordsFromStorage
+              : { lat: 45.51322, lon: -122.6587 };
+          dispatch(getInitialLocationTrackingEnabledFailure(coords));
         } else {
           dispatch(getLocationTrackingEnabledFailure());
         }
@@ -55,11 +71,11 @@ export const getLocationTrackingEnabledSuccess = (data) => {
   };
 };
 
-export const getInitialLocationTrackingEnabledFailure = () => {
+export const getInitialLocationTrackingEnabledFailure = ({ lat, lon }) => {
   return {
     type: INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
-    lat: 45.51322,
-    lon: -122.6587,
+    lat,
+    lon,
   };
 };
 
