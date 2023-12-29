@@ -3,7 +3,7 @@ import * as Application from "expo-application";
 // import { useState } from 'react';
 
 export const postData = (uri, body) => {
-  return fetch(process.env.API_URL + uri, {
+  return fetch(global.API_URL + uri, {
     method: "post",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -32,7 +32,7 @@ export const postData = (uri, body) => {
 };
 
 export const putData = (uri, body) => {
-  return fetch(process.env.API_URL + uri, {
+  return fetch(global.API_URL + uri, {
     method: "put",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -60,7 +60,7 @@ export const putData = (uri, body) => {
 };
 
 export const getData = (uri) => {
-  return fetch(process.env.API_URL + uri)
+  return fetch(global.API_URL + uri)
     .then((response) => {
       if (response.status === 200) return response.json();
 
@@ -82,7 +82,7 @@ export const getIfpaData = (address, radius, distanceUnit) => {
 };
 
 export const deleteData = (uri, body) => {
-  return fetch(process.env.API_URL + uri, {
+  return fetch(global.API_URL + uri, {
     method: "delete",
     headers: {
       Accept: "application/json, text/plain, */*",
