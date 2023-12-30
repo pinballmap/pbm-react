@@ -12,11 +12,19 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.9
+
+December 30, 2023
+
+- The location labels on the map can now dynamically position themselves around the marker.
+- Bug fix: If you search for locations that have the exact same name, the "recent search history" was only showing one of them.
+- When users have location services turned off, do not bug about turning it on every time they open the app. And remember where they were last time they used the map.
+
 ### 5.3.8
 
 December 5, 2023
 
-- Show number of machines on the mini-map on the location details screen
+- Show number of machines on the mini-map on the location details screen.
 - Don't show "machines in this area" option when adding a machine to a location.
 
 ### 5.3.7
