@@ -44,11 +44,9 @@ class Map extends Component {
 
   constructor(props) {
     super(props);
-    this.onMapIdle = this.onMapIdle.bind(this);
     this.cameraRef = React.createRef(null);
     this.state = {
       showUpdateSearch: false,
-      hasMovedMap: false,
       isFirstLoad: true,
       willMoveMapToLocation: false,
       moveMapToLocation: null,
@@ -138,25 +136,19 @@ class Map extends Component {
 
   onCameraChanged = async ({ gestures }) => {
     if (gestures?.isGestureActive) {
-      this.setState({ hasMovedMap: true, isFirstLoad: false });
-    }
-  };
-
-  onMapIdle = async () => {
-    if (this.state.hasMovedMap) {
-      this.setState({ showUpdateSearch: true });
+      this.setState({ showUpdateSearch: true, isFirstLoad: false });
     }
   };
 
   setToCurrentBounds = async () => {
-    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    this.setState({ showUpdateSearch: false });
     const bounds = await this.getBounds();
     this.props.updateBounds(bounds);
     return bounds;
   };
 
   onOpenSearch = () => {
-    this.setState({ showUpdateSearch: false, hasMovedMap: false });
+    this.setState({ showUpdateSearch: false });
     this.props.dispatch(setSelectedMapLocation(null));
   };
 
@@ -172,10 +164,9 @@ class Map extends Component {
   };
 
   updateCurrentLocation = () => {
-    this.props.getCurrentLocation(false);
+    this.props.dispatch(fetchCurrentLocation(false));
     this.setState({
       showUpdateSearch: false,
-      hasMovedMap: false,
       toCurrentLocation: true,
     });
   };
@@ -185,7 +176,7 @@ class Map extends Component {
   };
 
   async componentDidMount() {
-    await this.props.getCurrentLocation(true);
+    await this.props.dispatch(fetchCurrentLocation(true));
     Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
     Mapbox.setTelemetryEnabled(false);
 
@@ -330,7 +321,6 @@ class Map extends Component {
           rotateEnabled={false}
           attributionPosition={{ bottom: 6, left: 90 }}
           onCameraChanged={this.onCameraChanged}
-          onMapIdle={this.onMapIdle}
           styleURL={
             theme.theme === "dark"
               ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
@@ -586,7 +576,6 @@ const getStyles = (theme) =>
 Map.propTypes = {
   isFetchingLocations: PropTypes.bool,
   query: PropTypes.object,
-  getCurrentLocation: PropTypes.func,
   navigation: PropTypes.object,
   getFavoriteLocations: PropTypes.func,
   clearFilters: PropTypes.func,
@@ -616,8 +605,6 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  getCurrentLocation: (isInitialLoad) =>
-    dispatch(fetchCurrentLocation(isInitialLoad)),
   getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
   clearFilters: () => dispatch(clearFilters(true)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),

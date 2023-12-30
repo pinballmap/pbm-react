@@ -25,18 +25,19 @@ import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import * as Location from "expo-location";
 
-export const fetchCurrentLocation = (isInitialLoad) => async (dispatch) => {
+export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
-  const isLocationServicesEnabled = await Location.hasServicesEnabledAsync();
-  dispatch({
-    type: SET_LOCATION_SERVICES_ENABLED,
-    isLocationServicesEnabled,
-  });
-  const promise = isLocationServicesEnabled
-    ? getCurrentLocation
-    : () => Promise.reject();
 
-  return promise()
+  return Location.hasServicesEnabledAsync()
+    .then((isLocationServicesEnabled) => {
+      dispatch({
+        type: SET_LOCATION_SERVICES_ENABLED,
+        isLocationServicesEnabled,
+      });
+
+      if (isLocationServicesEnabled) return getCurrentLocation();
+      return Promise.reject();
+    })
     .then(
       (data) => dispatch(getLocationTrackingEnabledSuccess(data)),
       async () => {
