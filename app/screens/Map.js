@@ -516,9 +516,11 @@ const getStyles = (theme) =>
       position: "absolute",
       bottom: 15,
       alignSelf: "center",
+      justifyContent: "center",
       borderRadius: 25,
       backgroundColor: "#66017b",
-      paddingVertical: 8,
+      paddingTop: Platform.OS === "ios" ? 8 : 6,
+      paddingBottom: 8,
       paddingHorizontal: 15,
     },
     updateTitleStyle: {
