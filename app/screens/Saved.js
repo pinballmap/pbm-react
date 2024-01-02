@@ -149,6 +149,7 @@ export class Saved extends Component {
                                   item.location.lon,
                                   unitPreference,
                                 )}
+                                numMachines={item.location.machines.length}
                                 street={item.location.street}
                                 city={item.location.city}
                                 state={item.location.state}
