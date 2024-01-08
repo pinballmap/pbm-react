@@ -152,7 +152,7 @@ export default (state = initialState, action) => {
         ...state,
         submittingMessage: false,
         confirmationMessage:
-          "Thanks for the message! We'll try to respond soon.",
+          "Thanks for the message! We'll try to respond soon. If you don't see anything, check your spam folder!",
       };
     case MESSAGE_SUBMISSION_FAILED:
       return {

@@ -144,7 +144,7 @@ const Signup = ({ loginLater, navigation }) => {
       >
         <ConfirmationModal visible={modalVisible}>
           <Text style={s.confirmText}>
-            Please check your email and confirm your account.
+            {`Please check your email and confirm your account. If you don't see it, check your spam folder!`}
           </Text>
           <MaterialCommunityIcons
             name="close-circle"
