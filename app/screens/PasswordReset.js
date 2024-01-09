@@ -38,7 +38,7 @@ const PasswordReset = ({ navigation }) => {
       >
         <ConfirmationModal visible={modalVisible}>
           <Text style={s.confirmText}>
-            Password reset was successful. Check your email.
+            Password reset was successful. Check your email (and spam folder).
           </Text>
           <MaterialCommunityIcons
             name="close-circle"
