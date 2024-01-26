@@ -89,7 +89,7 @@ const getStyles = (theme) =>
     },
     inputText: {
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     confirmText: {
       textAlign: "center",
@@ -97,7 +97,7 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.purple,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     xButton: {
       position: "absolute",

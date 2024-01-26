@@ -39,7 +39,7 @@ const SignupLogin = ({
           <View style={s.textBg}>
             <Text
               style={{
-                fontFamily: "regularFont",
+                fontFamily: "Nunito-Regular",
                 fontSize: 18,
                 textAlign: "center",
               }}
@@ -133,7 +133,7 @@ const getStyles = () =>
       height: null,
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     outerBorder: {
       marginTop: 10,
@@ -175,7 +175,7 @@ const getStyles = () =>
     titleStyle: {
       color: "#fafaff",
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     justify: {
       flexDirection: "column",

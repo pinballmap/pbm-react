@@ -292,7 +292,7 @@ const getStyles = (theme) =>
       marginVertical: 6,
     },
     section: {
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
       fontSize: 14,
       textAlign: "center",
       paddingHorizontal: 10,
@@ -303,7 +303,7 @@ const getStyles = (theme) =>
     },
     savedLink: {
       fontSize: 16,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",
@@ -312,14 +312,14 @@ const getStyles = (theme) =>
       marginHorizontal: 10,
       fontSize: 18,
       paddingVertical: 10,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     scoreTitle: {
       marginHorizontal: 10,
       fontSize: 16,
       paddingVertical: 10,
       color: theme.text,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     usernameContainer: {
       paddingTop: 10,
@@ -331,7 +331,7 @@ const getStyles = (theme) =>
     username: {
       fontSize: 22,
       textAlign: "center",
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       lineHeight: 32,
       color: theme.purpleLight,
     },
@@ -350,13 +350,13 @@ const getStyles = (theme) =>
     stat: {
       marginTop: 5,
       fontSize: 16,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
       opacity: 0.9,
       color: theme.theme == "dark" ? "#fee7f5" : theme.text,
       width: 160,
     },
     statNum: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: "#17001c",
       backgroundColor: theme.theme == "dark" ? "#fee7f5" : "#FFFFFF",
       fontSize: 16,
@@ -368,7 +368,7 @@ const getStyles = (theme) =>
       marginVertical: 8,
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     buttonContainer: {
       marginLeft: 20,
@@ -400,7 +400,7 @@ const getStyles = (theme) =>
     },
     rankText: {
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text3,
     },
     rankIcon: {
@@ -422,12 +422,12 @@ const getStyles = (theme) =>
     externalUpdateText: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
       textAlign: "center",
     },
     externalLink: {
       fontSize: 14,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
       textDecorationLine: "underline",
       color: theme.pink1,
     },

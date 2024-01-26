@@ -76,7 +76,9 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
           </Text>
           <Text style={[s.text, s.regularFont]}>
             {`If you're writing about a specific location, `}
-            <Text style={[s.pinkText, s.boldFont]}>tell us the location!</Text>
+            <Text style={[s.pinkText, s.boldFont]}>
+              tell us the location name!
+            </Text>
           </Text>
           <Text
             onPress={() => navigation.navigate("FAQ")}
@@ -146,16 +148,16 @@ const getStyles = (theme) =>
       paddingHorizontal: 10,
       paddingVertical: 5,
       textAlign: "left",
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     regularFont: {
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       marginTop: 15,
       fontSize: 15,
     },
     boldFont: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     blackText: {
       color: theme.text,
@@ -169,7 +171,7 @@ const getStyles = (theme) =>
       lineHeight: 22,
       marginTop: 15,
       textAlign: "center",
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       color: theme.purple2,
     },
     confirmText: {
@@ -178,7 +180,7 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.purple,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     xButton: {
       position: "absolute",

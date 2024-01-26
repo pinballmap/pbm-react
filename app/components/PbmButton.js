@@ -58,14 +58,14 @@ const getStyles = (theme) =>
     titleStyle: {
       color: "white",
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     disabledStyle: {
       backgroundColor: theme.white,
     },
     disabledTitleStyle: {
       color: theme.pink3,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     margin15: {
       marginHorizontal: 40,

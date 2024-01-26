@@ -32,11 +32,11 @@ let deviceHeight = Dimensions.get("window").height;
 
 const getDisplayText = (machine, theme) => (
   <Text style={{ fontSize: 18 }}>
-    <Text style={{ fontFamily: "boldFont", color: theme.text }}>
+    <Text style={{ fontFamily: "Nunito-Bold", color: theme.text }}>
       {machine.name}
     </Text>
     <Text
-      style={{ color: theme.text3, fontFamily: "mediumFont" }}
+      style={{ color: theme.text3, fontFamily: "Nunito-Medium" }}
     >{` (${machine.manufacturer}, ${machine.year})`}</Text>
   </Text>
 );
@@ -124,7 +124,7 @@ class FindMachine extends React.PureComponent {
                   style={{
                     color: pressed ? "#95867c" : "#9718b1",
                     fontSize: 18,
-                    fontFamily: "boldFont",
+                    fontFamily: "Nunito-Bold",
                   }}
                 >
                   Done
@@ -155,7 +155,7 @@ class FindMachine extends React.PureComponent {
                   style={{
                     color: pressed ? "#95867c" : "#9718b1",
                     fontSize: 18,
-                    fontFamily: "boldFont",
+                    fontFamily: "Nunito-Bold",
                   }}
                 >
                   Done
@@ -378,7 +378,7 @@ class FindMachine extends React.PureComponent {
                         title="Yes"
                         onPress={() => this.onIcEnabledPressed(true)}
                         containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="boldFont"
+                        fontFamily="Nunito-Bold"
                         textStyle={{ fontSize: 16, color: theme.text }}
                         checkedColor={theme.purple}
                       />
@@ -387,7 +387,7 @@ class FindMachine extends React.PureComponent {
                         title="No"
                         onPress={() => this.onIcEnabledPressed(false)}
                         containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="boldFont"
+                        fontFamily="Nunito-Bold"
                         textStyle={{ fontSize: 16, color: theme.text }}
                         checkedColor={theme.purple}
                       />
@@ -422,7 +422,7 @@ class FindMachine extends React.PureComponent {
           onChangeText={(query) =>
             this.handleSearch(query, this.state.machinesInView)
           }
-          inputStyle={{ color: theme.text, fontFamily: "regularFont" }}
+          inputStyle={{ color: theme.text, fontFamily: "Nunito-Regular" }}
           value={this.state.query}
           inputContainerStyle={s.filterInput}
           containerStyle={{
@@ -496,7 +496,7 @@ const getStyles = (theme) =>
       marginTop: 15,
       marginBottom: 10,
       borderRadius: 10,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
       color: theme.text,
     },
@@ -526,7 +526,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -539,10 +539,10 @@ const getStyles = (theme) =>
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     machineName: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     manYear: {
@@ -559,17 +559,17 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     modalLocationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
   });
 

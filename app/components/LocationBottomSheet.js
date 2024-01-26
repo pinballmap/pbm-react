@@ -121,7 +121,7 @@ const LocationBottomSheet = React.memo(
                         style={{
                           marginRight: 15,
                           color: theme.text3,
-                          fontFamily: "semiBoldFont",
+                          fontFamily: "Nunito-SemiBold",
                         }}
                       >
                         {" "}
@@ -138,7 +138,7 @@ const LocationBottomSheet = React.memo(
                       <Text
                         style={{
                           color: theme.text3,
-                          fontFamily: "semiBoldFont",
+                          fontFamily: "Nunito-SemiBold",
                         }}
                       >
                         {" "}
@@ -208,7 +208,7 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     locationName: {
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       fontSize: 20,
       lineHeight: 24,
       textAlign: "left",
@@ -239,18 +239,18 @@ const getStyles = (theme) =>
     },
     address: {
       color: theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 14,
       flex: 1,
       marginBottom: 5,
     },
     machineName: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 15,
       color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     italic: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     pressed: {
       shadowColor: "transparent",

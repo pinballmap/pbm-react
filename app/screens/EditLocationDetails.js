@@ -229,14 +229,14 @@ function EditLocationDetails({
                   />
                   <Text style={[s.subText, s.margin8]}>
                     If this venue is{" "}
-                    <Text style={{ fontFamily: "boldFont" }}>
+                    <Text style={{ fontFamily: "Nunito-Bold" }}>
                       closed or no longer has machines
                     </Text>
                     , simply remove the machines from the listing!
                   </Text>
                   <Text style={[s.subText, s.margin8]}>
                     If this venue has{" "}
-                    <Text style={{ fontFamily: "boldFont" }}>
+                    <Text style={{ fontFamily: "Nunito-Bold" }}>
                       moved to a new address
                     </Text>{" "}
                     (or changed names), please{" "}
@@ -248,7 +248,7 @@ function EditLocationDetails({
                     </Text>
                     {` and we'll fix it `}
                     <Text
-                      style={{ fontFamily: "boldFont", color: theme.pink1 }}
+                      style={{ fontFamily: "Nunito-Bold", color: theme.pink1 }}
                     >{`(include the location name in your message)`}</Text>
                     .
                   </Text>
@@ -300,7 +300,7 @@ const getStyles = (theme) =>
     previewTitle: {
       marginLeft: 25,
       textAlign: "left",
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 16,
       width: 80,
       color: theme.purple,
@@ -310,7 +310,7 @@ const getStyles = (theme) =>
       marginRight: 25,
       textAlign: "center",
       width: deviceWidth - 130,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     pageTitle: {
       paddingVertical: 10,
@@ -318,7 +318,7 @@ const getStyles = (theme) =>
     },
     pageTitleText: {
       textAlign: "center",
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       fontSize: 18,
       color: theme.pink1,
     },
@@ -327,7 +327,7 @@ const getStyles = (theme) =>
       marginBottom: 5,
       marginTop: 10,
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     textInput: {
       backgroundColor: theme.white,
@@ -337,7 +337,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingHorizontal: 10,
       paddingVertical: 5,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     radius10: {
@@ -357,7 +357,7 @@ const getStyles = (theme) =>
     subText: {
       marginHorizontal: 30,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     purple: {
       color: theme.purple,

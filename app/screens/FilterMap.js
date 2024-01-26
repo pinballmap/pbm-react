@@ -211,7 +211,7 @@ const getStyles = (theme) =>
     sectionTitle: {
       textAlign: "center",
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text3,
     },
     pink: {
@@ -242,7 +242,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -252,11 +252,11 @@ const getStyles = (theme) =>
       borderColor: theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
   });
 

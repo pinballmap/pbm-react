@@ -317,16 +317,16 @@ const getStyles = (theme) =>
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     textLink: {
       textDecorationLine: "underline",
       color: theme.purple,
       fontSize: 16,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     hr: {
       marginLeft: 25,

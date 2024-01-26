@@ -208,7 +208,7 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -221,7 +221,7 @@ const getStyles = (theme) =>
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     savedIcon: {
       fontSize: 50,

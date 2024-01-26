@@ -30,7 +30,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     text: {
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
   });
 

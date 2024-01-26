@@ -57,7 +57,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       color: "white",
       textTransform: "capitalize",
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     redButton: {
       backgroundColor: theme.red2,

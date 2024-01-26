@@ -89,7 +89,7 @@ function SuggestLocation({
 
   const getDisplayText = (machine) => (
     <Text style={{ fontSize: 16 }}>
-      <Text style={{ fontFamily: "boldFont" }}>{machine.name}</Text>
+      <Text style={{ fontFamily: "Nunito-Bold" }}>{machine.name}</Text>
       <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
   );
@@ -391,7 +391,7 @@ function SuggestLocation({
                         placeholderTextColor: theme.indigo4,
                         style: [
                           {
-                            fontFamily: "regularFont",
+                            fontFamily: "Nunito-Regular",
                             height: 40,
                             width: deviceWidth - 40,
                           },
@@ -413,7 +413,7 @@ function SuggestLocation({
                           overflow: "hidden",
                         },
                         description: {
-                          fontFamily: "regularFont",
+                          fontFamily: "Nunito-Regular",
                         },
                       }}
                       disableScroll
@@ -554,7 +554,7 @@ function SuggestLocation({
                       titleStyle={{
                         fontSize: 16,
                         color: theme.text3,
-                        fontFamily: "regularFont",
+                        fontFamily: "Nunito-Regular",
                       }}
                       onPress={() =>
                         navigate("FindMachine", { multiSelect: true })
@@ -630,7 +630,7 @@ const getStyles = (theme) =>
       marginBottom: 5,
       marginTop: 10,
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     previewContainer: {
@@ -643,7 +643,7 @@ const getStyles = (theme) =>
     previewTitle: {
       marginLeft: 25,
       textAlign: "left",
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       width: 80,
     },
     preview: {
@@ -662,7 +662,7 @@ const getStyles = (theme) =>
     },
     pageTitleText: {
       textAlign: "center",
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       fontSize: 18,
       color: theme.pink1,
     },
@@ -674,7 +674,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingHorizontal: 10,
       paddingVertical: 5,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     radius10: {
@@ -686,7 +686,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       marginHorizontal: 20,
       paddingHorizontal: 10,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     picker: {
       backgroundColor: "#ffffff",
@@ -706,11 +706,11 @@ const getStyles = (theme) =>
       fontSize: 16,
       marginLeft: 10,
       marginRight: 10,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     successBanner: {
       fontSize: 20,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.purple,
     },
     error: {

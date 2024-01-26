@@ -296,11 +296,11 @@ const getStyles = (theme) =>
     },
     errorText: {
       color: "red",
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       textAlign: "center",
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       textAlign: "center",
       fontSize: 18,
     },
@@ -316,12 +316,12 @@ const getStyles = (theme) =>
     },
     inputText: {
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     textLink: {
       fontSize: 16,
       textAlign: "center",
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     iconStyle: {
@@ -339,7 +339,7 @@ const getStyles = (theme) =>
     buttonTitle: {
       color: theme.text3,
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     justify: {
       flexDirection: "column",
@@ -360,7 +360,7 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.purple,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     xButton: {
       position: "absolute",

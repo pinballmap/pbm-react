@@ -27,7 +27,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     hiya: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       paddingHorizontal: 15,
       paddingBottom: 10,
       paddingTop: 25,

@@ -45,7 +45,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       marginLeft: 10,
       marginRight: 10,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     xButton: {
       position: "absolute",
@@ -60,7 +60,7 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
   });
 

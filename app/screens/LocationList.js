@@ -191,7 +191,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: deviceWidth < 321 ? 12 : 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -204,14 +204,14 @@ const getStyles = (theme) =>
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
       marginLeft: 10,
       marginRight: 10,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       color: theme.purple,
     },
     xButton: {
@@ -227,7 +227,7 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
   });
 

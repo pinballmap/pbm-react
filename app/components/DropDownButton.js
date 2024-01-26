@@ -56,7 +56,7 @@ const getStyles = (theme) =>
     titleStyle: {
       color: theme.text3,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
   });
 

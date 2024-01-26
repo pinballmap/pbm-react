@@ -8,27 +8,16 @@ import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { dark, standard } from "./app/utils/themes";
 import { StatusBar } from "expo-status-bar";
-import {
-  useFonts,
-  Nunito_400Regular,
-  Nunito_400Regular_Italic,
-  Nunito_500Medium,
-  Nunito_600SemiBold,
-  Nunito_700Bold,
-  Nunito_800ExtraBold,
-  Nunito_900Black,
-} from "@expo-google-fonts/nunito";
 import store from "./app/store";
 import * as SplashScreen from "expo-splash-screen";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AppWrapper } from "./app/components";
 import MapNavigator from "./app/config/router";
-import * as Sentry from "sentry-expo";
+import * as Sentry from "@sentry/react-native";
 import * as Device from "expo-device";
 
 Sentry.init({
   dsn: "https://057bae9b04f2410db6e4f1bd8d3eff2c@o1352308.ingest.sentry.io/6633526",
-  enableInExpoDevelopment: true,
   debug: false,
 });
 
@@ -85,19 +74,6 @@ const App = () => {
   const toggleDarkTheme = () =>
     defaultTheme === "dark" &&
     setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
-  const [fontsLoaded] = useFonts({
-    regularFont: Nunito_400Regular,
-    regularItalicFont: Nunito_400Regular_Italic,
-    mediumFont: Nunito_500Medium,
-    semiBoldFont: Nunito_600SemiBold,
-    boldFont: Nunito_700Bold,
-    extraBoldFont: Nunito_800ExtraBold,
-    blackFont: Nunito_900Black,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider

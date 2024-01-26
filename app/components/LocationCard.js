@@ -92,7 +92,7 @@ const LocationCard = ({
                   return (
                     <Text key={key} style={s.machineName}>
                       <Text
-                        style={{ fontFamily: "extraBoldFont", fontSize: 18 }}
+                        style={{ fontFamily: "Nunito-ExtraBold", fontSize: 18 }}
                       >
                         {title}
                       </Text>
@@ -124,7 +124,7 @@ const LocationCard = ({
                       style={{
                         marginRight: 12,
                         color: theme.text3,
-                        fontFamily: "boldFont",
+                        fontFamily: "Nunito-Bold",
                       }}
                     >
                       {" "}
@@ -139,7 +139,7 @@ const LocationCard = ({
                       style={s.icon}
                     />
                     <Text
-                      style={{ color: theme.text3, fontFamily: "boldFont" }}
+                      style={{ color: theme.text3, fontFamily: "Nunito-Bold" }}
                     >
                       {" "}
                       {distance}
@@ -197,7 +197,7 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     locationName: {
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       fontSize: 22,
       lineHeight: 26,
       textAlign: "left",
@@ -233,7 +233,7 @@ const getStyles = (theme) =>
     },
     address: {
       color: theme.text3,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
       fontSize: 15,
       flex: 1,
       marginBottom: 3,
@@ -246,14 +246,14 @@ const getStyles = (theme) =>
     },
     manufacturer: {
       color: theme.theme == "dark" ? theme.pink1 : theme.text3,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
       fontSize: 15,
     },
     mediumFont: {
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     italic: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     pressed: {
       shadowColor: "transparent",

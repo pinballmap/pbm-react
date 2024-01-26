@@ -381,10 +381,10 @@ const getStyles = (theme) =>
       marginBottom: 10,
     },
     boldText: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     boldHeader: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 18,
       marginBottom: 10,
     },
@@ -392,7 +392,7 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: theme.purple2,
       fontSize: 16,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     appAlert: {
       borderWidth: 0,
@@ -408,7 +408,7 @@ const getStyles = (theme) =>
       color: theme.pink1,
       textDecorationLine: "underline",
       fontSize: 16,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
   });
 

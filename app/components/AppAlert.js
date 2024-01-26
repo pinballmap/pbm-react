@@ -60,7 +60,7 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     appAlertHeader: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,

@@ -538,7 +538,7 @@ const getStyles = (theme) =>
     },
     machineName: {
       textAlign: "center",
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       fontSize: 24,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
@@ -547,7 +547,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 20,
       color: theme.text3,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     machineNameContainer: {
       marginBottom: 5,
@@ -568,11 +568,11 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     externalLink: {
       fontSize: 16,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
     },
@@ -602,14 +602,14 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontSize: 18,
       marginTop: 5,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     noneYet: {
       textAlign: "center",
       paddingHorizontal: 15,
       color: theme.text3,
       paddingVertical: 5,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     textInput: {
@@ -619,7 +619,7 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginBottom: 10,
       marginHorizontal: 30,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     radius10: {
@@ -630,7 +630,7 @@ const getStyles = (theme) =>
       marginTop: 5,
       marginBottom: 5,
       color: theme.purpleLight,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
       fontSize: 13,
       textTransform: "uppercase",
     },
@@ -639,7 +639,7 @@ const getStyles = (theme) =>
       fontSize: 24,
       paddingBottom: 15,
       color: theme.purple,
-      fontFamily: "extraBoldFont",
+      fontFamily: "Nunito-ExtraBold",
     },
     verticalAlign: {
       flex: 1,
@@ -650,25 +650,25 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     modalLocationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     modalSubText: {
       marginHorizontal: 40,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     purple: {
       color: theme.purple,
@@ -680,7 +680,7 @@ const getStyles = (theme) =>
       paddingTop: 3,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     subtitleMargin: {
       marginTop: 5,
@@ -713,7 +713,7 @@ const getStyles = (theme) =>
     },
     sectionTitle: {
       fontSize: 20,
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       textAlign: "center",
       marginVertical: 10,
       color: theme.purpleLight,
@@ -742,12 +742,12 @@ const getStyles = (theme) =>
     operatorComments: {
       textAlign: "center",
       color: theme.text2,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     titleStyle: {
       color: "#392f3a",
       fontSize: 16,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     nullIC: {
       width: "100%",
@@ -765,7 +765,7 @@ const getStyles = (theme) =>
       backgroundColor: "#e7c8c8",
     },
     italic: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
   });
 

@@ -409,7 +409,7 @@ class Map extends Component {
             buttonStyle={s.buttonStyle}
             titleStyle={s.filterTitleStyle}
             iconLeft
-            icon={<Ionicons name="ios-close-circle" style={s.closeIcon} />}
+            icon={<Ionicons name="close-circle" style={s.closeIcon} />}
           />
         ) : null}
         {showUpdateSearch ? (
@@ -470,14 +470,14 @@ const getStyles = (theme) =>
     loadingText: {
       color: theme.pink2,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
       marginLeft: 10,
       marginRight: 10,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     buttonIcon: {
       fontSize: 18,
@@ -493,7 +493,7 @@ const getStyles = (theme) =>
     buttonTitle: {
       color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     containerStyle: {
       shadowColor: theme.darkShadow,
@@ -530,7 +530,7 @@ const getStyles = (theme) =>
     pressedTitleStyle: {
       color: theme.pink3,
       fontSize: 17,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     myLocationContainer: {
       position: "absolute",
@@ -556,7 +556,7 @@ const getStyles = (theme) =>
     filterTitleStyle: {
       color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
       fontSize: 18,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     closeIcon: {
       paddingRight: 5,

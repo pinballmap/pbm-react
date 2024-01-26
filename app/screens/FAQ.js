@@ -56,11 +56,11 @@ const FAQ = ({ navigation }) => {
             >{`I am an operator, and people are leaving bad comments on my machines. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
               {`We can't control the comments that people make, nor will we disable comments at an individual venue. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone.\n\n`}
-              <Text style={{ fontFamily: "boldFont" }}>
+              <Text style={{ fontFamily: "Nunito-Bold" }}>
                 To users leaving comments:
               </Text>{" "}
               {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
-              <Text style={{ fontFamily: "boldFont" }}>To operators:</Text>{" "}
+              <Text style={{ fontFamily: "Nunito-Bold" }}>To operators:</Text>{" "}
               {`Users notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators try to keep a level head amidst comments they don't like, and leave a note saying the issue is fixed. It's better in the long term and this comment history is actually really valuable.`}
             </Text>
             <Text
@@ -105,7 +105,7 @@ const FAQ = ({ navigation }) => {
               will not immediately appear in this app.
             </Text>
             <Text style={s.text}>
-              <Text style={{ fontFamily: "boldFont" }}>
+              <Text style={{ fontFamily: "Nunito-Bold" }}>
                 General backglass/translite photo guidelines
               </Text>
               : Take photo straight on, not at an angle. Crop image to show only
@@ -255,7 +255,7 @@ const getStyles = (theme) =>
       marginRight: 15,
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 17,
       marginBottom: 10,
       padding: 10,
@@ -265,7 +265,7 @@ const getStyles = (theme) =>
     textLink: {
       textDecorationLine: "underline",
       color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
   });
 

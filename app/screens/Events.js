@@ -124,7 +124,7 @@ class Events extends Component {
                 <Text
                   style={{
                     textAlign: "center",
-                    fontFamily: "boldFont",
+                    fontFamily: "Nunito-Bold",
                     marginTop: 15,
                     color: theme.text2,
                   }}
@@ -277,7 +277,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -290,10 +290,10 @@ const getStyles = (theme) =>
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     locationName: {
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       fontSize: 22,
       lineHeight: 28,
       textAlign: "left",
@@ -307,12 +307,12 @@ const getStyles = (theme) =>
       paddingBottom: 10,
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     problem: {
       textAlign: "center",
       color: theme.text,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       marginTop: 20,
       paddingHorizontal: 10,
       fontSize: 14,
@@ -324,13 +324,13 @@ const getStyles = (theme) =>
       marginTop: 0,
       marginBottom: 5,
       paddingHorizontal: 20,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     smallLink: {
       textDecorationLine: "underline",
       color: theme.purple,
       fontSize: 12,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     cardContainer: {
       padding: 0,
@@ -352,12 +352,12 @@ const getStyles = (theme) =>
     cardTextStyle: {
       fontSize: 14,
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     address: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     pressed: {
       shadowColor: "transparent",
@@ -372,7 +372,7 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: "#7cc5ff",
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
   });
 

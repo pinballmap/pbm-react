@@ -37,19 +37,30 @@ export default {
           RNMapboxMapsDownloadToken: process.env.MAPBOX_DOWNLOAD,
         },
       ],
-      "sentry-expo",
-    ],
-    hooks: {
-      postPublish: [
+      [
+        "@sentry/react-native/expo",
         {
-          file: "sentry-expo/upload-sourcemaps",
-          config: {
-            organization: "pinball-map",
-            project: "react-native",
-          },
+          url: "https://sentry.io/",
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          project: "react-native",
+          organization: "pinball-map",
         },
       ],
-    },
+      [
+        "expo-font",
+        {
+          fonts: [
+            "app/assets/fonts/Nunito-Regular.ttf",
+            "app/assets/fonts/Nunito-Italic.ttf",
+            "app/assets/fonts/Nunito-Medium.ttf",
+            "app/assets/fonts/Nunito-SemiBold.ttf",
+            "app/assets/fonts/Nunito-Bold.ttf",
+            "app/assets/fonts/Nunito-ExtraBold.ttf",
+            "app/assets/fonts/Nunito-Black.ttf",
+          ],
+        },
+      ],
+    ],
     ios: {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",

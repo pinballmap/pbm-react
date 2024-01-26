@@ -115,13 +115,13 @@ const getStyles = (theme) =>
     pageTitleText: {
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     text: {
       fontSize: 14,
       color: theme.text2,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,
@@ -141,7 +141,7 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
@@ -154,7 +154,7 @@ const getStyles = (theme) =>
     },
     selTextStyle: {
       color: theme.text2,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
   });
 

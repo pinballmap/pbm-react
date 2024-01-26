@@ -58,17 +58,17 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     locationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     buttonContainer: {
       marginLeft: 20,
@@ -79,7 +79,7 @@ const getStyles = (theme) =>
     modalSubText: {
       marginHorizontal: 18,
       fontSize: 14,
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
       color: theme.text3,
     },
   });

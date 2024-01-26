@@ -552,11 +552,11 @@ const getStyles = (theme) =>
       color: "#af9eb1",
       paddingLeft: 5,
       flex: 1,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     inputStyle: {
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     inputContainerStyle: {
       borderWidth: 1,
@@ -572,7 +572,7 @@ const getStyles = (theme) =>
     filterTitleStyle: {
       color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
       marginTop: Platform.OS === "ios" ? 0 : -2,
     },
     filterIcon: {
@@ -590,11 +590,11 @@ const getStyles = (theme) =>
       marginBottom: -2,
       marginTop: -2,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     searchHistoryTitle: {
       color: theme.pink1,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     clear: {
       color: theme.text2,
@@ -605,7 +605,7 @@ const getStyles = (theme) =>
     cityRegionRow: {
       position: "absolute",
       right: 0,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       color: theme.pink1,
     },
     pressed: {
@@ -625,7 +625,7 @@ const getStyles = (theme) =>
     },
     goToFilterText: {
       marginHorizontal: 30,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       color: theme.text3,
       textAlign: "center",
     },

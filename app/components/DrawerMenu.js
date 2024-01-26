@@ -165,7 +165,7 @@ const getStyles = (theme) =>
     },
     text: {
       color: theme.colors.activeTab,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 16,
       position: "absolute",
       paddingLeft: 75,
@@ -180,7 +180,7 @@ const getStyles = (theme) =>
     },
     labelStyle: {
       color: theme.colors.primary,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       fontSize: 16,
     },
   });

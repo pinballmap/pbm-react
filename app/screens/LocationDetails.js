@@ -398,7 +398,7 @@ class LocationDetails extends Component {
                           <View style={s.markerDot}>
                             <Text
                               style={{
-                                fontFamily: "semiBoldFont",
+                                fontFamily: "Nunito-SemiBold",
                                 color: "#f5f5ff",
                                 fontSize: 15,
                                 marginTop: Platform.OS === "android" ? -2 : 1,
@@ -641,7 +641,7 @@ class LocationDetails extends Component {
                               {location.last_updated_by_username && ` by`}
                               <Text
                                 style={{
-                                  fontFamily: "semiBoldFont",
+                                  fontFamily: "Nunito-SemiBold",
                                   color: theme.pink1,
                                 }}
                               >{` ${location.last_updated_by_username}`}</Text>
@@ -793,7 +793,7 @@ const getStyles = (theme) =>
       marginBottom: 0,
     },
     locationName: {
-      fontFamily: "blackFont",
+      fontFamily: "Nunito-Black",
       fontSize: deviceWidth < 325 ? 24 : 28,
       lineHeight: deviceWidth < 325 ? 30 : 34,
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
@@ -827,7 +827,7 @@ const getStyles = (theme) =>
     },
     machineName: {
       color: theme.theme == "dark" ? theme.text : theme.purple,
-      fontFamily: "extraBoldFont",
+      fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
     },
     locationMetaContainer: {
@@ -862,10 +862,10 @@ const getStyles = (theme) =>
       fontSize: 18,
     },
     bold: {
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     mediumFont: {
-      fontFamily: "mediumFont",
+      fontFamily: "Nunito-Medium",
     },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
@@ -877,26 +877,26 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     text: {
       color: theme.text,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     text2: {
       color: theme.text2,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     text3: {
       color: theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     pink1: {
       color: theme.theme == "dark" ? theme.pink1 : theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     italic: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     opacity09: {
       opacity: 0.9,
@@ -917,7 +917,7 @@ const getStyles = (theme) =>
     },
     staleText: {
       color: theme.red2,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     buttonIcon: {
       color: theme.indigo4,
@@ -995,7 +995,7 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "extraBoldFont",
+      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -1038,12 +1038,12 @@ const getStyles = (theme) =>
       marginRight: 15,
       fontSize: 18,
       color: theme.purple,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     updated: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
     },
     noTrackingMargin: {
       marginTop: 12,

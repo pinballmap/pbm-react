@@ -204,7 +204,7 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "extraBoldFont",
+      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -242,29 +242,29 @@ const getStyles = (theme) =>
     pbmText: {
       color: theme.text2,
       fontSize: 16,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     score: {
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     date: {
       paddingTop: 6,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "regularFont",
+      fontFamily: "Nunito-Regular",
     },
     italic: {
-      fontFamily: "regularItalicFont",
+      fontFamily: "Nunito-Italic",
       color: theme.text3,
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 16,
-      fontFamily: "semiBoldFont",
+      fontFamily: "Nunito-SemiBold",
     },
     flexi: {
       display: "flex",
@@ -289,7 +289,7 @@ const getStyles = (theme) =>
     problem: {
       textAlign: "center",
       color: theme.text,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
       marginTop: 20,
     },
     textContainer: {

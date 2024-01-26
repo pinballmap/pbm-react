@@ -43,7 +43,7 @@ const TabsOptionsStyle = {
   },
   headerTitleStyle: {
     textAlign: "center",
-    fontFamily: "boldFont",
+    fontFamily: "Nunito-Bold",
     fontSize: 18,
   },
 };
@@ -144,7 +144,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
                 s.labelText,
               ]}
@@ -171,7 +171,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
                 s.labelText,
               ]}
@@ -198,7 +198,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
                 s.labelText,
               ]}
@@ -225,7 +225,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "boldFont" : "semiBoldFont",
+                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
                 s.labelText,
               ]}
@@ -258,7 +258,7 @@ function BottomTabNavigator() {
               style={[
                 {
                   color: colors.inactiveTab,
-                  fontFamily: "semiBoldFont",
+                  fontFamily: "Nunito-SemiBold",
                 },
                 s.labelText,
               ]}
@@ -295,12 +295,12 @@ function MapStack() {
         },
         headerTitleStyle: {
           textAlign: "center",
-          fontFamily: "boldFont",
+          fontFamily: "Nunito-Bold",
           fontSize: 18,
           color: colors.text,
         },
         headerBackTitleStyle: {
-          fontFamily: "boldFont",
+          fontFamily: "Nunito-Bold",
         },
         headerBackTitleVisible: false,
       })}
@@ -422,7 +422,7 @@ function DrawerNavigator() {
         drawerPosition: "right",
         drawerType: "front",
         drawerActiveBackgroundColor: colors.background,
-        drawerLabelStyle: { fontFamily: "boldFont", fontSize: 16 },
+        drawerLabelStyle: { fontFamily: "Nunito-Bold", fontSize: 16 },
       })}
     >
       <Drawer.Screen

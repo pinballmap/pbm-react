@@ -218,7 +218,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
         titleStyle={{
           color: theme.purple2,
           fontSize: deviceWidth < 325 ? 16 : 18,
-          fontFamily: "boldFont",
+          fontFamily: "Nunito-Bold",
           marginTop: Platform.OS === "android" ? 3 : 0,
         }}
         type="clear"
@@ -244,7 +244,7 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "extraBoldFont",
+      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -254,11 +254,11 @@ const getStyles = (theme) =>
     },
     titleStyle: {
       color: theme.text3,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     activeTitleStyle: {
       color: theme.pink1,
-      fontFamily: "boldFont",
+      fontFamily: "Nunito-Bold",
     },
     containerBg: {
       backgroundColor: theme.pink2,
