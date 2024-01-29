@@ -567,6 +567,7 @@ const getStyles = (theme) =>
       height: 45,
       display: "flex",
       flexDirection: "row",
+      alignItems: "center",
       paddingLeft: 0,
     },
     filterTitleStyle: {

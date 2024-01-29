@@ -413,7 +413,7 @@ class LocationDetails extends Component {
                     {location.location_type_id ? (
                       <View style={s.locationTypeContainer}>
                         {locationTrackingServicesEnabled && (
-                          <View style={{ flexDirection: "row" }}>
+                          <View style={s.row}>
                             <MaterialCommunityIcons
                               name="compass-outline"
                               style={s.distanceIcon}
@@ -535,12 +535,12 @@ class LocationDetails extends Component {
 
                       {locationTrackingServicesEnabled &&
                       !location.location_type_id ? (
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={[s.row, s.marginB]}>
                           <MaterialCommunityIcons
                             name="compass-outline"
                             style={s.metaIcon}
                           />
-                          <Text style={[s.fontSize14, s.text3, s.marginB]}>
+                          <Text style={[s.fontSize14, s.text3]}>
                             {getDistanceWithUnit(
                               userLat,
                               userLon,
@@ -553,13 +553,13 @@ class LocationDetails extends Component {
                       ) : null}
 
                       {location.phone ? (
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={[s.row, s.marginB]}>
                           <MaterialIcons
                             name="local-phone"
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize14, s.link, s.marginB]}
+                            style={[s.fontSize14, s.link]}
                             onPress={() =>
                               Linking.openURL(`tel://${location.phone}`)
                             }
@@ -570,13 +570,13 @@ class LocationDetails extends Component {
                       ) : null}
 
                       {location.website ? (
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={[s.row, s.marginB]}>
                           <MaterialCommunityIcons
                             name="web"
                             style={s.metaIcon}
                           />
                           <Text
-                            style={[s.fontSize14, s.link, s.marginB]}
+                            style={[s.fontSize14, s.link]}
                             onPress={() =>
                               WebBrowser.openBrowserAsync(location.website)
                             }
@@ -587,19 +587,12 @@ class LocationDetails extends Component {
                       ) : null}
 
                       {!!opName && (
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={[s.row, s.marginB]}>
                           <MaterialCommunityIcons
                             name="wrench-outline"
                             style={s.metaIcon}
                           />
-                          <Text
-                            style={[
-                              s.text,
-                              s.fontSize15,
-                              s.marginB,
-                              s.marginRight,
-                            ]}
-                          >
+                          <Text style={[s.text, s.fontSize15, s.marginRight]}>
                             Operator:{" "}
                             <Text
                               style={opWebsite ? s.link : s.text3}
@@ -616,7 +609,7 @@ class LocationDetails extends Component {
                       )}
 
                       {!!location.date_last_updated && (
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={[s.row, s.marginB]}>
                           <MaterialCommunityIcons
                             name="clock-time-four-outline"
                             style={s.metaIcon}
@@ -625,7 +618,6 @@ class LocationDetails extends Component {
                             style={[
                               s.text,
                               s.fontSize15,
-                              s.marginB,
                               s.marginRight,
                               s.italic,
                             ]}
@@ -658,7 +650,13 @@ class LocationDetails extends Component {
                       }}
                     >
                       {location.description ? (
-                        <View style={{ flexDirection: "row", paddingRight: 5 }}>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "top",
+                            paddingRight: 5,
+                          }}
+                        >
                           <MaterialCommunityIcons
                             name="notebook-outline"
                             style={s.metaIcon}
@@ -698,7 +696,11 @@ class LocationDetails extends Component {
                             {this.getTitle(machine, s)}
                             {machine.created_at != machine.updated_at ? (
                               <View
-                                style={{ flexDirection: "row", marginTop: 6 }}
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  marginTop: 6,
+                                }}
                               >
                                 <MaterialCommunityIcons
                                   name="clock-time-four-outline"
@@ -873,6 +875,10 @@ const getStyles = (theme) =>
     },
     marginRight: {
       marginRight: 10,
+    },
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
     },
     link: {
       textDecorationLine: "underline",

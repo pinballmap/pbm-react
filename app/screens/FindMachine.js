@@ -57,7 +57,12 @@ class MultiSelectRow extends React.PureComponent {
       <Pressable
         onPress={this._onPress}
         style={({ pressed }) => [
-          { display: "flex", flexDirection: "row", padding: 8 },
+          {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+          },
           pressed
             ? { backgroundColor: theme.base4, opacity: 0.8 }
             : { backgroundColor, opacity: 1 },
@@ -372,7 +377,9 @@ class FindMachine extends React.PureComponent {
                     style={{ justifyContent: "center", alignItems: "center" }}
                   >
                     <Text>Does this machine have Stern Insider Connected?</Text>
-                    <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
                       <CheckBox
                         checked={this.state.ic_enabled}
                         title="Yes"
@@ -451,7 +458,13 @@ class FindMachine extends React.PureComponent {
             {machineList.length === 0 ? (
               <Text style={{ color: theme.pink1 }}>0 machines selected</Text>
             ) : (
-              <View style={{ display: "flex", flexDirection: "row" }}>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <Text style={{ color: theme.pink1 }}>{`${
                   machineList.length
                 } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>

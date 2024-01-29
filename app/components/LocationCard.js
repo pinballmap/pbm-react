@@ -68,7 +68,7 @@ const LocationCard = ({
               </View>
             </View>
             <View style={{ paddingHorizontal: 10, paddingBottom: 5 }}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <MaterialIcons name="location-on" style={s.metaIcon} />
                 <Text
                   style={[s.address]}

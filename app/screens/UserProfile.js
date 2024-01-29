@@ -345,6 +345,7 @@ const getStyles = (theme) =>
     },
     statItem: {
       flexDirection: "row",
+      alignItems: "center",
       width: 220,
     },
     stat: {
