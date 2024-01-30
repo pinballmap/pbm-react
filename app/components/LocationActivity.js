@@ -172,10 +172,10 @@ const LocationActivity = ({ locationId }) => {
         <MaterialCommunityIcons
           name="newspaper-variant-multiple-outline"
           color={theme.text2}
-          size={24}
+          size={28}
           style={{
-            height: 24,
-            width: 24,
+            height: 28,
+            width: 28,
             justifyContent: "center",
             alignSelf: "center",
           }}
@@ -221,9 +221,9 @@ const getStyles = (theme) =>
       padding: 10,
       marginHorizontal: 4,
       zIndex: 10,
-      borderRadius: 18,
-      height: 36,
-      width: 36,
+      borderRadius: 20,
+      height: 40,
+      width: 40,
       alignSelf: "center",
       justifyContent: "center",
       shadowColor: theme.darkShadow,

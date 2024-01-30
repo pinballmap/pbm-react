@@ -15,7 +15,7 @@ import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
 import { Avatar, ListItem, Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
   ActivityIndicator,
@@ -324,233 +324,248 @@ class LocationDetails extends Component {
                         : Constants.statusBarHeight + 8,
                   }}
                 >
-                  <View style={s.locationNameContainer}>
-                    <Text style={s.locationName}>{location.name}</Text>
-                  </View>
-                  <View style={s.mapTypeContainer}>
-                    <View
-                      style={[
-                        s.mapViewContainer,
-                        location.location_type_id
-                          ? s.mapViewContainerDuo
-                          : s.mapViewContainerSolo,
+                  <View style={s.mapViewContainer}>
+                    <Pressable
+                      style={({ pressed }) => [
+                        s.directionsButton,
+                        s.quickButton,
+                        pressed
+                          ? s.quickButtonPressed
+                          : s.quickButtonNotPressed,
                       ]}
+                      onPress={() => {
+                        openMap({
+                          end: `${location.name} ${location.city} ${
+                            location.state || ""
+                          } ${location.zip}`,
+                        });
+                        this.setShowLocationToolsModal(false);
+                      }}
                     >
-                      <Pressable
-                        style={({ pressed }) => [
-                          s.directionsButton,
-                          s.quickButton,
-                          pressed
-                            ? s.quickButtonPressed
-                            : s.quickButtonNotPressed,
-                        ]}
-                        onPress={() => {
-                          openMap({
-                            end: `${location.name} ${location.city} ${
-                              location.state || ""
-                            } ${location.zip}`,
-                          });
-                          this.setShowLocationToolsModal(false);
+                      <MaterialCommunityIcons
+                        name={"directions"}
+                        color={theme.text2}
+                        size={28}
+                        style={{
+                          height: 28,
+                          width: 28,
+                          justifyContent: "center",
+                          alignSelf: "center",
                         }}
+                      />
+                    </Pressable>
+                    <Pressable
+                      style={({ pressed }) => [
+                        s.mapButton,
+                        s.quickButton,
+                        pressed
+                          ? s.quickButtonPressed
+                          : s.quickButtonNotPressed,
+                      ]}
+                      onPress={this.onMapPress}
+                    >
+                      <FontAwesome6
+                        name={"map-location"}
+                        color={theme.text2}
+                        size={24}
+                        style={{
+                          height: 24,
+                          width: 24,
+                          justifyContent: "center",
+                          alignSelf: "center",
+                        }}
+                      />
+                    </Pressable>
+                    <Mapbox.MapView
+                      scaleBarEnabled={false}
+                      pitchEnabled={false}
+                      rotateEnabled={false}
+                      logoEnabled={false}
+                      attributionPosition={{ bottom: 4, right: 0 }}
+                      styleURL={
+                        theme.theme === "dark"
+                          ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
+                          : Mapbox.StyleURL.Street
+                      }
+                      style={s.mapHeight}
+                    >
+                      <Mapbox.Camera
+                        zoomLevel={11}
+                        centerCoordinate={[
+                          Number(location.lon),
+                          Number(location.lat),
+                        ]}
+                        animationMode="none"
+                        animationDuration={0}
+                      />
+                      <Mapbox.PointAnnotation
+                        id="userLocation"
+                        coordinate={[
+                          Number(location.lon),
+                          Number(location.lat),
+                        ]}
                       >
-                        <MaterialCommunityIcons
-                          name={"directions"}
-                          color={theme.text2}
-                          size={28}
-                          style={{
-                            height: 28,
-                            width: 28,
-                            justifyContent: "center",
-                            alignSelf: "center",
-                          }}
-                        />
-                      </Pressable>
-                      <Mapbox.MapView
-                        scaleBarEnabled={false}
-                        pitchEnabled={false}
-                        rotateEnabled={false}
-                        logoEnabled={false}
-                        onPress={this.onMapPress}
-                        attributionPosition={{ bottom: 4, right: 0 }}
-                        styleURL={
-                          theme.theme === "dark"
-                            ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-                            : Mapbox.StyleURL.Street
-                        }
-                        style={s.mapHeight}
-                      >
-                        <Mapbox.Camera
-                          zoomLevel={11}
-                          centerCoordinate={[
-                            Number(location.lon),
-                            Number(location.lat),
-                          ]}
-                          animationMode="none"
-                          animationDuration={0}
-                        />
-                        <Mapbox.PointAnnotation
-                          id="userLocation"
-                          coordinate={[
-                            Number(location.lon),
-                            Number(location.lat),
-                          ]}
-                        >
-                          <View style={s.markerDot}>
-                            <Text
-                              style={{
-                                fontFamily: "Nunito-SemiBold",
-                                color: "#f5f5ff",
-                                fontSize: 15,
-                                marginTop: Platform.OS === "android" ? -2 : 1,
-                              }}
-                            >
-                              {location.num_machines}
-                            </Text>
-                          </View>
-                        </Mapbox.PointAnnotation>
-                      </Mapbox.MapView>
-                    </View>
-                    {location.location_type_id ? (
-                      <View style={s.locationTypeContainer}>
-                        {locationTrackingServicesEnabled && (
-                          <View style={s.row}>
-                            <MaterialCommunityIcons
-                              name="compass-outline"
-                              style={s.distanceIcon}
-                            />
-                            <Text
-                              style={[
-                                s.fontSize15,
-                                s.text2,
-                                s.mediumFont,
-                                s.opacity09,
-                              ]}
-                            >
-                              {getDistanceWithUnit(
-                                userLat,
-                                userLon,
-                                location.lat,
-                                location.lon,
-                                unitPreference,
-                              )}
-                            </Text>
-                          </View>
-                        )}
-                        <View
-                          style={[
-                            locationTrackingServicesEnabled
-                              ? null
-                              : s.noTrackingMargin,
-                          ]}
-                        >
-                          <Icon
-                            name={locationIcon}
-                            type={iconLibrary}
-                            color={theme.purple}
-                            size={46}
-                          />
+                        <View style={s.markerDot}>
                           <Text
-                            style={[
-                              { textAlign: "center" },
-                              s.mediumFont,
-                              s.fontSize15,
-                              s.text2,
-                              s.opacity09,
-                            ]}
+                            style={{
+                              fontFamily: "Nunito-SemiBold",
+                              color: "#f5f5ff",
+                              fontSize: 15,
+                              marginTop: Platform.OS === "android" ? -2 : 1,
+                            }}
                           >
-                            {locationTypeName}
+                            {location.num_machines}
                           </Text>
                         </View>
-                      </View>
-                    ) : null}
+                      </Mapbox.PointAnnotation>
+                    </Mapbox.MapView>
                   </View>
 
                   <View style={s.locationContainer}>
+                    <View style={s.locationNameContainer}>
+                      <Text style={s.locationName}>{location.name}</Text>
+                    </View>
                     <View style={s.locationMetaContainer}>
-                      <View style={s.locationMetaInner}>
-                        <View style={s.addressContainer}>
-                          <View>
-                            <Text
-                              style={[
-                                s.text2,
-                                s.bold,
-                                s.fontSize15,
-                                s.marginRight,
-                                s.opacity09,
-                              ]}
-                            >
-                              {location.street}
-                            </Text>
-                            <Text
-                              style={[
-                                s.text2,
-                                s.bold,
-                                s.fontSize15,
-                                s.marginB,
-                                s.marginRight,
-                                s.opacity09,
-                              ]}
-                            >
-                              {cityState} {location.zip}
-                            </Text>
-                          </View>
-                        </View>
-                        <View style={s.quickButtonContainer}>
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.quickButtonPressed
-                                : s.quickButtonNotPressed,
-                            ]}
-                            onPress={() =>
-                              loggedIn
-                                ? navigation.navigate("FindMachine")
-                                : navigation.navigate("Login")
-                            }
-                          >
-                            <MaterialCommunityIcons
-                              name={"plus"}
-                              color={theme.text2}
-                              size={28}
-                              style={{
-                                height: 28,
-                                width: 28,
-                                justifyContent: "center",
-                                alignSelf: "center",
-                              }}
-                            />
-                          </Pressable>
-                          <FavoriteLocation
-                            locationId={location.id}
-                            style={{ ...s.quickButton, ...s.saveButton }}
-                            pressedStyle={s.quickButtonPressed}
-                            notPressedStyle={s.quickButtonNotPressed}
-                            navigation={navigation}
-                            removeFavorite={(cb) => cb()}
+                      <Text
+                        style={[s.text2, s.bold, s.fontSize15, s.marginRight]}
+                      >
+                        {location.street}, {cityState} {location.zip}
+                      </Text>
+                      <View style={s.quickButtonContainer}>
+                        <Pressable
+                          style={({ pressed }) => [
+                            s.quickButton,
+                            pressed
+                              ? s.quickButtonPressed
+                              : s.quickButtonNotPressed,
+                          ]}
+                          onPress={() =>
+                            loggedIn
+                              ? navigation.navigate("FindMachine")
+                              : navigation.navigate("Login")
+                          }
+                        >
+                          <MaterialCommunityIcons
+                            name={"plus"}
+                            color={theme.text2}
+                            size={28}
+                            style={{
+                              height: 28,
+                              width: 28,
+                              justifyContent: "center",
+                              alignSelf: "center",
+                            }}
                           />
-                          <LocationActivity locationId={location.id} />
-                        </View>
+                        </Pressable>
+                        <FavoriteLocation
+                          locationId={location.id}
+                          style={{ ...s.quickButton, ...s.saveButton }}
+                          pressedStyle={s.quickButtonPressed}
+                          notPressedStyle={s.quickButtonNotPressed}
+                          navigation={navigation}
+                          removeFavorite={(cb) => cb()}
+                        />
+                        <LocationActivity locationId={location.id} />
+                        <Pressable
+                          style={({ pressed }) => [
+                            s.quickButton,
+                            pressed
+                              ? s.toolsIconPressed
+                              : s.toolsIconNotPressed,
+                          ]}
+                          onPress={() => {
+                            this.setShowLocationToolsModal(true);
+                          }}
+                        >
+                          <MaterialCommunityIcons
+                            name={"menu"}
+                            color={theme.white}
+                            size={28}
+                            style={{
+                              height: 28,
+                              width: 28,
+                              justifyContent: "center",
+                              alignSelf: "center",
+                            }}
+                          />
+                        </Pressable>
                       </View>
 
-                      {locationTrackingServicesEnabled &&
-                      !location.location_type_id ? (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialCommunityIcons
-                            name="compass-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={[s.fontSize14, s.text3]}>
-                            {getDistanceWithUnit(
-                              userLat,
-                              userLon,
-                              location.lat,
-                              location.lon,
-                              unitPreference,
-                            )}
-                          </Text>
+                      {location.location_type_id ||
+                      locationTrackingServicesEnabled ? (
+                        <View
+                          style={[
+                            { justifyContent: "space-around" },
+                            s.row,
+                            s.marginB,
+                          ]}
+                        >
+                          {locationTrackingServicesEnabled && (
+                            <View style={[s.row]}>
+                              <MaterialCommunityIcons
+                                name="compass-outline"
+                                style={s.metaIcon}
+                              />
+                              <Text style={[s.fontSize15, s.mediumFont]}>
+                                {getDistanceWithUnit(
+                                  userLat,
+                                  userLon,
+                                  location.lat,
+                                  location.lon,
+                                  unitPreference,
+                                )}
+                              </Text>
+                            </View>
+                          )}
+
+                          {location.location_type_id && (
+                            <View style={[s.row]}>
+                              <Icon
+                                name={locationIcon}
+                                type={iconLibrary}
+                                color={theme.purple}
+                                size={18}
+                              />
+                              <Text
+                                style={[
+                                  { marginLeft: 5 },
+                                  s.fontSize15,
+                                  s.mediumFont,
+                                ]}
+                              >
+                                {locationTypeName}
+                              </Text>
+                            </View>
+                          )}
                         </View>
                       ) : null}
+
+                      {!!location.date_last_updated && (
+                        <View style={[s.row, s.marginB]}>
+                          <MaterialCommunityIcons
+                            name="clock-time-four-outline"
+                            style={s.metaIcon}
+                          />
+                          <Text style={[s.text, s.fontSize15, s.italic]}>
+                            Updated:{" "}
+                            <Text style={s.text3}>
+                              <Text style={s.italic}>
+                                {moment(
+                                  location.date_last_updated,
+                                  "YYYY-MM-DD",
+                                ).format("MMM DD, YYYY")}
+                              </Text>
+                              {location.last_updated_by_username && ` by`}
+                              <Text
+                                style={{
+                                  fontFamily: "Nunito-SemiBold",
+                                  color: theme.pink1,
+                                }}
+                              >{` ${location.last_updated_by_username}`}</Text>
+                            </Text>
+                          </Text>
+                        </View>
+                      )}
 
                       {location.phone ? (
                         <View style={[s.row, s.marginB]}>
@@ -608,47 +623,6 @@ class LocationDetails extends Component {
                         </View>
                       )}
 
-                      {!!location.date_last_updated && (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialCommunityIcons
-                            name="clock-time-four-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text
-                            style={[
-                              s.text,
-                              s.fontSize15,
-                              s.marginRight,
-                              s.italic,
-                            ]}
-                          >
-                            Updated:{" "}
-                            <Text style={s.text3}>
-                              <Text style={s.italic}>
-                                {moment(
-                                  location.date_last_updated,
-                                  "YYYY-MM-DD",
-                                ).format("MMM DD, YYYY")}
-                              </Text>
-                              {location.last_updated_by_username && ` by`}
-                              <Text
-                                style={{
-                                  fontFamily: "Nunito-SemiBold",
-                                  color: theme.pink1,
-                                }}
-                              >{` ${location.last_updated_by_username}`}</Text>
-                            </Text>
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                    <View
-                      style={{
-                        width: "100%",
-                        paddingRight: 10,
-                        paddingBottom: 5,
-                      }}
-                    >
                       {location.description ? (
                         <View
                           style={{
@@ -667,6 +641,7 @@ class LocationDetails extends Component {
                         </View>
                       ) : null}
                     </View>
+
                     {dateDiff >= 2 && (
                       <View style={s.staleView}>
                         <Text
@@ -722,22 +697,6 @@ class LocationDetails extends Component {
                   </View>
                 </View>
               </Screen>
-              <Pressable
-                style={({ pressed }) => [
-                  s.toolsIconButton,
-                  pressed ? s.toolsIconPressed : s.toolsIconNotPressed,
-                ]}
-                onPress={() => {
-                  this.setShowLocationToolsModal(true);
-                }}
-              >
-                <MaterialCommunityIcons
-                  name={"menu"}
-                  color={theme.white}
-                  size={28}
-                  style={{ justifyContent: "center", alignSelf: "center" }}
-                />
-              </Pressable>
             </View>
           );
         }}
@@ -748,39 +707,16 @@ class LocationDetails extends Component {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    mapTypeContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginVertical: 10,
-      marginHorizontal: 20,
-      height: 100,
-    },
     mapViewContainer: {
-      borderWidth: 2,
-      borderColor: theme.base4,
-      borderRadius: 10,
-      height: 100,
-      overflow: "hidden",
-    },
-    mapViewContainerDuo: {
-      width: "48%",
-    },
-    mapViewContainerSolo: {
+      // display: "flex",
+      marginTop: -Constants.statusBarHeight - 8,
+      height: 200,
       width: "100%",
+      borderBottomLeftRadius: 15,
+      borderBottomRightRadius: 15,
     },
     mapHeight: {
       height: "100%",
-    },
-    locationTypeContainer: {
-      backgroundColor: theme.white,
-      borderWidth: 2,
-      borderColor: theme.base4,
-      borderRadius: 10,
-      padding: 5,
-      width: "48%",
-      alignItems: "center",
-      justifyContent: "center",
     },
     backgroundColor: {
       backgroundColor: theme.base1,
@@ -788,11 +724,11 @@ const getStyles = (theme) =>
     locationContainer: {
       flex: 3,
       marginBottom: 10,
-      marginHorizontal: deviceWidth < 325 ? 20 : 25,
+      marginHorizontal: 15,
     },
     locationNameContainer: {
-      marginLeft: Platform.OS === "android" ? 45 : 35,
-      marginBottom: 0,
+      marginVertical: 10,
+      marginBottom: 5,
     },
     locationName: {
       fontFamily: "Nunito-Black",
@@ -835,6 +771,7 @@ const getStyles = (theme) =>
     locationMetaContainer: {
       paddingTop: 0,
       paddingBottom: 0,
+      marginHorizontal: 5,
       flex: 1,
     },
     locationMetaInner: {
@@ -845,8 +782,10 @@ const getStyles = (theme) =>
       flex: 1,
     },
     quickButtonContainer: {
-      width: 130,
+      width: "100%",
       flexDirection: "row",
+      justifyContent: "space-around",
+      marginVertical: 10,
     },
     fontSize12: {
       fontSize: 12,
@@ -947,9 +886,9 @@ const getStyles = (theme) =>
       padding: 10,
       marginHorizontal: 4,
       zIndex: 10,
-      borderRadius: 18,
-      height: 36,
-      width: 36,
+      borderRadius: 20,
+      height: 40,
+      width: 40,
       alignSelf: "center",
       justifyContent: "center",
       shadowColor: theme.darkShadow,
@@ -961,8 +900,13 @@ const getStyles = (theme) =>
     },
     directionsButton: {
       position: "absolute",
-      bottom: 3,
-      left: 0,
+      bottom: 5,
+      left: 5,
+    },
+    mapButton: {
+      position: "absolute",
+      bottom: 5,
+      left: 60,
     },
     metaIcon: {
       paddingTop: 0,
