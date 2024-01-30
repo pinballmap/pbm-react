@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@expo-google-fonts/nunito": "^0.2.0",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/drawer": "^6.4.4",

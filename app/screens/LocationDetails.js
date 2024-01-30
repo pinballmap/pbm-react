@@ -421,279 +421,283 @@ class LocationDetails extends Component {
                     </Mapbox.MapView>
                   </View>
 
-                  <View style={s.locationContainer}>
-                    <View style={s.locationNameContainer}>
-                      <Text style={s.locationName}>{location.name}</Text>
-                    </View>
-                    <View style={s.locationMetaContainer}>
-                      <Text
-                        style={[s.text2, s.bold, s.fontSize15, s.marginRight]}
-                      >
-                        {location.street}, {cityState} {location.zip}
-                      </Text>
-                      <View style={s.quickButtonContainer}>
-                        <Pressable
-                          style={({ pressed }) => [
-                            s.quickButton,
-                            pressed
-                              ? s.quickButtonPressed
-                              : s.quickButtonNotPressed,
-                          ]}
-                          onPress={() =>
-                            loggedIn
-                              ? navigation.navigate("FindMachine")
-                              : navigation.navigate("Login")
-                          }
-                        >
-                          <MaterialCommunityIcons
-                            name={"plus"}
-                            color={theme.text2}
-                            size={28}
-                            style={{
-                              height: 28,
-                              width: 28,
-                              justifyContent: "center",
-                              alignSelf: "center",
-                            }}
-                          />
-                        </Pressable>
-                        <FavoriteLocation
-                          locationId={location.id}
-                          style={{ ...s.quickButton, ...s.saveButton }}
-                          pressedStyle={s.quickButtonPressed}
-                          notPressedStyle={s.quickButtonNotPressed}
-                          navigation={navigation}
-                          removeFavorite={(cb) => cb()}
-                        />
-                        <LocationActivity locationId={location.id} />
-                        <Pressable
-                          style={({ pressed }) => [
-                            s.quickButton,
-                            pressed
-                              ? s.toolsIconPressed
-                              : s.toolsIconNotPressed,
-                          ]}
-                          onPress={() => {
-                            this.setShowLocationToolsModal(true);
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name={"menu"}
-                            color={theme.white}
-                            size={28}
-                            style={{
-                              height: 28,
-                              width: 28,
-                              justifyContent: "center",
-                              alignSelf: "center",
-                            }}
-                          />
-                        </Pressable>
+                  <View style={s.locationOuterContainer}>
+                    <View style={s.locationContainer}>
+                      <View style={s.locationNameContainer}>
+                        <Text style={s.locationName}>{location.name}</Text>
                       </View>
-
-                      {location.location_type_id ||
-                      locationTrackingServicesEnabled ? (
-                        <View
-                          style={[
-                            { justifyContent: "space-around" },
-                            s.row,
-                            s.marginB,
-                          ]}
-                        >
-                          {locationTrackingServicesEnabled && (
-                            <View style={[s.row]}>
-                              <MaterialCommunityIcons
-                                name="compass-outline"
-                                style={s.metaIcon}
-                              />
-                              <Text style={[s.fontSize15, s.mediumFont]}>
-                                {getDistanceWithUnit(
-                                  userLat,
-                                  userLon,
-                                  location.lat,
-                                  location.lon,
-                                  unitPreference,
-                                )}
-                              </Text>
-                            </View>
-                          )}
-
-                          {location.location_type_id && (
-                            <View style={[s.row]}>
-                              <Icon
-                                name={locationIcon}
-                                type={iconLibrary}
-                                color={theme.purple}
-                                size={18}
-                              />
-                              <Text
-                                style={[
-                                  { marginLeft: 5 },
-                                  s.fontSize15,
-                                  s.mediumFont,
-                                ]}
-                              >
-                                {locationTypeName}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      ) : null}
-
-                      {!!location.date_last_updated && (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialCommunityIcons
-                            name="clock-time-four-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={[s.text, s.fontSize15, s.italic]}>
-                            Updated:{" "}
-                            <Text style={s.text3}>
-                              <Text style={s.italic}>
-                                {moment(
-                                  location.date_last_updated,
-                                  "YYYY-MM-DD",
-                                ).format("MMM DD, YYYY")}
-                              </Text>
-                              {location.last_updated_by_username && ` by`}
-                              <Text
-                                style={{
-                                  fontFamily: "Nunito-SemiBold",
-                                  color: theme.pink1,
-                                }}
-                              >{` ${location.last_updated_by_username}`}</Text>
-                            </Text>
-                          </Text>
-                        </View>
-                      )}
-
-                      {location.phone ? (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialIcons
-                            name="local-phone"
-                            style={s.metaIcon}
-                          />
-                          <Text
-                            style={[s.fontSize14, s.link]}
-                            onPress={() =>
-                              Linking.openURL(`tel://${location.phone}`)
-                            }
-                          >
-                            {location.phone}
-                          </Text>
-                        </View>
-                      ) : null}
-
-                      {location.website ? (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialCommunityIcons
-                            name="web"
-                            style={s.metaIcon}
-                          />
-                          <Text
-                            style={[s.fontSize14, s.link]}
-                            onPress={() =>
-                              WebBrowser.openBrowserAsync(location.website)
-                            }
-                          >
-                            Website
-                          </Text>
-                        </View>
-                      ) : null}
-
-                      {!!opName && (
-                        <View style={[s.row, s.marginB]}>
-                          <MaterialCommunityIcons
-                            name="wrench-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={[s.text, s.fontSize15, s.marginRight]}>
-                            Operator:{" "}
-                            <Text
-                              style={opWebsite ? s.link : s.text3}
-                              onPress={
-                                opWebsite
-                                  ? () => WebBrowser.openBrowserAsync(opWebsite)
-                                  : null
-                              }
-                            >
-                              {opName}
-                            </Text>
-                          </Text>
-                        </View>
-                      )}
-
-                      {location.description ? (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "top",
-                            paddingRight: 5,
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name="notebook-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={[s.text3, s.fontSize14]}>
-                            {location.description}
-                          </Text>
-                        </View>
-                      ) : null}
-                    </View>
-
-                    {dateDiff >= 2 && (
-                      <View style={s.staleView}>
+                      <View style={s.locationMetaContainer}>
                         <Text
-                          style={s.staleText}
-                        >{`Last updated over ${dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.`}</Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={s.backgroundColor}>
-                    {sortedMachines.map((machine) => (
-                      <Pressable
-                        key={machine.id}
-                        onPress={() => {
-                          navigation.navigate("MachineDetails", {
-                            machineName: machine.name,
-                          });
-                          this.props.setCurrentMachine(machine.id);
-                        }}
-                      >
-                        {({ pressed }) => (
+                          style={[s.text2, s.bold, s.fontSize15, s.marginRight]}
+                        >
+                          {location.street}, {cityState} {location.zip}
+                        </Text>
+                        <View style={s.quickButtonContainer}>
+                          <Pressable
+                            style={({ pressed }) => [
+                              s.quickButton,
+                              pressed
+                                ? s.quickButtonPressed
+                                : s.quickButtonNotPressed,
+                            ]}
+                            onPress={() =>
+                              loggedIn
+                                ? navigation.navigate("FindMachine")
+                                : navigation.navigate("Login")
+                            }
+                          >
+                            <MaterialCommunityIcons
+                              name={"plus"}
+                              color={theme.text2}
+                              size={28}
+                              style={{
+                                height: 28,
+                                width: 28,
+                                justifyContent: "center",
+                                alignSelf: "center",
+                              }}
+                            />
+                          </Pressable>
+                          <FavoriteLocation
+                            locationId={location.id}
+                            style={{ ...s.quickButton, ...s.saveButton }}
+                            pressedStyle={s.quickButtonPressed}
+                            notPressedStyle={s.quickButtonNotPressed}
+                            navigation={navigation}
+                            removeFavorite={(cb) => cb()}
+                          />
+                          <LocationActivity locationId={location.id} />
+                          <Pressable
+                            style={({ pressed }) => [
+                              s.quickButton,
+                              pressed
+                                ? s.toolsIconPressed
+                                : s.toolsIconNotPressed,
+                            ]}
+                            onPress={() => {
+                              this.setShowLocationToolsModal(true);
+                            }}
+                          >
+                            <MaterialCommunityIcons
+                              name={"menu"}
+                              color={theme.white}
+                              size={28}
+                              style={{
+                                height: 28,
+                                width: 28,
+                                justifyContent: "center",
+                                alignSelf: "center",
+                              }}
+                            />
+                          </Pressable>
+                        </View>
+
+                        {location.location_type_id ||
+                        locationTrackingServicesEnabled ? (
                           <View
                             style={[
-                              s.machineListContainer,
-                              pressed ? s.pressed : s.notPressed,
+                              { justifyContent: "space-around" },
+                              s.row,
+                              s.marginB,
                             ]}
                           >
-                            {this.getTitle(machine, s)}
-                            {machine.created_at != machine.updated_at ? (
-                              <View
-                                style={{
-                                  flexDirection: "row",
-                                  alignItems: "center",
-                                  marginTop: 6,
-                                }}
-                              >
+                            {locationTrackingServicesEnabled && (
+                              <View style={[s.row]}>
                                 <MaterialCommunityIcons
-                                  name="clock-time-four-outline"
+                                  name="compass-outline"
                                   style={s.metaIcon}
                                 />
-                                <Text style={s.updated}>
-                                  {`Updated: ${moment(
-                                    machine.updated_at,
-                                  ).format("MMM DD, YYYY")}`}
+                                <Text style={[s.fontSize15, s.mediumFont]}>
+                                  {getDistanceWithUnit(
+                                    userLat,
+                                    userLon,
+                                    location.lat,
+                                    location.lon,
+                                    unitPreference,
+                                  )}
                                 </Text>
                               </View>
-                            ) : (
-                              ""
+                            )}
+
+                            {location.location_type_id && (
+                              <View style={[s.row]}>
+                                <Icon
+                                  name={locationIcon}
+                                  type={iconLibrary}
+                                  color={theme.purple}
+                                  size={18}
+                                />
+                                <Text
+                                  style={[
+                                    { marginLeft: 5 },
+                                    s.fontSize15,
+                                    s.mediumFont,
+                                  ]}
+                                >
+                                  {locationTypeName}
+                                </Text>
+                              </View>
                             )}
                           </View>
+                        ) : null}
+
+                        {!!location.date_last_updated && (
+                          <View style={[s.row, s.marginB]}>
+                            <MaterialCommunityIcons
+                              name="clock-time-four-outline"
+                              style={s.metaIcon}
+                            />
+                            <Text style={[s.text, s.fontSize15, s.italic]}>
+                              Updated:{" "}
+                              <Text style={s.text3}>
+                                <Text style={s.italic}>
+                                  {moment(
+                                    location.date_last_updated,
+                                    "YYYY-MM-DD",
+                                  ).format("MMM DD, YYYY")}
+                                </Text>
+                                {location.last_updated_by_username && ` by`}
+                                <Text
+                                  style={{
+                                    fontFamily: "Nunito-SemiBold",
+                                    color: theme.pink1,
+                                  }}
+                                >{` ${location.last_updated_by_username}`}</Text>
+                              </Text>
+                            </Text>
+                          </View>
                         )}
-                      </Pressable>
-                    ))}
+
+                        {location.phone ? (
+                          <View style={[s.row, s.marginB]}>
+                            <MaterialIcons
+                              name="local-phone"
+                              style={s.metaIcon}
+                            />
+                            <Text
+                              style={[s.fontSize14, s.link]}
+                              onPress={() =>
+                                Linking.openURL(`tel://${location.phone}`)
+                              }
+                            >
+                              {location.phone}
+                            </Text>
+                          </View>
+                        ) : null}
+
+                        {location.website ? (
+                          <View style={[s.row, s.marginB]}>
+                            <MaterialCommunityIcons
+                              name="web"
+                              style={s.metaIcon}
+                            />
+                            <Text
+                              style={[s.fontSize14, s.link]}
+                              onPress={() =>
+                                WebBrowser.openBrowserAsync(location.website)
+                              }
+                            >
+                              Website
+                            </Text>
+                          </View>
+                        ) : null}
+
+                        {!!opName && (
+                          <View style={[s.row, s.marginB]}>
+                            <MaterialCommunityIcons
+                              name="wrench-outline"
+                              style={s.metaIcon}
+                            />
+                            <Text style={[s.text, s.fontSize15, s.marginRight]}>
+                              Operator:{" "}
+                              <Text
+                                style={opWebsite ? s.link : s.text3}
+                                onPress={
+                                  opWebsite
+                                    ? () =>
+                                        WebBrowser.openBrowserAsync(opWebsite)
+                                    : null
+                                }
+                              >
+                                {opName}
+                              </Text>
+                            </Text>
+                          </View>
+                        )}
+
+                        {location.description ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "top",
+                              paddingRight: 5,
+                            }}
+                          >
+                            <MaterialCommunityIcons
+                              name="notebook-outline"
+                              style={s.metaIcon}
+                            />
+                            <Text style={[s.text3, s.fontSize14]}>
+                              {location.description}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </View>
+
+                      {dateDiff >= 2 && (
+                        <View style={s.staleView}>
+                          <Text
+                            style={s.staleText}
+                          >{`Last updated over ${dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.`}</Text>
+                        </View>
+                      )}
+                    </View>
+
+                    <View style={s.backgroundColor}>
+                      {sortedMachines.map((machine) => (
+                        <Pressable
+                          key={machine.id}
+                          onPress={() => {
+                            navigation.navigate("MachineDetails", {
+                              machineName: machine.name,
+                            });
+                            this.props.setCurrentMachine(machine.id);
+                          }}
+                        >
+                          {({ pressed }) => (
+                            <View
+                              style={[
+                                s.machineListContainer,
+                                pressed ? s.pressed : s.notPressed,
+                              ]}
+                            >
+                              {this.getTitle(machine, s)}
+                              {machine.created_at != machine.updated_at ? (
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 6,
+                                  }}
+                                >
+                                  <MaterialCommunityIcons
+                                    name="clock-time-four-outline"
+                                    style={s.metaIcon}
+                                  />
+                                  <Text style={s.updated}>
+                                    {`Updated: ${moment(
+                                      machine.updated_at,
+                                    ).format("MMM DD, YYYY")}`}
+                                  </Text>
+                                </View>
+                              ) : (
+                                ""
+                              )}
+                            </View>
+                          )}
+                        </Pressable>
+                      ))}
+                    </View>
                   </View>
                 </View>
               </Screen>
@@ -708,23 +712,30 @@ class LocationDetails extends Component {
 const getStyles = (theme) =>
   StyleSheet.create({
     mapViewContainer: {
-      // display: "flex",
       marginTop: -Constants.statusBarHeight - 8,
       height: 200,
       width: "100%",
-      borderBottomLeftRadius: 15,
-      borderBottomRightRadius: 15,
     },
     mapHeight: {
-      height: "100%",
+      height: "115%",
     },
     backgroundColor: {
       backgroundColor: theme.base1,
     },
-    locationContainer: {
+    locationOuterContainer: {
       flex: 3,
+      backgroundColor: theme.base1,
       marginBottom: 10,
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: -8 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+    },
+    locationContainer: {
       marginHorizontal: 15,
+      marginBottom: 10,
     },
     locationNameContainer: {
       marginVertical: 10,
@@ -900,12 +911,12 @@ const getStyles = (theme) =>
     },
     directionsButton: {
       position: "absolute",
-      bottom: 5,
-      left: 5,
+      bottom: 10,
+      left: 10,
     },
     mapButton: {
       position: "absolute",
-      bottom: 5,
+      bottom: 10,
       left: 60,
     },
     metaIcon: {
