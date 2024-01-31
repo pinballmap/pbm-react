@@ -428,11 +428,61 @@ class LocationDetails extends Component {
                         <Text style={s.locationName}>{location.name}</Text>
                       </View>
                       <View style={s.locationMetaContainer}>
-                        <Text
-                          style={[s.text2, s.bold, s.fontSize15, s.marginRight]}
-                        >
+                        <Text style={[s.text2, s.fontSize15, s.marginRight]}>
                           {location.street}, {cityState} {location.zip}
                         </Text>
+
+                        {location.location_type_id ||
+                        locationTrackingServicesEnabled ? (
+                          <View
+                            style={[
+                              {
+                                justifyContent: "space-around",
+                                marginTop: 10,
+                                marginBottom: 5,
+                              },
+                              s.row,
+                            ]}
+                          >
+                            {locationTrackingServicesEnabled && (
+                              <View style={[s.row]}>
+                                <MaterialCommunityIcons
+                                  name="compass-outline"
+                                  style={s.metaIcon}
+                                />
+                                <Text style={[s.fontSize15, s.mediumFont]}>
+                                  {getDistanceWithUnit(
+                                    userLat,
+                                    userLon,
+                                    location.lat,
+                                    location.lon,
+                                    unitPreference,
+                                  )}
+                                </Text>
+                              </View>
+                            )}
+
+                            {location.location_type_id && (
+                              <View style={[s.row]}>
+                                <Icon
+                                  name={locationIcon}
+                                  type={iconLibrary}
+                                  color={theme.purple}
+                                  size={18}
+                                />
+                                <Text
+                                  style={[
+                                    { marginLeft: 5 },
+                                    s.fontSize15,
+                                    s.mediumFont,
+                                  ]}
+                                >
+                                  {locationTypeName}
+                                </Text>
+                              </View>
+                            )}
+                          </View>
+                        ) : null}
                         <View style={s.quickButtonContainer}>
                           <Pressable
                             style={({ pressed }) => [
@@ -493,88 +543,29 @@ class LocationDetails extends Component {
                           </Pressable>
                         </View>
 
-                        {location.location_type_id ||
-                        locationTrackingServicesEnabled ? (
-                          <View
-                            style={[
-                              { justifyContent: "space-around" },
-                              s.row,
-                              s.marginB,
-                            ]}
-                          >
-                            {locationTrackingServicesEnabled && (
-                              <View style={[s.row]}>
-                                <MaterialCommunityIcons
-                                  name="compass-outline"
-                                  style={s.metaIcon}
-                                />
-                                <Text style={[s.fontSize15, s.mediumFont]}>
-                                  {getDistanceWithUnit(
-                                    userLat,
-                                    userLon,
-                                    location.lat,
-                                    location.lon,
-                                    unitPreference,
-                                  )}
-                                </Text>
-                              </View>
-                            )}
-
-                            {location.location_type_id && (
-                              <View style={[s.row]}>
-                                <Icon
-                                  name={locationIcon}
-                                  type={iconLibrary}
-                                  color={theme.purple}
-                                  size={18}
-                                />
-                                <Text
-                                  style={[
-                                    { marginLeft: 5 },
-                                    s.fontSize15,
-                                    s.mediumFont,
-                                  ]}
-                                >
-                                  {locationTypeName}
-                                </Text>
-                              </View>
-                            )}
-                          </View>
-                        ) : null}
-
-                        {!!location.date_last_updated && (
-                          <View style={[s.row, s.marginB]}>
-                            <MaterialCommunityIcons
-                              name="clock-time-four-outline"
-                              style={s.metaIcon}
-                            />
-                            <Text style={[s.text, s.fontSize15, s.italic]}>
-                              Updated:{" "}
-                              <Text style={s.text3}>
-                                <Text style={s.italic}>
-                                  {moment(
-                                    location.date_last_updated,
-                                    "YYYY-MM-DD",
-                                  ).format("MMM DD, YYYY")}
-                                </Text>
-                                {location.last_updated_by_username && ` by`}
-                                <Text
-                                  style={{
-                                    fontFamily: "Nunito-SemiBold",
-                                    color: theme.pink1,
-                                  }}
-                                >{` ${location.last_updated_by_username}`}</Text>
-                              </Text>
-                            </Text>
-                          </View>
-                        )}
-
                         <ListItem.Accordion
+                          containerStyle={s.accordionContainer}
+                          icon={
+                            <Icon
+                              name={"chevron-down"}
+                              type="material-community"
+                              color={theme.purple}
+                            />
+                          }
                           content={
                             <>
                               <ListItem.Content>
-                                <ListItem.Title>
-                                  Location Details
+                                <ListItem.Title
+                                  style={[
+                                    {
+                                      color: theme.text2,
+                                      textDecorationLine: "underline",
+                                    },
+                                    s.fontSize15,
+                                    s.bold,
+                                  ]}
+                                >
+                                  Location Info
                                 </ListItem.Title>
                               </ListItem.Content>
                             </>
@@ -657,12 +648,46 @@ class LocationDetails extends Component {
                                 name="notebook-outline"
                                 style={s.metaIcon}
                               />
-                              <Text style={[s.text3, s.fontSize14]}>
+                              <Text
+                                style={[
+                                  s.text3,
+                                  s.fontSize14,
+                                  s.marginB,
+                                  s.marginRight,
+                                ]}
+                              >
                                 {location.description}
                               </Text>
                             </View>
                           ) : null}
                         </ListItem.Accordion>
+
+                        {!!location.date_last_updated && (
+                          <View style={[s.row, s.marginB]}>
+                            <MaterialCommunityIcons
+                              name="clock-time-four-outline"
+                              style={s.metaIcon}
+                            />
+                            <Text style={[s.text, s.fontSize15, s.italic]}>
+                              Updated:{" "}
+                              <Text style={s.text3}>
+                                <Text style={s.italic}>
+                                  {moment(
+                                    location.date_last_updated,
+                                    "YYYY-MM-DD",
+                                  ).format("MMM DD, YYYY")}
+                                </Text>
+                                {location.last_updated_by_username && ` by`}
+                                <Text
+                                  style={{
+                                    fontFamily: "Nunito-SemiBold",
+                                    color: theme.pink1,
+                                  }}
+                                >{` ${location.last_updated_by_username}`}</Text>
+                              </Text>
+                            </Text>
+                          </View>
+                        )}
                       </View>
 
                       {dateDiff >= 2 && (
@@ -759,8 +784,9 @@ const getStyles = (theme) =>
       marginBottom: 10,
     },
     locationNameContainer: {
-      marginVertical: 10,
+      marginTop: 15,
       marginBottom: 5,
+      marginLeft: 5,
     },
     locationName: {
       fontFamily: "Nunito-Black",
@@ -842,7 +868,7 @@ const getStyles = (theme) =>
     },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
-      marginBottom: 8,
+      marginBottom: 10,
     },
     marginRight: {
       marginRight: 10,
@@ -932,13 +958,13 @@ const getStyles = (theme) =>
     },
     directionsButton: {
       position: "absolute",
-      bottom: 10,
-      left: 10,
+      right: 10,
+      top: Constants.statusBarHeight,
     },
     mapButton: {
       position: "absolute",
-      bottom: 10,
-      left: 60,
+      right: 60,
+      top: Constants.statusBarHeight,
     },
     metaIcon: {
       paddingTop: 0,
@@ -1029,6 +1055,16 @@ const getStyles = (theme) =>
     },
     noTrackingMargin: {
       marginTop: 12,
+    },
+    accordionContainer: {
+      paddingVertical: 0,
+      paddingLeft: 0,
+      paddingRight: 15,
+      marginLeft: 5,
+      marginTop: 4,
+      marginBottom: 10,
+      width: 160,
+      backgroundColor: theme.base1,
     },
   });
 
