@@ -403,7 +403,7 @@ class Map extends Component {
         </Pressable>
         {filterApplied ? (
           <Button
-            title={"Clear Filter"}
+            title={"Filter"}
             onPress={() => this.props.clearFilters()}
             containerStyle={[s.filterContainer, s.containerStyle]}
             buttonStyle={s.buttonStyle}
@@ -461,7 +461,10 @@ const getStyles = (theme) =>
       zIndex: 10,
       position: "absolute",
       alignSelf: "center",
-      bottom: 70,
+      top:
+        Constants.statusBarHeight > 40
+          ? Constants.statusBarHeight + 110
+          : Constants.statusBarHeight + 90,
       paddingVertical: 5,
       paddingHorizontal: 15,
       backgroundColor: theme.text3,
@@ -514,7 +517,10 @@ const getStyles = (theme) =>
     },
     updateContainerStyle: {
       position: "absolute",
-      bottom: 15,
+      top:
+        Constants.statusBarHeight > 40
+          ? Constants.statusBarHeight + 155
+          : Constants.statusBarHeight + 125,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
@@ -525,7 +531,7 @@ const getStyles = (theme) =>
     },
     updateTitleStyle: {
       color: "#FFFFFF",
-      fontSize: 18,
+      fontSize: 16,
     },
     pressedTitleStyle: {
       color: theme.pink3,

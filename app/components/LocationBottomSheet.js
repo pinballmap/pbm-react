@@ -70,7 +70,7 @@ const LocationBottomSheet = React.memo(
                 </View>
               </View>
               <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "top" }}>
                   <MaterialIcons name="location-on" style={s.metaIcon} />
                   <Text
                     style={[s.address]}
