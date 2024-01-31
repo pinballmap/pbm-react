@@ -52,6 +52,7 @@ class LocationDetails extends Component {
     id: this.props.route.params["id"],
     showLocationToolsModal: false,
     navigateToMap: false,
+    detailsExpanded: false,
   };
 
   getTitle = (machine, s) => (
@@ -568,80 +569,100 @@ class LocationDetails extends Component {
                           </View>
                         )}
 
-                        {location.phone ? (
-                          <View style={[s.row, s.marginB]}>
-                            <MaterialIcons
-                              name="local-phone"
-                              style={s.metaIcon}
-                            />
-                            <Text
-                              style={[s.fontSize14, s.link]}
-                              onPress={() =>
-                                Linking.openURL(`tel://${location.phone}`)
-                              }
-                            >
-                              {location.phone}
-                            </Text>
-                          </View>
-                        ) : null}
-
-                        {location.website ? (
-                          <View style={[s.row, s.marginB]}>
-                            <MaterialCommunityIcons
-                              name="web"
-                              style={s.metaIcon}
-                            />
-                            <Text
-                              style={[s.fontSize14, s.link]}
-                              onPress={() =>
-                                WebBrowser.openBrowserAsync(location.website)
-                              }
-                            >
-                              Website
-                            </Text>
-                          </View>
-                        ) : null}
-
-                        {!!opName && (
-                          <View style={[s.row, s.marginB]}>
-                            <MaterialCommunityIcons
-                              name="wrench-outline"
-                              style={s.metaIcon}
-                            />
-                            <Text style={[s.text, s.fontSize15, s.marginRight]}>
-                              Operator:{" "}
+                        <ListItem.Accordion
+                          content={
+                            <>
+                              <ListItem.Content>
+                                <ListItem.Title>
+                                  Location Details
+                                </ListItem.Title>
+                              </ListItem.Content>
+                            </>
+                          }
+                          isExpanded={this.state.detailsExpanded}
+                          onPress={() =>
+                            this.setState({
+                              detailsExpanded: !this.state.detailsExpanded,
+                            })
+                          }
+                        >
+                          {location.phone ? (
+                            <View style={[s.row, s.marginB]}>
+                              <MaterialIcons
+                                name="local-phone"
+                                style={s.metaIcon}
+                              />
                               <Text
-                                style={opWebsite ? s.link : s.text3}
-                                onPress={
-                                  opWebsite
-                                    ? () =>
-                                        WebBrowser.openBrowserAsync(opWebsite)
-                                    : null
+                                style={[s.fontSize14, s.link]}
+                                onPress={() =>
+                                  Linking.openURL(`tel://${location.phone}`)
                                 }
                               >
-                                {opName}
+                                {location.phone}
                               </Text>
-                            </Text>
-                          </View>
-                        )}
+                            </View>
+                          ) : null}
 
-                        {location.description ? (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "top",
-                              paddingRight: 5,
-                            }}
-                          >
-                            <MaterialCommunityIcons
-                              name="notebook-outline"
-                              style={s.metaIcon}
-                            />
-                            <Text style={[s.text3, s.fontSize14]}>
-                              {location.description}
-                            </Text>
-                          </View>
-                        ) : null}
+                          {location.website ? (
+                            <View style={[s.row, s.marginB]}>
+                              <MaterialCommunityIcons
+                                name="web"
+                                style={s.metaIcon}
+                              />
+                              <Text
+                                style={[s.fontSize14, s.link]}
+                                onPress={() =>
+                                  WebBrowser.openBrowserAsync(location.website)
+                                }
+                              >
+                                Website
+                              </Text>
+                            </View>
+                          ) : null}
+
+                          {!!opName && (
+                            <View style={[s.row, s.marginB]}>
+                              <MaterialCommunityIcons
+                                name="wrench-outline"
+                                style={s.metaIcon}
+                              />
+                              <Text
+                                style={[s.text, s.fontSize15, s.marginRight]}
+                              >
+                                Operator:{" "}
+                                <Text
+                                  style={opWebsite ? s.link : s.text3}
+                                  onPress={
+                                    opWebsite
+                                      ? () =>
+                                          WebBrowser.openBrowserAsync(opWebsite)
+                                      : null
+                                  }
+                                >
+                                  {opName}
+                                </Text>
+                              </Text>
+                            </View>
+                          )}
+
+                          {location.description ? (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "top",
+                                paddingRight: 5,
+                              }}
+                            >
+                              <MaterialCommunityIcons
+                                name="notebook-outline"
+                                style={s.metaIcon}
+                              />
+                              <Text style={[s.text3, s.fontSize14]}>
+                                {location.description}
+                              </Text>
+                            </View>
+                          ) : null}
+                        </ListItem.Accordion>
                       </View>
 
                       {dateDiff >= 2 && (
