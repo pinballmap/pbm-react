@@ -30,7 +30,6 @@ import FindLocationType from "../screens/FindLocationType";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
-import { HeaderBackButton } from "@react-navigation/elements";
 
 import { DrawerMenu } from "../components";
 
@@ -331,22 +330,6 @@ function MapStack() {
         options={{
           headerTransparent: true,
           title: null,
-          headerLeft: (navigation) => (
-            <HeaderBackButton
-              style={{
-                backgroundColor: "white",
-                paddingLeft: 6,
-                marginLeft: 10,
-                width: 45,
-                borderRadius: 22.5,
-              }}
-              labelVisible={false}
-              canGoBack={true}
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          ),
         }}
       />
       <Stack.Screen

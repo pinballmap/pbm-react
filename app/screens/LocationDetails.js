@@ -40,6 +40,7 @@ import {
 } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
+import { HeaderBackButton } from "@react-navigation/elements";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -113,6 +114,22 @@ class LocationDetails extends Component {
     this.props.fetchLocation(this.state.id);
     this.props.dispatch(setSelectedMapLocation(null));
     Mapbox.setTelemetryEnabled(false);
+    this.props.navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton
+          style={{
+            backgroundColor: "white",
+            paddingLeft: 6,
+            marginLeft: 10,
+            width: 45,
+            borderRadius: 22.5,
+          }}
+          labelVisible={false}
+          canGoBack={true}
+          onPress={() => this.props.navigation.goBack(null)}
+        />
+      ),
+    });
   }
 
   render() {
