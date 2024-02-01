@@ -467,7 +467,7 @@ class LocationDetails extends Component {
                                   name="compass-outline"
                                   style={s.metaIcon}
                                 />
-                                <Text style={[s.fontSize15, s.mediumFont]}>
+                                <Text style={[{ fontSize: 15 }, s.mediumFont]}>
                                   {getDistanceWithUnit(
                                     userLat,
                                     userLon,
@@ -485,12 +485,11 @@ class LocationDetails extends Component {
                                   name={locationIcon}
                                   type={iconLibrary}
                                   color={theme.purple}
-                                  size={18}
+                                  size={22}
                                 />
                                 <Text
                                   style={[
-                                    { marginLeft: 5 },
-                                    s.fontSize15,
+                                    { marginLeft: 5, fontSize: 15 },
                                     s.mediumFont,
                                   ]}
                                 >
@@ -849,27 +848,14 @@ const getStyles = (theme) =>
       marginHorizontal: 5,
       flex: 1,
     },
-    locationMetaInner: {
-      flexDirection: "row",
-      alignItems: "flex-start",
-    },
-    addressContainer: {
-      flex: 1,
-    },
     quickButtonContainer: {
       width: "100%",
       flexDirection: "row",
       justifyContent: "space-around",
       marginVertical: 10,
     },
-    fontSize12: {
-      fontSize: 12,
-    },
     fontSize14: {
       fontSize: 14,
-    },
-    fontSize13: {
-      fontSize: 13,
     },
     fontSize15: {
       fontSize: 15,
@@ -917,12 +903,6 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-    },
-    opacity09: {
-      opacity: 0.9,
-    },
-    opacity06: {
-      opacity: 0.6,
     },
     iconStyle: {
       fontSize: 32,
@@ -1027,23 +1007,6 @@ const getStyles = (theme) =>
       right: -20,
       top: -20,
       color: theme.red2,
-    },
-    toolsIconButton: {
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
-      overflow: "visible",
-      position: "absolute",
-      bottom: deviceWidth < 325 ? 20 : 30,
-      right: 20,
-      zIndex: 100,
-      alignSelf: "center",
-      justifyContent: "center",
-      borderRadius: 29,
-      height: 58,
-      width: 58,
     },
     toolsIconPressed: {
       backgroundColor: theme.base2,
