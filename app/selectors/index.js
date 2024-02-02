@@ -52,8 +52,8 @@ export const selectedMapLocation = ({ locations }) =>
   locations.selectedMapLocation;
 
 export const getMapLocations = createSelector(
-  [mapLocations, faveLocations, selectedMapLocation],
-  (locations = [], faveLocations = [], selectedMapLocation) => {
+  [mapLocations, faveLocations, selectedMapLocation, (_, theme) => theme],
+  (locations = [], faveLocations = [], selectedMapLocation, theme) => {
     return locations
       .sort((a, b) => a.num_machines - b.num_machines)
       .map((loc, index) => {
@@ -67,6 +67,20 @@ export const getMapLocations = createSelector(
             ? `one${isFave ? "Heart" : ""}`
             : `moreOne${isFave ? "Heart" : ""}`;
         };
+        const getTextColor = () => {
+          if (loc.id === selectedMapLocation) {
+            return theme === "dark" ? "blue" : "yellow";
+          }
+          const isFave =
+            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
+
+          if (isFave) {
+            return theme === "dark" ? "black" : "white";
+          }
+
+          // default case
+          return theme === "dark" ? "green" : "pink";
+        };
         return {
           type: "Feature",
           id: loc.id,
@@ -76,6 +90,7 @@ export const getMapLocations = createSelector(
             num_machines: loc.num_machines,
             name: loc.name,
             icon: getIcon(),
+            textColor: getTextColor(),
           },
           geometry: {
             type: "Point",

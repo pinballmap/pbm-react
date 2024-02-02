@@ -21,7 +21,7 @@ const iconStyles = {
   textFont: ["Nunito Sans Bold"],
 };
 
-const textFloat = (theme) => ({
+const textFloat = () => ({
   textField: [
     "step",
     ["zoom"],
@@ -36,7 +36,7 @@ const textFloat = (theme) => ({
   textVariableAnchor: ["bottom", "top", "right", "left"],
   textRadialOffset: 1.3,
   textAllowOverlap: false,
-  textColor: theme === "dark" ? "#f0ebbe" : "#553a3a",
+  textColor: ["get", "textColor"],
   textFont: ["Nunito Sans Bold"],
   iconAllowOverlap: false,
   symbolSortKey: ["get", "textOrder"],
@@ -44,7 +44,7 @@ const textFloat = (theme) => ({
 
 const CustomMapMarkers = React.memo(() => {
   const theme = useTheme();
-  const locations = useSelector(getMapLocations);
+  const locations = useSelector((state) => getMapLocations(state, theme.theme));
   const features = {
     type: "FeatureCollection",
     features: locations,
@@ -73,7 +73,7 @@ const CustomMapMarkers = React.memo(() => {
       />
       <Mapbox.SymbolLayer
         id={"symbol-id2"}
-        style={textFloat(theme.theme)}
+        style={textFloat()}
         minZoomLevel={11}
         maxZoomLevel={24}
       />
