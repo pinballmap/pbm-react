@@ -52,8 +52,8 @@ export const selectedMapLocation = ({ locations }) =>
   locations.selectedMapLocation;
 
 export const getMapLocations = createSelector(
-  [mapLocations, faveLocations, selectedMapLocation, (_, theme) => theme],
-  (locations = [], faveLocations = [], selectedMapLocation, theme) => {
+  [mapLocations, faveLocations, selectedMapLocation],
+  (locations = [], faveLocations = [], selectedMapLocation) => {
     return locations
       .sort((a, b) => a.num_machines - b.num_machines)
       .map((loc, index) => {
@@ -69,17 +69,17 @@ export const getMapLocations = createSelector(
         };
         const getTextColor = () => {
           if (loc.id === selectedMapLocation) {
-            return theme === "dark" ? "blue" : "yellow";
+            return "#fdebfc";
           }
           const isFave =
             faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
 
           if (isFave) {
-            return theme === "dark" ? "black" : "white";
+            return "white";
           }
 
           // default case
-          return theme === "dark" ? "green" : "pink";
+          return "#392f3a";
         };
         return {
           type: "Feature",

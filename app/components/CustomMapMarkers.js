@@ -10,18 +10,18 @@ import { useDispatch } from "react-redux";
 const iconStyles = {
   iconImage: ["get", "icon"],
   iconAllowOverlap: true,
-  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.6],
+  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.42, 24, 0.62],
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 18, 24, 26],
   iconOpacity: ["step", ["get", "num_machines"], 0.9, 2, 0.95],
   symbolSortKey: ["get", "order"],
   textField: ["get", "num_machines"],
   textAllowOverlap: true,
-  textColor: "#0e0d0d",
+  textColor: ["get", "textColor"],
   textOffset: [0, 0.04],
   textFont: ["Nunito Sans Bold"],
 };
 
-const textFloat = () => ({
+const textFloat = (theme) => ({
   textField: [
     "step",
     ["zoom"],
@@ -36,7 +36,7 @@ const textFloat = () => ({
   textVariableAnchor: ["bottom", "top", "right", "left"],
   textRadialOffset: 1.3,
   textAllowOverlap: false,
-  textColor: ["get", "textColor"],
+  textColor: theme === "dark" ? "#eecfa7" : "#553a3a",
   textFont: ["Nunito Sans Bold"],
   iconAllowOverlap: false,
   symbolSortKey: ["get", "textOrder"],
@@ -73,7 +73,7 @@ const CustomMapMarkers = React.memo(() => {
       />
       <Mapbox.SymbolLayer
         id={"symbol-id2"}
-        style={textFloat()}
+        style={textFloat(theme.theme)}
         minZoomLevel={11}
         maxZoomLevel={24}
       />

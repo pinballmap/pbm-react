@@ -463,9 +463,9 @@ const getStyles = (theme) =>
       alignSelf: "center",
       top:
         Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 110
-          : Constants.statusBarHeight + 90,
-      paddingVertical: 5,
+          ? Constants.statusBarHeight + 210
+          : Constants.statusBarHeight + 190,
+      paddingVertical: 7,
       paddingHorizontal: 15,
       backgroundColor: theme.text3,
       borderRadius: 25,
@@ -519,19 +519,20 @@ const getStyles = (theme) =>
       position: "absolute",
       top:
         Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 155
-          : Constants.statusBarHeight + 125,
+          ? Constants.statusBarHeight + 110
+          : Constants.statusBarHeight + 90,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
-      backgroundColor: "#66017b",
-      paddingTop: Platform.OS === "ios" ? 8 : 6,
-      paddingBottom: 8,
+      backgroundColor: "#f6ddfc",
+      paddingTop: Platform.OS === "ios" ? 7 : 6,
+      paddingBottom: 7,
       paddingHorizontal: 15,
     },
     updateTitleStyle: {
-      color: "#FFFFFF",
+      color: "#17001c",
       fontSize: 16,
+      fontFamily: "Nunito-Medium",
     },
     pressedTitleStyle: {
       color: theme.pink3,
@@ -554,9 +555,9 @@ const getStyles = (theme) =>
       alignSelf: "center",
       top:
         Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 110
-          : Constants.statusBarHeight + 90,
-      right: 15,
+          ? Constants.statusBarHeight + 160
+          : Constants.statusBarHeight + 140,
+      left: 15,
       borderRadius: 25,
     },
     filterTitleStyle: {
