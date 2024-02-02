@@ -209,38 +209,12 @@ const FilterMap = ({
         </View>
       </Screen>
       {hasFilterSelected ? (
-        <View
-          style={{
-            position: "fixed",
-            bottom: 0,
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            backgroundColor: "white",
-            width: "100%",
-            height: 80,
-          }}
-        >
-          <Text
-            style={{
-              textDecorationLine: "underline",
-              fontFamily: "Nunito-Bold",
-              fontSize: 15,
-            }}
-            onPress={clearFilters}
-          >
+        <View style={s.bottomTab}>
+          <Text style={s.bottomTabClear} onPress={clearFilters}>
             Clear Filters
           </Text>
-          <View style={{ borderRadius: 15, backgroundColor: theme.text3 }}>
-            <Text
-              style={{
-                padding: 10,
-                fontFamily: "Nunito-Bold",
-                fontSize: 15,
-                color: theme.white,
-              }}
-              onPress={() => goToMap()}
-            >
+          <View style={s.bottomTabApplyButton}>
+            <Text style={s.bottomTabApply} onPress={() => goToMap()}>
               Apply Filters
             </Text>
           </View>
@@ -301,6 +275,46 @@ const getStyles = (theme) =>
     selTextStyle: {
       color: theme.text2,
       fontFamily: "Nunito-Bold",
+    },
+    bottomTab: {
+      position: "fixed",
+      bottom: 0,
+      flexDirection: "row",
+      justifyContent: "space-around",
+      alignItems: "center",
+      backgroundColor: theme.white,
+      width: "100%",
+      height: 80,
+      paddingBottom: 10,
+      shadowColor: theme.shadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      elevation: 6,
+      overflow: "visible",
+    },
+    bottomTabClear: {
+      textDecorationLine: "underline",
+      fontFamily: "Nunito-Bold",
+      fontSize: 16,
+      color: theme.text,
+    },
+    bottomTabApplyButton: {
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      elevation: 6,
+      overflow: "visible",
+      borderRadius: 30,
+      backgroundColor: theme.purple,
+    },
+    bottomTabApply: {
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      fontFamily: "Nunito-Bold",
+      fontSize: 15,
+      color: theme.white,
     },
   });
 
