@@ -118,12 +118,14 @@ class LocationDetails extends Component {
       headerLeft: () => (
         <HeaderBackButton
           style={{
-            backgroundColor: "white",
-            paddingLeft: 6,
+            backgroundColor: "#fafaff",
+            paddingLeft: 4,
             marginLeft: 10,
-            width: 45,
-            borderRadius: 22.5,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
           }}
+          tintColor={"#66017b"}
           labelVisible={false}
           canGoBack={true}
           onPress={() => this.props.navigation.goBack(null)}
@@ -425,11 +427,12 @@ class LocationDetails extends Component {
                       >
                         <View style={s.markerDot}>
                           <Text
+                            maxFontSizeMultiplier={1}
                             style={{
                               fontFamily: "Nunito-SemiBold",
                               color: "#f5f5ff",
-                              fontSize: 15,
-                              marginTop: Platform.OS === "android" ? -2 : 1,
+                              fontSize: 16,
+                              marginTop: Platform.OS === "android" ? -2 : 0,
                             }}
                           >
                             {location.num_machines}
@@ -585,7 +588,7 @@ class LocationDetails extends Component {
                                       s.bold,
                                     ]}
                                   >
-                                    Location Info
+                                    Location details
                                   </ListItem.Title>
                                 </ListItem.Content>
                               </>
@@ -986,7 +989,7 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     markerDot: {
-      width: 42,
+      width: 44,
       height: 24,
       borderRadius: 15,
       borderWidth: 1,
@@ -1046,14 +1049,21 @@ const getStyles = (theme) =>
       marginTop: 12,
     },
     accordionContainer: {
-      paddingVertical: 0,
-      paddingLeft: 0,
-      paddingRight: 15,
-      marginLeft: 5,
-      marginTop: 4,
-      marginBottom: 10,
-      width: 160,
-      backgroundColor: theme.base1,
+      paddingVertical: 3,
+      paddingright: 8,
+      paddingLeft: 15,
+      marginLeft: "20%",
+      marginRight: "20%",
+      marginTop: 12,
+      marginBottom: 17,
+      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base3,
+      justifyContent: "center",
+      borderRadius: 15,
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      elevation: 6,
     },
   });
 
