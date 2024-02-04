@@ -429,9 +429,9 @@ class LocationDetails extends Component {
                           <Text
                             maxFontSizeMultiplier={1}
                             style={{
-                              fontFamily: "Nunito-SemiBold",
+                              fontFamily: "Nunito-Bold",
                               color: "#f5f5ff",
-                              fontSize: 16,
+                              fontSize: 18,
                               marginTop: Platform.OS === "android" ? -2 : 0,
                             }}
                           >
@@ -468,7 +468,7 @@ class LocationDetails extends Component {
                               <View style={[s.row]}>
                                 <MaterialCommunityIcons
                                   name="compass-outline"
-                                  style={s.metaIcon}
+                                  style={s.distanceIcon}
                                 />
                                 <Text style={[{ fontSize: 15 }, s.mediumFont]}>
                                   {getDistanceWithUnit(
@@ -488,7 +488,7 @@ class LocationDetails extends Component {
                                   name={locationIcon}
                                   type={iconLibrary}
                                   color={theme.purple}
-                                  size={22}
+                                  size={24}
                                 />
                                 <Text
                                   style={[
@@ -582,10 +582,9 @@ class LocationDetails extends Component {
                                     style={[
                                       {
                                         color: theme.text2,
-                                        textDecorationLine: "underline",
+                                        fontFamily: "Nunito-SemiBold",
                                       },
                                       s.fontSize15,
-                                      s.bold,
                                     ]}
                                   >
                                     Location details
@@ -983,18 +982,17 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     distanceIcon: {
-      fontSize: 18,
-      color: theme.indigo4,
+      fontSize: 22,
+      color: theme.colors.inactiveTab,
       marginRight: 3,
       opacity: 0.6,
     },
     markerDot: {
-      width: 44,
-      height: 24,
+      width: 48,
+      height: 26,
       borderRadius: 15,
-      borderWidth: 1,
-      borderColor: "#632071",
-      backgroundColor: "#ab63bb",
+      borderWidth: 0,
+      backgroundColor: "#5f0c72",
       elevation: 1,
       flex: 1,
       alignItems: "center",
