@@ -483,7 +483,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     buttonIcon: {
-      fontSize: 18,
+      fontSize: 22,
       color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
       paddingRight: 5,
     },

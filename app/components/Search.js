@@ -484,7 +484,7 @@ class Search extends Component {
                   ]}
                   onPress={onPressFilter}
                 >
-                  <Entypo name="sound-mix" size={20} style={s.filterIcon} />
+                  <Entypo name="sound-mix" size={24} style={s.filterIcon} />
                 </Pressable>
               </View>
             </View>
@@ -524,7 +524,7 @@ const getStyles = (theme) =>
       height: 45,
     },
     searchMap: {
-      width: deviceWidth - 80,
+      width: deviceWidth - 85,
       borderBottomLeftRadius: 25,
       borderTopLeftRadius: 25,
       paddingLeft: 10,
@@ -534,7 +534,7 @@ const getStyles = (theme) =>
     },
     buttonContainerStyle: {
       justifyContent: "center",
-      width: 50,
+      width: 55,
       borderBottomRightRadius: 25,
       borderTopRightRadius: 25,
       backgroundColor: theme.pink2,
@@ -568,7 +568,6 @@ const getStyles = (theme) =>
     },
     filterIcon: {
       paddingRight: 6,
-      fontSize: 20,
       color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
     },
     listContainerStyle: {

@@ -20,6 +20,7 @@ import {
   getOperatorName,
   filterSelected,
 } from "../selectors";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const FilterMap = ({
   updateNumMachinesSelected,
@@ -132,7 +133,7 @@ const FilterMap = ({
   };
 
   return (
-    <>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <Screen>
         <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
           <Text style={[s.sectionTitle, s.paddingFirst]}>
@@ -220,7 +221,7 @@ const FilterMap = ({
           </View>
         </View>
       ) : null}
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -285,7 +286,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       width: "100%",
       height: 80,
-      paddingBottom: 10,
       shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.6,

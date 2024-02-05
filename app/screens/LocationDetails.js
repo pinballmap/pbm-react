@@ -387,10 +387,10 @@ class LocationDetails extends Component {
                       <FontAwesome6
                         name={"map-location"}
                         color={theme.text2}
-                        size={24}
+                        size={22}
                         style={{
-                          height: 24,
-                          width: 24,
+                          height: 22,
+                          width: 22,
                           justifyContent: "center",
                           alignSelf: "center",
                         }}
@@ -502,65 +502,6 @@ class LocationDetails extends Component {
                             )}
                           </View>
                         ) : null}
-                        <View style={s.quickButtonContainer}>
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.quickButtonPressed
-                                : s.quickButtonNotPressed,
-                            ]}
-                            onPress={() =>
-                              loggedIn
-                                ? navigation.navigate("FindMachine")
-                                : navigation.navigate("Login")
-                            }
-                          >
-                            <MaterialCommunityIcons
-                              name={"plus"}
-                              color={theme.text2}
-                              size={28}
-                              style={{
-                                height: 28,
-                                width: 28,
-                                justifyContent: "center",
-                                alignSelf: "center",
-                              }}
-                            />
-                          </Pressable>
-                          <FavoriteLocation
-                            locationId={location.id}
-                            style={{ ...s.quickButton, ...s.saveButton }}
-                            pressedStyle={s.quickButtonPressed}
-                            notPressedStyle={s.quickButtonNotPressed}
-                            navigation={navigation}
-                            removeFavorite={(cb) => cb()}
-                          />
-                          <LocationActivity locationId={location.id} />
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.toolsIconPressed
-                                : s.toolsIconNotPressed,
-                            ]}
-                            onPress={() => {
-                              this.setShowLocationToolsModal(true);
-                            }}
-                          >
-                            <MaterialCommunityIcons
-                              name={"menu"}
-                              color={theme.white}
-                              size={28}
-                              style={{
-                                height: 28,
-                                width: 28,
-                                justifyContent: "center",
-                                alignSelf: "center",
-                              }}
-                            />
-                          </Pressable>
-                        </View>
 
                         {location.phone ||
                         location.website ||
@@ -715,6 +656,66 @@ class LocationDetails extends Component {
                             </Text>
                           </View>
                         )}
+
+                        <View style={s.quickButtonContainer}>
+                          <Pressable
+                            style={({ pressed }) => [
+                              s.quickButton,
+                              pressed
+                                ? s.quickButtonPressed
+                                : s.quickButtonNotPressed,
+                            ]}
+                            onPress={() =>
+                              loggedIn
+                                ? navigation.navigate("FindMachine")
+                                : navigation.navigate("Login")
+                            }
+                          >
+                            <MaterialCommunityIcons
+                              name={"plus"}
+                              color={theme.text2}
+                              size={30}
+                              style={{
+                                height: 30,
+                                width: 30,
+                                justifyContent: "center",
+                                alignSelf: "center",
+                              }}
+                            />
+                          </Pressable>
+                          <FavoriteLocation
+                            locationId={location.id}
+                            style={{ ...s.quickButton, ...s.saveButton }}
+                            pressedStyle={s.quickButtonPressed}
+                            notPressedStyle={s.quickButtonNotPressed}
+                            navigation={navigation}
+                            removeFavorite={(cb) => cb()}
+                          />
+                          <LocationActivity locationId={location.id} />
+                          <Pressable
+                            style={({ pressed }) => [
+                              s.quickButton,
+                              pressed
+                                ? s.toolsIconPressed
+                                : s.toolsIconNotPressed,
+                            ]}
+                            onPress={() => {
+                              this.setShowLocationToolsModal(true);
+                            }}
+                          >
+                            <MaterialCommunityIcons
+                              name={"menu"}
+                              color={theme.white}
+                              size={28}
+                              style={{
+                                height: 28,
+                                width: 28,
+                                justifyContent: "center",
+                                alignSelf: "center",
+                              }}
+                            />
+                          </Pressable>
+                        </View>
                       </View>
 
                       {dateDiff >= 2 && (
@@ -952,9 +953,9 @@ const getStyles = (theme) =>
       padding: 10,
       marginHorizontal: 4,
       zIndex: 10,
-      borderRadius: 20,
-      height: 40,
-      width: 40,
+      borderRadius: 22,
+      height: 44,
+      width: 44,
       alignSelf: "center",
       justifyContent: "center",
       shadowColor: theme.darkShadow,
@@ -971,7 +972,7 @@ const getStyles = (theme) =>
     },
     mapButton: {
       position: "absolute",
-      right: 60,
+      right: 65,
       top: Constants.statusBarHeight,
     },
     metaIcon: {
@@ -1050,11 +1051,11 @@ const getStyles = (theme) =>
       paddingVertical: 3,
       paddingright: 8,
       paddingLeft: 15,
-      marginLeft: "20%",
-      marginRight: "20%",
-      marginTop: 12,
-      marginBottom: 17,
-      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base3,
+      marginLeft: 0,
+      marginRight: 0,
+      marginTop: 10,
+      marginBottom: 15,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
       justifyContent: "center",
       borderRadius: 15,
       shadowColor: theme.darkShadow,
