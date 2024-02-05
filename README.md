@@ -12,6 +12,16 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.10
+
+February 5, 2023
+
+- Fix the "and x more machines" text on the Saved locations list
+- New map marker icon colors, and other map screen design tweaks
+- Design adjustments on the location details screen to better manage people using large system fonts
+- Tucking some of the location details behind a location details button in order to clean up the location details screen
+- Other behind the scenes maintenance updates
+
 ### 5.3.9
 
 December 30, 2023
