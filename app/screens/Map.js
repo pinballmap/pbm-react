@@ -525,8 +525,7 @@ const getStyles = (theme) =>
       justifyContent: "center",
       borderRadius: 25,
       backgroundColor: "#f6ddfc",
-      paddingTop: Platform.OS === "ios" ? 7 : 6,
-      paddingBottom: 7,
+      paddingVertical: 8,
       paddingHorizontal: 15,
     },
     updateTitleStyle: {

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 const iconStyles = {
   iconImage: ["get", "icon"],
   iconAllowOverlap: true,
-  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.42, 24, 0.62],
+  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.6],
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 18, 24, 26],
   iconOpacity: ["step", ["get", "num_machines"], 0.9, 2, 0.95],
   symbolSortKey: ["get", "order"],
