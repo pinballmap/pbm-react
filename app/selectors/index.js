@@ -75,11 +75,11 @@ export const getMapLocations = createSelector(
             faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
 
           if (isFave) {
-            return "white";
+            return "#fdebfc";
           }
 
           // default case
-          return "#392f3a";
+          return "#4c504d";
         };
         return {
           type: "Feature",

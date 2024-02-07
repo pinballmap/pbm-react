@@ -324,7 +324,7 @@ class Map extends Component {
           styleURL={
             theme.theme === "dark"
               ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-              : Mapbox.StyleURL.Street
+              : Mapbox.StyleURL.Outdoors
           }
           onPress={this.mapPress}
         >
@@ -524,7 +524,7 @@ const getStyles = (theme) =>
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
-      backgroundColor: "#f6ddfc",
+      backgroundColor: "#e3fae5",
       paddingVertical: 8,
       paddingHorizontal: 15,
     },

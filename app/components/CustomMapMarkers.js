@@ -10,15 +10,14 @@ import { useDispatch } from "react-redux";
 const iconStyles = {
   iconImage: ["get", "icon"],
   iconAllowOverlap: true,
-  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.4, 24, 0.6],
-  textSize: ["interpolate", ["linear"], ["zoom"], 11, 18, 24, 26],
-  iconOpacity: ["step", ["get", "num_machines"], 0.9, 2, 0.95],
+  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.44, 24, 0.6],
+  textSize: ["interpolate", ["linear"], ["zoom"], 11, 20, 24, 26],
   symbolSortKey: ["get", "order"],
   textField: ["get", "num_machines"],
   textAllowOverlap: true,
   textColor: ["get", "textColor"],
-  textOffset: [0, 0.04],
-  textFont: ["Nunito Sans Bold"],
+  textOffset: [0, 0.05],
+  textFont: ["Nunito Sans ExtraBold"],
 };
 
 const textFloat = (theme) => ({

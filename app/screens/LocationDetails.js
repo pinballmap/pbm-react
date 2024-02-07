@@ -412,7 +412,7 @@ class LocationDetails extends Component {
                       styleURL={
                         theme.theme === "dark"
                           ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-                          : Mapbox.StyleURL.Street
+                          : Mapbox.StyleURL.Outdoors
                       }
                       style={s.mapHeight}
                     >
@@ -436,9 +436,9 @@ class LocationDetails extends Component {
                           <Text
                             maxFontSizeMultiplier={1}
                             style={{
-                              fontFamily: "Nunito-Bold",
+                              fontFamily: "Nunito-ExtraBold",
                               color: "#f5f5ff",
-                              fontSize: 18,
+                              fontSize: 20,
                               marginTop: Platform.OS === "android" ? -2 : 0,
                             }}
                           >
@@ -999,12 +999,11 @@ const getStyles = (theme) =>
       opacity: 0.6,
     },
     markerDot: {
-      width: 48,
-      height: 26,
+      width: 52,
+      height: 30,
       borderRadius: 15,
       borderWidth: 0,
-      backgroundColor: "#5f0c72",
-      elevation: 1,
+      backgroundColor: "#ae57cf",
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
