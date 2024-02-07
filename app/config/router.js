@@ -30,6 +30,7 @@ import FindLocationType from "../screens/FindLocationType";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 import { DrawerMenu } from "../components";
 
@@ -303,6 +304,17 @@ function MapStack() {
           fontFamily: "Nunito-Bold",
         },
         headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <FontAwesome6
+            name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
+            size={24}
+            color={colors.text}
+            style={{
+              marginLeft: Platform.OS === "android" ? 0 : 10,
+              marginRight: 5,
+            }}
+          />
+        ),
       })}
     >
       <Stack.Screen

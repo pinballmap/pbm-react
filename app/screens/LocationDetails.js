@@ -119,16 +119,23 @@ class LocationDetails extends Component {
         <HeaderBackButton
           style={{
             backgroundColor: "#fafaff",
-            paddingLeft: 4,
             marginLeft: 10,
             width: 40,
             height: 40,
             borderRadius: 20,
+            justifyContent: "center",
           }}
           tintColor={"#66017b"}
           labelVisible={false}
           canGoBack={true}
           onPress={() => this.props.navigation.goBack(null)}
+          backImage={() => (
+            <FontAwesome6
+              name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
+              size={24}
+              color={"#66017b"}
+            />
+          )}
         />
       ),
     });
@@ -786,7 +793,10 @@ class LocationDetails extends Component {
 const getStyles = (theme) =>
   StyleSheet.create({
     mapViewContainer: {
-      marginTop: -Constants.statusBarHeight - 8,
+      marginTop:
+        Platform.OS === "android"
+          ? -Constants.statusBarHeight - 15
+          : -Constants.statusBarHeight - 8,
       height: 200,
       width: "100%",
     },
