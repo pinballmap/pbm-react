@@ -14,7 +14,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.10
 
-February 5, 2023
+February 7, 2023
 
 - Fix the "and x more machines" text on the Saved locations list
 - New map marker icon colors, and other map screen design tweaks

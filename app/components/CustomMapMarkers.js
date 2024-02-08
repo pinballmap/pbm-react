@@ -33,7 +33,7 @@ const textFloat = (theme) => ({
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 24],
   textJustify: "center",
   textVariableAnchor: ["bottom", "top", "right", "left"],
-  textRadialOffset: 1.3,
+  textRadialOffset: 1.4,
   textAllowOverlap: false,
   textColor: theme === "dark" ? "#eecfa7" : "#553a3a",
   textFont: ["Nunito Sans Bold"],

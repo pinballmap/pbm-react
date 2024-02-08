@@ -45,6 +45,7 @@ const TabsOptionsStyle = {
   headerTitleStyle: {
     textAlign: "center",
     fontFamily: "Nunito-Bold",
+    fontWeight: Platform.OS === "android" ? null : 700,
     fontSize: 18,
   },
 };
@@ -297,6 +298,7 @@ function MapStack() {
         headerTitleStyle: {
           textAlign: "center",
           fontFamily: "Nunito-Bold",
+          fontWeight: Platform.OS === "android" ? null : 700,
           fontSize: 18,
           color: colors.text,
         },
