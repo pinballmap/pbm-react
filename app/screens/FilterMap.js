@@ -83,7 +83,7 @@ const FilterMap = ({
       case 4:
         return "20";
       default:
-        return "";
+        return 0;
     }
   };
 
