@@ -54,7 +54,7 @@ const CustomMapMarkers = React.memo(() => {
     <Mapbox.ShapeSource
       id={"shape-source-id-0"}
       shape={features}
-      hitbox={{ width: 10, height: 10 }}
+      hitbox={{ width: 1, height: 1 }}
       onPress={(e) => {
         dispatch(setSelectedMapLocation(Number(e.features[0].id)));
       }}
