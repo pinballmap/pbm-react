@@ -521,6 +521,7 @@ const getStyles = (theme) =>
         Constants.statusBarHeight > 40
           ? Constants.statusBarHeight + 110
           : Constants.statusBarHeight + 90,
+      right: 15,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
