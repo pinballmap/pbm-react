@@ -37,7 +37,7 @@ const About = ({ navigation, appAlert }) => {
     return () => {
       isCancelled = true;
     };
-  });
+  }, []);
 
   return (
     <SafeAreaView edges={["right", "bottom", "left"]} style={s.background}>
