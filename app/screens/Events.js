@@ -241,7 +241,7 @@ class Events extends Component {
                   ) : (
                     <Text
                       style={s.problem}
-                    >{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
+                    >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
                   )}
                 </>
               )}

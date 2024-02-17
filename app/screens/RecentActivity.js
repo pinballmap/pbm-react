@@ -18,7 +18,7 @@ import getActivityIcon from "../utils/getActivityIcon";
 
 const moment = require("moment");
 
-const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
+const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true);
@@ -28,6 +28,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const { selectedActivities, swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
+  const distanceUnit = user.unitPreference ? "km" : "mi";
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
@@ -153,13 +154,29 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
     }
   };
 
+  const localizedDistance = (distanceInMiles, units) => {
+    if (units === "mi") {
+      return `${distanceInMiles} ${units}`;
+    }
+    let convertedDistance;
+    if (distanceInMiles === 30) convertedDistance = 50;
+    if (distanceInMiles === 75) convertedDistance = 120;
+    if (distanceInMiles === 150) convertedDistance = 240;
+
+    return convertedDistance;
+  };
+
   return (
     <Screen>
       <View style={s.header}>
         <ButtonGroup
           onPress={updateIdx}
           selectedIndex={btnIdx}
-          buttons={["30 mi", "75 mi", "150 mi"]}
+          buttons={
+            distanceUnit === "mi"
+              ? ["30 mi", "75 mi", "150 mi"]
+              : ["50 km", "120 km", "240 km"]
+          }
           containerStyle={s.buttonGroupContainer}
           textStyle={s.buttonGroupInactive}
           selectedButtonStyle={s.selButtonStyle}
@@ -183,7 +200,10 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       ) : recentActivity.length === 0 ? (
         <Text
           style={s.problem}
-        >{`No map edits in the last 30 days within ${maxDistance} miles of the map's current location`}</Text>
+        >{`No map edits in the last 30 days within ${localizedDistance(
+          maxDistance,
+          distanceUnit,
+        )} of the map's current location`}</Text>
       ) : (
         recentActivity
           .filter((activity) => {
@@ -303,6 +323,7 @@ const getStyles = (theme) =>
       color: theme.text,
       fontFamily: "Nunito-Bold",
       marginTop: 20,
+      paddingHorizonal: 10,
     },
     xButton: {
       color: theme.red2,
@@ -362,7 +383,7 @@ RecentActivity.propTypes = {
   clearActivityFilter: PropTypes.func,
 };
 
-const mapStateToProps = ({ query }) => ({ query });
+const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   clearActivityFilter: () => dispatch(clearActivityFilter()),
 });
