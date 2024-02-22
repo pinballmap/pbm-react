@@ -217,7 +217,7 @@ function SuggestLocation({
           >
             {!loggedIn ? (
               <NotLoggedIn
-                text={"But first! We ask that you log in. Thank you!"}
+                text={"You must be logged in to submit a location. Thank you!"}
                 onPress={() => navigation.navigate("Login")}
               />
             ) : (

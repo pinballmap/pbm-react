@@ -303,7 +303,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
       fontSize: 16,
       width: 80,
-      color: theme.purple,
+      color: theme.purpleLight,
     },
     preview: {
       fontSize: 15,

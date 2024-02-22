@@ -439,7 +439,7 @@ class LocationDetails extends Component {
                               fontFamily: "Nunito-ExtraBold",
                               color: "#f5f5ff",
                               fontSize: 20,
-                              marginTop: Platform.OS === "android" ? -2 : 0,
+                              marginTop: Platform.OS === "android" ? -2 : 1,
                             }}
                           >
                             {location.num_machines}

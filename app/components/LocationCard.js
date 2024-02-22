@@ -236,7 +236,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Medium",
       fontSize: 15,
       flex: 1,
-      marginBottom: 3,
     },
     text: {
       color: theme.text,
