@@ -5,7 +5,7 @@
       "version": "detect" // React version. "detect" automatically picks the version you have installed.
     }
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
