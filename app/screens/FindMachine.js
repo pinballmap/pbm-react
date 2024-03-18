@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
+  Image,
   Keyboard,
   Modal,
   Platform,
@@ -23,12 +24,17 @@ import {
   removeMachineFromList,
   setMachineFilter,
 } from "../actions";
-import { PbmButton, Text, WarningButton } from "../components";
+import {
+  ActivityIndicator,
+  PbmButton,
+  Text,
+  WarningButton,
+} from "../components";
 import { CheckBox } from "@rneui/themed";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
 
-let deviceHeight = Dimensions.get("window").height;
+let deviceWidth = Dimensions.get("window").width;
 
 const getDisplayText = (machine, theme) => (
   <Text style={{ fontSize: 18 }}>
@@ -104,6 +110,8 @@ class FindMachine extends React.PureComponent {
       machineList: props.location.machineList,
       machinesInView: false,
       ic_enabled: undefined,
+      isLoadingImage: false,
+      imageLoaded: false,
     };
   }
 
@@ -332,6 +340,14 @@ class FindMachine extends React.PureComponent {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
+    const { isLoadingImage, imageLoaded } = this.state;
+    const { opdb_img, opdb_img_height, opdb_img_width } = this.state.machine;
+    const opdb_resized = opdb_img_width - (deviceWidth - 48);
+    const opdb_img_height_calc =
+      (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
+    const opdbImgHeight =
+      opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
+    const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
 
     return (
       <>
@@ -340,77 +356,94 @@ class FindMachine extends React.PureComponent {
           onRequestClose={() => {}}
           transparent={false}
         >
-          <Pressable
-            onPress={() => {
-              Keyboard.dismiss();
-            }}
+          <KeyboardAwareScrollView
+            {...keyboardDismissProp}
+            enableResetScrollToCoords={false}
+            keyboardShouldPersistTaps="handled"
+            style={s.background}
           >
-            <KeyboardAwareScrollView
-              {...keyboardDismissProp}
-              enableResetScrollToCoords={false}
-              keyboardShouldPersistTaps="handled"
-              style={s.background}
-            >
-              <View style={s.verticalAlign}>
-                <Text style={s.modalTitle}>
-                  Add{" "}
-                  <Text style={s.modalMachineName}>
-                    {this.state.machine.name}
-                  </Text>{" "}
-                  to{" "}
-                  <Text style={s.modalLocationName}>
-                    {this.props.location.location.name}
-                  </Text>
+            <View style={s.verticalAlign}>
+              <Text style={s.modalTitle}>
+                Add{" "}
+                <Text style={s.modalMachineName}>
+                  {this.state.machine.name}
+                </Text>{" "}
+                to{" "}
+                <Text style={s.modalLocationName}>
+                  {this.props.location.location.name}
                 </Text>
-                <TextInput
-                  multiline={true}
-                  placeholder={"You can also include a machine comment..."}
-                  placeholderTextColor={theme.indigo4}
-                  style={[
-                    { padding: 5, minHeight: 80, height: "auto" },
-                    s.textInput,
-                  ]}
-                  onChangeText={(condition) => this.setState({ condition })}
-                  textAlignVertical="top"
-                  underlineColorAndroid="transparent"
-                />
-                {this.state.machine.ic_eligible && (
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
-                    <Text>Does this machine have Stern Insider Connected?</Text>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <CheckBox
-                        checked={this.state.ic_enabled}
-                        title="Yes"
-                        onPress={() => this.onIcEnabledPressed(true)}
-                        containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="Nunito-Bold"
-                        textStyle={{ fontSize: 16, color: theme.text }}
-                        checkedColor={theme.purple}
-                      />
-                      <CheckBox
-                        checked={this.state.ic_enabled === false}
-                        title="No"
-                        onPress={() => this.onIcEnabledPressed(false)}
-                        containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="Nunito-Bold"
-                        textStyle={{ fontSize: 16, color: theme.text }}
-                        checkedColor={theme.purple}
-                      />
-                    </View>
+              </Text>
+              {!!opdb_img && (
+                <View style={{ alignItems: "center" }}>
+                  <View style={[s.imageContainer, { width: opdbImgWidth + 8 }]}>
+                    <Image
+                      style={[
+                        {
+                          width: opdbImgWidth,
+                          height: opdbImgHeight,
+                          resizeMode: "cover",
+                          borderRadius: 10,
+                        },
+                        isLoadingImage && { display: "none" },
+                      ]}
+                      source={{ uri: opdb_img }}
+                      onLoadStart={() =>
+                        !imageLoaded && this.setState({ isLoadingImage: true })
+                      }
+                      onLoadEnd={() =>
+                        this.setState({
+                          imageLoaded: true,
+                          isLoadingImage: false,
+                        })
+                      }
+                    />
+                    {isLoadingImage && <ActivityIndicator />}
                   </View>
-                )}
-                <PbmButton title={"Add"} onPress={this.addMachine} />
-                <WarningButton
-                  title={"Cancel"}
-                  onPress={this.cancelAddMachine}
-                />
-              </View>
-            </KeyboardAwareScrollView>
-          </Pressable>
+                </View>
+              )}
+              <TextInput
+                multiline={true}
+                placeholder={"You can also include a machine comment..."}
+                placeholderTextColor={theme.indigo4}
+                style={[
+                  { padding: 5, minHeight: 50, height: "auto" },
+                  s.textInput,
+                ]}
+                onChangeText={(condition) => this.setState({ condition })}
+                textAlignVertical="top"
+                underlineColorAndroid="transparent"
+              />
+              {this.state.machine.ic_eligible && (
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Text>Does this machine have Stern Insider Connected?</Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <CheckBox
+                      checked={this.state.ic_enabled}
+                      title="Yes"
+                      onPress={() => this.onIcEnabledPressed(true)}
+                      containerStyle={{ backgroundColor: theme.base1 }}
+                      fontFamily="Nunito-Bold"
+                      textStyle={{ fontSize: 16, color: theme.text }}
+                      checkedColor={theme.purple}
+                    />
+                    <CheckBox
+                      checked={this.state.ic_enabled === false}
+                      title="No"
+                      onPress={() => this.onIcEnabledPressed(false)}
+                      containerStyle={{ backgroundColor: theme.base1 }}
+                      fontFamily="Nunito-Bold"
+                      textStyle={{ fontSize: 16, color: theme.text }}
+                      checkedColor={theme.purple}
+                    />
+                  </View>
+                </View>
+              )}
+              <PbmButton title={"Add"} onPress={this.addMachine} />
+              <WarningButton title={"Cancel"} onPress={this.cancelAddMachine} />
+            </View>
+          </KeyboardAwareScrollView>
         </Modal>
         <SearchBar
           lightTheme={theme.theme !== "dark"}
@@ -508,7 +541,7 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       marginHorizontal: 30,
-      marginTop: 15,
+      marginTop: 10,
       marginBottom: 10,
       borderRadius: 10,
       fontFamily: "Nunito-Regular",
@@ -517,8 +550,9 @@ const getStyles = (theme) =>
     },
     verticalAlign: {
       flexDirection: "column",
-      justifyContent: "center",
-      height: deviceHeight,
+      justifyContent: "top",
+      marginTop: 80,
+      marginBottom: 40,
     },
     multiSelect: {
       alignItems: "center",
@@ -585,6 +619,15 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
+    },
+    imageContainer: {
+      marginVertical: 20,
+      marginHorizontal: 20,
+      borderWidth: 4,
+      borderColor: "#e7b9f1",
+      borderRadius: 14,
+      alignItems: "center",
+      justifyContent: "center",
     },
   });
 
