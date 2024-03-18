@@ -111,8 +111,10 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
             multiline={true}
             placeholder={"Your words..."}
             placeholderTextColor={theme.indigo4}
-            numberOfLines={10}
-            style={[{ padding: 5, height: 200 }, s.textInput]}
+            style={[
+              { padding: 5, minHeight: 100, height: "auto" },
+              s.textInput,
+            ]}
             onChangeText={(message) => setMessage(message)}
             textAlignVertical="top"
             underlineColorAndroid="transparent"

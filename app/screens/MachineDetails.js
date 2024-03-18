@@ -181,13 +181,12 @@ class MachineDetails extends Component {
                       </Text>
                       <TextInput
                         multiline={true}
-                        numberOfLines={4}
                         underlineColorAndroid="transparent"
                         onChangeText={(conditionText) =>
                           this.setState({ conditionText })
                         }
                         style={[
-                          { padding: 5, height: 100 },
+                          { padding: 5, minHeight: 80, height: "auto" },
                           s.textInput,
                           s.radius10,
                         ]}
@@ -362,8 +361,8 @@ class MachineDetails extends Component {
                         ic_enabled === null
                           ? s.nullIC
                           : ic_enabled
-                          ? s.yesIC
-                          : s.noIC
+                            ? s.yesIC
+                            : s.noIC
                       }
                       icon={
                         ic_enabled === null ? (

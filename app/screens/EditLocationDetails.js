@@ -58,14 +58,14 @@ function EditLocationDetails({
   const locationTypeId = locationType
     ? locationType
     : selectedLocationType
-    ? selectedLocationType
-    : location_type_id;
+      ? selectedLocationType
+      : location_type_id;
 
   const operatorId = operator
     ? operator
     : selectedOperator
-    ? selectedOperator
-    : operator_id;
+      ? selectedOperator
+      : operator_id;
 
   const locationTypeObj =
     locationTypes.find((type) => type.id === locationTypeId) || {};
@@ -218,8 +218,11 @@ function EditLocationDetails({
                   <Text style={s.title}>Location Notes</Text>
                   <TextInput
                     multiline={true}
-                    numberOfLines={4}
-                    style={[{ height: 100 }, s.textInput, s.radius10]}
+                    style={[
+                      { minHeight: 80, height: "auto" },
+                      s.textInput,
+                      s.radius10,
+                    ]}
                     onChangeText={(description) => setDescription(description)}
                     value={description}
                     underlineColorAndroid="transparent"

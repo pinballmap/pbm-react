@@ -522,9 +522,8 @@ function SuggestLocation({
                     <Text style={s.title}>Location Notes</Text>
                     <TextInput
                       multiline={true}
-                      numberOfLines={4}
                       style={[
-                        { padding: 5, height: 100 },
+                        { padding: 5, minHeight: 80, height: "auto" },
                         s.textInput,
                         s.radius10,
                       ]}
