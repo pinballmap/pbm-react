@@ -753,27 +753,31 @@ class LocationDetails extends Component {
                               ]}
                             >
                               {this.getTitle(machine, s)}
-                              {machine.created_at != machine.updated_at ? (
-                                <View
-                                  style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    marginTop: 6,
-                                  }}
-                                >
-                                  <MaterialCommunityIcons
-                                    name="clock-time-four-outline"
-                                    style={s.metaIcon}
-                                  />
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  marginTop: 6,
+                                }}
+                              >
+                                <MaterialCommunityIcons
+                                  name="clock-time-four-outline"
+                                  style={s.metaIcon}
+                                />
+                                {machine.created_at != machine.updated_at ? (
                                   <Text style={s.updated}>
                                     {`Updated: ${moment(
                                       machine.updated_at,
                                     ).format("MMM DD, YYYY")}`}
                                   </Text>
-                                </View>
-                              ) : (
-                                ""
-                              )}
+                                ) : (
+                                  <Text style={s.updated}>
+                                    {`Added: ${moment(
+                                      machine.created_at,
+                                    ).format("MMM DD, YYYY")}`}
+                                  </Text>
+                                )}
+                              </View>
                             </View>
                           )}
                         </Pressable>
