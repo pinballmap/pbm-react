@@ -817,16 +817,8 @@ class LocationDetails extends Component {
                 </View>
               </ScrollView>
               {this.state.showScrollToTop && (
-                <Pressable
-                  onPress={this.scrollToTop}
-                  style={{
-                    position: "absolute",
-                    left: 20,
-                    bottom: 20,
-                    backgroundColor: "blue",
-                  }}
-                >
-                  <Text>Scroll To Top</Text>
+                <Pressable onPress={this.scrollToTop} style={s.upButton}>
+                  <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
                 </Pressable>
               )}
             </View>
@@ -1119,6 +1111,19 @@ const getStyles = (theme) =>
       shadowOpacity: 0.6,
       shadowRadius: 6,
       elevation: 6,
+    },
+    upButton: {
+      justifyContent: "center",
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      position: "absolute",
+      right: 25,
+      bottom: 25,
+      backgroundColor: theme.purple,
+      padding: 10,
+      borderRadius: 15,
     },
   });
 
