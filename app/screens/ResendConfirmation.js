@@ -37,7 +37,9 @@ const ResendConfirmation = ({ navigation }) => {
         }}
       >
         <ConfirmationModal visible={modalVisible}>
-          <Text style={s.confirmText}>Confirmation info resent.</Text>
+          <Text style={s.confirmText}>
+            Confirmation info resent (check your SPAM folder).
+          </Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={45}
