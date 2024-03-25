@@ -7,6 +7,7 @@ import {
   Linking,
   Platform,
   Pressable,
+  ScrollView,
   Share,
   StyleSheet,
   View,
@@ -22,7 +23,6 @@ import {
   ConfirmationModal,
   FavoriteLocation,
   LocationActivity,
-  Screen,
   Text,
 } from "../components";
 import {
@@ -49,11 +49,29 @@ let deviceWidth = Dimensions.get("window").width;
 const moment = require("moment");
 
 class LocationDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.scrollViewRef = React.createRef(null);
+  }
   state = {
     id: this.props.route.params["id"],
     showLocationToolsModal: false,
     navigateToMap: false,
     detailsExpanded: false,
+    showScrollToTop: false,
+  };
+
+  scrollToTop = () => {
+    this.scrollViewRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  };
+
+  handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    this.setState({ showScrollToTop: positionY > 150 });
   };
 
   getTitle = (machine, s) => (
@@ -190,7 +208,7 @@ class LocationDetails extends Component {
           const s = getStyles(theme);
           return (
             <View style={{ flex: 1 }}>
-              <Screen>
+              <ScrollView ref={this.scrollViewRef} onScroll={this.handleScroll}>
                 <ConfirmationModal visible={this.state.showLocationToolsModal}>
                   <View style={s.header}>
                     <Text style={s.filterTitle}>Location Tools</Text>
@@ -733,7 +751,6 @@ class LocationDetails extends Component {
                         </View>
                       )}
                     </View>
-
                     <View style={s.backgroundColor}>
                       {sortedMachines.map((machine) => (
                         <Pressable
@@ -797,7 +814,12 @@ class LocationDetails extends Component {
                     </View>
                   </View>
                 </View>
-              </Screen>
+              </ScrollView>
+              {this.state.showScrollToTop && (
+                <Pressable onPress={this.scrollToTop} style={s.upButton}>
+                  <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
+                </Pressable>
+              )}
             </View>
           );
         }}
@@ -1088,6 +1110,19 @@ const getStyles = (theme) =>
       shadowOpacity: 0.6,
       shadowRadius: 6,
       elevation: 6,
+    },
+    upButton: {
+      justifyContent: "center",
+      shadowColor: theme.darkShadow,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      position: "absolute",
+      right: 25,
+      bottom: 25,
+      backgroundColor: theme.purple,
+      padding: 10,
+      borderRadius: 15,
     },
   });
 
