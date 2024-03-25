@@ -756,11 +756,10 @@ class LocationDetails extends Component {
                         <Pressable
                           key={machine.id}
                           onPress={() => {
-                            this.onPressTouch();
-                            // navigation.navigate("MachineDetails", {
-                            //   machineName: machine.name,
-                            // });
-                            // this.props.setCurrentMachine(machine.id);
+                            navigation.navigate("MachineDetails", {
+                              machineName: machine.name,
+                            });
+                            this.props.setCurrentMachine(machine.id);
                           }}
                         >
                           {({ pressed }) => (
