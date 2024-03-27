@@ -24,7 +24,6 @@ import { getData } from "../config/request";
 import {
   getLocationsByRegion,
   triggerUpdateBounds,
-  getLocationsFailure,
   setSearchBarText,
   clearSearchBarText,
   fetchLocation,
@@ -131,6 +130,10 @@ class Search extends Component {
       const { locations } = await getData(
         `/locations?by_city_id=${city};${stateParam};no_details=1`,
       );
+      if (!Array.isArray(locations) || !locations.length) {
+        throw new Error();
+      }
+
       // In order to show all locations for a given city, we must determine the min/max lat/lon
       // such that we can come up with an appropriate bounds to place the map.
       const bounds = locations.reduce((prev, cur) => {
@@ -158,7 +161,7 @@ class Search extends Component {
       this.props.triggerUpdateBounds(bounds);
       this.clearSearchState({ value });
     } catch (e) {
-      this.props.getLocationsFailure();
+      Alert.alert("City not found");
       this.clearSearchState("");
     }
   };
@@ -630,7 +633,6 @@ Search.propTypes = {
   regions: PropTypes.object,
   query: PropTypes.object,
   getLocationsByRegion: PropTypes.func,
-  getLocationsFailure: PropTypes.func,
   setSearchBarText: PropTypes.func,
   clearSearchBarText: PropTypes.func,
 };
@@ -643,7 +645,6 @@ const mapStateToProps = ({ regions, query, user }) => ({
 const mapDispatchToProps = (dispatch) => ({
   triggerUpdateBounds: (bounds) => dispatch(triggerUpdateBounds(bounds)),
   getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
-  getLocationsFailure: () => dispatch(getLocationsFailure()),
   setSearchBarText: (searchBarText) =>
     dispatch(setSearchBarText(searchBarText)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),
