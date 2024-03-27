@@ -191,6 +191,19 @@ function EditLocationDetails({
                 }}
               >
                 <View style={{ marginLeft: 10, marginRight: 10 }}>
+                  <Text style={[s.subText, s.margin8]}>
+                    Want to edit the location name (or address)?
+                    <Text
+                      onPress={() => navigation.navigate("Contact")}
+                      style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
+                    >
+                      {"contact us"}
+                    </Text>
+                    <Text
+                      style={{ color: theme.pink1 }}
+                    >{` (include the location name in your message)`}</Text>
+                    .
+                  </Text>
                   <Text style={s.title}>Phone</Text>
                   <TextInput
                     style={[{ height: 40 }, s.textInput, s.radius10]}
@@ -237,24 +250,7 @@ function EditLocationDetails({
                     </Text>
                     , simply remove the machines from the listing!
                   </Text>
-                  <Text style={[s.subText, s.margin8]}>
-                    If this venue has{" "}
-                    <Text style={{ fontFamily: "Nunito-Bold" }}>
-                      moved to a new address
-                    </Text>{" "}
-                    (or changed names), please{" "}
-                    <Text
-                      onPress={() => navigation.navigate("Contact")}
-                      style={s.textLink}
-                    >
-                      {"contact us"}
-                    </Text>
-                    {` and we'll fix it `}
-                    <Text
-                      style={{ fontFamily: "Nunito-Bold", color: theme.pink1 }}
-                    >{`(include the location name in your message)`}</Text>
-                    .
-                  </Text>
+
                   <Text style={s.title}>Location Type</Text>
                   <DropDownButton
                     title={locationTypeName}
