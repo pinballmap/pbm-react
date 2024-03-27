@@ -35,10 +35,36 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
+            >{`The location name has changed. Can I change it?`}</Text>
+            <Text style={s.text}>
+              {`Only administrators can edit location names. Please `}
+              <Text
+                onPress={() => navigation.navigate("Contact")}
+                style={s.textLink}
+              >
+                {"contact us"}
+              </Text>
+              {`, and make sure to tell us the name of the location.`}
+            </Text>
+            <Text
+              style={s.bold}
             >{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
             <Text
               style={s.text}
             >{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+            <Text
+              style={s.bold}
+            >{`This location has moved. Should I add a location description that no administrator will ever see? Or should I remove the machines from it and re-submit?`}</Text>
+            <Text style={s.text}>
+              {`Neither! Administrators can change the address. Please `}
+              <Text
+                onPress={() => navigation.navigate("Contact")}
+                style={s.textLink}
+              >
+                {"contact us"}
+              </Text>
+              {`, and make sure to tell us the name of the location that has moved. It's preferable to simply change the address because that retains the location history.`}
+            </Text>
             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
             <Text style={s.text}>
               {
@@ -75,12 +101,6 @@ const FAQ = ({ navigation }) => {
             <Text
               style={s.text}
             >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
-            <Text
-              style={s.bold}
-            >{`This location has moved. Should I remove the machines from it and re-submit?`}</Text>
-            <Text
-              style={s.text}
-            >{`No. Administrators can change the address. Please let us know if a location has moved. It's preferable to simply change the address because that retains the location history.`}</Text>
             <Text
               style={s.bold}
             >{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
