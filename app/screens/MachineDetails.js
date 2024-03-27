@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Image,
   Keyboard,
   Modal,
   Platform,
@@ -33,6 +32,7 @@ import {
 } from "../utils/utilityFunctions";
 import {
   ActivityIndicator,
+  BackglassImage,
   PbmButton,
   RemoveMachineModal,
   RemoveMachine,
@@ -54,8 +54,6 @@ class MachineDetails extends Component {
     showAddScoreModal: false,
     score: "",
     showRemoveMachineModal: false,
-    isLoadingImage: false,
-    imageLoaded: false,
   };
 
   cancelAddCondition = () =>
@@ -147,7 +145,6 @@ class MachineDetails extends Component {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
-    const { isLoadingImage, imageLoaded } = this.state;
 
     return (
       <ThemeContext.Consumer>
@@ -305,35 +302,11 @@ class MachineDetails extends Component {
                   )}
                 </View>
                 {!!opdb_img && (
-                  <View style={{ alignItems: "center" }}>
-                    <View
-                      style={[s.imageContainer, { width: opdbImgWidth + 8 }]}
-                    >
-                      <Image
-                        style={[
-                          {
-                            width: opdbImgWidth,
-                            height: opdbImgHeight,
-                            resizeMode: "cover",
-                            borderRadius: 10,
-                          },
-                          isLoadingImage && { display: "none" },
-                        ]}
-                        source={{ uri: opdb_img }}
-                        onLoadStart={() =>
-                          !imageLoaded &&
-                          this.setState({ isLoadingImage: true })
-                        }
-                        onLoadEnd={() =>
-                          this.setState({
-                            imageLoaded: true,
-                            isLoadingImage: false,
-                          })
-                        }
-                      />
-                      {isLoadingImage && <ActivityIndicator />}
-                    </View>
-                  </View>
+                  <BackglassImage
+                    width={opdbImgWidth}
+                    height={opdbImgHeight}
+                    source={opdb_img}
+                  />
                 )}
                 {!!ic_eligible && (
                   <>
@@ -717,15 +690,6 @@ const getStyles = (theme) =>
       marginVertical: 10,
       color: theme.purpleLight,
       opacity: 0.9,
-    },
-    imageContainer: {
-      marginBottom: 20,
-      marginHorizontal: 20,
-      borderWidth: 4,
-      borderColor: "#e7b9f1",
-      borderRadius: 14,
-      alignItems: "center",
-      justifyContent: "center",
     },
     operatorEmail: {
       borderBottomLeftRadius: 15,

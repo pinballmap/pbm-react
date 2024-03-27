@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Image,
   Keyboard,
   Modal,
   Platform,
@@ -24,12 +23,7 @@ import {
   removeMachineFromList,
   setMachineFilter,
 } from "../actions";
-import {
-  ActivityIndicator,
-  PbmButton,
-  Text,
-  WarningButton,
-} from "../components";
+import { BackglassImage, PbmButton, Text, WarningButton } from "../components";
 import { CheckBox } from "@rneui/themed";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
@@ -110,8 +104,6 @@ class FindMachine extends React.PureComponent {
       machineList: props.location.machineList,
       machinesInView: false,
       ic_enabled: undefined,
-      isLoadingImage: false,
-      imageLoaded: false,
     };
   }
 
@@ -340,7 +332,6 @@ class FindMachine extends React.PureComponent {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
-    const { isLoadingImage, imageLoaded } = this.state;
     const { opdb_img, opdb_img_height, opdb_img_width } = this.state.machine;
     const opdb_resized = opdb_img_width - (deviceWidth - 48);
     const opdb_img_height_calc =
@@ -374,32 +365,11 @@ class FindMachine extends React.PureComponent {
                 </Text>
               </Text>
               {!!opdb_img && (
-                <View style={{ alignItems: "center" }}>
-                  <View style={[s.imageContainer, { width: opdbImgWidth + 8 }]}>
-                    <Image
-                      style={[
-                        {
-                          width: opdbImgWidth,
-                          height: opdbImgHeight,
-                          resizeMode: "cover",
-                          borderRadius: 10,
-                        },
-                        isLoadingImage && { display: "none" },
-                      ]}
-                      source={{ uri: opdb_img }}
-                      onLoadStart={() =>
-                        !imageLoaded && this.setState({ isLoadingImage: true })
-                      }
-                      onLoadEnd={() =>
-                        this.setState({
-                          imageLoaded: true,
-                          isLoadingImage: false,
-                        })
-                      }
-                    />
-                    {isLoadingImage && <ActivityIndicator />}
-                  </View>
-                </View>
+                <BackglassImage
+                  width={opdbImgWidth}
+                  height={opdbImgHeight}
+                  source={opdb_img}
+                />
               )}
               <TextInput
                 multiline={true}
@@ -619,15 +589,6 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
-    },
-    imageContainer: {
-      marginVertical: 20,
-      marginHorizontal: 20,
-      borderWidth: 4,
-      borderColor: "#e7b9f1",
-      borderRadius: 14,
-      alignItems: "center",
-      justifyContent: "center",
     },
   });
 

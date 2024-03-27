@@ -20,6 +20,7 @@ import FavoriteLocation from "./FavoriteLocation";
 import LocationActivity from "./LocationActivity";
 import CustomMapMarkers from "./CustomMapMarkers";
 import LocationBottomSheet from "./LocationBottomSheet";
+import BackglassImage from "./BackglassImage";
 
 export {
   LocationCard,
@@ -44,4 +45,5 @@ export {
   LocationActivity,
   CustomMapMarkers,
   LocationBottomSheet,
+  BackglassImage,
 };
