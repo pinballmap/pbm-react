@@ -710,7 +710,7 @@ const getStyles = (theme) =>
     successBanner: {
       fontSize: 20,
       fontFamily: "Nunito-Bold",
-      color: theme.purple,
+      color: theme.purpleLight,
     },
     error: {
       color: theme.red2,
