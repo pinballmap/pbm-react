@@ -18,7 +18,7 @@ March 28, 2023
 
 - Show backglass image (if available) when adding a machine to location, to try and help users know they have the right version.
 - Include a "scroll to top" button on the location details screen.
-- Show "Added on" date for machines on the location details screen.
+- Show "Added on" date for machines on the location details screen. (Thank you [@unitof](https://github.com/unitof))
 - Fixed some issues with text input design.
 - Bug fix for when a City that no longer has locations is in your Recent Search History.
 
@@ -26,7 +26,7 @@ March 28, 2023
 
 February 23, 2023
 
-- Fixed minor bug on About page.
+- Fixed minor bug on About page (Thank you [@ErikGraciosa](https://github.com/ErikGraciosa)).
 - A couple small design tweaks and package updates.
 
 ### 5.3.11
