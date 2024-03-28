@@ -14,7 +14,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.13
 
-March 28, 2023
+March 27, 2023
 
 - Show backglass image (if available) when adding a machine to location, to try and help users know they have the right version.
 - Include a "scroll to top" button on the location details screen.
