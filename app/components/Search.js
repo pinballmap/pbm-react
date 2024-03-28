@@ -161,7 +161,7 @@ class Search extends Component {
       this.props.triggerUpdateBounds(bounds);
       this.clearSearchState({ value });
     } catch (e) {
-      Alert.alert("City not found");
+      Alert.alert("City no longer has machines.");
       this.clearSearchState("");
     }
   };
@@ -182,7 +182,7 @@ class Search extends Component {
       });
       this.clearSearchState(location);
     } catch (e) {
-      Alert.alert("Location not found");
+      Alert.alert("Location is gone, friend.");
     }
   };
 
