@@ -12,6 +12,16 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.13
+
+March 28, 2023
+
+- Show backglass image (if available) when adding a machine to location, to try and help users know they have the right version.
+- Include a "scroll to top" button on the location details screen.
+- Show "Added on" date for machines on the location details screen.
+- Fixed some issues with text input design.
+- Bug fix for when a City that no longer has locations is in your Recent Search History.
+
 ### 5.3.12
 
 February 23, 2023
