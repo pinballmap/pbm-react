@@ -529,7 +529,6 @@ const getStyles = (theme) =>
     },
     addedContainer: {
       marginTop: 5,
-      marginBottom: 10,
     },
     addedText: {
       textAlign: "center",
@@ -711,16 +710,19 @@ const getStyles = (theme) =>
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e4dddd",
+      marginBottom: 10,
     },
     yesIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#ecbcf5",
+      marginBottom: 10,
     },
     noIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e7c8c8",
+      marginBottom: 10,
     },
     italic: {
       fontFamily: "Nunito-Italic",
