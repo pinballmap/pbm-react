@@ -208,7 +208,11 @@ class LocationDetails extends Component {
           const s = getStyles(theme);
           return (
             <View style={{ flex: 1 }}>
-              <ScrollView ref={this.scrollViewRef} onScroll={this.handleScroll}>
+              <ScrollView
+                ref={this.scrollViewRef}
+                onScroll={this.handleScroll}
+                scrollIndicatorInsets={{ right: 1 }}
+              >
                 <ConfirmationModal visible={this.state.showLocationToolsModal}>
                   <View style={s.header}>
                     <Text style={s.filterTitle}>Location Tools</Text>
