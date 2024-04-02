@@ -51,8 +51,8 @@ const AppWrapper = ({
         await allSettled([
           getRegions("/regions.json"),
           getLocationTypes("/location_types.json"),
-          getMachines("/machines.json"),
-          getOperators("/operators.json"),
+          getMachines("/machines.json?no_details=1"),
+          getOperators("/operators.json?no_details=1"),
           getLocationAndMachineCounts(
             "/regions/location_and_machine_counts.json",
           ),
