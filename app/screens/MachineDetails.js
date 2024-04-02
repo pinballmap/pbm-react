@@ -15,6 +15,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { ThemeContext } from "../theme-context";
 import {
   EvilIcons,
+  FontAwesome6,
   FontAwesome5,
   Ionicons,
   MaterialCommunityIcons,
@@ -101,16 +102,10 @@ class MachineDetails extends Component {
       opdb_img,
       opdb_img_height,
       opdb_img_width,
-      ipdb_id,
       name: machineName,
       ic_eligible,
     } = this.props.machineDetails;
     const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`;
-    const ipdbUrl = ipdb_id
-      ? `http://www.ipdb.org/machine.cgi?id=${ipdb_id}`
-      : `http://ipdb.org/search.pl?name=${encodeURIComponent(
-          machineName,
-        )};qh=checked;searchtype=advanced`;
     const opdb_resized = opdb_img_width - (deviceWidth - 48);
     const opdb_img_height_calc =
       (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
@@ -467,7 +462,7 @@ class MachineDetails extends Component {
                   />
                 </View>
                 {!!pintipsUrl && (
-                  <View style={[s.externalLinkContainer, s.marginB15]}>
+                  <View style={[s.externalLinkContainer, s.marginB10]}>
                     <Text
                       style={s.externalLink}
                       onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
@@ -477,15 +472,6 @@ class MachineDetails extends Component {
                     <EvilIcons name="external-link" style={s.externalIcon} />
                   </View>
                 )}
-                <View style={s.externalLinkContainer}>
-                  <Text
-                    style={s.externalLink}
-                    onPress={() => WebBrowser.openBrowserAsync(ipdbUrl)}
-                  >
-                    View on IPDB
-                  </Text>
-                  <EvilIcons name="external-link" style={s.externalIcon} />
-                </View>
                 <WarningButton
                   title={"Remove Machine"}
                   onPress={
@@ -493,6 +479,15 @@ class MachineDetails extends Component {
                       ? () => this.setState({ showRemoveMachineModal: true })
                       : () => this.props.navigation.navigate("Login")
                   }
+                  icon={
+                    <FontAwesome6
+                      size={24}
+                      color="#ffffff"
+                      name="trash-can"
+                      style={s.removeButton}
+                    />
+                  }
+                  iconPosition="left"
                 />
               </ScrollView>
             </KeyboardAwareScrollView>
@@ -558,8 +553,8 @@ const getStyles = (theme) =>
       fontSize: 24,
       color: theme.text2,
     },
-    marginB15: {
-      marginBottom: 15,
+    marginB10: {
+      marginBottom: 10,
     },
     margin40: {
       marginHorizontal: 40,
@@ -729,6 +724,9 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+    },
+    removeButton: {
+      marginRight: 10,
     },
   });
 

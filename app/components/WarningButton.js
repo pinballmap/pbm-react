@@ -9,6 +9,8 @@ const WarningButton = ({
   onPress,
   accessibilityLabel,
   containerStyle,
+  icon,
+  iconPosition,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -18,6 +20,8 @@ const WarningButton = ({
       title={title}
       onPress={onPress}
       accessibilityLabel={accessibilityLabel}
+      icon={icon}
+      iconPosition={iconPosition}
       buttonStyle={s.redButton}
       titleStyle={s.titleStyle}
       containerViewStyle={{ alignSelf: "stretch" }}
@@ -41,6 +45,8 @@ const WarningButton = ({
 WarningButton.propTypes = {
   onPress: PropTypes.func,
   title: PropTypes.string,
+  iconPosition: PropTypes.string,
+  icon: PropTypes.node,
   accessibilityLabel: PropTypes.string,
   containerStyle: PropTypes.object,
 };

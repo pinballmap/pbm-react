@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
 import RemoveMachineModal from "./RemoveMachineModal";
 import { useNavigation } from "@react-navigation/native";
 
@@ -15,8 +15,8 @@ const RemoveMachine = ({ user }) => {
       {showModal && (
         <RemoveMachineModal closeModal={() => setShowModal(false)} />
       )}
-      <FontAwesome
-        name="trash"
+      <FontAwesome6
+        name="trash-can"
         size={30}
         color={"#e4606a"}
         style={{ marginRight: 10 }}
