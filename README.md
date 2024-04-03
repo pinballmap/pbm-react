@@ -12,9 +12,17 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.14
+
+April 3, 2024
+
+- Bug fix: scrollbar issue on location details screen.
+- Remove IPDB links on machine details screen (too many missing machines; not getting updated), and replace with Kineticist links (contains a host of useful info and links).
+- Slight improvement to app startup time.
+
 ### 5.3.13
 
-March 27, 2023
+March 27, 2024
 
 - Show backglass image (if available) when adding a machine to location, to try and help users know they have the right version.
 - Include a "scroll to top" button on the location details screen.
