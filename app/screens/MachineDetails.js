@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
+  Image,
   Keyboard,
   Modal,
   Platform,
@@ -102,6 +103,7 @@ class MachineDetails extends Component {
       opdb_img,
       opdb_img_height,
       opdb_img_width,
+      kineticist_url,
       name: machineName,
       ic_eligible,
     } = this.props.machineDetails;
@@ -472,6 +474,26 @@ class MachineDetails extends Component {
                     <EvilIcons name="external-link" style={s.externalIcon} />
                   </View>
                 )}
+                {!!kineticist_url && (
+                  <View style={[s.externalLinkContainer, s.marginB10]}>
+                    <Text
+                      style={s.externalLink}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(kineticist_url)
+                      }
+                    >
+                      View machine info on Kineticist
+                    </Text>
+                    <Image
+                      source={require("../assets/images/kineticist.png")}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        marginLeft: 5,
+                      }}
+                    />
+                  </View>
+                )}
                 <WarningButton
                   title={"Remove Machine"}
                   onPress={
@@ -668,8 +690,7 @@ const getStyles = (theme) =>
     },
     containerStyle: {
       borderRadius: 15,
-      marginBottom: 20,
-      marginTop: 0,
+      marginVertical: 10,
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
@@ -710,19 +731,16 @@ const getStyles = (theme) =>
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e4dddd",
-      marginBottom: 10,
     },
     yesIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#ecbcf5",
-      marginBottom: 10,
     },
     noIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e7c8c8",
-      marginBottom: 10,
     },
     italic: {
       fontFamily: "Nunito-Italic",
