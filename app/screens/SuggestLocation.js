@@ -381,7 +381,7 @@ function SuggestLocation({
                   <SafeAreaView edges={["right", "bottom", "left"]}>
                     <Text
                       style={[{ marginTop: 10 }, s.text]}
-                    >{`Submit a new location to the map! We review all submissions. Thanks for helping out!`}</Text>
+                    >{`Only submit NEW locations (check first! please).`}</Text>
                     <Text style={s.title}>Location Name</Text>
                     <GooglePlacesAutocomplete
                       ref={autoCompleteRef}
