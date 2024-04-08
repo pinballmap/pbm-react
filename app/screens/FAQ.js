@@ -133,6 +133,25 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
+            >{`Can you include "bat games" like SlugFest on the map?`}</Text>
+            <Text style={s.text}>
+              No, no bat games. We fully understand that pitch and bat games
+              resemble pinball machines and the collectors that collect them
+              also usually collect pinball machines. We used to include bat
+              games, but found that non-pinball machines like that were a
+              slippery slope toward including more and more non-pinball
+              machines. We only want to map pinball machines. In general, if the
+              machine is not listed on{" "}
+              <Text
+                style={s.textLink}
+                onPress={() => WebBrowser.openBrowserAsync("https://opdb.org")}
+              >
+                OPDB
+              </Text>{" "}
+              then we will not include it.
+            </Text>
+            <Text
+              style={s.bold}
             >{`The Location List isn't showing a location that I think it should.`}</Text>
             <Text
               style={s.text}
