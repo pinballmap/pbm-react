@@ -356,6 +356,9 @@ function SuggestLocation({
                               </View>
                             )}
                           </View>
+                          <Text style={{ color: theme.purpleLight }}>
+                            {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
+                          </Text>
                           <PbmButton
                             title={"Submit Location"}
                             onPress={() => confirmSuggestLocationDetails()}
