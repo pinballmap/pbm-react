@@ -20,7 +20,30 @@ const FAQ = ({ navigation }) => {
             >{`How do I search for a particular machine?`}</Text>
             <Text
               style={s.text}
-            >{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}</Text>
+            >{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine. When the map is filtered, you can zoom further out.`}</Text>
+            <Text
+              style={s.bold}
+            >{`How do I add a machine to a location?`}</Text>
+            <Text
+              style={s.text}
+            >{`First, log in. Then lookup the location and click the + (plus) icon, or click the menu icon and choose "Add machine". Then select a machine and add it.`}</Text>
+            <Text
+              style={s.bold}
+            >{`How do I remove a machine from a location?`}</Text>
+            <Text
+              style={s.text}
+            >{`First, log in. Click on the machine name, and then look for the "remove" button or the trash can icon.`}</Text>
+            <Text style={s.bold}>{`How do I add a new location?`}</Text>
+            <Text style={s.text}>
+              {`Fill out `}
+              <Text
+                onPress={() => navigation.navigate("SuggestLocation")}
+                style={s.textLink}
+              >
+                {"this form"}
+              </Text>
+              {` (or go to the menu icon in the lower right of the map screen and choose "Submit Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added!`}
+            </Text>
             <Text
               style={s.bold}
             >{`I get an error every time I try to add a machine, or comment, or anything.`}</Text>
@@ -33,6 +56,18 @@ const FAQ = ({ navigation }) => {
                 {"Or go here to have it resent."}
               </Text>
             </Text>
+            <Text
+              style={s.bold}
+            >{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
+            <Text
+              style={s.text}
+            >{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
+            <Text
+              style={s.bold}
+            >{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
+            <Text
+              style={s.text}
+            >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
             <Text
               style={s.bold}
             >{`The location name has changed. Can I change it?`}</Text>
@@ -48,12 +83,6 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
-            <Text
-              style={s.text}
-            >{`Simply remove all the machines from it. Empty locations are periodically removed.`}</Text>
-            <Text
-              style={s.bold}
             >{`This location has moved. Should I add a location description that no administrator will ever see? Or should I remove the machines from it and re-submit?`}</Text>
             <Text style={s.text}>
               {`Neither! Administrators can change the address. Please `}
@@ -63,7 +92,65 @@ const FAQ = ({ navigation }) => {
               >
                 {"contact us"}
               </Text>
-              {`, and make sure to tell us the name of the location that has moved. It's preferable to simply change the address because that retains the location history.`}
+              {`, and make sure to tell us the name of the location that has moved. It's preferable for us to simply change the address because that retains the location history.`}
+            </Text>
+            <Text
+              style={s.bold}
+            >{`Can I use Pinball Map data on my own site?`}</Text>
+            <Text style={s.text}>
+              {`You can use our public API to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
+            </Text>
+            <Text
+              style={s.bold}
+            >{`Can you include "bat games", or other non-pinball but pinball-adjacent games??`}</Text>
+            <Text style={s.text}>
+              No, no bat games. We fully understand that pitch and bat games
+              resemble pinball machines and the collectors that collect them
+              also usually collect pinball machines. We used to include bat
+              games, but found that non-pinball machines like that were a
+              slippery slope toward including more and more non-pinball
+              machines. We only want to map pinball machines. In general, if the
+              machine is not listed on{" "}
+              <Text
+                style={s.textLink}
+                onPress={() => WebBrowser.openBrowserAsync("https://opdb.org")}
+              >
+                OPDB
+              </Text>{" "}
+              {`then we will not include it.\n\n`}
+              {`We do include some pre-pinball flipperless games. Are we missing some?`}
+            </Text>
+            <Text
+              style={s.bold}
+            >{`Can I add my private collection to the map?`}</Text>
+            <Text
+              style={s.text}
+            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members.`}</Text>
+            <Text
+              style={s.bold}
+            >{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
+            <Text style={s.text}>
+              {`These are data entry mistakes. Please `}
+              <Text
+                onPress={() => navigation.navigate("Contact")}
+                style={s.textLink}
+              >
+                {"contact us"}
+              </Text>
+              {` so we can fix them.`}
+            </Text>
+            <Text
+              style={s.bold}
+            >{`I submitted a new location but it never showed up on the map. What is wrong with you?`}</Text>
+            <Text style={s.text}>
+              {`There are numerous reasons why a new location was not added to the map. Here are some:\n\n`}
+              {`\u2022 Not enough time has passed. Please allow 0-7 days before a location is approved. Submissions go to different people, depending on where the location is in the world. And these people work at different paces. Reminder, we're all volunteers with the goal of having a very clean data set.\n\n`}
+
+              {`\u2022 The location you submitted isn't open yet. Many locations are submitted by the business owners themselves (and people helping out those businesses), and we are honored that they think of us when they are prepping to launch their business. But guess who are also eager folks? Pinball players! So if a location gets added to the map before it's open to the world, people will drive all the way there, discover an un-opened business, and then... you guessed it! They then yell at us about it. It doesn't matter if there's a location description saying "Opens on May 5." People do not read (except you).\n\n`}
+
+              {`\u2022 Your submission didn't utilize the "machine autocomplete". In the "machines" field of the submission form, you gotta start typing a machine name, and then select the correct machine from the list that pops up (note, this magically adds a comma after the machine name). When we approve the location, our system can correctly read the machine name, match it to a machine in our database, and successfully add it to the location. If instead you type in a machine name, then it's not formatted in a way that will match to the database. The end result is that we'll approve the location and the location will have zero machines (unless the admin happens to notice that the machine list is weird and then manually adds the machine after it's on the map), and then a week later the location will get auto-deleted from the map.\n\n`}
+
+              {`\u2022 The location you submitted is a private residence. Or private in some other way.\n\n`}
             </Text>
             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
             <Text style={s.text}>
@@ -79,28 +166,24 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`I am an operator, and people are leaving bad comments on my machines. Can you make them stop, or disable comments on my machines?`}</Text>
+            >{`How do I tag myself as the operator at a location?`}</Text>
+            <Text
+              style={s.text}
+            >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "menu" icon and then select "Edit Location Details". Choose your operator business from the list. Then save.`}</Text>
+            <Text
+              style={s.bold}
+            >{`I'm operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
-              {`We can't control the comments that people make, nor will we disable comments at an individual venue. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone.\n\n`}
+              {`The short answer is that we will/can not disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.\n\n`}
+              {`Comments may be removed and/or accounts can be disabled in some cases (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>
                 To users leaving comments:
               </Text>{" "}
               {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>To operators:</Text>{" "}
-              {`Users notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators try to keep a level head amidst comments they don't like, and leave a note saying the issue is fixed. It's better in the long term and this comment history is actually really valuable.`}
+              {`Users notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators try to keep a level head amidst comments they don't like, and leave a note saying the issue is fixed. It's better in the long term and this comment history is actually really valuable.\n\n`}
+              {`We regularly get messages from operators and owners demanding that a user be banned from leaving comments on their location. Most often, the comments in question are not slanderous, but have some sass or "off-topic" messages. These requests are a big headache for us, especially because they do not warrant any action toward the user. So please, help us! Be mindful that operators are very sensitive about the content on this site, and they take it out on us.`}
             </Text>
-            <Text
-              style={s.bold}
-            >{`How do I remove a machine from a location?`}</Text>
-            <Text
-              style={s.text}
-            >{`You have to be logged in (if you don't have account, please create one). Click on the machine name, and then look for the "remove" button or the trash can icon.`}</Text>
-            <Text
-              style={s.bold}
-            >{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
-            <Text
-              style={s.text}
-            >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
             <Text
               style={s.bold}
             >{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
@@ -133,59 +216,10 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`Can you include "bat games" like SlugFest on the map?`}</Text>
-            <Text style={s.text}>
-              No, no bat games. We fully understand that pitch and bat games
-              resemble pinball machines and the collectors that collect them
-              also usually collect pinball machines. We used to include bat
-              games, but found that non-pinball machines like that were a
-              slippery slope toward including more and more non-pinball
-              machines. We only want to map pinball machines. In general, if the
-              machine is not listed on{" "}
-              <Text
-                style={s.textLink}
-                onPress={() => WebBrowser.openBrowserAsync("https://opdb.org")}
-              >
-                OPDB
-              </Text>{" "}
-              then we will not include it.
-            </Text>
-            <Text
-              style={s.bold}
             >{`The Location List isn't showing a location that I think it should.`}</Text>
             <Text
               style={s.text}
             >{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
-            <Text style={s.bold}>{`How do I add a new location?`}</Text>
-            <Text style={s.text}>
-              {`Fill out `}
-              <Text
-                onPress={() => navigation.navigate("SuggestLocation")}
-                style={s.textLink}
-              >
-                {"this form"}
-              </Text>
-              {` (or go to the menu icon in the lower right of the map screen and choose "Submit Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added!`}
-            </Text>
-            <Text
-              style={s.bold}
-            >{`Can I add my private collection to the map?`}</Text>
-            <Text
-              style={s.text}
-            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members.`}</Text>
-            <Text
-              style={s.bold}
-            >{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
-            <Text style={s.text}>
-              {`These are data entry mistakes. Please `}
-              <Text
-                onPress={() => navigation.navigate("Contact")}
-                style={s.textLink}
-              >
-                {"contact us"}
-              </Text>
-              {` so we can fix them.`}
-            </Text>
             <Text style={s.bold}>{`Why was my comment removed?`}</Text>
             <Text style={s.text}>
               {`Our administrators may deem your machine or location comment to be inappropriate because:\n\n`}
