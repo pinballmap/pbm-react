@@ -207,7 +207,7 @@ class LocationDetails extends Component {
         {({ theme }) => {
           const s = getStyles(theme);
           return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: theme.base1 }}>
               <ScrollView
                 ref={this.scrollViewRef}
                 onScroll={this.handleScroll}
@@ -488,7 +488,7 @@ class LocationDetails extends Component {
                               {
                                 justifyContent: "space-around",
                                 marginTop: 10,
-                                marginBottom: 5,
+                                marginBottom: 10,
                               },
                               s.row,
                             ]}
@@ -1104,7 +1104,7 @@ const getStyles = (theme) =>
       paddingLeft: 15,
       marginLeft: 0,
       marginRight: 0,
-      marginTop: 10,
+      marginTop: 5,
       marginBottom: 15,
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
       justifyContent: "center",
