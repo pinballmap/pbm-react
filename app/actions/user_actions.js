@@ -181,10 +181,13 @@ export const selectFavoriteLocationFilterBy = (idx) => {
 };
 
 export const submitMessage =
-  ({ name, email, message }) =>
+  ({ name, email, message, locationName }) =>
   (dispatch, getState) => {
     dispatch({ type: SUBMITTING_MESSAGE });
 
+    const messageWithLocationName = locationName
+      ? `${message} \n\n Location Name: ${locationName}`
+      : message;
     const {
       email: user_email,
       authentication_token,
@@ -193,7 +196,7 @@ export const submitMessage =
       locationTrackingServicesEnabled,
     } = getState().user;
     const body = {
-      message,
+      message: messageWithLocationName,
       name,
       email,
     };

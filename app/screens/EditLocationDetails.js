@@ -194,7 +194,9 @@ function EditLocationDetails({
                   <Text style={[s.subText, s.margin8]}>
                     Want to edit the location name (or address)?
                     <Text
-                      onPress={() => navigation.navigate("Contact")}
+                      onPress={() =>
+                        navigation.navigate("Contact", { locationName: name })
+                      }
                       style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
                     >
                       {"contact us"}

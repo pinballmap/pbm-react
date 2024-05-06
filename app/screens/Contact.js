@@ -14,7 +14,7 @@ import { submitMessage, clearMessage } from "../actions";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
+const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -23,7 +23,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user }) => {
   const [message, setMessage] = useState("");
 
   const submit = () => {
-    submitMessage({ name, email, message });
+    submitMessage({
+      name,
+      email,
+      message,
+      locationName: route.params?.locationName,
+    });
   };
 
   const acknowledgeConfirmation = () => {
