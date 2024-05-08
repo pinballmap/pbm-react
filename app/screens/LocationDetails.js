@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
+  Alert,
   Dimensions,
   Image,
   Linking,
@@ -128,8 +129,14 @@ class LocationDetails extends Component {
     this.setState({ showLocationToolsModal: visible });
   }
 
-  componentDidMount() {
-    this.props.fetchLocation(this.state.id);
+  async componentDidMount() {
+    try {
+      const { location } = await this.props.fetchLocation(this.state.id);
+      if (location.errors) throw new Error("Unable to find location");
+    } catch (e) {
+      Alert.alert("Location is gone, friend.");
+      this.props.navigation.goBack();
+    }
     this.props.dispatch(setSelectedMapLocation(null));
     Mapbox.setTelemetryEnabled(false);
     this.props.navigation.setOptions({
