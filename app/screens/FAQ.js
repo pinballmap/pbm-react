@@ -46,7 +46,7 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`I get an error every time I try to add a machine, or comment, or anything.`}</Text>
+            >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
             <Text style={s.text}>
               {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
               <Text
@@ -67,7 +67,7 @@ const FAQ = ({ navigation }) => {
             >{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
             <Text
               style={s.text}
-            >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed, so that people can easily call and check on the status.`}</Text>
+            >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed so that people can easily call and check on the status.`}</Text>
             <Text
               style={s.bold}
             >{`The location name has changed. Can I change it?`}</Text>
@@ -172,16 +172,17 @@ const FAQ = ({ navigation }) => {
             >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "menu" icon and then select "Edit Location Details". Choose your operator business from the list. Then save.`}</Text>
             <Text
               style={s.bold}
-            >{`I'm operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
+            >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
-              {`The short answer is that we will/can not disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.\n\n`}
-              {`Comments may be removed and/or accounts can be disabled in some cases (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.\n\n`}
+              {`The short answer is that we can't disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.\n\n`}
+              {`In some circumstances, comments may be removed and/or accounts can be disabled (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>
                 To users leaving comments:
               </Text>{" "}
-              {`It is generally preferable to directly tell operators about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
+              {`To regular users leaving comments: Most operators prefer you directly tell them about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>To operators:</Text>{" "}
-              {`Users notice when operators remove and re-add the same machine in order to clear out comments they don't like. It makes it seem like the operator is whitewashing comments rather than fixing issues. We strongly discourage doing this, and instead ask that operators try to keep a level head amidst comments they don't like, and leave a note saying the issue is fixed. It's better in the long term and this comment history is actually really valuable.\n\n`}
+              {`A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. Pinball Map does not make you do this.\n\n`}
+              {`According to nearly everyone, it is really valuable to see a history of comments (thing is broken, thing is fixed, etc.). Everyone understands that machines break all the time. Seeing a dialog demonstrates that upkeep is occurring. The "latest comment" noting a problem is not particularly important to users and will not drive them away. Some operators choose to delete machines and re-add them in order to clear out comments rather than simply responding to a comment. This is bad practice - both for your business and for the map - and can result in your account being disabled. It makes it seem like the operator is whitewashing comments rather than fixing issues. Users definitely notice this, and we strongly discourage it.\n\n`}
               {`We regularly get messages from operators and owners demanding that a user be banned from leaving comments on their location. Most often, the comments in question are not slanderous, but have some sass or "off-topic" messages. These requests are a big headache for us, especially because they do not warrant any action toward the user. So please, help us! Be mindful that operators are very sensitive about the content on this site, and they take it out on us.`}
             </Text>
             <Text
@@ -214,6 +215,17 @@ const FAQ = ({ navigation }) => {
               : Take photo straight on, not at an angle. Crop image to show only
               artwork. Avoid glare, if possible
             </Text>
+            <Text style={s.bold}>{`Can I change my username?`}</Text>
+            <Text style={s.text}>
+              {`Only administrators can change your username.`}
+              <Text
+                onPress={() => navigation.navigate("Contact")}
+                style={s.textLink}
+              >
+                {"Contact us"}
+              </Text>
+              {`and we'll be happy to change it.`}
+            </Text>
             <Text
               style={s.bold}
             >{`The Location List isn't showing a location that I think it should.`}</Text>
@@ -224,15 +236,15 @@ const FAQ = ({ navigation }) => {
             <Text style={s.text}>
               {`Our administrators may deem your machine or location comment to be inappropriate because:\n\n`}
 
-              {`\u2022 It contains a personal attack\n\n`}
+              {`\u2022 It contains a personal attack.\n\n`}
 
-              {`\u2022 It isn't relevant (for example, promoting a tournament in a machine comment) or constructive\n\n`}
+              {`\u2022 It isn't relevant (for example, promoting a tournament in a machine comment) or constructive.\n\n`}
 
-              {`\u2022 It is offensive`}
+              {`\u2022 It is offensive.`}
             </Text>
             <Text style={s.bold}>{`Why was my account disabled?`}</Text>
             <Text style={s.text}>
-              {`\u2022 If your account has been used to mess with data on the site, then we may ban it. Bad behavior includes, but is not limited to: deleting machines that are at a location; adding machines that are not at a location; leaving lots of inappropriate/abusive comments.\n\n`}
+              {`\u2022 If your account has been used to mess with data on the site, then we may disable it. Bad behavior includes, but is not limited to: removing machines that are at a location (or removing+adding to clear out comments); adding machines that are not at a location; leaving lots of inappropriate/abusive comments; or adding Slugfest over and over (see above).\n\n`}
 
               {`\u2022 You created a sockpuppet account to hype your location and/or disparage the competition. This is unethical and it makes the site worse. Don't do this. Look in the mirror.\n\n`}
 
