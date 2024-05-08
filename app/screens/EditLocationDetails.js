@@ -199,12 +199,8 @@ function EditLocationDetails({
                       }
                       style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
                     >
-                      {"contact us"}
+                      {"Contact us"}.
                     </Text>
-                    <Text
-                      style={{ color: theme.pink1 }}
-                    >{` (include the location name in your message)`}</Text>
-                    .
                   </Text>
                   <Text style={s.title}>Phone</Text>
                   <TextInput

@@ -79,12 +79,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             <Text style={[s.pinkText, s.boldFont]}>NO NEED to tell us!</Text>{" "}
             {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
           </Text>
-          <Text style={[s.text, s.regularFont]}>
-            {`If you're writing about a specific location, `}
-            <Text style={[s.pinkText, s.boldFont]}>
-              tell us the location name!
-            </Text>
-          </Text>
           <Text
             onPress={() => navigation.navigate("FAQ")}
             style={s.textLink}
