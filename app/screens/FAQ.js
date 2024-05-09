@@ -277,7 +277,7 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
-            >{`How do I update your password, or email, or delete my account?`}</Text>
+            >{`How do I update my password, or email, or delete my account?`}</Text>
             <Text style={s.text}>
               {`These can be done on your`}{" "}
               <Text
