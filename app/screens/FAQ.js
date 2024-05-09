@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Entypo } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 
 const FAQ = ({ navigation }) => {
@@ -15,12 +16,79 @@ const FAQ = ({ navigation }) => {
       <Screen>
         <View style={s.container}>
           <View style={s.child}>
+            <Text style={s.text}>
+              {`\nThis page contains helpful app and website support information. If you have a question, comment, or suggestion, `}
+              <Text
+                onPress={() => navigation.navigate("Contact")}
+                style={s.textLink}
+              >
+                {"contact us"}
+              </Text>
+              {`.`}
+            </Text>
+            <Text style={s.category}>Mobile App-Specific</Text>
             <Text
               style={s.bold}
             >{`How do I search for a particular machine?`}</Text>
+            <Text style={s.text}>
+              {`When you're on the map screen, click the `}
+              <Entypo
+                name="sound-mix"
+                size={16}
+                style={s.filterIcon}
+                onPress={() => navigation.navigate("FilterMap")}
+              />
+              <Text
+                style={s.textLink}
+                onPress={() => navigation.navigate("FilterMap")}
+              >
+                {` filter`}
+              </Text>
+              {` button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine. When the map is filtered, you can zoom further out.`}
+            </Text>
+            <Text
+              style={s.bold}
+            >{`The Location List isn't showing a location that I think it should.`}</Text>
             <Text
               style={s.text}
-            >{`When you're on the map screen, click the "filter" button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine. When the map is filtered, you can zoom further out.`}</Text>
+            >{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
+            <Text
+              style={s.bold}
+            >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
+            <Text style={s.text}>
+              {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
+              <Text
+                style={s.textLink}
+                onPress={() => navigation.navigate("ResendConfirmation")}
+              >
+                {"Or go here to have it resent."}
+              </Text>
+            </Text>
+            <Text
+              style={s.bold}
+            >{`How can I submit a backglass photo to the “machine details” screen?`}</Text>
+            <Text style={s.text}>
+              The photos we display come from the Open Pinball Database (OPDB),
+              and so you should upload your high quality photo using{" "}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync("https://opdb.org/images/create")
+                }
+              >
+                this form
+              </Text>{" "}
+              (you must first create an OPDB account). The photos you upload
+              will not immediately appear in this app.
+            </Text>
+            <Text style={s.text}>
+              <Text style={{ fontFamily: "Nunito-Bold" }}>
+                General backglass/translite photo guidelines
+              </Text>
+              : Take photo straight on, not at an angle. Crop image to show only
+              artwork. Avoid glare, if possible
+            </Text>
+            <Text style={s.category}>Updating the Map</Text>
             <Text
               style={s.bold}
             >{`How do I add a machine to a location?`}</Text>
@@ -43,18 +111,6 @@ const FAQ = ({ navigation }) => {
                 {"this form"}
               </Text>
               {` (or go to the menu icon in the lower right of the map screen and choose "Submit Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added!`}
-            </Text>
-            <Text
-              style={s.bold}
-            >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
-            <Text style={s.text}>
-              {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
-              <Text
-                style={s.textLink}
-                onPress={() => navigation.navigate("ResendConfirmation")}
-              >
-                {"Or go here to have it resent."}
-              </Text>
             </Text>
             <Text
               style={s.bold}
@@ -94,12 +150,14 @@ const FAQ = ({ navigation }) => {
               </Text>
               {`, and make sure to tell us the name of the location that has moved. It's preferable for us to simply change the address because that retains the location history.`}
             </Text>
+            <Text style={s.category}>Data Usage</Text>
             <Text
               style={s.bold}
             >{`Can I use Pinball Map data on my own site?`}</Text>
             <Text style={s.text}>
               {`You can use our public API to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
             </Text>
+            <Text style={s.category}>Data Management</Text>
             <Text
               style={s.bold}
             >{`Can you include "bat games", or other non-pinball but pinball-adjacent games??`}</Text>
@@ -150,8 +208,9 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 Your submission didn't utilize the "machine autocomplete". In the "machines" field of the submission form, you gotta start typing a machine name, and then select the correct machine from the list that pops up (note, this magically adds a comma after the machine name). When we approve the location, our system can correctly read the machine name, match it to a machine in our database, and successfully add it to the location. If instead you type in a machine name, then it's not formatted in a way that will match to the database. The end result is that we'll approve the location and the location will have zero machines (unless the admin happens to notice that the machine list is weird and then manually adds the machine after it's on the map), and then a week later the location will get auto-deleted from the map.\n\n`}
 
-              {`\u2022 The location you submitted is a private residence. Or private in some other way.\n\n`}
+              {`\u2022 The location you submitted is a private residence. Or private in some other way.`}
             </Text>
+            <Text style={s.category}>Operators</Text>
             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
             <Text style={s.text}>
               {
@@ -179,59 +238,60 @@ const FAQ = ({ navigation }) => {
               <Text style={{ fontFamily: "Nunito-Bold" }}>
                 To users leaving comments:
               </Text>{" "}
-              {`To regular users leaving comments: Most operators prefer you directly tell them about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
+              {`Most operators prefer you directly tell them about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>To operators:</Text>{" "}
               {`A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. Pinball Map does not make you do this.\n\n`}
               {`According to nearly everyone, it is really valuable to see a history of comments (thing is broken, thing is fixed, etc.). Everyone understands that machines break all the time. Seeing a dialog demonstrates that upkeep is occurring. The "latest comment" noting a problem is not particularly important to users and will not drive them away. Some operators choose to delete machines and re-add them in order to clear out comments rather than simply responding to a comment. This is bad practice - both for your business and for the map - and can result in your account being disabled. It makes it seem like the operator is whitewashing comments rather than fixing issues. Users definitely notice this, and we strongly discourage it.\n\n`}
               {`We regularly get messages from operators and owners demanding that a user be banned from leaving comments on their location. Most often, the comments in question are not slanderous, but have some sass or "off-topic" messages. These requests are a big headache for us, especially because they do not warrant any action toward the user. So please, help us! Be mindful that operators are very sensitive about the content on this site, and they take it out on us.`}
             </Text>
+            <Text style={s.category}>Users</Text>
             <Text
               style={s.bold}
             >{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
             <Text
               style={s.text}
             >{`Great question! As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}</Text>
-            <Text
-              style={s.bold}
-            >{`How can I submit a backglass photo to the “machine details” screen?`}</Text>
-            <Text style={s.text}>
-              The photos we display come from the Open Pinball Database (OPDB),
-              and so you should upload your high quality photo using{" "}
-              <Text
-                style={s.textLink}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync("https://opdb.org/images/create")
-                }
-              >
-                this form
-              </Text>{" "}
-              (you must first create an OPDB account). The photos you upload
-              will not immediately appear in this app.
-            </Text>
-            <Text style={s.text}>
-              <Text style={{ fontFamily: "Nunito-Bold" }}>
-                General backglass/translite photo guidelines
-              </Text>
-              : Take photo straight on, not at an angle. Crop image to show only
-              artwork. Avoid glare, if possible
-            </Text>
             <Text style={s.bold}>{`Can I change my username?`}</Text>
             <Text style={s.text}>
-              {`Only administrators can change your username.`}
+              {`Only administrators can change your username. `}
               <Text
                 onPress={() => navigation.navigate("Contact")}
                 style={s.textLink}
               >
-                {"Contact us"}
+                {"Contact us "}
               </Text>
               {`and we'll be happy to change it.`}
             </Text>
             <Text
               style={s.bold}
-            >{`The Location List isn't showing a location that I think it should.`}</Text>
+            >{`I can't remember my password. How do I reset it?`}</Text>
+            <Text style={s.text}>
+              {`You can reset it via`}{" "}
+              <Text
+                onPress={() => navigation.navigate("PasswordReset")}
+                style={s.textLink}
+              >
+                {"this link"}
+              </Text>
+              .
+            </Text>
             <Text
-              style={s.text}
-            >{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
+              style={s.bold}
+            >{`How do I update your password, or email, or delete my account?`}</Text>
+            <Text style={s.text}>
+              {`These can be done on your`}{" "}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://pinballmap.com/inspire_profile",
+                  )
+                }
+              >
+                Profile page on the website
+              </Text>
+              .
+            </Text>
             <Text style={s.bold}>{`Why was my comment removed?`}</Text>
             <Text style={s.text}>
               {`Our administrators may deem your machine or location comment to be inappropriate because:\n\n`}
@@ -250,19 +310,7 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 You signed up with a disposable email account. We sometimes have legitimate reasons for contacting you individually. Disposable emails are most often used by people who abuse the site.`}
             </Text>
-            <Text
-              style={s.bold}
-            >{`I can't remember my password. How do I reset it?`}</Text>
-            <Text style={s.text}>
-              {`You can reset it via`}{" "}
-              <Text
-                onPress={() => navigation.navigate("PasswordReset")}
-                style={s.textLink}
-              >
-                {"this link"}
-              </Text>
-              .
-            </Text>
+            <Text style={s.category}>Miscellaneous</Text>
             <Text style={s.bold}>{`Can you add a feature that I want?`}</Text>
             <Text style={s.text}>
               {`Maybe! We can try. Pinball Map is an open source app. You can submit "issues" to`}{" "}
@@ -287,7 +335,7 @@ const FAQ = ({ navigation }) => {
               >
                 detailed privacy policy on our website
               </Text>
-              {`. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.\n\nThis app uses Mapbox for the map, and they seem to enable telemetry by default. It is used to improve their data, and not for ads. We cannot disable it en masse. You can `}
+              {`. The overview: We do not track or store user locations, nor store any personal information. We do not sell any user data. We do not use third-party analytics. This site is not monetized. We keep a log of map edits that users make.\n\nThis app uses Mapbox for the map, and while we set telemetry (`}
               <Text
                 style={s.textLink}
                 onPress={() =>
@@ -296,18 +344,9 @@ const FAQ = ({ navigation }) => {
                   )
                 }
               >
-                read more about it here
+                which is used to improve their data, and not for ads
               </Text>
-              {`, and you should be able to disable it in the app by clicking the (i) icon on the map.`}
-            </Text>
-            <Text style={s.bold}>
-              {`Have a question that we didn't cover here?`}{" "}
-              <Text
-                onPress={() => navigation.navigate("Contact")}
-                style={s.textLink}
-              >
-                {"Ask us!"}
-              </Text>
+              {`) to be disabled by default, you can check and make sure it's off by clicking the (i) icon on the map.`}
             </Text>
           </View>
         </View>
@@ -351,6 +390,19 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
       fontFamily: "Nunito-Medium",
+    },
+    filterIcon: {
+      color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
+    },
+    category: {
+      fontFamily: "Nunito-Bold",
+      fontSize: 17,
+      textAlign: "center",
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+      backgroundColor: "#66017b",
+      color: "#fec3e7",
+      textTransform: "uppercase",
     },
   });
 

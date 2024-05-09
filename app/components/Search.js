@@ -322,6 +322,12 @@ class Search extends Component {
     return (
       <Text style={s.goToFilterText}>
         Looking for a particular machine? Use the{" "}
+        <Entypo
+          name="sound-mix"
+          size={14}
+          style={s.filterIcon}
+          onPress={onPress}
+        />{" "}
         <Text onPress={onPress} style={s.link}>
           Filter
         </Text>
