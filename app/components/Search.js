@@ -34,6 +34,7 @@ import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import Constants from "expo-constants";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -348,6 +349,11 @@ class Search extends Component {
       .catch(() => this.setState({ recentSearchHistory: [] }));
   };
 
+  clearSearchHistory = async () => {
+    await AsyncStorage.removeItem("searchHistory");
+    this.setState({ recentSearchHistory: [] });
+  };
+
   render() {
     const {
       q,
@@ -370,6 +376,7 @@ class Search extends Component {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
+    const showRecentSearches = q === "" && recentSearchHistory.length > 0;
 
     return (
       <ThemeContext.Consumer>
@@ -449,8 +456,7 @@ class Search extends Component {
                       >
                         {searching && <ActivityIndicator />}
                         {q === "" && this.renderGoToFilter(s)}
-                        {q === "" &&
-                          recentSearchHistory.length > 0 &&
+                        {showRecentSearches &&
                           this.renderRecentSearchHistory(s)}
                         {!!foundRegions &&
                           foundRegions.map((region) =>
@@ -465,6 +471,14 @@ class Search extends Component {
                             this.renderLocationRow(location, s),
                           )}
                       </ScrollView>
+                      {showRecentSearches && (
+                        <Text
+                          onPress={this.clearSearchHistory}
+                          style={s.clearButton}
+                        >
+                          CLEAR ALL
+                        </Text>
+                      )}
                     </View>
                   </SafeAreaView>
                 </SafeAreaProvider>
@@ -631,6 +645,12 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.purple2,
+    },
+    clearButton: {
+      position: "absolute",
+      right: 10,
+      top: Constants.statusBarHeight,
+      color: "white",
     },
   });
 
