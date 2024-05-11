@@ -34,7 +34,6 @@ import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
-import Constants from "expo-constants";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -289,15 +288,12 @@ class Search extends Component {
 
   renderRecentSearchHistory = (s) => (
     <View>
-      <ListItem
-        containerStyle={[{ alignItems: "center" }, s.listContainerStyle]}
-      >
-        <ListItem.Content>
-          <ListItem.Title style={s.searchHistoryTitle}>
-            {"Recent Search History"}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={s.recentSearchHistory}>
+        <Text style={s.searchHistoryTitle}>{"Recent Search History"}</Text>
+        <Text onPress={this.clearSearchHistory} style={s.clearButton}>
+          Clear All
+        </Text>
+      </View>
       {this.state.recentSearchHistory.map((search) => {
         // Determine which rows to render based on search payload
         if (search.motd) {
@@ -471,14 +467,6 @@ class Search extends Component {
                             this.renderLocationRow(location, s),
                           )}
                       </ScrollView>
-                      {showRecentSearches && (
-                        <Text
-                          onPress={this.clearSearchHistory}
-                          style={s.clearButton}
-                        >
-                          CLEAR ALL
-                        </Text>
-                      )}
                     </View>
                   </SafeAreaView>
                 </SafeAreaProvider>
@@ -605,9 +593,22 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
+    recentSearchHistory: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginHorizontal: 15,
+      marginVertical: 15,
+    },
     searchHistoryTitle: {
       color: theme.pink1,
       fontFamily: "Nunito-Bold",
+      fontSize: 18,
+    },
+    clearButton: {
+      color: theme.text,
+      textTransform: "uppercase",
     },
     clear: {
       color: theme.text2,
@@ -645,12 +646,6 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.purple2,
-    },
-    clearButton: {
-      position: "absolute",
-      right: 10,
-      top: Constants.statusBarHeight,
-      color: "white",
     },
   });
 
