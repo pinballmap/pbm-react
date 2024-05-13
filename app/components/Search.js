@@ -123,7 +123,7 @@ class Search extends Component {
       });
   };
 
-  getLocationsByCity = async ({ value }) => {
+  getLocationsByCity = async ({ value }, idx) => {
     try {
       const [city, state] = value.split(", ");
       const stateParam = state ? `by_state_id=${state}` : "";
@@ -163,6 +163,7 @@ class Search extends Component {
     } catch (e) {
       Alert.alert("City no longer has machines.");
       this.clearSearchState("");
+      this.removeItemFromSearchHistory(idx);
     }
   };
 
@@ -252,11 +253,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderCityRow = (location, s) => (
+  renderCityRow = (location, s, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.value}
-      onPress={() => this.getLocationsByCity(location)}
+      onPress={() => this.getLocationsByCity(location, idx)}
     >
       <ListItem containerStyle={s.listContainerStyle}>
         <ListItem.Content>
@@ -306,7 +307,7 @@ class Search extends Component {
         }
 
         if (search.value) {
-          return this.renderCityRow(search, s);
+          return this.renderCityRow(search, s, idx);
         }
       })}
     </View>
