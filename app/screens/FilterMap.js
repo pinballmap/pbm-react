@@ -137,7 +137,7 @@ const FilterMap = ({
       <Screen>
         <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
           <Text style={[s.sectionTitle, s.paddingFirst]}>
-            Only show locations with this machine:
+            Locations with this machine:
           </Text>
           <DropDownButton
             title={machine && machine.name ? machine.name : "All"}
@@ -151,7 +151,7 @@ const FilterMap = ({
               <Text
                 style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
               >
-                ...And only this machine version, or all:
+                ...This machine version, or all:
               </Text>
               <ButtonGroup
                 onPress={(idx) =>
@@ -168,7 +168,7 @@ const FilterMap = ({
             </>
           )}
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
-            Limit by number of machines per location:
+            Limit by number of machines:
           </Text>
           <ButtonGroup
             onPress={setNumMachinesSelected}
@@ -181,21 +181,21 @@ const FilterMap = ({
             innerBorderStyle={s.innerBorderStyle}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
-            Filter by location type:
+            Location type:
           </Text>
           <DropDownButton
             title={locationTypeName}
             onPress={() => goToFindLocationType()}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
-            Filter by operator:
+            Operator:
           </Text>
           <DropDownButton
             title={operatorName}
             onPress={() => goToFindOperator()}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
-            Only show my Saved locations:
+            Saved locations or all:
           </Text>
           <ButtonGroup
             onPress={updateViewFavorites}

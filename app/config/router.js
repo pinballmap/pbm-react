@@ -361,7 +361,7 @@ function MapStack() {
         component={FilterMap}
         options={{
           headerBackTitleVisible: true,
-          title: "Apply Filters to the Map",
+          title: "Filter Map Results",
         }}
       />
       <Stack.Screen
