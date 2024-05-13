@@ -166,7 +166,7 @@ class Search extends Component {
     }
   };
 
-  goToLocation = async (location) => {
+  goToLocation = async (location, idx) => {
     try {
       const data = await this.props.dispatch(fetchLocation(location.id));
       const { lat, lon } = data.location;
@@ -183,6 +183,7 @@ class Search extends Component {
       this.clearSearchState(location);
     } catch (e) {
       Alert.alert("Location is gone, friend.");
+      this.removeItemFromSearchHistor(idx);
     }
   };
 
@@ -270,11 +271,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderLocationRow = (location, s) => (
+  renderLocationRow = (location, s, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.id}
-      onPress={() => this.goToLocation(location)}
+      onPress={() => this.goToLocation(location, idx)}
     >
       <ListItem containerStyle={s.listContainerStyle}>
         <ListItem.Content>
@@ -294,14 +295,14 @@ class Search extends Component {
           Clear All
         </Text>
       </View>
-      {this.state.recentSearchHistory.map((search) => {
+      {this.state.recentSearchHistory.map((search, idx) => {
         // Determine which rows to render based on search payload
         if (search.motd) {
           return this.renderRegionRow(search, s);
         }
 
         if (search.id) {
-          return this.renderLocationRow(search, s);
+          return this.renderLocationRow(search, s, idx);
         }
 
         if (search.value) {
@@ -348,6 +349,15 @@ class Search extends Component {
   clearSearchHistory = async () => {
     await AsyncStorage.removeItem("searchHistory");
     this.setState({ recentSearchHistory: [] });
+  };
+
+  removeItemFromSearchHistory = (idx) => {
+    let currentSearchHistory = this.state.recentSearchHistory;
+    if (idx >= 0) {
+      currentSearchHistory.splice(idx, 1);
+    }
+    this.setState({ recentSearchHistory: currentSearchHistory });
+    AsyncStorage.setItem("searchHistory", JSON.stringify(currentSearchHistory));
   };
 
   render() {
