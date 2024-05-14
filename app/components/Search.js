@@ -322,7 +322,7 @@ class Search extends Component {
         <Entypo
           name="sound-mix"
           size={14}
-          style={s.filterIcon}
+          style={s.smallFilterIcon}
           onPress={onPress}
         />{" "}
         <Text onPress={onPress} style={s.link}>
@@ -393,7 +393,13 @@ class Search extends Component {
                     style={{ flex: 1, backgroundColor: theme.base1 }}
                   >
                     <View style={s.modalContainer}>
-                      <View style={{ display: "flex", flexDirection: "row" }}>
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          height: 65,
+                        }}
+                      >
                         <MaterialIcons
                           onPress={() => {
                             this.setState({ searchModalVisible: false });
@@ -645,6 +651,9 @@ const getStyles = (theme) =>
     },
     link: {
       textDecorationLine: "underline",
+      color: theme.purple2,
+    },
+    smallFilterIcon: {
       color: theme.purple2,
     },
   });
