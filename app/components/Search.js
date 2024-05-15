@@ -184,7 +184,7 @@ class Search extends Component {
       this.clearSearchState(location);
     } catch (e) {
       Alert.alert("Location is gone, friend.");
-      this.removeItemFromSearchHistor(idx);
+      this.removeItemFromSearchHistory(idx);
     }
   };
 
