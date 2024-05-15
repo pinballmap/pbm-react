@@ -123,7 +123,7 @@ class Search extends Component {
       });
   };
 
-  getLocationsByCity = async ({ value }) => {
+  getLocationsByCity = async ({ value }, idx) => {
     try {
       const [city, state] = value.split(", ");
       const stateParam = state ? `by_state_id=${state}` : "";
@@ -163,10 +163,11 @@ class Search extends Component {
     } catch (e) {
       Alert.alert("City no longer has machines.");
       this.clearSearchState("");
+      this.removeItemFromSearchHistory(idx);
     }
   };
 
-  goToLocation = async (location) => {
+  goToLocation = async (location, idx) => {
     try {
       const data = await this.props.dispatch(fetchLocation(location.id));
       const { lat, lon } = data.location;
@@ -183,6 +184,7 @@ class Search extends Component {
       this.clearSearchState(location);
     } catch (e) {
       Alert.alert("Location is gone, friend.");
+      this.removeItemFromSearchHistory(idx);
     }
   };
 
@@ -251,11 +253,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderCityRow = (location, s) => (
+  renderCityRow = (location, s, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.value}
-      onPress={() => this.getLocationsByCity(location)}
+      onPress={() => this.getLocationsByCity(location, idx)}
     >
       <ListItem containerStyle={s.listContainerStyle}>
         <ListItem.Content>
@@ -270,11 +272,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderLocationRow = (location, s) => (
+  renderLocationRow = (location, s, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.id}
-      onPress={() => this.goToLocation(location)}
+      onPress={() => this.goToLocation(location, idx)}
     >
       <ListItem containerStyle={s.listContainerStyle}>
         <ListItem.Content>
@@ -288,27 +290,24 @@ class Search extends Component {
 
   renderRecentSearchHistory = (s) => (
     <View>
-      <ListItem
-        containerStyle={[{ alignItems: "center" }, s.listContainerStyle]}
-      >
-        <ListItem.Content>
-          <ListItem.Title style={s.searchHistoryTitle}>
-            {"Recent Search History"}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      {this.state.recentSearchHistory.map((search) => {
+      <View style={s.recentSearchHistory}>
+        <Text style={s.searchHistoryTitle}>{"Recent Search History"}</Text>
+        <Text onPress={this.clearSearchHistory} style={s.clearButton}>
+          Clear All
+        </Text>
+      </View>
+      {this.state.recentSearchHistory.map((search, idx) => {
         // Determine which rows to render based on search payload
         if (search.motd) {
           return this.renderRegionRow(search, s);
         }
 
         if (search.id) {
-          return this.renderLocationRow(search, s);
+          return this.renderLocationRow(search, s, idx);
         }
 
         if (search.value) {
-          return this.renderCityRow(search, s);
+          return this.renderCityRow(search, s, idx);
         }
       })}
     </View>
@@ -325,7 +324,7 @@ class Search extends Component {
         <Entypo
           name="sound-mix"
           size={14}
-          style={s.filterIcon}
+          style={s.smallFilterIcon}
           onPress={onPress}
         />{" "}
         <Text onPress={onPress} style={s.link}>
@@ -346,6 +345,20 @@ class Search extends Component {
           : this.setState({ recentSearchHistory: [] }),
       )
       .catch(() => this.setState({ recentSearchHistory: [] }));
+  };
+
+  clearSearchHistory = async () => {
+    await AsyncStorage.removeItem("searchHistory");
+    this.setState({ recentSearchHistory: [] });
+  };
+
+  removeItemFromSearchHistory = (idx) => {
+    let currentSearchHistory = this.state.recentSearchHistory;
+    if (idx >= 0) {
+      currentSearchHistory.splice(idx, 1);
+    }
+    this.setState({ recentSearchHistory: currentSearchHistory });
+    AsyncStorage.setItem("searchHistory", JSON.stringify(currentSearchHistory));
   };
 
   render() {
@@ -370,6 +383,7 @@ class Search extends Component {
       Platform.OS === "ios"
         ? { keyboardDismissMode: "on-drag" }
         : { onScrollBeginDrag: Keyboard.dismiss };
+    const showRecentSearches = q === "" && recentSearchHistory.length > 0;
 
     return (
       <ThemeContext.Consumer>
@@ -390,7 +404,13 @@ class Search extends Component {
                     style={{ flex: 1, backgroundColor: theme.base1 }}
                   >
                     <View style={s.modalContainer}>
-                      <View style={{ display: "flex", flexDirection: "row" }}>
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          height: 65,
+                        }}
+                      >
                         <MaterialIcons
                           onPress={() => {
                             this.setState({ searchModalVisible: false });
@@ -449,8 +469,7 @@ class Search extends Component {
                       >
                         {searching && <ActivityIndicator />}
                         {q === "" && this.renderGoToFilter(s)}
-                        {q === "" &&
-                          recentSearchHistory.length > 0 &&
+                        {showRecentSearches &&
                           this.renderRecentSearchHistory(s)}
                         {!!foundRegions &&
                           foundRegions.map((region) =>
@@ -591,9 +610,22 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
+    recentSearchHistory: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginHorizontal: 15,
+      marginVertical: 15,
+    },
     searchHistoryTitle: {
       color: theme.pink1,
       fontFamily: "Nunito-Bold",
+      fontSize: 18,
+    },
+    clearButton: {
+      color: theme.text,
+      textTransform: "uppercase",
     },
     clear: {
       color: theme.text2,
@@ -630,6 +662,9 @@ const getStyles = (theme) =>
     },
     link: {
       textDecorationLine: "underline",
+      color: theme.purple2,
+    },
+    smallFilterIcon: {
       color: theme.purple2,
     },
   });
