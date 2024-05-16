@@ -383,7 +383,7 @@ const getStyles = (theme) =>
       fontSize: 17,
       marginBottom: 10,
       padding: 10,
-      color: "#ede8fe",
+      color: "#fef3e8",
       backgroundColor: "#4e3a52",
     },
     textLink: {
@@ -400,8 +400,8 @@ const getStyles = (theme) =>
       textAlign: "center",
       paddingHorizontal: 10,
       paddingVertical: 10,
-      backgroundColor: "#66017b",
-      color: "#fec3e7",
+      backgroundColor: "#a1befd",
+      color: "#503d49",
       textTransform: "uppercase",
     },
   });
