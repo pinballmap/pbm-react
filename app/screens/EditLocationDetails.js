@@ -360,7 +360,7 @@ const getStyles = (theme) =>
       color: theme.purple,
     },
     margin8: {
-      marginVertical: 8,
+      marginTop: 8,
     },
     textLink: {
       textDecorationLine: "underline",

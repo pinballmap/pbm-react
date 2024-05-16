@@ -15,7 +15,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { ButtonGroup, SearchBar } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
 import {
   addMachineToLocation,
@@ -62,19 +61,22 @@ class MultiSelectRow extends React.PureComponent {
             flexDirection: "row",
             alignItems: "center",
             padding: 8,
+            justifyContent: "space-between",
           },
           pressed
             ? { backgroundColor: theme.base4, opacity: 0.8 }
             : { backgroundColor, opacity: 1 },
         ]}
       >
-        <Text style={{ fontSize: 18 }}>{getDisplayText(machine, theme)}</Text>
+        <Text style={{ fontSize: 18, width: "94%" }}>
+          {getDisplayText(machine, theme)}
+        </Text>
         {selected ? (
           <MaterialIcons
             name="cancel"
             size={18}
             color="#fd0091"
-            style={{ paddingTop: 3, paddingLeft: 5 }}
+            style={{ paddingTop: 3 }}
           />
         ) : null}
       </Pressable>
@@ -426,8 +428,8 @@ class FindMachine extends React.PureComponent {
             <MaterialIcons name="search" size={25} color={theme.indigo4} />
           }
           clearIcon={
-            <MaterialCommunityIcons
-              name="close-circle"
+            <MaterialIcons
+              name="cancel"
               size={20}
               color={theme.indigo4}
               onPress={() => this.handleSearch("")}
