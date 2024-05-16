@@ -68,7 +68,7 @@ class MultiSelectRow extends React.PureComponent {
             : { backgroundColor, opacity: 1 },
         ]}
       >
-        <Text style={{ fontSize: 18, width: "94%" }}>
+        <Text style={{ fontSize: 18, width: deviceWidth - 40 }}>
           {getDisplayText(machine, theme)}
         </Text>
         {selected ? (
@@ -126,7 +126,7 @@ class FindMachine extends React.PureComponent {
                 <MaterialIcons
                   name="check-box"
                   size={32}
-                  color={pressed ? "#95867c" : "#56be64"}
+                  color={pressed ? "#95867c" : "#68b0f3"}
                 />
               </View>
             )}
@@ -149,7 +149,7 @@ class FindMachine extends React.PureComponent {
                 <MaterialIcons
                   name="check-box"
                   size={32}
-                  color={pressed ? "#95867c" : "#56be64"}
+                  color={pressed ? "#95867c" : "#68b0f3"}
                 />
               </View>
             )}
@@ -447,7 +447,7 @@ class FindMachine extends React.PureComponent {
         {multiSelect ? (
           <View style={s.multiSelect}>
             {machineList.length === 0 ? (
-              <Text style={{ color: theme.pink1 }}>0 machines selected</Text>
+              <Text style={{ color: theme.purple2 }}>0 machines selected</Text>
             ) : (
               <View
                 style={{
@@ -456,7 +456,7 @@ class FindMachine extends React.PureComponent {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ color: theme.pink1 }}>{`${
+                <Text style={{ color: theme.purple2 }}>{`${
                   machineList.length
                 } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>
               </View>
@@ -512,8 +512,8 @@ const getStyles = (theme) =>
     },
     multiSelect: {
       alignItems: "center",
-      padding: 5,
-      backgroundColor: theme.pink2,
+      paddingBottom: 5,
+      backgroundColor: theme.base1,
     },
     buttonGroupContainer: {
       height: 40,
