@@ -120,23 +120,14 @@ class FindMachine extends React.PureComponent {
             {({ pressed }) => (
               <View
                 style={{
-                  backgroundColor: "#fec3e7",
-                  paddingHorizontal: 10,
-                  paddingVertical: 2,
-                  borderRadius: 10,
                   marginRight: 10,
                 }}
               >
-                <Text
-                  maxFontSizeMultiplier={1.1}
-                  style={{
-                    color: pressed ? "#95867c" : "#9718b1",
-                    fontSize: 16,
-                    fontFamily: "Nunito-Bold",
-                  }}
-                >
-                  Done
-                </Text>
+                <MaterialIcons
+                  name="check-box"
+                  size={32}
+                  color={pressed ? "#95867c" : "#56be64"}
+                />
               </View>
             )}
           </Pressable>
@@ -152,23 +143,14 @@ class FindMachine extends React.PureComponent {
             {({ pressed }) => (
               <View
                 style={{
-                  backgroundColor: "#fec3e7",
-                  paddingHorizontal: 10,
-                  paddingVertical: 2,
-                  borderRadius: 10,
                   marginRight: 10,
                 }}
               >
-                <Text
-                  maxFontSizeMultiplier={1.1}
-                  style={{
-                    color: pressed ? "#95867c" : "#9718b1",
-                    fontSize: 18,
-                    fontFamily: "Nunito-Bold",
-                  }}
-                >
-                  Done
-                </Text>
+                <MaterialIcons
+                  name="check-box"
+                  size={32}
+                  color={pressed ? "#95867c" : "#56be64"}
+                />
               </View>
             )}
           </Pressable>
