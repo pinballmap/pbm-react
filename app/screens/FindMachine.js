@@ -126,9 +126,10 @@ class FindMachine extends React.PureComponent {
                 }}
               >
                 <Text
+                  maxFontSizeMultiplier={1.1}
                   style={{
                     color: pressed ? "#95867c" : "#9718b1",
-                    fontSize: 18,
+                    fontSize: 16,
                     fontFamily: "Nunito-Bold",
                   }}
                 >
@@ -157,6 +158,7 @@ class FindMachine extends React.PureComponent {
                 }}
               >
                 <Text
+                  maxFontSizeMultiplier={1.1}
                   style={{
                     color: pressed ? "#95867c" : "#9718b1",
                     fontSize: 18,

@@ -41,7 +41,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.base3,
       width: "100%",
       borderRadius: 25,
-      height: 40,
     },
     containerMargin: {
       marginTop: 5,
@@ -49,9 +48,8 @@ const getStyles = (theme) =>
     },
     dropdownIcon: {
       color: theme.text3,
-      fontSize: 32,
+      fontSize: 24,
       marginLeft: 5,
-      marginTop: -3,
     },
     titleStyle: {
       color: theme.text3,
