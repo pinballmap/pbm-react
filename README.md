@@ -12,6 +12,15 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.15
+
+May 16, 2024
+
+- Add ability to "Clear All" from Recent Search History.
+- A deleted location will now be removed from Recent Search History if you click on it.
+- Updated the FAQ.
+- Various design tweaks and other things.
+
 ### 5.3.14
 
 April 3, 2024
