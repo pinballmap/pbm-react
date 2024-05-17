@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
-import { Avatar, ListItem, Icon } from "@rneui/base";
+import { ListItem, Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -57,7 +57,6 @@ class LocationDetails extends Component {
   }
   state = {
     id: this.props.route.params["id"],
-    showLocationToolsModal: false,
     navigateToMap: false,
     detailsExpanded: false,
     showScrollToTop: false,
@@ -87,7 +86,6 @@ class LocationDetails extends Component {
   );
 
   handleConfirmPress = (id, loggedIn) => {
-    this.setShowLocationToolsModal(false);
     if (loggedIn) {
       const { email, username, authentication_token } = this.props.user;
       const body = {
@@ -123,10 +121,6 @@ class LocationDetails extends Component {
         this.props.fetchLocation(this.state.id);
       });
     }
-  }
-
-  setShowLocationToolsModal(visible) {
-    this.setState({ showLocationToolsModal: visible });
   }
 
   async componentDidMount() {
@@ -220,138 +214,6 @@ class LocationDetails extends Component {
                 onScroll={this.handleScroll}
                 scrollIndicatorInsets={{ right: 1 }}
               >
-                <ConfirmationModal visible={this.state.showLocationToolsModal}>
-                  <View style={s.header}>
-                    <Text style={s.filterTitle}>Location Tools</Text>
-                    <MaterialCommunityIcons
-                      name="close-circle"
-                      size={45}
-                      onPress={() => this.setShowLocationToolsModal(false)}
-                      style={s.xButton}
-                    />
-                  </View>
-                  <View>
-                    <ListItem
-                      containerStyle={s.backgroundColor}
-                      onPress={() => {
-                        if (loggedIn) {
-                          navigation.navigate("FindMachine");
-                          this.setShowLocationToolsModal(false);
-                        } else {
-                          navigation.navigate("Login");
-                          this.setShowLocationToolsModal(false);
-                        }
-                      }}
-                    >
-                      <Avatar>
-                        {
-                          <MaterialCommunityIcons
-                            name="plus-outline"
-                            style={s.buttonIcon}
-                          />
-                        }
-                      </Avatar>
-                      <ListItem.Content>
-                        <ListItem.Title style={[s.text3, s.bold]}>
-                          Add Machine
-                        </ListItem.Title>
-                      </ListItem.Content>
-                    </ListItem>
-                    <ListItem
-                      containerStyle={s.backgroundColor}
-                      onPress={() =>
-                        this.handleConfirmPress(location.id, loggedIn)
-                      }
-                    >
-                      <Avatar>
-                        {
-                          <MaterialCommunityIcons
-                            name="check-outline"
-                            style={s.buttonIcon}
-                          />
-                        }
-                      </Avatar>
-                      <ListItem.Content>
-                        <ListItem.Title style={[s.text3, s.bold]}>
-                          Confirm Line-Up
-                        </ListItem.Title>
-                      </ListItem.Content>
-                    </ListItem>
-                    <ListItem
-                      containerStyle={s.backgroundColor}
-                      onPress={() => {
-                        if (loggedIn) {
-                          navigation.navigate("EditLocationDetails");
-                          this.setShowLocationToolsModal(false);
-                        } else {
-                          navigation.navigate("Login");
-                          this.setShowLocationToolsModal(false);
-                        }
-                      }}
-                    >
-                      <Avatar>
-                        {
-                          <MaterialCommunityIcons
-                            name="pencil-outline"
-                            style={s.buttonIcon}
-                          />
-                        }
-                      </Avatar>
-                      <ListItem.Content>
-                        <ListItem.Title style={[s.text3, s.bold]}>
-                          Edit Location Details
-                        </ListItem.Title>
-                      </ListItem.Content>
-                    </ListItem>
-                    <ListItem
-                      containerStyle={s.backgroundColor}
-                      onPress={async () => {
-                        (await Share.share({
-                          message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
-                        })) && this.setShowLocationToolsModal(false);
-                      }}
-                    >
-                      <Avatar>
-                        {
-                          <MaterialIcons
-                            name="ios-share"
-                            style={s.buttonIcon}
-                          />
-                        }
-                      </Avatar>
-                      <ListItem.Content>
-                        <ListItem.Title style={[s.text3, s.bold]}>
-                          Share Location
-                        </ListItem.Title>
-                      </ListItem.Content>
-                    </ListItem>
-                    <ListItem
-                      containerStyle={s.backgroundColor}
-                      onPress={() => {
-                        openMap({
-                          end: `${location.name} ${location.city} ${
-                            location.state || ""
-                          } ${location.zip}`,
-                        });
-                        this.setShowLocationToolsModal(false);
-                      }}
-                    >
-                      <Avatar>
-                        {
-                          <MaterialCommunityIcons
-                            name="directions"
-                            style={s.buttonIcon}
-                          />
-                        }
-                      </Avatar>
-                      <ListItem.Content>
-                        <ListItem.Title style={[s.text3, s.bold]}>
-                          Directions
-                        </ListItem.Title>
-                      </ListItem.Content>
-                    </ListItem>
-                  </View>
-                </ConfirmationModal>
                 <ConfirmationModal
                   visible={this.props.location.confirmModalVisible}
                 >
@@ -395,7 +257,6 @@ class LocationDetails extends Component {
                             location.state || ""
                           } ${location.zip}`,
                         });
-                        this.setShowLocationToolsModal(false);
                       }}
                     >
                       <MaterialCommunityIcons
@@ -432,6 +293,23 @@ class LocationDetails extends Component {
                         }}
                       />
                     </Pressable>
+                    <View
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                        bottom: 10,
+                        zIndex: 10,
+                      }}
+                    >
+                      <FavoriteLocation
+                        locationId={location.id}
+                        style={{ ...s.quickButton }}
+                        pressedStyle={s.quickButtonPressed}
+                        notPressedStyle={s.quickButtonNotPressed}
+                        navigation={navigation}
+                        removeFavorite={(cb) => cb()}
+                      />
+                    </View>
                     <Mapbox.MapView
                       scaleBarEnabled={false}
                       pitchEnabled={false}
@@ -576,6 +454,34 @@ class LocationDetails extends Component {
                               })
                             }
                           >
+                            <Pressable
+                              style={({ pressed }) => [
+                                s.quickButton,
+                                s.editLocationButton,
+                                pressed
+                                  ? s.quickButtonPressed
+                                  : s.quickButtonNotPressed,
+                              ]}
+                              onPress={() => {
+                                if (loggedIn) {
+                                  navigation.navigate("EditLocationDetails");
+                                } else {
+                                  navigation.navigate("Login");
+                                }
+                              }}
+                            >
+                              <MaterialCommunityIcons
+                                name={"pencil-outline"}
+                                color={theme.text2}
+                                size={30}
+                                style={{
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignSelf: "center",
+                                }}
+                              />
+                            </Pressable>
                             {location.phone ? (
                               <View style={[s.row, s.marginB]}>
                                 <MaterialIcons
@@ -708,7 +614,7 @@ class LocationDetails extends Component {
                             }
                           >
                             <MaterialCommunityIcons
-                              name={"plus"}
+                              name={"plus-outline"}
                               color={theme.text2}
                               size={30}
                               style={{
@@ -719,33 +625,50 @@ class LocationDetails extends Component {
                               }}
                             />
                           </Pressable>
-                          <FavoriteLocation
-                            locationId={location.id}
-                            style={{ ...s.quickButton, ...s.saveButton }}
-                            pressedStyle={s.quickButtonPressed}
-                            notPressedStyle={s.quickButtonNotPressed}
-                            navigation={navigation}
-                            removeFavorite={(cb) => cb()}
-                          />
                           <LocationActivity locationId={location.id} />
                           <Pressable
                             style={({ pressed }) => [
                               s.quickButton,
                               pressed
-                                ? s.toolsIconPressed
-                                : s.toolsIconNotPressed,
+                                ? s.quickButtonPressed
+                                : s.quickButtonNotPressed,
                             ]}
-                            onPress={() => {
-                              this.setShowLocationToolsModal(true);
+                            onPress={async () => {
+                              await Share.share({
+                                message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
+                              });
                             }}
                           >
-                            <MaterialCommunityIcons
-                              name={"menu"}
-                              color={theme.white}
-                              size={28}
+                            <MaterialIcons
+                              name={"ios-share"}
+                              color={theme.text2}
+                              size={26}
                               style={{
-                                height: 28,
-                                width: 28,
+                                height: 26,
+                                width: 26,
+                                justifyContent: "center",
+                                alignSelf: "center",
+                              }}
+                            />
+                          </Pressable>
+                          <Pressable
+                            style={({ pressed }) => [
+                              s.quickButton,
+                              pressed
+                                ? s.quickButtonPressed
+                                : s.quickButtonNotPressed,
+                            ]}
+                            onPress={() =>
+                              this.handleConfirmPress(location.id, loggedIn)
+                            }
+                          >
+                            <MaterialCommunityIcons
+                              name={"check-outline"}
+                              color={theme.text2}
+                              size={26}
+                              style={{
+                                height: 26,
+                                width: 26,
                                 justifyContent: "center",
                                 alignSelf: "center",
                               }}
@@ -975,10 +898,6 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
     },
-    iconStyle: {
-      fontSize: 32,
-      color: "#97a5af",
-    },
     staleView: {
       marginVertical: 5,
       borderRadius: 10,
@@ -989,11 +908,6 @@ const getStyles = (theme) =>
     staleText: {
       color: theme.red2,
       fontFamily: "Nunito-Regular",
-    },
-    buttonIcon: {
-      color: theme.indigo4,
-      opacity: 0.8,
-      fontSize: 32,
     },
     logo: {
       resizeMode: "contain",
@@ -1034,6 +948,10 @@ const getStyles = (theme) =>
       right: 65,
       top: Constants.statusBarHeight,
     },
+    editLocationButton: {
+      position: "absolute",
+      right: 15,
+    },
     metaIcon: {
       paddingTop: 0,
       fontSize: 18,
@@ -1057,31 +975,11 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      height: 40,
-      justifyContent: "center",
-    },
-    filterTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
-    },
     xButton: {
       position: "absolute",
       right: -20,
       top: -20,
       color: theme.red2,
-    },
-    toolsIconPressed: {
-      backgroundColor: theme.base2,
-    },
-    toolsIconNotPressed: {
-      backgroundColor: theme.pink1,
     },
     quickButtonPressed: {
       backgroundColor: theme.blue2,
@@ -1101,9 +999,6 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
-    },
-    noTrackingMargin: {
-      marginTop: 12,
     },
     accordionContainer: {
       paddingVertical: 3,
