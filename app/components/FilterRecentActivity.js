@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
-import { Avatar, Button, ListItem } from "@rneui/base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar, ListItem } from "@rneui/base";
+import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const { theme } = useContext(ThemeContext);
@@ -210,18 +208,11 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
           </View>
         </ConfirmationModal>
       )}
-      <Button
+      <Entypo
+        name="sound-mix"
+        size={24}
+        style={s.filterIcon}
         onPress={() => setShowModal(true)}
-        containerStyle={{ width: deviceWidth < 325 ? 60 : 70 }}
-        title="Filter"
-        accessibilityLabel="Filter"
-        titleStyle={{
-          color: theme.purple2,
-          fontSize: deviceWidth < 325 ? 16 : 18,
-          fontFamily: "Nunito-Bold",
-          marginTop: Platform.OS === "android" ? 3 : 0,
-        }}
-        type="clear"
       />
     </View>
   );
@@ -262,6 +253,10 @@ const getStyles = (theme) =>
     },
     containerBg: {
       backgroundColor: theme.pink2,
+    },
+    filterIcon: {
+      paddingRight: 10,
+      color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
     },
   });
 

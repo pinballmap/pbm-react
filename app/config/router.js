@@ -87,7 +87,7 @@ function ActivityStackNavigator() {
         component={RecentActivity}
         options={{
           headerTitleAlign: "center",
-          title: "Nearby Activity (30 Days)",
+          title: "Recent Activity",
           headerLeft: null,
         }}
       />

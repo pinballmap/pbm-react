@@ -108,7 +108,7 @@ export class Saved extends Component {
                         selectedIndex={
                           this.props.user.selectedFavoriteLocationFilter
                         }
-                        buttons={["Distance", "Alphabetically", "Last Added"]}
+                        buttons={["Distance", "A-Z", "Last Added"]}
                         containerStyle={s.buttonGroupContainer}
                         textStyle={s.buttonGroupInactive}
                         selectedButtonStyle={s.selButtonStyle}
