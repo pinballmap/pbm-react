@@ -94,7 +94,7 @@ const FAQ = ({ navigation }) => {
             >{`How do I add a machine to a location?`}</Text>
             <Text
               style={s.text}
-            >{`First, log in. Then lookup the location and click the + (plus) icon, or click the menu icon and choose "Add machine". Then select a machine and add it.`}</Text>
+            >{`First, log in. Then lookup the location and click the + (plus) icon. Then select a machine and add it.`}</Text>
             <Text
               style={s.bold}
             >{`How do I remove a machine from a location?`}</Text>
@@ -228,7 +228,7 @@ const FAQ = ({ navigation }) => {
             >{`How do I tag myself as the operator at a location?`}</Text>
             <Text
               style={s.text}
-            >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "menu" icon and then select "Edit Location Details". Choose your operator business from the list. Then save.`}</Text>
+            >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "location details" button and then the pencil edit icon. Choose your operator business from the list. Then save.`}</Text>
             <Text
               style={s.bold}
             >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
