@@ -293,23 +293,34 @@ class LocationDetails extends Component {
                         }}
                       />
                     </Pressable>
-                    <View
-                      style={{
-                        position: "absolute",
-                        right: 10,
-                        bottom: 10,
-                        zIndex: 10,
+                    <Pressable
+                      style={({ pressed }) => [
+                        s.quickButton,
+                        s.editLocationButton,
+                        pressed
+                          ? s.quickButtonPressed
+                          : s.quickButtonNotPressed,
+                      ]}
+                      onPress={() => {
+                        if (loggedIn) {
+                          navigation.navigate("EditLocationDetails");
+                        } else {
+                          navigation.navigate("Login");
+                        }
                       }}
                     >
-                      <FavoriteLocation
-                        locationId={location.id}
-                        style={{ ...s.quickButton }}
-                        pressedStyle={s.quickButtonPressed}
-                        notPressedStyle={s.quickButtonNotPressed}
-                        navigation={navigation}
-                        removeFavorite={(cb) => cb()}
+                      <MaterialCommunityIcons
+                        name={"pencil-outline"}
+                        color={theme.text2}
+                        size={30}
+                        style={{
+                          height: 30,
+                          width: 30,
+                          justifyContent: "center",
+                          alignSelf: "center",
+                        }}
                       />
-                    </View>
+                    </Pressable>
                     <Mapbox.MapView
                       scaleBarEnabled={false}
                       pitchEnabled={false}
@@ -360,6 +371,12 @@ class LocationDetails extends Component {
                     <View style={s.locationContainer}>
                       <View style={s.locationNameContainer}>
                         <Text style={s.locationName}>{location.name}</Text>
+                        <FavoriteLocation
+                          locationId={location.id}
+                          style={{ ...s.heartItem }}
+                          navigation={navigation}
+                          removeFavorite={(cb) => cb()}
+                        />
                       </View>
                       <View style={s.locationMetaContainer}>
                         <Text style={[s.text2, s.fontSize15, s.marginRight]}>
@@ -454,34 +471,6 @@ class LocationDetails extends Component {
                               })
                             }
                           >
-                            <Pressable
-                              style={({ pressed }) => [
-                                s.quickButton,
-                                s.editLocationButton,
-                                pressed
-                                  ? s.quickButtonPressed
-                                  : s.quickButtonNotPressed,
-                              ]}
-                              onPress={() => {
-                                if (loggedIn) {
-                                  navigation.navigate("EditLocationDetails");
-                                } else {
-                                  navigation.navigate("Login");
-                                }
-                              }}
-                            >
-                              <MaterialCommunityIcons
-                                name={"pencil-outline"}
-                                color={theme.text2}
-                                size={30}
-                                style={{
-                                  height: 30,
-                                  width: 30,
-                                  justifyContent: "center",
-                                  alignSelf: "center",
-                                }}
-                              />
-                            </Pressable>
                             {location.phone ? (
                               <View style={[s.row, s.marginB]}>
                                 <MaterialIcons
@@ -797,6 +786,9 @@ const getStyles = (theme) =>
       marginTop: 15,
       marginBottom: 5,
       marginLeft: 5,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
     },
     locationName: {
       fontFamily: "Nunito-Black",
@@ -950,7 +942,8 @@ const getStyles = (theme) =>
     },
     editLocationButton: {
       position: "absolute",
-      right: 15,
+      right: 10,
+      bottom: 10,
     },
     metaIcon: {
       paddingTop: 0,
@@ -964,6 +957,12 @@ const getStyles = (theme) =>
       color: theme.colors.inactiveTab,
       marginRight: 3,
       opacity: 0.6,
+    },
+    heartItem: {
+      justifyContent: "center",
+      height: 34,
+      width: 34,
+      marginRight: 10,
     },
     markerDot: {
       width: 52,
