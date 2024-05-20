@@ -254,18 +254,6 @@ const getStyles = (theme) =>
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
     },
-    iconStyle: {
-      fontSize: 24,
-      color: "#9b9ebb",
-      marginRight: 5,
-      marginLeft: 5,
-    },
-    buttonStyle: {
-      backgroundColor: theme.blue2,
-      width: "100%",
-      elevation: 0,
-      borderRadius: 25,
-    },
     buttonTitle: {
       color: theme.text3,
       fontSize: 16,

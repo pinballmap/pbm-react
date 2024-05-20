@@ -330,17 +330,6 @@ const getStyles = (theme) =>
       marginRight: 5,
       marginLeft: 5,
     },
-    buttonStyle: {
-      backgroundColor: theme.blue2,
-      width: "100%",
-      elevation: 0,
-      borderRadius: 25,
-    },
-    buttonTitle: {
-      color: theme.text3,
-      fontSize: 16,
-      fontFamily: "Nunito-Bold",
-    },
     justify: {
       flexDirection: "column",
       justifyContent: "center",

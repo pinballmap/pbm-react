@@ -192,15 +192,16 @@ function EditLocationDetails({
               >
                 <View style={{ marginLeft: 10, marginRight: 10 }}>
                   <Text style={[s.subText, s.margin8]}>
-                    Want to edit the location name (or address)?
+                    {`Want to edit the location name (or address)?`}
                     <Text
                       onPress={() =>
                         navigation.navigate("Contact", { locationName: name })
                       }
                       style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
                     >
-                      {"Contact us"}.
+                      {"Contact us"}
                     </Text>
+                    {` with the details!`}
                   </Text>
                   <Text style={s.title}>Phone</Text>
                   <TextInput
@@ -246,7 +247,7 @@ function EditLocationDetails({
                     <Text style={{ fontFamily: "Nunito-Bold" }}>
                       closed or no longer has machines
                     </Text>
-                    , simply remove the machines from the listing!
+                    , simply remove the machines from the listing.
                   </Text>
 
                   <Text style={s.title}>Location Type</Text>

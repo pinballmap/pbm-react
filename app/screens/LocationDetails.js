@@ -41,7 +41,6 @@ import {
 } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
-import { HeaderBackButton } from "@react-navigation/elements";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -133,31 +132,6 @@ class LocationDetails extends Component {
     }
     this.props.dispatch(setSelectedMapLocation(null));
     Mapbox.setTelemetryEnabled(false);
-    this.props.navigation.setOptions({
-      headerLeft: () => (
-        <HeaderBackButton
-          style={{
-            backgroundColor: "#fafaff",
-            marginLeft: 10,
-            width: 40,
-            height: 40,
-            borderRadius: 20,
-            justifyContent: "center",
-          }}
-          tintColor={"#66017b"}
-          labelVisible={false}
-          canGoBack={true}
-          onPress={() => this.props.navigation.goBack(null)}
-          backImage={() => (
-            <FontAwesome6
-              name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
-              size={24}
-              color={"#66017b"}
-            />
-          )}
-        />
-      ),
-    });
   }
 
   render() {
@@ -246,10 +220,10 @@ class LocationDetails extends Component {
                     <Pressable
                       style={({ pressed }) => [
                         s.directionsButton,
-                        s.quickButton,
+                        s.mapViewButton,
                         pressed
                           ? s.quickButtonPressed
-                          : s.quickButtonNotPressed,
+                          : s.mapViewButtonNotPressed,
                       ]}
                       onPress={() => {
                         openMap({
@@ -261,11 +235,11 @@ class LocationDetails extends Component {
                     >
                       <MaterialCommunityIcons
                         name={"directions"}
-                        color={theme.text2}
-                        size={28}
+                        color={theme.colors.text}
+                        size={30}
                         style={{
-                          height: 28,
-                          width: 28,
+                          height: 30,
+                          width: 30,
                           justifyContent: "center",
                           alignSelf: "center",
                         }}
@@ -274,48 +248,47 @@ class LocationDetails extends Component {
                     <Pressable
                       style={({ pressed }) => [
                         s.mapButton,
-                        s.quickButton,
+                        s.mapViewButton,
                         pressed
                           ? s.quickButtonPressed
-                          : s.quickButtonNotPressed,
+                          : s.mapViewButtonNotPressed,
                       ]}
                       onPress={this.onMapPress}
                     >
                       <FontAwesome6
                         name={"map-location"}
-                        color={theme.text2}
-                        size={22}
+                        color={theme.colors.text}
+                        size={24}
                         style={{
-                          height: 22,
-                          width: 22,
+                          height: 24,
+                          width: 24,
                           justifyContent: "center",
                           alignSelf: "center",
                         }}
                       />
                     </Pressable>
+
                     <Pressable
                       style={({ pressed }) => [
-                        s.quickButton,
-                        s.editLocationButton,
+                        s.mapViewButton,
+                        s.shareButton,
                         pressed
                           ? s.quickButtonPressed
-                          : s.quickButtonNotPressed,
+                          : s.mapViewButtonNotPressed,
                       ]}
-                      onPress={() => {
-                        if (loggedIn) {
-                          navigation.navigate("EditLocationDetails");
-                        } else {
-                          navigation.navigate("Login");
-                        }
+                      onPress={async () => {
+                        await Share.share({
+                          message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
+                        });
                       }}
                     >
-                      <MaterialCommunityIcons
-                        name={"pencil-outline"}
-                        color={theme.text2}
-                        size={30}
+                      <MaterialIcons
+                        name={"ios-share"}
+                        color={theme.colors.text}
+                        size={28}
                         style={{
-                          height: 30,
-                          width: 30,
+                          height: 28,
+                          width: 28,
                           justifyContent: "center",
                           alignSelf: "center",
                         }}
@@ -622,14 +595,12 @@ class LocationDetails extends Component {
                                 ? s.quickButtonPressed
                                 : s.quickButtonNotPressed,
                             ]}
-                            onPress={async () => {
-                              await Share.share({
-                                message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
-                              });
-                            }}
+                            onPress={() =>
+                              this.handleConfirmPress(location.id, loggedIn)
+                            }
                           >
-                            <MaterialIcons
-                              name={"ios-share"}
+                            <MaterialCommunityIcons
+                              name={"check-outline"}
                               color={theme.text2}
                               size={26}
                               style={{
@@ -647,17 +618,21 @@ class LocationDetails extends Component {
                                 ? s.quickButtonPressed
                                 : s.quickButtonNotPressed,
                             ]}
-                            onPress={() =>
-                              this.handleConfirmPress(location.id, loggedIn)
-                            }
+                            onPress={() => {
+                              if (loggedIn) {
+                                navigation.navigate("EditLocationDetails");
+                              } else {
+                                navigation.navigate("Login");
+                              }
+                            }}
                           >
                             <MaterialCommunityIcons
-                              name={"check-outline"}
+                              name={"pencil-outline"}
                               color={theme.text2}
-                              size={26}
+                              size={30}
                               style={{
-                                height: 26,
-                                width: 26,
+                                height: 30,
+                                width: 30,
                                 justifyContent: "center",
                                 alignSelf: "center",
                               }}
@@ -930,6 +905,16 @@ const getStyles = (theme) =>
       elevation: 6,
       backgroundColor: theme.white,
     },
+    mapViewButton: {
+      padding: 10,
+      zIndex: 10,
+      borderRadius: 20,
+      height: 40,
+      width: 40,
+      alignSelf: "center",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+    },
     directionsButton: {
       position: "absolute",
       right: 10,
@@ -937,13 +922,13 @@ const getStyles = (theme) =>
     },
     mapButton: {
       position: "absolute",
-      right: 65,
+      right: 60,
       top: Constants.statusBarHeight,
     },
-    editLocationButton: {
+    shareButton: {
       position: "absolute",
-      right: 10,
-      bottom: 10,
+      right: 110,
+      top: Constants.statusBarHeight,
     },
     metaIcon: {
       paddingTop: 0,
@@ -981,10 +966,14 @@ const getStyles = (theme) =>
       color: theme.red2,
     },
     quickButtonPressed: {
-      backgroundColor: theme.blue2,
+      backgroundColor: theme.indigo4,
     },
     quickButtonNotPressed: {
       backgroundColor: theme.white,
+    },
+    mapViewButtonNotPressed: {
+      backgroundColor:
+        theme.theme == "dark" ? "transparent" : "rgba(255,255,255,.5)",
     },
     confirmText: {
       textAlign: "center",

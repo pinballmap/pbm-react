@@ -234,7 +234,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     quickButtonPressed: {
-      backgroundColor: theme.blue2,
+      backgroundColor: theme.indigo4,
     },
     quickButtonNotPressed: {
       backgroundColor: theme.white,

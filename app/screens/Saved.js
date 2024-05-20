@@ -191,9 +191,6 @@ const getStyles = (theme) =>
       flex: 1,
       backgroundColor: theme.base1,
     },
-    buttonStyle: {
-      backgroundColor: theme.blue2,
-    },
     buttonGroupContainer: {
       height: 40,
       borderWidth: 0,
