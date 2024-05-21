@@ -35,7 +35,7 @@ const BackglassImage = ({ width, height, source }) => {
 const getStyles = () =>
   StyleSheet.create({
     imageContainer: {
-      marginVertical: 20,
+      marginVertical: 10,
       marginHorizontal: 20,
       borderWidth: 4,
       borderColor: "#e7b9f1",

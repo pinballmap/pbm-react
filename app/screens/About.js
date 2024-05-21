@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, Image, Platform, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { getData } from "../config/request";
 import { Screen, Text } from "../components";
@@ -61,14 +68,10 @@ const About = ({ navigation, appAlert }) => {
               {appAlert}
             </Text>
           </View>
-
+          <Text style={s.category}>What About It</Text>
           <Text style={s.text}>
             Founded in 2008, Pinball Map is an open source, crowdsourced
-            worldwide map of public pinball machines.
-          </Text>
-
-          <Text style={s.text}>
-            We currently list{" "}
+            worldwide map of public pinball machines. We currently list{" "}
             <Text style={s.boldText}>
               {formatNumWithCommas(stats.num_locations)}
             </Text>{" "}
@@ -76,7 +79,23 @@ const About = ({ navigation, appAlert }) => {
             <Text style={s.boldText}>
               {formatNumWithCommas(stats.num_lmxes)}
             </Text>{" "}
-            machines. You can update the map using this app or the website:{" "}
+            machines.
+          </Text>
+          <Text style={s.text}>
+            The site is not monetized and{" "}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://github.com/pinballmap/pbm-react",
+                )
+              }
+            >{`the code`}</Text>{" "}
+            is open source. The site is maintained by over 100 administrators
+            and thousands of active users.
+          </Text>
+          <Text style={s.text}>
+            To help maintain it (on the app or the website,{" "}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -85,8 +104,22 @@ const About = ({ navigation, appAlert }) => {
             >
               pinballmap.com
             </Text>
-            . The data is managed by over 100 administrators and thousands of
-            active users.
+            ), create an account and add and remove machines and submit new
+            locations. You can also add machine comments, edit location info,
+            and add high scores.
+          </Text>
+          <Text style={s.text}>
+            {`You can `}
+            <Text
+              onPress={() => navigation.navigate("Contact")}
+              style={s.textLink}
+            >{`contact us`}</Text>
+            {`, and you also might find wisdom `}
+            <Text
+              onPress={() => navigation.navigate("FAQ")}
+              style={s.textLink}
+            >{`in the FAQ`}</Text>
+            .
           </Text>
 
           <Image
@@ -95,104 +128,29 @@ const About = ({ navigation, appAlert }) => {
             style={s.purpleMachine}
           />
 
+          <Text style={s.category}>Keep Up</Text>
           <Text style={s.text}>
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync(
-                  "https://github.com/pinballmap/pbm-react",
-                )
-              }
-            >{`This app's code`}</Text>{" "}
-            is open source, and you can contribute to it. You can also use the
-            data{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync(
-                  "https://pinballmap.com/api/v1/docs",
-                )
-              }
-            >
-              via our API
-            </Text>
-            . With the API, we supply the mapping data for the{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync(
-                  "https://sternpinball.com/pinball-locator/",
-                )
-              }
-            >{`Stern Pinball website`}</Text>
-            , and are used by{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://pindigo.app/")
-              }
-            >{`Pindigo`}</Text>
-            ,{" "}
-            <Text
-              style={s.textLink}
-              onPress={() => WebBrowser.openBrowserAsync("http://pintips.net")}
-            >{`PinTips`}</Text>
-            ,{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("http://matchplay.events")
-              }
-            >{`MatchPlay Events`}</Text>
-            ,{" "}
-            <Text
-              style={s.textLink}
-              onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
-            >{`Scorbit`}</Text>
-            ,{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://kineticist.co/")
-              }
-            >{`Kineticist`}</Text>
-            , and more!
-          </Text>
-
-          <Text style={s.text}>
-            <Text
-              onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
-            >{`Contact Us`}</Text>
-            . Or you can start a discussion about anything on our{" "}
-            <Text
-              onPress={() =>
-                WebBrowser.openBrowserAsync(
-                  "https://github.com/pinballmap/pbm/discussions",
-                )
-              }
-              style={s.textLink}
-            >{`Github discussion page`}</Text>
-            .
-          </Text>
-
-          <Text style={s.text}>
+            {`Check the `}
             <Text
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://blog.pinballmap.com/")
               }
-              style={s.pink}
-            >{`Read the blog`}</Text>
-            .{" "}
-            <Text
-              onPress={() => navigation.navigate("FAQ")}
               style={s.textLink}
-            >{`Read the FAQ (and Privacy Policy)`}</Text>
-            .
+            >{`blog`}</Text>
+            {` to keep up with map news. Follow `}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://fosstodon.org/@pinballmap")
+              }
+            >
+              @pinballmap
+            </Text>
+            {` on Mastodon.`}
           </Text>
 
           <Text style={s.text}>
-            Listen to our old podcast,{" "}
+            Listen to our podcast,{" "}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -201,19 +159,21 @@ const About = ({ navigation, appAlert }) => {
             >{`Mappin' Around with Scott & Ryan`}</Text>
             !
           </Text>
-
-          <Text style={s.text}>
-            Follow{" "}
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://fosstodon.org/@pinballmap")
-              }
-            >
-              @pinballmap
-            </Text>{" "}
-            on Mastodon!
-          </Text>
+          <Pressable
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://pod.pinballmap.com/")
+            }
+          >
+            <Image
+              source={require("../assets/images/mappin-logo-600.png")}
+              style={{
+                width: deviceWidth - 30,
+                height: deviceWidth - 30,
+                marginBottom: 10,
+              }}
+              resizeMode="contain"
+            />
+          </Pressable>
 
           <Text style={s.text}>
             We sometimes have a few things for sale{" "}
@@ -228,6 +188,38 @@ const About = ({ navigation, appAlert }) => {
             .
           </Text>
 
+          <Pressable
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://pinballmap.com/store")
+            }
+          >
+            <Image
+              source={require("../assets/images/beanie-three-500.jpg")}
+              style={{
+                width: deviceWidth - 30,
+                height: (deviceWidth - 30) / 1.121,
+                marginBottom: 10,
+              }}
+              resizeMode="contain"
+            />
+          </Pressable>
+
+          <Pressable
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://pinballmap.com/store")
+            }
+          >
+            <Image
+              source={require("../assets/images/pbm-both-stickers.png")}
+              style={{
+                width: deviceWidth - 30,
+                height: (deviceWidth - 30) / 1.4195,
+                marginBottom: 10,
+              }}
+              resizeMode="contain"
+            />
+          </Pressable>
+
           <Text style={s.text}>
             {"And finally, we've compiled some "}
             <Text
@@ -239,54 +231,95 @@ const About = ({ navigation, appAlert }) => {
             !
           </Text>
 
-          <Image
-            source={require("../assets/images/pbm-both-stickers.png")}
-            style={{
-              width: deviceWidth - 40,
-              height: (deviceWidth - 40) / 1.4195,
-              marginBottom: 10,
-            }}
-            resizeMode="contain"
-          />
+          <Text style={s.category}>API</Text>
+          <Text style={s.text}>
+            Not only is the Pinball Map website and app open source, but there
+            is also
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://pinballmap.com/api/v1/docs",
+                )
+              }
+            >
+              an API
+            </Text>
+            . With it, you can pull down map data and use it on your cool app.
+          </Text>
+          <Text style={s.text}>
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://sternpinball.com/pinball-locator/",
+                )
+              }
+            >{`Stern Pinball`}</Text>{" "}
+            uses our data for their machine locator. Out API is also used by{" "}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("http://matchplay.events")
+              }
+            >{`MatchPlay Events`}</Text>{" "}
+            and{" "}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://pindigo.app/")
+              }
+            >{`Pindigo`}</Text>{" "}
+            and{" "}
+            <Text
+              style={s.textLink}
+              onPress={() => WebBrowser.openBrowserAsync("http://pintips.net")}
+            >{`PinTips`}</Text>{" "}
+            and{" "}
+            <Text
+              style={s.textLink}
+              onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
+            >{`Scorbit`}</Text>{" "}
+            and{" "}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://kineticist.com/")
+              }
+            >{`Kineticist`}</Text>
+            , and more!
+          </Text>
 
-          <Text style={s.boldHeader}>App Credits:</Text>
-          <Text style={{ fontSize: 16 }}>
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://github.com/bpoore")
-              }
-            >
-              Beth Poore
-            </Text>{" "}
-            (Development)
+          <Text style={s.category}>App Credits</Text>
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://github.com/bpoore")
+            }
+          >
+            Beth Poore
           </Text>
-          <Text style={{ fontSize: 16 }}>
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://github.com/ryantg")
-              }
-            >
-              Ryan Gratzer
-            </Text>{" "}
-            (Design & Dev)
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://github.com/ryantg")
+            }
+          >
+            Ryan Gratzer
           </Text>
-          <Text style={{ fontSize: 16 }}>
-            <Text
-              style={s.textLink}
-              onPress={() =>
-                WebBrowser.openBrowserAsync("https://github.com/scottwainstock")
-              }
-            >
-              Scott Wainstock
-            </Text>{" "}
-            (API)
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://github.com/scottwainstock")
+            }
+          >
+            Scott Wainstock
           </Text>
-          <Text style={{ fontSize: 16 }}>Elijah St Clair (DevOps)</Text>
+          <Text style={{ fontSize: 16 }}>Elijah St Clair</Text>
           <Text style={{ fontSize: 16, marginBottom: 10 }}>
             And other great folks (noted on Github)!
           </Text>
+          <Text style={s.category}>Support Us</Text>
           <Text style={s.text}>
             If you like the app,&nbsp;
             {Platform.OS === "ios" ? (
@@ -409,6 +442,19 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       fontSize: 16,
       fontFamily: "Nunito-Medium",
+    },
+    category: {
+      fontFamily: "Nunito-Bold",
+      fontSize: 17,
+      textAlign: "center",
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+      marginHorizontal: -15,
+      marginBottom: 10,
+      marginTop: 5,
+      backgroundColor: "#adc7fd",
+      color: "#503d49",
+      textTransform: "uppercase",
     },
   });
 

@@ -400,7 +400,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       paddingHorizontal: 10,
       paddingVertical: 10,
-      backgroundColor: "#a1befd",
+      backgroundColor: "#adc7fd",
       color: "#503d49",
       textTransform: "uppercase",
     },

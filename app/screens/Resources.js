@@ -172,7 +172,7 @@ const Resources = () => {
         <View style={s.hr}></View>
         <Pressable
           onPress={() =>
-            WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+            WebBrowser.openBrowserAsync("https://www.kineticist.com/")
           }
           style={[s.logoWrapper]}
         >
@@ -188,19 +188,19 @@ const Resources = () => {
           <Text
             style={s.textLink}
             onPress={() =>
-              WebBrowser.openBrowserAsync("https://www.kineticist.co/")
+              WebBrowser.openBrowserAsync("https://www.kineticist.com/")
             }
           >{`Kineticist`}</Text>
-          {` is a digital publication and community resource for the pinball and physical gaming communities. And we have a monthly `}
+          {` is a digital publication and community resource for the pinball and physical gaming communities. They have an incredible machine directory and they also run This Week in Pinball! We have `}
           <Text
             style={s.textLink}
             onPress={() =>
               WebBrowser.openBrowserAsync(
-                "https://www.kineticist.co/blog-category/pinball-map-update",
+                "https://www.kineticist.com/blog-category/pinball-map-update",
               )
             }
-          >{`Pinball Map New Locations Update`}</Text>
-          {` article series on the site!`}
+          >{`contributed articles to it`}</Text>
+          {`!`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
