@@ -343,13 +343,16 @@ class LocationDetails extends Component {
                   <View style={s.locationOuterContainer}>
                     <View style={s.locationContainer}>
                       <View style={s.locationNameContainer}>
-                        <Text style={s.locationName}>{location.name}</Text>
-                        <FavoriteLocation
-                          locationId={location.id}
-                          style={{ ...s.heartItem }}
-                          navigation={navigation}
-                          removeFavorite={(cb) => cb()}
-                        />
+                        <View style={s.nameItem}>
+                          <Text style={s.locationName}>{location.name}</Text>
+                        </View>
+                        <View style={s.heartItem}>
+                          <FavoriteLocation
+                            locationId={location.id}
+                            navigation={navigation}
+                            removeFavorite={(cb) => cb()}
+                          />
+                        </View>
                       </View>
                       <View style={s.locationMetaContainer}>
                         <Text style={[s.text2, s.fontSize15, s.marginRight]}>
@@ -942,6 +945,10 @@ const getStyles = (theme) =>
       color: theme.colors.inactiveTab,
       marginRight: 3,
       opacity: 0.6,
+    },
+    nameItem: {
+      flex: 1,
+      justifyContent: "center",
     },
     heartItem: {
       justifyContent: "center",
