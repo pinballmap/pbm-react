@@ -180,12 +180,12 @@ class MachineDetails extends Component {
                           this.setState({ conditionText })
                         }
                         style={[
-                          { padding: 5, minHeight: 80, height: "auto" },
+                          { padding: 5, height: 100 },
                           s.textInput,
                           s.radius10,
                         ]}
                         placeholder={
-                          "(note: if this machine is gone, please just remove it. no need to leave a comment saying it is gone)"
+                          "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
                         }
                         placeholderTextColor={theme.indigo4}
                         textAlignVertical="top"

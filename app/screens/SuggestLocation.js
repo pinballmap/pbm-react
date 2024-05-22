@@ -531,7 +531,7 @@ function SuggestLocation({
                     <TextInput
                       multiline={true}
                       style={[
-                        { padding: 5, minHeight: 80, height: "auto" },
+                        { padding: 5, height: 100 },
                         s.textInput,
                         s.radius10,
                       ]}

@@ -361,10 +361,7 @@ class FindMachine extends React.PureComponent {
                 multiline={true}
                 placeholder={"You can also include a machine comment..."}
                 placeholderTextColor={theme.indigo4}
-                style={[
-                  { padding: 5, minHeight: 50, height: "auto" },
-                  s.textInput,
-                ]}
+                style={[{ padding: 5, height: 70 }, s.textInput]}
                 onChangeText={(condition) => this.setState({ condition })}
                 textAlignVertical="top"
                 underlineColorAndroid="transparent"

@@ -230,15 +230,13 @@ function EditLocationDetails({
                   <Text style={s.title}>Location Notes</Text>
                   <TextInput
                     multiline={true}
-                    style={[
-                      { minHeight: 80, height: "auto" },
-                      s.textInput,
-                      s.radius10,
-                    ]}
+                    style={[{ height: 100 }, s.textInput, s.radius10]}
                     onChangeText={(description) => setDescription(description)}
                     value={description}
                     underlineColorAndroid="transparent"
-                    placeholder={description || "Location description..."}
+                    placeholder={
+                      description || "Location description, hours, etc..."
+                    }
                     placeholderTextColor={theme.indigo4}
                     textAlignVertical="top"
                   />
