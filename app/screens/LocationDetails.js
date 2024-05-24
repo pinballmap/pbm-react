@@ -285,10 +285,10 @@ class LocationDetails extends Component {
                       <MaterialIcons
                         name={"ios-share"}
                         color={theme.colors.text}
-                        size={28}
+                        size={26}
                         style={{
-                          height: 28,
-                          width: 28,
+                          height: 26,
+                          width: 26,
                           justifyContent: "center",
                           alignSelf: "center",
                         }}
@@ -377,7 +377,12 @@ class LocationDetails extends Component {
                                   name="compass-outline"
                                   style={s.distanceIcon}
                                 />
-                                <Text style={[{ fontSize: 15 }, s.mediumFont]}>
+                                <Text
+                                  style={[
+                                    { fontSize: 15, color: theme.text3 },
+                                    s.mediumFont,
+                                  ]}
+                                >
                                   {getDistanceWithUnit(
                                     userLat,
                                     userLon,
@@ -399,7 +404,11 @@ class LocationDetails extends Component {
                                 />
                                 <Text
                                   style={[
-                                    { marginLeft: 5, fontSize: 15 },
+                                    {
+                                      marginLeft: 5,
+                                      fontSize: 15,
+                                      color: theme.text3,
+                                    },
                                     s.mediumFont,
                                   ]}
                                 >
@@ -543,7 +552,7 @@ class LocationDetails extends Component {
                               name="clock-time-four-outline"
                               style={s.metaIcon}
                             />
-                            <Text style={[s.text, s.fontSize15, s.italic]}>
+                            <Text style={[s.text3, s.fontSize15, s.italic]}>
                               Updated:{" "}
                               <Text style={s.text3}>
                                 <Text style={s.italic}>

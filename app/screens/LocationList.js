@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, Linking, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Linking,
+  PixelRatio,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, LocationCard, Text } from "../components";
@@ -190,7 +196,8 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
-      fontSize: deviceWidth < 321 ? 12 : 14,
+      fontSize:
+        deviceWidth < 321 ? 12 : PixelRatio.getFontScale() > 1.25 ? 16 : 14,
       fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
