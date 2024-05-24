@@ -6,6 +6,7 @@ import {
   CLOSE_CONFIRM_MODAL,
   SET_SELECTED_LMX,
   MACHINE_CONDITION_UPDATED,
+  MACHINE_CONDITION_REMOVED,
   MACHINE_SCORE_ADDED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
@@ -102,6 +103,18 @@ export default (state = initialState, action) => {
           last_updated_by_username: action.username,
           date_last_updated: moment().format("YYYY-MM-DD"),
           location_machine_xrefs,
+        },
+      };
+    }
+    case MACHINE_CONDITION_REMOVED: {
+      const machine_conditions = state.curLmx.machine_conditions.filter(
+        (condition) => condition.id !== action.conditionId,
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_conditions,
         },
       };
     }

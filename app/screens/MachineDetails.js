@@ -35,6 +35,7 @@ import {
 import {
   ActivityIndicator,
   BackglassImage,
+  MachineComment,
   PbmButton,
   RemoveMachineModal,
   RemoveMachine,
@@ -366,30 +367,13 @@ class MachineDetails extends Component {
                     <Text style={s.sectionTitle}>Machine Comments</Text>
                   </View>
                   {mostRecentComments ? (
-                    mostRecentComments.map((commentObj) => {
-                      const { comment, created_at, username } = commentObj;
-                      return (
-                        <View
-                          style={[s.listContainerStyle, s.hr]}
-                          key={commentObj.id}
-                        >
-                          <Text style={[{ marginRight: 5 }, s.conditionText]}>
-                            {`"${comment}"`}
-                          </Text>
-                          <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            <Text style={s.italic}>
-                              {moment(created_at).format("MMM DD, YYYY")}
-                            </Text>
-                            {username ? ` by ` : ""}
-                            {!!username && (
-                              <Text style={[s.subtitleStyle, s.username]}>
-                                {username}
-                              </Text>
-                            )}
-                          </Text>
-                        </View>
-                      );
-                    })
+                    mostRecentComments.map((commentObj) => (
+                      <MachineComment
+                        commentObj={commentObj}
+                        key={commentObj.id}
+                        machineId={curLmx.id}
+                      />
+                    ))
                   ) : (
                     <Text style={s.noneYet}>No machine comments yet</Text>
                   )}
@@ -435,7 +419,7 @@ class MachineDetails extends Component {
                       const { id, score, created_at, username } = scoreObj;
 
                       return (
-                        <View style={[s.listContainerStyle, s.hr]} key={id}>
+                        <View style={s.listContainerStyle} key={id}>
                           <Text style={s.scoreText}>
                             {formatNumWithCommas(score)}
                           </Text>
@@ -581,11 +565,6 @@ const getStyles = (theme) =>
       marginHorizontal: 40,
       marginVertical: 15,
     },
-    conditionText: {
-      color: theme.text2,
-      fontSize: 16,
-      marginTop: 5,
-    },
     scoreText: {
       color: theme.text2,
       fontSize: 18,
@@ -683,8 +662,6 @@ const getStyles = (theme) =>
       marginHorizontal: 15,
       paddingTop: 5,
       paddingBottom: 10,
-    },
-    hr: {
       borderBottomWidth: 1,
       borderBottomColor: theme.indigo4,
     },
