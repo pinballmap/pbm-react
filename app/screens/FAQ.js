@@ -302,6 +302,13 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 It is offensive.`}
             </Text>
+            <Text
+              style={s.bold}
+            >{`I left a machine comment, but I made a typo. Or, I just woke up and I regret a comment I made last night. Can I edit or delete my comment?`}</Text>
+            <Text style={s.text}>
+              {`Yes. Click the machine and below your comment you'll see "edit" and "delete" buttons.\n\n`}
+              {`Note that recent/location activity feeds contain a log of the original machine comments. Those are public and cannot be edited or deleted (and kind of serve as a deterrent to people leaving troublesome comments that they intend to delete later).`}
+            </Text>
             <Text style={s.bold}>{`Why was my account disabled?`}</Text>
             <Text style={s.text}>
               {`\u2022 If your account has been used to mess with data on the site, then we may disable it. Bad behavior includes, but is not limited to: removing machines that are at a location (or removing+adding to clear out comments); adding machines that are not at a location; leaving lots of inappropriate/abusive comments; or adding Slugfest over and over (see above).\n\n`}

@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
   Modal,
   Platform,
   ScrollView,
@@ -226,54 +227,49 @@ class MachineDetails extends Component {
                 visible={this.state.showAddScoreModal}
                 onRequestClose={() => {}}
               >
-                <SafeAreaProvider>
-                  <SafeAreaView style={[{ flex: 1 }, s.backgroundColor]}>
-                    <ScrollView
-                      contentContainerStyle={{
-                        flex: 1,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <View style={s.verticalAlign}>
-                        <Text style={s.modalTitle}>
-                          Add your high score to{" "}
-                          <Text style={s.modalMachineName}>{machineName}</Text>{" "}
-                          at{" "}
-                          <Text style={s.modalLocationName}>
-                            {location.name}
-                          </Text>
-                        </Text>
-                        <TextInput
-                          style={[
-                            { height: 40, textAlign: "center" },
-                            s.textInput,
-                            s.radius10,
-                          ]}
-                          keyboardType="numeric"
-                          underlineColorAndroid="transparent"
-                          onChangeText={(score) => this.setState({ score })}
-                          defaultValue={formatInputNumWithCommas(
-                            this.state.score,
-                          )}
-                          returnKeyType="done"
-                          placeholder={"123..."}
-                          placeholderTextColor={theme.indigo4}
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                        />
-                        <PbmButton
-                          title={"Add Score"}
-                          disabled={this.state.score.length === 0}
-                          onPress={() => this.addScore(curLmx.id)}
-                        />
-                        <WarningButton
-                          title={"Cancel"}
-                          onPress={this.cancelAddScore}
-                        />
-                      </View>
-                    </ScrollView>
-                  </SafeAreaView>
-                </SafeAreaProvider>
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+                  <ScrollView
+                    contentContainerStyle={{
+                      flex: 1,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <View style={s.verticalAlign}>
+                      <Text style={s.modalTitle}>
+                        Add your high score to{" "}
+                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
+                        <Text style={s.modalLocationName}>{location.name}</Text>
+                      </Text>
+                      <TextInput
+                        style={[
+                          { height: 40, textAlign: "center" },
+                          s.textInput,
+                          s.radius10,
+                        ]}
+                        keyboardType="numeric"
+                        underlineColorAndroid="transparent"
+                        onChangeText={(score) => this.setState({ score })}
+                        defaultValue={formatInputNumWithCommas(
+                          this.state.score,
+                        )}
+                        returnKeyType="done"
+                        placeholder={"123..."}
+                        placeholderTextColor={theme.indigo4}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <PbmButton
+                        title={"Add Score"}
+                        disabled={this.state.score.length === 0}
+                        onPress={() => this.addScore(curLmx.id)}
+                      />
+                      <WarningButton
+                        title={"Cancel"}
+                        onPress={this.cancelAddScore}
+                      />
+                    </View>
+                  </ScrollView>
+                </KeyboardAvoidingView>
               </Modal>
               {this.state.showRemoveMachineModal && (
                 <RemoveMachineModal

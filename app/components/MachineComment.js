@@ -1,6 +1,14 @@
 import React, { useContext, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
@@ -47,41 +55,56 @@ const MachineComment = ({ commentObj, user }) => {
   return (
     <>
       <ConfirmationModal loading={loading} visible={deleteModalVisible}>
-        <WarningButton
+        <Text style={s.modalTitle}>Delete your comment</Text>
+        <PbmButton
           title={"Delete Comment"}
           onPress={onDeletePress}
           accessibilityLabel="Delete Comment"
           containerStyle={s.buttonContainer}
         />
-        <PbmButton
-          title={"Nevermind"}
-          onPress={() => setDeleteModalVisible(false)}
-          accessibilityLabel="Nevermind"
-          containerStyle={s.buttonContainer}
-        />
-      </ConfirmationModal>
-      <ConfirmationModal loading={loading} visible={editModalVisible}>
-        <TextInput
-          defaultValue={initialComment}
-          multiline={true}
-          underlineColorAndroid="transparent"
-          onChangeText={(conditionText) => setComment(conditionText)}
-          style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-          textAlignVertical="top"
-        />
         <WarningButton
-          title={"Save"}
-          onPress={onEditPress}
-          accessibilityLabel="Edit Comment"
-          containerStyle={s.buttonContainer}
-        />
-        <PbmButton
           title={"Cancel"}
-          onPress={() => setEditModalVisible(false)}
-          accessibilityLabel="Nevermind"
+          onPress={() => setDeleteModalVisible(false)}
+          accessibilityLabel="Cancel"
           containerStyle={s.buttonContainer}
         />
       </ConfirmationModal>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        loading={loading}
+        visible={editModalVisible}
+        onRequestClose={() => {}}
+      >
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+          <ScrollView
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Text style={s.modalTitle}>Edit your comment</Text>
+            <TextInput
+              defaultValue={initialComment}
+              multiline={true}
+              underlineColorAndroid="transparent"
+              onChangeText={(conditionText) => setComment(conditionText)}
+              style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+              textAlignVertical="top"
+            />
+            <PbmButton
+              title={"Save"}
+              onPress={onEditPress}
+              accessibilityLabel="Edit Comment"
+            />
+            <WarningButton
+              title={"Cancel"}
+              onPress={() => setEditModalVisible(false)}
+              accessibilityLabel="Cancel"
+            />
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </Modal>
       <View style={s.listContainerStyle}>
         <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
         <Text style={[s.subtitleStyle]}>
@@ -164,12 +187,19 @@ const getStyles = (theme) =>
       color: theme.text,
       borderWidth: 1,
       marginBottom: 10,
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     radius10: {
       borderRadius: 10,
+    },
+    modalTitle: {
+      textAlign: "center",
+      marginBottom: 10,
+      marginHorizontal: 40,
+      fontSize: 18,
+      fontFamily: "Nunito-Regular",
     },
   });
 
