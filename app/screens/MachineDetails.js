@@ -423,13 +423,13 @@ class MachineDetails extends Component {
                             {formatNumWithCommas(score)}
                           </Text>
                           <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            <Text style={s.italic}>
-                              {moment(created_at).format("MMM DD, YYYY")}
-                            </Text>{" "}
-                            {`by `}
                             <Text
                               style={[s.subtitleStyle, s.username]}
                             >{`${username}`}</Text>
+                            {"  "}
+                            <Text style={s.italic}>
+                              {moment(created_at).format("MMM DD, YYYY")}
+                            </Text>
                           </Text>
                         </View>
                       );

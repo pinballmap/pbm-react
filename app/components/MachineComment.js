@@ -84,22 +84,38 @@ const MachineComment = ({ commentObj, user }) => {
       </ConfirmationModal>
       <View style={s.listContainerStyle}>
         <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-        <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-          <Text style={s.italic}>
-            {moment(updated_at).format("MMM DD, YYYY")}
+        <View style={[s.subtitleStyle]}>
+          <Text>
+            {!!username && (
+              <Text style={s.username}>
+                {username}
+                {"  "}
+              </Text>
+            )}
+            <Text style={s.italic}>
+              {moment(updated_at).format("MMM DD, YYYY")}
+            </Text>
+            {created_at !== updated_at && "*"}
+            {"  "}
+            {user?.id && user.id === commentUserId && (
+              <>
+                <Text
+                  style={s.editDelete}
+                  onPress={() => setEditModalVisible(true)}
+                >
+                  edit
+                </Text>
+                {"  "}
+                <Text
+                  style={s.editDelete}
+                  onPress={() => setDeleteModalVisible(true)}
+                >
+                  delete
+                </Text>
+              </>
+            )}
           </Text>
-          {created_at !== updated_at && "*"}
-          {user?.id && user.id === commentUserId && (
-            <>
-              <Text onPress={() => setEditModalVisible(true)}> Edit </Text>
-              <Text onPress={() => setDeleteModalVisible(true)}> Delete </Text>
-            </>
-          )}
-          {username ? ` by ` : ""}
-          {!!username && (
-            <Text style={[s.subtitleStyle, s.username]}>{username}</Text>
-          )}
-        </Text>
+        </View>
       </View>
     </>
   );
@@ -111,7 +127,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
       paddingTop: 5,
-      paddingBottom: 10,
+      paddingBottom: 5,
       borderBottomWidth: 1,
       borderBottomColor: theme.indigo4,
     },
@@ -122,15 +138,10 @@ const getStyles = (theme) =>
       marginRight: 5,
     },
     subtitleStyle: {
-      paddingTop: 3,
+      paddingTop: 5,
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-SemiBold",
-    },
-    subtitleMargin: {
-      marginTop: 5,
-      marginHorizontal: 0,
-      fontSize: 14,
     },
     username: {
       color: theme.pink1,
@@ -140,6 +151,26 @@ const getStyles = (theme) =>
       marginRight: 20,
       marginTop: 10,
       marginBottom: 10,
+    },
+    italic: {
+      fontFamily: "Nunito-Italic",
+      paddingHorizontal: 5,
+    },
+    editDelete: {
+      textDecorationLine: "underline",
+    },
+    textInput: {
+      backgroundColor: theme.white,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      color: theme.text,
+      borderWidth: 1,
+      marginBottom: 10,
+      marginHorizontal: 20,
+      fontFamily: "Nunito-Regular",
+      fontSize: 16,
+    },
+    radius10: {
+      borderRadius: 10,
     },
   });
 
