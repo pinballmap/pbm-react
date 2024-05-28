@@ -84,38 +84,36 @@ const MachineComment = ({ commentObj, user }) => {
       </ConfirmationModal>
       <View style={s.listContainerStyle}>
         <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-        <View style={[s.subtitleStyle]}>
-          <Text>
-            {!!username && (
-              <Text style={s.username}>
-                {username}
-                {"  "}
-              </Text>
-            )}
-            <Text style={s.italic}>
-              {moment(updated_at).format("MMM DD, YYYY")}
+        <Text style={[s.subtitleStyle]}>
+          {!!username && (
+            <Text style={s.username}>
+              {username}
+              {"  "}
             </Text>
-            {created_at !== updated_at && "*"}
-            {"  "}
-            {user?.id && user.id === commentUserId && (
-              <>
-                <Text
-                  style={s.editDelete}
-                  onPress={() => setEditModalVisible(true)}
-                >
-                  edit
-                </Text>
-                {"  "}
-                <Text
-                  style={s.editDelete}
-                  onPress={() => setDeleteModalVisible(true)}
-                >
-                  delete
-                </Text>
-              </>
-            )}
+          )}
+          <Text style={s.italic}>
+            {moment(updated_at).format("MMM DD, YYYY")}
           </Text>
-        </View>
+          {created_at !== updated_at && "*"}
+          {"  "}
+          {user?.id && user.id === commentUserId && (
+            <>
+              <Text
+                style={s.editDelete}
+                onPress={() => setEditModalVisible(true)}
+              >
+                edit
+              </Text>
+              {"  "}
+              <Text
+                style={s.editDelete}
+                onPress={() => setDeleteModalVisible(true)}
+              >
+                delete
+              </Text>
+            </>
+          )}
+        </Text>
       </View>
     </>
   );
@@ -146,6 +144,7 @@ const getStyles = (theme) =>
     },
     username: {
       color: theme.pink1,
+      marginLeft: 6,
     },
     buttonContainer: {
       marginLeft: 20,
@@ -155,7 +154,6 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-      paddingHorizontal: 5,
     },
     editDelete: {
       textDecorationLine: "underline",

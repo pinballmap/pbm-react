@@ -595,7 +595,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginTop: 5,
       marginBottom: 5,
-      color: theme.purpleLight,
+      color: theme.text2,
       fontFamily: "Nunito-SemiBold",
       fontSize: 13,
       textTransform: "uppercase",
