@@ -21,6 +21,7 @@ import LocationActivity from "./LocationActivity";
 import CustomMapMarkers from "./CustomMapMarkers";
 import LocationBottomSheet from "./LocationBottomSheet";
 import BackglassImage from "./BackglassImage";
+import MachineComment from "./MachineComment";
 
 export {
   LocationCard,
@@ -46,4 +47,5 @@ export {
   CustomMapMarkers,
   LocationBottomSheet,
   BackglassImage,
+  MachineComment,
 };

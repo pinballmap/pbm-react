@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Modal, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
+import { ActivityIndicator } from ".";
 
-const ConfirmationModal = ({ children, visible, wide, noPad }) => {
+const ConfirmationModal = ({ children, visible, wide, noPad, loading }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -22,7 +23,7 @@ const ConfirmationModal = ({ children, visible, wide, noPad }) => {
             noPad && { paddingBottom: 0 },
           ]}
         >
-          {children}
+          {loading ? <ActivityIndicator /> : children}
         </View>
       </View>
     </Modal>

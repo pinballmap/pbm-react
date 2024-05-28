@@ -5,6 +5,8 @@ import {
   CLOSE_CONFIRM_MODAL,
   SET_SELECTED_LMX,
   MACHINE_CONDITION_UPDATED,
+  MACHINE_CONDITION_REMOVED,
+  MACHINE_CONDITION_EDITED,
   MACHINE_SCORE_ADDED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
@@ -233,8 +235,8 @@ export const updateLocationDetails =
       locationType === -1
         ? ""
         : locationType
-        ? locationType
-        : location.location_type_id;
+          ? locationType
+          : location.location_type_id;
     const operator_id =
       operator === -1 ? "" : operator ? operator : location.operator_id;
 
@@ -365,4 +367,32 @@ export const setSelectedLocationType = (id) => {
     type: SET_SELECTED_LOCATION_TYPE,
     id,
   };
+};
+
+export const deleteCondition = (conditionId, user) => (dispatch) => {
+  const body = {
+    user_email: user.email,
+    user_token: user.authentication_token,
+  };
+  return deleteData(`/machine_conditions/${conditionId}.json`, body)
+    .then(() => {
+      dispatch({ type: MACHINE_CONDITION_REMOVED, conditionId });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const editCondition = (conditionId, comment, user) => (dispatch) => {
+  const body = {
+    user_email: user.email,
+    user_token: user.authentication_token,
+    comment,
+  };
+
+  return putData(`/machine_conditions/${conditionId}.json`, body)
+    .then(() => {
+      dispatch({ type: MACHINE_CONDITION_EDITED, conditionId, comment });
+    })
+    .catch((err) => console.log(err));
 };

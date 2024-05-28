@@ -6,6 +6,7 @@ import {
   CLOSE_CONFIRM_MODAL,
   SET_SELECTED_LMX,
   MACHINE_CONDITION_UPDATED,
+  MACHINE_CONDITION_REMOVED,
   MACHINE_SCORE_ADDED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
@@ -22,6 +23,7 @@ import {
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
   IC_ENABLED_UPDATED,
+  MACHINE_CONDITION_EDITED,
 } from "../actions/types";
 
 const moment = require("moment");
@@ -102,6 +104,36 @@ export default (state = initialState, action) => {
           last_updated_by_username: action.username,
           date_last_updated: moment().format("YYYY-MM-DD"),
           location_machine_xrefs,
+        },
+      };
+    }
+    case MACHINE_CONDITION_REMOVED: {
+      const machine_conditions = state.curLmx.machine_conditions.filter(
+        (condition) => condition.id !== action.conditionId,
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_conditions,
+        },
+      };
+    }
+    case MACHINE_CONDITION_EDITED: {
+      const machine_conditions = state.curLmx.machine_conditions.map(
+        (condition) => {
+          if (condition.id === action.conditionId) {
+            condition.comment = action.comment;
+            condition.updated_at = moment().format("YYYY-MM-DD");
+          }
+          return condition;
+        },
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_conditions,
         },
       };
     }

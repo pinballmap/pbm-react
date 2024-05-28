@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
   Modal,
   Platform,
   ScrollView,
@@ -35,6 +36,7 @@ import {
 import {
   ActivityIndicator,
   BackglassImage,
+  MachineComment,
   PbmButton,
   RemoveMachineModal,
   RemoveMachine,
@@ -225,54 +227,49 @@ class MachineDetails extends Component {
                 visible={this.state.showAddScoreModal}
                 onRequestClose={() => {}}
               >
-                <SafeAreaProvider>
-                  <SafeAreaView style={[{ flex: 1 }, s.backgroundColor]}>
-                    <ScrollView
-                      contentContainerStyle={{
-                        flex: 1,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <View style={s.verticalAlign}>
-                        <Text style={s.modalTitle}>
-                          Add your high score to{" "}
-                          <Text style={s.modalMachineName}>{machineName}</Text>{" "}
-                          at{" "}
-                          <Text style={s.modalLocationName}>
-                            {location.name}
-                          </Text>
-                        </Text>
-                        <TextInput
-                          style={[
-                            { height: 40, textAlign: "center" },
-                            s.textInput,
-                            s.radius10,
-                          ]}
-                          keyboardType="numeric"
-                          underlineColorAndroid="transparent"
-                          onChangeText={(score) => this.setState({ score })}
-                          defaultValue={formatInputNumWithCommas(
-                            this.state.score,
-                          )}
-                          returnKeyType="done"
-                          placeholder={"123..."}
-                          placeholderTextColor={theme.indigo4}
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                        />
-                        <PbmButton
-                          title={"Add Score"}
-                          disabled={this.state.score.length === 0}
-                          onPress={() => this.addScore(curLmx.id)}
-                        />
-                        <WarningButton
-                          title={"Cancel"}
-                          onPress={this.cancelAddScore}
-                        />
-                      </View>
-                    </ScrollView>
-                  </SafeAreaView>
-                </SafeAreaProvider>
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+                  <ScrollView
+                    contentContainerStyle={{
+                      flex: 1,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <View style={s.verticalAlign}>
+                      <Text style={s.modalTitle}>
+                        Add your high score to{" "}
+                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
+                        <Text style={s.modalLocationName}>{location.name}</Text>
+                      </Text>
+                      <TextInput
+                        style={[
+                          { height: 40, textAlign: "center" },
+                          s.textInput,
+                          s.radius10,
+                        ]}
+                        keyboardType="numeric"
+                        underlineColorAndroid="transparent"
+                        onChangeText={(score) => this.setState({ score })}
+                        defaultValue={formatInputNumWithCommas(
+                          this.state.score,
+                        )}
+                        returnKeyType="done"
+                        placeholder={"123..."}
+                        placeholderTextColor={theme.indigo4}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <PbmButton
+                        title={"Add Score"}
+                        disabled={this.state.score.length === 0}
+                        onPress={() => this.addScore(curLmx.id)}
+                      />
+                      <WarningButton
+                        title={"Cancel"}
+                        onPress={this.cancelAddScore}
+                      />
+                    </View>
+                  </ScrollView>
+                </KeyboardAvoidingView>
               </Modal>
               {this.state.showRemoveMachineModal && (
                 <RemoveMachineModal
@@ -366,30 +363,12 @@ class MachineDetails extends Component {
                     <Text style={s.sectionTitle}>Machine Comments</Text>
                   </View>
                   {mostRecentComments ? (
-                    mostRecentComments.map((commentObj) => {
-                      const { comment, created_at, username } = commentObj;
-                      return (
-                        <View
-                          style={[s.listContainerStyle, s.hr]}
-                          key={commentObj.id}
-                        >
-                          <Text style={[{ marginRight: 5 }, s.conditionText]}>
-                            {`"${comment}"`}
-                          </Text>
-                          <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            <Text style={s.italic}>
-                              {moment(created_at).format("MMM DD, YYYY")}
-                            </Text>
-                            {username ? ` by ` : ""}
-                            {!!username && (
-                              <Text style={[s.subtitleStyle, s.username]}>
-                                {username}
-                              </Text>
-                            )}
-                          </Text>
-                        </View>
-                      );
-                    })
+                    mostRecentComments.map((commentObj) => (
+                      <MachineComment
+                        commentObj={commentObj}
+                        key={commentObj.id}
+                      />
+                    ))
                   ) : (
                     <Text style={s.noneYet}>No machine comments yet</Text>
                   )}
@@ -435,18 +414,18 @@ class MachineDetails extends Component {
                       const { id, score, created_at, username } = scoreObj;
 
                       return (
-                        <View style={[s.listContainerStyle, s.hr]} key={id}>
+                        <View style={s.listContainerStyle} key={id}>
                           <Text style={s.scoreText}>
                             {formatNumWithCommas(score)}
                           </Text>
                           <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            <Text style={s.italic}>
-                              {moment(created_at).format("MMM DD, YYYY")}
-                            </Text>{" "}
-                            {`by `}
                             <Text
                               style={[s.subtitleStyle, s.username]}
                             >{`${username}`}</Text>
+                            {"  "}
+                            <Text style={s.italic}>
+                              {moment(created_at).format("MMM DD, YYYY")}
+                            </Text>
                           </Text>
                         </View>
                       );
@@ -581,11 +560,6 @@ const getStyles = (theme) =>
       marginHorizontal: 40,
       marginVertical: 15,
     },
-    conditionText: {
-      color: theme.text2,
-      fontSize: 16,
-      marginTop: 5,
-    },
     scoreText: {
       color: theme.text2,
       fontSize: 18,
@@ -617,7 +591,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginTop: 5,
       marginBottom: 5,
-      color: theme.purpleLight,
+      color: theme.text2,
       fontFamily: "Nunito-SemiBold",
       fontSize: 13,
       textTransform: "uppercase",
@@ -683,8 +657,6 @@ const getStyles = (theme) =>
       marginHorizontal: 15,
       paddingTop: 5,
       paddingBottom: 10,
-    },
-    hr: {
       borderBottomWidth: 1,
       borderBottomColor: theme.indigo4,
     },
