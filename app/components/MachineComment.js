@@ -136,6 +136,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       marginTop: 5,
       marginRight: 5,
+      fontFamily: "Nunito-Regular",
     },
     subtitleStyle: {
       paddingTop: 5,
