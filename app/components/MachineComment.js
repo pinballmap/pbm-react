@@ -1,36 +1,52 @@
 import React, { useContext, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
-import { deleteCondition } from "../actions";
+import { deleteCondition, editCondition } from "../actions";
 
 const moment = require("moment");
 
-const MachineComment = ({ commentObj, machineId, user }) => {
+const MachineComment = ({ commentObj, user }) => {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const [loading, setIsLoading] = useState(false);
   const {
-    comment,
+    comment: initialComment,
     created_at,
+    updated_at,
     username,
     user_id: commentUserId,
     id: commentId,
   } = commentObj;
-  const [modalVisible, setModalVisible] = useState(false);
-  const onEditPress = () => {
-    console.log("HEYYYY");
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [comment, setComment] = useState(initialComment);
+  const onEditPress = async () => {
+    try {
+      setIsLoading(true);
+      comment.length &&
+        (await dispatch(editCondition(commentId, comment, user)));
+    } finally {
+      setIsLoading(false);
+      setEditModalVisible(false);
+    }
   };
 
-  const onDeletePress = () => {
-    dispatch(deleteCondition(commentId, machineId, user));
-    setModalVisible(false);
+  const onDeletePress = async () => {
+    try {
+      setIsLoading(true);
+      await dispatch(deleteCondition(commentId, user));
+    } finally {
+      setIsLoading(false);
+      setDeleteModalVisible(false);
+    }
   };
 
   return (
     <>
-      <ConfirmationModal visible={modalVisible}>
+      <ConfirmationModal loading={loading} visible={deleteModalVisible}>
         <WarningButton
           title={"Delete Comment"}
           onPress={onDeletePress}
@@ -39,21 +55,44 @@ const MachineComment = ({ commentObj, machineId, user }) => {
         />
         <PbmButton
           title={"Nevermind"}
-          onPress={() => setModalVisible(false)}
+          onPress={() => setDeleteModalVisible(false)}
+          accessibilityLabel="Nevermind"
+          containerStyle={s.buttonContainer}
+        />
+      </ConfirmationModal>
+      <ConfirmationModal loading={loading} visible={editModalVisible}>
+        <TextInput
+          defaultValue={initialComment}
+          multiline={true}
+          underlineColorAndroid="transparent"
+          onChangeText={(conditionText) => setComment(conditionText)}
+          style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+          textAlignVertical="top"
+        />
+        <WarningButton
+          title={"Save"}
+          onPress={onEditPress}
+          accessibilityLabel="Edit Comment"
+          containerStyle={s.buttonContainer}
+        />
+        <PbmButton
+          title={"Cancel"}
+          onPress={() => setEditModalVisible(false)}
           accessibilityLabel="Nevermind"
           containerStyle={s.buttonContainer}
         />
       </ConfirmationModal>
       <View style={s.listContainerStyle}>
-        <Text style={s.conditionText}>{`"${comment}"`}</Text>
+        <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
         <Text style={[s.subtitleStyle, s.subtitleMargin]}>
           <Text style={s.italic}>
-            {moment(created_at).format("MMM DD, YYYY")}
+            {moment(updated_at).format("MMM DD, YYYY")}
           </Text>
+          {created_at !== updated_at && "*"}
           {user?.id && user.id === commentUserId && (
             <>
-              <Text onPress={onEditPress}> Edit </Text>
-              <Text onPress={() => setModalVisible(true)}> Delete </Text>
+              <Text onPress={() => setEditModalVisible(true)}> Edit </Text>
+              <Text onPress={() => setDeleteModalVisible(true)}> Delete </Text>
             </>
           )}
           {username ? ` by ` : ""}

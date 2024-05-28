@@ -23,6 +23,7 @@ import {
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
   IC_ENABLED_UPDATED,
+  MACHINE_CONDITION_EDITED,
 } from "../actions/types";
 
 const moment = require("moment");
@@ -109,6 +110,24 @@ export default (state = initialState, action) => {
     case MACHINE_CONDITION_REMOVED: {
       const machine_conditions = state.curLmx.machine_conditions.filter(
         (condition) => condition.id !== action.conditionId,
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_conditions,
+        },
+      };
+    }
+    case MACHINE_CONDITION_EDITED: {
+      const machine_conditions = state.curLmx.machine_conditions.map(
+        (condition) => {
+          if (condition.id === action.conditionId) {
+            condition.comment = action.comment;
+            condition.updated_at = moment().format("YYYY-MM-DD");
+          }
+          return condition;
+        },
       );
       return {
         ...state,

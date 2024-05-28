@@ -371,7 +371,6 @@ class MachineDetails extends Component {
                       <MachineComment
                         commentObj={commentObj}
                         key={commentObj.id}
-                        machineId={curLmx.id}
                       />
                     ))
                   ) : (
