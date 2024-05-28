@@ -1,17 +1,10 @@
 import React, { useContext, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import {
-  KeyboardAvoidingView,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const moment = require("moment");
 
@@ -76,34 +69,32 @@ const MachineComment = ({ commentObj, user }) => {
         visible={editModalVisible}
         onRequestClose={() => {}}
       >
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
-          <ScrollView
-            contentContainerStyle={{
-              flex: 1,
-              justifyContent: "center",
-            }}
-          >
-            <Text style={s.modalTitle}>Edit your comment</Text>
-            <TextInput
-              defaultValue={initialComment}
-              multiline={true}
-              underlineColorAndroid="transparent"
-              onChangeText={(conditionText) => setComment(conditionText)}
-              style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-              textAlignVertical="top"
-            />
-            <PbmButton
-              title={"Save"}
-              onPress={onEditPress}
-              accessibilityLabel="Edit Comment"
-            />
-            <WarningButton
-              title={"Cancel"}
-              onPress={() => setEditModalVisible(false)}
-              accessibilityLabel="Cancel"
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <Text style={s.modalTitle}>Edit your comment</Text>
+          <TextInput
+            defaultValue={initialComment}
+            multiline={true}
+            underlineColorAndroid="transparent"
+            onChangeText={(conditionText) => setComment(conditionText)}
+            style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+            textAlignVertical="top"
+          />
+          <PbmButton
+            title={"Save"}
+            onPress={onEditPress}
+            accessibilityLabel="Edit Comment"
+          />
+          <WarningButton
+            title={"Cancel"}
+            onPress={() => setEditModalVisible(false)}
+            accessibilityLabel="Cancel"
+          />
+        </KeyboardAwareScrollView>
       </Modal>
       <View style={s.listContainerStyle}>
         <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
