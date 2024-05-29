@@ -12,6 +12,16 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.16
+
+May 28, 2024
+
+- Users can edit or delete their own machine comments. Recent/Location Activity feeds will retain a log of the original comment.
+- No more "location tools" icon/section on the Location Details screen. Now all the icons (share/edit/confirm/etc) are displayed more prominently.
+- More design accommodations for people using large system fonts.
+- Updated the About page.
+- Fix to multiline text input issues.
+
 ### 5.3.15
 
 May 16, 2024
