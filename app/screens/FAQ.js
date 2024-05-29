@@ -221,7 +221,7 @@ const FAQ = ({ navigation }) => {
                   {"Contact us"}
                 </Text>
               }
-              {` and we'll add you. Once you tag all of your locations, you'll be able to quickly see all your locations using the "Filter". You can also choose to be notified about comments made to your machines. Let us know if you want those notifications!`}
+              {` and we'll add you. In your message, tell us the name of your business and whether you want to be notified via email when users leave comments on your machines. Once you tag all of your locations, you'll be able to quickly see all your locations using the "Filter".`}
             </Text>
             <Text
               style={s.bold}

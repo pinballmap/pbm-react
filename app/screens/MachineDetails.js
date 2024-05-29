@@ -108,7 +108,7 @@ class MachineDetails extends Component {
       name: machineName,
       ic_eligible,
     } = this.props.machineDetails;
-    const pintipsUrl = opdb_id && `http://pintips.net/opdb/${opdb_id}`;
+    const pintipsUrl = opdb_id && `https://pintips.net/opdb/${opdb_id}`;
     const opdb_resized = opdb_img_width - (deviceWidth - 48);
     const opdb_img_height_calc =
       (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
@@ -230,6 +230,7 @@ class MachineDetails extends Component {
                   contentContainerStyle={{
                     flex: 1,
                     justifyContent: "center",
+                    backgroundColor: theme.base1,
                   }}
                 >
                   <Text style={s.modalTitle}>

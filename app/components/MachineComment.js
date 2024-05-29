@@ -46,90 +46,97 @@ const MachineComment = ({ commentObj, user }) => {
   };
 
   return (
-    <>
-      <ConfirmationModal loading={loading} visible={deleteModalVisible}>
-        <Text style={s.modalTitle}>Delete your comment</Text>
-        <PbmButton
-          title={"Delete Comment"}
-          onPress={onDeletePress}
-          accessibilityLabel="Delete Comment"
-          containerStyle={s.buttonContainer}
-        />
-        <WarningButton
-          title={"Cancel"}
-          onPress={() => setDeleteModalVisible(false)}
-          accessibilityLabel="Cancel"
-          containerStyle={s.buttonContainer}
-        />
-      </ConfirmationModal>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        loading={loading}
-        visible={editModalVisible}
-        onRequestClose={() => {}}
-      >
-        <KeyboardAwareScrollView
-          contentContainerStyle={{
-            flex: 1,
-            justifyContent: "center",
-          }}
-        >
-          <Text style={s.modalTitle}>Edit your comment</Text>
-          <TextInput
-            defaultValue={initialComment}
-            multiline={true}
-            underlineColorAndroid="transparent"
-            onChangeText={(conditionText) => setComment(conditionText)}
-            style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-            textAlignVertical="top"
-          />
-          <PbmButton
-            title={"Save"}
-            onPress={onEditPress}
-            accessibilityLabel="Edit Comment"
-          />
-          <WarningButton
-            title={"Cancel"}
-            onPress={() => setEditModalVisible(false)}
-            accessibilityLabel="Cancel"
-          />
-        </KeyboardAwareScrollView>
-      </Modal>
-      <View style={s.listContainerStyle}>
-        <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-        <Text style={[s.subtitleStyle]}>
-          {!!username && (
-            <Text style={s.username}>
-              {username}
-              {"  "}
-            </Text>
-          )}
-          <Text style={s.italic}>
-            {moment(updated_at).format("MMM DD, YYYY")}
-          </Text>
-          {created_at !== updated_at && "*"}
-          {"  "}
-          {user?.id && user.id === commentUserId && (
-            <>
-              <Text
-                style={s.editDelete}
-                onPress={() => setEditModalVisible(true)}
+    <ThemeContext.Consumer>
+      {({ theme }) => {
+        return (
+          <>
+            <ConfirmationModal loading={loading} visible={deleteModalVisible}>
+              <Text style={s.modalTitle}>Delete your comment?</Text>
+              <PbmButton
+                title={"Delete Comment"}
+                onPress={onDeletePress}
+                accessibilityLabel="Delete Comment"
+                containerStyle={s.buttonContainer}
+              />
+              <WarningButton
+                title={"Cancel"}
+                onPress={() => setDeleteModalVisible(false)}
+                accessibilityLabel="Cancel"
+                containerStyle={s.buttonContainer}
+              />
+            </ConfirmationModal>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              loading={loading}
+              visible={editModalVisible}
+              onRequestClose={() => {}}
+            >
+              <KeyboardAwareScrollView
+                contentContainerStyle={{
+                  flex: 1,
+                  justifyContent: "center",
+                  backgroundColor: theme.base1,
+                }}
               >
-                edit
+                <Text style={s.modalTitle}>Edit your comment</Text>
+                <TextInput
+                  defaultValue={initialComment}
+                  multiline={true}
+                  underlineColorAndroid="transparent"
+                  onChangeText={(conditionText) => setComment(conditionText)}
+                  style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+                  textAlignVertical="top"
+                />
+                <PbmButton
+                  title={"Save"}
+                  onPress={onEditPress}
+                  accessibilityLabel="Edit Comment"
+                />
+                <WarningButton
+                  title={"Cancel"}
+                  onPress={() => setEditModalVisible(false)}
+                  accessibilityLabel="Cancel"
+                />
+              </KeyboardAwareScrollView>
+            </Modal>
+            <View style={s.listContainerStyle}>
+              <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
+              <Text style={[s.subtitleStyle]}>
+                {!!username && (
+                  <Text style={s.username}>
+                    {username}
+                    {"  "}
+                  </Text>
+                )}
+                <Text style={s.italic}>
+                  {moment(updated_at).format("MMM DD, YYYY")}
+                </Text>
+                {created_at !== updated_at && "*"}
+                {"  "}
+                {user?.id && user.id === commentUserId && (
+                  <>
+                    <Text
+                      style={s.editDelete}
+                      onPress={() => setEditModalVisible(true)}
+                    >
+                      edit
+                    </Text>
+                    {"  "}
+                    <Text
+                      style={s.editDelete}
+                      onPress={() => setDeleteModalVisible(true)}
+                    >
+                      delete
+                    </Text>
+                  </>
+                )}
               </Text>
-              {"  "}
-              <Text
-                style={s.editDelete}
-                onPress={() => setDeleteModalVisible(true)}
-              >
-                delete
-              </Text>
-            </>
-          )}
-        </Text>
-      </View>
-    </>
+            </View>
+          </>
+        );
+      }}
+    </ThemeContext.Consumer>
   );
 };
 
@@ -191,6 +198,7 @@ const getStyles = (theme) =>
       marginHorizontal: 40,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      color: theme.text,
     },
   });
 

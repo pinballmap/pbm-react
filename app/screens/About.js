@@ -260,7 +260,7 @@ const About = ({ navigation, appAlert }) => {
             <Text
               style={s.textLink}
               onPress={() =>
-                WebBrowser.openBrowserAsync("http://matchplay.events")
+                WebBrowser.openBrowserAsync("https://matchplay.events")
               }
             >{`MatchPlay Events`}</Text>{" "}
             and{" "}
@@ -273,7 +273,7 @@ const About = ({ navigation, appAlert }) => {
             and{" "}
             <Text
               style={s.textLink}
-              onPress={() => WebBrowser.openBrowserAsync("http://pintips.net")}
+              onPress={() => WebBrowser.openBrowserAsync("https://pintips.net")}
             >{`PinTips`}</Text>{" "}
             and{" "}
             <Text

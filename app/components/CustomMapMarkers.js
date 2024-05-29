@@ -37,7 +37,7 @@ const textFloat = (theme) => ({
   textAllowOverlap: false,
   textColor: theme === "dark" ? "#f0f9ff" : "#463333",
   textHaloColor: theme === "dark" ? "#222221" : "#eeeaea",
-  textHaloWidth: 0.8,
+  textHaloWidth: 1,
   textFont: ["Nunito Sans Bold"],
   iconAllowOverlap: false,
   symbolSortKey: ["get", "textOrder"],
