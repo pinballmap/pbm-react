@@ -930,17 +930,26 @@ const getStyles = (theme) =>
     directionsButton: {
       position: "absolute",
       right: 10,
-      top: Constants.statusBarHeight,
+      top:
+        Platform.OS == "ios"
+          ? Constants.statusBarHeight
+          : Constants.statusBarHeight + 7,
     },
     mapButton: {
       position: "absolute",
       right: 60,
-      top: Constants.statusBarHeight,
+      top:
+        Platform.OS == "ios"
+          ? Constants.statusBarHeight
+          : Constants.statusBarHeight + 7,
     },
     shareButton: {
       position: "absolute",
       right: 110,
-      top: Constants.statusBarHeight,
+      top:
+        Platform.OS == "ios"
+          ? Constants.statusBarHeight
+          : Constants.statusBarHeight + 7,
     },
     metaIcon: {
       paddingTop: 0,

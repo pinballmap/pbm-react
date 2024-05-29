@@ -272,6 +272,12 @@ const getStyles = (theme) =>
     disabledTitleStyle: {
       color: theme.pink3,
     },
+    iconStyle: {
+      fontSize: 24,
+      color: "#9b9ebb",
+      marginRight: 5,
+      marginLeft: 5,
+    },
   });
 
 Login.propTypes = {

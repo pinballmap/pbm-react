@@ -61,8 +61,9 @@ const FAQ = ({ navigation }) => {
                 style={s.textLink}
                 onPress={() => navigation.navigate("ResendConfirmation")}
               >
-                {"Or go here to have it resent."}
+                {"Or go here to have it resent"}
               </Text>
+              {`.`}
             </Text>
             <Text
               style={s.bold}
@@ -258,9 +259,9 @@ const FAQ = ({ navigation }) => {
                 onPress={() => navigation.navigate("Contact")}
                 style={s.textLink}
               >
-                {"Contact us "}
+                {"Contact us"}
               </Text>
-              {`and we'll be happy to change it.`}
+              {` and we'll be happy to change it.`}
             </Text>
             <Text
               style={s.bold}

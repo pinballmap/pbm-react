@@ -170,6 +170,7 @@ const About = ({ navigation, appAlert }) => {
                 width: deviceWidth - 30,
                 height: deviceWidth - 30,
                 marginBottom: 10,
+                borderRadius: 15,
               }}
               resizeMode="contain"
             />
@@ -199,6 +200,7 @@ const About = ({ navigation, appAlert }) => {
                 width: deviceWidth - 30,
                 height: (deviceWidth - 30) / 1.121,
                 marginBottom: 10,
+                borderRadius: 15,
               }}
               resizeMode="contain"
             />
@@ -234,7 +236,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.category}>API</Text>
           <Text style={s.text}>
             Not only is the Pinball Map website and app open source, but there
-            is also
+            is also{" "}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -343,7 +345,7 @@ const About = ({ navigation, appAlert }) => {
                 please rate and review it
               </Text>
             )}
-            !
+            ! And tell your friends about it.
           </Text>
           <Text style={s.text}>Thanks to our beta testers!</Text>
           <Text style={{ fontSize: 16 }}>
@@ -390,8 +392,8 @@ const getStyles = (theme) =>
       flex: 1,
       alignSelf: "center",
       width: deviceWidth - 30,
-      borderRadius: Platform.OS === "ios" ? 10 : 0,
-      backgroundColor: theme.theme == "dark" ? "#ac9fc7" : theme.base1,
+      borderRadius: 15,
+      backgroundColor: theme.theme == "dark" ? "#c3bad6" : theme.base1,
     },
     purpleMachine: {
       flex: 1,
@@ -429,7 +431,7 @@ const getStyles = (theme) =>
     },
     appAlert: {
       borderWidth: 0,
-      borderRadius: 10,
+      borderRadius: 15,
       marginBottom: 10,
       paddingTop: 5,
       paddingLeft: 10,
