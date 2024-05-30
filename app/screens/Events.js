@@ -27,7 +27,7 @@ class Events extends Component {
   };
 
   updateIdx = (selectedIdx) => {
-    const radiusArray = [50, 100, 150, 200, 250];
+    const radiusArray = [50, 150, 250];
     const radius = radiusArray[selectedIdx];
     this.setState({ selectedIdx, radius, refetchingEvents: true });
     this.fetchEvents(radius);
@@ -104,9 +104,7 @@ class Events extends Component {
     const distanceUnit = this.props.user.unitPreference ? "km" : "mi";
     const buttons = [
       `50 ${distanceUnit}`,
-      `100 ${distanceUnit}`,
       `150 ${distanceUnit}`,
-      `200 ${distanceUnit}`,
       `250 ${distanceUnit}`,
     ];
 
