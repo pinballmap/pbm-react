@@ -18,6 +18,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 let deviceWidth = Dimensions.get("window").width;
 
+const moment = require("moment");
+
 export class LocationList extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +67,14 @@ export class LocationList extends Component {
           }),
         });
       case 2:
+        return this.setState({
+          locations: locations.sort(
+            (a, b) =>
+              moment(b.updated_at, "YYYY-MM-DDTh:mm:ss").unix() -
+              moment(a.updated_at, "YYYY-MM-DDTh:mm:ss").unix(),
+          ),
+        });
+      case 3:
         return this.setState({
           locations: locations.sort((a, b) => b.num_machines - a.num_machines),
         });
@@ -116,7 +126,7 @@ export class LocationList extends Component {
                   selectedIndex={
                     this.props.locations.selectedLocationListFilter
                   }
-                  buttons={["Distance", "A-Z", "# Machines"]}
+                  buttons={["Distance", "A-Z", "Updated", "# Machines"]}
                   containerStyle={s.buttonGroupContainer}
                   textStyle={s.buttonGroupInactive}
                   selectedButtonStyle={s.selButtonStyle}
@@ -187,7 +197,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize:
-        deviceWidth < 321 ? 12 : PixelRatio.getFontScale() > 1.25 ? 16 : 14,
+        deviceWidth < 321 ? 12 : PixelRatio.getFontScale() > 1.25 ? 11 : 14,
       fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {

@@ -317,7 +317,7 @@ const getStyles = (theme) =>
     },
     sourceText: {
       textAlign: "center",
-      color: theme.pink1,
+      color: theme.text3,
       fontSize: 12,
       marginTop: 0,
       marginBottom: 5,
@@ -326,7 +326,7 @@ const getStyles = (theme) =>
     },
     smallLink: {
       textDecorationLine: "underline",
-      color: theme.purple,
+      color: theme.pink1,
       fontSize: 12,
       fontFamily: "Nunito-Regular",
     },
