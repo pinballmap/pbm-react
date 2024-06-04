@@ -305,6 +305,7 @@ function MapStack() {
         headerBackTitleStyle: {
           fontFamily: "Nunito-Bold",
         },
+        headerTitleAllowFontScaling: false,
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <FontAwesome6

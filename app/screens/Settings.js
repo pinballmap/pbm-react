@@ -52,12 +52,12 @@ const Settings = ({ user, setUnitPreference }) => {
     <Screen>
       <View style={s.background}>
         <View style={s.pageTitle}>
-          <Text style={s.pageTitleText}>Standard Theme</Text>
+          <Text style={s.pageTitleText}>Light Mode Theme</Text>
         </View>
         <ButtonGroup
           onPress={updateDefaultPref}
           selectedIndex={selectedDefault}
-          buttons={["Standard", "Dark"]}
+          buttons={["Light", "Dark"]}
           containerStyle={s.buttonGroupContainer}
           textStyle={s.buttonGroupInactive}
           selectedButtonStyle={s.selButtonStyle}
@@ -66,14 +66,14 @@ const Settings = ({ user, setUnitPreference }) => {
         />
         <Text
           style={s.text}
-        >{`When your phone is in Light Mode, use the default ("Standard") or select "Dark" to use our Dark Mode theme.`}</Text>
+        >{`When your phone is in Light Mode, use our Light theme or our Dark theme.`}</Text>
         <View style={s.pageTitle}>
           <Text style={s.pageTitleText}>Dark Mode Theme</Text>
         </View>
         <ButtonGroup
           onPress={updateDarkPref}
           selectedIndex={selectedDark}
-          buttons={["Standard", "Dark"]}
+          buttons={["Light", "Dark"]}
           containerStyle={s.buttonGroupContainer}
           textStyle={s.buttonGroupInactive}
           selectedButtonStyle={s.selButtonStyle}
@@ -82,7 +82,7 @@ const Settings = ({ user, setUnitPreference }) => {
         />
         <Text
           style={s.text}
-        >{`When your phone is in Dark Mode, use the default ("Dark") or select "Standard" to use our Light Mode theme.`}</Text>
+        >{`When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme.`}</Text>
         <View style={s.pageTitle}>
           <Text style={s.pageTitleText}>Distance Unit</Text>
         </View>
@@ -130,7 +130,7 @@ const getStyles = (theme) =>
       height: 40,
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.base3,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.6,
@@ -141,14 +141,15 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
+      fontSize: 14,
       fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
     },
     selButtonStyle: {
-      borderWidth: 4,
-      borderColor: theme.base4,
+      borderWidth: 2,
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },

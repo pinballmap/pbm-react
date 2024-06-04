@@ -513,11 +513,10 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     buttonGroupContainer: {
-      height: 40,
       marginBottom: 10,
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.base3,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.6,
@@ -534,8 +533,8 @@ const getStyles = (theme) =>
       width: 0,
     },
     selButtonStyle: {
-      borderWidth: 4,
-      borderColor: theme.base4,
+      borderWidth: 2,
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },

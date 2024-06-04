@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, PixelRatio, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext } from "../theme-context";
@@ -110,7 +110,7 @@ export class Saved extends Component {
                         selectedIndex={
                           this.props.user.selectedFavoriteLocationFilter
                         }
-                        buttons={["Distance", "A-Z", "Last Added"]}
+                        buttons={["Near", "A-Z", "Added"]}
                         containerStyle={s.buttonGroupContainer}
                         textStyle={s.buttonGroupInactive}
                         selectedButtonStyle={s.selButtonStyle}
@@ -194,10 +194,9 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     buttonGroupContainer: {
-      height: 40,
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.base3,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.6,
@@ -207,16 +206,15 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
-      fontSize:
-        deviceWidth < 321 ? 12 : PixelRatio.getFontScale() > 1.25 ? 16 : 14,
+      fontSize: deviceWidth < 321 ? 12 : 14,
       fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
       width: 0,
     },
     selButtonStyle: {
-      borderWidth: 4,
-      borderColor: theme.base4,
+      borderWidth: 2,
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },

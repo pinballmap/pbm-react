@@ -38,7 +38,7 @@ const DropDownButton = ({ title, onPress, containerStyle }) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     dropdown: {
-      backgroundColor: theme.base3,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       width: "100%",
       borderRadius: 25,
     },
