@@ -998,7 +998,9 @@ const getStyles = (theme) =>
     },
     mapViewButtonNotPressed: {
       backgroundColor:
-        theme.theme == "dark" ? "transparent" : "rgba(255,255,255,.5)",
+        theme.theme == "dark"
+          ? "rgba(29, 28, 28, 0.5)"
+          : "rgba(255,255,255,.5)",
     },
     confirmText: {
       textAlign: "center",

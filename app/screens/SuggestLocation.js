@@ -733,7 +733,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
     },
     addMachinesButton: {
-      backgroundColor: theme.base3,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       borderRadius: 25,
     },
     listContainerStyle: {
