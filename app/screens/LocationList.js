@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, Linking, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, LocationCard, Text } from "../components";
@@ -9,8 +9,6 @@ import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const moment = require("moment");
 
@@ -189,7 +187,7 @@ const getStyles = (theme) =>
     },
     buttonGroupInactive: {
       color: theme.text2,
-      fontSize: deviceWidth < 321 ? 12 : 14,
+      fontSize: 14,
       fontFamily: "Nunito-Medium",
     },
     innerBorderStyle: {
