@@ -12,6 +12,13 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.17
+
+June 5, 2024
+
+- Okay, added back the "sort by updated" option in the Location List, and also revised the words in that group of buttons to be comprised of fewer letters and thus fit better within the buttons when people set their phone's system font to jumbo.
+- Fewer radius options on the Events screen. 5 was excessive.
+
 ### 5.3.16
 
 May 28, 2024
