@@ -154,6 +154,7 @@ const Signup = ({ loginLater, navigation }) => {
             flex: 1,
             justifyContent: "center",
           }}
+          keyboardShouldPersistTaps="handled"
         >
           <View style={s.justify}>
             {errors && (

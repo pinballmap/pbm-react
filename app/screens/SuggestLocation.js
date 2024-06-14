@@ -214,6 +214,7 @@ function SuggestLocation({
                 contentContainerStyle={{
                   backgroundColor: theme.base1,
                 }}
+                keyboardShouldPersistTaps="handled"
               >
                 {!loggedIn ? (
                   <NotLoggedIn

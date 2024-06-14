@@ -347,6 +347,7 @@ class FindMachine extends React.PureComponent {
                   justifyContent: "center",
                   backgroundColor: theme.base1,
                 }}
+                keyboardShouldPersistTaps="handled"
               >
                 <View style={s.verticalAlign}>
                   <Text style={s.modalTitle}>

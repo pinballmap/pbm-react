@@ -94,6 +94,7 @@ class Login extends Component {
                     flex: 1,
                     justifyContent: "center",
                   }}
+                  keyboardShouldPersistTaps="handled"
                 >
                   <View style={s.justify}>
                     {this.state.errors && (
