@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   Image,
-  Keyboard,
+  KeyboardAvoidingView,
   Modal,
   Platform,
   ScrollView,
@@ -12,7 +12,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ThemeContext } from "../theme-context";
 import {
   EvilIcons,
@@ -44,7 +43,6 @@ import {
 } from "../components";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 const moment = require("moment");
 
@@ -139,34 +137,33 @@ class MachineDetails extends Component {
         (prev, current) => (prev.score > current.score ? prev : current),
         -1,
       );
-    const keyboardDismissProp =
-      Platform.OS === "ios"
-        ? { keyboardDismissMode: "on-drag" }
-        : { onScrollBeginDrag: Keyboard.dismiss };
 
     return (
       <ThemeContext.Consumer>
         {({ theme }) => {
           const s = getStyles(theme);
           return (
-            <KeyboardAwareScrollView
-              {...keyboardDismissProp}
-              enableResetScrollToCoords={false}
-              keyboardShouldPersistTaps="handled"
-              style={s.backgroundColor}
-            >
-              <Modal
-                animationType="slide"
-                transparent={false}
-                visible={this.state.showAddConditionModal}
-                onRequestClose={() => {}}
+            <>
+              <ScrollView
+                style={{ overflow: "visible" }}
+                contentContainerStyle={{
+                  flex: 1,
+                  backgroundColor: theme.base1,
+                }}
               >
-                <SafeAreaProvider>
-                  <SafeAreaView style={[{ flex: 1 }, s.backgroundColor]}>
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={this.state.showAddConditionModal}
+                  onRequestClose={() => {}}
+                >
+                  <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                     <ScrollView
+                      style={{ overflow: "visible" }}
                       contentContainerStyle={{
                         flex: 1,
                         justifyContent: "center",
+                        backgroundColor: theme.base1,
                       }}
                     >
                       <Text style={s.modalTitle}>
@@ -174,23 +171,27 @@ class MachineDetails extends Component {
                         <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
                         <Text style={s.modalLocationName}>{location.name}</Text>
                       </Text>
-                      <TextInput
-                        multiline={true}
-                        underlineColorAndroid="transparent"
-                        onChangeText={(conditionText) =>
-                          this.setState({ conditionText })
-                        }
-                        style={[
-                          { padding: 5, height: 100 },
-                          s.textInput,
-                          s.radius10,
-                        ]}
-                        placeholder={
-                          "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
-                        }
-                        placeholderTextColor={theme.indigo4}
-                        textAlignVertical="top"
-                      />
+                      <KeyboardAvoidingView
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                      >
+                        <TextInput
+                          multiline={true}
+                          underlineColorAndroid="transparent"
+                          onChangeText={(conditionText) =>
+                            this.setState({ conditionText })
+                          }
+                          style={[
+                            { padding: 5, height: 100 },
+                            s.textInput,
+                            s.radius10,
+                          ]}
+                          placeholder={
+                            "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
+                          }
+                          placeholderTextColor={theme.indigo4}
+                          textAlignVertical="top"
+                        />
+                      </KeyboardAvoidingView>
                       <Text style={[s.modalSubText, s.margin4]}>
                         <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
                         {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
@@ -208,7 +209,7 @@ class MachineDetails extends Component {
                         {`if you've fixed an issue, please leave a comment saying so.`}
                       </Text>
                       <PbmButton
-                        title={"Add Condition"}
+                        title={"Add Comment"}
                         disabled={this.state.conditionText.length === 0}
                         onPress={() => this.addCondition(curLmx.id)}
                       />
@@ -217,275 +218,284 @@ class MachineDetails extends Component {
                         onPress={this.cancelAddCondition}
                       />
                     </ScrollView>
-                  </SafeAreaView>
-                </SafeAreaProvider>
-              </Modal>
-              <Modal
-                animationType="slide"
-                transparent={false}
-                visible={this.state.showAddScoreModal}
-                onRequestClose={() => {}}
-              >
-                <KeyboardAwareScrollView
-                  contentContainerStyle={{
-                    flex: 1,
-                    justifyContent: "center",
-                    backgroundColor: theme.base1,
-                  }}
+                  </View>
+                </Modal>
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={this.state.showAddScoreModal}
+                  onRequestClose={() => {}}
                 >
-                  <Text style={s.modalTitle}>
-                    Add your high score to{" "}
-                    <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
-                    <Text style={s.modalLocationName}>{location.name}</Text>
-                  </Text>
-                  <TextInput
-                    style={[
-                      { height: 40, textAlign: "center" },
-                      s.textInput,
-                      s.radius10,
-                    ]}
-                    keyboardType="numeric"
-                    underlineColorAndroid="transparent"
-                    onChangeText={(score) => this.setState({ score })}
-                    defaultValue={formatInputNumWithCommas(this.state.score)}
-                    returnKeyType="done"
-                    placeholder={"123..."}
-                    placeholderTextColor={theme.indigo4}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  <PbmButton
-                    title={"Add Score"}
-                    disabled={this.state.score.length === 0}
-                    onPress={() => this.addScore(curLmx.id)}
-                  />
-                  <WarningButton
-                    title={"Cancel"}
-                    onPress={this.cancelAddScore}
-                  />
-                </KeyboardAwareScrollView>
-              </Modal>
-              {this.state.showRemoveMachineModal && (
-                <RemoveMachineModal
-                  closeModal={() =>
-                    this.setState({ showRemoveMachineModal: false })
-                  }
-                />
-              )}
-              <ScrollView style={{ marginBottom: 20 }}>
-                <View style={s.machineNameContainer}>
-                  <Text style={s.machineName}>{machineName}</Text>
-                  <Text style={s.locationName}>{location.name}</Text>
-                </View>
-                <View style={s.addedContainer}>
-                  <Text style={s.addedText}>{`Added: ${moment(
-                    curLmx.created_at,
-                  ).format("MMM DD, YYYY")}`}</Text>
-                  {curLmx.created_at != curLmx.updated_at ? (
-                    <Text style={s.addedText}>{`Last updated: ${moment(
-                      curLmx.updated_at,
-                    ).format("MMM DD, YYYY")}`}</Text>
-                  ) : (
-                    ""
-                  )}
-                </View>
-                {!!opdb_img && (
-                  <BackglassImage
-                    width={opdbImgWidth}
-                    height={opdbImgHeight}
-                    source={opdb_img}
-                  />
-                )}
-                {!!ic_eligible && (
-                  <>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontSize: 12,
-                        color: theme.text3,
-                        marginBottom: -8,
+                  <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                    <ScrollView
+                      style={{ overflow: "visible" }}
+                      contentContainerStyle={{
+                        flex: 1,
+                        justifyContent: "center",
+                        backgroundColor: theme.base1,
                       }}
                     >
-                      Click to toggle Stern Insider Connected status
-                    </Text>
+                      <Text style={s.modalTitle}>
+                        Add your high score to{" "}
+                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
+                        <Text style={s.modalLocationName}>{location.name}</Text>
+                      </Text>
+                      <KeyboardAvoidingView
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                      >
+                        <TextInput
+                          style={[
+                            { height: 40, textAlign: "center" },
+                            s.textInput,
+                            s.radius10,
+                          ]}
+                          keyboardType="numeric"
+                          underlineColorAndroid="transparent"
+                          onChangeText={(score) => this.setState({ score })}
+                          defaultValue={formatInputNumWithCommas(
+                            this.state.score,
+                          )}
+                          returnKeyType="done"
+                          placeholder={"123..."}
+                          placeholderTextColor={theme.indigo4}
+                          autoCapitalize="none"
+                          autoCorrect={false}
+                        />
+                      </KeyboardAvoidingView>
+                      <PbmButton
+                        title={"Add Score"}
+                        disabled={this.state.score.length === 0}
+                        onPress={() => this.addScore(curLmx.id)}
+                      />
+                      <WarningButton
+                        title={"Cancel"}
+                        onPress={this.cancelAddScore}
+                      />
+                    </ScrollView>
+                  </View>
+                </Modal>
+                {this.state.showRemoveMachineModal && (
+                  <RemoveMachineModal
+                    closeModal={() =>
+                      this.setState({ showRemoveMachineModal: false })
+                    }
+                  />
+                )}
+                <ScrollView style={{ marginBottom: 20 }}>
+                  <View style={s.machineNameContainer}>
+                    <Text style={s.machineName}>{machineName}</Text>
+                    <Text style={s.locationName}>{location.name}</Text>
+                  </View>
+                  <View style={s.addedContainer}>
+                    <Text style={s.addedText}>{`Added: ${moment(
+                      curLmx.created_at,
+                    ).format("MMM DD, YYYY")}`}</Text>
+                    {curLmx.created_at != curLmx.updated_at ? (
+                      <Text style={s.addedText}>{`Last updated: ${moment(
+                        curLmx.updated_at,
+                      ).format("MMM DD, YYYY")}`}</Text>
+                    ) : (
+                      ""
+                    )}
+                  </View>
+                  {!!opdb_img && (
+                    <BackglassImage
+                      width={opdbImgWidth}
+                      height={opdbImgHeight}
+                      source={opdb_img}
+                    />
+                  )}
+                  {!!ic_eligible && (
+                    <>
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 12,
+                          color: theme.text3,
+                          marginBottom: -8,
+                        }}
+                      >
+                        Click to toggle Stern Insider Connected status
+                      </Text>
+                      <PbmButton
+                        title={`${
+                          ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
+                        } Insider Connected`}
+                        onPress={
+                          loggedIn
+                            ? () => this.props.updateIcEnabled(curLmx.id)
+                            : () => this.props.navigation.navigate("Login")
+                        }
+                        titleStyle={s.titleStyle}
+                        buttonStyle={
+                          ic_enabled === null
+                            ? s.nullIC
+                            : ic_enabled
+                              ? s.yesIC
+                              : s.noIC
+                        }
+                        icon={
+                          ic_enabled === null ? (
+                            <FontAwesome5
+                              name="question-circle"
+                              size={24}
+                              color="#665b50"
+                              style={{ marginRight: 8 }}
+                            />
+                          ) : ic_enabled ? (
+                            <Ionicons
+                              name="qr-code"
+                              size={22}
+                              color="#66017b"
+                              style={{ marginRight: 8 }}
+                            />
+                          ) : (
+                            <MaterialCommunityIcons
+                              name="close-circle-outline"
+                              size={24}
+                              color="#533a3a"
+                              style={{ marginRight: 8 }}
+                            />
+                          )
+                        }
+                      />
+                    </>
+                  )}
+                  <View style={s.containerStyle}>
+                    <View style={s.locationNameContainer}>
+                      <Text style={s.sectionTitle}>Machine Comments</Text>
+                    </View>
+                    {mostRecentComments ? (
+                      mostRecentComments.map((commentObj) => (
+                        <MachineComment
+                          commentObj={commentObj}
+                          key={commentObj.id}
+                        />
+                      ))
+                    ) : (
+                      <Text style={s.noneYet}>No machine comments yet</Text>
+                    )}
                     <PbmButton
-                      title={`${
-                        ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                      } Insider Connected`}
+                      title={"Add a New Comment"}
                       onPress={
                         loggedIn
-                          ? () => this.props.updateIcEnabled(curLmx.id)
+                          ? () => this.setState({ showAddConditionModal: true })
                           : () => this.props.navigation.navigate("Login")
                       }
-                      titleStyle={s.titleStyle}
-                      buttonStyle={
-                        ic_enabled === null
-                          ? s.nullIC
-                          : ic_enabled
-                            ? s.yesIC
-                            : s.noIC
-                      }
-                      icon={
-                        ic_enabled === null ? (
-                          <FontAwesome5
-                            name="question-circle"
-                            size={24}
-                            color="#665b50"
-                            style={{ marginRight: 8 }}
-                          />
-                        ) : ic_enabled ? (
-                          <Ionicons
-                            name="qr-code"
-                            size={22}
-                            color="#66017b"
-                            style={{ marginRight: 8 }}
-                          />
-                        ) : (
-                          <MaterialCommunityIcons
-                            name="close-circle-outline"
-                            size={24}
-                            color="#533a3a"
-                            style={{ marginRight: 8 }}
-                          />
-                        )
-                      }
                     />
-                  </>
-                )}
-                <View style={s.containerStyle}>
-                  <View style={s.locationNameContainer}>
-                    <Text style={s.sectionTitle}>Machine Comments</Text>
+                    {!!location.operator_id && operatorHasEmail && (
+                      <View style={[s.operatorEmail, s.operatorHasEmail]}>
+                        <Text style={s.operatorComments}>
+                          This operator receives machine comments!
+                        </Text>
+                      </View>
+                    )}
+                    {!!location.operator_id && !operatorHasEmail && (
+                      <View style={[s.operatorEmail, s.operatorNotEmail]}>
+                        <Text style={s.operatorComments}>
+                          This operator does not receive machine comments
+                        </Text>
+                      </View>
+                    )}
                   </View>
-                  {mostRecentComments ? (
-                    mostRecentComments.map((commentObj) => (
-                      <MachineComment
-                        commentObj={commentObj}
-                        key={commentObj.id}
-                      />
-                    ))
-                  ) : (
-                    <Text style={s.noneYet}>No machine comments yet</Text>
-                  )}
-                  <PbmButton
-                    title={"Add a New Comment"}
-                    onPress={
-                      loggedIn
-                        ? () => this.setState({ showAddConditionModal: true })
-                        : () => this.props.navigation.navigate("Login")
-                    }
-                  />
-                  {!!location.operator_id && operatorHasEmail && (
-                    <View style={[s.operatorEmail, s.operatorHasEmail]}>
-                      <Text style={s.operatorComments}>
-                        This operator receives machine comments!
-                      </Text>
+                  <View style={s.containerStyle}>
+                    <View style={s.locationNameContainer}>
+                      <Text style={s.sectionTitle}>High Scores</Text>
                     </View>
-                  )}
-                  {!!location.operator_id && !operatorHasEmail && (
-                    <View style={[s.operatorEmail, s.operatorNotEmail]}>
-                      <Text style={s.operatorComments}>
-                        This operator does not receive machine comments
-                      </Text>
-                    </View>
-                  )}
-                </View>
-                <View style={s.containerStyle}>
-                  <View style={s.locationNameContainer}>
-                    <Text style={s.sectionTitle}>High Scores</Text>
-                  </View>
-                  {!!userHighScore && (
-                    <View>
-                      <Text
-                        style={s.userScoreTitle}
-                      >{`Your personal best on this machine is`}</Text>
-                      <Text style={s.userHighScore}>
-                        {formatNumWithCommas(userHighScore)}
-                      </Text>
-                    </View>
-                  )}
-                  {scores.length > 0 ? (
-                    scores.map((scoreObj) => {
-                      const { id, score, created_at, username } = scoreObj;
+                    {!!userHighScore && (
+                      <View>
+                        <Text
+                          style={s.userScoreTitle}
+                        >{`Your personal best on this machine is`}</Text>
+                        <Text style={s.userHighScore}>
+                          {formatNumWithCommas(userHighScore)}
+                        </Text>
+                      </View>
+                    )}
+                    {scores.length > 0 ? (
+                      scores.map((scoreObj) => {
+                        const { id, score, created_at, username } = scoreObj;
 
-                      return (
-                        <View style={s.listContainerStyle} key={id}>
-                          <Text style={s.scoreText}>
-                            {formatNumWithCommas(score)}
-                          </Text>
-                          <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                            <Text
-                              style={[s.subtitleStyle, s.username]}
-                            >{`${username}`}</Text>
-                            {"  "}
-                            <Text style={s.italic}>
-                              {moment(created_at).format("MMM DD, YYYY")}
+                        return (
+                          <View style={s.listContainerStyle} key={id}>
+                            <Text style={s.scoreText}>
+                              {formatNumWithCommas(score)}
                             </Text>
-                          </Text>
-                        </View>
-                      );
-                    })
-                  ) : (
-                    <Text style={s.noneYet}>No scores yet</Text>
+                            <Text style={[s.subtitleStyle, s.subtitleMargin]}>
+                              <Text
+                                style={[s.subtitleStyle, s.username]}
+                              >{`${username}`}</Text>
+                              {"  "}
+                              <Text style={s.italic}>
+                                {moment(created_at).format("MMM DD, YYYY")}
+                              </Text>
+                            </Text>
+                          </View>
+                        );
+                      })
+                    ) : (
+                      <Text style={s.noneYet}>No scores yet</Text>
+                    )}
+                    <PbmButton
+                      title={"Add Your Score"}
+                      onPress={
+                        loggedIn
+                          ? () => this.setState({ showAddScoreModal: true })
+                          : () => this.props.navigation.navigate("Login")
+                      }
+                    />
+                  </View>
+                  {!!pintipsUrl && (
+                    <View style={[s.externalLinkContainer, s.marginB10]}>
+                      <Text
+                        style={s.externalLink}
+                        onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
+                      >
+                        View playing tips on PinTips
+                      </Text>
+                      <EvilIcons name="external-link" style={s.externalIcon} />
+                    </View>
                   )}
-                  <PbmButton
-                    title={"Add Your Score"}
+                  {!!kineticist_url && (
+                    <View style={[s.externalLinkContainer, s.marginB10]}>
+                      <Text
+                        style={s.externalLink}
+                        onPress={() =>
+                          WebBrowser.openBrowserAsync(kineticist_url)
+                        }
+                      >
+                        View machine info on Kineticist
+                      </Text>
+                      <Image
+                        source={require("../assets/images/kineticist.png")}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          marginLeft: 5,
+                        }}
+                      />
+                    </View>
+                  )}
+                  <WarningButton
+                    title={"Remove Machine"}
                     onPress={
                       loggedIn
-                        ? () => this.setState({ showAddScoreModal: true })
+                        ? () => this.setState({ showRemoveMachineModal: true })
                         : () => this.props.navigation.navigate("Login")
                     }
+                    icon={
+                      <FontAwesome6
+                        size={24}
+                        color="#ffffff"
+                        name="trash-can"
+                        style={s.removeButton}
+                      />
+                    }
+                    iconPosition="left"
                   />
-                </View>
-                {!!pintipsUrl && (
-                  <View style={[s.externalLinkContainer, s.marginB10]}>
-                    <Text
-                      style={s.externalLink}
-                      onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
-                    >
-                      View playing tips on PinTips
-                    </Text>
-                    <EvilIcons name="external-link" style={s.externalIcon} />
-                  </View>
-                )}
-                {!!kineticist_url && (
-                  <View style={[s.externalLinkContainer, s.marginB10]}>
-                    <Text
-                      style={s.externalLink}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(kineticist_url)
-                      }
-                    >
-                      View machine info on Kineticist
-                    </Text>
-                    <Image
-                      source={require("../assets/images/kineticist.png")}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        marginLeft: 5,
-                      }}
-                    />
-                  </View>
-                )}
-                <WarningButton
-                  title={"Remove Machine"}
-                  onPress={
-                    loggedIn
-                      ? () => this.setState({ showRemoveMachineModal: true })
-                      : () => this.props.navigation.navigate("Login")
-                  }
-                  icon={
-                    <FontAwesome6
-                      size={24}
-                      color="#ffffff"
-                      name="trash-can"
-                      style={s.removeButton}
-                    />
-                  }
-                  iconPosition="left"
-                />
+                </ScrollView>
               </ScrollView>
-            </KeyboardAwareScrollView>
+            </>
           );
         }}
       </ThemeContext.Consumer>
@@ -495,9 +505,6 @@ class MachineDetails extends Component {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    backgroundColor: {
-      backgroundColor: theme.base1,
-    },
     machineName: {
       textAlign: "center",
       fontFamily: "Nunito-Black",

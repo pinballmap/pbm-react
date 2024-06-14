@@ -1,10 +1,18 @@
 import React, { useContext, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const moment = require("moment");
 
@@ -72,33 +80,46 @@ const MachineComment = ({ commentObj, user }) => {
               visible={editModalVisible}
               onRequestClose={() => {}}
             >
-              <KeyboardAwareScrollView
-                contentContainerStyle={{
-                  flex: 1,
-                  justifyContent: "center",
-                  backgroundColor: theme.base1,
-                }}
-              >
-                <Text style={s.modalTitle}>Edit your comment</Text>
-                <TextInput
-                  defaultValue={initialComment}
-                  multiline={true}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(conditionText) => setComment(conditionText)}
-                  style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-                  textAlignVertical="top"
-                />
-                <PbmButton
-                  title={"Save"}
-                  onPress={onEditPress}
-                  accessibilityLabel="Edit Comment"
-                />
-                <WarningButton
-                  title={"Cancel"}
-                  onPress={() => setEditModalVisible(false)}
-                  accessibilityLabel="Cancel"
-                />
-              </KeyboardAwareScrollView>
+              <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                <ScrollView
+                  style={{ overflow: "visible" }}
+                  contentContainerStyle={{
+                    flex: 1,
+                    justifyContent: "center",
+                    backgroundColor: theme.base1,
+                  }}
+                >
+                  <Text style={s.modalTitle}>Edit your comment</Text>
+                  <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                  >
+                    <TextInput
+                      defaultValue={initialComment}
+                      multiline={true}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(conditionText) =>
+                        setComment(conditionText)
+                      }
+                      style={[
+                        { padding: 5, height: 100 },
+                        s.textInput,
+                        s.radius10,
+                      ]}
+                      textAlignVertical="top"
+                    />
+                  </KeyboardAvoidingView>
+                  <PbmButton
+                    title={"Save"}
+                    onPress={onEditPress}
+                    accessibilityLabel="Edit Comment"
+                  />
+                  <WarningButton
+                    title={"Cancel"}
+                    onPress={() => setEditModalVisible(false)}
+                    accessibilityLabel="Cancel"
+                  />
+                </ScrollView>
+              </View>
             </Modal>
             <View style={s.listContainerStyle}>
               <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
@@ -142,6 +163,9 @@ const MachineComment = ({ commentObj, user }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    background: {
+      backgroundColor: theme.base1,
+    },
     listContainerStyle: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
@@ -197,7 +221,7 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
   });

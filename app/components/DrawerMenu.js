@@ -32,7 +32,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
   return (
     <DrawerContentScrollView {...props}>
       <ConfirmationModal visible={modalVisible}>
-        <WarningButton
+        <PbmButton
           title={"Log Me Out"}
           onPress={() => {
             setModalVisible(false);
@@ -42,7 +42,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
           accessibilityLabel="Logout"
           containerStyle={s.buttonContainer}
         />
-        <PbmButton
+        <WarningButton
           title={"Stay Logged In"}
           onPress={() => setModalVisible(false)}
           accessibilityLabel="Stay Logged In"

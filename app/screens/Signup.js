@@ -4,14 +4,13 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
-  Keyboard,
+  KeyboardAvoidingView,
   Platform,
-  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { loginLater } from "../actions/user_actions";
@@ -127,20 +126,13 @@ const Signup = ({ loginLater, navigation }) => {
         });
     }
   };
-  const keyboardDismissProp =
-    Platform.OS === "ios"
-      ? { keyboardDismissMode: "on-drag" }
-      : { onScrollBeginDrag: Keyboard.dismiss };
 
   return (
-    <KeyboardAwareScrollView
-      {...keyboardDismissProp}
-      enableResetScrollToCoords={false}
-      keyboardShouldPersistTaps="handled"
-    >
+    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
       <ImageBackground
         source={require("../assets/images/t-shirt-logo.png")}
         style={s.backgroundImage}
+        imageStyle={{ opacity: 0.2 }}
       >
         <ConfirmationModal visible={modalVisible}>
           <Text style={s.confirmText}>
@@ -156,21 +148,25 @@ const Signup = ({ loginLater, navigation }) => {
             style={s.xButton}
           />
         </ConfirmationModal>
-        <View style={s.mask}>
-          <Pressable
-            onPress={() => {
-              Keyboard.dismiss();
-            }}
-          >
-            <View style={s.justify}>
-              {errors && (
-                <Text style={s.errorText}>
-                  {apiErrorMsg
-                    ? apiErrorMsg
-                    : "There were errors trying to process your submission"}
-                </Text>
-              )}
-              <Text style={s.bold}>Sign Up</Text>
+        <ScrollView
+          style={{ overflow: "visible" }}
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <View style={s.justify}>
+            {errors && (
+              <Text style={s.errorText}>
+                {apiErrorMsg
+                  ? apiErrorMsg
+                  : "There were errors trying to process your submission"}
+              </Text>
+            )}
+            <Text style={s.bold}>Sign Up</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
               <Input
                 placeholder="Username"
                 placeholderTextColor={"#9b9ebb"}
@@ -237,40 +233,40 @@ const Signup = ({ loginLater, navigation }) => {
                 autoCapitalize="none"
                 autoCorrect={false}
               />
-              <PbmButton
-                onPress={submit}
-                containerStyle={{
-                  marginHorizontal: 10,
-                  marginTop: 10,
-                  marginBottom: 25,
-                }}
-                title="Sign Up"
-                accessibilityLabel="Sign Up"
-                disabled={!username || !email || !password || !confirm_password}
-                disabledStyle={s.disabledStyle}
-                disabledTitleStyle={s.disabledTitleStyle}
-              />
-              <Button
-                onPress={() => navigation.navigate("Login")}
-                titleStyle={s.textLink}
-                containerStyle={{ marginBottom: 15 }}
-                buttonStyle={s.buttonMask}
-                title="Already a user? LOG IN!"
-              />
-              <Button
-                onPress={() => {
-                  loginLater();
-                  navigation.navigate("MapTab");
-                }}
-                titleStyle={s.textLink}
-                buttonStyle={s.buttonMask}
-                title="skip signing up for now"
-              />
-            </View>
-          </Pressable>
-        </View>
+            </KeyboardAvoidingView>
+            <PbmButton
+              onPress={submit}
+              containerStyle={{
+                marginHorizontal: 10,
+                marginTop: 10,
+                marginBottom: 25,
+              }}
+              title="Sign Up"
+              accessibilityLabel="Sign Up"
+              disabled={!username || !email || !password || !confirm_password}
+              disabledStyle={s.disabledStyle}
+              disabledTitleStyle={s.disabledTitleStyle}
+            />
+            <Button
+              onPress={() => navigation.navigate("Login")}
+              titleStyle={s.textLink}
+              containerStyle={{ marginBottom: 15 }}
+              buttonStyle={s.buttonMask}
+              title="Already a user? LOG IN!"
+            />
+            <Button
+              onPress={() => {
+                loginLater();
+                navigation.navigate("MapTab");
+              }}
+              titleStyle={s.textLink}
+              buttonStyle={s.buttonMask}
+              title="skip signing up for now"
+            />
+          </View>
+        </ScrollView>
       </ImageBackground>
-    </KeyboardAwareScrollView>
+    </View>
   );
 };
 
@@ -285,10 +281,6 @@ const getStyles = (theme) =>
       flex: 1,
       width: null,
       height: null,
-    },
-    mask: {
-      flex: 1,
-      backgroundColor: theme.mask,
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,

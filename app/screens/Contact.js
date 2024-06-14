@@ -1,17 +1,22 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Keyboard, Platform, StyleSheet, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
   ActivityIndicator,
   ConfirmationModal,
   PbmButton,
-  Screen,
   Text,
 } from "../components";
 import { submitMessage, clearMessage } from "../actions";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
@@ -47,13 +52,9 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   };
 
   const { loggedIn, submittingMessage, confirmationMessage } = user;
-  const keyboardDismissProp =
-    Platform.OS === "ios"
-      ? { keyboardDismissMode: "on-drag" }
-      : { onScrollBeginDrag: Keyboard.dismiss };
 
   return (
-    <Screen {...keyboardDismissProp}>
+    <View style={{ flex: 1, paddingHorizontal: 0, marginTop: 10 }}>
       <ConfirmationModal visible={confirmationMessage.length > 0}>
         <Text style={s.confirmText}>{confirmationMessage}</Text>
         <MaterialCommunityIcons
@@ -66,59 +67,68 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
       {submittingMessage ? (
         <ActivityIndicator />
       ) : (
-        <KeyboardAwareScrollView
-          {...keyboardDismissProp}
-          enableResetScrollToCoords={false}
-          style={s.background}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={[s.background, Platform.OS === "ios" && { flex: 1 }]}
+          keyboardVerticalOffset={50}
         >
-          <Text
-            style={[s.text, s.boldFont]}
-          >{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
-          <Text style={[s.text, s.regularFont]}>
-            If a venue no longer has machines -{" "}
-            <Text style={[s.pinkText, s.boldFont]}>NO NEED to tell us!</Text>{" "}
-            {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
-          </Text>
-          <Text
-            onPress={() => navigation.navigate("FAQ")}
-            style={s.textLink}
-          >{`Check the FAQ first for common questions.`}</Text>
-          {!loggedIn ? (
-            <View>
-              <TextInput
-                style={[{ height: 40 }, s.textInput]}
-                underlineColorAndroid="transparent"
-                onChangeText={(name) => setName(name)}
-                returnKeyType="done"
-                placeholder={"Your name..."}
-                placeholderTextColor={theme.indigo4}
-                autoCorrect={false}
-              />
-              <TextInput
-                style={[{ height: 40 }, s.textInput]}
-                underlineColorAndroid="transparent"
-                onChangeText={(email) => setEmail(email)}
-                returnKeyType="done"
-                placeholder={"Your email..."}
-                placeholderTextColor={theme.indigo4}
-                keyboardType="email-address"
-                autoCorrect={false}
-              />
-            </View>
-          ) : null}
-          <TextInput
-            multiline={true}
-            placeholder={"Your words..."}
-            placeholderTextColor={theme.indigo4}
-            style={[{ padding: 5, height: 200 }, s.textInput]}
-            onChangeText={(message) => setMessage(message)}
-            textAlignVertical="top"
-            underlineColorAndroid="transparent"
-          />
-          <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
-        </KeyboardAwareScrollView>
+          <ScrollView
+            style={{ overflow: "visible", paddingHorizontal: 20 }}
+            scrollIndicatorInsets={{ right: 1 }}
+          >
+            <Text
+              style={[s.text, s.boldFont]}
+            >{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
+            <Text style={[s.text, s.regularFont]}>
+              If a venue no longer has machines -{" "}
+              <Text style={[s.pinkText, s.boldFont]}>NO NEED to tell us!</Text>{" "}
+              {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
+            </Text>
+            <Text
+              onPress={() => navigation.navigate("FAQ")}
+              style={s.textLink}
+            >{`Check the FAQ first for common questions.`}</Text>
+            {!loggedIn ? (
+              <View>
+                <TextInput
+                  style={[{ height: 40 }, s.textInput]}
+                  underlineColorAndroid="transparent"
+                  onChangeText={(name) => setName(name)}
+                  returnKeyType="done"
+                  placeholder={"Your name..."}
+                  placeholderTextColor={theme.indigo4}
+                  autoCorrect={false}
+                />
+                <TextInput
+                  style={[{ height: 40 }, s.textInput]}
+                  underlineColorAndroid="transparent"
+                  onChangeText={(email) => setEmail(email)}
+                  returnKeyType="done"
+                  placeholder={"Your email..."}
+                  placeholderTextColor={theme.indigo4}
+                  keyboardType="email-address"
+                  autoCorrect={false}
+                />
+              </View>
+            ) : null}
+            <TextInput
+              multiline={true}
+              placeholder={"Your words..."}
+              placeholderTextColor={theme.indigo4}
+              style={[{ padding: 5, height: 200 }, s.textInput]}
+              onChangeText={(message) => setMessage(message)}
+              textAlignVertical="top"
+              underlineColorAndroid="transparent"
+            />
+            <PbmButton
+              title={"Submit"}
+              disabled={_disabled()}
+              onPress={submit}
+            />
+          </ScrollView>
+        </KeyboardAvoidingView>
       )}
-    </Screen>
+    </View>
   );
 };
 
@@ -127,8 +137,6 @@ const getStyles = (theme) =>
     background: {
       flex: 1,
       backgroundColor: theme.base1,
-      marginHorizontal: 20,
-      marginTop: 10,
     },
     text: {
       fontSize: 16,
