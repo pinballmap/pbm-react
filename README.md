@@ -12,6 +12,12 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.18
+
+June 18, 2024
+
+- Bug fix for when a keyboard covers up an text input.
+
 ### 5.3.17
 
 June 5, 2024
