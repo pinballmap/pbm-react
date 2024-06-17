@@ -70,11 +70,13 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={[s.background, Platform.OS === "ios" && { flex: 1 }]}
-          keyboardVerticalOffset={50}
+          keyboardVerticalOffset={100}
         >
           <ScrollView
-            style={{ overflow: "visible", paddingHorizontal: 20 }}
+            style={{ paddingHorizontal: 20 }}
             scrollIndicatorInsets={{ right: 1 }}
+            keyboardShouldPersistTaps="handled"
+            overScrollMode="always"
           >
             <Text
               style={[s.text, s.boldFont]}

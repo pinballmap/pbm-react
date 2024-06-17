@@ -145,7 +145,6 @@ class MachineDetails extends Component {
           return (
             <>
               <ScrollView
-                style={{ overflow: "visible" }}
                 contentContainerStyle={{
                   flex: 1,
                   backgroundColor: theme.base1,
@@ -159,7 +158,6 @@ class MachineDetails extends Component {
                 >
                   <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                     <ScrollView
-                      style={{ overflow: "visible" }}
                       contentContainerStyle={{
                         flex: 1,
                         justifyContent: "center",
@@ -228,7 +226,6 @@ class MachineDetails extends Component {
                 >
                   <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                     <ScrollView
-                      style={{ overflow: "visible" }}
                       contentContainerStyle={{
                         flex: 1,
                         justifyContent: "center",

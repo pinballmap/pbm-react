@@ -82,7 +82,6 @@ const MachineComment = ({ commentObj, user }) => {
             >
               <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                 <ScrollView
-                  style={{ overflow: "visible" }}
                   contentContainerStyle={{
                     flex: 1,
                     justifyContent: "center",

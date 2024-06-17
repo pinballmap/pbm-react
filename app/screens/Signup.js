@@ -128,32 +128,32 @@ const Signup = ({ loginLater, navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      <ImageBackground
-        source={require("../assets/images/t-shirt-logo.png")}
-        style={s.backgroundImage}
-        imageStyle={{ opacity: 0.2 }}
-      >
-        <ConfirmationModal visible={modalVisible}>
-          <Text style={s.confirmText}>
-            {`Please check your email and confirm your account. If you don't see it, check your SPAM folder!`}
-          </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={45}
-            onPress={() => {
-              setModalVisible(false);
-              navigation.navigate("Login");
-            }}
-            style={s.xButton}
-          />
-        </ConfirmationModal>
-        <ScrollView
-          style={{ overflow: "visible" }}
-          contentContainerStyle={{
-            flex: 1,
-            justifyContent: "center",
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: theme.base1,
+      }}
+    >
+      <ConfirmationModal visible={modalVisible}>
+        <Text style={s.confirmText}>
+          {`Please check your email and confirm your account. If you don't see it, check your SPAM folder!`}
+        </Text>
+        <MaterialCommunityIcons
+          name="close-circle"
+          size={45}
+          onPress={() => {
+            setModalVisible(false);
+            navigation.navigate("Login");
           }}
+          style={s.xButton}
+        />
+      </ConfirmationModal>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
           keyboardShouldPersistTaps="handled"
         >
           <View style={s.justify}>
@@ -165,76 +165,72 @@ const Signup = ({ loginLater, navigation }) => {
               </Text>
             )}
             <Text style={s.bold}>Sign Up</Text>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >
-              <Input
-                placeholder="Username"
-                placeholderTextColor={"#9b9ebb"}
-                leftIcon={<MaterialIcons name="face" style={s.iconStyle} />}
-                onChangeText={(username) => setUsername(username)}
-                value={username}
-                errorStyle={{ color: "red" }}
-                errorMessage={usernameError}
-                inputContainerStyle={s.inputBox}
-                inputStyle={s.inputText}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <Input
-                placeholder="Email Address"
-                placeholderTextColor={"#9b9ebb"}
-                leftIcon={
-                  <MaterialCommunityIcons
-                    name="email-outline"
-                    style={s.iconStyle}
-                  />
-                }
-                onChangeText={(email) => setEmail(email)}
-                value={email}
-                errorStyle={{ color: "red" }}
-                errorMessage={emailError}
-                inputContainerStyle={s.inputBox}
-                inputStyle={s.inputText}
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-              />
-              <Input
-                placeholder="Password"
-                placeholderTextColor={"#9b9ebb"}
-                leftIcon={
-                  <MaterialIcons name="lock-outline" style={s.iconStyle} />
-                }
-                onChangeText={(password) => setPassword(password)}
-                value={password}
-                errorStyle={{ color: "red" }}
-                errorMessage={passwordError}
-                inputContainerStyle={s.inputBox}
-                inputStyle={s.inputText}
-                secureTextEntry={true}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <Input
-                placeholder="Confirm Password"
-                placeholderTextColor={"#9b9ebb"}
-                leftIcon={
-                  <MaterialIcons name="lock-outline" style={s.iconStyle} />
-                }
-                onChangeText={(confirm_password) =>
-                  setConfirmPassword(confirm_password)
-                }
-                value={confirm_password}
-                errorStyle={{ color: "red" }}
-                errorMessage={confirm_passwordError}
-                inputContainerStyle={s.inputBox}
-                inputStyle={s.inputText}
-                secureTextEntry={true}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </KeyboardAvoidingView>
+            <Input
+              placeholder="Username"
+              placeholderTextColor={"#9b9ebb"}
+              leftIcon={<MaterialIcons name="face" style={s.iconStyle} />}
+              onChangeText={(username) => setUsername(username)}
+              value={username}
+              errorStyle={{ color: "red" }}
+              errorMessage={usernameError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <Input
+              placeholder="Email Address"
+              placeholderTextColor={"#9b9ebb"}
+              leftIcon={
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  style={s.iconStyle}
+                />
+              }
+              onChangeText={(email) => setEmail(email)}
+              value={email}
+              errorStyle={{ color: "red" }}
+              errorMessage={emailError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+            />
+            <Input
+              placeholder="Password"
+              placeholderTextColor={"#9b9ebb"}
+              leftIcon={
+                <MaterialIcons name="lock-outline" style={s.iconStyle} />
+              }
+              onChangeText={(password) => setPassword(password)}
+              value={password}
+              errorStyle={{ color: "red" }}
+              errorMessage={passwordError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <Input
+              placeholder="Confirm Password"
+              placeholderTextColor={"#9b9ebb"}
+              leftIcon={
+                <MaterialIcons name="lock-outline" style={s.iconStyle} />
+              }
+              onChangeText={(confirm_password) =>
+                setConfirmPassword(confirm_password)
+              }
+              value={confirm_password}
+              errorStyle={{ color: "red" }}
+              errorMessage={confirm_passwordError}
+              inputContainerStyle={s.inputBox}
+              inputStyle={s.inputText}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
             <PbmButton
               onPress={submit}
               containerStyle={{
@@ -266,7 +262,12 @@ const Signup = ({ loginLater, navigation }) => {
             />
           </View>
         </ScrollView>
-      </ImageBackground>
+      </KeyboardAvoidingView>
+      <ImageBackground
+        source={require("../assets/images/t-shirt-logo.png")}
+        style={s.backgroundImage}
+        imageStyle={{ opacity: 0.2 }}
+      />
     </View>
   );
 };
@@ -279,9 +280,14 @@ Signup.navigationOptions = {
 const getStyles = (theme) =>
   StyleSheet.create({
     backgroundImage: {
-      flex: 1,
-      width: null,
-      height: null,
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: -1,
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,
@@ -295,7 +301,11 @@ const getStyles = (theme) =>
     bold: {
       fontFamily: "Nunito-Bold",
       textAlign: "center",
-      fontSize: 18,
+      fontSize: 22,
+      color: theme.text,
+      textShadowColor: theme.white,
+      textShadowOffset: { width: -1, height: 1 },
+      textShadowRadius: 2,
     },
     inputBox: {
       width: "100%",

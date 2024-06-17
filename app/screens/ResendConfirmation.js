@@ -50,7 +50,7 @@ const ResendConfirmation = ({ navigation }) => {
             style={s.xButton}
           />
         </ConfirmationModal>
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 10, paddingBottom: 30 }}>
           <Input
             placeholder="Username or email..."
             placeholderTextColor={theme.indigo4}

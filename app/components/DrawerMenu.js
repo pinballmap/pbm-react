@@ -181,6 +181,7 @@ const getStyles = (theme) =>
     labelStyle: {
       color: theme.colors.primary,
       fontFamily: "Nunito-Bold",
+      fontWeight: Platform.OS === "android" ? undefined : 700,
       fontSize: 16,
     },
   });

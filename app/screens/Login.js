@@ -82,16 +82,19 @@ class Login extends Component {
         {({ theme }) => {
           const s = getStyles(theme);
           return (
-            <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-              <ImageBackground
-                source={require("../assets/images/pbm-fade-tall.png")}
-                style={s.backgroundImage}
-                imageStyle={{ opacity: 0.2 }}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                backgroundColor: theme.base1,
+              }}
+            >
+              <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
               >
                 <ScrollView
-                  style={{ overflow: "visible" }}
                   contentContainerStyle={{
-                    flex: 1,
+                    flexGrow: 1,
                     justifyContent: "center",
                   }}
                   keyboardShouldPersistTaps="handled"
@@ -105,44 +108,40 @@ class Login extends Component {
                       </Text>
                     )}
                     <Text style={s.bold}>Log In</Text>
-                    <KeyboardAvoidingView
-                      behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    >
-                      <Input
-                        placeholder="Username or Email"
-                        placeholderTextColor={"#9b9ebb"}
-                        leftIcon={
-                          <MaterialIcons name="face" style={s.iconStyle} />
-                        }
-                        onChangeText={(login) => this.setState({ login })}
-                        value={this.state.login}
-                        errorStyle={{ color: "red" }}
-                        errorMessage={this.state.loginError}
-                        inputContainerStyle={s.inputBox}
-                        inputStyle={s.inputText}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                      />
-                      <Input
-                        placeholder="Password"
-                        placeholderTextColor={"#9b9ebb"}
-                        leftIcon={
-                          <MaterialIcons
-                            name="lock-outline"
-                            style={s.iconStyle}
-                          />
-                        }
-                        onChangeText={(password) => this.setState({ password })}
-                        value={this.state.password}
-                        errorStyle={{ color: "red" }}
-                        errorMessage={this.state.passwordError}
-                        inputContainerStyle={s.inputBox}
-                        inputStyle={s.inputText}
-                        secureTextEntry={true}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                      />
-                    </KeyboardAvoidingView>
+                    <Input
+                      placeholder="Username or Email"
+                      placeholderTextColor={"#9b9ebb"}
+                      leftIcon={
+                        <MaterialIcons name="face" style={s.iconStyle} />
+                      }
+                      onChangeText={(login) => this.setState({ login })}
+                      value={this.state.login}
+                      errorStyle={{ color: "red" }}
+                      errorMessage={this.state.loginError}
+                      inputContainerStyle={s.inputBox}
+                      inputStyle={s.inputText}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <Input
+                      placeholder="Password"
+                      placeholderTextColor={"#9b9ebb"}
+                      leftIcon={
+                        <MaterialIcons
+                          name="lock-outline"
+                          style={s.iconStyle}
+                        />
+                      }
+                      onChangeText={(password) => this.setState({ password })}
+                      value={this.state.password}
+                      errorStyle={{ color: "red" }}
+                      errorMessage={this.state.passwordError}
+                      inputContainerStyle={s.inputBox}
+                      inputStyle={s.inputText}
+                      secureTextEntry={true}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
                     <PbmButton
                       onPress={() => this.submit()}
                       title="Log In"
@@ -192,7 +191,12 @@ class Login extends Component {
                     />
                   </View>
                 </ScrollView>
-              </ImageBackground>
+              </KeyboardAvoidingView>
+              <ImageBackground
+                source={require("../assets/images/pbm-fade-tall.png")}
+                style={s.backgroundImage}
+                imageStyle={{ opacity: 0.2 }}
+              />
             </View>
           );
         }}
@@ -204,9 +208,14 @@ class Login extends Component {
 const getStyles = (theme) =>
   StyleSheet.create({
     backgroundImage: {
-      flex: 1,
-      width: null,
-      height: null,
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: -1,
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,

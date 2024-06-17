@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Keyboard,
+  KeyboardAvoidingView,
   Modal,
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -17,7 +16,6 @@ import {
   ActivityIndicator,
   DropDownButton,
   PbmButton,
-  Screen,
   Text,
   WarningButton,
 } from "../components";
@@ -78,10 +76,6 @@ function EditLocationDetails({
   const operatorObj = operators.find((op) => op.id === operatorId) || {};
   const { name: operatorName = operator === -1 ? "N/A" : "Select operator" } =
     operatorObj;
-  const keyboardDismissProp =
-    Platform.OS === "ios"
-      ? { keyboardDismissMode: "on-drag" }
-      : { onScrollBeginDrag: Keyboard.dismiss };
 
   const [showEditLocationDetailsModal, setShowEditLocationDetailsModal] =
     useState(false);
@@ -122,152 +116,161 @@ function EditLocationDetails({
       {({ theme }) => {
         const s = getStyles(theme);
         return (
-          <Screen keyboardShouldPersistTaps="handled" {...keyboardDismissProp}>
-            <Modal
-              animationType="slide"
-              transparent={false}
-              visible={showEditLocationDetailsModal}
-              onRequestClose={() => {}}
+          <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              keyboardVerticalOffset={50}
             >
-              <SafeAreaProvider>
-                <SafeAreaView style={s.background}>
-                  <ScrollView style={{ backgroundColor: theme.base1 }}>
-                    <View style={s.pageTitle}>
-                      <Text style={s.pageTitleText}>
-                        Please review your edits
-                      </Text>
-                    </View>
-                    <View style={s.previewContainer}>
-                      <Text style={s.previewTitle}>Phone</Text>
-                      <Text style={s.preview}>{phone}</Text>
-                    </View>
-                    <View style={s.previewContainer}>
-                      <Text style={s.previewTitle}>Website</Text>
-                      <Text style={s.preview}>{website}</Text>
-                    </View>
-                    <View style={s.previewContainer}>
-                      <Text style={s.previewTitle}>Location Notes</Text>
-                      <Text style={s.preview}>{description}</Text>
-                    </View>
-                    <View style={s.previewContainer}>
-                      <Text style={s.previewTitle}>Location Type</Text>
-                      <Text style={s.preview}>
-                        {typeof locationTypeId === "number" &&
-                        locationTypeId > -1
-                          ? locationTypes
-                              .filter((type) => type.id === locationTypeId)
-                              .map((type) => type.name)
-                          : "None Selected"}
-                      </Text>
-                    </View>
-                    <View style={s.previewContainer}>
-                      <Text style={s.previewTitle}>Operator</Text>
-                      <Text style={s.preview}>
-                        {typeof operatorId === "number" && operatorId > -1
-                          ? operators
-                              .filter((op) => op.id === operatorId)
-                              .map((operator) => operator.name)
-                          : "None Selected"}
-                      </Text>
-                    </View>
-                    <PbmButton
-                      title={"Confirm Location Details"}
-                      onPress={() => confirmEditLocationDetails()}
-                    />
-                    <WarningButton
-                      title={"Cancel"}
-                      onPress={() => setShowEditLocationDetailsModal(false)}
-                    />
-                  </ScrollView>
-                </SafeAreaView>
-              </SafeAreaProvider>
-            </Modal>
-            {updatingLocationDetails ? (
-              <ActivityIndicator />
-            ) : (
-              <Pressable
-                onPress={() => {
-                  Keyboard.dismiss();
+              <ScrollView
+                contentContainerStyle={{
+                  backgroundColor: theme.base1,
+                  paddingBottom: 40,
                 }}
+                keyboardShouldPersistTaps="handled"
               >
-                <View style={{ marginLeft: 10, marginRight: 10 }}>
-                  <Text style={[s.subText, s.margin8]}>
-                    {`Want to edit the location name (or address)?`}
-                    <Text
-                      onPress={() =>
-                        navigation.navigate("Contact", { locationName: name })
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={showEditLocationDetailsModal}
+                  onRequestClose={() => {}}
+                >
+                  <SafeAreaProvider>
+                    <SafeAreaView style={s.background}>
+                      <ScrollView style={{ backgroundColor: theme.base1 }}>
+                        <View style={s.pageTitle}>
+                          <Text style={s.pageTitleText}>
+                            Please review your edits
+                          </Text>
+                        </View>
+                        <View style={s.previewContainer}>
+                          <Text style={s.previewTitle}>Phone</Text>
+                          <Text style={s.preview}>{phone}</Text>
+                        </View>
+                        <View style={s.previewContainer}>
+                          <Text style={s.previewTitle}>Website</Text>
+                          <Text style={s.preview}>{website}</Text>
+                        </View>
+                        <View style={s.previewContainer}>
+                          <Text style={s.previewTitle}>Location Notes</Text>
+                          <Text style={s.preview}>{description}</Text>
+                        </View>
+                        <View style={s.previewContainer}>
+                          <Text style={s.previewTitle}>Location Type</Text>
+                          <Text style={s.preview}>
+                            {typeof locationTypeId === "number" &&
+                            locationTypeId > -1
+                              ? locationTypes
+                                  .filter((type) => type.id === locationTypeId)
+                                  .map((type) => type.name)
+                              : "None Selected"}
+                          </Text>
+                        </View>
+                        <View style={s.previewContainer}>
+                          <Text style={s.previewTitle}>Operator</Text>
+                          <Text style={s.preview}>
+                            {typeof operatorId === "number" && operatorId > -1
+                              ? operators
+                                  .filter((op) => op.id === operatorId)
+                                  .map((operator) => operator.name)
+                              : "None Selected"}
+                          </Text>
+                        </View>
+                        <PbmButton
+                          title={"Confirm Location Details"}
+                          onPress={() => confirmEditLocationDetails()}
+                        />
+                        <WarningButton
+                          title={"Cancel"}
+                          onPress={() => setShowEditLocationDetailsModal(false)}
+                        />
+                      </ScrollView>
+                    </SafeAreaView>
+                  </SafeAreaProvider>
+                </Modal>
+                {updatingLocationDetails ? (
+                  <ActivityIndicator />
+                ) : (
+                  <View style={{ marginLeft: 10, marginRight: 10 }}>
+                    <Text style={[s.subText, s.margin8]}>
+                      {`Want to edit the location name (or address)?`}
+                      <Text
+                        onPress={() =>
+                          navigation.navigate("Contact", { locationName: name })
+                        }
+                        style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
+                      >
+                        {"Contact us"}
+                      </Text>
+                      {` with the details!`}
+                    </Text>
+                    <Text style={s.title}>Phone</Text>
+                    <TextInput
+                      style={[{ height: 40 }, s.textInput, s.radius10]}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(phone) => setPhone(phone)}
+                      value={phone}
+                      returnKeyType="done"
+                      placeholder={phone || "(503) xxx-xxxx"}
+                      placeholderTextColor={theme.indigo4}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <Text style={s.title}>Website</Text>
+                    <TextInput
+                      style={[{ height: 40 }, s.textInput, s.radius10]}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(website) => setWebsite(website)}
+                      value={website}
+                      returnKeyType="done"
+                      placeholder={website || "https://..."}
+                      placeholderTextColor={theme.indigo4}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <Text style={s.title}>Location Notes</Text>
+                    <TextInput
+                      multiline={true}
+                      style={[{ height: 100 }, s.textInput, s.radius10]}
+                      onChangeText={(description) =>
+                        setDescription(description)
                       }
-                      style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
-                    >
-                      {"Contact us"}
+                      value={description}
+                      underlineColorAndroid="transparent"
+                      placeholder={
+                        description || "Location description, hours, etc..."
+                      }
+                      placeholderTextColor={theme.indigo4}
+                      textAlignVertical="top"
+                    />
+                    <Text style={[s.subText, s.margin8]}>
+                      If this venue is{" "}
+                      <Text style={{ fontFamily: "Nunito-Bold" }}>
+                        closed or no longer has machines
+                      </Text>
+                      , simply remove the machines from the listing.
                     </Text>
-                    {` with the details!`}
-                  </Text>
-                  <Text style={s.title}>Phone</Text>
-                  <TextInput
-                    style={[{ height: 40 }, s.textInput, s.radius10]}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(phone) => setPhone(phone)}
-                    value={phone}
-                    returnKeyType="done"
-                    placeholder={phone || "(503) xxx-xxxx"}
-                    placeholderTextColor={theme.indigo4}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  <Text style={s.title}>Website</Text>
-                  <TextInput
-                    style={[{ height: 40 }, s.textInput, s.radius10]}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(website) => setWebsite(website)}
-                    value={website}
-                    returnKeyType="done"
-                    placeholder={website || "https://..."}
-                    placeholderTextColor={theme.indigo4}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  <Text style={s.title}>Location Notes</Text>
-                  <TextInput
-                    multiline={true}
-                    style={[{ height: 100 }, s.textInput, s.radius10]}
-                    onChangeText={(description) => setDescription(description)}
-                    value={description}
-                    underlineColorAndroid="transparent"
-                    placeholder={
-                      description || "Location description, hours, etc..."
-                    }
-                    placeholderTextColor={theme.indigo4}
-                    textAlignVertical="top"
-                  />
-                  <Text style={[s.subText, s.margin8]}>
-                    If this venue is{" "}
-                    <Text style={{ fontFamily: "Nunito-Bold" }}>
-                      closed or no longer has machines
-                    </Text>
-                    , simply remove the machines from the listing.
-                  </Text>
 
-                  <Text style={s.title}>Location Type</Text>
-                  <DropDownButton
-                    title={locationTypeName}
-                    containerStyle={[s.containerStyle]}
-                    onPress={() => goToFindLocationType()}
-                  />
-                  <Text style={s.title}>Operator</Text>
-                  <DropDownButton
-                    title={operatorName}
-                    containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
-                    onPress={() => goToFindOperator()}
-                  />
-                  <PbmButton
-                    title={"Review Location Details"}
-                    onPress={() => setShowEditLocationDetailsModal(true)}
-                  />
-                </View>
-              </Pressable>
-            )}
-          </Screen>
+                    <Text style={s.title}>Location Type</Text>
+                    <DropDownButton
+                      title={locationTypeName}
+                      containerStyle={[s.containerStyle]}
+                      onPress={() => goToFindLocationType()}
+                    />
+                    <Text style={s.title}>Operator</Text>
+                    <DropDownButton
+                      title={operatorName}
+                      containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
+                      onPress={() => goToFindOperator()}
+                    />
+                    <PbmButton
+                      title={"Review Location Details"}
+                      onPress={() => setShowEditLocationDetailsModal(true)}
+                    />
+                  </View>
+                )}
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </View>
         );
       }}
     </ThemeContext.Consumer>

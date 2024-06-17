@@ -338,13 +338,9 @@ class FindMachine extends React.PureComponent {
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={[s.background, Platform.OS === "ios" && { flex: 1 }]}
-              keyboardVerticalOffset={50}
             >
               <ScrollView
-                style={{ overflow: "visible" }}
                 contentContainerStyle={{
-                  flex: 1,
-                  justifyContent: "center",
                   backgroundColor: theme.base1,
                 }}
                 keyboardShouldPersistTaps="handled"
