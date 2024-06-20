@@ -137,7 +137,26 @@ const About = ({ navigation, appAlert }) => {
               }
               style={s.textLink}
             >{`blog`}</Text>
-            {` to keep up with map news. Follow `}
+            {` to keep up with map news.`}
+          </Text>
+          <Pressable
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://blog.pinballmap.com/")
+            }
+          >
+            <Image
+              source={require("../assets/images/sass_sticker_blog.jpg")}
+              style={{
+                width: deviceWidth - 30,
+                height: (deviceWidth - 30) / 1.3053,
+                marginBottom: 10,
+                borderRadius: 15,
+              }}
+              resizeMode="contain"
+            />
+          </Pressable>
+          <Text style={s.text}>
+            {`Follow `}
             <Text
               style={s.textLink}
               onPress={() =>
