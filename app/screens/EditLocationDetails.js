@@ -237,7 +237,8 @@ function EditLocationDetails({
                       value={description}
                       underlineColorAndroid="transparent"
                       placeholder={
-                        description || "Location description, hours, etc..."
+                        description ||
+                        "Hours; what type of payment system(s) they use (door fee, cash, cards)"
                       }
                       placeholderTextColor={theme.indigo4}
                       textAlignVertical="top"
