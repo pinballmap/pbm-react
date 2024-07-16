@@ -37,6 +37,7 @@ export const putData = (uri, body) => {
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
+      AppVersion: Application.nativeApplicationVersion,
     },
     body: JSON.stringify(body),
   })
