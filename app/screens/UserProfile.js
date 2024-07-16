@@ -346,7 +346,7 @@ const getStyles = (theme) =>
     statItem: {
       flexDirection: "row",
       alignItems: "center",
-      width: 220,
+      width: 250,
     },
     stat: {
       marginTop: 5,
@@ -354,7 +354,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
       opacity: 0.9,
       color: theme.theme == "dark" ? "#fee7f5" : theme.text,
-      width: 160,
+      width: 190,
     },
     statNum: {
       fontFamily: "Nunito-Bold",
