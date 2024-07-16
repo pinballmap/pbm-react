@@ -342,11 +342,13 @@ const getStyles = (theme) =>
       paddingTop: 10,
       paddingBottom: 14,
       borderRadius: 20,
+      paddingHorizontal: 30,
     },
     statItem: {
       flexDirection: "row",
       alignItems: "center",
-      width: 250,
+      width: "100%",
+      justifyContent: "space-between",
     },
     stat: {
       marginTop: 5,
@@ -354,7 +356,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
       opacity: 0.9,
       color: theme.theme == "dark" ? "#fee7f5" : theme.text,
-      width: 190,
     },
     statNum: {
       fontFamily: "Nunito-Bold",
