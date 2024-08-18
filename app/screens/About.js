@@ -167,6 +167,18 @@ const About = ({ navigation, appAlert }) => {
             </Text>
             {` on Mastodon.`}
           </Text>
+          <Text style={s.text}>
+            {`Join `}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://discord.gg/bzVZd5Zd")
+              }
+            >
+              our Discord
+            </Text>
+            {` to chat with developers, administrators, and fellow users.`}
+          </Text>
 
           <Text style={s.text}>
             Listen to our podcast,{" "}
@@ -368,31 +380,18 @@ const About = ({ navigation, appAlert }) => {
           </Text>
           <Text style={s.text}>Thanks to our beta testers!</Text>
           <Text style={{ fontSize: 16 }}>
-            And thanks to all our
-            {Platform.OS === "ios" ? (
-              <Text style={{ fontSize: 16 }}> Patreon </Text>
-            ) : (
-              <Text
-                style={s.textLink}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync("https://patreon.com/pinballmap")
-                }
-              >
-                {" "}
-                Patreon{" "}
-              </Text>
-            )}
-            supporters!
+            And thanks to all our <Text style={{ fontSize: 16 }}>Ko-fi</Text>{" "}
+            and <Text style={{ fontSize: 16 }}>Patreon</Text> supporters!
           </Text>
         </View>
         {Platform.OS === "android" ? (
           <Image
-            source={require("../assets/images/patreon.png")}
+            source={require("../assets/images/kofi_button_black.png")}
             resizeMode="contain"
             onPress={() =>
-              WebBrowser.openBrowserAsync("https://patreon.com/pinballmap")
+              WebBrowser.openBrowserAsync("https://ko-fi.com/pinballmap")
             }
-            style={[s.patreonLogo]}
+            style={[s.supportLogo]}
           />
         ) : null}
       </Screen>
@@ -420,7 +419,7 @@ const getStyles = (theme) =>
       alignSelf: "center",
       marginVertical: 5,
     },
-    patreonLogo: {
+    supportLogo: {
       flex: 1,
       width: deviceWidth - 40,
       alignSelf: "center",
