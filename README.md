@@ -17,7 +17,7 @@ Release dates are approximate, given that review times vary between the App Stor
 July 16, 2024
 
 - Some minor design fixes.
-- Help to log the app version to help us troubleshoot.
+- Log the app version in more places to help us troubleshoot.
 
 ### 5.3.18
 
