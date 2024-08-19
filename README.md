@@ -12,6 +12,12 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.20
+
+August 19, 2024
+
+- Include country code prefix on non-US phone numbers in location submission form.
+
 ### 5.3.19
 
 July 16, 2024
