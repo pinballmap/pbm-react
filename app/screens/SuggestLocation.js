@@ -149,7 +149,6 @@ function SuggestLocation({
   };
 
   const setLocation = (details) => {
-    setPhone(details.international_phone_number);
     setWebsite(details.website);
     setLocationName(details.name);
     autoCompleteRef.current.setAddressText(details.name);
@@ -176,6 +175,14 @@ function SuggestLocation({
           break;
         }
         case "country": {
+          if (component.short_name == "US" && details.formatted_phone_number) {
+            setPhone(details.formatted_phone_number);
+          } else if (
+            component.short_name != "US" &&
+            details.international_phone_number
+          ) {
+            setPhone(details.international_phone_number);
+          }
           setCountryCode(component.short_name);
           setCountryName(component.long_name);
           break;
