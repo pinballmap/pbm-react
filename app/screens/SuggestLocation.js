@@ -149,7 +149,7 @@ function SuggestLocation({
   };
 
   const setLocation = (details) => {
-    setPhone(details.formatted_phone_number);
+    setPhone(details.international_phone_number);
     setWebsite(details.website);
     setLocationName(details.name);
     autoCompleteRef.current.setAddressText(details.name);
