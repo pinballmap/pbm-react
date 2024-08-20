@@ -383,17 +383,24 @@ const About = ({ navigation, appAlert }) => {
             And thanks to all our <Text style={{ fontSize: 16 }}>Ko-fi</Text>{" "}
             and <Text style={{ fontSize: 16 }}>Patreon</Text> supporters!
           </Text>
+          {Platform.OS === "android" ? (
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://ko-fi.com/pinballmap")
+              }
+            >
+              <Image
+                source={require("../assets/images/kofi_button_black.png")}
+                style={{
+                  width: deviceWidth - 30,
+                  height: (deviceWidth - 30) / 6.385,
+                  marginVertical: 10,
+                }}
+                resizeMode="contain"
+              />
+            </Pressable>
+          ) : null}
         </View>
-        {Platform.OS === "android" ? (
-          <Image
-            source={require("../assets/images/kofi_button_black.png")}
-            resizeMode="contain"
-            onPress={() =>
-              WebBrowser.openBrowserAsync("https://ko-fi.com/pinballmap")
-            }
-            style={[s.supportLogo]}
-          />
-        ) : null}
       </Screen>
     </SafeAreaView>
   );
@@ -418,11 +425,6 @@ const getStyles = (theme) =>
       height: 60,
       alignSelf: "center",
       marginVertical: 5,
-    },
-    supportLogo: {
-      flex: 1,
-      width: deviceWidth - 40,
-      alignSelf: "center",
     },
     child: {
       margin: "auto",
