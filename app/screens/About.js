@@ -172,7 +172,7 @@ const About = ({ navigation, appAlert }) => {
             <Text
               style={s.textLink}
               onPress={() =>
-                WebBrowser.openBrowserAsync("https://discord.gg/bzVZd5Zd")
+                WebBrowser.openBrowserAsync("https://discord.gg/zK6xjyYHJf")
               }
             >
               our Discord
