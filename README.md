@@ -12,6 +12,19 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.22
+
+August 23, 2024
+
+- Add button descriptions on location details screen.
+- Change location confirmation action.
+
+### 5.3.21
+
+August 20, 2024
+
+- Fix some bad/broken links on the About screen.
+
 ### 5.3.20
 
 August 19, 2024
