@@ -2,7 +2,6 @@ import {
   FETCHING_LOCATION,
   FETCHING_LOCATION_SUCCESS,
   LOCATION_DETAILS_CONFIRMED,
-  CLOSE_CONFIRM_MODAL,
   SET_SELECTED_LMX,
   MACHINE_CONDITION_UPDATED,
   MACHINE_CONDITION_REMOVED,
@@ -53,7 +52,7 @@ export const getLocationSuccess = (data) => {
 export const confirmLocationIsUpToDate = (body, id, username) => (dispatch) => {
   return putData(`/locations/${id}/confirm.json`, body)
     .then(
-      (data) => dispatch(locationDetailsConfirmed(data.msg, username, id)),
+      () => dispatch(locationDetailsConfirmed(username, id)),
       (err) => {
         throw err;
       },
@@ -61,18 +60,11 @@ export const confirmLocationIsUpToDate = (body, id, username) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-const locationDetailsConfirmed = (msg, username, id) => {
+const locationDetailsConfirmed = (username, id) => {
   return {
     type: LOCATION_DETAILS_CONFIRMED,
-    msg,
     username,
     id,
-  };
-};
-
-export const closeConfirmModal = () => {
-  return {
-    type: CLOSE_CONFIRM_MODAL,
   };
 };
 

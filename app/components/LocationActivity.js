@@ -161,26 +161,31 @@ const LocationActivity = ({ locationId }) => {
           </ScrollView>
         </>
       </ConfirmationModal>
-      <Pressable
-        style={({ pressed }) => [
-          s.activity,
-          s.quickButton,
-          pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
-        ]}
-        onPress={() => setLocationActivityModalOpen(true)}
+      <View
+        style={{ flexDirection: "column", alignItems: "center", width: "25%" }}
       >
-        <MaterialCommunityIcons
-          name="newspaper-variant-multiple-outline"
-          color={theme.text2}
-          size={28}
-          style={{
-            height: 28,
-            width: 28,
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        />
-      </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            s.activity,
+            s.quickButton,
+            pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
+          ]}
+          onPress={() => setLocationActivityModalOpen(true)}
+        >
+          <MaterialCommunityIcons
+            name="newspaper-variant-multiple-outline"
+            color={theme.text2}
+            size={28}
+            style={{
+              height: 28,
+              width: 28,
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          />
+        </Pressable>
+        <Text style={s.quickButtonText}>Activity</Text>
+      </View>
     </>
   );
 };
@@ -232,6 +237,12 @@ const getStyles = (theme) =>
       shadowRadius: 6,
       elevation: 6,
       backgroundColor: theme.white,
+    },
+    quickButtonText: {
+      color: theme.text2,
+      fontSize: 12,
+      marginTop: 5,
+      textAlign: "center",
     },
     quickButtonPressed: {
       backgroundColor: theme.indigo4,

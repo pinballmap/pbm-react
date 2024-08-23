@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {
   Alert,
   Dimensions,
-  Image,
   Linking,
   Platform,
   Pressable,
@@ -24,10 +23,11 @@ import {
   ConfirmationModal,
   FavoriteLocation,
   LocationActivity,
+  PbmButton,
   Text,
+  WarningButton,
 } from "../components";
 import {
-  closeConfirmModal,
   confirmLocationIsUpToDate,
   fetchLocation,
   setCurrentMachine,
@@ -59,7 +59,12 @@ class LocationDetails extends Component {
     navigateToMap: false,
     detailsExpanded: false,
     showScrollToTop: false,
+    confirmModalVisible: false,
   };
+
+  setConfirmModalVisible(visible) {
+    this.setState({ confirmModalVisible: visible });
+  }
 
   scrollToTop = () => {
     this.scrollViewRef.current?.scrollTo({
@@ -92,6 +97,7 @@ class LocationDetails extends Component {
         user_token: authentication_token,
       };
       this.props.confirmLocationIsUpToDate(body, id, username);
+      this.setConfirmModalVisible(false);
     } else {
       this.props.navigation.navigate("Login");
     }
@@ -188,24 +194,22 @@ class LocationDetails extends Component {
                 onScroll={this.handleScroll}
                 scrollIndicatorInsets={{ right: 1 }}
               >
-                <ConfirmationModal
-                  visible={this.props.location.confirmModalVisible}
-                >
+                <ConfirmationModal visible={this.state.confirmModalVisible}>
                   <Text style={s.confirmText}>
-                    {this.props.location.confirmationMessage}
+                    Confirm the lineup at {location.name}?
                   </Text>
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={45}
-                    onPress={this.props.closeConfirmModal}
-                    style={s.xButton}
+                  <PbmButton
+                    title={"Confirm Lineup"}
+                    onPress={() =>
+                      this.handleConfirmPress(location.id, loggedIn)
+                    }
+                    containerStyle={s.buttonContainer}
                   />
-                  <View style={s.logoWrapper}>
-                    <Image
-                      source={require("../assets/images/PPM-Splash-200.png")}
-                      style={s.logo}
-                    />
-                  </View>
+                  <WarningButton
+                    title={"Cancel"}
+                    onPress={() => this.setConfirmModalVisible(false)}
+                    containerStyle={s.buttonContainer}
+                  />
                 </ConfirmationModal>
                 <View
                   style={{
@@ -574,82 +578,91 @@ class LocationDetails extends Component {
                         )}
 
                         <View style={s.quickButtonContainer}>
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.quickButtonPressed
-                                : s.quickButtonNotPressed,
-                            ]}
-                            onPress={() =>
-                              loggedIn
-                                ? navigation.navigate("FindMachine")
-                                : navigation.navigate("Login")
-                            }
-                          >
-                            <MaterialCommunityIcons
-                              name={"plus-outline"}
-                              color={theme.text2}
-                              size={30}
-                              style={{
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignSelf: "center",
-                              }}
-                            />
-                          </Pressable>
-                          <LocationActivity locationId={location.id} />
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.quickButtonPressed
-                                : s.quickButtonNotPressed,
-                            ]}
-                            onPress={() =>
-                              this.handleConfirmPress(location.id, loggedIn)
-                            }
-                          >
-                            <MaterialCommunityIcons
-                              name={"check-outline"}
-                              color={theme.text2}
-                              size={26}
-                              style={{
-                                height: 26,
-                                width: 26,
-                                justifyContent: "center",
-                                alignSelf: "center",
-                              }}
-                            />
-                          </Pressable>
-                          <Pressable
-                            style={({ pressed }) => [
-                              s.quickButton,
-                              pressed
-                                ? s.quickButtonPressed
-                                : s.quickButtonNotPressed,
-                            ]}
-                            onPress={() => {
-                              if (loggedIn) {
-                                navigation.navigate("EditLocationDetails");
-                              } else {
-                                navigation.navigate("Login");
+                          <View style={s.quickButtonSubContainer}>
+                            <Pressable
+                              style={({ pressed }) => [
+                                s.quickButton,
+                                pressed
+                                  ? s.quickButtonPressed
+                                  : s.quickButtonNotPressed,
+                              ]}
+                              onPress={() =>
+                                loggedIn
+                                  ? navigation.navigate("FindMachine")
+                                  : navigation.navigate("Login")
                               }
-                            }}
-                          >
-                            <MaterialCommunityIcons
-                              name={"pencil-outline"}
-                              color={theme.text2}
-                              size={30}
-                              style={{
-                                height: 30,
-                                width: 30,
-                                justifyContent: "center",
-                                alignSelf: "center",
+                            >
+                              <MaterialCommunityIcons
+                                name={"plus-outline"}
+                                color={theme.text2}
+                                size={30}
+                                style={{
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignSelf: "center",
+                                }}
+                              />
+                            </Pressable>
+                            <Text style={s.quickButtonText}>Add machine</Text>
+                          </View>
+                          <LocationActivity locationId={location.id} />
+                          <View style={s.quickButtonSubContainer}>
+                            <Pressable
+                              style={({ pressed }) => [
+                                s.quickButton,
+                                pressed
+                                  ? s.quickButtonPressed
+                                  : s.quickButtonNotPressed,
+                              ]}
+                              onPress={() => this.setConfirmModalVisible(true)}
+                            >
+                              <MaterialCommunityIcons
+                                name={"check-outline"}
+                                color={theme.text2}
+                                size={26}
+                                style={{
+                                  height: 26,
+                                  width: 26,
+                                  justifyContent: "center",
+                                  alignSelf: "center",
+                                }}
+                              />
+                            </Pressable>
+                            <Text style={s.quickButtonText}>
+                              Confirm lineup
+                            </Text>
+                          </View>
+                          <View style={s.quickButtonSubContainer}>
+                            <Pressable
+                              style={({ pressed }) => [
+                                s.quickButton,
+                                pressed
+                                  ? s.quickButtonPressed
+                                  : s.quickButtonNotPressed,
+                              ]}
+                              onPress={() => {
+                                if (loggedIn) {
+                                  navigation.navigate("EditLocationDetails");
+                                } else {
+                                  navigation.navigate("Login");
+                                }
                               }}
-                            />
-                          </Pressable>
+                            >
+                              <MaterialCommunityIcons
+                                name={"pencil-outline"}
+                                color={theme.text2}
+                                size={30}
+                                style={{
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: "center",
+                                  alignSelf: "center",
+                                }}
+                              />
+                            </Pressable>
+                            <Text style={s.quickButtonText}>Edit location</Text>
+                          </View>
                         </View>
                       </View>
 
@@ -827,6 +840,11 @@ const getStyles = (theme) =>
       justifyContent: "space-around",
       marginVertical: 10,
     },
+    quickButtonSubContainer: {
+      flexDirection: "column",
+      alignItems: "center",
+      width: "25%",
+    },
     fontSize14: {
       fontSize: 14,
     },
@@ -916,6 +934,12 @@ const getStyles = (theme) =>
       shadowRadius: 6,
       elevation: 6,
       backgroundColor: theme.white,
+    },
+    quickButtonText: {
+      color: theme.text2,
+      fontSize: 12,
+      marginTop: 5,
+      textAlign: "center",
     },
     mapViewButton: {
       padding: 10,
@@ -1045,6 +1069,12 @@ const getStyles = (theme) =>
       padding: 10,
       borderRadius: 15,
     },
+    buttonContainer: {
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop: 10,
+      marginBottom: 10,
+    },
   });
 
 LocationDetails.propTypes = {
@@ -1055,7 +1085,6 @@ LocationDetails.propTypes = {
   operators: PropTypes.object,
   machines: PropTypes.object,
   user: PropTypes.object,
-  closeConfirmModal: PropTypes.func,
   setCurrentMachine: PropTypes.func,
   navigation: PropTypes.object,
   route: PropTypes.object,
@@ -1073,7 +1102,6 @@ const mapDispatchToProps = (dispatch) => ({
   fetchLocation: (url) => dispatch(fetchLocation(url)),
   confirmLocationIsUpToDate: (body, id, username) =>
     dispatch(confirmLocationIsUpToDate(body, id, username)),
-  closeConfirmModal: () => dispatch(closeConfirmModal()),
   setCurrentMachine: (id) => dispatch(setCurrentMachine(id)),
   dispatch,
 });

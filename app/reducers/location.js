@@ -3,7 +3,6 @@ import {
   FETCHING_LOCATION_SUCCESS,
   FETCHING_LOCATION_FAILURE,
   LOCATION_DETAILS_CONFIRMED,
-  CLOSE_CONFIRM_MODAL,
   SET_SELECTED_LMX,
   MACHINE_CONDITION_UPDATED,
   MACHINE_CONDITION_REMOVED,
@@ -31,7 +30,6 @@ const moment = require("moment");
 export const initialState = {
   isFetchingLocation: false,
   location: {},
-  confirmModalVisible: false,
   confirmationMessage: "",
   curLmx: null,
   addingMachineToLocation: false,
@@ -70,14 +68,6 @@ export default (state = initialState, action) => {
           last_updated_by_username: action.username,
           date_last_updated: moment().format("YYYY-MM-DD"),
         },
-        confirmModalVisible: true,
-        confirmationMessage: action.msg,
-      };
-    case CLOSE_CONFIRM_MODAL:
-      return {
-        ...state,
-        confirmModalVisible: false,
-        confirmationMessage: "",
       };
     case SET_SELECTED_LMX:
       return {
