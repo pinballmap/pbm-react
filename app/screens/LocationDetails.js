@@ -938,7 +938,8 @@ const getStyles = (theme) =>
     quickButtonText: {
       color: theme.text2,
       fontSize: 12,
-      marginTop: 5,
+      lineHeight: 14,
+      marginTop: 8,
       textAlign: "center",
     },
     mapViewButton: {
