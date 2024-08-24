@@ -174,7 +174,7 @@ const LocationActivity = ({ locationId }) => {
         >
           <MaterialCommunityIcons
             name="newspaper-variant-multiple-outline"
-            color={theme.text2}
+            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
             size={28}
             style={{
               height: 28,
@@ -239,7 +239,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     quickButtonText: {
-      color: theme.text2,
+      color: theme.purpleLight,
       fontSize: 12,
       lineHeight: 14,
       marginTop: 8,

@@ -82,7 +82,7 @@ class LocationDetails extends Component {
     <Text>
       <Text style={s.machineName}>{machine.name}</Text>
       {machine.year ? (
-        <Text style={[s.fontSize18, s.pink1, s.mediumFont]}>{` (${
+        <Text style={[s.fontSize20, s.pink1, s.mediumFont]}>{` (${
           machine.manufacturer && machine.manufacturer + ", "
         }${machine.year})`}</Text>
       ) : null}
@@ -99,6 +99,7 @@ class LocationDetails extends Component {
       this.props.confirmLocationIsUpToDate(body, id, username);
       this.setConfirmModalVisible(false);
     } else {
+      this.setConfirmModalVisible(false);
       this.props.navigation.navigate("Login");
     }
   };
@@ -239,7 +240,7 @@ class LocationDetails extends Component {
                     >
                       <MaterialCommunityIcons
                         name={"directions"}
-                        color={theme.colors.text}
+                        color={theme.purpleLight}
                         size={30}
                         style={{
                           height: 30,
@@ -261,7 +262,7 @@ class LocationDetails extends Component {
                     >
                       <FontAwesome6
                         name={"map-location"}
-                        color={theme.colors.text}
+                        color={theme.purpleLight}
                         size={24}
                         style={{
                           height: 24,
@@ -288,7 +289,7 @@ class LocationDetails extends Component {
                     >
                       <MaterialIcons
                         name={"ios-share"}
-                        color={theme.colors.text}
+                        color={theme.purpleLight}
                         size={26}
                         style={{
                           height: 26,
@@ -378,13 +379,20 @@ class LocationDetails extends Component {
                             {locationTrackingServicesEnabled && (
                               <View style={[s.row]}>
                                 <MaterialCommunityIcons
-                                  name="compass-outline"
+                                  name="compass"
                                   style={s.distanceIcon}
                                 />
                                 <Text
                                   style={[
-                                    { fontSize: 15, color: theme.text3 },
-                                    s.mediumFont,
+                                    {
+                                      marginLeft: 5,
+                                      fontSize: 15,
+                                      color:
+                                        theme.theme == "dark"
+                                          ? theme.pink1
+                                          : theme.purple2,
+                                    },
+                                    s.bold,
                                   ]}
                                 >
                                   {getDistanceWithUnit(
@@ -403,7 +411,11 @@ class LocationDetails extends Component {
                                 <Icon
                                   name={locationIcon}
                                   type={iconLibrary}
-                                  color={theme.purple}
+                                  color={
+                                    theme.theme == "dark"
+                                      ? theme.purpleLight
+                                      : theme.pink3
+                                  }
                                   size={24}
                                 />
                                 <Text
@@ -411,9 +423,9 @@ class LocationDetails extends Component {
                                     {
                                       marginLeft: 5,
                                       fontSize: 15,
-                                      color: theme.text3,
+                                      color: theme.purple2,
                                     },
-                                    s.mediumFont,
+                                    s.bold,
                                   ]}
                                 >
                                   {locationTypeName}
@@ -433,7 +445,11 @@ class LocationDetails extends Component {
                               <Icon
                                 name={"chevron-down"}
                                 type="material-community"
-                                color={theme.purple}
+                                color={
+                                  theme.theme == "dark"
+                                    ? theme.purple2
+                                    : theme.purple
+                                }
                               />
                             }
                             content={
@@ -594,7 +610,11 @@ class LocationDetails extends Component {
                             >
                               <MaterialCommunityIcons
                                 name={"plus-outline"}
-                                color={theme.text2}
+                                color={
+                                  theme.theme == "dark"
+                                    ? theme.purple2
+                                    : theme.purple
+                                }
                                 size={30}
                                 style={{
                                   height: 30,
@@ -619,7 +639,11 @@ class LocationDetails extends Component {
                             >
                               <MaterialCommunityIcons
                                 name={"check-outline"}
-                                color={theme.text2}
+                                color={
+                                  theme.theme == "dark"
+                                    ? theme.purple2
+                                    : theme.purple
+                                }
                                 size={26}
                                 style={{
                                   height: 26,
@@ -651,7 +675,11 @@ class LocationDetails extends Component {
                             >
                               <MaterialCommunityIcons
                                 name={"pencil-outline"}
-                                color={theme.text2}
+                                color={
+                                  theme.theme == "dark"
+                                    ? theme.purple2
+                                    : theme.purple
+                                }
                                 size={30}
                                 style={{
                                   height: 30,
@@ -661,7 +689,7 @@ class LocationDetails extends Component {
                                 }}
                               />
                             </Pressable>
-                            <Text style={s.quickButtonText}>Edit location</Text>
+                            <Text style={s.quickButtonText}>Edit details</Text>
                           </View>
                         </View>
                       </View>
@@ -791,9 +819,9 @@ const getStyles = (theme) =>
       alignItems: "flex-start",
     },
     locationName: {
-      fontFamily: "Nunito-Black",
-      fontSize: deviceWidth < 325 ? 24 : 28,
-      lineHeight: deviceWidth < 325 ? 30 : 34,
+      fontFamily: "Nunito-ExtraBold",
+      fontSize: deviceWidth < 325 ? 24 : 26,
+      lineHeight: deviceWidth < 325 ? 30 : 32,
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     machineListContainer: {
@@ -851,8 +879,8 @@ const getStyles = (theme) =>
     fontSize15: {
       fontSize: 15,
     },
-    fontSize18: {
-      fontSize: 18,
+    fontSize20: {
+      fontSize: 20,
     },
     bold: {
       fontFamily: "Nunito-Bold",
@@ -936,7 +964,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     quickButtonText: {
-      color: theme.text2,
+      color: theme.purpleLight,
       fontSize: 12,
       lineHeight: 14,
       marginTop: 8,
@@ -946,11 +974,13 @@ const getStyles = (theme) =>
       padding: 10,
       zIndex: 10,
       borderRadius: 20,
-      height: 40,
-      width: 40,
+      height: 42,
+      width: 42,
       alignSelf: "center",
       justifyContent: "center",
       backgroundColor: "transparent",
+      borderWidth: 1,
+      borderColor: theme.theme == "dark" ? theme.border : theme.white,
     },
     directionsButton: {
       position: "absolute",
@@ -985,9 +1015,7 @@ const getStyles = (theme) =>
     },
     distanceIcon: {
       fontSize: 22,
-      color: theme.colors.inactiveTab,
-      marginRight: 3,
-      opacity: 0.6,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
     },
     nameItem: {
       flex: 1,
@@ -1024,7 +1052,7 @@ const getStyles = (theme) =>
     mapViewButtonNotPressed: {
       backgroundColor:
         theme.theme == "dark"
-          ? "rgba(29, 28, 28, 0.5)"
+          ? "rgba(29, 28, 28, 0.7)"
           : "rgba(255,255,255,.5)",
     },
     confirmText: {

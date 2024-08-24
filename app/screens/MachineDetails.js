@@ -504,7 +504,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     machineName: {
       textAlign: "center",
-      fontFamily: "Nunito-Black",
+      fontFamily: "Nunito-ExtraBold",
       fontSize: 24,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
@@ -666,7 +666,7 @@ const getStyles = (theme) =>
     },
     sectionTitle: {
       fontSize: 20,
-      fontFamily: "Nunito-Black",
+      fontFamily: "Nunito-ExtraBold",
       textAlign: "center",
       marginVertical: 10,
       color: theme.purpleLight,
@@ -686,7 +686,7 @@ const getStyles = (theme) =>
     operatorComments: {
       textAlign: "center",
       color: theme.text2,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
     },
     titleStyle: {
       color: "#392f3a",

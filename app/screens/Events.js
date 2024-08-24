@@ -290,7 +290,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
     },
     locationName: {
-      fontFamily: "Nunito-Black",
+      fontFamily: "Nunito-ExtraBold",
       fontSize: 22,
       lineHeight: 28,
       textAlign: "left",

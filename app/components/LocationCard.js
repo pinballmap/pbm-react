@@ -111,38 +111,40 @@ const LocationCard = ({
             </View>
             {type || distance ? (
               <View style={s.locationTypeContainer}>
+                {distance ? (
+                  <View style={s.vertAlign}>
+                    <MaterialCommunityIcons name="compass" style={s.icon} />
+                    <Text
+                      style={{
+                        marginRight: 15,
+                        color: theme.purple2,
+                        fontFamily: "Nunito-Bold",
+                      }}
+                    >
+                      {" "}
+                      {distance}
+                    </Text>
+                  </View>
+                ) : null}
                 {type ? (
                   <View style={s.vertAlign}>
                     <Icon
                       name={icon}
                       type={library}
-                      color={theme.indigo4}
+                      color={
+                        theme.theme == "dark" ? theme.purpleLight : theme.pink3
+                      }
                       size={30}
                       style={s.icon}
                     />
                     <Text
                       style={{
-                        marginRight: 12,
-                        color: theme.text3,
+                        color: theme.purple2,
                         fontFamily: "Nunito-Bold",
                       }}
                     >
                       {" "}
                       {type}
-                    </Text>
-                  </View>
-                ) : null}
-                {distance ? (
-                  <View style={s.vertAlign}>
-                    <MaterialCommunityIcons
-                      name="compass-outline"
-                      style={s.icon}
-                    />
-                    <Text
-                      style={{ color: theme.text3, fontFamily: "Nunito-Bold" }}
-                    >
-                      {" "}
-                      {distance}
                     </Text>
                   </View>
                 ) : null}
@@ -173,7 +175,7 @@ const getStyles = (theme) =>
       alignContent: "space-around",
     },
     machineName: {
-      marginBottom: -10,
+      marginBottom: -12,
       color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     plus: {
@@ -197,15 +199,15 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     locationName: {
-      fontFamily: "Nunito-Black",
-      fontSize: 22,
-      lineHeight: 26,
+      fontFamily: "Nunito-ExtraBold",
+      fontSize: 24,
+      lineHeight: 28,
       textAlign: "left",
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
     },
     locationTypeContainer: {
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-around",
       flexDirection: "row",
       marginBottom: -2,
       marginHorizontal: -2,
@@ -246,7 +248,7 @@ const getStyles = (theme) =>
     manufacturer: {
       color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Medium",
-      fontSize: 15,
+      fontSize: 18,
     },
     mediumFont: {
       fontFamily: "Nunito-Medium",
@@ -267,9 +269,8 @@ const getStyles = (theme) =>
       shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
     },
     icon: {
-      fontSize: 30,
-      color: theme.indigo4,
-      opacity: 0.8,
+      fontSize: 28,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
       marginRight: 1,
     },
   });

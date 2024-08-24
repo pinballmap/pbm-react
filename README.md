@@ -18,6 +18,7 @@ August 23, 2024
 
 - Add button descriptions on location details screen.
 - Change location confirmation action.
+- Some design tweaks.
 
 ### 5.3.21
 

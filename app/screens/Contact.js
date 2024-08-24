@@ -115,7 +115,9 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             ) : null}
             <TextInput
               multiline={true}
-              placeholder={"Your words..."}
+              placeholder={
+                "Include the NAME of the location you're writing about!"
+              }
               placeholderTextColor={theme.indigo4}
               style={[{ padding: 5, height: 200 }, s.textInput]}
               onChangeText={(message) => setMessage(message)}

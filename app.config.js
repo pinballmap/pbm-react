@@ -55,7 +55,6 @@ export default {
             "app/assets/fonts/Nunito-SemiBold.ttf",
             "app/assets/fonts/Nunito-Bold.ttf",
             "app/assets/fonts/Nunito-ExtraBold.ttf",
-            "app/assets/fonts/Nunito-Black.ttf",
           ],
         },
       ],
@@ -64,7 +63,7 @@ export default {
       bundleIdentifier: "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "193",
+      buildNumber: "197",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -122,7 +121,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 165,
+      versionCode: 169,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

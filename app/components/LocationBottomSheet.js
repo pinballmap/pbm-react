@@ -108,37 +108,14 @@ const LocationBottomSheet = React.memo(
               </View>
               {locationType || user.locationTrackingServicesEnabled ? (
                 <View style={s.locationTypeContainer}>
-                  {locationType ? (
+                  {user.locationTrackingServicesEnabled ? (
                     <View style={s.vertAlign}>
-                      <Icon
-                        name={locationType.icon}
-                        type={locationType.library}
-                        color={theme.colors.inactiveTab}
-                        size={30}
-                        style={s.icon}
-                      />
+                      <MaterialCommunityIcons name="compass" style={s.icon} />
                       <Text
                         style={{
                           marginRight: 15,
-                          color: theme.text3,
-                          fontFamily: "Nunito-SemiBold",
-                        }}
-                      >
-                        {" "}
-                        {locationType.name}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {user.locationTrackingServicesEnabled ? (
-                    <View style={s.vertAlign}>
-                      <MaterialCommunityIcons
-                        name="compass-outline"
-                        style={s.icon}
-                      />
-                      <Text
-                        style={{
-                          color: theme.text3,
-                          fontFamily: "Nunito-SemiBold",
+                          color: theme.purple2,
+                          fontFamily: "Nunito-Bold",
                         }}
                       >
                         {" "}
@@ -149,6 +126,30 @@ const LocationBottomSheet = React.memo(
                           lon,
                           user.unitPreference,
                         )}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {locationType ? (
+                    <View style={s.vertAlign}>
+                      <Icon
+                        name={locationType.icon}
+                        type={locationType.library}
+                        color={
+                          theme.theme == "dark"
+                            ? theme.purpleLight
+                            : theme.pink3
+                        }
+                        size={30}
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          color: theme.purple2,
+                          fontFamily: "Nunito-Bold",
+                        }}
+                      >
+                        {" "}
+                        {locationType.name}
                       </Text>
                     </View>
                   ) : null}
@@ -208,7 +209,7 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     locationName: {
-      fontFamily: "Nunito-Black",
+      fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
       lineHeight: 24,
       textAlign: "left",
@@ -216,7 +217,7 @@ const getStyles = (theme) =>
     },
     locationTypeContainer: {
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-around",
       flexDirection: "row",
       paddingVertical: 6,
       backgroundColor: theme.base3,
@@ -264,10 +265,9 @@ const getStyles = (theme) =>
       shadowRadius: 6,
     },
     icon: {
-      fontSize: 30,
-      opacity: 0.6,
+      fontSize: 28,
       marginRight: 3,
-      color: theme.colors.inactiveTab,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
     },
   });
 

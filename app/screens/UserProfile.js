@@ -331,7 +331,7 @@ const getStyles = (theme) =>
     username: {
       fontSize: 22,
       textAlign: "center",
-      fontFamily: "Nunito-Black",
+      fontFamily: "Nunito-ExtraBold",
       lineHeight: 32,
       color: theme.purpleLight,
     },
