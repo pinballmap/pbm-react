@@ -210,7 +210,7 @@ function EditLocationDetails({
                       onChangeText={(phone) => setPhone(phone)}
                       value={phone}
                       returnKeyType="done"
-                      placeholder={phone || "(503) xxx-xxxx"}
+                      placeholder={"(503) xxx-xxxx"}
                       placeholderTextColor={theme.indigo4}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -222,7 +222,7 @@ function EditLocationDetails({
                       onChangeText={(website) => setWebsite(website)}
                       value={website}
                       returnKeyType="done"
-                      placeholder={website || "https://..."}
+                      placeholder={"https://..."}
                       placeholderTextColor={theme.indigo4}
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -237,7 +237,6 @@ function EditLocationDetails({
                       value={description}
                       underlineColorAndroid="transparent"
                       placeholder={
-                        description ||
                         "Hours; what type of payment system(s) they use (door fee, cash, cards)"
                       }
                       placeholderTextColor={theme.indigo4}
