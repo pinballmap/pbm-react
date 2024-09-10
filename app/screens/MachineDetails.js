@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
 import {
   Dimensions,
@@ -12,7 +11,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { ThemeContext } from "../theme-context";
 import {
   EvilIcons,
   FontAwesome6,
@@ -23,7 +21,6 @@ import {
 import {
   addMachineCondition,
   addMachineScore,
-  removeMachineFromLocation,
   updateIcEnabled,
 } from "../actions/location_actions";
 import {
@@ -43,462 +40,444 @@ import {
 } from "../components";
 import * as WebBrowser from "expo-web-browser";
 import Constants from "expo-constants";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 
 const moment = require("moment");
 
 let deviceWidth = Dimensions.get("window").width;
 
-class MachineDetails extends Component {
-  state = {
-    showAddConditionModal: false,
-    conditionText: "",
-    showAddScoreModal: false,
-    score: "",
-    showRemoveMachineModal: false,
-  };
+const MachineDetails = ({
+  location: locationProp,
+  operators,
+  user,
+  machineDetails,
+  addMachineCondition,
+  addMachineScore,
+  updateIcEnabled,
+}) => {
+  const navigation = useNavigation();
+  const theme = useTheme();
+  const s = getStyles(theme);
+  const [showAddConditionModal, setShowAddConditionModal] = useState(false);
+  const [conditionText, setConditionText] = useState("");
+  const [showAddScoreModal, setShowAddScoreModal] = useState(false);
+  const [score, setScore] = useState("");
+  const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
 
-  cancelAddCondition = () =>
-    this.setState({ showAddConditionModal: false, conditionText: "" });
+  const { curLmx, location } = locationProp;
+  const { id: userId, loggedIn } = user;
+  const {
+    opdb_id,
+    opdb_img,
+    opdb_img_height,
+    opdb_img_width,
+    kineticist_url,
+    name: machineName,
+    ic_eligible,
+  } = machineDetails;
+  const pintipsUrl = opdb_id && `https://pintips.net/opdb/${opdb_id}`;
+  const opdb_resized = opdb_img_width - (deviceWidth - 48);
+  const opdb_img_height_calc =
+    (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
+  const opdbImgHeight =
+    opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
+  const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
 
-  cancelAddScore = () => this.setState({ showAddScoreModal: false, score: "" });
+  const operator =
+    location.operator_id &&
+    operators.operators.find(
+      (operator) => operator.id === location.operator_id,
+    );
+  const operatorHasEmail =
+    operator && operator.operator_has_email
+      ? operator.operator_has_email
+      : false;
 
-  addCondition = (lmx) => {
-    this.props.addMachineCondition(this.state.conditionText, lmx);
-    this.setState({
-      showAddConditionModal: false,
-      conditionText: "",
-    });
-  };
-
-  addScore = (lmx) => {
-    this.props.addMachineScore(removeCommasFromNum(this.state.score), lmx);
-    this.setState({ showAddScoreModal: false, score: "" });
-  };
-
-  componentDidMount() {
-    this.props.navigation.setOptions({
+  useEffect(() => {
+    navigation.setOptions({
       headerRight: ({ navigation }) => (
         <RemoveMachine navigation={navigation} />
       ),
     });
-  }
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.location.curLmx && !this.props.location.curLmx)
-      this.props.navigation.goBack();
-  }
-
-  render() {
-    const { curLmx, location } = this.props.location;
-
-    if (!curLmx) {
-      return <ActivityIndicator />;
+  useEffect(() => {
+    if (!locationProp.curLmx) {
+      navigation.goBack();
     }
+  }, [locationProp]);
 
-    const { ic_enabled } = curLmx;
-    const { id: userId, loggedIn } = this.props.user;
-    const {
-      opdb_id,
-      opdb_img,
-      opdb_img_height,
-      opdb_img_width,
-      kineticist_url,
-      name: machineName,
-      ic_eligible,
-    } = this.props.machineDetails;
-    const pintipsUrl = opdb_id && `https://pintips.net/opdb/${opdb_id}`;
-    const opdb_resized = opdb_img_width - (deviceWidth - 48);
-    const opdb_img_height_calc =
-      (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
-    const opdbImgHeight =
-      opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
-    const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
+  const cancelAddCondition = () => {
+    setShowAddConditionModal(false);
+    setConditionText("");
+  };
 
-    const operator =
-      location.operator_id &&
-      this.props.operators.operators.find(
-        (operator) => operator.id === location.operator_id,
-      );
-    const operatorHasEmail =
-      operator && operator.operator_has_email
-        ? operator.operator_has_email
-        : false;
+  const cancelAddScore = () => {
+    setShowAddScoreModal(false);
+    setScore("");
+  };
 
-    const mostRecentComments =
-      curLmx.machine_conditions.length > 0
-        ? curLmx.machine_conditions.slice(0, 5)
-        : undefined;
-    const scores = curLmx.machine_score_xrefs
-      .sort((a, b) => (a.score > b.score ? -1 : b.score > a.score ? 1 : 0))
-      .slice(0, 10);
-    const { score: userHighScore } = curLmx.machine_score_xrefs
-      .filter((score) => score.user_id === userId)
-      .reduce(
-        (prev, current) => (prev.score > current.score ? prev : current),
-        -1,
-      );
+  const addCondition = (lmx) => {
+    addMachineCondition(conditionText, lmx);
+    setShowAddConditionModal(false);
+    setConditionText("");
+  };
 
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
+  const addScore = (lmx) => {
+    addMachineScore(removeCommasFromNum(score), lmx);
+    setShowAddScoreModal(false);
+    setScore("");
+  };
+
+  if (!curLmx) {
+    return <ActivityIndicator />;
+  }
+
+  const { ic_enabled } = curLmx;
+  const mostRecentComments =
+    curLmx.machine_conditions.length > 0
+      ? curLmx.machine_conditions.slice(0, 5)
+      : undefined;
+  const scores = curLmx.machine_score_xrefs
+    .sort((a, b) => (a.score > b.score ? -1 : b.score > a.score ? 1 : 0))
+    .slice(0, 10);
+  const { score: userHighScore } = curLmx.machine_score_xrefs
+    .filter((score) => score.user_id === userId)
+    .reduce(
+      (prev, current) => (prev.score > current.score ? prev : current),
+      -1,
+    );
+
+  return (
+    <>
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          backgroundColor: theme.base1,
+        }}
+      >
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={showAddConditionModal}
+          onRequestClose={() => {}}
+        >
+          <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+            <ScrollView
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: "center",
+                backgroundColor: theme.base1,
+              }}
+            >
+              <Text style={s.modalTitle}>
+                Comment on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+                at <Text style={s.modalLocationName}>{location.name}</Text>
+              </Text>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  multiline={true}
+                  underlineColorAndroid="transparent"
+                  onChangeText={(conditionText) =>
+                    setConditionText(conditionText)
+                  }
+                  style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+                  placeholder={
+                    "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
+                  }
+                  placeholderTextColor={theme.indigo4}
+                  textAlignVertical="top"
+                />
+              </KeyboardAvoidingView>
+              <Text style={[s.modalSubText, s.margin4]}>
+                <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
+                {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
+              </Text>
+              <Text style={[s.modalSubText, s.margin4]}>
+                {`That said, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines.`}
+              </Text>
+              {!!location.operator_id && operatorHasEmail && (
+                <Text style={[s.modalSubText, s.margin4, s.bold]}>
+                  {`This operator is signed up to be notified about machine comments.`}
+                </Text>
+              )}
+              <Text style={[s.modalSubText, s.margin4]}>
+                <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
+                {`if you've fixed an issue, please leave a comment saying so.`}
+              </Text>
+              <PbmButton
+                title={"Add Comment"}
+                disabled={conditionText.length === 0}
+                onPress={() => addCondition(curLmx.id)}
+              />
+              <WarningButton title={"Cancel"} onPress={cancelAddCondition} />
+            </ScrollView>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={showAddScoreModal}
+          onRequestClose={() => {}}
+        >
+          <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+            <ScrollView
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: "center",
+                backgroundColor: theme.base1,
+              }}
+            >
+              <Text style={s.modalTitle}>
+                Add your high score to{" "}
+                <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
+                <Text style={s.modalLocationName}>{location.name}</Text>
+              </Text>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  style={[
+                    { height: 40, textAlign: "center" },
+                    s.textInput,
+                    s.radius10,
+                  ]}
+                  keyboardType="numeric"
+                  underlineColorAndroid="transparent"
+                  onChangeText={(score) => setScore(score)}
+                  defaultValue={formatInputNumWithCommas(score)}
+                  returnKeyType="done"
+                  placeholder={"123..."}
+                  placeholderTextColor={theme.indigo4}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </KeyboardAvoidingView>
+              <PbmButton
+                title={"Add Score"}
+                disabled={score.length === 0}
+                onPress={() => addScore(curLmx.id)}
+              />
+              <WarningButton title={"Cancel"} onPress={cancelAddScore} />
+            </ScrollView>
+          </View>
+        </Modal>
+        {showRemoveMachineModal && (
+          <RemoveMachineModal
+            closeModal={() => setShowRemoveMachineModal(false)}
+          />
+        )}
+        <ScrollView style={{ marginBottom: 20 }}>
+          <View style={s.machineNameContainer}>
+            <Text style={s.machineName}>{machineName}</Text>
+            <Text style={s.locationName}>{location.name}</Text>
+          </View>
+          <View style={s.addedContainer}>
+            <Text style={s.addedText}>{`Added: ${moment(
+              curLmx.created_at,
+            ).format("MMM DD, YYYY")}`}</Text>
+            {curLmx.created_at != curLmx.updated_at ? (
+              <Text style={s.addedText}>{`Last updated: ${moment(
+                curLmx.updated_at,
+              ).format("MMM DD, YYYY")}`}</Text>
+            ) : (
+              ""
+            )}
+          </View>
+          {!!opdb_img && (
+            <BackglassImage
+              width={opdbImgWidth}
+              height={opdbImgHeight}
+              source={opdb_img}
+            />
+          )}
+          {!!ic_eligible && (
             <>
-              <ScrollView
-                contentContainerStyle={{
-                  flex: 1,
-                  backgroundColor: theme.base1,
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 12,
+                  color: theme.text3,
+                  marginBottom: -8,
                 }}
               >
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.showAddConditionModal}
-                  onRequestClose={() => {}}
-                >
-                  <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                    <ScrollView
-                      contentContainerStyle={{
-                        flex: 1,
-                        justifyContent: "center",
-                        backgroundColor: theme.base1,
-                      }}
-                    >
-                      <Text style={s.modalTitle}>
-                        Comment on{" "}
-                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
-                        <Text style={s.modalLocationName}>{location.name}</Text>
-                      </Text>
-                      <KeyboardAvoidingView
-                        behavior={Platform.OS === "ios" ? "padding" : "height"}
-                      >
-                        <TextInput
-                          multiline={true}
-                          underlineColorAndroid="transparent"
-                          onChangeText={(conditionText) =>
-                            this.setState({ conditionText })
-                          }
-                          style={[
-                            { padding: 5, height: 100 },
-                            s.textInput,
-                            s.radius10,
-                          ]}
-                          placeholder={
-                            "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
-                          }
-                          placeholderTextColor={theme.indigo4}
-                          textAlignVertical="top"
-                        />
-                      </KeyboardAvoidingView>
-                      <Text style={[s.modalSubText, s.margin4]}>
-                        <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
-                        {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
-                      </Text>
-                      <Text style={[s.modalSubText, s.margin4]}>
-                        {`That said, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines.`}
-                      </Text>
-                      {!!location.operator_id && operatorHasEmail && (
-                        <Text style={[s.modalSubText, s.margin4, s.bold]}>
-                          {`This operator is signed up to be notified about machine comments.`}
-                        </Text>
-                      )}
-                      <Text style={[s.modalSubText, s.margin4]}>
-                        <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
-                        {`if you've fixed an issue, please leave a comment saying so.`}
-                      </Text>
-                      <PbmButton
-                        title={"Add Comment"}
-                        disabled={this.state.conditionText.length === 0}
-                        onPress={() => this.addCondition(curLmx.id)}
-                      />
-                      <WarningButton
-                        title={"Cancel"}
-                        onPress={this.cancelAddCondition}
-                      />
-                    </ScrollView>
-                  </View>
-                </Modal>
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.showAddScoreModal}
-                  onRequestClose={() => {}}
-                >
-                  <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                    <ScrollView
-                      contentContainerStyle={{
-                        flex: 1,
-                        justifyContent: "center",
-                        backgroundColor: theme.base1,
-                      }}
-                    >
-                      <Text style={s.modalTitle}>
-                        Add your high score to{" "}
-                        <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
-                        <Text style={s.modalLocationName}>{location.name}</Text>
-                      </Text>
-                      <KeyboardAvoidingView
-                        behavior={Platform.OS === "ios" ? "padding" : "height"}
-                      >
-                        <TextInput
-                          style={[
-                            { height: 40, textAlign: "center" },
-                            s.textInput,
-                            s.radius10,
-                          ]}
-                          keyboardType="numeric"
-                          underlineColorAndroid="transparent"
-                          onChangeText={(score) => this.setState({ score })}
-                          defaultValue={formatInputNumWithCommas(
-                            this.state.score,
-                          )}
-                          returnKeyType="done"
-                          placeholder={"123..."}
-                          placeholderTextColor={theme.indigo4}
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                        />
-                      </KeyboardAvoidingView>
-                      <PbmButton
-                        title={"Add Score"}
-                        disabled={this.state.score.length === 0}
-                        onPress={() => this.addScore(curLmx.id)}
-                      />
-                      <WarningButton
-                        title={"Cancel"}
-                        onPress={this.cancelAddScore}
-                      />
-                    </ScrollView>
-                  </View>
-                </Modal>
-                {this.state.showRemoveMachineModal && (
-                  <RemoveMachineModal
-                    closeModal={() =>
-                      this.setState({ showRemoveMachineModal: false })
-                    }
-                  />
-                )}
-                <ScrollView style={{ marginBottom: 20 }}>
-                  <View style={s.machineNameContainer}>
-                    <Text style={s.machineName}>{machineName}</Text>
-                    <Text style={s.locationName}>{location.name}</Text>
-                  </View>
-                  <View style={s.addedContainer}>
-                    <Text style={s.addedText}>{`Added: ${moment(
-                      curLmx.created_at,
-                    ).format("MMM DD, YYYY")}`}</Text>
-                    {curLmx.created_at != curLmx.updated_at ? (
-                      <Text style={s.addedText}>{`Last updated: ${moment(
-                        curLmx.updated_at,
-                      ).format("MMM DD, YYYY")}`}</Text>
-                    ) : (
-                      ""
-                    )}
-                  </View>
-                  {!!opdb_img && (
-                    <BackglassImage
-                      width={opdbImgWidth}
-                      height={opdbImgHeight}
-                      source={opdb_img}
+                Click to toggle Stern Insider Connected status
+              </Text>
+              <PbmButton
+                title={`${
+                  ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
+                } Insider Connected`}
+                onPress={
+                  loggedIn
+                    ? () => updateIcEnabled(curLmx.id)
+                    : () => navigation.navigate("Login")
+                }
+                titleStyle={s.titleStyle}
+                buttonStyle={
+                  ic_enabled === null ? s.nullIC : ic_enabled ? s.yesIC : s.noIC
+                }
+                icon={
+                  ic_enabled === null ? (
+                    <FontAwesome5
+                      name="question-circle"
+                      size={24}
+                      color="#665b50"
+                      style={{ marginRight: 8 }}
                     />
-                  )}
-                  {!!ic_eligible && (
-                    <>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 12,
-                          color: theme.text3,
-                          marginBottom: -8,
-                        }}
-                      >
-                        Click to toggle Stern Insider Connected status
-                      </Text>
-                      <PbmButton
-                        title={`${
-                          ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                        } Insider Connected`}
-                        onPress={
-                          loggedIn
-                            ? () => this.props.updateIcEnabled(curLmx.id)
-                            : () => this.props.navigation.navigate("Login")
-                        }
-                        titleStyle={s.titleStyle}
-                        buttonStyle={
-                          ic_enabled === null
-                            ? s.nullIC
-                            : ic_enabled
-                              ? s.yesIC
-                              : s.noIC
-                        }
-                        icon={
-                          ic_enabled === null ? (
-                            <FontAwesome5
-                              name="question-circle"
-                              size={24}
-                              color="#665b50"
-                              style={{ marginRight: 8 }}
-                            />
-                          ) : ic_enabled ? (
-                            <Ionicons
-                              name="qr-code"
-                              size={22}
-                              color="#66017b"
-                              style={{ marginRight: 8 }}
-                            />
-                          ) : (
-                            <MaterialCommunityIcons
-                              name="close-circle-outline"
-                              size={24}
-                              color="#533a3a"
-                              style={{ marginRight: 8 }}
-                            />
-                          )
-                        }
-                      />
-                    </>
-                  )}
-                  <View style={s.containerStyle}>
-                    <View style={s.locationNameContainer}>
-                      <Text style={s.sectionTitle}>Machine Comments</Text>
-                    </View>
-                    {mostRecentComments ? (
-                      mostRecentComments.map((commentObj) => (
-                        <MachineComment
-                          commentObj={commentObj}
-                          key={commentObj.id}
-                        />
-                      ))
-                    ) : (
-                      <Text style={s.noneYet}>No machine comments yet</Text>
-                    )}
-                    <PbmButton
-                      title={"Add a New Comment"}
-                      onPress={
-                        loggedIn
-                          ? () => this.setState({ showAddConditionModal: true })
-                          : () => this.props.navigation.navigate("Login")
-                      }
+                  ) : ic_enabled ? (
+                    <Ionicons
+                      name="qr-code"
+                      size={22}
+                      color="#66017b"
+                      style={{ marginRight: 8 }}
                     />
-                    {!!location.operator_id && operatorHasEmail && (
-                      <View style={[s.operatorEmail, s.operatorHasEmail]}>
-                        <Text style={s.operatorComments}>
-                          This operator receives machine comments!
-                        </Text>
-                      </View>
-                    )}
-                    {!!location.operator_id && !operatorHasEmail && (
-                      <View style={[s.operatorEmail, s.operatorNotEmail]}>
-                        <Text style={s.operatorComments}>
-                          This operator does not receive machine comments
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={s.containerStyle}>
-                    <View style={s.locationNameContainer}>
-                      <Text style={s.sectionTitle}>High Scores</Text>
-                    </View>
-                    {!!userHighScore && (
-                      <View>
-                        <Text
-                          style={s.userScoreTitle}
-                        >{`Your personal best on this machine is`}</Text>
-                        <Text style={s.userHighScore}>
-                          {formatNumWithCommas(userHighScore)}
-                        </Text>
-                      </View>
-                    )}
-                    {scores.length > 0 ? (
-                      scores.map((scoreObj) => {
-                        const { id, score, created_at, username } = scoreObj;
-
-                        return (
-                          <View style={s.listContainerStyle} key={id}>
-                            <Text style={s.scoreText}>
-                              {formatNumWithCommas(score)}
-                            </Text>
-                            <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                              <Text
-                                style={[s.subtitleStyle, s.username]}
-                              >{`${username}`}</Text>
-                              {"  "}
-                              <Text style={s.italic}>
-                                {moment(created_at).format("MMM DD, YYYY")}
-                              </Text>
-                            </Text>
-                          </View>
-                        );
-                      })
-                    ) : (
-                      <Text style={s.noneYet}>No scores yet</Text>
-                    )}
-                    <PbmButton
-                      title={"Add Your Score"}
-                      onPress={
-                        loggedIn
-                          ? () => this.setState({ showAddScoreModal: true })
-                          : () => this.props.navigation.navigate("Login")
-                      }
+                  ) : (
+                    <MaterialCommunityIcons
+                      name="close-circle-outline"
+                      size={24}
+                      color="#533a3a"
+                      style={{ marginRight: 8 }}
                     />
-                  </View>
-                  {!!pintipsUrl && (
-                    <View style={[s.externalLinkContainer, s.marginB10]}>
-                      <Text
-                        style={s.externalLink}
-                        onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
-                      >
-                        View playing tips on PinTips
-                      </Text>
-                      <EvilIcons name="external-link" style={s.externalIcon} />
-                    </View>
-                  )}
-                  {!!kineticist_url && (
-                    <View style={[s.externalLinkContainer, s.marginB10]}>
-                      <Text
-                        style={s.externalLink}
-                        onPress={() =>
-                          WebBrowser.openBrowserAsync(kineticist_url)
-                        }
-                      >
-                        View machine info on Kineticist
-                      </Text>
-                      <Image
-                        source={require("../assets/images/kineticist.png")}
-                        style={{
-                          width: 24,
-                          height: 24,
-                          marginLeft: 5,
-                        }}
-                      />
-                    </View>
-                  )}
-                  <WarningButton
-                    title={"Remove Machine"}
-                    onPress={
-                      loggedIn
-                        ? () => this.setState({ showRemoveMachineModal: true })
-                        : () => this.props.navigation.navigate("Login")
-                    }
-                    icon={
-                      <FontAwesome6
-                        size={24}
-                        color="#ffffff"
-                        name="trash-can"
-                        style={s.removeButton}
-                      />
-                    }
-                    iconPosition="left"
-                  />
-                </ScrollView>
-              </ScrollView>
+                  )
+                }
+              />
             </>
-          );
-        }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+          )}
+          <View style={s.containerStyle}>
+            <View style={s.locationNameContainer}>
+              <Text style={s.sectionTitle}>Machine Comments</Text>
+            </View>
+            {mostRecentComments ? (
+              mostRecentComments.map((commentObj) => (
+                <MachineComment commentObj={commentObj} key={commentObj.id} />
+              ))
+            ) : (
+              <Text style={s.noneYet}>No machine comments yet</Text>
+            )}
+            <PbmButton
+              title={"Add a New Comment"}
+              onPress={
+                loggedIn
+                  ? () => setShowAddConditionModal(true)
+                  : () => navigation.navigate("Login")
+              }
+            />
+            {!!location.operator_id && operatorHasEmail && (
+              <View style={[s.operatorEmail, s.operatorHasEmail]}>
+                <Text style={s.operatorComments}>
+                  This operator receives machine comments!
+                </Text>
+              </View>
+            )}
+            {!!location.operator_id && !operatorHasEmail && (
+              <View style={[s.operatorEmail, s.operatorNotEmail]}>
+                <Text style={s.operatorComments}>
+                  This operator does not receive machine comments
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={s.containerStyle}>
+            <View style={s.locationNameContainer}>
+              <Text style={s.sectionTitle}>High Scores</Text>
+            </View>
+            {!!userHighScore && (
+              <View>
+                <Text
+                  style={s.userScoreTitle}
+                >{`Your personal best on this machine is`}</Text>
+                <Text style={s.userHighScore}>
+                  {formatNumWithCommas(userHighScore)}
+                </Text>
+              </View>
+            )}
+            {scores.length > 0 ? (
+              scores.map((scoreObj) => {
+                const { id, score, created_at, username } = scoreObj;
+
+                return (
+                  <View style={s.listContainerStyle} key={id}>
+                    <Text style={s.scoreText}>
+                      {formatNumWithCommas(score)}
+                    </Text>
+                    <Text style={[s.subtitleStyle, s.subtitleMargin]}>
+                      <Text
+                        style={[s.subtitleStyle, s.username]}
+                      >{`${username}`}</Text>
+                      {"  "}
+                      <Text style={s.italic}>
+                        {moment(created_at).format("MMM DD, YYYY")}
+                      </Text>
+                    </Text>
+                  </View>
+                );
+              })
+            ) : (
+              <Text style={s.noneYet}>No scores yet</Text>
+            )}
+            <PbmButton
+              title={"Add Your Score"}
+              onPress={
+                loggedIn
+                  ? () => setShowAddScoreModal(true)
+                  : () => navigation.navigate("Login")
+              }
+            />
+          </View>
+          {!!pintipsUrl && (
+            <View style={[s.externalLinkContainer, s.marginB10]}>
+              <Text
+                style={s.externalLink}
+                onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
+              >
+                View playing tips on PinTips
+              </Text>
+              <EvilIcons name="external-link" style={s.externalIcon} />
+            </View>
+          )}
+          {!!kineticist_url && (
+            <View style={[s.externalLinkContainer, s.marginB10]}>
+              <Text
+                style={s.externalLink}
+                onPress={() => WebBrowser.openBrowserAsync(kineticist_url)}
+              >
+                View machine info on Kineticist
+              </Text>
+              <Image
+                source={require("../assets/images/kineticist.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                  marginLeft: 5,
+                }}
+              />
+            </View>
+          )}
+          <WarningButton
+            title={"Remove Machine"}
+            onPress={
+              loggedIn
+                ? () => setShowRemoveMachineModal(true)
+                : () => navigation.navigate("Login")
+            }
+            icon={
+              <FontAwesome6
+                size={24}
+                color="#ffffff"
+                name="trash-can"
+                style={s.removeButton}
+              />
+            }
+            iconPosition="left"
+          />
+        </ScrollView>
+      </ScrollView>
+    </>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -716,17 +695,6 @@ const getStyles = (theme) =>
     },
   });
 
-MachineDetails.propTypes = {
-  location: PropTypes.object,
-  addMachineCondition: PropTypes.func,
-  addMachineScore: PropTypes.func,
-  operators: PropTypes.object,
-  navigation: PropTypes.object,
-  user: PropTypes.object,
-  machineDetails: PropTypes.object,
-  removeMachineFromLocation: PropTypes.func,
-};
-
 const mapStateToProps = ({ location, operators, user, machines }) => {
   const machineDetails = location.curLmx
     ? machines.machines.find((m) => m.id === location.curLmx.machine_id)
@@ -737,7 +705,6 @@ const mapDispatchToProps = (dispatch) => ({
   addMachineCondition: (condition, lmx) =>
     dispatch(addMachineCondition(condition, lmx)),
   addMachineScore: (score, lmx) => dispatch(addMachineScore(score, lmx)),
-  removeMachineFromLocation: (lmx) => dispatch(removeMachineFromLocation(lmx)),
   updateIcEnabled: (id) => dispatch(updateIcEnabled(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MachineDetails);
