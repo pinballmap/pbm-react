@@ -184,7 +184,7 @@ const FAQ = ({ navigation }) => {
             >{`Can I add my private collection to the map?`}</Text>
             <Text
               style={s.text}
-            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members.`}</Text>
+            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members. We also exclude short-term house rentals.`}</Text>
             <Text
               style={s.bold}
             >{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
