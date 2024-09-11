@@ -20,7 +20,7 @@ export default {
     name: "Pinball Map",
     scheme: "pinballmap",
     description:
-      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 34,000 pinball machines.",
+      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 44,000 pinball machines.",
     privacy: "public",
     githubUrl: "https://github.com/pinballmap/pbm-react/",
     primaryColor: "#ebecff",

@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 0.40.0"
+    "version": ">= 0.40.0",
+    "appVersionSource": "local"
   },
   "build": {
     "development": {
@@ -40,6 +41,7 @@
     "production": {
       "distribution": "store",
       "channel": "production",
+      "autoIncrement": false,
       "ios": {
         "resourceClass": "m-medium"
       },
