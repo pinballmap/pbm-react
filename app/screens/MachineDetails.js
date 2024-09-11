@@ -39,9 +39,9 @@ import {
   WarningButton,
 } from "../components";
 import * as WebBrowser from "expo-web-browser";
-import Constants from "expo-constants";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const moment = require("moment");
 
@@ -64,6 +64,7 @@ const MachineDetails = ({
   const [showAddScoreModal, setShowAddScoreModal] = useState(false);
   const [score, setScore] = useState("");
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const { curLmx, location } = locationProp;
   const { id: userId, loggedIn } = user;
@@ -271,7 +272,7 @@ const MachineDetails = ({
           />
         )}
         <ScrollView style={{ marginBottom: 20 }}>
-          <View style={s.machineNameContainer}>
+          <View style={[{ marginTop: insets.top }, s.machineNameContainer]}>
             <Text style={s.machineName}>{machineName}</Text>
             <Text style={s.locationName}>{location.name}</Text>
           </View>
@@ -295,7 +296,7 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <>
+            <View style={{ marginBottom: 10 }}>
               <Text
                 style={{
                   textAlign: "center",
@@ -344,7 +345,7 @@ const MachineDetails = ({
                   )
                 }
               />
-            </>
+            </View>
           )}
           <View style={s.containerStyle}>
             <View style={s.locationNameContainer}>
@@ -427,19 +428,8 @@ const MachineDetails = ({
               }
             />
           </View>
-          {!!pintipsUrl && (
-            <View style={[s.externalLinkContainer, s.marginB10]}>
-              <Text
-                style={s.externalLink}
-                onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
-              >
-                View playing tips on PinTips
-              </Text>
-              <EvilIcons name="external-link" style={s.externalIcon} />
-            </View>
-          )}
           {!!kineticist_url && (
-            <View style={[s.externalLinkContainer, s.marginB10]}>
+            <View style={[{ marginBottom: 15 }, s.externalLinkContainer]}>
               <Text
                 style={s.externalLink}
                 onPress={() => WebBrowser.openBrowserAsync(kineticist_url)}
@@ -454,6 +444,17 @@ const MachineDetails = ({
                   marginLeft: 5,
                 }}
               />
+            </View>
+          )}
+          {!!pintipsUrl && (
+            <View style={[s.externalLinkContainer, s.marginB10]}>
+              <Text
+                style={s.externalLink}
+                onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
+              >
+                View playing tips on PinTips
+              </Text>
+              <EvilIcons name="external-link" style={s.externalIcon} />
             </View>
           )}
           <WarningButton
@@ -500,13 +501,10 @@ const getStyles = (theme) =>
       borderWidth: 0,
       paddingVertical: 5,
       textAlign: "center",
-      marginTop:
-        Platform.OS === "android"
-          ? Constants.statusBarHeight + 6
-          : Constants.statusBarHeight + 1,
     },
     addedContainer: {
       marginTop: 5,
+      marginBottom: 15,
     },
     addedText: {
       textAlign: "center",
@@ -635,7 +633,7 @@ const getStyles = (theme) =>
     },
     containerStyle: {
       borderRadius: 15,
-      marginVertical: 10,
+      marginBottom: 20,
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
