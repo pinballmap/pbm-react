@@ -5,6 +5,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Modal,
+  PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -84,6 +85,10 @@ const MachineDetails = ({
   const opdbImgHeight =
     opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
   const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
+  const machineNameMargin =
+    Platform.OS === "android"
+      ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
+      : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
 
   const operator =
     location.operator_id &&
@@ -271,9 +276,13 @@ const MachineDetails = ({
             closeModal={() => setShowRemoveMachineModal(false)}
           />
         )}
-        <ScrollView style={{ marginBottom: 20 }}>
-          <View style={[{ marginTop: insets.top }, s.machineNameContainer]}>
-            <Text style={s.machineName}>{machineName}</Text>
+        <ScrollView>
+          <View
+            style={[{ marginTop: machineNameMargin }, s.machineNameContainer]}
+          >
+            <Text maxFontSizeMultiplier={1.3} style={s.machineName}>
+              {machineName}
+            </Text>
             <Text style={s.locationName}>{location.name}</Text>
           </View>
           <View style={s.addedContainer}>
@@ -458,6 +467,7 @@ const MachineDetails = ({
             </View>
           )}
           <WarningButton
+            containerStyle={s.removeButtonMargins}
             title={"Remove Machine"}
             onPress={
               loggedIn
@@ -690,6 +700,12 @@ const getStyles = (theme) =>
     },
     removeButton: {
       marginRight: 10,
+    },
+    removeButtonMargins: {
+      marginLeft: 40,
+      marginRight: 40,
+      marginTop: 15,
+      marginBottom: 40,
     },
   });
 
