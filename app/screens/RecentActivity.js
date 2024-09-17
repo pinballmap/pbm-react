@@ -43,7 +43,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       if (distance || shouldRefresh) {
         setFetchingRecentActivity(true);
         getData(
-          `/user_submissions/list_within_range.json?lat=${lat};lon=${lon};max_distance=${
+          `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
             distance || maxDistance
           }`,
         ).then((data) => {

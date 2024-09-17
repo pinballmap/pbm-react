@@ -67,7 +67,7 @@ class Map extends Component {
       const decoded = decodeURIComponent(url);
       const address = decoded.split("address=")[1];
       const { location } = await getData(
-        `/locations/closest_by_address.json?address=${address};no_details=1`,
+        `/locations/closest_by_address.json?address=${address}&no_details=1`,
       );
       if (location) {
         const bounds = coordsToBounds({

@@ -56,16 +56,16 @@ export const getFilterState = (filterState) => {
   const maxDelta = noFilterNeeded
     ? 100 // A large number so that all locations are included for Operator and Fave Locations
     : multipleFilters
-    ? 80 // A pretty large delta when multiple filters are applied
-    : filteringByTwoMachines
-    ? 12
-    : filteringByMoreMachines
-    ? numMachines * 4
-    : !!machineGroupId
-    ? 20
-    : filteringMachineOrType
-    ? 40
-    : 6;
+      ? 80 // A pretty large delta when multiple filters are applied
+      : filteringByTwoMachines
+        ? 12
+        : filteringByMoreMachines
+          ? numMachines * 4
+          : !!machineGroupId
+            ? 20
+            : filteringMachineOrType
+              ? 40
+              : 6;
   return {
     maxDelta,
     ignoreZoom,
@@ -85,22 +85,22 @@ export const getLocationsByBounds =
     } = getState().query;
     const { id: userId } = getState().user;
     const machineQueryString = machineGroupId
-      ? `by_machine_group_id=${machineGroupId};`
+      ? `by_machine_group_id=${machineGroupId}&`
       : machineId
-      ? `by_machine_single_id=${machineId};`
-      : "";
+        ? `by_machine_single_id=${machineId}&`
+        : "";
     const locationTypeQueryString = locationType
-      ? `by_type_id=${locationType};`
+      ? `by_type_id=${locationType}&`
       : "";
     const numMachinesQueryString = numMachines
-      ? `by_at_least_n_machines_type=${numMachines};`
+      ? `by_at_least_n_machines_type=${numMachines}&`
       : "";
     const byOperator = selectedOperator
-      ? `by_operator_id=${selectedOperator};`
+      ? `by_operator_id=${selectedOperator}&`
       : "";
     const byUserFaved =
-      viewByFavoriteLocations && userId ? `user_faved=${userId};` : "";
-    const url = `/locations/within_bounding_box.json?swlat=${swLat};swlon=${swLon};nelat=${neLat};nelon=${neLon};${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved};no_details=1`;
+      viewByFavoriteLocations && userId ? `user_faved=${userId}&` : "";
+    const url = `/locations/within_bounding_box.json?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved}no_details=1`;
     dispatch({ type: FETCHING_LOCATIONS });
     return getData(url)
       .then((data) => {

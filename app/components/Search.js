@@ -128,7 +128,7 @@ class Search extends Component {
       const [city, state] = value.split(", ");
       const stateParam = state ? `by_state_id=${state}` : "";
       const { locations } = await getData(
-        `/locations?by_city_id=${city};${stateParam};no_details=1`,
+        `/locations?by_city_id=${city}&${stateParam}&no_details=1`,
       );
       if (!Array.isArray(locations) || !locations.length) {
         throw new Error();
