@@ -61,7 +61,11 @@ export const putData = (uri, body) => {
 };
 
 export const getData = (uri) => {
-  return fetch(global.API_URL + uri)
+  return fetch(global.API_URL + uri, {
+    headers: {
+      AppVersion: Application.nativeApplicationVersion,
+    },
+  })
     .then((response) => {
       if (response.status === 200) return response.json();
 
