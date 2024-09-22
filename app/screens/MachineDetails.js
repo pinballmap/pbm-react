@@ -688,12 +688,12 @@ const getStyles = (theme) =>
     yesIC: {
       width: "100%",
       borderRadius: 25,
-      backgroundColor: "#ecbcf5",
+      backgroundColor: "#e3fae5",
     },
     noIC: {
       width: "100%",
       borderRadius: 25,
-      backgroundColor: "#e7c8c8",
+      backgroundColor: "#f0d8d8",
     },
     italic: {
       fontFamily: "Nunito-Italic",
