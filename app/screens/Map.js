@@ -484,7 +484,7 @@ const getStyles = (theme) =>
     },
     buttonIcon: {
       fontSize: 22,
-      color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple2,
       paddingRight: 5,
     },
     buttonStyle: {
@@ -494,9 +494,9 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     buttonTitle: {
-      color: theme.theme == "dark" ? theme.text2 : theme.purple,
+      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
     },
     containerStyle: {
       shadowColor: theme.darkShadow,
@@ -530,7 +530,7 @@ const getStyles = (theme) =>
       paddingHorizontal: 15,
     },
     updateTitleStyle: {
-      color: "#17001c",
+      color: "#440152",
       fontSize: 16,
       fontFamily: "Nunito-Medium",
     },
@@ -561,14 +561,14 @@ const getStyles = (theme) =>
       borderRadius: 25,
     },
     filterTitleStyle: {
-      color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
+      color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
     },
     closeIcon: {
       paddingRight: 5,
       fontSize: 20,
-      color: theme.theme == "dark" ? theme.colors.activeTab : theme.pink1,
+      color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
     },
     pressed: {
       opacity: 0.9,

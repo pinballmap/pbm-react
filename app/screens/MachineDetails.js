@@ -305,13 +305,13 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <View style={{ marginBottom: 10 }}>
+            <View style={{ marginBottom: 5 }}>
               <Text
                 style={{
                   textAlign: "center",
                   fontSize: 12,
                   color: theme.text3,
-                  marginBottom: -8,
+                  marginBottom: -10,
                 }}
               >
                 Click to toggle Stern Insider Connected status
@@ -325,7 +325,14 @@ const MachineDetails = ({
                     ? () => updateIcEnabled(curLmx.id)
                     : () => navigation.navigate("Login")
                 }
-                titleStyle={s.titleStyle}
+                titleStyle={[
+                  s.titleStyle,
+                  ic_enabled === null
+                    ? s.nullICTitle
+                    : ic_enabled
+                      ? s.yesICTitle
+                      : s.noICTitle,
+                ]}
                 buttonStyle={
                   ic_enabled === null ? s.nullIC : ic_enabled ? s.yesIC : s.noIC
                 }
@@ -676,9 +683,17 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     titleStyle: {
-      color: "#392f3a",
       fontSize: 16,
       fontFamily: "Nunito-Bold",
+    },
+    nullICTitle: {
+      color: "#665b50",
+    },
+    yesICTitle: {
+      color: "#440152",
+    },
+    noICTitle: {
+      color: "#533a3a",
     },
     nullIC: {
       width: "100%",

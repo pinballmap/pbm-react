@@ -296,7 +296,7 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       fontFamily: "Nunito-Bold",
       fontSize: 16,
-      color: theme.text,
+      color: theme.theme == "dark" ? "#e3fae5" : theme.text,
     },
     bottomTabApplyButton: {
       shadowColor: theme.darkShadow,
@@ -313,7 +313,7 @@ const getStyles = (theme) =>
       paddingHorizontal: 15,
       fontFamily: "Nunito-Bold",
       fontSize: 15,
-      color: theme.white,
+      color: "#ffffff",
     },
   });
 
