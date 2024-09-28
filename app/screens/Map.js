@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState, useRef } from "react";
+import { connect, useDispatch } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
-import PropTypes from "prop-types";
 import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
 import { sleep } from "../utils";
@@ -32,37 +31,136 @@ import {
   setSelectedMapLocation,
 } from "../actions";
 import { getSelectedMapLocation } from "../selectors";
-import { ThemeContext } from "../theme-context";
 import Constants from "expo-constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
-class Map extends Component {
-  mapRef = null;
+const Map = ({
+  isFetchingLocations,
+  query,
+  selectedLocation,
+  numLocations,
+  isLocationServicesEnabled,
+  locationTrackingServicesEnabled,
+  regions,
+}) => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const cameraRef = useRef(null);
+  const _map = useRef(null);
+  const theme = useTheme();
+  const s = getStyles(theme);
 
-  constructor(props) {
-    super(props);
-    this.cameraRef = React.createRef(null);
-    this.state = {
-      showUpdateSearch: false,
-      isFirstLoad: true,
-      willMoveMapToLocation: false,
-      moveMapToLocation: null,
+  const [showUpdateSearch, setShowUpdateSearch] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [toCurrentLocation, setToCurrentLocation] = useState(false);
+  const [loadAgain, setLoadAgain] = useState(false);
+
+  const {
+    swLat,
+    swLon,
+    neLat,
+    neLon,
+    machineId = false,
+    locationType = false,
+    numMachines = false,
+    selectedOperator = false,
+    viewByFavoriteLocations,
+    maxZoom,
+    forceTriggerUpdateBounds,
+    triggerUpdateBounds: shouldTriggerUpdateBounds,
+  } = query;
+  const latitude = (swLat + neLat) / 2;
+  const longitude = (swLon + neLon) / 2;
+  const filterApplied =
+    machineId ||
+    locationType ||
+    numMachines ||
+    selectedOperator ||
+    viewByFavoriteLocations
+      ? true
+      : false;
+
+  useEffect(() => {
+    const run = async () => {
+      await dispatch(fetchCurrentLocation(true));
+      Linking.addEventListener("url", ({ url }) => navigateToScreen(url));
+      Mapbox.setTelemetryEnabled(false);
+
+      retrieveItem("auth").then(async (auth) => {
+        if (auth) {
+          const initialUrl = (await Linking.getInitialURL()) || "";
+          if (auth.id) {
+            dispatch(login(auth));
+            dispatch(getFavoriteLocations(auth.id));
+          }
+          navigateToScreen(initialUrl);
+        } else {
+          navigation.navigate("SignupLogin");
+        }
+      });
+
+      retrieveItem("unitPreference").then((unitPreference) => {
+        if (unitPreference) {
+          dispatch(setUnitPreference(true));
+        }
+      });
     };
-  }
+    run();
+  }, []);
 
-  static contextType = ThemeContext;
+  useEffect(() => {
+    const run = async () => {
+      if (shouldTriggerUpdateBounds || loadAgain || forceTriggerUpdateBounds) {
+        if (!cameraRef?.current) {
+          await sleep(500);
+          setLoadAgain(true);
+        }
 
-  navigateToScreen = async (url) => {
-    const { navigate } = this.props.navigation;
-    const { regions: allRegions = [] } = this.props.regions ?? {};
+        if (!toCurrentLocation) {
+          await sleep(500);
+        } else {
+          setToCurrentLocation(false);
+        }
+
+        cameraRef?.current?.setCamera({
+          animationDuration: 0,
+          bounds: {
+            ne: [neLon, neLat],
+            sw: [swLon, swLat],
+          },
+        });
+
+        if (loadAgain) {
+          await sleep(500);
+          setLoadAgain(false);
+        } else {
+          await sleep(50);
+        }
+        const bounds = await getBounds();
+        dispatch(updateBounds(bounds));
+        dispatch(getLocationsConsideringZoom(bounds));
+      }
+    };
+    run();
+  }, [
+    query,
+    cameraRef,
+    shouldTriggerUpdateBounds,
+    forceTriggerUpdateBounds,
+    loadAgain,
+    toCurrentLocation,
+  ]);
+
+  const navigateToScreen = async (url) => {
+    const { regions: allRegions = [] } = regions ?? {};
     if (url.indexOf("location_id=") > 0) {
       const idSegment = url.split("location_id=")[1];
       const id = idSegment.split("&")[0];
-      navigate("LocationDetails", { id, refreshMap: true });
-      this.setState({ moveMapToLocation: id, willMoveMapToLocation: true });
+      navigation.navigate("LocationDetails", { id, refreshMap: true });
     } else if (url.indexOf("address=") > 0) {
       const decoded = decodeURIComponent(url);
       const address = decoded.split("address=")[1];
@@ -74,9 +172,9 @@ class Map extends Component {
           lat: parseFloat(location.lat),
           lon: parseFloat(location.lon),
         });
-        this.props.triggerUpdate(bounds);
+        dispatch(triggerUpdateBounds(bounds));
       }
-      navigate("MapTab");
+      navigation.navigate("MapTab");
     } else if (url.indexOf("region=") > 0) {
       const regionSegment = url.split("region=")[1];
       const regionName = regionSegment.split("&")[0];
@@ -99,33 +197,33 @@ class Map extends Component {
             lat: parseFloat(lat),
             lon: parseFloat(lon),
           });
-          this.props.triggerUpdate(bounds);
+          dispatch(triggerUpdateBounds(bounds));
         }
       }
       // If something goes wrong trying to get the specific city (highly plausible as it requires exact case matching), still get locations for the region
       if (region && locations.length === 0) {
-        this.props.getLocationsByRegion(region);
+        dispatch(getLocationsByRegion(region));
       }
-      navigate("MapTab");
+      navigation.navigate("MapTab");
     } else if (url.indexOf("about") > 0) {
-      navigate("Contact");
+      navigation.navigate("Contact");
     } else if (url.indexOf("events") > 0) {
-      navigate("Events");
+      navigation.navigate("Events");
     } else if (url.indexOf("suggest") > 0) {
-      navigate("SuggestLocation");
+      navigation.navigate("SuggestLocation");
     } else if (url.indexOf("saved") > 0) {
-      navigate("Saved");
+      navigation.navigate("Saved");
     } else {
       const region = allRegions.find(({ name }) => url.includes(name));
       if (region) {
-        this.props.getLocationsByRegion(region);
+        dispatch(getLocationsByRegion(region));
       }
-      navigate("MapTab");
+      navigation.navigate("MapTab");
     }
   };
 
-  getBounds = async () => {
-    const currentBounds = await this._map.getVisibleBounds();
+  const getBounds = async () => {
+    const currentBounds = await _map.current.getVisibleBounds();
     return {
       swLat: currentBounds[1][1],
       swLon: currentBounds[1][0],
@@ -134,314 +232,205 @@ class Map extends Component {
     };
   };
 
-  onCameraChanged = async ({ gestures }) => {
+  const onCameraChanged = async ({ gestures }) => {
     if (gestures?.isGestureActive) {
-      this.setState({ showUpdateSearch: true, isFirstLoad: false });
+      setShowUpdateSearch(true);
+      setIsFirstLoad(false);
     }
   };
 
-  setToCurrentBounds = async () => {
-    this.setState({ showUpdateSearch: false });
-    const bounds = await this.getBounds();
-    this.props.updateBounds(bounds);
+  const setToCurrentBounds = async () => {
+    setShowUpdateSearch(false);
+    const bounds = await getBounds();
+    dispatch(updateBounds(bounds));
     return bounds;
   };
 
-  onOpenSearch = () => {
-    this.setState({ showUpdateSearch: false });
-    this.props.dispatch(setSelectedMapLocation(null));
+  const onOpenSearch = () => {
+    setShowUpdateSearch(false);
+    dispatch(setSelectedMapLocation(null));
   };
 
-  onPressFilter = async () => {
-    await this.setToCurrentBounds();
-    this.props.navigation.navigate("FilterMap");
+  const onPressFilter = async () => {
+    await setToCurrentBounds();
+    navigation.navigate("FilterMap");
   };
 
-  refreshResults = async () => {
-    this.props.clearSearchBarText();
-    const bounds = await this.setToCurrentBounds();
-    this.props.getLocationsConsideringZoom(bounds);
+  const refreshResults = async () => {
+    dispatch(clearSearchBarText());
+    const bounds = await setToCurrentBounds();
+    dispatch(getLocationsConsideringZoom(bounds));
   };
 
-  updateCurrentLocation = () => {
-    this.props.dispatch(fetchCurrentLocation(false));
-    this.setState({
-      showUpdateSearch: false,
-      toCurrentLocation: true,
-    });
+  const updateCurrentLocation = () => {
+    dispatch(fetchCurrentLocation(false));
+    setShowUpdateSearch(false);
+    setToCurrentLocation(true);
   };
 
-  mapPress = () => {
-    this.props.dispatch(setSelectedMapLocation(null));
+  const mapPress = () => {
+    dispatch(setSelectedMapLocation(null));
   };
 
-  async componentDidMount() {
-    await this.props.dispatch(fetchCurrentLocation(true));
-    Linking.addEventListener("url", ({ url }) => this.navigateToScreen(url));
-    Mapbox.setTelemetryEnabled(false);
-
-    retrieveItem("auth").then(async (auth) => {
-      if (auth) {
-        const initialUrl = (await Linking.getInitialURL()) || "";
-        if (auth.id) {
-          this.props.login(auth);
-          this.props.getFavoriteLocations(auth.id);
-        }
-        this.navigateToScreen(initialUrl);
-      } else {
-        this.props.navigation.navigate("SignupLogin");
-      }
-    });
-
-    retrieveItem("unitPreference").then((unitPreference) => {
-      if (unitPreference) {
-        this.props.setUnitPreference(true);
-      }
-    });
+  if (!latitude) {
+    return <ActivityIndicator />;
   }
 
-  async componentDidUpdate(prevProps) {
-    const {
-      triggerUpdateBounds,
-      swLat,
-      swLon,
-      neLat,
-      neLon,
-      forceTriggerUpdateBounds,
-    } = this.props.query;
-    const { loadAgain, toCurrentLocation } = this.state;
-
-    if (
-      (swLat !== prevProps.query.swLat && triggerUpdateBounds) ||
-      loadAgain ||
-      forceTriggerUpdateBounds
-    ) {
-      if (!this.cameraRef?.current) {
-        await sleep(500);
-        return this.setState({ loadAgain: true });
-      }
-
-      if (!toCurrentLocation) {
-        await sleep(500);
-      } else {
-        this.setState({ toCurrentLocation: false });
-      }
-
-      this.cameraRef?.current?.setCamera({
-        animationDuration: 0,
-        bounds: {
-          ne: [neLon, neLat],
-          sw: [swLon, swLat],
-        },
-      });
-      if (this.state.loadAgain) {
-        await sleep(500);
-        this.setState({ loadAgain: false });
-      } else {
-        await sleep(50);
-      }
-      const bounds = await this.getBounds();
-      this.props.updateBounds(bounds);
-      this.props.getLocationsConsideringZoom(bounds);
-    }
-  }
-
-  render() {
-    const {
-      isFetchingLocations,
-      navigation,
-      query,
-      selectedLocation,
-      numLocations,
-      isLocationServicesEnabled,
-      locationTrackingServicesEnabled,
-    } = this.props;
-
-    const { showUpdateSearch, isFirstLoad } = this.state;
-    const { theme } = this.context;
-    const s = getStyles(theme);
-    const { swLat, swLon, neLat, neLon } = query;
-    const latitude = (swLat + neLat) / 2;
-    const longitude = (swLon + neLon) / 2;
-    const {
-      machineId = false,
-      locationType = false,
-      numMachines = false,
-      selectedOperator = false,
-      viewByFavoriteLocations,
-      maxZoom,
-    } = this.props.query;
-    const filterApplied =
-      machineId ||
-      locationType ||
-      numMachines ||
-      selectedOperator ||
-      viewByFavoriteLocations
-        ? true
-        : false;
-
-    if (!latitude) {
-      return <ActivityIndicator />;
-    }
-
-    return (
-      <SafeAreaView
-        edges={["right", "left", "top"]}
-        style={{ flex: 1, marginTop: -Constants.statusBarHeight }}
-      >
-        <AppAlert />
-        <NoLocationTrackingModal />
-        <View style={s.search}>
-          <Search
-            navigate={navigation.navigate}
-            onOpenSearch={this.onOpenSearch}
-            onPressFilter={this.onPressFilter}
-          />
-        </View>
-        {isFetchingLocations ? (
-          <View style={s.loading}>
-            <Text style={s.loadingText}>Loading...</Text>
-          </View>
-        ) : null}
-        {numLocations === 0 && !isFetchingLocations && !isFirstLoad && (
-          <View style={s.loading}>
-            <Text style={s.loadingText}>No Results</Text>
-          </View>
-        )}
-        {maxZoom ? (
-          <View style={s.loading}>
-            <Text style={s.loadingText}>Zoom in to update results</Text>
-          </View>
-        ) : null}
-        <Mapbox.MapView
-          ref={(c) => (this._map = c)}
-          style={s.map}
-          scaleBarEnabled={false}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          attributionPosition={{ bottom: 6, left: 90 }}
-          onCameraChanged={this.onCameraChanged}
-          styleURL={
-            theme.theme === "dark"
-              ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-              : Mapbox.StyleURL.Outdoors
-          }
-          onPress={this.mapPress}
-        >
-          <Mapbox.Camera
-            ref={this.cameraRef}
-            defaultSettings={{
-              zoomLevel: 11,
-              centerCoordinate: [longitude, latitude],
-            }}
-            animationMode="none"
-            animationDuration={0}
-          />
-          {isLocationServicesEnabled && (
-            <Mapbox.LocationPuck
-              visible
-              renderMode={Platform.OS === "ios" ? "native" : "normal"}
-            />
-          )}
-          <CustomMapMarkers navigation={navigation} />
-        </Mapbox.MapView>
-        <Button
-          onPress={() => navigation.navigate("LocationList")}
-          icon={
-            <MaterialCommunityIcons
-              name="format-list-bulleted"
-              style={s.buttonIcon}
-            />
-          }
-          containerStyle={[s.listButtonContainer, s.containerStyle]}
-          buttonStyle={s.buttonStyle}
-          titleStyle={s.buttonTitle}
-          title="List"
-          underlayColor="transparent"
+  return (
+    <SafeAreaView
+      edges={["right", "left", "top"]}
+      style={{ flex: 1, marginTop: -Constants.statusBarHeight }}
+    >
+      <AppAlert />
+      <NoLocationTrackingModal />
+      <View style={s.search}>
+        <Search
+          navigate={navigation.navigate}
+          onOpenSearch={onOpenSearch}
+          onPressFilter={onPressFilter}
         />
+      </View>
+      {isFetchingLocations ? (
+        <View style={s.loading}>
+          <Text style={s.loadingText}>Loading...</Text>
+        </View>
+      ) : null}
+      {numLocations === 0 && !isFetchingLocations && !isFirstLoad && (
+        <View style={s.loading}>
+          <Text style={s.loadingText}>No Results</Text>
+        </View>
+      )}
+      {maxZoom ? (
+        <View style={s.loading}>
+          <Text style={s.loadingText}>Zoom in to update results</Text>
+        </View>
+      ) : null}
+      <Mapbox.MapView
+        ref={(c) => (_map.current = c)}
+        style={s.map}
+        scaleBarEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        attributionPosition={{ bottom: 6, left: 90 }}
+        onCameraChanged={onCameraChanged}
+        styleURL={
+          theme.theme === "dark"
+            ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
+            : Mapbox.StyleURL.Outdoors
+        }
+        onPress={mapPress}
+      >
+        <Mapbox.Camera
+          ref={cameraRef}
+          defaultSettings={{
+            zoomLevel: 11,
+            centerCoordinate: [longitude, latitude],
+          }}
+          animationMode="none"
+          animationDuration={0}
+        />
+        {isLocationServicesEnabled && (
+          <Mapbox.LocationPuck
+            visible
+            renderMode={Platform.OS === "ios" ? "native" : "normal"}
+          />
+        )}
+        <CustomMapMarkers navigation={navigation} />
+      </Mapbox.MapView>
+      <Button
+        onPress={() => navigation.navigate("LocationList")}
+        icon={
+          <MaterialCommunityIcons
+            name="format-list-bulleted"
+            style={s.buttonIcon}
+          />
+        }
+        containerStyle={[s.listButtonContainer, s.containerStyle]}
+        buttonStyle={s.buttonStyle}
+        titleStyle={s.buttonTitle}
+        title="List"
+        underlayColor="transparent"
+      />
+      <Pressable
+        style={({ pressed }) => [
+          {},
+          s.containerStyle,
+          s.myLocationContainer,
+          pressed ? s.pressedMyLocation : s.notPressed,
+        ]}
+        onPress={updateCurrentLocation}
+      >
+        {Platform.OS === "ios" && locationTrackingServicesEnabled && (
+          <FontAwesome
+            name={"location-arrow"}
+            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            size={26}
+            style={{ justifyContent: "center", alignSelf: "center" }}
+          />
+        )}
+        {Platform.OS === "ios" && !locationTrackingServicesEnabled && (
+          <MaterialIcons
+            name={"location-off"}
+            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            size={26}
+            style={{ justifyContent: "center", alignSelf: "center" }}
+          />
+        )}
+        {Platform.OS !== "ios" && locationTrackingServicesEnabled && (
+          <MaterialIcons
+            name={"gps-fixed"}
+            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            size={26}
+            style={{ justifyContent: "center", alignSelf: "center" }}
+          />
+        )}
+        {Platform.OS !== "ios" && !locationTrackingServicesEnabled && (
+          <MaterialIcons
+            name={"location-disabled"}
+            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            size={26}
+            style={{ justifyContent: "center", alignSelf: "center" }}
+          />
+        )}
+      </Pressable>
+      {filterApplied ? (
+        <Button
+          title={"Filter"}
+          onPress={() => dispatch(clearFilters(true))}
+          containerStyle={[s.filterContainer, s.containerStyle]}
+          buttonStyle={s.buttonStyle}
+          titleStyle={s.filterTitleStyle}
+          iconLeft
+          icon={<Ionicons name="close-circle" style={s.closeIcon} />}
+        />
+      ) : null}
+      {showUpdateSearch ? (
         <Pressable
           style={({ pressed }) => [
-            {},
             s.containerStyle,
-            s.myLocationContainer,
-            pressed ? s.pressedMyLocation : s.notPressed,
+            s.updateContainerStyle,
+            pressed ? s.pressed : s.notPressed,
           ]}
-          onPress={this.updateCurrentLocation}
+          onPress={refreshResults}
         >
-          {Platform.OS === "ios" && locationTrackingServicesEnabled && (
-            <FontAwesome
-              name={"location-arrow"}
-              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
-              size={26}
-              style={{ justifyContent: "center", alignSelf: "center" }}
-            />
-          )}
-          {Platform.OS === "ios" && !locationTrackingServicesEnabled && (
-            <MaterialIcons
-              name={"location-off"}
-              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
-              size={26}
-              style={{ justifyContent: "center", alignSelf: "center" }}
-            />
-          )}
-          {Platform.OS !== "ios" && locationTrackingServicesEnabled && (
-            <MaterialIcons
-              name={"gps-fixed"}
-              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
-              size={26}
-              style={{ justifyContent: "center", alignSelf: "center" }}
-            />
-          )}
-          {Platform.OS !== "ios" && !locationTrackingServicesEnabled && (
-            <MaterialIcons
-              name={"location-disabled"}
-              color={theme.theme == "dark" ? theme.purple2 : theme.purple}
-              size={26}
-              style={{ justifyContent: "center", alignSelf: "center" }}
-            />
+          {({ pressed }) => (
+            <Text style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
+              Refresh this area
+            </Text>
           )}
         </Pressable>
-        {filterApplied ? (
-          <Button
-            title={"Filter"}
-            onPress={() => this.props.clearFilters()}
-            containerStyle={[s.filterContainer, s.containerStyle]}
-            buttonStyle={s.buttonStyle}
-            titleStyle={s.filterTitleStyle}
-            iconLeft
-            icon={<Ionicons name="close-circle" style={s.closeIcon} />}
-          />
-        ) : null}
-        {showUpdateSearch ? (
-          <Pressable
-            style={({ pressed }) => [
-              s.containerStyle,
-              s.updateContainerStyle,
-              pressed ? s.pressed : s.notPressed,
-            ]}
-            onPress={this.refreshResults}
-          >
-            {({ pressed }) => (
-              <Text
-                style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}
-              >
-                Refresh this area
-              </Text>
-            )}
-          </Pressable>
-        ) : null}
-        {!!selectedLocation && (
-          <LocationBottomSheet
-            navigation={navigation}
-            location={selectedLocation}
-            setToCurrentBounds={this.setToCurrentBounds}
-            triggerUpdate={this.props.triggerUpdate}
-          />
-        )}
-      </SafeAreaView>
-    );
-  }
-}
+      ) : null}
+      {!!selectedLocation && (
+        <LocationBottomSheet
+          navigation={navigation}
+          location={selectedLocation}
+          setToCurrentBounds={setToCurrentBounds}
+          triggerUpdate={(bounds) => dispatch(updateBounds(bounds))}
+        />
+      )}
+    </SafeAreaView>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -582,21 +571,6 @@ const getStyles = (theme) =>
     },
   });
 
-Map.propTypes = {
-  isFetchingLocations: PropTypes.bool,
-  query: PropTypes.object,
-  navigation: PropTypes.object,
-  getFavoriteLocations: PropTypes.func,
-  clearFilters: PropTypes.func,
-  getLocationsConsideringZoom: PropTypes.func,
-  clearSearchBarText: PropTypes.func,
-  setUnitPreference: PropTypes.func,
-  regions: PropTypes.object,
-  login: PropTypes.func,
-  getLocationAndMachineCounts: PropTypes.func,
-  getLocationsByRegion: PropTypes.func,
-};
-
 const mapStateToProps = (state) => {
   const { locations, query, regions, user } = state;
   const selectedLocation = getSelectedMapLocation(state);
@@ -613,18 +587,5 @@ const mapStateToProps = (state) => {
     locationTrackingServicesEnabled,
   };
 };
-const mapDispatchToProps = (dispatch) => ({
-  getFavoriteLocations: (id) => dispatch(getFavoriteLocations(id)),
-  clearFilters: () => dispatch(clearFilters(true)),
-  clearSearchBarText: () => dispatch(clearSearchBarText()),
-  login: (auth) => dispatch(login(auth)),
-  setUnitPreference: (preference) => dispatch(setUnitPreference(preference)),
-  updateBounds: (bounds) => dispatch(updateBounds(bounds)),
-  getLocationsConsideringZoom: (bounds) =>
-    dispatch(getLocationsConsideringZoom(bounds)),
-  getLocationsByRegion: (region) => dispatch(getLocationsByRegion(region)),
-  triggerUpdate: (bounds) => dispatch(triggerUpdateBounds(bounds)),
-  dispatch,
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps)(Map);
