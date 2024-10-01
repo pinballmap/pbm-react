@@ -31,8 +31,10 @@ import {
   setSelectedMapLocation,
 } from "../actions";
 import { getSelectedMapLocation } from "../selectors";
-import Constants from "expo-constants";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
 
@@ -58,6 +60,8 @@ const Map = ({
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [toCurrentLocation, setToCurrentLocation] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
+  const insets = useSafeAreaInsets();
+  const topMargin = insets.top;
 
   const {
     swLat,
@@ -277,13 +281,10 @@ const Map = ({
   }
 
   return (
-    <SafeAreaView
-      edges={["right", "left", "top"]}
-      style={{ flex: 1, marginTop: -Constants.statusBarHeight }}
-    >
+    <SafeAreaView edges={["right", "left"]} style={{ flex: 1 }}>
       <AppAlert />
       <NoLocationTrackingModal />
-      <View style={s.search}>
+      <View style={[{ top: topMargin }, s.search]}>
         <Search
           navigate={navigation.navigate}
           onOpenSearch={onOpenSearch}
@@ -291,17 +292,17 @@ const Map = ({
         />
       </View>
       {isFetchingLocations ? (
-        <View style={s.loading}>
+        <View style={[{ top: topMargin + 170 }, s.loading]}>
           <Text style={s.loadingText}>Loading...</Text>
         </View>
       ) : null}
       {numLocations === 0 && !isFetchingLocations && !isFirstLoad && (
-        <View style={s.loading}>
+        <View style={[{ top: topMargin + 170 }, s.loading]}>
           <Text style={s.loadingText}>No Results</Text>
         </View>
       )}
       {maxZoom ? (
-        <View style={s.loading}>
+        <View style={[{ top: topMargin + 170 }, s.loading]}>
           <Text style={s.loadingText}>Zoom in to update results</Text>
         </View>
       ) : null}
@@ -345,7 +346,11 @@ const Map = ({
             style={s.buttonIcon}
           />
         }
-        containerStyle={[s.listButtonContainer, s.containerStyle]}
+        containerStyle={[
+          { top: topMargin + 60 },
+          s.listButtonContainer,
+          s.containerStyle,
+        ]}
         buttonStyle={s.buttonStyle}
         titleStyle={s.buttonTitle}
         title="List"
@@ -397,7 +402,11 @@ const Map = ({
         <Button
           title={"Filter"}
           onPress={() => dispatch(clearFilters(true))}
-          containerStyle={[s.filterContainer, s.containerStyle]}
+          containerStyle={[
+            { top: topMargin + 110 },
+            s.filterContainer,
+            s.containerStyle,
+          ]}
           buttonStyle={s.buttonStyle}
           titleStyle={s.filterTitleStyle}
           iconLeft
@@ -407,6 +416,7 @@ const Map = ({
       {showUpdateSearch ? (
         <Pressable
           style={({ pressed }) => [
+            { top: topMargin + 60 },
             s.containerStyle,
             s.updateContainerStyle,
             pressed ? s.pressed : s.notPressed,
@@ -439,10 +449,6 @@ const getStyles = (theme) =>
     },
     search: {
       position: "absolute",
-      top:
-        Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 50
-          : Constants.statusBarHeight + 30,
       zIndex: 10,
       alignSelf: "center",
     },
@@ -450,10 +456,6 @@ const getStyles = (theme) =>
       zIndex: 10,
       position: "absolute",
       alignSelf: "center",
-      top:
-        Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 210
-          : Constants.statusBarHeight + 190,
       paddingVertical: 7,
       paddingHorizontal: 15,
       backgroundColor: theme.text3,
@@ -497,19 +499,11 @@ const getStyles = (theme) =>
     },
     listButtonContainer: {
       position: "absolute",
-      top:
-        Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 110
-          : Constants.statusBarHeight + 90,
       left: 15,
       borderRadius: 25,
     },
     updateContainerStyle: {
       position: "absolute",
-      top:
-        Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 110
-          : Constants.statusBarHeight + 90,
       right: 15,
       alignSelf: "center",
       justifyContent: "center",
@@ -542,10 +536,6 @@ const getStyles = (theme) =>
     filterContainer: {
       position: "absolute",
       alignSelf: "center",
-      top:
-        Constants.statusBarHeight > 40
-          ? Constants.statusBarHeight + 160
-          : Constants.statusBarHeight + 140,
       left: 15,
       borderRadius: 25,
     },
