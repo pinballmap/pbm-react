@@ -32,6 +32,12 @@ export default {
     },
     plugins: [
       [
+        "expo-dev-client",
+        {
+          addGeneratedScheme: !IS_DEV,
+        },
+      ],
+      [
         "@rnmapbox/maps",
         {
           RNMapboxMapsVersion: "11.3.0",
