@@ -305,7 +305,7 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <View style={{ marginBottom: 5 }}>
+            <View>
               <Text
                 style={{
                   textAlign: "center",
