@@ -1,4 +1,5 @@
 import "dotenv/config";
+const IS_DEV = process.env.APP_VARIANT === "development";
 
 export default {
   expo: {
@@ -14,10 +15,10 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.24",
+    version: "5.3.25",
     slug: "pbm-app",
     owner: "pinballmap",
-    name: "Pinball Map",
+    name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
     scheme: "pinballmap",
     description:
       "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 44,000 pinball machines.",
@@ -60,10 +61,10 @@ export default {
       ],
     ],
     ios: {
-      bundleIdentifier: "net.isaacruiz.ppm",
+      bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: "app/assets/images/ios-icon.png",
-      buildNumber: "200",
+      buildNumber: "202",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -107,7 +108,7 @@ export default {
       },
     },
     android: {
-      package: "com.pbm",
+      package: IS_DEV ? "com.pbm.dev" : "com.pbm",
       userInterfaceStyle: "automatic",
       config: {
         googleMaps: {
@@ -121,7 +122,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 172,
+      versionCode: 174,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

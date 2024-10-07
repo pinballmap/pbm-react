@@ -11,6 +11,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
+        "APP_VARIANT": "development",
         "API_URL": "https://www.pinballmap.com/api/v1"
       },
     },
