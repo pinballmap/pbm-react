@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Image,
   Platform,
   Pressable,
   StyleSheet,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { getData } from "../config/request";
 import { Screen, Text } from "../components";
@@ -51,7 +51,8 @@ const About = ({ navigation, appAlert }) => {
       <Screen>
         <Image
           source={require("../assets/images/pinballmapcom_nocom.png")}
-          resizeMode="contain"
+          contentFit="contain"
+          tintColor={theme.theme == "dark" ? "#adc7fd" : "#1d1c1d"}
           style={s.logo}
         />
         <View style={s.child}>
@@ -124,7 +125,7 @@ const About = ({ navigation, appAlert }) => {
 
           <Image
             source={require("../assets/images/purple-machine.png")}
-            resizeMode="contain"
+            tintColor={theme.theme == "dark" ? "#f6d3fc" : "#66017b"}
             style={s.purpleMachine}
           />
 
@@ -152,7 +153,7 @@ const About = ({ navigation, appAlert }) => {
                 marginBottom: 10,
                 borderRadius: 15,
               }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </Pressable>
           <Text style={s.text}>
@@ -203,7 +204,7 @@ const About = ({ navigation, appAlert }) => {
                 marginBottom: 10,
                 borderRadius: 15,
               }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </Pressable>
 
@@ -233,7 +234,7 @@ const About = ({ navigation, appAlert }) => {
                 marginBottom: 10,
                 borderRadius: 15,
               }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </Pressable>
 
@@ -249,7 +250,7 @@ const About = ({ navigation, appAlert }) => {
                 height: (deviceWidth - 30) / 1.4195,
                 marginBottom: 10,
               }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </Pressable>
 
@@ -396,7 +397,7 @@ const About = ({ navigation, appAlert }) => {
                   height: (deviceWidth - 30) / 6.385,
                   marginVertical: 10,
                 }}
-                resizeMode="contain"
+                contentFit="contain"
               />
             </Pressable>
           ) : null}
@@ -416,15 +417,15 @@ const getStyles = (theme) =>
       marginTop: 10,
       flex: 1,
       alignSelf: "center",
+      height: (deviceWidth - 30) / 6.759,
       width: deviceWidth - 30,
-      borderRadius: 15,
-      backgroundColor: theme.theme == "dark" ? "#c3bad6" : theme.base1,
     },
     purpleMachine: {
       flex: 1,
-      height: 60,
       alignSelf: "center",
       marginVertical: 5,
+      height: 65,
+      width: 50,
     },
     child: {
       margin: "auto",

@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import { Button } from "@rneui/base";
 import { loginLater } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";

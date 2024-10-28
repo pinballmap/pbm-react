@@ -132,7 +132,7 @@ const Signup = ({ loginLater, navigation }) => {
       style={{
         flex: 1,
         justifyContent: "center",
-        backgroundColor: theme.base1,
+        backgroundColor: "transparent",
       }}
     >
       <ConfirmationModal visible={modalVisible}>

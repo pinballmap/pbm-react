@@ -32,15 +32,26 @@ export default {
     },
     plugins: [
       [
-        "expo-dev-client",
+        "expo-dev-launcher",
         {
           addGeneratedScheme: !IS_DEV,
         },
       ],
       [
+        "expo-build-properties",
+        {
+          ios: {
+            newArchEnabled: true,
+          },
+          android: {
+            newArchEnabled: true,
+          },
+        },
+      ],
+      [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.3.0",
+          RNMapboxMapsVersion: "11.4.0",
           RNMapboxMapsDownloadToken: process.env.MAPBOX_DOWNLOAD,
         },
       ],

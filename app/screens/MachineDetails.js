@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  Image,
   KeyboardAvoidingView,
   Modal,
   PixelRatio,
@@ -12,6 +11,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import {
   EvilIcons,
   FontAwesome6,
@@ -305,7 +305,7 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <View>
+            <View style={{ marginBottom: 10 }}>
               <Text
                 style={{
                   textAlign: "center",

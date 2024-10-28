@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Dimensions, Image, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";

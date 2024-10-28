@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { EvilIcons } from "@expo/vector-icons";
 import { ListItem } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
