@@ -86,7 +86,7 @@ class Login extends Component {
               style={{
                 flex: 1,
                 justifyContent: "center",
-                backgroundColor: theme.base1,
+                backgroundColor: "transparent",
               }}
             >
               <KeyboardAvoidingView

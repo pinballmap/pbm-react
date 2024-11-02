@@ -54,7 +54,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   const { loggedIn, submittingMessage, confirmationMessage } = user;
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 0, marginTop: 10 }}>
+    <View style={{ flex: 1, paddingHorizontal: 0 }}>
       <ConfirmationModal visible={confirmationMessage.length > 0}>
         <Text style={s.confirmText}>{confirmationMessage}</Text>
         <MaterialCommunityIcons
@@ -81,9 +81,9 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             <Text
               style={[s.text, s.boldFont]}
             >{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
-            <Text style={[s.text, s.regularFont]}>
-              If a venue no longer has machines -{" "}
-              <Text style={[s.pinkText, s.boldFont]}>NO NEED to tell us!</Text>{" "}
+            <Text style={[s.subText]}>
+              Is this location closed or are all the machines gone?{" "}
+              <Text style={[s.pinkText, s.boldFont]}>No need to tell us!</Text>{" "}
               {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
             </Text>
             <Text
@@ -148,6 +148,12 @@ const getStyles = (theme) =>
       marginTop: 5,
       marginHorizontal: 5,
     },
+    subText: {
+      marginHorizontal: 5,
+      marginTop: 15,
+      fontSize: 14,
+      fontFamily: "Nunito-Medium",
+    },
     textInput: {
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
@@ -160,11 +166,6 @@ const getStyles = (theme) =>
       textAlign: "left",
       fontFamily: "Nunito-Regular",
       fontSize: 16,
-    },
-    regularFont: {
-      fontFamily: "Nunito-Regular",
-      marginTop: 15,
-      fontSize: 15,
     },
     boldFont: {
       fontFamily: "Nunito-Bold",

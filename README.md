@@ -12,6 +12,15 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.25
+
+November 2, 2024
+
+- Fix top margin issue on map screen.
+- Increase contrast on map screen items in dark mode.
+- Change Insider Connected button colors.
+- Bug fix on machine comment screen to account for small devices with large text.
+
 ### 5.3.24
 
 September 12, 2024

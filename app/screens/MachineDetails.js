@@ -232,9 +232,9 @@ const MachineDetails = ({
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
             <ScrollView
               contentContainerStyle={{
-                flex: 1,
-                justifyContent: "center",
                 backgroundColor: theme.base1,
+                paddingBottom: 30,
+                paddingTop: machineNameMargin + 50,
               }}
             >
               <Text style={s.modalTitle}>
@@ -305,7 +305,7 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <View>
+            <View style={{ marginBottom: 10 }}>
               <Text
                 style={{
                   textAlign: "center",

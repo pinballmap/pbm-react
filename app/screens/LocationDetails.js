@@ -184,6 +184,33 @@ class LocationDetails extends Component {
 
     const dateDiff = moment().diff(moment(location.date_last_updated), "years");
 
+    const iconStyles = {
+      iconImage: ["get", "icon"],
+      iconSize: 0.5,
+      textSize: 20,
+      textField: ["get", "num_machines"],
+      textColor: "#fdebfc",
+      textOffset: [0, 0.05],
+      textFont: ["Nunito Sans ExtraBold"],
+    };
+    const featureCollection = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          id: location.id,
+          properties: {
+            icon: "moreOne",
+            num_machines: location.num_machines,
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [Number(location.lon), Number(location.lat)],
+          },
+        },
+      ],
+    };
+
     return (
       <ThemeContext.Consumer>
         {({ theme }) => {
@@ -321,27 +348,20 @@ class LocationDetails extends Component {
                         animationMode="none"
                         animationDuration={0}
                       />
-                      <Mapbox.PointAnnotation
-                        id="userLocation"
-                        coordinate={[
-                          Number(location.lon),
-                          Number(location.lat),
-                        ]}
+                      <Mapbox.ShapeSource
+                        id={"shape-source-id-0"}
+                        shape={featureCollection}
                       >
-                        <View style={s.markerDot}>
-                          <Text
-                            maxFontSizeMultiplier={1}
-                            style={{
-                              fontFamily: "Nunito-ExtraBold",
-                              color: "#f5f5ff",
-                              fontSize: 20,
-                              marginTop: Platform.OS === "android" ? -2 : 1,
-                            }}
-                          >
-                            {location.num_machines}
-                          </Text>
-                        </View>
-                      </Mapbox.PointAnnotation>
+                        <Mapbox.SymbolLayer
+                          id={"symbol-id1"}
+                          style={iconStyles}
+                        />
+                        <Mapbox.Images
+                          images={{
+                            moreOne: require("../assets/marker-more-selected.png"),
+                          }}
+                        />
+                      </Mapbox.ShapeSource>
                     </Mapbox.MapView>
                   </View>
 

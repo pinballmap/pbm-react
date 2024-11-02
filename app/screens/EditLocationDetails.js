@@ -5,6 +5,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Modal,
+  PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -25,7 +26,7 @@ import {
   setSelectedLocationType,
   updateLocationDetails,
 } from "../actions";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -51,6 +52,11 @@ function EditLocationDetails({
   const { locationTypes } = props.locations;
   const { operators } = props.operators;
   const { updatingLocationDetails } = props.location.location;
+  const insets = useSafeAreaInsets();
+  const machineNameMargin =
+    Platform.OS === "android"
+      ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
+      : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
   const selectedLocationType = route.params?.setSelectedLocationType;
   const selectedOperator = route.params?.setSelectedOperator;
   const locationTypeId = locationType
@@ -117,92 +123,97 @@ function EditLocationDetails({
         const s = getStyles(theme);
         return (
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-              keyboardVerticalOffset={50}
+            <ScrollView
+              contentContainerStyle={{
+                flex: 1,
+                backgroundColor: theme.base1,
+                paddingBottom: 30,
+              }}
+              keyboardShouldPersistTaps="handled"
             >
-              <ScrollView
-                contentContainerStyle={{
-                  backgroundColor: theme.base1,
-                  paddingBottom: 40,
-                }}
-                keyboardShouldPersistTaps="handled"
+              <Modal
+                animationType="slide"
+                transparent={false}
+                visible={showEditLocationDetailsModal}
+                onRequestClose={() => {}}
               >
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={showEditLocationDetailsModal}
-                  onRequestClose={() => {}}
-                >
-                  <SafeAreaProvider>
-                    <SafeAreaView style={s.background}>
-                      <ScrollView style={{ backgroundColor: theme.base1 }}>
-                        <View style={s.pageTitle}>
-                          <Text style={s.pageTitleText}>
-                            Please review your edits
-                          </Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Phone</Text>
-                          <Text style={s.preview}>{phone}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Website</Text>
-                          <Text style={s.preview}>{website}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Location Notes</Text>
-                          <Text style={s.preview}>{description}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Location Type</Text>
-                          <Text style={s.preview}>
-                            {typeof locationTypeId === "number" &&
-                            locationTypeId > -1
-                              ? locationTypes
-                                  .filter((type) => type.id === locationTypeId)
-                                  .map((type) => type.name)
-                              : "None Selected"}
-                          </Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Operator</Text>
-                          <Text style={s.preview}>
-                            {typeof operatorId === "number" && operatorId > -1
-                              ? operators
-                                  .filter((op) => op.id === operatorId)
-                                  .map((operator) => operator.name)
-                              : "None Selected"}
-                          </Text>
-                        </View>
-                        <PbmButton
-                          title={"Confirm Location Details"}
-                          onPress={() => confirmEditLocationDetails()}
-                        />
-                        <WarningButton
-                          title={"Cancel"}
-                          onPress={() => setShowEditLocationDetailsModal(false)}
-                        />
-                      </ScrollView>
-                    </SafeAreaView>
-                  </SafeAreaProvider>
-                </Modal>
-                {updatingLocationDetails ? (
-                  <ActivityIndicator />
-                ) : (
-                  <View style={{ marginLeft: 10, marginRight: 10 }}>
-                    <Text style={[s.subText, s.margin8]}>
-                      {`Want to edit the location name (or address)?`}
-                      <Text
-                        onPress={() =>
-                          navigation.navigate("Contact", { locationName: name })
-                        }
-                        style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
-                      >
-                        {"Contact us"}
+                <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                  <ScrollView
+                    contentContainerStyle={{
+                      backgroundColor: theme.base1,
+                      paddingBottom: 30,
+                      paddingTop: machineNameMargin,
+                    }}
+                  >
+                    <View style={s.pageTitle}>
+                      <Text style={s.pageTitleText}>
+                        Please review your edits
                       </Text>
-                      {` with the details!`}
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Phone</Text>
+                      <Text style={s.preview}>{phone}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Website</Text>
+                      <Text style={s.preview}>{website}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Notes</Text>
+                      <Text style={s.preview}>{description}</Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Location Type</Text>
+                      <Text style={s.preview}>
+                        {typeof locationTypeId === "number" &&
+                        locationTypeId > -1
+                          ? locationTypes
+                              .filter((type) => type.id === locationTypeId)
+                              .map((type) => type.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <View style={s.previewContainer}>
+                      <Text style={s.previewTitle}>Operator</Text>
+                      <Text style={s.preview}>
+                        {typeof operatorId === "number" && operatorId > -1
+                          ? operators
+                              .filter((op) => op.id === operatorId)
+                              .map((operator) => operator.name)
+                          : "None Selected"}
+                      </Text>
+                    </View>
+                    <PbmButton
+                      title={"Confirm Location Details"}
+                      onPress={() => confirmEditLocationDetails()}
+                    />
+                    <WarningButton
+                      title={"Cancel"}
+                      onPress={() => setShowEditLocationDetailsModal(false)}
+                    />
+                  </ScrollView>
+                </View>
+              </Modal>
+              {updatingLocationDetails ? (
+                <ActivityIndicator />
+              ) : (
+                <ScrollView>
+                  <Text style={[s.subText, s.margin8]}>
+                    {`Does the location have a new name or address?`}
+                    <Text
+                      onPress={() =>
+                        navigation.navigate("Contact", { locationName: name })
+                      }
+                      style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
+                    >
+                      {"Contact us"}
                     </Text>
+                    {` with the details!`}
+                  </Text>
+                  <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    keyboardVerticalOffset={50}
+                  >
                     <Text style={s.title}>Phone</Text>
                     <TextInput
                       style={[{ height: 40 }, s.textInput, s.radius10]}
@@ -242,34 +253,34 @@ function EditLocationDetails({
                       placeholderTextColor={theme.indigo4}
                       textAlignVertical="top"
                     />
-                    <Text style={[s.subText, s.margin8]}>
-                      If this venue is{" "}
-                      <Text style={{ fontFamily: "Nunito-Bold" }}>
-                        closed or no longer has machines
-                      </Text>
-                      , simply remove the machines from the listing.
+                  </KeyboardAvoidingView>
+                  <Text style={[s.subText, s.margin8]}>
+                    Is this location{" "}
+                    <Text style={{ fontFamily: "Nunito-Bold" }}>
+                      closed or are all the machines gone
                     </Text>
+                    ? Simply remove the machines!
+                  </Text>
 
-                    <Text style={s.title}>Location Type</Text>
-                    <DropDownButton
-                      title={locationTypeName}
-                      containerStyle={[s.containerStyle]}
-                      onPress={() => goToFindLocationType()}
-                    />
-                    <Text style={s.title}>Operator</Text>
-                    <DropDownButton
-                      title={operatorName}
-                      containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
-                      onPress={() => goToFindOperator()}
-                    />
-                    <PbmButton
-                      title={"Review Location Details"}
-                      onPress={() => setShowEditLocationDetailsModal(true)}
-                    />
-                  </View>
-                )}
-              </ScrollView>
-            </KeyboardAvoidingView>
+                  <Text style={s.title}>Location Type</Text>
+                  <DropDownButton
+                    title={locationTypeName}
+                    containerStyle={[s.containerStyle]}
+                    onPress={() => goToFindLocationType()}
+                  />
+                  <Text style={s.title}>Operator</Text>
+                  <DropDownButton
+                    title={operatorName}
+                    containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
+                    onPress={() => goToFindOperator()}
+                  />
+                  <PbmButton
+                    title={"Review Location Details"}
+                    onPress={() => setShowEditLocationDetailsModal(true)}
+                  />
+                </ScrollView>
+              )}
+            </ScrollView>
           </View>
         );
       }}
@@ -313,13 +324,13 @@ const getStyles = (theme) =>
     },
     pageTitle: {
       paddingVertical: 10,
-      backgroundColor: theme.pink2,
+      backgroundColor: theme.base4,
     },
     pageTitleText: {
       textAlign: "center",
       fontFamily: "Nunito-Italic",
       fontSize: 18,
-      color: theme.pink1,
+      color: theme.purpleLight,
     },
     title: {
       textAlign: "center",
