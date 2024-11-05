@@ -325,6 +325,7 @@ const getStyles = (theme) =>
       paddingTop: 10,
       paddingBottom: 14,
       backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
+      marginTop: 20,
       marginHorizontal: 20,
       borderRadius: 20,
     },
