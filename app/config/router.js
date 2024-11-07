@@ -129,8 +129,9 @@ function BottomTabNavigator() {
       screenOptions={{
         gestureEnabled: true,
         tabBarStyle: {
+          borderTopColor: colors.border,
+          borderTopWidth: 0.25,
           backgroundColor: colors.tabBar,
-          borderTopWidth: 0,
           height: Platform.OS === "android" ? 56 : 79,
         },
         tabBarLabelPosition: "below-icon",
@@ -160,7 +161,7 @@ function BottomTabNavigator() {
           ),
           tabBarIcon: ({ focused }) => (
             <MaterialIcons
-              name="search"
+              name="map"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />

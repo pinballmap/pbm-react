@@ -31,7 +31,7 @@ export const dark = {
     border: "#797479",
     notification: "green",
     activeTab: "#f5c9fd",
-    inactiveTab: "#d9d9e0",
+    inactiveTab: "#E0D6E0",
     tabBar: "#303041",
   },
 };
@@ -69,7 +69,7 @@ export const standard = {
     border: "#e0e0ff",
     notification: "yellow",
     activeTab: "#9718b1",
-    inactiveTab: "#685d6b",
+    inactiveTab: "#786D7A",
     tabBar: "#fafaff",
   },
 };
