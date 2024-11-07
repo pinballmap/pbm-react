@@ -132,7 +132,6 @@ function BottomTabNavigator() {
           borderTopColor: colors.border,
           borderTopWidth: 0.25,
           backgroundColor: colors.tabBar,
-          height: Platform.OS === "android" ? 56 : 79,
         },
         tabBarLabelPosition: "below-icon",
         tabBarIconStyle: {
@@ -466,6 +465,6 @@ export default DrawerNavigator;
 const s = StyleSheet.create({
   labelText: {
     fontSize: 12,
-    marginBottom: Platform.OS === "android" ? 6 : 0,
+    marginBottom: Platform.OS === "android" ? 3 : 0,
   },
 });
