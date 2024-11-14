@@ -228,7 +228,7 @@ const getStyles = (theme) =>
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,
-      height: 40,
+      paddingVertical: 8,
       justifyContent: "center",
     },
     filterTitle: {

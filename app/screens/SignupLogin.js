@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -24,11 +25,10 @@ const SignupLogin = ({
   const s = getStyles();
 
   return (
-    <ImageBackground
-      source={require("../assets/images/app_logo.jpg")}
-      style={s.backgroundImage}
-    >
-      <View style={[s.mask, s.justify]}>
+    <View style={[s.mask, s.justify]}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
         <View style={s.logoWrapper}>
           <Image
             source={require("../assets/images/pinballmapcom_nocom.png")}
@@ -60,14 +60,14 @@ const SignupLogin = ({
               <Text
                 style={{ marginTop: 15, fontSize: 18, textAlign: "center" }}
               >
-                When prompted on the next screen, enable location services to
-                see pinball machines near you!
+                On the next screen, enable location services to see pinball
+                machines near you!
               </Text>
               {"\n"}
               {"\n"}
               <Text>
-                YOU can help keep the map up to date! Create an account
-                (optional).
+                You can create an account (optional) and help keep the map up to
+                date!
               </Text>
             </Text>
           </View>
@@ -116,8 +116,13 @@ const SignupLogin = ({
             containerStyle={{ overflow: "hidden", borderRadius: 25 }}
           />
         </View>
-      </View>
-    </ImageBackground>
+      </ScrollView>
+      <ImageBackground
+        source={require("../assets/images/app_logo.jpg")}
+        style={s.backgroundImage}
+        imageStyle={{ opacity: 0.2 }}
+      />
+    </View>
   );
 };
 
@@ -125,12 +130,17 @@ const getStyles = () =>
   StyleSheet.create({
     mask: {
       flex: 1,
-      backgroundColor: "rgba(255,255,255,.8)",
+      backgroundColor: "transparent",
     },
     backgroundImage: {
-      flex: 1,
-      width: null,
-      height: null,
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: -1,
     },
     bold: {
       fontFamily: "Nunito-Bold",

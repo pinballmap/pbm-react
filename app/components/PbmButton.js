@@ -82,7 +82,7 @@ PbmButton.propTypes = {
   disabled: PropTypes.bool,
   buttonStyle: PropTypes.object,
   containerStyle: PropTypes.object,
-  titleStyle: PropTypes.array,
+  titleStyle: PropTypes.object,
 };
 
 export default PbmButton;

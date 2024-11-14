@@ -14,11 +14,12 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.3.25
 
-October xx, 2024
+November 2, 2024
 
 - Fix top margin issue on map screen.
 - Increase contrast on map screen items in dark mode.
 - Change Insider Connected button colors.
+- Bug fix on machine comment screen to account for small devices with large text.
 
 ### 5.3.24
 

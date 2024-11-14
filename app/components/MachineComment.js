@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import {
   KeyboardAvoidingView,
   Modal,
+  PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -13,6 +14,7 @@ import {
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const moment = require("moment");
 
@@ -21,6 +23,7 @@ const MachineComment = ({ commentObj, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [loading, setIsLoading] = useState(false);
+  const insets = useSafeAreaInsets();
   const {
     comment: initialComment,
     created_at,
@@ -42,6 +45,10 @@ const MachineComment = ({ commentObj, user }) => {
       setEditModalVisible(false);
     }
   };
+  const machineNameMargin =
+    Platform.OS === "android"
+      ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
+      : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
 
   const onDeletePress = async () => {
     try {
@@ -83,9 +90,9 @@ const MachineComment = ({ commentObj, user }) => {
               <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                 <ScrollView
                   contentContainerStyle={{
-                    flex: 1,
-                    justifyContent: "center",
                     backgroundColor: theme.base1,
+                    paddingBottom: 30,
+                    paddingTop: machineNameMargin + 50,
                   }}
                 >
                   <Text style={s.modalTitle}>Edit your comment</Text>

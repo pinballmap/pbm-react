@@ -129,10 +129,14 @@ function BottomTabNavigator() {
       screenOptions={{
         gestureEnabled: true,
         tabBarStyle: {
+          borderTopColor: colors.border,
+          borderTopWidth: 0.25,
           backgroundColor: colors.tabBar,
-          borderTopWidth: 0,
         },
         tabBarLabelPosition: "below-icon",
+        tabBarIconStyle: {
+          marginBottom: Platform.OS === "android" ? -4 : -2,
+        },
       }}
     >
       <Tab.Screen
@@ -156,7 +160,7 @@ function BottomTabNavigator() {
           ),
           tabBarIcon: ({ focused }) => (
             <MaterialIcons
-              name="search"
+              name="map"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
@@ -461,7 +465,6 @@ export default DrawerNavigator;
 const s = StyleSheet.create({
   labelText: {
     fontSize: 12,
-    marginBottom: Platform.OS === "android" ? 5 : 0,
-    marginTop: Platform.OS === "android" ? -5 : 0,
+    marginBottom: Platform.OS === "android" ? 3 : 0,
   },
 });

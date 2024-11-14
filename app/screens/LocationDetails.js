@@ -193,7 +193,6 @@ class LocationDetails extends Component {
       textOffset: [0, 0.05],
       textFont: ["Nunito Sans ExtraBold"],
     };
-
     const featureCollection = {
       type: "FeatureCollection",
       features: [

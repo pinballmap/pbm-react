@@ -5,6 +5,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Modal,
+  PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -30,7 +31,7 @@ import {
   suggestLocation,
   resetSuggestLocation,
 } from "../actions";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 let deviceWidth = Dimensions.get("window").width;
@@ -59,6 +60,11 @@ function SuggestLocation({
     useState(false);
   const [countryName, setCountryName] = useState("United States");
   const [countryCode, setCountryCode] = useState("US");
+  const insets = useSafeAreaInsets();
+  const machineNameMargin =
+    Platform.OS === "android"
+      ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
+      : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
 
   useEffect(() => {
     if (route.params?.countryCode) {
@@ -235,159 +241,157 @@ function SuggestLocation({
                     {isSuggestingLocation ? (
                       <ActivityIndicator />
                     ) : locationSuggested ? (
-                      <SafeAreaProvider>
-                        <SafeAreaView
-                          style={{ flex: 1, backgroundColor: theme.base1 }}
+                      <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                        <ScrollView
+                          contentContainerStyle={{
+                            backgroundColor: theme.base1,
+                            paddingBottom: 30,
+                            paddingTop: machineNameMargin + 50,
+                          }}
                         >
-                          <ScrollView
-                            style={[s.successContainer, s.background]}
-                            contentContainerStyle={{
-                              flex: 1,
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Text style={s.success}>
-                              <Text style={s.successBanner}>
-                                {`Thanks for submitting that location!\n\n`}
-                              </Text>
-                              {`Please allow us 0-7 days to review and add it. No need to re-submit it or remind us (unless it's opening day!).\n\nNote: you usually won't get a message from us confirming that it's been added.`}
+                          <Text style={s.success}>
+                            <Text style={s.successBanner}>
+                              {`Thanks for submitting that location!\n\n`}
                             </Text>
-                            <MaterialCommunityIcons
-                              name="close-circle"
-                              size={45}
-                              onPress={() => {
-                                navigation.navigate("MapTab");
-                                setShowSuggestLocationModal(false);
-                                resetSuggestLocation();
-                              }}
-                              style={s.xButton}
-                            />
-                          </ScrollView>
-                        </SafeAreaView>
-                      </SafeAreaProvider>
+                            {`Please allow us 0-7 days to review and add it. No need to re-submit it or remind us (unless it's opening day!).\n\nNote: you usually won't get a message from us confirming that it's been added.`}
+                          </Text>
+                          <MaterialCommunityIcons
+                            name="close-circle"
+                            size={45}
+                            onPress={() => {
+                              navigation.navigate("MapTab");
+                              setShowSuggestLocationModal(false);
+                              resetSuggestLocation();
+                            }}
+                            style={s.xButton}
+                          />
+                        </ScrollView>
+                      </View>
                     ) : (
-                      <SafeAreaProvider>
-                        <SafeAreaView style={[{ flex: 1 }, s.background]}>
-                          <ScrollView style={s.background}>
-                            <View style={s.pageTitle}>
-                              {machineList.length === 0 ||
-                              locationName?.length === 0 ? (
-                                <Text style={[s.pageTitleText, s.error]}>
-                                  Please fill in required fields
-                                </Text>
-                              ) : (
-                                <Text style={s.pageTitleText}>
-                                  Please review your submission
-                                </Text>
-                              )}
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Location Name</Text>
-                              {locationName?.length === 0 ? (
-                                <Text style={[s.error, s.preview]}>
-                                  Include a location name
-                                </Text>
-                              ) : (
-                                <Text style={s.preview}>{locationName}</Text>
-                              )}
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Street</Text>
-                              <Text style={s.preview}>{street}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>City</Text>
-                              <Text style={s.preview}>{city}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>State</Text>
-                              <Text style={s.preview}>{state}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Zip</Text>
-                              <Text style={s.preview}>{zip}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Country</Text>
-                              <Text style={s.preview}>{countryName}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Phone</Text>
-                              <Text style={s.preview}>{phone}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Website</Text>
-                              <Text style={s.preview}>{website}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Location Notes</Text>
-                              <Text style={s.preview}>{description}</Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Location Type</Text>
-                              <Text style={s.preview}>
-                                {typeof locationType === "number" &&
-                                locationType > -1
-                                  ? locationTypes
-                                      .filter(
-                                        (type) => type.id === locationType,
-                                      )
-                                      .map((type) => type.name)
-                                  : "None Selected"}
+                      <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                        <ScrollView
+                          contentContainerStyle={{
+                            backgroundColor: theme.base1,
+                            paddingBottom: 30,
+                            paddingTop: machineNameMargin,
+                          }}
+                        >
+                          <View style={s.pageTitle}>
+                            {machineList.length === 0 ||
+                            locationName?.length === 0 ? (
+                              <Text style={[s.pageTitleText, s.error]}>
+                                Please fill in required fields
                               </Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Operator</Text>
-                              <Text style={s.preview}>
-                                {typeof operator === "number" && operator > -1
-                                  ? operators
-                                      .filter((op) => op.id === operator)
-                                      .map((op) => op.name)
-                                  : "None Selected"}
+                            ) : (
+                              <Text style={s.pageTitleText}>
+                                Please review your submission
                               </Text>
-                            </View>
-                            <View style={s.previewContainer}>
-                              <Text style={s.previewTitle}>Machine List</Text>
-                              {machineList.length === 0 ? (
-                                <Text style={[s.error, s.preview]}>
-                                  Include at least one machine
-                                </Text>
-                              ) : (
-                                <View style={s.preview}>
-                                  {machineList.map((m) => (
-                                    <Text style={s.previewMachine} key={m.name}>
-                                      {m.name} ({m.manufacturer}, {m.year})
-                                    </Text>
-                                  ))}
-                                </View>
-                              )}
-                            </View>
-                            <View style={s.machineVersionContainer}>
-                              <Text
-                                style={{
-                                  paddingHorizontal: 15,
-                                  paddingVertical: 10,
-                                  color: theme.purpleLight,
-                                }}
-                              >
-                                {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
+                            )}
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Location Name</Text>
+                            {locationName?.length === 0 ? (
+                              <Text style={[s.error, s.preview]}>
+                                Include a location name
                               </Text>
-                            </View>
-                            <PbmButton
-                              title={"Submit Location"}
-                              onPress={() => confirmSuggestLocationDetails()}
-                              disabled={
-                                machineList.length === 0 ||
-                                locationName.length === 0
-                              }
-                            />
-                            <WarningButton
-                              title={"Go Back"}
-                              onPress={() => setShowSuggestLocationModal(false)}
-                            />
-                          </ScrollView>
-                        </SafeAreaView>
-                      </SafeAreaProvider>
+                            ) : (
+                              <Text style={s.preview}>{locationName}</Text>
+                            )}
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Street</Text>
+                            <Text style={s.preview}>{street}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>City</Text>
+                            <Text style={s.preview}>{city}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>State</Text>
+                            <Text style={s.preview}>{state}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Zip</Text>
+                            <Text style={s.preview}>{zip}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Country</Text>
+                            <Text style={s.preview}>{countryName}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Phone</Text>
+                            <Text style={s.preview}>{phone}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Website</Text>
+                            <Text style={s.preview}>{website}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Location Notes</Text>
+                            <Text style={s.preview}>{description}</Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Location Type</Text>
+                            <Text style={s.preview}>
+                              {typeof locationType === "number" &&
+                              locationType > -1
+                                ? locationTypes
+                                    .filter((type) => type.id === locationType)
+                                    .map((type) => type.name)
+                                : "None Selected"}
+                            </Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Operator</Text>
+                            <Text style={s.preview}>
+                              {typeof operator === "number" && operator > -1
+                                ? operators
+                                    .filter((op) => op.id === operator)
+                                    .map((op) => op.name)
+                                : "None Selected"}
+                            </Text>
+                          </View>
+                          <View style={s.previewContainer}>
+                            <Text style={s.previewTitle}>Machine List</Text>
+                            {machineList.length === 0 ? (
+                              <Text style={[s.error, s.preview]}>
+                                Include at least one machine
+                              </Text>
+                            ) : (
+                              <View style={s.preview}>
+                                {machineList.map((m) => (
+                                  <Text style={s.previewMachine} key={m.name}>
+                                    {m.name} ({m.manufacturer}, {m.year})
+                                  </Text>
+                                ))}
+                              </View>
+                            )}
+                          </View>
+                          <View style={s.machineVersionContainer}>
+                            <Text
+                              style={{
+                                paddingHorizontal: 15,
+                                paddingVertical: 10,
+                                color: theme.purpleLight,
+                              }}
+                            >
+                              {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
+                            </Text>
+                          </View>
+                          <PbmButton
+                            title={"Submit Location"}
+                            onPress={() => confirmSuggestLocationDetails()}
+                            disabled={
+                              machineList.length === 0 ||
+                              locationName.length === 0
+                            }
+                          />
+                          <WarningButton
+                            title={"Go Back"}
+                            onPress={() => setShowSuggestLocationModal(false)}
+                          />
+                        </ScrollView>
+                      </View>
                     )}
                   </Modal>
                   <Text
@@ -561,11 +565,7 @@ function SuggestLocation({
                   <Text style={s.title}>Machines</Text>
                   <PbmButton
                     title={"Select machines"}
-                    titleStyle={{
-                      fontSize: 16,
-                      color: theme.text3,
-                      fontFamily: "Nunito-Regular",
-                    }}
+                    titleStyle={s.titleStyle}
                     onPress={() =>
                       navigate("FindMachine", { multiSelect: true })
                     }
@@ -638,6 +638,11 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Bold",
       color: theme.text2,
+    },
+    titleStyle: {
+      fontSize: 16,
+      color: theme.text3,
+      fontFamily: "Nunito-Regular",
     },
     previewContainer: {
       flexDirection: "row",

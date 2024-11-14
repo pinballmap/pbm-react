@@ -67,7 +67,6 @@ const getStyles = (theme) =>
       marginTop: -25,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
-      height: 40,
       paddingVertical: 8,
     },
     appAlert: {

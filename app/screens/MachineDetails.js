@@ -172,9 +172,9 @@ const MachineDetails = ({
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
             <ScrollView
               contentContainerStyle={{
-                flex: 1,
-                justifyContent: "center",
                 backgroundColor: theme.base1,
+                paddingBottom: 30,
+                paddingTop: machineNameMargin + 50,
               }}
             >
               <Text style={s.modalTitle}>
@@ -200,10 +200,10 @@ const MachineDetails = ({
               </KeyboardAvoidingView>
               <Text style={[s.modalSubText, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
-                {`Sometimes it's better to tell technicians about small and very temporary issues on-site (note or call) rather than leaving them "on the record" here.`}
+                {`it's often best to tell technicians about issues on-site rather than leaving them "on the record" here.`}
               </Text>
               <Text style={[s.modalSubText, s.margin4]}>
-                {`That said, please be descriptive about machine issues and also considerate of the time and effort needed to maintain machines.`}
+                {`Please be descriptive about machine issues and considerate toward those fixing them.`}
               </Text>
               {!!location.operator_id && operatorHasEmail && (
                 <Text style={[s.modalSubText, s.margin4, s.bold]}>
@@ -232,9 +232,9 @@ const MachineDetails = ({
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
             <ScrollView
               contentContainerStyle={{
-                flex: 1,
-                justifyContent: "center",
                 backgroundColor: theme.base1,
+                paddingBottom: 30,
+                paddingTop: machineNameMargin + 50,
               }}
             >
               <Text style={s.modalTitle}>
@@ -540,6 +540,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
+      marginHorizontal: 20,
     },
     externalIcon: {
       fontSize: 24,
