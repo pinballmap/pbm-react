@@ -23,6 +23,11 @@ Sentry.init({
 
 SplashScreen.preventAutoHideAsync();
 
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+});
+
 const defaultTheme = Appearance.getColorScheme();
 
 // https://github.com/facebook/react-native/issues/19410

@@ -1,14 +1,8 @@
-import "dotenv/config";
 const IS_DEV = process.env.APP_VARIANT === "development";
 
 export default {
   expo: {
     assetBundlePatterns: ["app/assets/images/*"],
-    splash: {
-      image: "app/assets/images/pbm-splash-2022.png",
-      backgroundColor: "#47475f",
-      resizeMode: "contain",
-    },
     updates: {
       url: "https://u.expo.dev/7488ea00-6c89-11e9-8ab8-0157f5861c1f",
     },
@@ -22,9 +16,9 @@ export default {
     scheme: "pinballmap",
     description:
       "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 44,000 pinball machines.",
-    privacy: "public",
     githubUrl: "https://github.com/pinballmap/pbm-react/",
     primaryColor: "#ebecff",
+    newArchEnabled: true,
     extra: {
       eas: {
         projectId: "7488ea00-6c89-11e9-8ab8-0157f5861c1f",
@@ -38,14 +32,11 @@ export default {
         },
       ],
       [
-        "expo-build-properties",
+        "expo-splash-screen",
         {
-          ios: {
-            newArchEnabled: true,
-          },
-          android: {
-            newArchEnabled: true,
-          },
+          backgroundColor: "#47475f",
+          image: "app/assets/images/pbm-splash-2022.png",
+          imageWidth: 200,
         },
       ],
       [
@@ -80,7 +71,49 @@ export default {
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
-      icon: "app/assets/images/ios-icon.png",
+      icon: {
+        description:
+          "Configuration that is specific to the iOS platform icons.",
+        type: "object",
+        properties: {
+          light: {
+            description:
+              "The light icon. It will appear when neither dark nor tinted icons are used, or if they are not provided.",
+            path: "app/assets/images/ios-icon.png",
+            type: "string",
+            meta: {
+              asset: true,
+              contentTypePattern: "^image/png$",
+              contentTypeHuman: ".png image",
+              square: true,
+            },
+          },
+          dark: {
+            description:
+              "The dark icon. It will appear for the app when the user's system appearance is dark. See Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/app-icons#iOS-iPadOS) for more information.",
+            path: "app/assets/images/ios-icon-dark.png",
+            type: "string",
+            meta: {
+              asset: true,
+              contentTypePattern: "^image/png$",
+              contentTypeHuman: ".png image",
+              square: true,
+            },
+          },
+          tinted: {
+            description:
+              "The tinted icon. It will appear for the app when the user's system appearance is tinted. See Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/app-icons#iOS-iPadOS) for more information.",
+            path: "app/assets/images/ios-icon-tinted.png",
+            type: "string",
+            meta: {
+              asset: true,
+              contentTypePattern: "^image/png$",
+              contentTypeHuman: ".png image",
+              square: true,
+            },
+          },
+        },
+      },
       buildNumber: "203",
       supportsTablet: true,
       infoPlist: {
