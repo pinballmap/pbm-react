@@ -38,8 +38,8 @@ import {
   getDistanceWithUnit,
 } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
-import Constants from "expo-constants";
 import { useNavigation, useTheme } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -60,6 +60,8 @@ const LocationDetails = (props) => {
   const [detailsExpanded, setDetailsExpanded] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const insets = useSafeAreaInsets();
+  const topMargin = insets.top;
 
   useEffect(() => {
     const onMount = async () => {
@@ -232,18 +234,18 @@ const LocationDetails = (props) => {
         <View
           style={{
             flex: 1,
-            marginTop:
-              Platform.OS === "android"
-                ? Constants.statusBarHeight + 15
-                : Constants.statusBarHeight + 8,
+            marginTop: topMargin,
           }}
         >
-          <View style={s.mapViewContainer}>
+          <View style={[{ marginTop: -topMargin }, s.mapViewContainer]}>
             <Pressable
               style={({ pressed }) => [
-                s.directionsButton,
-                s.mapViewButton,
-                pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                [
+                  { top: topMargin },
+                  s.directionsButton,
+                  s.mapViewButton,
+                  pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                ],
               ]}
               onPress={() => {
                 openMap({
@@ -267,9 +269,12 @@ const LocationDetails = (props) => {
             </Pressable>
             <Pressable
               style={({ pressed }) => [
-                s.mapButton,
-                s.mapViewButton,
-                pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                [
+                  { top: topMargin },
+                  s.mapButton,
+                  s.mapViewButton,
+                  pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                ],
               ]}
               onPress={onMapPress}
             >
@@ -288,9 +293,12 @@ const LocationDetails = (props) => {
 
             <Pressable
               style={({ pressed }) => [
-                s.mapViewButton,
-                s.shareButton,
-                pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                [
+                  { top: topMargin },
+                  s.shareButton,
+                  s.mapViewButton,
+                  pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
+                ],
               ]}
               onPress={async () => {
                 await Share.share({
@@ -749,10 +757,6 @@ const LocationDetails = (props) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     mapViewContainer: {
-      marginTop:
-        Platform.OS === "android"
-          ? -Constants.statusBarHeight - 15
-          : -Constants.statusBarHeight - 8,
       height: 200,
       width: "100%",
     },
@@ -952,26 +956,14 @@ const getStyles = (theme) =>
     directionsButton: {
       position: "absolute",
       right: 10,
-      top:
-        Platform.OS == "ios"
-          ? Constants.statusBarHeight
-          : Constants.statusBarHeight + 7,
     },
     mapButton: {
       position: "absolute",
       right: 60,
-      top:
-        Platform.OS == "ios"
-          ? Constants.statusBarHeight
-          : Constants.statusBarHeight + 7,
     },
     shareButton: {
       position: "absolute",
       right: 110,
-      top:
-        Platform.OS == "ios"
-          ? Constants.statusBarHeight
-          : Constants.statusBarHeight + 7,
     },
     metaIcon: {
       paddingTop: 0,
