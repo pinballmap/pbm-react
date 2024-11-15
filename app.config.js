@@ -42,7 +42,7 @@ export default {
       [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.4.0",
+          RNMapboxMapsVersion: "11.8.0",
           RNMapboxMapsDownloadToken: process.env.MAPBOX_DOWNLOAD,
         },
       ],
