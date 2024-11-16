@@ -49,7 +49,6 @@ const moment = require("moment");
 
 const LocationDetails = (props) => {
   const { route } = props;
-  console.log(route);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useTheme();
