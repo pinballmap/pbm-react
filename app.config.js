@@ -35,7 +35,7 @@ export default {
         "expo-splash-screen",
         {
           backgroundColor: "#47475f",
-          image: "app/assets/images/pbm-splash-2022.png",
+          image: "app/assets/images/pbm-splash-2024.png",
           imageWidth: 200,
         },
       ],
@@ -72,47 +72,9 @@ export default {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
       userInterfaceStyle: "automatic",
       icon: {
-        description:
-          "Configuration that is specific to the iOS platform icons.",
-        type: "object",
-        properties: {
-          light: {
-            description:
-              "The light icon. It will appear when neither dark nor tinted icons are used, or if they are not provided.",
-            path: "app/assets/images/ios-icon.png",
-            type: "string",
-            meta: {
-              asset: true,
-              contentTypePattern: "^image/png$",
-              contentTypeHuman: ".png image",
-              square: true,
-            },
-          },
-          dark: {
-            description:
-              "The dark icon. It will appear for the app when the user's system appearance is dark. See Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/app-icons#iOS-iPadOS) for more information.",
-            path: "app/assets/images/ios-icon-dark.png",
-            type: "string",
-            meta: {
-              asset: true,
-              contentTypePattern: "^image/png$",
-              contentTypeHuman: ".png image",
-              square: true,
-            },
-          },
-          tinted: {
-            description:
-              "The tinted icon. It will appear for the app when the user's system appearance is tinted. See Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/app-icons#iOS-iPadOS) for more information.",
-            path: "app/assets/images/ios-icon-tinted.png",
-            type: "string",
-            meta: {
-              asset: true,
-              contentTypePattern: "^image/png$",
-              contentTypeHuman: ".png image",
-              square: true,
-            },
-          },
-        },
+        light: "app/assets/images/ios-icon.png",
+        dark: "app/assets/images/ios-icon-dark.png",
+        tinted: "app/assets/images/ios-icon-tinted.png",
       },
       buildNumber: "203",
       supportsTablet: true,
