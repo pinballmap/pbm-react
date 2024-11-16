@@ -128,7 +128,11 @@ class UserProfile extends Component {
                     {!admin_rank_int && !!contributor_rank_int && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{contributor_rank}</Text>
-                        <Image source={contributor_icon} style={s.rankIcon} />
+                        <Image
+                          contentFit="fill"
+                          source={contributor_icon}
+                          style={s.rankIcon}
+                        />
                       </View>
                     )}
                     <Text style={s.joined}>
@@ -410,7 +414,6 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 20,
       height: 20,
-      resizeMode: "stretch",
       marginLeft: 8,
     },
     externalUpdateContainer: {

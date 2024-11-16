@@ -954,17 +954,6 @@ const getStyles = (theme) =>
       color: theme.red2,
       fontFamily: "Nunito-Regular",
     },
-    logo: {
-      resizeMode: "contain",
-      borderColor: "#fdd4d7",
-      borderWidth: 10,
-      borderRadius: 15,
-    },
-    logoWrapper: {
-      paddingTop: 20,
-      justifyContent: "center",
-      alignItems: "center",
-    },
     quickButton: {
       borderWidth: 1,
       borderColor: theme.pink2,

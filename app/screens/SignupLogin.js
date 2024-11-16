@@ -31,6 +31,7 @@ const SignupLogin = ({
       >
         <View style={s.logoWrapper}>
           <Image
+            contentFit="contain"
             source={require("../assets/images/pinballmapcom_nocom.png")}
             style={s.logo}
           />
@@ -165,7 +166,6 @@ const getStyles = () =>
     },
     logo: {
       width: "100%",
-      resizeMode: "contain",
     },
     buttonPink: {
       backgroundColor: "#8e83ce",
