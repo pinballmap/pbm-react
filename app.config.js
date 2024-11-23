@@ -9,7 +9,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.25",
+    version: "5.3.26",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -76,7 +76,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "203",
+      buildNumber: "204",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:

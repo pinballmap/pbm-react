@@ -30,7 +30,7 @@ import FindLocationType from "../screens/FindLocationType";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
-import { FontAwesome6 } from "@expo/vector-icons";
+// import { FontAwesome6 } from "@expo/vector-icons";
 
 import { DrawerMenu } from "../components";
 
@@ -310,18 +310,18 @@ function MapStack() {
           fontFamily: "Nunito-Bold",
         },
         headerTitleAllowFontScaling: false,
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <FontAwesome6
-            name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
-            size={24}
-            color={colors.text}
-            style={{
-              marginLeft: Platform.OS === "android" ? 0 : 10,
-              marginRight: 5,
-            }}
-          />
-        ),
+        headerBackButtonDisplayMode: "minimal",
+        // headerBackImage: () => (
+        //   <FontAwesome6
+        //     name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
+        //     size={24}
+        //     color={colors.text}
+        //     style={{
+        //       marginLeft: Platform.OS === "android" ? 0 : 10,
+        //       marginRight: 5,
+        //     }}
+        //   />
+        // ),
       })}
     >
       <Stack.Screen
@@ -339,7 +339,7 @@ function MapStack() {
         name="LocationList"
         component={LocationList}
         options={{
-          headerBackTitleVisible: true,
+          headerBackButtonDisplayMode: "default",
           title: "Locations on the Map",
         }}
       />
@@ -365,7 +365,8 @@ function MapStack() {
         name="FilterMap"
         component={FilterMap}
         options={{
-          headerBackTitleVisible: true,
+          headerBackTitle: "Map",
+          headerBackButtonDisplayMode: "default",
           title: "Filter Map Results",
         }}
       />
