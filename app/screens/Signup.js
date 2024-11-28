@@ -254,7 +254,7 @@ const Signup = ({ loginLater, navigation }) => {
             <Button
               onPress={() => {
                 loginLater();
-                navigation.navigate("MapTab");
+                navigation.navigate("MapStack");
               }}
               titleStyle={s.textLink}
               buttonStyle={s.buttonMask}

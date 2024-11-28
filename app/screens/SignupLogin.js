@@ -107,7 +107,7 @@ const SignupLogin = ({
           <Button
             onPress={() => {
               loginLater();
-              navigation.navigate("MapTab");
+              navigation.navigate("MapStack");
             }}
             title="Or skip signing in"
             accessibilityLabel="Skip signing in"

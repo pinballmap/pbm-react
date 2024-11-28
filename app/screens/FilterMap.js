@@ -126,7 +126,7 @@ const FilterMap = ({
   };
 
   const goToMap = () => {
-    navigation.navigate("MapTab", {
+    navigation.navigate("MapStack", {
       previous_screen: "FilterMap",
       type: "filter",
     });

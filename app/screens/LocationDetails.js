@@ -136,7 +136,7 @@ const LocationDetails = (props) => {
   };
 
   const onMapPress = () => {
-    navigation.navigate("MapTab");
+    navigation.navigate("MapStack");
     setNavigateToMap(true);
   };
 

@@ -259,7 +259,7 @@ function SuggestLocation({
                             name="close-circle"
                             size={45}
                             onPress={() => {
-                              navigation.navigate("MapTab");
+                              navigation.navigate("MapStack");
                               setShowSuggestLocationModal(false);
                               resetSuggestLocation();
                             }}

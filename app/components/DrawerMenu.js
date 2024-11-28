@@ -37,7 +37,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
           onPress={() => {
             setModalVisible(false);
             logout();
-            props.navigation.navigate("Login");
+            props.navigation.navigate("Map", { screen: "Login" });
           }}
           accessibilityLabel="Logout"
           containerStyle={s.buttonContainer}
@@ -56,7 +56,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
         icon={() => (
           <MaterialIcons name="search" size={iconSize} color={iconColor} />
         )}
-        onPress={() => props.navigation.navigate("MapTab")}
+        onPress={() => props.navigation.navigate("MapStack")}
       />
       <DrawerItem
         label="Submit Location"
@@ -137,7 +137,7 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
         </Pressable>
       ) : (
         <Pressable
-          onPress={() => props.navigation.navigate("Login")}
+          onPress={() => props.navigation.navigate("Map", { screen: "Login" })}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,
