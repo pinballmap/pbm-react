@@ -66,24 +66,23 @@ class UserProfile extends Component {
       num_locations_suggested,
       num_locations_edited,
       num_total_submissions,
-      admin_rank_int,
       admin_title,
-      contributor_rank_int,
       contributor_rank,
     } = profileInfo;
+
     let admin_icon;
-    if (admin_rank_int == 1) {
-      admin_icon = require("../assets/images/Rank_1.png");
-    } else if (admin_rank_int == 2) {
-      admin_icon = require("../assets/images/Rank_2.png");
+    if (admin_title == "Global Administrator") {
+      admin_icon = require("../assets/images/GlobalAdministrator.png");
+    } else if (admin_title == "Regional Administrator") {
+      admin_icon = require("../assets/images/RegionalAdministrator.png");
     }
     let contributor_icon;
-    if (contributor_rank_int == 3) {
-      contributor_icon = require("../assets/images/Rank_3.png");
-    } else if (contributor_rank_int == 4) {
-      contributor_icon = require("../assets/images/Rank_4.png");
-    } else if (contributor_rank_int == 5) {
-      contributor_icon = require("../assets/images/Rank_5.png");
+    if (contributor_rank == "Super Mapper") {
+      contributor_icon = require("../assets/images/SuperMapper.png");
+    } else if (contributor_rank == "Legendary Mapper") {
+      contributor_icon = require("../assets/images/LegendaryMapper.png");
+    } else if (contributor_rank == "Grand Champ Mapper") {
+      contributor_icon = require("../assets/images/GrandChampMapper.png");
     }
 
     return (
@@ -119,13 +118,13 @@ class UserProfile extends Component {
                   </ConfirmationModal>
                   <View style={s.usernameContainer}>
                     <Text style={s.username}>{user.username}</Text>
-                    {!!admin_rank_int && (
+                    {!!admin_title && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{admin_title}</Text>
                         <Image source={admin_icon} style={s.rankIcon} />
                       </View>
                     )}
-                    {!admin_rank_int && !!contributor_rank_int && (
+                    {!admin_title && !!contributor_rank && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{contributor_rank}</Text>
                         <Image
