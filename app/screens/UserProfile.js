@@ -184,59 +184,70 @@ class UserProfile extends Component {
                   </View>
                   <Text style={s.section}>Some recently edited locations</Text>
                   <View style={{ paddingVertical: 8 }}>
-                    {profile_list_of_edited_locations
-                      .slice(0, 50)
-                      .map((location) => (
-                        <Pressable
-                          key={location[0]}
-                          onPress={() =>
-                            this.props.navigation.navigate("LocationDetails", {
-                              id: location[0],
-                            })
-                          }
-                        >
-                          {({ pressed }) => (
-                            <View
-                              style={[
-                                s.list,
-                                pressed ? s.pressed : s.notPressed,
-                              ]}
-                            >
-                              <Text
+                    {profile_list_of_edited_locations.length === 0 ? (
+                      <Text style={s.none}>No edits yet</Text>
+                    ) : (
+                      profile_list_of_edited_locations
+                        .slice(0, 50)
+                        .map((location) => (
+                          <Pressable
+                            key={location[0]}
+                            onPress={() =>
+                              this.props.navigation.navigate(
+                                "LocationDetails",
+                                {
+                                  id: location[0],
+                                },
+                              )
+                            }
+                          >
+                            {({ pressed }) => (
+                              <View
                                 style={[
-                                  s.locationName,
-                                  pressed ? s.textPressed : s.textNotPressed,
+                                  s.list,
+                                  pressed ? s.pressed : s.notPressed,
                                 ]}
                               >
-                                {location[1]}
-                              </Text>
-                            </View>
-                          )}
-                        </Pressable>
-                      ))}
+                                <Text
+                                  style={[
+                                    s.locationName,
+                                    pressed ? s.textPressed : s.textNotPressed,
+                                  ]}
+                                >
+                                  {location[1]}
+                                </Text>
+                              </View>
+                            )}
+                          </Pressable>
+                        ))
+                    )}
                   </View>
                   <Text style={s.section}>High scores</Text>
                   <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-                    {profile_list_of_high_scores.map((score, idx) => {
-                      return (
-                        <ListItem
-                          containerStyle={s.background}
-                          key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
-                        >
-                          <ListItem.Content
-                            style={{
-                              marginHorizontal: 5,
-                              backgroundColor: theme.white,
-                              borderRadius: 15,
-                            }}
+                    {profile_list_of_high_scores.length === 0 ? (
+                      <Text style={s.none}>No high scores yet</Text>
+                    ) : (
+                      profile_list_of_high_scores.map((score, idx) => {
+                        return (
+                          <ListItem
+                            containerStyle={s.background}
+                            key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
                           >
-                            <ListItem.Title style={s.scoreTitle}>
-                              {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
-                            </ListItem.Title>
-                          </ListItem.Content>
-                        </ListItem>
-                      );
-                    })}
+                            <ListItem.Content
+                              style={{
+                                marginHorizontal: 5,
+                                backgroundColor: theme.white,
+                                borderRadius: 15,
+                              }}
+                            >
+                              <ListItem.Title style={s.scoreTitle}>
+                                {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
+                              </ListItem.Title>
+                            </ListItem.Content>
+                          </ListItem>
+                        );
+                      })
+                    )}
                   </View>
                   <WarningButton
                     title={"Logout"}
@@ -374,6 +385,13 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginVertical: 8,
       fontSize: 16,
+      color: theme.text3,
+      fontFamily: "Nunito-Italic",
+    },
+    none: {
+      textAlign: "center",
+      marginVertical: 8,
+      fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
     },
