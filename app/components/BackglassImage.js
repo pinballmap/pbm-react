@@ -4,13 +4,13 @@ import { Image } from "expo-image";
 import { ActivityIndicator } from "../components";
 
 const BackglassImage = ({ width, height, source }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const s = getStyles();
 
   return (
     <View style={{ alignItems: "center" }}>
       <View style={[s.imageContainer, { width: width + 8 }]}>
+        {isLoading && <ActivityIndicator />}
         <Image
           style={[
             {
@@ -18,17 +18,12 @@ const BackglassImage = ({ width, height, source }) => {
               height,
               borderRadius: 10,
             },
-            isLoading && { display: "none" },
+            isLoading && { height: 1 },
           ]}
           contentFit="cover"
           source={{ uri: source }}
-          onLoadStart={() => !isLoaded && setIsLoading(true)}
-          onLoadEnd={() => {
-            setIsLoaded(true);
-            setIsLoading(false);
-          }}
+          onLoad={() => setIsLoading(false)}
         />
-        {isLoading && <ActivityIndicator />}
       </View>
     </View>
   );
