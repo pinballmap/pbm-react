@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { connect, useDispatch } from "react-redux";
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -30,15 +29,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 let deviceWidth = Dimensions.get("window").width;
 
-function EditLocationDetails({
-  navigation,
-  route,
-  setSelectedLocationType,
-  setSelectedOperator,
-  ...props
-}) {
+function EditLocationDetails({ navigation, ...props }) {
+  const dispatch = useDispatch();
   const confirmEditLocationDetails = () => {
-    props.updateLocationDetails(navigation.goBack, phone, website, description);
+    dispatch(
+      updateLocationDetails(navigation.goBack, phone, website, description),
+    );
   };
 
   const [phone, setPhone] = useState(props.location.location.phone);
@@ -47,8 +43,9 @@ function EditLocationDetails({
     props.location.location.description,
   );
 
-  const { operator, locationType, name, location_type_id, operator_id } =
-    props.location.location;
+  const { locationType, operator, location } = props.location;
+  const { name, location_type_id, operator_id } = location;
+
   const { locationTypes } = props.locations;
   const { operators } = props.operators;
   const { updatingLocationDetails } = props.location.location;
@@ -57,19 +54,8 @@ function EditLocationDetails({
     Platform.OS === "android"
       ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
       : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
-  const selectedLocationType = route.params?.setSelectedLocationType;
-  const selectedOperator = route.params?.setSelectedOperator;
-  const locationTypeId = locationType
-    ? locationType
-    : selectedLocationType
-      ? selectedLocationType
-      : location_type_id;
-
-  const operatorId = operator
-    ? operator
-    : selectedOperator
-      ? selectedOperator
-      : operator_id;
+  const locationTypeId = locationType ? locationType : location_type_id;
+  const operatorId = operator ? operator : operator_id;
 
   const locationTypeObj =
     locationTypes.find((type) => type.id === locationTypeId) || {};
@@ -86,34 +72,20 @@ function EditLocationDetails({
   const [showEditLocationDetailsModal, setShowEditLocationDetailsModal] =
     useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({ title: name });
-    return () => props.clearSelectedState();
+    return () => dispatch(clearSelectedState());
   }, []);
-
-  React.useEffect(() => {
-    if (selectedLocationType) {
-      setSelectedLocationType(selectedLocationType);
-    }
-  }, [selectedLocationType]);
-
-  React.useEffect(() => {
-    if (selectedOperator) {
-      setSelectedOperator(selectedOperator);
-    }
-  }, [selectedOperator]);
 
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
-      previous_screen: "EditLocationDetails",
-      type: "search",
+      onGoBack: (id) => dispatch(setSelectedLocationType(id)),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
-      previous_screen: "EditLocationDetails",
-      type: "search",
+      onGoBack: (id) => dispatch(setSelectedOperator(id)),
     });
   };
 
@@ -381,31 +353,9 @@ const getStyles = (theme) =>
     },
   });
 
-EditLocationDetails.propTypes = {
-  locations: PropTypes.object,
-  location: PropTypes.object,
-  operators: PropTypes.object,
-  updateLocationDetails: PropTypes.func,
-  navigation: PropTypes.object,
-  setSelectedOperator: PropTypes.func,
-  setSelectedLocationType: PropTypes.func,
-  clearSelectedState: PropTypes.func,
-  route: PropTypes.object,
-};
-
 const mapStateToProps = ({ locations, location, operators }) => ({
   locations,
   location,
   operators,
 });
-const mapDispatchToProps = (dispatch) => ({
-  updateLocationDetails: (goBack, phone, website, description) =>
-    dispatch(updateLocationDetails(goBack, phone, website, description)),
-  setSelectedOperator: (id) => dispatch(setSelectedOperator(id)),
-  setSelectedLocationType: (id) => dispatch(setSelectedLocationType(id)),
-  clearSelectedState: () => dispatch(clearSelectedState()),
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditLocationDetails);
+export default connect(mapStateToProps)(EditLocationDetails);

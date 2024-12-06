@@ -16,7 +16,7 @@ const FindLocationType = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
-  const { previous_screen } = route.params;
+  const { onGoBack } = route.params;
 
   const allLocationTypes = [
     { name: route.params?.type === "search" ? "N/A" : "All", id: -1 },
@@ -35,11 +35,8 @@ const FindLocationType = ({
   };
 
   const _selectLocationType = (id) => {
-    navigation.navigate({
-      name: previous_screen,
-      params: { setSelectedLocationType: id },
-      merge: true,
-    });
+    onGoBack(id);
+    navigation.goBack();
   };
 
   const renderRow = ({ item, index }) => (
