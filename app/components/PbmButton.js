@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
@@ -72,17 +71,5 @@ const getStyles = (theme) =>
       marginVertical: 15,
     },
   });
-
-PbmButton.propTypes = {
-  onPress: PropTypes.func,
-  title: PropTypes.string,
-  accessibilityLabel: PropTypes.string,
-  iconPosition: PropTypes.string,
-  icon: PropTypes.node,
-  disabled: PropTypes.bool,
-  buttonStyle: PropTypes.object,
-  containerStyle: PropTypes.object,
-  titleStyle: PropTypes.object,
-};
 
 export default PbmButton;
