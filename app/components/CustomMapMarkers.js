@@ -61,7 +61,15 @@ const CustomMapMarkers = React.memo(() => {
         dispatch(setSelectedMapLocation(Number(e.features[0].id)));
       }}
     >
+      <Mapbox.SymbolLayer
+        id={"symbol-id2"}
+        style={textFloat(theme.theme)}
+        minZoomLevel={11}
+        maxZoomLevel={24}
+      />
+
       <Mapbox.SymbolLayer id={"symbol-id1"} style={iconStyles} />
+
       <Mapbox.Images
         images={{
           one: require("../assets/marker-one.png"),
@@ -71,12 +79,6 @@ const CustomMapMarkers = React.memo(() => {
           oneSelected: require("../assets/marker-one-selected.png"),
           moreOneSelected: require("../assets/marker-more-selected.png"),
         }}
-      />
-      <Mapbox.SymbolLayer
-        id={"symbol-id2"}
-        style={textFloat(theme.theme)}
-        minZoomLevel={11}
-        maxZoomLevel={24}
       />
     </Mapbox.ShapeSource>
   );
