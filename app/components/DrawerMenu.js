@@ -21,11 +21,13 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
+import { useNavigation } from "@react-navigation/native";
 
 let deviceWidth = Dimensions.get("window").width;
 
 const DrawerMenu = ({ logout, user, ...props }) => {
   const { theme } = useContext(ThemeContext);
+  const navigation = useNavigation();
   const s = getStyles(theme);
   const iconSize = 28;
   const iconColor = "#bec2e6";
@@ -39,7 +41,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           onPress={() => {
             setModalVisible(false);
             logout();
-            props.navigation.navigate("Map", { screen: "Login" });
+            navigation.navigate("Map", { screen: "Login" });
           }}
           accessibilityLabel="Logout"
           containerStyle={s.buttonContainer}
@@ -137,7 +139,12 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("MapStack")}
+        onPress={() =>
+          navigation.navigate("Map", {
+            screen: "MapStack",
+            params: { screen: "MapTab" },
+          })
+        }
       />
       <DrawerItem
         label="Submit Location"
@@ -152,7 +159,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() =>
-          props.navigation.navigate("Map", { screen: "SuggestLocation" })
+          navigation.navigate("Map", { screen: "SuggestLocation" })
         }
       />
       <DrawerItem
@@ -167,7 +174,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
+        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"
@@ -181,7 +188,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "About" })}
+        onPress={() => navigation.navigate("Map", { screen: "About" })}
       />
       <DrawerItem
         label="Events"
@@ -195,7 +202,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Events" })}
+        onPress={() => navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="FAQ"
@@ -209,7 +216,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "FAQ" })}
+        onPress={() => navigation.navigate("Map", { screen: "FAQ" })}
       />
       <DrawerItem
         label="Settings"
@@ -223,7 +230,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Settings" })}
+        onPress={() => navigation.navigate("Map", { screen: "Settings" })}
       />
       {user.loggedIn ? (
         <Pressable
@@ -240,7 +247,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         </Pressable>
       ) : (
         <Pressable
-          onPress={() => props.navigation.navigate("Map", { screen: "Login" })}
+          onPress={() => navigation.navigate("Map", { screen: "Login" })}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,

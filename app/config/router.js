@@ -49,19 +49,6 @@ const TabsOptionsStyle = {
   },
 };
 
-function MapNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="MapNavStack"
-        title="Map"
-        component={Map}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-}
-
 function SavedStackNavigator() {
   return (
     <Stack.Navigator screenOptions={TabsOptionsStyle}>
@@ -141,7 +128,7 @@ function BottomTabNavigator() {
       <Tab.Screen
         name="MapTab"
         title="Map"
-        component={MapNavigator}
+        component={Map}
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
