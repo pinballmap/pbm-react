@@ -475,7 +475,7 @@ const getStyles = (theme) =>
     },
     buttonIcon: {
       fontSize: 22,
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple2,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
       paddingRight: 5,
     },
     buttonStyle: {
@@ -485,7 +485,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     buttonTitle: {
-      color: theme.theme == "dark" ? theme.purple2 : theme.purple,
+      color: theme.theme == "dark" ? theme.text2 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-SemiBold",
     },

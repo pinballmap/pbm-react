@@ -509,7 +509,7 @@ const getStyles = (theme) =>
       marginTop: 5,
       textAlign: "center",
       fontSize: 20,
-      color: theme.text3,
+      color: theme.text2,
       fontFamily: "Nunito-SemiBold",
     },
     machineNameContainer: {

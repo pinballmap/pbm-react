@@ -6,12 +6,14 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
+import { Image, ImageBackground } from "expo-image";
 import {
   Dimensions,
   Platform,
   Text,
   Pressable,
   StyleSheet,
+  View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -22,10 +24,10 @@ import WarningButton from "./WarningButton";
 
 let deviceWidth = Dimensions.get("window").width;
 
-const DrawerMenu = ({ loggedIn, logout, ...props }) => {
+const DrawerMenu = ({ logout, user, ...props }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
-  const iconSize = 24;
+  const iconSize = 28;
   const iconColor = "#bec2e6";
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -50,22 +52,103 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
         />
       </ConfirmationModal>
       <DrawerItemList {...props} />
+      <View
+        style={{
+          width: "100%",
+          paddingTop: 10,
+          marginLeft: -10,
+          paddingBottom: 20,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            marginTop: 0,
+            marginBottom: 2,
+            height: 80,
+            width: "100%",
+            marginLeft: 20,
+          }}
+        >
+          <Image
+            source={
+              theme.theme === "dark"
+                ? require("../assets/images/pbm-logo-dark.png")
+                : require("../assets/images/pbm-logo-light.png")
+            }
+            contentFit="contain"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        {user.loggedIn ? (
+          <Text allowFontScaling={false} style={s.nameText}>
+            {user.username}
+          </Text>
+        ) : (
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate("Map", { screen: "Signup" })
+            }
+            style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+          >
+            <Text allowFontScaling={false} style={s.nameText}>
+              Sign up!
+            </Text>
+          </Pressable>
+        )}
+        <ImageBackground
+          source={
+            theme.theme === "dark"
+              ? require("../assets/images/dots-background.png")
+              : require("../assets/images/dots-background-light.png")
+          }
+          style={{
+            zIndex: -1,
+            width: 400,
+            height: 130,
+            position: "absolute",
+            top: 0,
+          }}
+          imageStyle={{ opacity: theme.theme == "dark" ? 0.4 : 0.1 }}
+        >
+          {theme.theme == "dark" ? null : (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "#cf8dde",
+                opacity: 0.1,
+              }}
+            />
+          )}
+        </ImageBackground>
+      </View>
       <DrawerItem
         label="Map"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
-          <MaterialIcons name="search" size={iconSize} color={iconColor} />
+          <MaterialIcons
+            name="search"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
         )}
         onPress={() => props.navigation.navigate("MapStack")}
       />
       <DrawerItem
         label="Submit Location"
+        allowFontScaling={false}
         labelStyle={s.labelStyle}
         icon={() => (
           <MaterialIcons
             name="add-location"
             size={iconSize}
             color={iconColor}
+            style={s.iconStyle}
           />
         )}
         onPress={() =>
@@ -75,11 +158,13 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
       <DrawerItem
         label="Contact"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
           <MaterialCommunityIcons
             name="email-outline"
             size={iconSize}
             color={iconColor}
+            style={s.iconStyle}
           />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
@@ -87,11 +172,13 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
       <DrawerItem
         label="About"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
           <MaterialIcons
             name="info-outline"
             size={iconSize}
             color={iconColor}
+            style={s.iconStyle}
           />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "About" })}
@@ -99,19 +186,27 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
       <DrawerItem
         label="Events"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
-          <MaterialIcons name="event-note" size={iconSize} color={iconColor} />
+          <MaterialIcons
+            name="event-note"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="FAQ"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
           <MaterialIcons
             name="question-answer"
             size={iconSize}
             color={iconColor}
+            style={s.iconStyle}
           />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "FAQ" })}
@@ -119,12 +214,18 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
       <DrawerItem
         label="Settings"
         labelStyle={s.labelStyle}
+        allowFontScaling={false}
         icon={() => (
-          <MaterialIcons name="settings" size={iconSize} color={iconColor} />
+          <MaterialIcons
+            name="settings"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "Settings" })}
       />
-      {loggedIn ? (
+      {user.loggedIn ? (
         <Pressable
           onPress={() => setModalVisible(true)}
           style={({ pressed }) => [
@@ -132,7 +233,9 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
             s.container,
           ]}
         >
-          <Text style={s.text}>Logout</Text>
+          <Text allowFontScaling={false} style={s.text}>
+            Logout
+          </Text>
           <MaterialCommunityIcons name="exit-run" style={s.icon} />
         </Pressable>
       ) : (
@@ -143,7 +246,9 @@ const DrawerMenu = ({ loggedIn, logout, ...props }) => {
             s.container,
           ]}
         >
-          <Text style={s.text}>Login</Text>
+          <Text allowFontScaling={false} style={s.text}>
+            Login
+          </Text>
           <MaterialCommunityIcons name="login" style={s.icon} />
         </Pressable>
       )}
@@ -157,20 +262,30 @@ const getStyles = (theme) =>
       height: 55,
     },
     icon: {
-      fontSize: 24,
+      fontSize: 28,
       color: theme.colors.activeTab,
       position: "absolute",
       opacity: 0.9,
       paddingLeft: 15,
+      marginTop: 3,
+    },
+    iconStyle: {
+      marginTop: -3,
     },
     text: {
       color: theme.colors.activeTab,
       fontFamily: "Nunito-Bold",
-      fontSize: 16,
+      fontSize: 20,
       position: "absolute",
       paddingLeft: 55,
       paddingRight: 120,
       top: 3,
+    },
+    nameText: {
+      color: theme.colors.activeTab,
+      fontFamily: "Nunito-ExtraBold",
+      fontSize: 22,
+      marginLeft: 20,
     },
     buttonContainer: {
       marginLeft: 20,
@@ -182,7 +297,7 @@ const getStyles = (theme) =>
       color: theme.colors.primary,
       fontFamily: "Nunito-Bold",
       fontWeight: Platform.OS === "android" ? undefined : 700,
-      fontSize: 16,
+      fontSize: 20,
     },
   });
 
@@ -192,7 +307,7 @@ DrawerMenu.propTypes = {
   navigation: PropTypes.object,
 };
 
-const mapStateToProps = ({ user }) => ({ loggedIn: user.loggedIn });
+const mapStateToProps = ({ user }) => ({ user });
 const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logout()),
 });

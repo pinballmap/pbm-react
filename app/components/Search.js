@@ -570,7 +570,7 @@ const getStyles = (theme) =>
     },
     searchIcon: {
       paddingLeft: 5,
-      color: theme.purple2,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
     inputPlaceholder: {
       fontSize: deviceWidth < 321 ? 14 : 16,
@@ -644,7 +644,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base3,
     },
     notPressed: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base2,
     },
     filterPressed: {
       backgroundColor: theme.white,

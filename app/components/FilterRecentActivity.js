@@ -256,7 +256,7 @@ const getStyles = (theme) =>
     },
     filterIcon: {
       paddingRight: 10,
-      color: theme.theme == "dark" ? theme.indigo4 : theme.purple2,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
     },
   });
 
