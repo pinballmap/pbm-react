@@ -12,7 +12,7 @@ import { FlashList } from "@shopify/flash-list";
 const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
-  const { previous_screen } = route.params;
+  const { onGoBack } = route.params;
 
   const allOperators = [
     { name: route.params?.type === "search" ? "N/A" : "All", id: -1 },
@@ -31,11 +31,8 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   };
 
   const _selectOperator = (id) => {
-    navigation.navigate({
-      name: previous_screen,
-      params: { setSelectedOperator: id },
-      merge: true,
-    });
+    onGoBack(id);
+    navigation.goBack();
   };
 
   const renderRow = ({ item, index }) => (

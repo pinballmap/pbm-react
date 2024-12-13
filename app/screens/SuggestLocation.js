@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -36,17 +36,8 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 
 let deviceWidth = Dimensions.get("window").width;
 
-function SuggestLocation({
-  navigation,
-  route,
-  setSelectedLocationType,
-  setSelectedOperator,
-  suggestLocation,
-  resetSuggestLocation,
-  location,
-  removeMachineFromList,
-  ...props
-}) {
+function SuggestLocation({ navigation, route, location, ...props }) {
+  const dispatch = useDispatch();
   const autoCompleteRef = useRef();
   const [locationName, setLocationName] = useState("");
   const [street, setStreet] = useState("");
@@ -87,7 +78,7 @@ function SuggestLocation({
       website,
       description,
     };
-    suggestLocation(locationDetails);
+    dispatch(suggestLocation(locationDetails));
   };
 
   const getDisplayText = (machine) => (
@@ -118,32 +109,18 @@ function SuggestLocation({
   const { name: operatorName = "Select operator" } = operatorObj;
 
   useEffect(() => {
-    if (route.params?.setSelectedLocationType) {
-      setSelectedLocationType(route.params?.setSelectedLocationType);
-    }
-  }, [route.params?.setSelectedLocationType]);
-
-  useEffect(() => {
-    if (route.params?.setSelectedOperator) {
-      setSelectedOperator(route.params?.setSelectedOperator);
-    }
-  }, [route.params?.setSelectedOperator]);
-
-  useEffect(() => {
-    return () => props.clearSelectedState();
+    return () => dispatch(clearSelectedState());
   }, []);
 
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
-      type: "search",
-      previous_screen: "SuggestLocation",
+      onGoBack: (id) => dispatch(setSelectedLocationType(id)),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
-      type: "search",
-      previous_screen: "SuggestLocation",
+      onGoBack: (id) => dispatch(setSelectedOperator(id)),
     });
   };
 
@@ -261,7 +238,7 @@ function SuggestLocation({
                             onPress={() => {
                               navigation.navigate("MapStack");
                               setShowSuggestLocationModal(false);
-                              resetSuggestLocation();
+                              dispatch(resetSuggestLocation());
                             }}
                             style={s.xButton}
                           />
@@ -585,7 +562,9 @@ function SuggestLocation({
                         <ListItem
                           key={machine.id}
                           containerStyle={s.listContainerStyle}
-                          onPress={() => removeMachineFromList(machine)}
+                          onPress={() =>
+                            dispatch(removeMachineFromList(machine))
+                          }
                         >
                           <Icon
                             name="cancel"
@@ -772,11 +751,6 @@ SuggestLocation.propTypes = {
   navigation: PropTypes.object,
   location: PropTypes.object,
   removeMachineFromList: PropTypes.func,
-  clearSelectedState: PropTypes.func,
-  suggestLocation: PropTypes.func,
-  setSelectedOperator: PropTypes.func,
-  setSelectedLocationType: PropTypes.func,
-  resetSuggestLocation: PropTypes.func,
   route: PropTypes.object,
 };
 
@@ -786,13 +760,4 @@ const mapStateToProps = ({ location, locations, operators, user }) => ({
   operators,
   user,
 });
-const mapDispatchToProps = (dispatch) => ({
-  removeMachineFromList: (machine) => dispatch(removeMachineFromList(machine)),
-  clearSelectedState: () => dispatch(clearSelectedState()),
-  suggestLocation: (goBack, locationDetails) =>
-    dispatch(suggestLocation(goBack, locationDetails)),
-  setSelectedOperator: (id) => dispatch(setSelectedOperator(id)),
-  setSelectedLocationType: (id) => dispatch(setSelectedLocationType(id)),
-  resetSuggestLocation: () => dispatch(resetSuggestLocation()),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(SuggestLocation);
+export default connect(mapStateToProps)(SuggestLocation);

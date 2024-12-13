@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
@@ -23,19 +22,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FilterMap = ({
-  updateNumMachinesSelected,
-  updateViewFavoriteLocations,
   locationTypeName,
   operatorName,
   hasFilterSelected,
   query,
   navigation,
-  selectedLocationTypeFilter,
-  selectedOperatorFilter,
-  clearFilters,
-  setMachineFilter,
-  setMachineVersionFilter,
-  route,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -88,48 +79,35 @@ const FilterMap = ({
   };
 
   const setNumMachinesSelected = (idx) => {
-    updateNumMachinesSelected(getNumMachines(idx));
+    dispatch(updateNumMachinesSelected(getNumMachines(idx)));
   };
 
   const updateViewFavorites = (idx) => {
-    updateViewFavoriteLocations(idx);
+    dispatch(updateViewFavoriteLocations(idx));
   };
 
   const setFilterByMachineVersion = (idx, machine_group_id) => {
-    setMachineVersionFilter(idx === 0 ? machine_group_id : undefined);
+    dispatch(setMachineVersionFilter(idx === 0 ? machine_group_id : undefined));
   };
-
-  useEffect(() => {
-    if (route.params?.setSelectedLocationType) {
-      selectedLocationTypeFilter(route.params?.setSelectedLocationType);
-    }
-  }, [route.params?.setSelectedLocationType]);
-
-  useEffect(() => {
-    if (route.params?.setSelectedOperator) {
-      selectedOperatorFilter(route.params?.setSelectedOperator);
-    }
-  }, [route.params?.setSelectedOperator]);
 
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
-      previous_screen: "FilterMap",
-      type: "filter",
+      onGoBack: (id) => {
+        dispatch(selectedLocationTypeFilter(id));
+      },
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
-      previous_screen: "FilterMap",
-      type: "filter",
+      onGoBack: (id) => {
+        dispatch(selectedOperatorFilter(id));
+      },
     });
   };
 
   const goToMap = () => {
-    navigation.navigate("MapStack", {
-      previous_screen: "FilterMap",
-      type: "filter",
-    });
+    navigation.navigate("MapStack");
   };
 
   return (
@@ -143,7 +121,7 @@ const FilterMap = ({
             title={machine && machine.name ? machine.name : "All"}
             onPress={() => {
               navigate("FindMachine", { machineFilter: true });
-              setMachineFilter();
+              dispatch(setMachineFilter());
             }}
           />
           {machine && machine.machine_group_id && (
@@ -211,7 +189,10 @@ const FilterMap = ({
       </Screen>
       {hasFilterSelected ? (
         <View style={s.bottomTab}>
-          <Text style={s.bottomTabClear} onPress={clearFilters}>
+          <Text
+            style={s.bottomTabClear}
+            onPress={() => dispatch(clearFilters())}
+          >
             Clear Filters
           </Text>
           <View style={s.bottomTabApplyButton}>
@@ -317,22 +298,6 @@ const getStyles = (theme) =>
     },
   });
 
-FilterMap.propTypes = {
-  query: PropTypes.object,
-  operatorName: PropTypes.string,
-  updateNumMachinesSelected: PropTypes.func,
-  updateViewFavoriteLocations: PropTypes.func,
-  clearFilters: PropTypes.func,
-  navigation: PropTypes.object,
-  selectedOperatorFilter: PropTypes.func,
-  selectedLocationTypeFilter: PropTypes.func,
-  locationTypeName: PropTypes.string,
-  hasFilterSelected: PropTypes.bool,
-  setMachineFilter: PropTypes.func,
-  setMachineVersionFilter: PropTypes.func,
-  route: PropTypes.object,
-};
-
 const mapStateToProps = (state) => {
   const { query } = state;
   const locationTypeName = getLocationTypeName(state);
@@ -347,17 +312,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  updateNumMachinesSelected: (idx) => dispatch(updateNumMachinesSelected(idx)),
-  selectedLocationTypeFilter: (type) =>
-    dispatch(selectedLocationTypeFilter(type)),
-  selectedOperatorFilter: (operator) =>
-    dispatch(selectedOperatorFilter(operator)),
-  clearFilters: () => dispatch(clearFilters()),
-  setMachineFilter: () => dispatch(setMachineFilter()),
-  updateViewFavoriteLocations: (idx) =>
-    dispatch(updateViewFavoriteLocations(idx)),
-  setMachineVersionFilter: (machine_group_id) =>
-    dispatch(setMachineVersionFilter(machine_group_id)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(FilterMap);
+export default connect(mapStateToProps)(FilterMap);
