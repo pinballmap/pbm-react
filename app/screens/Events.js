@@ -1,67 +1,75 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import Geocode from "react-geocode";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ButtonGroup } from "@rneui/base";
-import { ThemeContext } from "../theme-context";
 import { ActivityIndicator } from "../components";
 import { getIfpaData } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
 import { FlashList } from "@shopify/flash-list";
 import { boundsToCoords } from "../utils/utilityFunctions";
+import { useTheme } from "@react-navigation/native";
 
 const moment = require("moment");
 
 Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
 
-class Events extends Component {
-  state = {
-    gettingEvents: true,
-    refetchingEvents: false,
-    events: [],
-    error: false,
-    address: "",
-    selectedIdx: 0,
-    radius: 50,
-  };
+export const Events = ({ locations, query, user }) => {
+  const [gettingEvents, setGettingEvents] = useState(true);
+  const [refetchingEvents, setRefetchingEvents] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [error, setError] = useState(false);
+  const addressRef = useRef("");
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const [radius, setRadius] = useState(50);
 
-  updateIdx = (selectedIdx) => {
+  const theme = useTheme();
+  const s = getStyles(theme);
+
+  const { lat, lon } = user;
+  const { neLat, neLon, swLat, swLon } = query;
+  const distanceUnit = user.unitPreference ? "km" : "mi";
+  const buttons = [
+    `50 ${distanceUnit}`,
+    `150 ${distanceUnit}`,
+    `250 ${distanceUnit}`,
+  ];
+
+  const updateIdx = (selectedIdx) => {
     const radiusArray = [50, 150, 250];
     const radius = radiusArray[selectedIdx];
-    this.setState({ selectedIdx, radius, refetchingEvents: true });
-    this.fetchEvents(radius);
+    setSelectedIdx(selectedIdx);
+    setRadius(radius);
+    setRefetchingEvents(true);
+    fetchEvents(radius);
   };
 
-  fetchEvents = async (radius) => {
-    const distanceUnit = this.props.user.unitPreference ? "k" : "m";
+  const fetchEvents = async (radius) => {
     try {
-      const data = await getIfpaData(this.state.address, radius, distanceUnit);
-      this.setState({
-        error: false,
-        events: data.calendar ? data.calendar : [],
-        gettingEvents: false,
-        refetchingEvents: false,
-      });
+      const data = await getIfpaData(
+        addressRef.current,
+        radius,
+        user.unitPreference ? "k" : "m",
+      );
+      setError(false);
+      setEvents(data.calendar ? data.calendar : []);
+      setGettingEvents(false);
+      setRefetchingEvents(false);
     } catch (e) {
-      this.setState({
-        error: true,
-        gettingEvents: false,
-        refetchingEvents: false,
-      });
+      setError(true);
+      setGettingEvents(false);
+      setRefetchingEvents(false);
     }
   };
 
-  componentDidMount() {
-    const { lat, lon } = this.props.user;
-    const { neLat, neLon, swLat, swLon } = this.props.query;
+  useEffect(() => {
     const { lat: mapLat, lon: mapLon } = boundsToCoords({
       neLat,
       neLon,
       swLat,
       swLon,
     });
-    const { mapLocations = [] } = this.props.locations;
+    const { mapLocations = [] } = locations;
 
     let promise;
     if (
@@ -86,170 +94,140 @@ class Events extends Component {
 
     promise()
       .then((address) => {
-        this.setState({ address });
-        this.fetchEvents(50);
+        addressRef.current = address;
+        fetchEvents(50);
       })
-      .catch(() => this.setState({ error: true, gettingEvents: false }));
-  }
+      .catch(() => {
+        setError(true);
+        setGettingEvents(false);
+      });
+  }, []);
 
-  render() {
-    const {
-      events,
-      gettingEvents,
-      error,
-      selectedIdx,
-      radius,
-      refetchingEvents,
-    } = this.state;
-    const distanceUnit = this.props.user.unitPreference ? "km" : "mi";
-    const buttons = [
-      `50 ${distanceUnit}`,
-      `150 ${distanceUnit}`,
-      `250 ${distanceUnit}`,
-    ];
-
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
+  return (
+    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+      {gettingEvents ? (
+        <View style={s.background}>
+          <ActivityIndicator />
+        </View>
+      ) : error ? (
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "Nunito-Bold",
+            marginTop: 15,
+            color: theme.text2,
+          }}
+        >
+          {`Something went wrong. In the meantime, you can check the `}
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://www.ifpapinball.com/calendar/",
+              )
+            }
+          >
+            IFPA calendar
+          </Text>
+          {` on their site.`}
+        </Text>
+      ) : (
+        <>
+          <View style={s.header}>
+            <ButtonGroup
+              onPress={updateIdx}
+              selectedIndex={selectedIdx}
+              buttons={buttons}
+              containerStyle={s.buttonGroupContainer}
+              textStyle={s.buttonGroupInactive}
+              selectedButtonStyle={s.selButtonStyle}
+              selectedTextStyle={s.selTextStyle}
+              innerBorderStyle={s.innerBorderStyle}
+            />
+          </View>
+          {refetchingEvents ? (
+            <ActivityIndicator />
+          ) : events.length > 0 ? (
             <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-              {gettingEvents ? (
-                <View style={s.background}>
-                  <ActivityIndicator />
-                </View>
-              ) : error ? (
+              <Text style={s.sourceText}>
+                These events are brought to you by the{" "}
                 <Text
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "Nunito-Bold",
-                    marginTop: 15,
-                    color: theme.text2,
-                  }}
+                  style={s.smallLink}
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      "https://www.ifpapinball.com/calendar/",
+                    )
+                  }
                 >
-                  {`Something went wrong. In the meantime, you can check the `}
-                  <Text
-                    style={s.textLink}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        "https://www.ifpapinball.com/calendar/",
-                      )
-                    }
-                  >
-                    IFPA calendar
-                  </Text>
-                  {` on their site.`}
+                  International Flipper Pinball Association
                 </Text>
-              ) : (
-                <>
-                  <View style={s.header}>
-                    <ButtonGroup
-                      onPress={this.updateIdx}
-                      selectedIndex={selectedIdx}
-                      buttons={buttons}
-                      containerStyle={s.buttonGroupContainer}
-                      textStyle={s.buttonGroupInactive}
-                      selectedButtonStyle={s.selButtonStyle}
-                      selectedTextStyle={s.selTextStyle}
-                      innerBorderStyle={s.innerBorderStyle}
-                    />
-                  </View>
-                  {refetchingEvents ? (
-                    <ActivityIndicator />
-                  ) : events.length > 0 ? (
-                    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                      <Text style={s.sourceText}>
-                        These events are brought to you by the{" "}
-                        <Text
-                          style={s.smallLink}
-                          onPress={() =>
-                            WebBrowser.openBrowserAsync(
-                              "https://www.ifpapinball.com/calendar/",
-                            )
-                          }
-                        >
-                          International Flipper Pinball Association
-                        </Text>
+              </Text>
+              <FlashList
+                data={events}
+                estimatedItemSize={214}
+                renderItem={({ item }) => {
+                  const start_date = moment(
+                    item.start_date,
+                    "YYYY-MM-DD",
+                  ).format("MMM DD, YYYY");
+                  const end_date = moment(item.end_date, "YYYY-MM-DD").format(
+                    "MMM DD, YYYY",
+                  );
+                  return (
+                    <Pressable
+                      style={({ pressed }) => [
+                        {},
+                        s.cardContainer,
+                        pressed ? s.pressed : s.notPressed,
+                      ]}
+                      onPress={() => WebBrowser.openBrowserAsync(item.website)}
+                    >
+                      <Text style={[s.margin, s.padding, s.locationName]}>
+                        {item.tournament_name}
                       </Text>
-                      <FlashList
-                        data={events}
-                        estimatedItemSize={214}
-                        extraData={this.state}
-                        renderItem={({ item }) => {
-                          const start_date = moment(
-                            item.start_date,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY");
-                          const end_date = moment(
-                            item.end_date,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY");
-                          return (
-                            <Pressable
-                              style={({ pressed }) => [
-                                {},
-                                s.cardContainer,
-                                pressed ? s.pressed : s.notPressed,
-                              ]}
-                              onPress={() =>
-                                WebBrowser.openBrowserAsync(item.website)
-                              }
-                            >
-                              <Text
-                                style={[s.margin, s.padding, s.locationName]}
-                              >
-                                {item.tournament_name}
-                              </Text>
-                              <Text style={[s.center, s.cardTextStyle]}>
-                                {item.start_date === item.end_date ? (
-                                  <Text style={s.bold}>{start_date}</Text>
-                                ) : (
-                                  <Text style={s.bold}>
-                                    {start_date} - {end_date}
-                                  </Text>
-                                )}
-                              </Text>
-                              <Text
-                                style={[s.cardTextStyle, s.margin, s.padding]}
-                              >
-                                {item.details.substring(0, 100)}
-                                {item.details.length > 99 ? "..." : ""}
-                              </Text>
-                              <Text style={[s.address, s.margin, s.padding]}>
-                                {item.address1}
-                                {(item.city.length > 0) &
-                                (item.address1.length > 0) ? (
-                                  <Text>, </Text>
-                                ) : (
-                                  ""
-                                )}
-                                {item.city}
-                                {item.state.length > 0 ? (
-                                  <Text>, {item.state}</Text>
-                                ) : (
-                                  ""
-                                )}
-                              </Text>
-                            </Pressable>
-                          );
-                        }}
-                        keyExtractor={(event) => `${event.calendar_id}`}
-                      />
-                    </View>
-                  ) : (
-                    <Text
-                      style={s.problem}
-                    >{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
-                  )}
-                </>
-              )}
+                      <Text style={[s.center, s.cardTextStyle]}>
+                        {item.start_date === item.end_date ? (
+                          <Text style={s.bold}>{start_date}</Text>
+                        ) : (
+                          <Text style={s.bold}>
+                            {start_date} - {end_date}
+                          </Text>
+                        )}
+                      </Text>
+                      <Text style={[s.cardTextStyle, s.margin, s.padding]}>
+                        {item.details.substring(0, 100)}
+                        {item.details.length > 99 ? "..." : ""}
+                      </Text>
+                      <Text style={[s.address, s.margin, s.padding]}>
+                        {item.address1}
+                        {(item.city.length > 0) & (item.address1.length > 0) ? (
+                          <Text>, </Text>
+                        ) : (
+                          ""
+                        )}
+                        {item.city}
+                        {item.state.length > 0 ? (
+                          <Text>, {item.state}</Text>
+                        ) : (
+                          ""
+                        )}
+                      </Text>
+                    </Pressable>
+                  );
+                }}
+                keyExtractor={(event) => `${event.calendar_id}`}
+              />
             </View>
-          );
-        }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+          ) : (
+            <Text
+              style={s.problem}
+            >{`No IFPA-sanctioned events found within ${radius} miles of current map location.`}</Text>
+          )}
+        </>
+      )}
+    </View>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -373,16 +351,9 @@ const getStyles = (theme) =>
     },
   });
 
-Events.propTypes = {
-  navigation: PropTypes.object,
-  user: PropTypes.object,
-  locations: PropTypes.object,
-  query: PropTypes.object,
-};
-
 const mapStateToProps = ({ locations, query, user }) => ({
   locations,
   query,
   user,
 });
-export default connect(mapStateToProps, null)(Events);
+export default connect(mapStateToProps)(Events);
