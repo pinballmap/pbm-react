@@ -107,7 +107,7 @@ const SignupLogin = ({
           <Button
             onPress={() => {
               loginLater();
-              navigation.navigate("MapStack");
+              navigation.navigateDeprecated("MapStack", { screen: "MapTab" });
             }}
             title="Or skip signing in"
             accessibilityLabel="Skip signing in"

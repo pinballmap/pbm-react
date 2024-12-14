@@ -70,7 +70,9 @@ class Login extends Component {
         if (data.user) {
           this.props.login(data.user);
           this.props.getFavoriteLocations(data.user.id);
-          this.props.navigation.navigate("MapStack");
+          this.props.navigation.navigateDeprecated("MapStack", {
+            screen: "MapTab",
+          });
         }
       })
       .catch((err) => this.setState({ errors: true, apiErrorMsg: err }));
@@ -183,7 +185,9 @@ class Login extends Component {
                     <Button
                       onPress={() => {
                         this.props.loginLater();
-                        this.props.navigation.navigate("MapStack");
+                        this.props.navigation.navigateDeprecated("MapStack", {
+                          screen: "MapTab",
+                        });
                       }}
                       titleStyle={s.textLink}
                       buttonStyle={s.buttonMask}

@@ -254,7 +254,7 @@ const Signup = ({ loginLater, navigation }) => {
             <Button
               onPress={() => {
                 loginLater();
-                navigation.navigate("MapStack");
+                navigation.navigateDeprecated("MapStack", { screen: "MapTab" });
               }}
               titleStyle={s.textLink}
               buttonStyle={s.buttonMask}

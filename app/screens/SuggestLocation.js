@@ -236,7 +236,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                             name="close-circle"
                             size={45}
                             onPress={() => {
-                              navigation.navigate("MapStack");
+                              navigation.navigateDeprecated("MapStack", {
+                                screen: "MapTab",
+                              });
                               setShowSuggestLocationModal(false);
                               dispatch(resetSuggestLocation());
                             }}
