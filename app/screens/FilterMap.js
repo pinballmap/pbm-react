@@ -107,7 +107,7 @@ const FilterMap = ({
   };
 
   const goToMap = () => {
-    navigation.navigate("MapStack");
+    navigation.navigateDeprecated("MapStack", { screen: "MapTab" });
   };
 
   return (
