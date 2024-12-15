@@ -211,7 +211,7 @@ const getStyles = (theme) =>
       fontSize: 20,
       lineHeight: 24,
       textAlign: "left",
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
+      color: theme.pink1,
     },
     locationTypeContainer: {
       alignItems: "center",

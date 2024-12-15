@@ -574,7 +574,7 @@ const getStyles = (theme) =>
     },
     inputPlaceholder: {
       fontSize: deviceWidth < 321 ? 14 : 16,
-      color: "#af9eb1",
+      color: theme.indigo4,
       paddingLeft: 5,
       flex: 1,
       fontFamily: "Nunito-Regular",
