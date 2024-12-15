@@ -570,7 +570,7 @@ const getStyles = (theme) =>
     },
     searchIcon: {
       paddingLeft: 5,
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: theme.text2,
     },
     inputPlaceholder: {
       fontSize: deviceWidth < 321 ? 14 : 16,

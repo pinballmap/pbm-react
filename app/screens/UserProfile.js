@@ -339,7 +339,7 @@ const getStyles = (theme) =>
     usernameContainer: {
       paddingTop: 10,
       paddingBottom: 14,
-      backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
+      backgroundColor: theme.theme == "dark" ? theme.white : "#efe9f0",
       marginTop: 20,
       marginHorizontal: 20,
       borderRadius: 20,
@@ -349,11 +349,11 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontFamily: "Nunito-ExtraBold",
       lineHeight: 32,
-      color: theme.purpleLight,
+      color: theme.pink1,
     },
     statContainer: {
       alignItems: "center",
-      backgroundColor: theme.theme == "dark" ? theme.base2 : "#efe9f0",
+      backgroundColor: theme.theme == "dark" ? theme.white : "#efe9f0",
       margin: 20,
       paddingTop: 10,
       paddingBottom: 14,
@@ -426,7 +426,7 @@ const getStyles = (theme) =>
     rankText: {
       fontSize: 18,
       fontFamily: "Nunito-Bold",
-      color: theme.text3,
+      color: theme.text,
     },
     rankIcon: {
       width: 20,

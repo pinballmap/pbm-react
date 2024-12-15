@@ -475,7 +475,7 @@ const getStyles = (theme) =>
     },
     buttonIcon: {
       fontSize: 22,
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
+      color: theme.text2,
       paddingRight: 5,
     },
     buttonStyle: {
@@ -485,7 +485,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.pink2,
     },
     buttonTitle: {
-      color: theme.theme == "dark" ? theme.text2 : theme.purple,
+      color: theme.text2,
       fontSize: 18,
       fontFamily: "Nunito-SemiBold",
     },
@@ -515,12 +515,11 @@ const getStyles = (theme) =>
     updateTitleStyle: {
       color: "#440152",
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     pressedTitleStyle: {
-      color: theme.pink3,
-      fontSize: 17,
-      fontFamily: "Nunito-Regular",
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
     },
     myLocationContainer: {
       position: "absolute",
@@ -550,7 +549,7 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
     },
     pressed: {
-      opacity: 0.9,
+      opacity: 0.7,
     },
     pressedMyLocation: {
       opacity: 0.9,

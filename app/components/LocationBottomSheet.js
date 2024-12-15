@@ -114,7 +114,7 @@ const LocationBottomSheet = React.memo(
                       <Text
                         style={{
                           marginRight: 15,
-                          color: theme.purple2,
+                          color: theme.text2,
                           fontFamily: "Nunito-Bold",
                         }}
                       >
@@ -135,16 +135,14 @@ const LocationBottomSheet = React.memo(
                         name={locationType.icon}
                         type={locationType.library}
                         color={
-                          theme.theme == "dark"
-                            ? theme.purpleLight
-                            : theme.pink3
+                          theme.theme == "dark" ? theme.pink1 : theme.pink3
                         }
                         size={30}
                         style={s.icon}
                       />
                       <Text
                         style={{
-                          color: theme.purple2,
+                          color: theme.text2,
                           fontFamily: "Nunito-Bold",
                         }}
                       >
@@ -267,7 +265,7 @@ const getStyles = (theme) =>
     icon: {
       fontSize: 28,
       marginRight: 3,
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
+      color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
     },
   });
 

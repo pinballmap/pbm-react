@@ -212,7 +212,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 16,
       fontFamily: "Nunito-Bold",
-      color: theme.text3,
+      color: theme.text2,
     },
     pink: {
       color: theme.pink1,

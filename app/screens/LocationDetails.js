@@ -385,10 +385,7 @@ const LocationDetails = (props) => {
                             {
                               marginLeft: 5,
                               fontSize: 15,
-                              color:
-                                theme.theme == "dark"
-                                  ? theme.pink1
-                                  : theme.purple2,
+                              color: theme.text2,
                             },
                             s.bold,
                           ]}
@@ -421,7 +418,7 @@ const LocationDetails = (props) => {
                             {
                               marginLeft: 5,
                               fontSize: 15,
-                              color: theme.purple2,
+                              color: theme.text2,
                             },
                             s.bold,
                           ]}
@@ -785,7 +782,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-ExtraBold",
       fontSize: deviceWidth < 325 ? 24 : 26,
       lineHeight: deviceWidth < 325 ? 30 : 32,
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
+      color: theme.pink1,
     },
     machineListContainer: {
       borderRadius: 25,
