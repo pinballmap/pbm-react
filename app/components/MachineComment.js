@@ -205,6 +205,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     editDelete: {
       textDecorationLine: "underline",

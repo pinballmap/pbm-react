@@ -882,6 +882,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     staleView: {
       marginVertical: 5,
@@ -1004,6 +1005,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     accordionContainer: {
       paddingVertical: 3,

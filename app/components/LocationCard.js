@@ -1,6 +1,13 @@
 import React, { useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { Animated, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Animated,
+  Platform,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+} from "react-native";
 import { Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -173,7 +180,7 @@ const getStyles = (theme) =>
       alignContent: "space-around",
     },
     machineName: {
-      marginBottom: -12,
+      marginBottom: Platform.OS === "android" ? 0 : -12,
       color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     plus: {
@@ -253,6 +260,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     pressed: {
       shadowColor: "transparent",

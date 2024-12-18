@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
 
@@ -28,6 +28,7 @@ const getStyles = (theme) =>
     },
     hiya: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       paddingHorizontal: 15,
       paddingBottom: 10,
       paddingTop: 25,

@@ -528,6 +528,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     externalLink: {
       fontSize: 16,
@@ -713,6 +714,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     removeButton: {
       marginRight: 10,

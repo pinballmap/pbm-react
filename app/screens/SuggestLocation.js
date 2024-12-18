@@ -655,6 +655,7 @@ const getStyles = (theme) =>
     pageTitleText: {
       textAlign: "center",
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       fontSize: 18,
       color: theme.pink1,
     },
@@ -708,6 +709,7 @@ const getStyles = (theme) =>
     error: {
       color: theme.red2,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     plusButton: {
       color: theme.red2,

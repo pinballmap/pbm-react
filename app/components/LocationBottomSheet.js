@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { Platform, StyleSheet, View, Pressable } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ThemeContext } from "../theme-context";
@@ -250,6 +250,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     pressed: {
       shadowColor: "transparent",

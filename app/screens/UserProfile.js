@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { EvilIcons } from "@expo/vector-icons";
 import { ListItem } from "@rneui/base";
@@ -387,6 +387,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     none: {
       textAlign: "center",
@@ -394,6 +395,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     buttonContainer: {
       marginLeft: 20,

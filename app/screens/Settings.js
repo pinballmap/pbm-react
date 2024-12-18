@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
 import { ButtonGroup } from "@rneui/base";
@@ -122,6 +122,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text2,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,

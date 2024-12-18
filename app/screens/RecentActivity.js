@@ -1,7 +1,7 @@
 import React, { useContext, useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getData } from "../config/request";
@@ -245,6 +245,7 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,

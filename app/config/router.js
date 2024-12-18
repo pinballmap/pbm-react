@@ -121,7 +121,7 @@ function BottomTabNavigator() {
         },
         tabBarLabelPosition: "below-icon",
         tabBarIconStyle: {
-          marginBottom: Platform.OS === "android" ? -4 : -2,
+          marginBottom: -2,
         },
       }}
     >
@@ -441,6 +441,6 @@ export default DrawerNavigator;
 const s = StyleSheet.create({
   labelText: {
     fontSize: 12,
-    marginBottom: Platform.OS === "android" ? 3 : 0,
+    marginBottom: Platform.OS === "android" ? 0 : 0,
   },
 });

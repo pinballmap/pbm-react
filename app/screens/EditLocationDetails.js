@@ -301,6 +301,7 @@ const getStyles = (theme) =>
     pageTitleText: {
       textAlign: "center",
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       fontSize: 18,
       color: theme.purpleLight,
     },

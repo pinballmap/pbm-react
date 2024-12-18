@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActivityIndicator from "./ActivityIndicator";
@@ -268,6 +274,7 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,

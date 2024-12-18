@@ -638,6 +638,7 @@ const getStyles = (theme) =>
       position: "absolute",
       right: 0,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       color: theme.pink1,
     },
     pressed: {
@@ -658,6 +659,7 @@ const getStyles = (theme) =>
     goToFilterText: {
       marginHorizontal: 30,
       fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
       color: theme.text3,
       textAlign: "center",
     },
