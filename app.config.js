@@ -36,7 +36,7 @@ export default {
         {
           backgroundColor: "#47475f",
           image: "app/assets/images/pbm-splash-2024.png",
-          imageWidth: 250,
+          imageWidth: 200,
         },
       ],
       [
