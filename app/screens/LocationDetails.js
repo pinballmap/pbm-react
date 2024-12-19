@@ -32,6 +32,7 @@ import {
   setSelectedMapLocation,
   updateMap,
 } from "../actions";
+import { TRIGGER_UPDATE_BOUNDS } from "../actions/types";
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
@@ -54,6 +55,7 @@ const LocationDetails = (props) => {
   const s = getStyles(theme);
   const scrollViewRef = createRef(null);
   const [locationId, setLocationId] = useState(props.route.params["id"]);
+  const [navigateToMap, setNavigateToMap] = useState(false);
   const [detailsExpanded, setDetailsExpanded] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -77,7 +79,12 @@ const LocationDetails = (props) => {
     // component unmount
     return () => {
       if (!!route.params["refreshMap"]) {
-        dispatch(updateMap(location.lat, location.lon));
+        dispatch({ type: TRIGGER_UPDATE_BOUNDS });
+      }
+      if (navigateToMap) {
+        const { lat, lon, id } = props.location.location;
+        dispatch(updateMap(lat, lon));
+        dispatch(setSelectedMapLocation(id));
       }
     };
   }, []);
@@ -128,9 +135,8 @@ const LocationDetails = (props) => {
   };
 
   const onMapPress = () => {
-    dispatch(updateMap(location.lat, location.lon));
-    dispatch(setSelectedMapLocation(location.id));
-    navigation.navigateDeprecated("MapStack", { screen: "MapTab" });
+    navigation.navigate("MapTab");
+    setNavigateToMap(true);
   };
 
   if (
@@ -914,7 +920,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     quickButtonText: {
-      color: theme.purpleLight,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.text,
       fontSize: 12,
       lineHeight: 14,
       marginTop: 8,
@@ -991,7 +997,7 @@ const getStyles = (theme) =>
       backgroundColor:
         theme.theme == "dark"
           ? "rgba(29, 28, 28, 0.7)"
-          : "rgba(255,255,255,.5)",
+          : "rgba(255,255,255,.7)",
     },
     confirmText: {
       textAlign: "center",

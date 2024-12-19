@@ -424,7 +424,7 @@ class Search extends Component {
                         />
                         <Input
                           placeholder="City, Region, Venue..."
-                          placeholderTextColor={"#af9eb1"}
+                          placeholderTextColor={theme.indigo4}
                           leftIcon={
                             <MaterialIcons
                               name="search"
@@ -500,7 +500,11 @@ class Search extends Component {
                   onPress={this.openSearch}
                 >
                   <MaterialIcons name="search" size={25} style={s.searchIcon} />
-                  <Text numberOfLines={1} style={s.inputPlaceholder}>
+                  <Text
+                    numberOfLines={1}
+                    style={s.inputPlaceholder}
+                    allowFontScaling={false}
+                  >
                     {searchBarText ? searchBarText : "City, Region, Venue..."}
                   </Text>
                 </Pressable>
@@ -573,9 +577,9 @@ const getStyles = (theme) =>
       color: theme.text2,
     },
     inputPlaceholder: {
-      fontSize: deviceWidth < 321 ? 14 : 16,
       color: theme.indigo4,
       paddingLeft: 5,
+      fontSize: deviceWidth < 321 ? 14 : 18,
       flex: 1,
       fontFamily: "Nunito-Regular",
     },

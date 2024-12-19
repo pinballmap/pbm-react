@@ -30,6 +30,7 @@ import FindLocationType from "../screens/FindLocationType";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 import { DrawerMenu } from "../components";
 
@@ -48,6 +49,19 @@ const TabsOptionsStyle = {
     fontSize: 18,
   },
 };
+
+function MapNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="MapNavStack"
+        title="Map"
+        component={Map}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function SavedStackNavigator() {
   return (
@@ -128,7 +142,7 @@ function BottomTabNavigator() {
       <Tab.Screen
         name="MapTab"
         title="Map"
-        component={Map}
+        component={MapNavigator}
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
@@ -296,7 +310,18 @@ function MapStack() {
           fontFamily: "Nunito-Bold",
         },
         headerTitleAllowFontScaling: false,
-        headerBackButtonDisplayMode: "minimal",
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <FontAwesome6
+            name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
+            size={24}
+            color={colors.text}
+            style={{
+              marginLeft: Platform.OS === "android" ? 0 : 10,
+              marginRight: 5,
+            }}
+          />
+        ),
       })}
     >
       <Stack.Screen
@@ -314,7 +339,7 @@ function MapStack() {
         name="LocationList"
         component={LocationList}
         options={{
-          headerBackButtonDisplayMode: "default",
+          headerBackTitleVisible: true,
           title: "Locations on the Map",
         }}
       />
@@ -340,8 +365,7 @@ function MapStack() {
         name="FilterMap"
         component={FilterMap}
         options={{
-          headerBackTitle: "Map",
-          headerBackButtonDisplayMode: "default",
+          headerBackTitleVisible: true,
           title: "Filter Map Results",
         }}
       />

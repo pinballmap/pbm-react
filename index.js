@@ -91,7 +91,6 @@ const App = () => {
       <Provider store={store}>
         <AppWrapper>
           <NavigationContainer
-            navigationInChildEnabled
             theme={selectedTheme === "dark" ? dark : standard}
           >
             <MapNavigator />

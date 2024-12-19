@@ -21,13 +21,11 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
-import { useNavigation } from "@react-navigation/native";
 
 let deviceWidth = Dimensions.get("window").width;
 
 const DrawerMenu = ({ logout, user, ...props }) => {
   const { theme } = useContext(ThemeContext);
-  const navigation = useNavigation();
   const s = getStyles(theme);
   const iconSize = 28;
   const iconColor = "#bec2e6";
@@ -41,7 +39,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           onPress={() => {
             setModalVisible(false);
             logout();
-            navigation.navigate("Map", { screen: "Login" });
+            props.navigation.navigate("Login");
           }}
           accessibilityLabel="Logout"
           containerStyle={s.buttonContainer}
@@ -91,9 +89,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           </Text>
         ) : (
           <Pressable
-            onPress={() =>
-              props.navigation.navigate("Map", { screen: "Signup" })
-            }
+            onPress={() => props.navigation.navigate("Signup")}
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
           >
             <Text allowFontScaling={false} style={s.nameText}>
@@ -139,12 +135,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() =>
-          navigation.navigate("Map", {
-            screen: "MapStack",
-            params: { screen: "MapTab" },
-          })
-        }
+        onPress={() => props.navigation.navigate("MapTab")}
       />
       <DrawerItem
         label="Submit Location"
@@ -159,7 +150,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() =>
-          navigation.navigate("Map", { screen: "SuggestLocation" })
+          props.navigation.navigate("Map", { screen: "SuggestLocation" })
         }
       />
       <DrawerItem
@@ -174,7 +165,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
+        onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"
@@ -188,7 +179,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "About" })}
+        onPress={() => props.navigation.navigate("Map", { screen: "About" })}
       />
       <DrawerItem
         label="Events"
@@ -202,7 +193,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Events" })}
+        onPress={() => props.navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="FAQ"
@@ -216,7 +207,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "FAQ" })}
+        onPress={() => props.navigation.navigate("Map", { screen: "FAQ" })}
       />
       <DrawerItem
         label="Settings"
@@ -230,7 +221,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Settings" })}
+        onPress={() => props.navigation.navigate("Map", { screen: "Settings" })}
       />
       {user.loggedIn ? (
         <Pressable
@@ -247,7 +238,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         </Pressable>
       ) : (
         <Pressable
-          onPress={() => navigation.navigate("Map", { screen: "Login" })}
+          onPress={() => props.navigation.navigate("Login")}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,
