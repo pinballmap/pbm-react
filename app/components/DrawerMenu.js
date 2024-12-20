@@ -264,20 +264,20 @@ const getStyles = (theme) =>
       color: theme.colors.activeTab,
       position: "absolute",
       opacity: 0.9,
-      paddingLeft: 15,
-      marginTop: 3,
+      paddingLeft: Platform.OS === "ios" ? 17 : 15,
+      marginTop: 8,
     },
     iconStyle: {
-      marginTop: -3,
+      marginTop: 0,
     },
     text: {
       color: theme.colors.activeTab,
       fontFamily: "Nunito-Bold",
       fontSize: 20,
       position: "absolute",
-      paddingLeft: 55,
+      paddingLeft: 78,
       paddingRight: 120,
-      top: 3,
+      top: 8,
     },
     nameText: {
       color: theme.colors.activeTab,
@@ -286,10 +286,8 @@ const getStyles = (theme) =>
       marginLeft: 20,
     },
     buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 10,
-      marginBottom: 10,
+      marginVertical: 10,
+      marginHorizontal: 20,
     },
     labelStyle: {
       color: theme.colors.primary,
