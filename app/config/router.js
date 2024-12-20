@@ -3,7 +3,7 @@ import { DrawerActions, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Dimensions, Platform, StyleSheet, Text } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
@@ -33,8 +33,6 @@ import FindCountry from "../screens/FindCountry";
 import { FontAwesome6 } from "@expo/vector-icons";
 
 import { DrawerMenu } from "../components";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const Stack = createStackNavigator();
 
@@ -448,8 +446,7 @@ function DrawerNavigator() {
         drawerActiveBackgroundColor: colors.background,
         drawerLabelStyle: { fontFamily: "Nunito-Bold", fontSize: 16 },
         drawerStyle: {
-          width: deviceWidth - 50,
-          minWidth: 300,
+          width: "87%",
           borderBottomLeftRadius: 20,
           borderTopLeftRadius: 20,
         },
