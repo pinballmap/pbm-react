@@ -32,7 +32,6 @@ import {
   setSelectedMapLocation,
   updateMap,
 } from "../actions";
-import { TRIGGER_UPDATE_BOUNDS } from "../actions/types";
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
@@ -55,7 +54,6 @@ const LocationDetails = (props) => {
   const s = getStyles(theme);
   const scrollViewRef = createRef(null);
   const [locationId, setLocationId] = useState(props.route.params["id"]);
-  const [navigateToMap, setNavigateToMap] = useState(false);
   const [detailsExpanded, setDetailsExpanded] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -79,12 +77,7 @@ const LocationDetails = (props) => {
     // component unmount
     return () => {
       if (!!route.params["refreshMap"]) {
-        dispatch({ type: TRIGGER_UPDATE_BOUNDS });
-      }
-      if (navigateToMap) {
-        const { lat, lon, id } = props.location.location;
-        dispatch(updateMap(lat, lon));
-        dispatch(setSelectedMapLocation(id));
+        dispatch(updateMap(location.lat, location.lon));
       }
     };
   }, []);
@@ -135,8 +128,9 @@ const LocationDetails = (props) => {
   };
 
   const onMapPress = () => {
+    dispatch(updateMap(location.lat, location.lon));
+    dispatch(setSelectedMapLocation(location.id));
     navigation.navigate("MapTab");
-    setNavigateToMap(true);
   };
 
   if (
