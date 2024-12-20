@@ -37,6 +37,7 @@ export default {
           backgroundColor: "#47475f",
           image: "app/assets/images/pbm-splash-2024.png",
           imageWidth: 200,
+          resizeMode: "contain",
         },
       ],
       [
@@ -76,7 +77,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "206",
+      buildNumber: "207",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -134,7 +135,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 177,
+      versionCode: 178,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

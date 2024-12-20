@@ -12,6 +12,14 @@ This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/a
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.26
+
+December 21, 2024
+
+- iOS: add dark and tinted icons.
+- Performance improvements (e.g. Enable react native new architecture (fabric) and upgrade to Expo SDK 52).
+- Some design tweaks.
+
 ### 5.3.25
 
 November 2, 2024
