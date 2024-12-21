@@ -35,9 +35,14 @@ export default {
         "expo-splash-screen",
         {
           backgroundColor: "#47475f",
-          image: "app/assets/images/pbm-splash-2024.png",
-          imageWidth: 200,
-          resizeMode: "contain",
+          ios: {
+            image: "app/assets/images/pbm-splash-2024.png",
+            imageWidth: 250,
+          },
+          android: {
+            image: "app/assets/images/pbm-splash-android-2024.png",
+            imageWidth: 200,
+          },
         },
       ],
       [
