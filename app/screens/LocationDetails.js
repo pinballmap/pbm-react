@@ -314,8 +314,8 @@ const LocationDetails = (props) => {
               scaleBarEnabled={false}
               pitchEnabled={false}
               rotateEnabled={false}
-              logoEnabled={false}
-              attributionPosition={{ bottom: 4, right: 0 }}
+              attributionPosition={{ bottom: 33, left: 85 }}
+              logoPosition={{ bottom: 35, left: 5 }}
               styleURL={
                 theme.theme === "dark"
                   ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
@@ -750,7 +750,7 @@ const getStyles = (theme) =>
       width: "100%",
     },
     mapHeight: {
-      height: "115%",
+      height: 230,
     },
     backgroundColor: {
       backgroundColor: theme.base1,
