@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
 
@@ -9,14 +9,14 @@ const NotLoggedIn = ({ onPress, text }) => {
   const s = getStyles(theme);
 
   return (
-    <View style={s.container}>
+    <ScrollView style={s.container}>
       <Text style={s.hiya}>{text}</Text>
       <PbmButton
         title={"Log In"}
         onPress={onPress}
         accessibilityLabel="Log In"
       />
-    </View>
+    </ScrollView>
   );
 };
 
