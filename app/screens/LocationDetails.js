@@ -763,8 +763,8 @@ const getStyles = (theme) =>
       borderTopRightRadius: 30,
       boxShadow:
         theme.theme == "dark"
-          ? "0 -8 6 0 rgba(0, 0, 0, 0.4)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.6)",
+          ? "0 -8 6 0 rgba(0, 0, 0, 0.2)"
+          : "0 -8 6 0 rgba(170, 170, 199, 0.1)",
     },
     locationContainer: {
       marginHorizontal: 15,

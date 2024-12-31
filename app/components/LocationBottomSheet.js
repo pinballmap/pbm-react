@@ -169,8 +169,8 @@ const getStyles = (theme) =>
       alignSelf: "center",
       justifyContent: "center",
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
       width: "100%",
       minHeight: 130,
       height: "auto",
@@ -183,8 +183,8 @@ const getStyles = (theme) =>
       alignItems: "center",
       alignContent: "space-around",
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
     },
     plus: {
       color: theme.text3,
@@ -258,8 +258,8 @@ const getStyles = (theme) =>
     notPressed: {
       boxShadow:
         theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+          ? "0 -8 10 0 rgba(0, 0, 0, 0.4)"
+          : "0 -8 10 0 rgba(170, 170, 199, 0.2)",
     },
     icon: {
       fontSize: 28,
