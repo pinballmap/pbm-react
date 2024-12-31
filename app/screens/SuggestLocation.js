@@ -671,17 +671,6 @@ const getStyles = (theme) =>
     radius10: {
       borderRadius: 10,
     },
-    viewPicker: {
-      borderRadius: 25,
-      elevation: 6,
-      backgroundColor: theme.white,
-      marginHorizontal: 20,
-      paddingHorizontal: 10,
-      fontFamily: "Nunito-Bold",
-    },
-    picker: {
-      backgroundColor: "#ffffff",
-    },
     hr: {
       marginLeft: 25,
       marginRight: 25,

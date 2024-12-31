@@ -263,16 +263,13 @@ const getStyles = (theme) =>
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     pressed: {
-      shadowColor: "transparent",
       opacity: 0.8,
-      elevation: 0,
     },
     notPressed: {
-      shadowRadius: 6,
-      elevation: 6,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     icon: {
       fontSize: 28,

@@ -237,11 +237,10 @@ const getStyles = (theme) =>
       width: 44,
       alignSelf: "center",
       justifyContent: "center",
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       backgroundColor: theme.white,
     },
     quickButtonText: {
@@ -299,11 +298,10 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.white,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     problem: {
       textAlign: "center",

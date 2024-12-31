@@ -169,17 +169,14 @@ const getStyles = () =>
     },
     buttonPink: {
       backgroundColor: "#8e83ce",
-      elevation: 0,
       borderRadius: 25,
     },
     buttonBlue: {
       backgroundColor: "#cf8dde",
-      elevation: 0,
       borderRadius: 25,
     },
     buttonWhite: {
       backgroundColor: "#514953",
-      elevation: 0,
       borderRadius: 25,
     },
     titleStyle: {

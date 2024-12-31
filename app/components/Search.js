@@ -548,11 +548,10 @@ const getStyles = (theme) =>
     searchMapChild: {
       flexDirection: "row",
       alignItems: "center",
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       margin: "auto",
       height: 45,
     },

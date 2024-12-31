@@ -761,10 +761,10 @@ const getStyles = (theme) =>
       marginBottom: 10,
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: -8 },
-      shadowOpacity: 0.3,
-      shadowRadius: 4,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 -8 6 0 rgba(0, 0, 0, 0.4)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.6)",
     },
     locationContainer: {
       marginHorizontal: 15,
@@ -790,10 +790,10 @@ const getStyles = (theme) =>
       marginRight: 20,
       marginLeft: 20,
       backgroundColor: theme.white,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
-      shadowRadius: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       paddingVertical: 10,
       paddingLeft: 15,
       paddingRight: 15,
@@ -801,15 +801,13 @@ const getStyles = (theme) =>
     pressed: {
       borderColor: theme.pink2,
       borderWidth: 2,
-      shadowColor: "transparent",
+      boxShadow: null,
       opacity: 0.8,
-      elevation: 0,
     },
     notPressed: {
       borderColor: "transparent",
       borderWidth: 2,
       opacity: 1.0,
-      elevation: 6,
     },
     machineName: {
       color: theme.theme == "dark" ? theme.text : theme.purple,
@@ -906,11 +904,10 @@ const getStyles = (theme) =>
       width: 44,
       alignSelf: "center",
       justifyContent: "center",
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       backgroundColor: theme.white,
     },
     quickButtonText: {
@@ -1018,18 +1015,17 @@ const getStyles = (theme) =>
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
       justifyContent: "center",
       borderRadius: 15,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     upButton: {
       justifyContent: "center",
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       position: "absolute",
       right: 25,
       bottom: 25,

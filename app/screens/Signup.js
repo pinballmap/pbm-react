@@ -291,7 +291,6 @@ const getStyles = (theme) =>
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,
-      elevation: 0,
     },
     errorText: {
       color: "red",

@@ -234,11 +234,10 @@ const getStyles = (theme) =>
       borderWidth: 0,
       borderRadius: 25,
       backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor: theme.shadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     buttonGroupInactive: {
@@ -269,11 +268,10 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       width: "100%",
       height: 80,
-      shadowColor: theme.shadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     bottomTabClear: {
@@ -283,11 +281,10 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? "#e3fae5" : theme.text,
     },
     bottomTabApplyButton: {
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 6,
-      elevation: 6,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       overflow: "visible",
       borderRadius: 30,
       backgroundColor: theme.purple,

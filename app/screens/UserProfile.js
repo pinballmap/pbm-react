@@ -298,11 +298,10 @@ const getStyles = (theme) =>
       paddingHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.theme == "dark" ? "#312433" : theme.base4,
-      shadowColor: theme.darkShadow,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
-      shadowRadius: 6,
-      elevation: 2,
+      boxShadow:
+        theme.theme == "dark"
+          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       marginHorizontal: 15,
       marginVertical: 6,
     },
@@ -404,13 +403,11 @@ const getStyles = (theme) =>
       marginBottom: 10,
     },
     pressed: {
-      shadowColor: "transparent",
+      boxShadow: null,
       opacity: 0.8,
-      elevation: 0,
     },
     notPressed: {
       opacity: 1.0,
-      elevation: 2,
     },
     textPressed: {
       color: theme.purple2,

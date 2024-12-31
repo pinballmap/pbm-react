@@ -35,11 +35,10 @@ const PbmButton = ({
           overflow: "visible",
           borderRadius: 25,
           backgroundColor: theme.base1,
-          shadowColor: theme.darkShadow,
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: theme.theme == "dark" ? 0.6 : 0.4,
-          shadowRadius: 6,
-          elevation: 6,
+          boxShadow:
+            theme.theme == "dark"
+              ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+              : "0 0 10 0 rgba(170, 170, 199, 0.3)",
         },
         containerStyle ? containerStyle : styles.margin15,
       ]}
