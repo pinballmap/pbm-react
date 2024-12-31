@@ -120,14 +120,14 @@ March 27, 2024
 
 ### 5.3.12
 
-February 23, 2023
+February 23, 2024
 
 - Fixed minor bug on About page (Thank you [@ErikGraciosa](https://github.com/ErikGraciosa)).
 - A couple small design tweaks and package updates.
 
 ### 5.3.11
 
-February 8, 2023
+February 8, 2024
 
 - Fix the "and x more machines" text on the Saved locations list.
 - New map marker icon colors, and other map screen design tweaks.
@@ -137,7 +137,7 @@ February 8, 2023
 
 ### 5.3.10
 
-February 8, 2023
+February 8, 2024
 
 - The same as 5.3.11 above, but the markers were a little tough to click due to the dropshadow radius (overlapping other markers). So, adjusted and re-submitted (5.3.10 was only published on the iOS app store).
 
