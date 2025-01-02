@@ -1,5 +1,7 @@
 This repo is the codebase for the [Pinball Map app](https://www.pinballmap.com/app). The code for the [Pinball Map website is here](https://github.com/pinballmap/pbm). If you have an app issue, please use this repo; if you have a website issue, please use that one!
 
+If you want to contribute to the development of the Pinball Map React Native app, start by following the setup instructions [here](setup.md).
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P411XZAM)
 
 <p align="center">
