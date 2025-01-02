@@ -8,19 +8,16 @@ These instructions assume that you have installed:
 
 - [Node.js](https://nodejs.org/en/)
 - [Git](https://git-scm.com/)
-- [Watchman](https://facebook.github.io/watchman/docs/install.html) (for macOS users)
 
 ## Expo
 
 Development of the Pinball Map App (pbm-react) is done using Expo. **Expo** is a platform for making universal native apps using Javascript and React Native. Expo runs on Android, iOS, and the web (the pbm website does not use Expo).
 
-You'll need two tools to develop using Expo: Expo's command line interface, and Expo's mobile client app:
+You'll need the expo cli tool to develop using Expo:
 
 - The **expo-cli** is a command line app used to initialize and serve React-Native apps like ours.
 
-- **Expo Go** (for iOS), or **Expo** (for Android) is Expo's mobile client app that will allow you to open React Native apps on your mobile device that are served through the expo-cli.
-
-You can proceed with the following steps to get the Expo CLI and the Expo Go app (or the Expo app, for Android) up and running:
+You can proceed with the following steps to get the Expo CLI up and running:
 
 - Make an Expo account [here](https//expo.dev/)
 - Install the Expo CLI using npm:
@@ -34,7 +31,7 @@ You can proceed with the following steps to get the Expo CLI and the Expo Go app
 
 ## GitHub
 
-Fork this GitHub repository to your own GitHub account, then clone it to your local machine.
+Fork [this](https://github.com/pinballmap/pbm-react.git) GitHub repository to your own GitHub account, then clone it to your local machine.
 
 ## .env File
 
@@ -43,7 +40,6 @@ Create a file called ”.env”, in the root directory of the project on your lo
 ## Fire It Up
 
 - `npm install`
-- `npm start` (This delegates to `expo start`, so you can type whichever you like.)
-- The terminal should now show you a QR code. Scan the QR code with your device using the Camera app (iOS) or the Expo app (Android). This should start the Pinball Map app running on your device using Expo. Note that your device and your computer must be on the same network.
+- `npm expo run` (Choose the platform you want to run. It may take some time.)
 
 If you are unable to successfully get set-up like this, or if you identify errors in these instructions, we'd love for you to file an issue or open a pull request.
