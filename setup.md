@@ -88,3 +88,19 @@ Staging: `API_URL='https://www.pinballmap.com/api/v1'`
 - or review [here](https://docs.expo.dev/develop/development-builds/create-a-build/) for instructions on EAS builds.
 
 If you are unable to successfully get set-up like this, or if you identify errors in these instructions, we'd love for you to file an issue or open a pull request.
+
+## Possible Problems
+
+If you receive an error upon launching the app that says something along th elines of `you are using the bare workflow, where runtime policy versions are not supported.` you will need to adjust your [app.config.js](./app.config.js). Try replacing
+
+```
+runtimeVersion: {
+  policy: "sdkVersion",
+},
+```
+
+with
+
+```
+runtimeVersion: "1.0.0",
+```
