@@ -163,7 +163,12 @@ const LocationDetails = (props) => {
           >
             <Image
               source={insiderConnectedImage}
-              style={{ width: 50, height: 50 }}
+              style={{
+                width: 50,
+                height: 50,
+                // Translation account for the space on the right and small TM so the card feels balanced
+                transform: [{ translateX: 10 }],
+              }}
               resizeMode="contain"
             />
           </View>
