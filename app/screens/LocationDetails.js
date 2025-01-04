@@ -10,6 +10,7 @@ import {
   Share,
   StyleSheet,
   View,
+  Image,
 } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
@@ -46,6 +47,9 @@ let deviceWidth = Dimensions.get("window").width;
 
 const moment = require("moment");
 
+// TODO: pull from settings after adding setting option
+const showInsiderConnectedBadge = true;
+
 const LocationDetails = (props) => {
   const { route } = props;
   const navigation = useNavigation();
@@ -59,6 +63,10 @@ const LocationDetails = (props) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
+  const insiderConnectedImage =
+    theme.theme == "dark"
+      ? require("../assets/images/Insider_Connected_Vertical_RED_and_WHT_300_dpi.png")
+      : require("../assets/images/Insider_Connected_Vertical_standard_300_dpi.png");
 
   useEffect(() => {
     const onMount = async () => {
@@ -101,7 +109,7 @@ const LocationDetails = (props) => {
     setShowScrollToTop(positionY > 150);
   };
 
-  const getTitle = (machine, s) => (
+  const Title = ({ machine }) => (
     <Text>
       <Text style={s.machineName}>{machine.name}</Text>
       {machine.year ? (
@@ -110,6 +118,50 @@ const LocationDetails = (props) => {
         }${machine.year})`}</Text>
       ) : null}
     </Text>
+  );
+
+  const MachineCard = ({ pressed, machine }) => (
+    <View>
+      <View
+        style={[
+          s.machineListContainer,
+          pressed ? s.pressed : s.notPressed,
+          { flexDirection: "row" },
+        ]}
+      >
+        <View style={{ flex: 1 }}>
+          <Title machine={machine} />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 6,
+            }}
+          >
+            <MaterialCommunityIcons
+              name={
+                machine.created_at != machine.updated_at
+                  ? "clock-time-four-outline"
+                  : "clock-time-three-outline"
+              }
+              style={s.metaIcon}
+            />
+            <Text style={s.updated}>
+              {machine.created_at != machine.updated_at
+                ? `Updated: ${moment(machine.updated_at).format("MMM DD, YYYY")}`
+                : `Added: ${moment(machine.created_at).format("MMM DD, YYYY")}`}
+            </Text>
+          </View>
+        </View>
+        {showInsiderConnectedBadge && machine.ic_enabled && (
+          <Image
+            source={insiderConnectedImage}
+            style={{ width: 50, height: 50 }}
+            resizeMode="contain"
+          />
+        )}
+      </View>
+    </View>
   );
 
   const handleConfirmPress = (id, loggedIn) => {
@@ -682,51 +734,7 @@ const LocationDetails = (props) => {
                   }}
                 >
                   {({ pressed }) => (
-                    <View
-                      style={[
-                        s.machineListContainer,
-                        pressed ? s.pressed : s.notPressed,
-                      ]}
-                    >
-                      {getTitle(machine, s)}
-                      {machine.created_at != machine.updated_at ? (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            marginTop: 6,
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name="clock-time-four-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={s.updated}>
-                            {`Updated: ${moment(machine.updated_at).format(
-                              "MMM DD, YYYY",
-                            )}`}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            marginTop: 6,
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name="clock-time-three-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={s.updated}>
-                            {`Added: ${moment(machine.created_at).format(
-                              "MMM DD, YYYY",
-                            )}`}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
+                    <MachineCard pressed={pressed} machine={machine} />
                   )}
                 </Pressable>
               ))}
