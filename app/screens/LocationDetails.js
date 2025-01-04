@@ -154,11 +154,19 @@ const LocationDetails = (props) => {
           </View>
         </View>
         {showInsiderConnectedBadge && machine.ic_enabled && (
-          <Image
-            source={insiderConnectedImage}
-            style={{ width: 50, height: 50 }}
-            resizeMode="contain"
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={insiderConnectedImage}
+              style={{ width: 50, height: 50 }}
+              resizeMode="contain"
+            />
+          </View>
         )}
       </View>
     </View>
