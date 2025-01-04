@@ -46,6 +46,9 @@ let deviceWidth = Dimensions.get("window").width;
 
 const moment = require("moment");
 
+// TODO: add settings
+const prioritizeSternInsiderconnected = true;
+
 const LocationDetails = (props) => {
   const { route } = props;
   const navigation = useNavigation();
@@ -153,7 +156,23 @@ const LocationDetails = (props) => {
   const { website: opWebsite, name: opName } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
 
-  const sortedMachines = alphaSortNameObj(
+  const sternFilteredSorted = (machinesArray) => {
+    const icEnabledMachines = alphaSortNameObj(
+      machinesArray.filter((machine) => machine.ic_enabled),
+    );
+
+    const icDisabledMachines = alphaSortNameObj(
+      machinesArray.filter((machine) => !machine.ic_enabled),
+    );
+
+    return [...icEnabledMachines, ...icDisabledMachines];
+  };
+
+  const sortFunction = prioritizeSternInsiderconnected
+    ? sternFilteredSorted
+    : alphaSortNameObj;
+
+  const sortedMachines = sortFunction(
     location.location_machine_xrefs.map((machine) => {
       const machineDetails = props.machines.machines.find(
         (m) => m.id === machine.machine_id,
@@ -161,6 +180,7 @@ const LocationDetails = (props) => {
       return { ...machineDetails, ...machine };
     }),
   );
+
   const {
     icon: locationIcon,
     library: iconLibrary,
