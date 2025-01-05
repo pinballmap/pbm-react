@@ -9,6 +9,9 @@ import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
 
+export const KEY_DEFAULT_THEME_OVERRIDE = "defaultThemeOverride";
+export const KEY_DARK_THEME_OVERRIDE = "darkThemeOverride";
+
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
     useContext(ThemeContext);
@@ -18,12 +21,12 @@ const Settings = ({ user, setUnitPreference }) => {
   const [selectedDark, updateSelectedDark] = useState(1);
 
   useEffect(() => {
-    retrieveItem("defaultThemeOverride").then(
+    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
       (defaultThemeOverride) =>
         defaultThemeOverride && updateSelectedDefault(1),
     );
 
-    retrieveItem("darkThemeOverride").then(
+    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
     );
   });
@@ -32,7 +35,7 @@ const Settings = ({ user, setUnitPreference }) => {
     if (idx === selectedDefault) return;
 
     updateSelectedDefault(idx);
-    AsyncStorage.setItem("defaultThemeOverride", JSON.stringify(idx === 1));
+    AsyncStorage.setItem(KEY_DEFAULT_THEME_OVERRIDE, JSON.stringify(idx === 1));
     toggleDefaultTheme();
   };
 
@@ -40,7 +43,7 @@ const Settings = ({ user, setUnitPreference }) => {
     if (idx === selectedDark) return;
 
     updateSelectedDark(idx);
-    AsyncStorage.setItem("darkThemeOverride", JSON.stringify(idx === 0));
+    AsyncStorage.setItem(KEY_DARK_THEME_OVERRIDE, JSON.stringify(idx === 0));
     toggleDarkTheme();
   };
 
