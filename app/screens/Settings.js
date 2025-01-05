@@ -8,6 +8,7 @@ import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
+import { CheckBox } from "@rneui/themed";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
@@ -16,6 +17,7 @@ const Settings = ({ user, setUnitPreference }) => {
 
   const [selectedDefault, updateSelectedDefault] = useState(0);
   const [selectedDark, updateSelectedDark] = useState(1);
+  const [checkedTestCheckBox, updateCheckedTestCheckbox] = useState(false);
 
   useEffect(() => {
     retrieveItem("defaultThemeOverride").then(
@@ -48,9 +50,50 @@ const Settings = ({ user, setUnitPreference }) => {
     setUnitPreference(idx);
   };
 
+  const testCheckBoxChange = (newCheckedValue) => {
+    updateCheckedTestCheckbox(newCheckedValue);
+  };
+
+  const SettingCheckBox = ({
+    title,
+    description,
+    checkTitle,
+    onPress,
+    checked,
+  }) => {
+    return (
+      <View>
+        <View style={[s.pageTitle, { marginBottom: 4 }]}>
+          <Text style={s.pageTitleText}>{title}</Text>
+        </View>
+        <CheckBox
+          checked={checked}
+          title={checkTitle}
+          onPress={() => {
+            // Sends the new checked value
+            return onPress(!checked);
+          }}
+          containerStyle={{ backgroundColor: theme.base1, marginVertical: -8 }}
+          fontFamily="Nunito-Bold"
+          textStyle={{ fontSize: 16, color: theme.text }}
+          checkedColor={theme.purple}
+        />
+        <Text style={s.text}>{description}</Text>
+      </View>
+    );
+  };
+
   return (
     <Screen>
       <View style={s.background}>
+        <SettingCheckBox
+          title="CheckBox test"
+          checkTitle="CheckBox title"
+          description={"Testing how a checkbox setting looks."}
+          onPress={testCheckBoxChange}
+          checked={checkedTestCheckBox}
+        />
+
         <View style={s.pageTitle}>
           <Text style={s.pageTitleText}>Light Mode Theme</Text>
         </View>
