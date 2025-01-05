@@ -8,9 +8,10 @@ import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
-
-export const KEY_DEFAULT_THEME_OVERRIDE = "defaultThemeOverride";
-export const KEY_DARK_THEME_OVERRIDE = "darkThemeOverride";
+import {
+  KEY_DEFAULT_THEME_OVERRIDE,
+  KEY_DARK_THEME_OVERRIDE,
+} from "../utils/constants";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
