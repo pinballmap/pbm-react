@@ -9,6 +9,10 @@ import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
 import { CheckBox } from "@rneui/themed";
+import {
+  KEY_DEFAULT_THEME_OVERRIDE,
+  KEY_DARK_THEME_OVERRIDE,
+} from "../utils/constants";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
@@ -20,12 +24,12 @@ const Settings = ({ user, setUnitPreference }) => {
   const [checkedTestCheckBox, updateCheckedTestCheckbox] = useState(false);
 
   useEffect(() => {
-    retrieveItem("defaultThemeOverride").then(
+    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
       (defaultThemeOverride) =>
         defaultThemeOverride && updateSelectedDefault(1),
     );
 
-    retrieveItem("darkThemeOverride").then(
+    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
     );
   });
@@ -34,7 +38,7 @@ const Settings = ({ user, setUnitPreference }) => {
     if (idx === selectedDefault) return;
 
     updateSelectedDefault(idx);
-    AsyncStorage.setItem("defaultThemeOverride", JSON.stringify(idx === 1));
+    AsyncStorage.setItem(KEY_DEFAULT_THEME_OVERRIDE, JSON.stringify(idx === 1));
     toggleDefaultTheme();
   };
 
@@ -42,7 +46,7 @@ const Settings = ({ user, setUnitPreference }) => {
     if (idx === selectedDark) return;
 
     updateSelectedDark(idx);
-    AsyncStorage.setItem("darkThemeOverride", JSON.stringify(idx === 0));
+    AsyncStorage.setItem(KEY_DARK_THEME_OVERRIDE, JSON.stringify(idx === 0));
     toggleDarkTheme();
   };
 
@@ -83,6 +87,33 @@ const Settings = ({ user, setUnitPreference }) => {
     );
   };
 
+  const ButtonGroupSetting = ({
+    title,
+    buttons,
+    description,
+    onPress,
+    selectedIndex,
+  }) => {
+    return (
+      <View>
+        <View style={s.pageTitle}>
+          <Text style={s.pageTitleText}>{title}</Text>
+        </View>
+        <ButtonGroup
+          onPress={onPress}
+          selectedIndex={selectedIndex}
+          buttons={buttons}
+          containerStyle={s.buttonGroupContainer}
+          textStyle={s.buttonGroupInactive}
+          selectedButtonStyle={s.selButtonStyle}
+          selectedTextStyle={s.selTextStyle}
+          innerBorderStyle={s.innerBorderStyle}
+        />
+        <Text style={s.text}>{description}</Text>
+      </View>
+    );
+  };
+
   return (
     <Screen>
       <View style={s.background}>
@@ -93,51 +124,26 @@ const Settings = ({ user, setUnitPreference }) => {
           onPress={testCheckBoxChange}
           checked={checkedTestCheckBox}
         />
-
-        <View style={s.pageTitle}>
-          <Text style={s.pageTitleText}>Light Mode Theme</Text>
-        </View>
-        <ButtonGroup
+        <ButtonGroupSetting
+          title="Light Mode Theme"
+          buttons={["Light", "Dark"]}
+          description="When your phone is in Light Mode, use our Light theme or our Dark theme."
           onPress={updateDefaultPref}
           selectedIndex={selectedDefault}
-          buttons={["Light", "Dark"]}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
         />
-        <Text
-          style={s.text}
-        >{`When your phone is in Light Mode, use our Light theme or our Dark theme.`}</Text>
-        <View style={s.pageTitle}>
-          <Text style={s.pageTitleText}>Dark Mode Theme</Text>
-        </View>
-        <ButtonGroup
+        <ButtonGroupSetting
+          title="Dark Mode Theme"
+          buttons={["Light", "Dark"]}
+          description="When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme."
           onPress={updateDarkPref}
           selectedIndex={selectedDark}
-          buttons={["Light", "Dark"]}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
         />
-        <Text
-          style={s.text}
-        >{`When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme.`}</Text>
-        <View style={s.pageTitle}>
-          <Text style={s.pageTitleText}>Distance Unit</Text>
-        </View>
-        <ButtonGroup
+        <ButtonGroupSetting
+          title="Distance Unit"
+          buttons={["Miles", "Kilometers"]}
+          description="Choose your preferred distance measurement unit."
           onPress={updateUnitPref}
           selectedIndex={user.unitPreference ? 1 : 0}
-          buttons={["Miles", "Kilometers"]}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
         />
       </View>
     </Screen>
