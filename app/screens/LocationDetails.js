@@ -50,6 +50,11 @@ const moment = require("moment");
 // TODO: pull from settings after adding setting option
 const showInsiderConnectedBadge = true;
 
+const insiderConnectedImage = {
+  dark: require("../assets/images/Insider_Connected_Vertical_RED_and_WHT_300_dpi.png"),
+  light: require("../assets/images/Insider_Connected_Vertical_standard_300_dpi.png"),
+};
+
 const LocationDetails = (props) => {
   const { route } = props;
   const navigation = useNavigation();
@@ -63,10 +68,6 @@ const LocationDetails = (props) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
-  const insiderConnectedImage =
-    theme.theme == "dark"
-      ? require("../assets/images/Insider_Connected_Vertical_RED_and_WHT_300_dpi.png")
-      : require("../assets/images/Insider_Connected_Vertical_standard_300_dpi.png");
 
   useEffect(() => {
     const onMount = async () => {
@@ -162,7 +163,11 @@ const LocationDetails = (props) => {
             }}
           >
             <Image
-              source={insiderConnectedImage}
+              source={
+                theme.theme === "dark"
+                  ? insiderConnectedImage.dark
+                  : insiderConnectedImage.light
+              }
               style={{
                 width: 50,
                 height: 50,
