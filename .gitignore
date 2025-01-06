@@ -1,11 +1,9 @@
 # OSX
-#
 .DS_Store
 *.directory
 .package.json.kate-swp
 
 # node.js
-#
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -18,6 +16,14 @@ __snapshots__/
 .expo/
 dist/
 
-.env
+# Local dev client build platform directories
+/android/
+/ios/
 
+# IDE configuration directories
 .vscode/
+/.idea/
+
+# API keys stored here
+# Prevent accidental sharing
+.env

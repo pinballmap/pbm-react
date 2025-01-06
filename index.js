@@ -15,6 +15,10 @@ import { AppWrapper } from "./app/components";
 import MapNavigator from "./app/config/router";
 import * as Sentry from "@sentry/react-native";
 import * as Device from "expo-device";
+import {
+  KEY_DARK_THEME_OVERRIDE,
+  KEY_DEFAULT_THEME_OVERRIDE,
+} from "./app/utils/constants";
 
 Sentry.init({
   dsn: "https://057bae9b04f2410db6e4f1bd8d3eff2c@o1352308.ingest.sentry.io/6633526",
@@ -42,14 +46,14 @@ const App = () => {
   );
 
   useEffect(() => {
-    retrieveItem("defaultThemeOverride").then(
+    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
       (defaultThemeOverride) =>
         defaultTheme !== "dark" &&
         defaultThemeOverride &&
         setSelectedTheme("dark"),
     );
 
-    retrieveItem("darkThemeOverride").then(
+    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) =>
         defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
     );
