@@ -25,5 +25,5 @@ dist/
 /.idea/
 
 # API keys stored here
-# Prevent acciental sharing
+# Prevent accidental sharing
 .env
