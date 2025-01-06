@@ -67,10 +67,10 @@ Request an IFPA API Key [here](https://www.ifpapinball.com/api/request_api_key.p
 
 ### Pinball Maps API
 
-No key is needed, but you may want to switch between the produciton and staging servers if there's a risk that you may damage data.
+No key is needed. If your development process involves editing data (adding/removing machines, leaving comments, etc.) then do not use the production API endpoints. Instead, use the staging server. The staging server is not always turned on, so please ask us to turn it on.
 
-Production: `API_URL='https://pinballmapstaging.herokuapp.com/api/v1'`
-Staging: `API_URL='https://www.pinballmap.com/api/v1'`
+Staging: `API_URL='https://pbmstaging.com/api/v1'`
+Production: `API_URL='https://www.pinballmap.com/api/v1'`
 
 ### Sentry Auth Token
 
