@@ -8,6 +8,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
 import { FlashList } from "@shopify/flash-list";
+import { isThemeDark } from "../utils/themes";
 
 const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const { theme } = useContext(ThemeContext);
@@ -110,7 +111,7 @@ const getStyles = (theme) =>
       height: 40,
       backgroundColor: theme.white,
       borderRadius: 25,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       borderBottomWidth: 1,
       marginHorizontal: 10,

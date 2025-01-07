@@ -19,6 +19,7 @@ import { getData } from "../config/request";
 import { logout } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
+import { isThemeDark } from "../utils/themes";
 
 const moment = require("moment");
 
@@ -297,11 +298,10 @@ const getStyles = (theme) =>
       paddingVertical: 2,
       paddingHorizontal: 20,
       borderWidth: 0,
-      backgroundColor: theme.theme == "dark" ? "#312433" : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      backgroundColor: isThemeDark(theme.theme) ? "#312433" : theme.base4,
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       marginHorizontal: 15,
       marginVertical: 6,
     },
@@ -338,7 +338,7 @@ const getStyles = (theme) =>
     usernameContainer: {
       paddingTop: 10,
       paddingBottom: 14,
-      backgroundColor: theme.theme == "dark" ? theme.white : "#efe9f0",
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : "#efe9f0",
       marginTop: 20,
       marginHorizontal: 20,
       borderRadius: 20,
@@ -352,7 +352,7 @@ const getStyles = (theme) =>
     },
     statContainer: {
       alignItems: "center",
-      backgroundColor: theme.theme == "dark" ? theme.white : "#efe9f0",
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : "#efe9f0",
       margin: 20,
       paddingTop: 10,
       paddingBottom: 14,
@@ -370,12 +370,12 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-SemiBold",
       opacity: 0.9,
-      color: theme.theme == "dark" ? "#fee7f5" : theme.text,
+      color: isThemeDark(theme.theme) ? "#fee7f5" : theme.text,
     },
     statNum: {
       fontFamily: "Nunito-Bold",
       color: "#17001c",
-      backgroundColor: theme.theme == "dark" ? "#fee7f5" : "#FFFFFF",
+      backgroundColor: isThemeDark(theme.theme) ? "#fee7f5" : "#FFFFFF",
       fontSize: 16,
       marginTop: 5,
       marginLeft: 10,

@@ -9,6 +9,7 @@ import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { isThemeDark } from "../utils/themes";
 
 const moment = require("moment");
 
@@ -177,11 +178,10 @@ const getStyles = (theme) =>
     buttonGroupContainer: {
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     buttonGroupInactive: {
@@ -194,7 +194,7 @@ const getStyles = (theme) =>
     },
     selButtonStyle: {
       borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      borderColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },

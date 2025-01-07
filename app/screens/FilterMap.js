@@ -20,6 +20,7 @@ import {
   filterSelected,
 } from "../selectors";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { isThemeDark } from "../utils/themes";
 
 const FilterMap = ({
   locationTypeName,
@@ -233,11 +234,10 @@ const getStyles = (theme) =>
     buttonGroupContainer: {
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     buttonGroupInactive: {
@@ -250,7 +250,7 @@ const getStyles = (theme) =>
     },
     selButtonStyle: {
       borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      borderColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
       fontFamily: "Nunito-Medium",
@@ -268,23 +268,21 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       width: "100%",
       height: 80,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     bottomTabClear: {
       textDecorationLine: "underline",
       fontFamily: "Nunito-Bold",
       fontSize: 16,
-      color: theme.theme == "dark" ? "#e3fae5" : theme.text,
+      color: isThemeDark(theme.theme) ? "#e3fae5" : theme.text,
     },
     bottomTabApplyButton: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       overflow: "visible",
       borderRadius: 30,
       backgroundColor: theme.purple,

@@ -18,6 +18,7 @@ import { postData } from "../config/request";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ConfirmationModal, PbmButton } from "../components";
+import { isThemeDark } from "../utils/themes";
 
 let deviceHeight = Dimensions.get("window").height;
 
@@ -311,7 +312,7 @@ const getStyles = (theme) =>
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       marginTop: 5,
       marginBottom: 5,
       paddingLeft: 10,

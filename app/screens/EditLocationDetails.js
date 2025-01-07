@@ -26,6 +26,7 @@ import {
   updateLocationDetails,
 } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -314,7 +315,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginHorizontal: 20,

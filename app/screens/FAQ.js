@@ -6,6 +6,7 @@ import { Screen, Text } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
+import { isThemeDark } from "../utils/themes";
 
 const FAQ = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -396,11 +397,11 @@ const getStyles = (theme) =>
     },
     textLink: {
       textDecorationLine: "underline",
-      color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
+      color: isThemeDark(theme.theme) ? theme.pink3 : theme.pink1,
       fontFamily: "Nunito-Medium",
     },
     filterIcon: {
-      color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
+      color: isThemeDark(theme.theme) ? theme.pink3 : theme.pink1,
     },
     category: {
       fontFamily: "Nunito-Bold",

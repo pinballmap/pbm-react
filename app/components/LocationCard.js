@@ -13,6 +13,7 @@ import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import FavoriteLocation from "./FavoriteLocation";
+import { isThemeDark } from "../utils/themes";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -138,7 +139,9 @@ const LocationCard = ({
                     <Icon
                       name={icon}
                       type={library}
-                      color={theme.theme == "dark" ? theme.pink1 : theme.pink3}
+                      color={
+                        isThemeDark(theme.theme) ? theme.pink1 : theme.pink3
+                      }
                       size={30}
                       style={s.icon}
                     />
@@ -181,7 +184,7 @@ const getStyles = (theme) =>
     },
     machineName: {
       marginBottom: Platform.OS === "android" ? 0 : -12,
-      color: theme.theme == "dark" ? theme.text : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.text : theme.purple,
     },
     plus: {
       marginBottom: 10,
@@ -251,7 +254,7 @@ const getStyles = (theme) =>
       color: theme.text3,
     },
     manufacturer: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Medium",
       fontSize: 18,
     },
@@ -266,14 +269,13 @@ const getStyles = (theme) =>
       opacity: 0.8,
     },
     notPressed: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     icon: {
       fontSize: 28,
-      color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.pink3,
       marginRight: 1,
     },
   });

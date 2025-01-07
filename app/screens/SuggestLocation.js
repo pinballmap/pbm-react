@@ -33,6 +33,7 @@ import {
 } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -659,7 +660,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginHorizontal: 20,
@@ -708,7 +709,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
     },
     addMachinesButton: {
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
       borderRadius: 25,
     },
     listContainerStyle: {
@@ -718,7 +719,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderRadius: 25,
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       borderWidth: 1,
     },
     machineVersionContainer: {

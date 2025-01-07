@@ -43,6 +43,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isThemeDark } from "../utils/themes";
 
 const moment = require("moment");
 
@@ -503,7 +504,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontFamily: "Nunito-ExtraBold",
       fontSize: 24,
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple,
     },
     locationName: {
       marginTop: 5,
@@ -570,7 +571,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginBottom: 10,
@@ -610,7 +611,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
     },
@@ -643,7 +644,7 @@ const getStyles = (theme) =>
       color: theme.pink1,
     },
     listContainerStyle: {
-      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
+      backgroundColor: isThemeDark(theme.theme) ? theme.base2 : theme.base3,
       marginHorizontal: 15,
       paddingTop: 5,
       paddingBottom: 10,
@@ -655,7 +656,7 @@ const getStyles = (theme) =>
       marginBottom: 20,
       marginHorizontal: 20,
       borderWidth: 0,
-      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
+      backgroundColor: isThemeDark(theme.theme) ? theme.base2 : theme.base3,
     },
     locationNameContainer: {
       paddingVertical: 0,

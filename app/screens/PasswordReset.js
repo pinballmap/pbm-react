@@ -6,6 +6,7 @@ import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { isThemeDark } from "../utils/themes";
 
 const PasswordReset = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -85,7 +86,7 @@ const getStyles = (theme) =>
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       margin: 15,
       paddingLeft: 10,
     },

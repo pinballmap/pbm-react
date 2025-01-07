@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
+import { isThemeDark } from "../utils/themes";
 
 const PbmButton = ({
   title,
@@ -35,10 +36,9 @@ const PbmButton = ({
           overflow: "visible",
           borderRadius: 25,
           backgroundColor: theme.base1,
-          boxShadow:
-            theme.theme == "dark"
-              ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-              : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+          boxShadow: isThemeDark(theme.theme)
+            ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+            : "0 0 10 0 rgba(170, 170, 199, 0.3)",
         },
         containerStyle ? containerStyle : styles.margin15,
       ]}
@@ -49,7 +49,7 @@ const PbmButton = ({
 const getStyles = (theme) =>
   StyleSheet.create({
     blueButton: {
-      backgroundColor: theme.theme == "dark" ? "#736aaf" : "#8e83ce",
+      backgroundColor: isThemeDark(theme.theme) ? "#736aaf" : "#8e83ce",
       width: "100%",
       borderRadius: 25,
     },

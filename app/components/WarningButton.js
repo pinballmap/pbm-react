@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
+import { isThemeDark } from "../utils/themes";
 
 const WarningButton = ({
   title,
@@ -30,10 +31,9 @@ const WarningButton = ({
           overflow: "visible",
           borderRadius: 25,
           backgroundColor: theme.base1,
-          boxShadow:
-            theme.theme == "dark"
-              ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-              : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+          boxShadow: isThemeDark(theme.theme)
+            ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+            : "0 0 10 0 rgba(170, 170, 199, 0.3)",
         },
         containerStyle ? containerStyle : s.margin15,
       ]}

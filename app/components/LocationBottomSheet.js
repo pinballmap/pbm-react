@@ -9,6 +9,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Icon } from "@rneui/base";
 import { getDistanceWithUnit } from "../utils/utilityFunctions";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { isThemeDark } from "../utils/themes";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -135,7 +136,7 @@ const LocationBottomSheet = React.memo(
                         name={locationType.icon}
                         type={locationType.library}
                         color={
-                          theme.theme == "dark" ? theme.pink1 : theme.pink3
+                          isThemeDark(theme.theme) ? theme.pink1 : theme.pink3
                         }
                         size={30}
                         style={s.icon}
@@ -168,7 +169,7 @@ const getStyles = (theme) =>
       bottom: 0,
       alignSelf: "center",
       justifyContent: "center",
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base2,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       width: "100%",
@@ -182,7 +183,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       alignContent: "space-around",
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base2,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
     },
@@ -246,7 +247,7 @@ const getStyles = (theme) =>
     machineName: {
       fontFamily: "Nunito-Bold",
       fontSize: 15,
-      color: theme.theme == "dark" ? theme.text : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.text : theme.purple,
     },
     italic: {
       fontFamily: "Nunito-Italic",
@@ -256,15 +257,14 @@ const getStyles = (theme) =>
       opacity: 0.8,
     },
     notPressed: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 -8 10 0 rgba(0, 0, 0, 0.4)"
-          : "0 -8 10 0 rgba(170, 170, 199, 0.2)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 -8 10 0 rgba(0, 0, 0, 0.4)"
+        : "0 -8 10 0 rgba(170, 170, 199, 0.2)",
     },
     icon: {
       fontSize: 28,
       marginRight: 3,
-      color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.pink3,
     },
   });
 

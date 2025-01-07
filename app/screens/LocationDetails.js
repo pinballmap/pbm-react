@@ -40,6 +40,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getMapboxStyle } from "./Map";
+import { isThemeDark } from "../utils/themes";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -404,7 +405,7 @@ const LocationDetails = (props) => {
                           name={locationIcon}
                           type={iconLibrary}
                           color={
-                            theme.theme == "dark"
+                            isThemeDark(theme.theme)
                               ? theme.purpleLight
                               : theme.pink3
                           }
@@ -438,7 +439,9 @@ const LocationDetails = (props) => {
                         name={"chevron-down"}
                         type="material-community"
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          isThemeDark(theme.theme)
+                            ? theme.purple2
+                            : theme.purple
                         }
                       />
                     }
@@ -584,7 +587,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"plus-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          isThemeDark(theme.theme)
+                            ? theme.purple2
+                            : theme.purple
                         }
                         size={30}
                         style={{
@@ -611,7 +616,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"check-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          isThemeDark(theme.theme)
+                            ? theme.purple2
+                            : theme.purple
                         }
                         size={26}
                         style={{
@@ -643,7 +650,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"pencil-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          isThemeDark(theme.theme)
+                            ? theme.purple2
+                            : theme.purple
                         }
                         size={30}
                         style={{
@@ -758,10 +767,9 @@ const getStyles = (theme) =>
       marginBottom: 10,
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 -8 6 0 rgba(0, 0, 0, 0.2)"
-          : "0 -8 6 0 rgba(170, 170, 199, 0.1)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 -8 6 0 rgba(0, 0, 0, 0.2)"
+        : "0 -8 6 0 rgba(170, 170, 199, 0.1)",
     },
     locationContainer: {
       marginHorizontal: 15,
@@ -787,10 +795,9 @@ const getStyles = (theme) =>
       marginRight: 20,
       marginLeft: 20,
       backgroundColor: theme.white,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       paddingVertical: 10,
       paddingLeft: 15,
       paddingRight: 15,
@@ -807,7 +814,7 @@ const getStyles = (theme) =>
       opacity: 1.0,
     },
     machineName: {
-      color: theme.theme == "dark" ? theme.text : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.text : theme.purple,
       fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
     },
@@ -872,7 +879,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     pink1: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Regular",
     },
     italic: {
@@ -901,14 +908,13 @@ const getStyles = (theme) =>
       width: 44,
       alignSelf: "center",
       justifyContent: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       backgroundColor: theme.white,
     },
     quickButtonText: {
-      color: theme.theme == "dark" ? theme.purpleLight : theme.text,
+      color: isThemeDark(theme.theme) ? theme.purpleLight : theme.text,
       fontSize: 12,
       lineHeight: 14,
       marginTop: 8,
@@ -924,7 +930,7 @@ const getStyles = (theme) =>
       justifyContent: "center",
       backgroundColor: "transparent",
       borderWidth: 1,
-      borderColor: theme.theme == "dark" ? theme.border : theme.white,
+      borderColor: isThemeDark(theme.theme) ? theme.border : theme.white,
     },
     directionsButton: {
       position: "absolute",
@@ -947,7 +953,7 @@ const getStyles = (theme) =>
     },
     distanceIcon: {
       fontSize: 22,
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
+      color: isThemeDark(theme.theme) ? theme.purpleLight : theme.pink3,
     },
     nameItem: {
       flex: 1,
@@ -982,10 +988,9 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     mapViewButtonNotPressed: {
-      backgroundColor:
-        theme.theme == "dark"
-          ? "rgba(29, 28, 28, 0.7)"
-          : "rgba(255,255,255,.7)",
+      backgroundColor: isThemeDark(theme.theme)
+        ? "rgba(29, 28, 28, 0.7)"
+        : "rgba(255,255,255,.7)",
     },
     confirmText: {
       textAlign: "center",
@@ -1009,20 +1014,18 @@ const getStyles = (theme) =>
       marginRight: 0,
       marginTop: 5,
       marginBottom: 15,
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base2,
       justifyContent: "center",
       borderRadius: 15,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     upButton: {
       justifyContent: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       position: "absolute",
       right: 25,
       bottom: 25,

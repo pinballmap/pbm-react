@@ -366,7 +366,7 @@ const Map = ({
         {Platform.OS === "ios" && locationTrackingServicesEnabled && (
           <FontAwesome
             name={"location-arrow"}
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={isThemeDark(theme.theme) ? theme.purple2 : theme.purple}
             size={26}
             style={{ justifyContent: "center", alignSelf: "center" }}
           />
@@ -374,7 +374,7 @@ const Map = ({
         {Platform.OS === "ios" && !locationTrackingServicesEnabled && (
           <MaterialIcons
             name={"location-off"}
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={isThemeDark(theme.theme) ? theme.purple2 : theme.purple}
             size={26}
             style={{ justifyContent: "center", alignSelf: "center" }}
           />
@@ -382,7 +382,7 @@ const Map = ({
         {Platform.OS !== "ios" && locationTrackingServicesEnabled && (
           <MaterialIcons
             name={"gps-fixed"}
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={isThemeDark(theme.theme) ? theme.purple2 : theme.purple}
             size={26}
             style={{ justifyContent: "center", alignSelf: "center" }}
           />
@@ -390,7 +390,7 @@ const Map = ({
         {Platform.OS !== "ios" && !locationTrackingServicesEnabled && (
           <MaterialIcons
             name={"location-disabled"}
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={isThemeDark(theme.theme) ? theme.purple2 : theme.purple}
             size={26}
             style={{ justifyContent: "center", alignSelf: "center" }}
           />
@@ -488,10 +488,9 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     containerStyle: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       overflow: "visible",
     },
     listButtonContainer: {
@@ -527,7 +526,7 @@ const getStyles = (theme) =>
       borderRadius: 27,
       height: 54,
       width: 54,
-      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base1,
+      backgroundColor: isThemeDark(theme.theme) ? theme.pink2 : theme.base1,
     },
     filterContainer: {
       position: "absolute",
@@ -536,14 +535,14 @@ const getStyles = (theme) =>
       borderRadius: 25,
     },
     filterTitleStyle: {
-      color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
+      color: isThemeDark(theme.theme) ? "#ffa7dd" : theme.pink1,
       fontSize: 18,
       fontFamily: "Nunito-SemiBold",
     },
     closeIcon: {
       paddingRight: 5,
       fontSize: 20,
-      color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
+      color: isThemeDark(theme.theme) ? "#ffa7dd" : theme.pink1,
     },
     pressed: {
       opacity: 0.7,

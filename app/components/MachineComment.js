@@ -15,6 +15,7 @@ import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isThemeDark } from "../utils/themes";
 
 const moment = require("moment");
 
@@ -173,7 +174,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     listContainerStyle: {
-      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
+      backgroundColor: isThemeDark(theme.theme) ? theme.base2 : theme.base3,
       marginHorizontal: 15,
       paddingTop: 5,
       paddingBottom: 5,
@@ -212,7 +213,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginBottom: 10,

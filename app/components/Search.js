@@ -34,6 +34,7 @@ import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -548,10 +549,9 @@ const getStyles = (theme) =>
     searchMapChild: {
       flexDirection: "row",
       alignItems: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       margin: "auto",
       height: 45,
     },
@@ -560,8 +560,8 @@ const getStyles = (theme) =>
       borderBottomLeftRadius: 25,
       borderTopLeftRadius: 25,
       paddingLeft: 10,
-      borderWidth: theme.theme == "dark" ? 1 : 0,
-      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
+      borderWidth: isThemeDark(theme.theme) ? 1 : 0,
+      borderColor: isThemeDark(theme.theme) ? theme.base1 : "transparent",
       borderRightWidth: 0,
     },
     buttonContainerStyle: {
@@ -591,7 +591,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderRadius: 25,
       width: deviceWidth - 60,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       height: 45,
       display: "flex",
       flexDirection: "row",
@@ -648,15 +648,15 @@ const getStyles = (theme) =>
       backgroundColor: theme.base3,
     },
     notPressed: {
-      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base2,
+      backgroundColor: isThemeDark(theme.theme) ? theme.pink2 : theme.base2,
     },
     filterPressed: {
       backgroundColor: theme.white,
     },
     filterNotPressed: {
       backgroundColor: theme.pink2,
-      borderWidth: theme.theme == "dark" ? 1 : 0,
-      borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
+      borderWidth: isThemeDark(theme.theme) ? 1 : 0,
+      borderColor: isThemeDark(theme.theme) ? theme.base1 : "transparent",
       borderLeftWidth: 0,
     },
     goToFilterText: {

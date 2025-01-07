@@ -7,6 +7,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
 import { ThemeContext } from "../theme-context";
+import { isThemeDark } from "../utils/themes";
 
 const RemoveMachineModal = ({
   removeMachineFromLocation,
@@ -66,7 +67,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     machineName: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
     },

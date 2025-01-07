@@ -8,6 +8,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
+import { isThemeDark } from "../utils/themes";
 
 const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const { theme } = useContext(ThemeContext);
@@ -224,7 +225,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,
@@ -256,7 +257,7 @@ const getStyles = (theme) =>
     },
     filterIcon: {
       paddingRight: 10,
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple2,
     },
   });
 

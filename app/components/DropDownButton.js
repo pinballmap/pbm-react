@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ThemeContext } from "../theme-context";
+import { isThemeDark } from "../utils/themes";
 
 const DropDownButton = ({ title, onPress, containerStyle }) => {
   const { theme } = useContext(ThemeContext);
@@ -23,10 +24,9 @@ const DropDownButton = ({ title, onPress, containerStyle }) => {
           overflow: "visible",
           borderRadius: 25,
           backgroundColor: theme.base1,
-          boxShadow:
-            theme.theme == "dark"
-              ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-              : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+          boxShadow: isThemeDark(theme.theme)
+            ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+            : "0 0 10 0 rgba(170, 170, 199, 0.3))",
         },
         containerStyle ? containerStyle : s.containerMargin,
       ]}
@@ -37,7 +37,7 @@ const DropDownButton = ({ title, onPress, containerStyle }) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     dropdown: {
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
       width: "100%",
       borderRadius: 25,
     },

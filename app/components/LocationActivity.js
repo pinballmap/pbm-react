@@ -15,6 +15,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { getData } from "../config/request";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import getActivityIcon from "../utils/getActivityIcon";
+import { isThemeDark } from "../utils/themes";
 const moment = require("moment");
 
 const LocationActivity = ({ locationId }) => {
@@ -180,7 +181,7 @@ const LocationActivity = ({ locationId }) => {
         >
           <MaterialCommunityIcons
             name="newspaper-variant-multiple-outline"
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={isThemeDark(theme.theme) ? theme.purple2 : theme.purple}
             size={28}
             style={{
               height: 28,
@@ -204,7 +205,7 @@ LocationActivity.propTypes = {
 const getStyles = (theme) =>
   StyleSheet.create({
     header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       marginTop: -25,
@@ -237,10 +238,9 @@ const getStyles = (theme) =>
       width: 44,
       alignSelf: "center",
       justifyContent: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       backgroundColor: theme.white,
     },
     quickButtonText: {
@@ -276,11 +276,11 @@ const getStyles = (theme) =>
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     username: {
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
+      color: isThemeDark(theme.theme) ? theme.purpleLight : theme.pink1,
       fontFamily: "Nunito-SemiBold",
     },
     machineName: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple,
       fontSize: 16,
       fontFamily: "Nunito-SemiBold",
     },
@@ -298,10 +298,9 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       borderWidth: 0,
       backgroundColor: theme.white,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3)",
     },
     problem: {
       textAlign: "center",

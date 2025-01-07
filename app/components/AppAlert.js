@@ -8,6 +8,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { ThemeContext } from "../theme-context";
 import { retrieveItem } from "../config/utils";
 import Text from "./PbmText";
+import { isThemeDark } from "../utils/themes";
 
 const AppAlert = ({ motd }) => {
   const { theme } = useContext(ThemeContext);
@@ -63,7 +64,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
     },
     appAlertHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      backgroundColor: isThemeDark(theme.theme) ? theme.white : theme.base4,
       marginTop: -25,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,

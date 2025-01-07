@@ -27,6 +27,7 @@ import { BackglassImage, PbmButton, Text, WarningButton } from "../components";
 import { CheckBox } from "@rneui/themed";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -499,14 +500,14 @@ const getStyles = (theme) =>
       height: 40,
       backgroundColor: theme.white,
       borderRadius: 25,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       borderBottomWidth: 1,
       marginHorizontal: 5,
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       marginHorizontal: 30,
       marginTop: 10,
@@ -531,11 +532,10 @@ const getStyles = (theme) =>
       marginBottom: 10,
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
+      boxShadow: isThemeDark(theme.theme)
+        ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
+        : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
     },
     buttonGroupInactive: {
@@ -548,7 +548,7 @@ const getStyles = (theme) =>
     },
     selButtonStyle: {
       borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      borderColor: isThemeDark(theme.theme) ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },
@@ -582,7 +582,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      color: isThemeDark(theme.theme) ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
     },

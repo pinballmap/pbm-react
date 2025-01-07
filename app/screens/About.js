@@ -15,6 +15,7 @@ import { Screen, Text } from "../components";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -52,7 +53,7 @@ const About = ({ navigation, appAlert }) => {
         <Image
           source={require("../assets/images/pinballmapcom_nocom.png")}
           contentFit="contain"
-          tintColor={theme.theme == "dark" ? "#adc7fd" : "#1d1c1d"}
+          tintColor={isThemeDark(theme.theme) ? "#adc7fd" : "#1d1c1d"}
           style={s.logo}
         />
         <View style={s.child}>
@@ -125,7 +126,7 @@ const About = ({ navigation, appAlert }) => {
 
           <Image
             source={require("../assets/images/purple-machine.png")}
-            tintColor={theme.theme == "dark" ? "#f6d3fc" : "#66017b"}
+            tintColor={isThemeDark(theme.theme) ? "#f6d3fc" : "#66017b"}
             style={s.purpleMachine}
           />
 
@@ -458,7 +459,7 @@ const getStyles = (theme) =>
       paddingLeft: 10,
       paddingRight: 10,
       paddingBottom: 0,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : "#efe9f0",
+      backgroundColor: isThemeDark(theme.theme) ? theme.base3 : "#efe9f0",
     },
     pink: {
       color: theme.pink1,

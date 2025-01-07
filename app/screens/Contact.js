@@ -18,6 +18,7 @@ import {
 } from "../components";
 import { submitMessage, clearMessage } from "../actions";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { isThemeDark } from "../utils/themes";
 
 const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   const { theme } = useContext(ThemeContext);
@@ -156,7 +157,7 @@ const getStyles = (theme) =>
     },
     textInput: {
       backgroundColor: theme.white,
-      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      borderColor: isThemeDark(theme.theme) ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
       marginTop: 20,
