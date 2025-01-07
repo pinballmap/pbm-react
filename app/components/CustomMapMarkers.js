@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getMapLocations } from "../selectors";
 import { setSelectedMapLocation } from "../actions";
 import { useDispatch } from "react-redux";
+import { isThemeDark } from "../utils/themes";
 
 const iconStyles = {
   iconImage: ["get", "icon"],
@@ -35,8 +36,8 @@ const textFloat = (theme) => ({
   textVariableAnchor: ["bottom", "top", "right", "left"],
   textRadialOffset: 1.4,
   textAllowOverlap: false,
-  textColor: theme === "dark" ? "#f0f9ff" : "#463333",
-  textHaloColor: theme === "dark" ? "#222221" : "#eeeaea",
+  textColor: isThemeDark(theme) ? "#f0f9ff" : "#463333",
+  textHaloColor: isThemeDark(theme) ? "#222221" : "#eeeaea",
   textHaloWidth: 1,
   textFont: ["Nunito Sans Bold"],
   iconAllowOverlap: false,

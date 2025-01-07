@@ -37,6 +37,7 @@ import {
 } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
+import { isThemeDark } from "../utils/themes";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -79,14 +80,13 @@ const Map = ({
   } = query;
   const latitude = (swLat + neLat) / 2;
   const longitude = (swLon + neLon) / 2;
-  const filterApplied =
+  const filterApplied = !!(
     machineId ||
     locationType ||
     numMachines ||
     selectedOperator ||
     viewByFavoriteLocations
-      ? true
-      : false;
+  );
 
   useEffect(() => {
     const run = async () => {
@@ -316,11 +316,7 @@ const Map = ({
         gestureSettings={{ rotateEnabled: false }}
         attributionPosition={{ bottom: 6, left: 90 }}
         onCameraChanged={onCameraChanged}
-        styleURL={
-          theme.theme === "dark"
-            ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-            : Mapbox.StyleURL.Outdoors
-        }
+        styleURL={getMapboxStyle(theme.theme)}
         onPress={mapPress}
       >
         <Mapbox.Camera
@@ -560,6 +556,11 @@ const getStyles = (theme) =>
       opacity: 1.0,
     },
   });
+
+export const getMapboxStyle = (theme) =>
+  isThemeDark(theme)
+    ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w" // Custom dark style, higher contrast
+    : Mapbox.StyleURL.Outdoors;
 
 const mapStateToProps = (state) => {
   const { locations, query, regions, user } = state;

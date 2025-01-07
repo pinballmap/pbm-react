@@ -39,6 +39,7 @@ import {
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { getMapboxStyle } from "./Map";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -316,11 +317,7 @@ const LocationDetails = (props) => {
               rotateEnabled={false}
               attributionPosition={{ bottom: 33, left: 85 }}
               logoPosition={{ bottom: 35, left: 5 }}
-              styleURL={
-                theme.theme === "dark"
-                  ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
-                  : Mapbox.StyleURL.Outdoors
-              }
+              styleURL={getMapboxStyle(theme.theme)}
               style={s.mapHeight}
             >
               <Mapbox.Camera

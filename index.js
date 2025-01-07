@@ -6,7 +6,7 @@ import { retrieveItem } from "./app/config/utils";
 import { ThemeContext } from "./app/theme-context";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
-import { dark, standard } from "./app/utils/themes";
+import { dark, isThemeDark, standard } from "./app/utils/themes";
 import { StatusBar } from "expo-status-bar";
 import store from "./app/store";
 import * as SplashScreen from "expo-splash-screen";
@@ -18,6 +18,8 @@ import * as Device from "expo-device";
 import {
   KEY_DARK_THEME_OVERRIDE,
   KEY_DEFAULT_THEME_OVERRIDE,
+  THEME_DARK,
+  THEME_LIGHT,
 } from "./app/utils/constants";
 
 Sentry.init({
@@ -42,7 +44,7 @@ if (Platform.OS === "android") {
 
 const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(
-    defaultTheme === "dark" ? "dark" : "",
+    isThemeDark(defaultTheme) ? THEME_DARK : THEME_LIGHT,
   );
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const App = () => {
 
     retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) =>
-        defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
+        isThemeDark(defaultTheme) && darkThemeOverride && setSelectedTheme(""),
     );
 
     async function lockOrientation() {
@@ -78,31 +80,31 @@ const App = () => {
   }, []);
 
   const toggleDefaultTheme = () =>
-    defaultTheme !== "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
+    defaultTheme !== THEME_DARK &&
+    setSelectedTheme(isThemeDark(selectedTheme) ? THEME_LIGHT : THEME_DARK);
   const toggleDarkTheme = () =>
-    defaultTheme === "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
+    defaultTheme === THEME_DARK &&
+    setSelectedTheme(isThemeDark(selectedTheme) ? THEME_LIGHT : THEME_DARK);
 
   return (
     <ThemeContext.Provider
       value={{
         toggleDefaultTheme,
         toggleDarkTheme,
-        theme: selectedTheme === "dark" ? dark : standard,
+        theme: isThemeDark(selectedTheme) ? dark : standard,
       }}
     >
       <Provider store={store}>
         <AppWrapper>
           <NavigationContainer
-            theme={selectedTheme === "dark" ? dark : standard}
+            theme={isThemeDark(selectedTheme) ? dark : standard}
           >
             <MapNavigator />
           </NavigationContainer>
         </AppWrapper>
       </Provider>
       <StatusBar
-        style={selectedTheme === "dark" ? "light" : "dark"}
+        style={isThemeDark(selectedTheme) ? "light" : "dark"}
         translucent={true}
       />
     </ThemeContext.Provider>

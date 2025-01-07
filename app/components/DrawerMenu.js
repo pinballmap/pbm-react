@@ -21,6 +21,7 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
+import { isThemeDark } from "../utils/themes";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -75,7 +76,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         >
           <Image
             source={
-              theme.theme === "dark"
+              isThemeDark(theme.theme)
                 ? require("../assets/images/pbm-logo-dark.png")
                 : require("../assets/images/pbm-logo-light.png")
             }
@@ -99,7 +100,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         )}
         <ImageBackground
           source={
-            theme.theme === "dark"
+            isThemeDark(theme.theme)
               ? require("../assets/images/dots-background.png")
               : require("../assets/images/dots-background-light.png")
           }
@@ -110,9 +111,9 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             position: "absolute",
             top: 0,
           }}
-          imageStyle={{ opacity: theme.theme == "dark" ? 0.4 : 0.1 }}
+          imageStyle={{ opacity: isThemeDark(theme.theme) ? 0.4 : 0.1 }}
         >
-          {theme.theme == "dark" ? null : (
+          {isThemeDark(theme.theme) ? null : (
             <View
               style={{
                 flex: 1,

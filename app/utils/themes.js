@@ -1,5 +1,7 @@
+import { THEME_DARK } from "./constants";
+
 export const dark = {
-  theme: "dark",
+  theme: THEME_DARK,
   base1: "#1d1c1d",
   base2: "#413244",
   base3: "#5f5063",
@@ -69,3 +71,5 @@ export const standard = {
     tabBar: "#fafaff",
   },
 };
+
+export const isThemeDark = (selectedTheme) => selectedTheme === THEME_DARK;
