@@ -8,44 +8,27 @@ import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
-import {
-  KEY_DEFAULT_THEME_OVERRIDE,
-  KEY_DARK_THEME_OVERRIDE,
-} from "../utils/constants";
+import { KEY_THEME, THEME_SYSTEM_SETTING_VALUE } from "../utils/constants";
 
 const Settings = ({ user, setUnitPreference }) => {
-  const { toggleDefaultTheme, toggleDarkTheme, theme } =
-    useContext(ThemeContext);
+  const { setTheme, theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
-  const [selectedDefault, updateSelectedDefault] = useState(0);
-  const [selectedDark, updateSelectedDark] = useState(1);
+  const [selectedTheme, updateSelectedTheme] = useState(
+    THEME_SYSTEM_SETTING_VALUE,
+  );
 
   useEffect(() => {
-    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
-      (defaultThemeOverride) =>
-        defaultThemeOverride && updateSelectedDefault(1),
-    );
-
-    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
-      (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
+    retrieveItem(KEY_THEME).then((theme) =>
+      updateSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE),
     );
   });
 
-  const updateDefaultPref = (idx) => {
-    if (idx === selectedDefault) return;
-
-    updateSelectedDefault(idx);
-    AsyncStorage.setItem(KEY_DEFAULT_THEME_OVERRIDE, JSON.stringify(idx === 1));
-    toggleDefaultTheme();
-  };
-
-  const updateDarkPref = (idx) => {
-    if (idx === selectedDark) return;
-
-    updateSelectedDark(idx);
-    AsyncStorage.setItem(KEY_DARK_THEME_OVERRIDE, JSON.stringify(idx === 0));
-    toggleDarkTheme();
+  const updateThemePref = (idx) => {
+    if (idx === selectedTheme) return;
+    updateSelectedTheme(idx);
+    AsyncStorage.setItem(KEY_THEME, idx.toString());
+    setTheme(idx);
   };
 
   const updateUnitPref = (idx) => {
@@ -83,18 +66,12 @@ const Settings = ({ user, setUnitPreference }) => {
     <Screen>
       <View style={s.background}>
         <ButtonGroupSetting
-          title="Light Mode Theme"
-          buttons={["Light", "Dark"]}
-          description="When your phone is in Light Mode, use our Light theme or our Dark theme."
-          onPress={updateDefaultPref}
-          selectedIndex={selectedDefault}
-        />
-        <ButtonGroupSetting
-          title="Dark Mode Theme"
-          buttons={["Light", "Dark"]}
-          description="When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme."
-          onPress={updateDarkPref}
-          selectedIndex={selectedDark}
+          title="App Theme"
+          buttons={["OS Theme", "Light", "Dark"]}
+          description="Choose the theme to use for the app."
+          onPress={updateThemePref}
+          selectedIndex={selectedTheme}
+          s={s}
         />
         <ButtonGroupSetting
           title="Distance Unit"

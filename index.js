@@ -16,8 +16,12 @@ import MapNavigator from "./app/config/router";
 import * as Sentry from "@sentry/react-native";
 import * as Device from "expo-device";
 import {
-  KEY_DARK_THEME_OVERRIDE,
-  KEY_DEFAULT_THEME_OVERRIDE,
+  KEY_THEME,
+  THEME_DARK,
+  THEME_DARK_SETTING_VALUE,
+  THEME_LIGHT,
+  THEME_LIGHT_SETTING_VALUE,
+  THEME_SYSTEM_SETTING_VALUE,
 } from "./app/utils/constants";
 
 Sentry.init({
@@ -41,22 +45,14 @@ if (Platform.OS === "android") {
 }
 
 const App = () => {
-  const [selectedTheme, setSelectedTheme] = useState(
-    defaultTheme === "dark" ? "dark" : "",
+  const [selectedTheme, updateSelectedTheme] = useState(
+    THEME_SYSTEM_SETTING_VALUE,
   );
 
   useEffect(() => {
-    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
-      (defaultThemeOverride) =>
-        defaultTheme !== "dark" &&
-        defaultThemeOverride &&
-        setSelectedTheme("dark"),
-    );
-
-    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
-      (darkThemeOverride) =>
-        defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
-    );
+    retrieveItem(KEY_THEME).then((theme) => {
+      updateSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE);
+    });
 
     async function lockOrientation() {
       if (Device.deviceType.TABLET) {
@@ -77,18 +73,28 @@ const App = () => {
     prepare();
   }, []);
 
-  const toggleDefaultTheme = () =>
-    defaultTheme !== "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
-  const toggleDarkTheme = () =>
-    defaultTheme === "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
+  const calculateTheme = (newTheme) => {
+    switch (newTheme) {
+      case THEME_SYSTEM_SETTING_VALUE:
+        return defaultTheme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+      case THEME_DARK_SETTING_VALUE:
+        return THEME_DARK;
+      case THEME_LIGHT_SETTING_VALUE:
+        return THEME_LIGHT;
+      default:
+        return THEME_LIGHT; // Default
+    }
+  };
+
+  const setTheme = (newTheme) => {
+    // TODO: Default theme doesnt update when changing at the system level until you restart the app though?
+    updateSelectedTheme(calculateTheme(newTheme));
+  };
 
   return (
     <ThemeContext.Provider
       value={{
-        toggleDefaultTheme,
-        toggleDarkTheme,
+        setTheme,
         theme: selectedTheme === "dark" ? dark : standard,
       }}
     >
