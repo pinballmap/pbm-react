@@ -1,12 +1,9 @@
 import { View } from "react-native";
 import { Text } from "./index";
 import { Switch } from "@rneui/themed";
-import React, { useContext } from "react";
-import { ThemeContext } from "../theme-context";
+import React from "react";
 
 const SwitchSetting = ({ title, description, value, onValueChange, s }) => {
-  const { theme } = useContext(ThemeContext);
-
   return (
     <View>
       <View style={[s.pageTitle, { marginBottom: 4 }]}>
@@ -26,11 +23,10 @@ const SwitchSetting = ({ title, description, value, onValueChange, s }) => {
             // Sends the new checked value
             return onValueChange(!value);
           }}
-          trackColor={{
-            false: theme.base3,
-            true: theme.purple,
-          }}
-          thumbColor={value ? theme.base1 : theme.white}
+          trackColor={s.switchTrackColor}
+          thumbColor={
+            value ? s.switchThumbColors.true : s.switchThumbColors.false
+          }
         />
       </View>
     </View>

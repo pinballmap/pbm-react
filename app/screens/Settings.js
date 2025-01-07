@@ -163,6 +163,23 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontFamily: "Nunito-Bold",
     },
+    checkBoxContainer: {
+      backgroundColor: theme.base1,
+      marginVertical: -8,
+    },
+    checkBoxCheckedColor: theme.purple,
+    checkBoxTextStyle: {
+      fontSize: 16,
+      color: theme.text,
+    },
+    switchTrackColor: {
+      false: theme.base3,
+      true: theme.purple,
+    },
+    switchThumbColors: {
+      false: theme.base3,
+      true: theme.white,
+    },
   });
 
 Settings.propTypes = {
