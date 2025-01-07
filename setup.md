@@ -13,22 +13,6 @@ These instructions assume that you have installed:
 
 Development of the Pinball Map App (pbm-react) is done using Expo. **Expo** is a platform for making universal native apps using Javascript and React Native. Expo runs on Android, iOS, and the web (the pbm website does not use Expo).
 
-You'll need the expo cli tool to develop using Expo:
-
-- The **expo-cli** is a command line app used to initialize and serve React-Native apps like ours.
-
-You can proceed with the following steps to get the Expo CLI up and running:
-
-- Make an Expo account [here](https://expo.dev/)
-- Install the Expo CLI using npm:
-  - `npm install -g expo-cli`
-  - to verify installation, type `expo whoami` in the terminal.
-    If you are not logged-in you will see `Not logged in`, but that also means the installation worked. You can login by typing `expo login`.
-- Get the client app on your device.
-  - Expo, for Android: [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent)
-  - Expo Go, for iOS: [App Store](https://itunes.com/apps/exponent)
-- Open the app on your device. Go to the Profile tab and sign-in with your Expo credentials.
-
 ## GitHub
 
 Fork [this](https://github.com/pinballmap/pbm-react.git) GitHub repository to your own GitHub account, then clone it to your local machine.
