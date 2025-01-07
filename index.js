@@ -36,8 +36,6 @@ SplashScreen.setOptions({
   fade: true,
 });
 
-const defaultTheme = Appearance.getColorScheme();
-
 // https://github.com/facebook/react-native/issues/19410
 if (Platform.OS === "android") {
   require("intl");
@@ -45,6 +43,15 @@ if (Platform.OS === "android") {
 }
 
 const App = () => {
+  Appearance.addChangeListener(({ colorScheme }) => {
+    if (selectedTheme === THEME_SYSTEM_SETTING_VALUE) {
+      // Update theme only if "system" theme is selected
+      updateSelectedTheme(
+        colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT,
+      );
+    }
+  });
+
   const [selectedTheme, updateSelectedTheme] = useState(
     THEME_SYSTEM_SETTING_VALUE,
   );
@@ -69,6 +76,7 @@ const App = () => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
+
     lockOrientation();
     prepare();
   }, []);
@@ -76,7 +84,9 @@ const App = () => {
   const calculateTheme = (newTheme) => {
     switch (newTheme) {
       case THEME_SYSTEM_SETTING_VALUE:
-        return defaultTheme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+        return Appearance.getColorScheme() === THEME_DARK
+          ? THEME_DARK
+          : THEME_LIGHT;
       case THEME_DARK_SETTING_VALUE:
         return THEME_DARK;
       case THEME_LIGHT_SETTING_VALUE:
@@ -87,7 +97,6 @@ const App = () => {
   };
 
   const setTheme = (newTheme) => {
-    // TODO: Default theme doesnt update when changing at the system level until you restart the app though?
     updateSelectedTheme(calculateTheme(newTheme));
   };
 
