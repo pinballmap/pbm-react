@@ -52,12 +52,14 @@ const App = () => {
       (defaultThemeOverride) =>
         !isThemeDark(defaultTheme) &&
         defaultThemeOverride &&
-        setSelectedTheme("dark"),
+        setSelectedTheme(THEME_DARK),
     );
 
     retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) =>
-        isThemeDark(defaultTheme) && darkThemeOverride && setSelectedTheme(""),
+        isThemeDark(defaultTheme) &&
+        darkThemeOverride &&
+        setSelectedTheme(THEME_LIGHT),
     );
 
     async function lockOrientation() {
