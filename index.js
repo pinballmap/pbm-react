@@ -50,7 +50,7 @@ const App = () => {
   useEffect(() => {
     retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
       (defaultThemeOverride) =>
-        defaultTheme !== "dark" &&
+        !isThemeDark(defaultTheme) &&
         defaultThemeOverride &&
         setSelectedTheme("dark"),
     );
@@ -80,10 +80,10 @@ const App = () => {
   }, []);
 
   const toggleDefaultTheme = () =>
-    defaultTheme !== THEME_DARK &&
+    !isThemeDark(defaultTheme) &&
     setSelectedTheme(isThemeDark(selectedTheme) ? THEME_LIGHT : THEME_DARK);
   const toggleDarkTheme = () =>
-    defaultTheme === THEME_DARK &&
+    isThemeDark(defaultTheme) &&
     setSelectedTheme(isThemeDark(selectedTheme) ? THEME_LIGHT : THEME_DARK);
 
   return (
