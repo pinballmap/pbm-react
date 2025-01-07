@@ -415,7 +415,7 @@ class FindMachine extends React.PureComponent {
           </View>
         </Modal>
         <SearchBar
-          lightTheme={theme.theme !== "dark"}
+          lightTheme={!isThemeDark(theme.theme)}
           placeholder="Filter machines..."
           placeholderTextColor={theme.indigo4}
           platform="default"

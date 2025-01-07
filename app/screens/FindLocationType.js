@@ -69,7 +69,7 @@ const FindLocationType = ({
   return (
     <>
       <SearchBar
-        lightTheme={theme.theme !== "dark"}
+        lightTheme={!isThemeDark(theme.theme)}
         placeholder="Filter location types..."
         placeholderTextColor={theme.indigo4}
         platform="default"

@@ -65,7 +65,7 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   return (
     <>
       <SearchBar
-        lightTheme={theme.theme !== "dark"}
+        lightTheme={!isThemeDark(theme.theme)}
         placeholder="Filter operators..."
         placeholderTextColor={theme.indigo4}
         platform="default"

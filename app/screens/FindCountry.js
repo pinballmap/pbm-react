@@ -63,7 +63,7 @@ const FindCountry = ({ navigation, route }) => {
   return (
     <>
       <SearchBar
-        lightTheme={theme.theme !== "dark"}
+        lightTheme={!isThemeDark(theme.theme)}
         placeholder="Filter countries..."
         placeholderTextColor={theme.indigo4}
         platform="default"
