@@ -11,8 +11,6 @@ import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
 } from "../utils/constants";
-import CheckBoxSetting from "../components/SettingsCheckBox";
-import SwitchSetting from "../components/SettingsSwitch";
 import ButtonGroupSetting from "../components/SettingsButtonGroup";
 
 const Settings = ({ user, setUnitPreference }) => {
@@ -22,7 +20,6 @@ const Settings = ({ user, setUnitPreference }) => {
 
   const [selectedDefault, updateSelectedDefault] = useState(0);
   const [selectedDark, updateSelectedDark] = useState(1);
-  const [checkedTestCheckBox, updateCheckedTestCheckbox] = useState(false);
 
   useEffect(() => {
     retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
@@ -55,29 +52,9 @@ const Settings = ({ user, setUnitPreference }) => {
     setUnitPreference(idx);
   };
 
-  const testCheckBoxChange = (newCheckedValue) => {
-    updateCheckedTestCheckbox(newCheckedValue);
-  };
-
   return (
     <Screen>
       <View style={s.background}>
-        <CheckBoxSetting
-          title="CheckBox test"
-          checkTitle="CheckBox title"
-          description={"Testing how a checkbox setting looks."}
-          onPress={testCheckBoxChange}
-          checked={checkedTestCheckBox}
-          s={s}
-        />
-        <SwitchSetting
-          title="Switch test"
-          checkTitle="Switch title"
-          description={"Testing how a switch setting looks."}
-          onValueChange={testCheckBoxChange}
-          value={checkedTestCheckBox}
-          s={s}
-        />
         <ButtonGroupSetting
           title="Light Mode Theme"
           buttons={["Light", "Dark"]}
