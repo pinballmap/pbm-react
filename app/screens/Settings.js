@@ -10,7 +10,9 @@ import { setUnitPreference } from "../actions";
 import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
+  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
 } from "../utils/constants";
+import SwitchSetting from "../components/SettingsSwitch";
 import ButtonGroupSetting from "../components/SettingsButtonGroup";
 
 const Settings = ({ user, setUnitPreference }) => {
@@ -21,6 +23,8 @@ const Settings = ({ user, setUnitPreference }) => {
   const [selectedDefault, updateSelectedDefault] = useState(0);
   const [selectedDark, updateSelectedDark] = useState(1);
 
+  const [insiderConnectedBadge, updateInsiderConnectedBadge] = useState(false);
+
   useEffect(() => {
     retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
       (defaultThemeOverride) =>
@@ -29,6 +33,12 @@ const Settings = ({ user, setUnitPreference }) => {
 
     retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
+    );
+
+    // TODO: will likely use redux like the units, so remove this before merge
+    retrieveItem(KEY_INSIDER_CONNECTED_BADGE_DISPLAY).then(
+      (insiderConnectedBadgeDisplay) =>
+        updateInsiderConnectedBadge(insiderConnectedBadgeDisplay),
     );
   });
 
@@ -52,9 +62,22 @@ const Settings = ({ user, setUnitPreference }) => {
     setUnitPreference(idx);
   };
 
+  const updateInsiderConnectedBadgeChange = (newSelectedValue) => {
+    updateInsiderConnectedBadge(newSelectedValue);
+  };
+
   return (
     <Screen>
       <View style={s.background}>
+        <SwitchSetting
+          title="Insider Connected Badge"
+          description={
+            "Show Insider Connected badge on the location details screen."
+          }
+          onValueChange={updateInsiderConnectedBadgeChange}
+          value={insiderConnectedBadge}
+          s={s}
+        />
         <ButtonGroupSetting
           title="Light Mode Theme"
           buttons={["Light", "Dark"]}
