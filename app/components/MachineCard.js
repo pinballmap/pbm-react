@@ -5,9 +5,6 @@ import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
 const moment = require("moment");
 
-// TODO: pull from settings after adding setting option
-const showInsiderConnectedBadge = true;
-
 const insiderConnectedImage = {
   dark: require("../assets/images/Insider_Connected_Vertical_RED_and_WHT_300_dpi.png"),
   light: require("../assets/images/Insider_Connected_Vertical_standard_300_dpi.png"),
@@ -24,7 +21,7 @@ const Title = ({ machine, s }) => (
   </Text>
 );
 
-const MachineCard = ({ pressed, machine, s }) => {
+const MachineCard = ({ pressed, machine, s, displayInsiderConnectedBadge }) => {
   const theme = useTheme();
 
   return (
@@ -60,7 +57,7 @@ const MachineCard = ({ pressed, machine, s }) => {
             </Text>
           </View>
         </View>
-        {showInsiderConnectedBadge && machine.ic_enabled && (
+        {displayInsiderConnectedBadge && machine.ic_enabled && (
           <View
             style={{
               flexDirection: "row",

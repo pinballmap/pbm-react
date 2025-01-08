@@ -6,24 +6,25 @@ import { connect } from "react-redux";
 import { ThemeContext } from "../theme-context";
 import { Screen } from "../components";
 import { retrieveItem } from "../config/utils";
-import { setUnitPreference } from "../actions";
+import { setInsiderConnectedBadgeDisplay, setUnitPreference } from "../actions";
 import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
-  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
 } from "../utils/constants";
 import SwitchSetting from "../components/SettingsSwitch";
 import ButtonGroupSetting from "../components/SettingsButtonGroup";
 
-const Settings = ({ user, setUnitPreference }) => {
+const Settings = ({
+  user,
+  setUnitPreference,
+  setDisplayInsiderConnectedBadge,
+}) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
     useContext(ThemeContext);
   const s = getStyles(theme);
 
   const [selectedDefault, updateSelectedDefault] = useState(0);
   const [selectedDark, updateSelectedDark] = useState(1);
-
-  const [insiderConnectedBadge, updateInsiderConnectedBadge] = useState(false);
 
   useEffect(() => {
     retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
@@ -33,12 +34,6 @@ const Settings = ({ user, setUnitPreference }) => {
 
     retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
       (darkThemeOverride) => darkThemeOverride && updateSelectedDark(0),
-    );
-
-    // TODO: will likely use redux like the units, so remove this before merge
-    retrieveItem(KEY_INSIDER_CONNECTED_BADGE_DISPLAY).then(
-      (insiderConnectedBadgeDisplay) =>
-        updateInsiderConnectedBadge(insiderConnectedBadgeDisplay),
     );
   });
 
@@ -63,7 +58,8 @@ const Settings = ({ user, setUnitPreference }) => {
   };
 
   const updateInsiderConnectedBadgeChange = (newSelectedValue) => {
-    updateInsiderConnectedBadge(newSelectedValue);
+    setDisplayInsiderConnectedBadge(newSelectedValue);
+    // updateInsiderConnectedBadge(newSelectedValue);
   };
 
   return (
@@ -75,7 +71,7 @@ const Settings = ({ user, setUnitPreference }) => {
             "Show Insider Connected badge on the location details screen."
           }
           onValueChange={updateInsiderConnectedBadgeChange}
-          value={insiderConnectedBadge}
+          value={user.insiderConnectedBadgeDisplayPreference}
           s={s}
         />
         <ButtonGroupSetting
@@ -186,11 +182,17 @@ Settings.propTypes = {
   navigation: PropTypes.object,
   user: PropTypes.object,
   setUnitPreference: PropTypes.func,
+  setDisplayInsiderConnectedBadge: PropTypes.func,
 };
 
 const mapStateToProps = ({ user }) => ({ user });
 const mapDispatchToProps = (dispatch) => ({
   setUnitPreference: (unitPreference) =>
     dispatch(setUnitPreference(unitPreference)),
+  setDisplayInsiderConnectedBadge: (insiderConnectedBadgeDisplayPreference) => {
+    return dispatch(
+      setInsiderConnectedBadgeDisplay(insiderConnectedBadgeDisplayPreference),
+    );
+  },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

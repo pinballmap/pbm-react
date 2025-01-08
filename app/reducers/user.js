@@ -18,6 +18,7 @@ import {
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
+  SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
 } from "../actions/types";
 
 export const initialState = {
@@ -36,6 +37,7 @@ export const initialState = {
   submittingMessage: false,
   confirmationMessage: "",
   unitPreference: 0,
+  displayInsiderConnectedBadge: false,
   showNoLocationTrackingModal: false,
   isLocationServicesEnabled: true,
 };
@@ -169,6 +171,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         unitPreference: action.unitPreference,
+      };
+    case SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE:
+      return {
+        ...state,
+        insiderConnectedBadgeDisplayPreference:
+          action.displayInsiderConnectedBadge,
       };
     default:
       return state;

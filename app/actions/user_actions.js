@@ -17,6 +17,7 @@ import {
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
+  SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
@@ -24,6 +25,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import * as Location from "expo-location";
+import {
+  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+  KEY_UNIT_PREFERENCE,
+} from "../utils/constants";
 
 export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
@@ -227,9 +232,22 @@ export const messageSubmissionFailed = (err) => {
 };
 
 export const setUnitPreference = (unitPreference) => {
-  AsyncStorage.setItem("unitPreference", JSON.stringify(!!unitPreference));
+  AsyncStorage.setItem(KEY_UNIT_PREFERENCE, JSON.stringify(!!unitPreference));
   return {
     type: SET_UNIT_PREFERENCE,
     unitPreference,
+  };
+};
+
+export const setInsiderConnectedBadgeDisplay = (
+  displayInsiderConnectedBadge,
+) => {
+  AsyncStorage.setItem(
+    KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+    JSON.stringify(!!displayInsiderConnectedBadge),
+  );
+  return {
+    type: SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
+    displayInsiderConnectedBadge,
   };
 };

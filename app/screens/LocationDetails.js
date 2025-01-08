@@ -139,6 +139,7 @@ const LocationDetails = (props) => {
     lon: userLon,
     locationTrackingServicesEnabled,
     unitPreference,
+    insiderConnectedBadgeDisplayPreference,
   } = props.user;
   const { website: opWebsite, name: opName } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
@@ -672,7 +673,14 @@ const LocationDetails = (props) => {
                   }}
                 >
                   {({ pressed }) => (
-                    <MachineCard pressed={pressed} machine={machine} s={s} />
+                    <MachineCard
+                      pressed={pressed}
+                      machine={machine}
+                      s={s}
+                      displayInsiderConnectedBadge={
+                        insiderConnectedBadgeDisplayPreference
+                      }
+                    />
                   )}
                 </Pressable>
               ))}
