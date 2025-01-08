@@ -39,7 +39,7 @@ import {
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import {
-  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   KEY_UNIT_PREFERENCE,
 } from "../utils/constants";
 
@@ -117,11 +117,13 @@ const Map = ({
         }
       });
 
-      retrieveItem(KEY_INSIDER_CONNECTED_BADGE_DISPLAY).then((pref) => {
-        if (pref) {
-          dispatch(setDisplayInsiderConnectedBadge(true));
-        }
-      });
+      retrieveItem(KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE).then(
+        (pref) => {
+          if (pref) {
+            dispatch(setDisplayInsiderConnectedBadge(true));
+          }
+        },
+      );
     };
     run();
   }, []);

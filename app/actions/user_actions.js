@@ -26,7 +26,7 @@ import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import * as Location from "expo-location";
 import {
-  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   KEY_UNIT_PREFERENCE,
 } from "../utils/constants";
 
@@ -243,7 +243,7 @@ export const setInsiderConnectedBadgeDisplay = (
   displayInsiderConnectedBadge,
 ) => {
   AsyncStorage.setItem(
-    KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+    KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
     JSON.stringify(!!displayInsiderConnectedBadge),
   );
   return {

@@ -14,7 +14,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
 import { retrieveItem } from "../config/utils";
 import {
-  KEY_INSIDER_CONNECTED_BADGE_DISPLAY,
+  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   KEY_UNIT_PREFERENCE,
 } from "../utils/constants";
 
@@ -53,7 +53,7 @@ const AppWrapper = ({
         setUnitPreference(!!unitPreference),
       );
 
-      retrieveItem(KEY_INSIDER_CONNECTED_BADGE_DISPLAY).then(
+      retrieveItem(KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE).then(
         (displayInsiderConnectedPreference) =>
           setDisplayInsiderConnectedBadge(!!displayInsiderConnectedPreference),
       );
