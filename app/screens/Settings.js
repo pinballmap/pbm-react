@@ -71,7 +71,7 @@ const Settings = ({
             "Show Insider Connected badge on the location details screen."
           }
           onValueChange={updateInsiderConnectedBadgeChange}
-          value={user.insiderConnectedBadgeDisplayPreference}
+          value={user.displayInsiderConnectedBadgePreference}
           s={s}
         />
         <ButtonGroupSetting
@@ -189,9 +189,9 @@ const mapStateToProps = ({ user }) => ({ user });
 const mapDispatchToProps = (dispatch) => ({
   setUnitPreference: (unitPreference) =>
     dispatch(setUnitPreference(unitPreference)),
-  setDisplayInsiderConnectedBadge: (insiderConnectedBadgeDisplayPreference) => {
+  setDisplayInsiderConnectedBadge: (displayInsiderConnectedBadgePreference) => {
     return dispatch(
-      setInsiderConnectedBadgeDisplay(insiderConnectedBadgeDisplayPreference),
+      setInsiderConnectedBadgeDisplay(displayInsiderConnectedBadgePreference),
     );
   },
 });

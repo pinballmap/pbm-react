@@ -139,7 +139,7 @@ const LocationDetails = (props) => {
     lon: userLon,
     locationTrackingServicesEnabled,
     unitPreference,
-    insiderConnectedBadgeDisplayPreference,
+    displayInsiderConnectedBadgePreference,
   } = props.user;
   const { website: opWebsite, name: opName } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
@@ -678,7 +678,7 @@ const LocationDetails = (props) => {
                       machine={machine}
                       s={s}
                       displayInsiderConnectedBadge={
-                        insiderConnectedBadgeDisplayPreference
+                        displayInsiderConnectedBadgePreference
                       }
                     />
                   )}

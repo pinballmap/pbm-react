@@ -175,7 +175,7 @@ export default (state = initialState, action) => {
     case SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE:
       return {
         ...state,
-        insiderConnectedBadgeDisplayPreference:
+        displayInsiderConnectedBadgePreference:
           action.displayInsiderConnectedBadge,
       };
     default:
