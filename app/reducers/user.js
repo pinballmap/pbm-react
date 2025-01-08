@@ -18,7 +18,7 @@ import {
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
-  SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
+  SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
 } from "../actions/types";
 
 export const initialState = {
@@ -172,7 +172,7 @@ export default (state = initialState, action) => {
         ...state,
         unitPreference: action.unitPreference,
       };
-    case SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE:
+    case SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE:
       return {
         ...state,
         insiderConnectedBadgeDisplayPreference:

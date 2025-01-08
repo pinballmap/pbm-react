@@ -17,7 +17,7 @@ import {
   HIDE_NO_LOCATION_TRACKING_MODAL,
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
-  SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
+  SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
@@ -247,7 +247,7 @@ export const setInsiderConnectedBadgeDisplay = (
     JSON.stringify(!!displayInsiderConnectedBadge),
   );
   return {
-    type: SET_INSIDER_CONNECTED_BADGE_DISPLAY_PREFERENCE,
+    type: SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
     displayInsiderConnectedBadge,
   };
 };
