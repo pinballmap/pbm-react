@@ -56,7 +56,7 @@ const App = () => {
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) => {
-      setSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE);
+      setTheme(theme);
     });
 
     async function lockOrientation() {
