@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import { Platform, StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
-import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import { Screen, Text } from "../components";
+import { Screen } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
 import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
 } from "../utils/constants";
+import ButtonGroupSetting from "../components/SettingsButtonGroup";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
@@ -52,33 +52,6 @@ const Settings = ({ user, setUnitPreference }) => {
     setUnitPreference(idx);
   };
 
-  const ButtonGroupSetting = ({
-    title,
-    buttons,
-    description,
-    onPress,
-    selectedIndex,
-  }) => {
-    return (
-      <View>
-        <View style={s.pageTitle}>
-          <Text style={s.pageTitleText}>{title}</Text>
-        </View>
-        <ButtonGroup
-          onPress={onPress}
-          selectedIndex={selectedIndex}
-          buttons={buttons}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
-        />
-        <Text style={s.text}>{description}</Text>
-      </View>
-    );
-  };
-
   return (
     <Screen>
       <View style={s.background}>
@@ -88,6 +61,7 @@ const Settings = ({ user, setUnitPreference }) => {
           description="When your phone is in Light Mode, use our Light theme or our Dark theme."
           onPress={updateDefaultPref}
           selectedIndex={selectedDefault}
+          s={s}
         />
         <ButtonGroupSetting
           title="Dark Mode Theme"
@@ -95,6 +69,7 @@ const Settings = ({ user, setUnitPreference }) => {
           description="When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme."
           onPress={updateDarkPref}
           selectedIndex={selectedDark}
+          s={s}
         />
         <ButtonGroupSetting
           title="Distance Unit"
@@ -102,6 +77,7 @@ const Settings = ({ user, setUnitPreference }) => {
           description="Choose your preferred distance measurement unit."
           onPress={updateUnitPref}
           selectedIndex={user.unitPreference ? 1 : 0}
+          s={s}
         />
       </View>
     </Screen>
@@ -138,9 +114,9 @@ const getStyles = (theme) =>
       height: 40,
       borderWidth: 0,
       borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      backgroundColor: theme.theme === "dark" ? theme.base3 : theme.base4,
       boxShadow:
-        theme.theme == "dark"
+        theme.theme === "dark"
           ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
           : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
@@ -156,13 +132,30 @@ const getStyles = (theme) =>
     },
     selButtonStyle: {
       borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      borderColor: theme.theme === "dark" ? theme.base3 : theme.base4,
       backgroundColor: theme.white,
       borderRadius: 25,
     },
     selTextStyle: {
       color: theme.text2,
       fontFamily: "Nunito-Bold",
+    },
+    checkBoxContainer: {
+      backgroundColor: theme.base1,
+      marginVertical: -8,
+    },
+    checkBoxCheckedColor: theme.purple,
+    checkBoxTextStyle: {
+      fontSize: 16,
+      color: theme.text,
+    },
+    switchTrackColor: {
+      false: theme.base3,
+      true: theme.purple,
+    },
+    switchThumbColors: {
+      false: theme.base3,
+      true: theme.white,
     },
   });
 
