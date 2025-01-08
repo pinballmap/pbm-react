@@ -14,19 +14,19 @@ const Settings = ({ user, setUnitPreference }) => {
   const { setTheme, theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
-  const [selectedTheme, updateSelectedTheme] = useState(
+  const [selectedTheme, setSelectedTheme] = useState(
     THEME_SYSTEM_SETTING_VALUE,
   );
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) =>
-      updateSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE),
+      setSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE),
     );
   });
 
   const updateThemePref = (idx) => {
     if (idx === selectedTheme) return;
-    updateSelectedTheme(idx);
+    setSelectedTheme(idx);
     AsyncStorage.setItem(KEY_THEME, idx.toString());
     setTheme(idx);
   };

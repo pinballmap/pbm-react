@@ -46,19 +46,17 @@ const App = () => {
   Appearance.addChangeListener(({ colorScheme }) => {
     if (selectedTheme === THEME_SYSTEM_SETTING_VALUE) {
       // Update theme only if "system" theme is selected
-      updateSelectedTheme(
-        colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT,
-      );
+      setSelectedTheme(colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT);
     }
   });
 
-  const [selectedTheme, updateSelectedTheme] = useState(
+  const [selectedTheme, setSelectedTheme] = useState(
     THEME_SYSTEM_SETTING_VALUE,
   );
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) => {
-      updateSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE);
+      setSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE);
     });
 
     async function lockOrientation() {
@@ -97,7 +95,7 @@ const App = () => {
   };
 
   const setTheme = (newTheme) => {
-    updateSelectedTheme(calculateTheme(newTheme));
+    setSelectedTheme(calculateTheme(newTheme));
   };
 
   return (
