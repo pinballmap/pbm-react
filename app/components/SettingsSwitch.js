@@ -20,7 +20,7 @@ const SwitchSetting = ({ title, description, value, onValueChange, s }) => {
         <Switch
           value={value}
           onValueChange={() => {
-            // Sends the new checked value
+            // Sends the new switch value
             return onValueChange(!value);
           }}
           trackColor={s.switchTrackColor}
