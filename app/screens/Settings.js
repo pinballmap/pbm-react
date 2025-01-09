@@ -11,7 +11,7 @@ import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
 } from "../utils/constants";
-import ButtonGroupSetting from "../components/SettingsButtonGroup";
+import ButtonGroupSetting from "../components/ButtonGroupSetting";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
