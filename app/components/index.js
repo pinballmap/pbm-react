@@ -10,6 +10,7 @@ import Text from "./PbmText";
 import FilterRecentActivity from "./FilterRecentActivity";
 import Search from "./Search";
 import DrawerMenu from "./DrawerMenu";
+import ButtonGroupSetting from "./ButtonGroupSetting";
 import Screen from "./Screen";
 import withThemeHOC from "./withThemeHOC";
 import ActivityIndicator from "./ActivityIndicator";
@@ -36,6 +37,7 @@ export {
   FilterRecentActivity,
   Search,
   DrawerMenu,
+  ButtonGroupSetting,
   Screen,
   withThemeHOC,
   ActivityIndicator,

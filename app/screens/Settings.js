@@ -4,14 +4,13 @@ import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
 import { ThemeContext } from "../theme-context";
-import { Screen } from "../components";
+import { Screen, ButtonGroupSetting } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
 import {
   KEY_DEFAULT_THEME_OVERRIDE,
   KEY_DARK_THEME_OVERRIDE,
 } from "../utils/constants";
-import ButtonGroupSetting from "../components/ButtonGroupSetting";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { toggleDefaultTheme, toggleDarkTheme, theme } =
