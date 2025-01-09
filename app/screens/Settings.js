@@ -26,6 +26,7 @@ const Settings = ({ user, setUnitPreference }) => {
 
   const updateThemePref = (idx) => {
     if (idx === selectedTheme) return;
+    
     setSelectedTheme(idx);
     AsyncStorage.setItem(KEY_THEME, idx.toString());
     setThemePreference(idx);
