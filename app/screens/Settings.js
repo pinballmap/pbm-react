@@ -8,25 +8,23 @@ import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { retrieveItem } from "../config/utils";
 import { setUnitPreference } from "../actions";
-import { KEY_THEME, THEME_SYSTEM_SETTING_VALUE } from "../utils/constants";
+import { KEY_THEME, THEME_DEFAULT_VALUE } from "../utils/constants";
 
 const Settings = ({ user, setUnitPreference }) => {
   const { setThemePreference, theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
-  const [selectedTheme, setSelectedTheme] = useState(
-    THEME_SYSTEM_SETTING_VALUE,
-  );
+  const [selectedTheme, setSelectedTheme] = useState(THEME_DEFAULT_VALUE);
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) =>
-      setSelectedTheme(theme ? theme : THEME_SYSTEM_SETTING_VALUE),
+      setSelectedTheme(theme ?? THEME_DEFAULT_VALUE),
     );
   });
 
   const updateThemePref = (idx) => {
     if (idx === selectedTheme) return;
-    
+
     setSelectedTheme(idx);
     AsyncStorage.setItem(KEY_THEME, idx.toString());
     setThemePreference(idx);

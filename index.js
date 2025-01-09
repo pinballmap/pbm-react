@@ -19,6 +19,7 @@ import {
   KEY_THEME,
   THEME_DARK,
   THEME_DARK_SETTING_VALUE,
+  THEME_DEFAULT_VALUE,
   THEME_LIGHT,
   THEME_LIGHT_SETTING_VALUE,
   THEME_SYSTEM_SETTING_VALUE,
@@ -44,23 +45,22 @@ if (Platform.OS === "android") {
 
 const App = () => {
   const calculateTheme = (themePreference) => {
-    switch (themePreference) {
-      case THEME_SYSTEM_SETTING_VALUE:
-        return Appearance.getColorScheme() === THEME_DARK
-          ? THEME_DARK
-          : THEME_LIGHT;
+    switch (themePreference ?? THEME_DEFAULT_VALUE) {
       case THEME_DARK_SETTING_VALUE:
         return THEME_DARK;
       case THEME_LIGHT_SETTING_VALUE:
         return THEME_LIGHT;
+      case THEME_SYSTEM_SETTING_VALUE:
       default:
-        return THEME_LIGHT; // Default
+        return Appearance.getColorScheme() === THEME_DARK
+          ? THEME_DARK
+          : THEME_LIGHT;
     }
   };
 
   // The actual theme, such as "dark" or ""
   const [selectedTheme, setSelectedTheme] = useState(
-    calculateTheme(THEME_SYSTEM_SETTING_VALUE),
+    calculateTheme(THEME_DEFAULT_VALUE),
   );
 
   useEffect(() => {
@@ -88,7 +88,10 @@ const App = () => {
       ({ colorScheme }) => {
         retrieveItem(KEY_THEME).then((selectedThemePreference) => {
           // Update theme only if "system" preference is selected
-          if (selectedThemePreference === THEME_SYSTEM_SETTING_VALUE) {
+          if (
+            (selectedThemePreference ?? THEME_DEFAULT_VALUE) ===
+            THEME_SYSTEM_SETTING_VALUE
+          ) {
             setSelectedTheme(
               colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT,
             );
