@@ -28,9 +28,7 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
             return onValueChange(!value);
           }}
           trackColor={s.switchTrackColor}
-          thumbColor={
-            value ? s.switchThumbColors.true : s.switchThumbColors.false
-          }
+          ios_backgroundColor={s.iosTrackColor}
         />
       </View>
     </View>
@@ -58,13 +56,10 @@ const getStyles = (theme) =>
       marginRight: 15,
     },
     switchTrackColor: {
-      false: theme.base3,
       true: theme.purple,
+      false: theme.theme === "dark" ? theme.red2 : theme.base4, // Not used on iOS
     },
-    switchThumbColors: {
-      false: theme.base3,
-      true: theme.white,
-    },
+    iosTrackColor: theme.theme === "dark" ? theme.red2 : theme.base4,
   });
 
 export default SwitchSetting;
