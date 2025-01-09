@@ -28,7 +28,9 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
             return onValueChange(!value);
           }}
           trackColor={s.switchTrackColor}
-          ios_backgroundColor={s.iosTrackColor}
+          ios_backgroundColor={
+            theme.theme === "dark" ? theme.red2 : theme.base4
+          }
         />
       </View>
     </View>
@@ -59,7 +61,6 @@ const getStyles = (theme) =>
       true: theme.purple,
       false: theme.theme === "dark" ? theme.red2 : theme.base4, // Not used on iOS
     },
-    iosTrackColor: theme.theme === "dark" ? theme.red2 : theme.base4,
   });
 
 export default SwitchSetting;
