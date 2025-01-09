@@ -11,7 +11,7 @@ import { setUnitPreference } from "../actions";
 import { KEY_THEME, THEME_SYSTEM_SETTING_VALUE } from "../utils/constants";
 
 const Settings = ({ user, setUnitPreference }) => {
-  const { setTheme, theme } = useContext(ThemeContext);
+  const { setThemePreference, theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
   const [selectedTheme, setSelectedTheme] = useState(
@@ -28,7 +28,7 @@ const Settings = ({ user, setUnitPreference }) => {
     if (idx === selectedTheme) return;
     setSelectedTheme(idx);
     AsyncStorage.setItem(KEY_THEME, idx.toString());
-    setTheme(idx);
+    setThemePreference(idx);
   };
 
   const updateUnitPref = (idx) => {

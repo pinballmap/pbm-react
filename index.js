@@ -43,20 +43,46 @@ if (Platform.OS === "android") {
 }
 
 const App = () => {
-  Appearance.addChangeListener(({ colorScheme }) => {
-    if (selectedTheme === THEME_SYSTEM_SETTING_VALUE) {
-      // Update theme only if "system" theme is selected
-      setSelectedTheme(colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT);
+  const calculateTheme = (themePreference) => {
+    switch (themePreference) {
+      case THEME_SYSTEM_SETTING_VALUE:
+        return Appearance.getColorScheme() === THEME_DARK
+          ? THEME_DARK
+          : THEME_LIGHT;
+      case THEME_DARK_SETTING_VALUE:
+        return THEME_DARK;
+      case THEME_LIGHT_SETTING_VALUE:
+        return THEME_LIGHT;
+      default:
+        return THEME_LIGHT; // Default
     }
-  });
+  };
 
+  // The actual theme, such as "dark" or ""
   const [selectedTheme, setSelectedTheme] = useState(
+    calculateTheme(THEME_SYSTEM_SETTING_VALUE),
+  );
+  // The value for theme selected in the settings screen
+  const [selectedThemePreference, setSelectedThemePreference] = useState(
     THEME_SYSTEM_SETTING_VALUE,
   );
 
   useEffect(() => {
+    const listener = Appearance.addChangeListener(({ colorScheme }) => {
+      // Update theme only if "system" preference is selected
+      if (selectedThemePreference === THEME_SYSTEM_SETTING_VALUE) {
+        setSelectedTheme(colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT);
+      }
+    });
+
+    return () => {
+      listener.remove(); // Cleanup the listener on unmount
+    };
+  }, [selectedThemePreference]);
+
+  useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) => {
-      setTheme(theme);
+      setThemePreference(theme);
     });
 
     async function lockOrientation() {
@@ -79,29 +105,15 @@ const App = () => {
     prepare();
   }, []);
 
-  const calculateTheme = (newTheme) => {
-    switch (newTheme) {
-      case THEME_SYSTEM_SETTING_VALUE:
-        return Appearance.getColorScheme() === THEME_DARK
-          ? THEME_DARK
-          : THEME_LIGHT;
-      case THEME_DARK_SETTING_VALUE:
-        return THEME_DARK;
-      case THEME_LIGHT_SETTING_VALUE:
-        return THEME_LIGHT;
-      default:
-        return THEME_LIGHT; // Default
-    }
-  };
-
-  const setTheme = (newTheme) => {
-    setSelectedTheme(calculateTheme(newTheme));
+  const setThemePreference = (newThemePreference) => {
+    setSelectedThemePreference(newThemePreference);
+    setSelectedTheme(calculateTheme(newThemePreference));
   };
 
   return (
     <ThemeContext.Provider
       value={{
-        setTheme,
+        setThemePreference,
         theme: selectedTheme === "dark" ? dark : standard,
       }}
     >
