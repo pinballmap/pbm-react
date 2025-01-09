@@ -62,23 +62,6 @@ const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(
     calculateTheme(THEME_SYSTEM_SETTING_VALUE),
   );
-  // The value for theme selected in the settings screen
-  const [selectedThemePreference, setSelectedThemePreference] = useState(
-    THEME_SYSTEM_SETTING_VALUE,
-  );
-
-  useEffect(() => {
-    const listener = Appearance.addChangeListener(({ colorScheme }) => {
-      // Update theme only if "system" preference is selected
-      if (selectedThemePreference === THEME_SYSTEM_SETTING_VALUE) {
-        setSelectedTheme(colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT);
-      }
-    });
-
-    return () => {
-      listener.remove(); // Cleanup the listener on unmount
-    };
-  }, [selectedThemePreference]);
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) => {
@@ -101,12 +84,29 @@ const App = () => {
       await SplashScreen.preventAutoHideAsync();
     }
 
+    const appearanceListener = Appearance.addChangeListener(
+      ({ colorScheme }) => {
+        retrieveItem(KEY_THEME).then((selectedThemePreference) => {
+          // Update theme only if "system" preference is selected
+          if (selectedThemePreference === THEME_SYSTEM_SETTING_VALUE) {
+            setSelectedTheme(
+              colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT,
+            );
+          }
+        });
+      },
+    );
+
     lockOrientation();
     prepare();
+
+    // Cleanup the listener when the component is unmounted
+    return () => {
+      appearanceListener.remove();
+    };
   }, []);
 
   const setThemePreference = (newThemePreference) => {
-    setSelectedThemePreference(newThemePreference);
     setSelectedTheme(calculateTheme(newThemePreference));
   };
 
