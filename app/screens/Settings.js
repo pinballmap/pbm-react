@@ -61,7 +61,6 @@ const Settings = ({ user, setUnitPreference }) => {
           description="When your phone is in Light Mode, use our Light theme or our Dark theme."
           onPress={updateDefaultPref}
           selectedIndex={selectedDefault}
-          s={s}
         />
         <ButtonGroupSetting
           title="Dark Mode Theme"
@@ -69,7 +68,6 @@ const Settings = ({ user, setUnitPreference }) => {
           description="When your phone is in Dark Mode, stick with a Dark theme or switch to Light theme."
           onPress={updateDarkPref}
           selectedIndex={selectedDark}
-          s={s}
         />
         <ButtonGroupSetting
           title="Distance Unit"
@@ -77,7 +75,6 @@ const Settings = ({ user, setUnitPreference }) => {
           description="Choose your preferred distance measurement unit."
           onPress={updateUnitPref}
           selectedIndex={user.unitPreference ? 1 : 0}
-          s={s}
         />
       </View>
     </Screen>
