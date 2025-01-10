@@ -65,16 +65,35 @@ Production: `API_URL='https://www.pinballmap.com/api/v1'`
 
 ## Fire It Up
 
+### Local Dev Build
+
+<details>
+  <summary>Build on your local machine.</summary>
+
 - `npm install` - Install all necessary dependencies
 - `npx expo run` - Build and run a local build
   - Choose the platform you want to run. It may take some time to build.
   - You can also run a platform directly with `npx expo run:ios` or `npx expo run:android`
   - More details on local dev client builds are [here](https://docs.expo.dev/guides/local-app-development/#local-builds-with-expo-dev-client)
-- or rather than `npx expo run` you can use Expo's EAS to build a Development Build. This will create a build that you install on your phone, then you run a server using `npx expo start --clear`, scan the QR code, and launch the dev app. Review documentation [here](https://docs.expo.dev/develop/development-builds/create-a-build/) for instructions on EAS Development Builds.
+  </details>
+
+or rather than `npx expo run` you can use Expo's EAS to build a Development Build. This creates a build in the cloud for free.
+
+### EAS
+
+<details>
+  <summary>Build in the cloud using EAS.</summary>
+- `npx expo install expo-dev-client` - Install the expo dev client
+- `eas build` - Begin the build process
+- Select a platform and wait for the build to complete. You should see a link in your terminal. This link will take you to the build details.
+- More details on EAS builds are [here](https://docs.expo.dev/develop/development-builds/create-a-build/)
+</details>
 
 If you are unable to successfully get set-up like this, or if you identify errors in these instructions, we'd love for you to file an issue or open a pull request.
 
 ## Possible Problems
+
+### Bare Workflow Error
 
 If you receive an error upon launching the app that says something along the lines of `you are using the bare workflow, where runtime policy versions are not supported.` you will need to adjust your [app.config.js](./app.config.js). Try replacing
 
@@ -89,3 +108,15 @@ with
 ```
 runtimeVersion: "1.0.0",
 ```
+
+Please don't commit this change.
+
+### EAS Errors
+
+If you are receiving errors when trying to perform an EAS build.
+
+- Make some changes in [app.config.js](./app.config.js).
+  1. Change the owner property to your expo user name.
+  2. Delete the expo.extra.eas projectId. A new one should be generated when you build next.
+
+Please don't commit these changes.
