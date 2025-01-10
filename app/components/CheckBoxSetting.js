@@ -29,7 +29,7 @@ const CheckBoxSetting = ({
         containerStyle={s.checkBoxContainer}
         fontFamily="Nunito-Bold"
         textStyle={s.checkBoxTextStyle}
-        checkedColor={s.checkBoxCheckedColor}
+        checkedColor={theme.purple}
       />
       <Text style={s.descriptionText}>{description}</Text>
     </View>
@@ -60,7 +60,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
       marginVertical: -8,
     },
-    checkBoxCheckedColor: theme.purple,
     checkBoxTextStyle: {
       fontSize: 16,
       color: theme.text,
