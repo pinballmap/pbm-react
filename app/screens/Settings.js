@@ -59,7 +59,6 @@ const Settings = ({
           description="Choose the theme to use for the app."
           onPress={updateThemePref}
           selectedIndex={selectedTheme}
-          s={s}
         />
         <ButtonGroupSetting
           title="Distance Unit"
@@ -67,7 +66,6 @@ const Settings = ({
           description="Choose your preferred distance measurement unit."
           onPress={updateUnitPref}
           selectedIndex={user.unitPreference ? 1 : 0}
-          s={s}
         />
       </View>
     </Screen>
