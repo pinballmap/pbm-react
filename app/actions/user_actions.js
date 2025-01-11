@@ -236,7 +236,7 @@ export const setUnitPreference = (unitPreference) => {
   };
 };
 
-export const setInsiderConnectedBadgeDisplay = (
+export const setDisplayInsiderConnectedBadge = (
   displayInsiderConnectedBadge,
 ) => {
   AsyncStorage.setItem(
