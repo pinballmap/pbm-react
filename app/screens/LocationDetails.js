@@ -676,7 +676,6 @@ const LocationDetails = (props) => {
                     <MachineCard
                       pressed={pressed}
                       machine={machine}
-                      s={s}
                       displayInsiderConnectedBadge={
                         displayInsiderConnectedBadgePreference
                       }
@@ -752,22 +751,6 @@ const getStyles = (theme) =>
       paddingLeft: 15,
       paddingRight: 15,
     },
-    pressed: {
-      borderColor: theme.pink2,
-      borderWidth: 2,
-      boxShadow: null,
-      opacity: 0.8,
-    },
-    notPressed: {
-      borderColor: "transparent",
-      borderWidth: 2,
-      opacity: 1.0,
-    },
-    machineName: {
-      color: theme.theme == "dark" ? theme.text : theme.purple,
-      fontFamily: "Nunito-ExtraBold",
-      fontSize: 20,
-    },
     locationMetaContainer: {
       paddingTop: 0,
       paddingBottom: 0,
@@ -791,14 +774,8 @@ const getStyles = (theme) =>
     fontSize15: {
       fontSize: 15,
     },
-    fontSize20: {
-      fontSize: 20,
-    },
     bold: {
       fontFamily: "Nunito-Bold",
-    },
-    mediumFont: {
-      fontFamily: "Nunito-Medium",
     },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
@@ -826,10 +803,6 @@ const getStyles = (theme) =>
     },
     text3: {
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
-    },
-    pink1: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Regular",
     },
     italic: {
@@ -951,12 +924,6 @@ const getStyles = (theme) =>
       fontSize: 18,
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
-    },
-    updated: {
-      fontSize: 14,
-      color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     accordionContainer: {
       paddingVertical: 3,

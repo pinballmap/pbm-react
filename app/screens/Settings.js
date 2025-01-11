@@ -51,7 +51,6 @@ const Settings = ({
           }
           onValueChange={updateInsiderConnectedBadgeChange}
           value={user.displayInsiderConnectedBadgePreference}
-          s={s}
         />
         <ButtonGroupSetting
           title="App Theme"
