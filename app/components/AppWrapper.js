@@ -13,10 +13,7 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
 import { retrieveItem } from "../config/utils";
-import {
-  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
-  KEY_UNIT_PREFERENCE,
-} from "../utils/constants";
+import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
 
 const AppWrapper = ({
   children,
@@ -49,7 +46,7 @@ const AppWrapper = ({
         );
       };
 
-      retrieveItem(KEY_UNIT_PREFERENCE).then((unitPreference) =>
+      retrieveItem("unitPreference").then((unitPreference) =>
         setUnitPreference(!!unitPreference),
       );
 

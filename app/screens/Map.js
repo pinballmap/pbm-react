@@ -38,10 +38,7 @@ import {
 } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import {
-  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
-  KEY_UNIT_PREFERENCE,
-} from "../utils/constants";
+import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -111,7 +108,7 @@ const Map = ({
           navigation.navigate("SignupLogin");
         }
       });
-      retrieveItem(KEY_UNIT_PREFERENCE).then((unitPreference) => {
+      retrieveItem("unitPreference").then((unitPreference) => {
         if (unitPreference) {
           dispatch(setUnitPreference(true));
         }

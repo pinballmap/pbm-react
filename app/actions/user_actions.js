@@ -25,10 +25,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import * as Location from "expo-location";
-import {
-  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
-  KEY_UNIT_PREFERENCE,
-} from "../utils/constants";
+import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
 
 export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
@@ -232,7 +229,7 @@ export const messageSubmissionFailed = (err) => {
 };
 
 export const setUnitPreference = (unitPreference) => {
-  AsyncStorage.setItem(KEY_UNIT_PREFERENCE, JSON.stringify(!!unitPreference));
+  AsyncStorage.setItem("unitPreference", JSON.stringify(!!unitPreference));
   return {
     type: SET_UNIT_PREFERENCE,
     unitPreference,
