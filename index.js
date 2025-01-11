@@ -16,8 +16,13 @@ import MapNavigator from "./app/config/router";
 import * as Sentry from "@sentry/react-native";
 import * as Device from "expo-device";
 import {
-  KEY_DARK_THEME_OVERRIDE,
-  KEY_DEFAULT_THEME_OVERRIDE,
+  KEY_THEME,
+  THEME_DARK,
+  THEME_DARK_SETTING_VALUE,
+  THEME_DEFAULT_VALUE,
+  THEME_LIGHT,
+  THEME_LIGHT_SETTING_VALUE,
+  THEME_SYSTEM_SETTING_VALUE,
 } from "./app/utils/constants";
 
 Sentry.init({
@@ -32,8 +37,6 @@ SplashScreen.setOptions({
   fade: true,
 });
 
-const defaultTheme = Appearance.getColorScheme();
-
 // https://github.com/facebook/react-native/issues/19410
 if (Platform.OS === "android") {
   require("intl");
@@ -41,22 +44,29 @@ if (Platform.OS === "android") {
 }
 
 const App = () => {
+  const calculateTheme = (themePreference) => {
+    switch (themePreference ?? THEME_DEFAULT_VALUE) {
+      case THEME_DARK_SETTING_VALUE:
+        return THEME_DARK;
+      case THEME_LIGHT_SETTING_VALUE:
+        return THEME_LIGHT;
+      case THEME_SYSTEM_SETTING_VALUE:
+      default:
+        return Appearance.getColorScheme() === THEME_DARK
+          ? THEME_DARK
+          : THEME_LIGHT;
+    }
+  };
+
+  // The actual theme, such as "dark" or ""
   const [selectedTheme, setSelectedTheme] = useState(
-    defaultTheme === "dark" ? "dark" : "",
+    calculateTheme(THEME_DEFAULT_VALUE),
   );
 
   useEffect(() => {
-    retrieveItem(KEY_DEFAULT_THEME_OVERRIDE).then(
-      (defaultThemeOverride) =>
-        defaultTheme !== "dark" &&
-        defaultThemeOverride &&
-        setSelectedTheme("dark"),
-    );
-
-    retrieveItem(KEY_DARK_THEME_OVERRIDE).then(
-      (darkThemeOverride) =>
-        defaultTheme === "dark" && darkThemeOverride && setSelectedTheme(""),
-    );
+    retrieveItem(KEY_THEME).then((theme) => {
+      setThemePreference(theme);
+    });
 
     async function lockOrientation() {
       if (Device.deviceType.TABLET) {
@@ -73,22 +83,40 @@ const App = () => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
+
+    const appearanceListener = Appearance.addChangeListener(
+      ({ colorScheme }) => {
+        retrieveItem(KEY_THEME).then((selectedThemePreference) => {
+          // Update theme only if "system" preference is selected
+          if (
+            (selectedThemePreference ?? THEME_DEFAULT_VALUE) ===
+            THEME_SYSTEM_SETTING_VALUE
+          ) {
+            setSelectedTheme(
+              colorScheme === THEME_DARK ? THEME_DARK : THEME_LIGHT,
+            );
+          }
+        });
+      },
+    );
+
     lockOrientation();
     prepare();
+
+    // Cleanup the listener when the component is unmounted
+    return () => {
+      appearanceListener.remove();
+    };
   }, []);
 
-  const toggleDefaultTheme = () =>
-    defaultTheme !== "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
-  const toggleDarkTheme = () =>
-    defaultTheme === "dark" &&
-    setSelectedTheme(selectedTheme === "dark" ? "" : "dark");
+  const setThemePreference = (newThemePreference) => {
+    setSelectedTheme(calculateTheme(newThemePreference));
+  };
 
   return (
     <ThemeContext.Provider
       value={{
-        toggleDefaultTheme,
-        toggleDarkTheme,
+        setThemePreference,
         theme: selectedTheme === "dark" ? dark : standard,
       }}
     >
