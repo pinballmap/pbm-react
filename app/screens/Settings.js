@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ThemeContext } from "../theme-context";
 import { Screen, ButtonGroupSetting, SwitchSetting } from "../components";
 import { retrieveItem } from "../config/utils";
-import { setInsiderConnectedBadgeDisplay, setUnitPreference } from "../actions";
+import { setDisplayInsiderConnectedBadge, setUnitPreference } from "../actions";
 import { KEY_THEME, THEME_DEFAULT_VALUE } from "../utils/constants";
 
-const Settings = ({
-  user,
-  setUnitPreference,
-  setDisplayInsiderConnectedBadge,
-}) => {
+const Settings = ({ user }) => {
   const { setThemePreference, theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const dispatch = useDispatch();
 
   const [selectedTheme, setSelectedTheme] = useState(THEME_DEFAULT_VALUE);
 
@@ -34,11 +30,12 @@ const Settings = ({
   };
 
   const updateUnitPref = (idx) => {
-    setUnitPreference(idx);
+    dispatch(setUnitPreference(idx));
   };
 
   const updateInsiderConnectedBadgeChange = (newSelectedValue) => {
-    setDisplayInsiderConnectedBadge(newSelectedValue);
+    console.log(newSelectedValue);
+    dispatch(setDisplayInsiderConnectedBadge(newSelectedValue));
   };
 
   return (
@@ -81,21 +78,5 @@ const getStyles = (theme) =>
     },
   });
 
-Settings.propTypes = {
-  navigation: PropTypes.object,
-  user: PropTypes.object,
-  setUnitPreference: PropTypes.func,
-  setDisplayInsiderConnectedBadge: PropTypes.func,
-};
-
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = (dispatch) => ({
-  setUnitPreference: (unitPreference) =>
-    dispatch(setUnitPreference(unitPreference)),
-  setDisplayInsiderConnectedBadge: (displayInsiderConnectedBadgePreference) => {
-    return dispatch(
-      setInsiderConnectedBadgeDisplay(displayInsiderConnectedBadgePreference),
-    );
-  },
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps)(Settings);
