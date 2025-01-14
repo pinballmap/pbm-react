@@ -23,13 +23,11 @@ import {
   clearFilters,
   clearSearchBarText,
   login,
-  setUnitPreference,
   updateBounds,
   getLocationsByRegion,
   getLocationsConsideringZoom,
   triggerUpdateBounds,
   setSelectedMapLocation,
-  setDisplayInsiderConnectedBadge,
 } from "../actions";
 import { getSelectedMapLocation } from "../selectors";
 import {
@@ -38,7 +36,6 @@ import {
 } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -108,19 +105,6 @@ const Map = ({
           navigation.navigate("SignupLogin");
         }
       });
-      retrieveItem("unitPreference").then((unitPreference) => {
-        if (unitPreference) {
-          dispatch(setUnitPreference(true));
-        }
-      });
-
-      retrieveItem(KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE).then(
-        (pref) => {
-          if (pref) {
-            dispatch(setDisplayInsiderConnectedBadge(true));
-          }
-        },
-      );
     };
     run();
   }, []);
