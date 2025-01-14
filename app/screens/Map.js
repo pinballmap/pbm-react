@@ -23,7 +23,6 @@ import {
   clearFilters,
   clearSearchBarText,
   login,
-  setUnitPreference,
   updateBounds,
   getLocationsByRegion,
   getLocationsConsideringZoom,
@@ -104,12 +103,6 @@ const Map = ({
           navigateToScreen(initialUrl);
         } else {
           navigation.navigate("SignupLogin");
-        }
-      });
-
-      retrieveItem("unitPreference").then((unitPreference) => {
-        if (unitPreference) {
-          dispatch(setUnitPreference(true));
         }
       });
     };

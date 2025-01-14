@@ -8,10 +8,12 @@ import {
   fetchOperators,
   getLocationAndMachineCounts,
   setUnitPreference,
+  setDisplayInsiderConnectedBadge,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
 import { retrieveItem } from "../config/utils";
+import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
 
 const AppWrapper = ({
   children,
@@ -21,6 +23,7 @@ const AppWrapper = ({
   getOperators,
   getLocationAndMachineCounts,
   setUnitPreference,
+  setDisplayInsiderConnectedBadge,
 }) => {
   const [loading, setIsLoading] = useState(true);
   // Global variable to let us swap out to use the staging server if a store tester logs in
@@ -45,6 +48,11 @@ const AppWrapper = ({
 
       retrieveItem("unitPreference").then((unitPreference) =>
         setUnitPreference(!!unitPreference),
+      );
+
+      retrieveItem(KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE).then(
+        (displayInsiderConnectedPreference) =>
+          setDisplayInsiderConnectedBadge(!!displayInsiderConnectedPreference),
       );
 
       try {
@@ -88,5 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
   getLocationAndMachineCounts: (url) =>
     dispatch(getLocationAndMachineCounts(url)),
   setUnitPreference: (pref) => dispatch(setUnitPreference(pref)),
+  setDisplayInsiderConnectedBadge: (pref) =>
+    dispatch(setDisplayInsiderConnectedBadge(pref)),
 });
 export default connect(null, mapDispatchToProps)(AppWrapper);

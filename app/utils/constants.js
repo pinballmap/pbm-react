@@ -1,7 +1,9 @@
 /**
  * Keys used to persist setting values
  */
-export const KEY_THEME = "themeOverride";
+export const KEY_THEME = "themeOverride"; // Which visual theme to use for te app
+export const KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE =
+  "displayInsiderConnectedBadgePreference"; // Display the Insider Connected badge
 
 /**
  * Setting Values

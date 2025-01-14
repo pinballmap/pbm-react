@@ -39,6 +39,7 @@ import {
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import MachineCard from "../components/MachineCard";
 
 Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
 
@@ -101,17 +102,6 @@ const LocationDetails = (props) => {
     setShowScrollToTop(positionY > 150);
   };
 
-  const getTitle = (machine, s) => (
-    <Text>
-      <Text style={s.machineName}>{machine.name}</Text>
-      {machine.year ? (
-        <Text style={[s.fontSize20, s.pink1, s.mediumFont]}>{` (${
-          machine.manufacturer && machine.manufacturer + ", "
-        }${machine.year})`}</Text>
-      ) : null}
-    </Text>
-  );
-
   const handleConfirmPress = (id, loggedIn) => {
     if (loggedIn) {
       const { email, username, authentication_token } = props.user;
@@ -149,6 +139,7 @@ const LocationDetails = (props) => {
     lon: userLon,
     locationTrackingServicesEnabled,
     unitPreference,
+    displayInsiderConnectedBadgePreference,
   } = props.user;
   const { website: opWebsite, name: opName } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
@@ -682,51 +673,13 @@ const LocationDetails = (props) => {
                   }}
                 >
                   {({ pressed }) => (
-                    <View
-                      style={[
-                        s.machineListContainer,
-                        pressed ? s.pressed : s.notPressed,
-                      ]}
-                    >
-                      {getTitle(machine, s)}
-                      {machine.created_at != machine.updated_at ? (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            marginTop: 6,
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name="clock-time-four-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={s.updated}>
-                            {`Updated: ${moment(machine.updated_at).format(
-                              "MMM DD, YYYY",
-                            )}`}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            marginTop: 6,
-                          }}
-                        >
-                          <MaterialCommunityIcons
-                            name="clock-time-three-outline"
-                            style={s.metaIcon}
-                          />
-                          <Text style={s.updated}>
-                            {`Added: ${moment(machine.created_at).format(
-                              "MMM DD, YYYY",
-                            )}`}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
+                    <MachineCard
+                      pressed={pressed}
+                      machine={machine}
+                      displayInsiderConnectedBadge={
+                        displayInsiderConnectedBadgePreference
+                      }
+                    />
                   )}
                 </Pressable>
               ))}
@@ -798,22 +751,6 @@ const getStyles = (theme) =>
       paddingLeft: 15,
       paddingRight: 15,
     },
-    pressed: {
-      borderColor: theme.pink2,
-      borderWidth: 2,
-      boxShadow: null,
-      opacity: 0.8,
-    },
-    notPressed: {
-      borderColor: "transparent",
-      borderWidth: 2,
-      opacity: 1.0,
-    },
-    machineName: {
-      color: theme.theme == "dark" ? theme.text : theme.purple,
-      fontFamily: "Nunito-ExtraBold",
-      fontSize: 20,
-    },
     locationMetaContainer: {
       paddingTop: 0,
       paddingBottom: 0,
@@ -837,14 +774,8 @@ const getStyles = (theme) =>
     fontSize15: {
       fontSize: 15,
     },
-    fontSize20: {
-      fontSize: 20,
-    },
     bold: {
       fontFamily: "Nunito-Bold",
-    },
-    mediumFont: {
-      fontFamily: "Nunito-Medium",
     },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
@@ -872,10 +803,6 @@ const getStyles = (theme) =>
     },
     text3: {
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
-    },
-    pink1: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Regular",
     },
     italic: {
@@ -997,12 +924,6 @@ const getStyles = (theme) =>
       fontSize: 18,
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
-    },
-    updated: {
-      fontSize: 14,
-      color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     accordionContainer: {
       paddingVertical: 3,

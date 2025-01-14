@@ -11,6 +11,7 @@ import FilterRecentActivity from "./FilterRecentActivity";
 import Search from "./Search";
 import DrawerMenu from "./DrawerMenu";
 import ButtonGroupSetting from "./ButtonGroupSetting";
+import SwitchSetting from "./SwitchSetting";
 import Screen from "./Screen";
 import withThemeHOC from "./withThemeHOC";
 import ActivityIndicator from "./ActivityIndicator";
@@ -38,6 +39,7 @@ export {
   Search,
   DrawerMenu,
   ButtonGroupSetting,
+  SwitchSetting,
   Screen,
   withThemeHOC,
   ActivityIndicator,
