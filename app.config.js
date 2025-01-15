@@ -9,7 +9,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.26",
+    version: "5.3.27",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -26,9 +26,9 @@ export default {
     },
     plugins: [
       [
-        "expo-dev-launcher",
+        "expo-dev-client",
         {
-          addGeneratedScheme: !IS_DEV,
+          addGeneratedScheme: !!IS_DEV,
         },
       ],
       [
