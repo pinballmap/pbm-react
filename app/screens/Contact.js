@@ -79,17 +79,19 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             overScrollMode="always"
           >
             <Text
-              style={[s.text, s.boldFont]}
-            >{`We welcome all questions, comments, tips, app feedback, and whatever else!`}</Text>
-            <Text style={[s.subText]}>
-              Is this location closed or are all the machines gone?{" "}
-              <Text style={[s.pinkText, s.boldFont]}>No need to tell us!</Text>{" "}
-              {`Please just remove the machines from the location, and we'll auto-delete the location within a week.`}
-            </Text>
-            <Text
               onPress={() => navigation.navigate("FAQ")}
               style={s.textLink}
             >{`Check the FAQ first for common questions.`}</Text>
+            <Text
+              style={[s.text, s.boldFont, s.pinkText]}
+            >{`Do not tell us that a location closed or are all the machines gone!`}</Text>
+            <Text style={[s.subText]}>
+              {`Instead, just `}
+              <Text
+                style={[s.pinkText, s.boldFont]}
+              >{`remove the machines from the location`}</Text>
+              {`, and we'll auto-delete the location within a week.`}
+            </Text>
             {!loggedIn ? (
               <View>
                 <TextInput
@@ -116,7 +118,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             <TextInput
               multiline={true}
               placeholder={
-                "Include the NAME of the location you're writing about!"
+                "Include the NAME of the location you're writing about! This is a general contact form."
               }
               placeholderTextColor={theme.indigo4}
               style={[{ padding: 5, height: 200 }, s.textInput]}
@@ -181,9 +183,9 @@ const getStyles = (theme) =>
       fontSize: 16,
       lineHeight: 22,
       marginTop: 15,
+      marginBottom: 10,
       textAlign: "center",
       fontFamily: "Nunito-Regular",
-      color: theme.purple2,
     },
     confirmText: {
       textAlign: "center",
