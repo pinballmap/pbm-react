@@ -183,7 +183,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       ) : recentActivity.length === 0 ? (
         <Text
           style={s.problem}
-        >{`No map edits in the last 30 days within ${maxDistance} miles of the map's current location`}</Text>
+        >{`No recent map edits within ${maxDistance} miles of the map's current location`}</Text>
       ) : (
         recentActivity
           .filter((activity) => {

@@ -68,13 +68,6 @@ const LocationActivity = ({ locationId }) => {
         );
       }
       case "new_condition": {
-        if (!comment)
-          return (
-            <View style={s.textContainer}>
-              <Text style={s.pbmText}>{submission}</Text>
-              <Text style={s.date}>{time}</Text>
-            </View>
-          );
         return (
           <View style={s.textContainer}>
             <Text style={s.pbmText}>{`"${comment}"`}</Text>
