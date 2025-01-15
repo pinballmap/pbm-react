@@ -9,15 +9,14 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
   const s = getStyles(theme);
 
   return (
-    <View>
-      <View style={[s.title, { marginBottom: 4 }]}>
+    <View style={s.container}>
+      <View>
         <Text style={s.titleText}>{title}</Text>
       </View>
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginVertical: -8,
         }}
       >
         <Text style={[s.descriptionText, { flex: 1 }]}>{description}</Text>
@@ -32,7 +31,7 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
             false: theme.theme === "dark" ? theme.red2 : theme.base4, // Not used on iOS
           }}
           ios_backgroundColor={
-            theme.theme === "dark" ? theme.red2 : theme.base4
+            theme.theme === "dark" ? theme.red3 : theme.base4
           }
         />
       </View>
@@ -42,14 +41,16 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    title: {
-      paddingTop: 10,
+    container: {
+      marginVertical: 15,
+      marginHorizontal: 15,
     },
     titleText: {
       textAlign: "center",
       fontSize: 18,
       fontFamily: "Nunito-Bold",
       color: theme.text,
+      marginBottom: 2,
     },
     descriptionText: {
       fontSize: 14,
@@ -57,7 +58,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
       lineHeight: 22,
-      marginLeft: 15,
+      marginLeft: 5,
       marginRight: 15,
     },
   });

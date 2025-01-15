@@ -41,14 +41,6 @@ const Settings = ({ user }) => {
   return (
     <Screen>
       <View style={s.background}>
-        <SwitchSetting
-          title="Insider Connected Badge"
-          description={
-            "Show Insider Connected badge on the location details screen."
-          }
-          onValueChange={updateInsiderConnectedBadgeChange}
-          value={user.displayInsiderConnectedBadgePreference}
-        />
         <ButtonGroupSetting
           title="App Theme"
           buttons={["OS Theme", "Light", "Dark"]}
@@ -62,6 +54,14 @@ const Settings = ({ user }) => {
           description="Choose your preferred distance measurement unit."
           onPress={updateUnitPref}
           selectedIndex={user.unitPreference ? 1 : 0}
+        />
+        <SwitchSetting
+          title="Insider Connected Badge"
+          description={
+            "Show Insider Connected badge on the location details screen."
+          }
+          onValueChange={updateInsiderConnectedBadgeChange}
+          value={user.displayInsiderConnectedBadgePreference}
         />
       </View>
     </Screen>

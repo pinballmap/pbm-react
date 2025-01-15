@@ -15,8 +15,8 @@ const ButtonGroupSetting = ({
   const s = getStyles(theme);
 
   return (
-    <View>
-      <View style={s.title}>
+    <View style={s.container}>
+      <View>
         <Text style={s.titleText}>{title}</Text>
       </View>
       <ButtonGroup
@@ -36,8 +36,9 @@ const ButtonGroupSetting = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    title: {
-      paddingTop: 10,
+    container: {
+      marginVertical: 15,
+      marginHorizontal: 15,
     },
     titleText: {
       textAlign: "center",
@@ -55,7 +56,7 @@ const getStyles = (theme) =>
           ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
           : "0 0 10 0 rgba(170, 170, 199, 0.3))",
       overflow: "visible",
-      marginHorizontal: 15,
+      marginHorizontal: 0,
     },
     buttonGroupInactive: {
       color: theme.text2,
@@ -81,7 +82,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
       lineHeight: 22,
-      marginLeft: 15,
+      marginLeft: 5,
       marginRight: 15,
     },
   });
