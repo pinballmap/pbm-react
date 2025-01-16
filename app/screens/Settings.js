@@ -34,7 +34,6 @@ const Settings = ({ user }) => {
   };
 
   const updateInsiderConnectedBadgeChange = (newSelectedValue) => {
-    console.log(newSelectedValue);
     dispatch(setDisplayInsiderConnectedBadge(newSelectedValue));
   };
 

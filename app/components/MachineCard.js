@@ -6,8 +6,8 @@ import { Text } from "./index";
 const moment = require("moment");
 
 const insiderConnectedImage = {
-  dark: require("../assets/images/Insider_Connected_Vertical_RED_and_WHT_300_dpi.png"),
-  light: require("../assets/images/Insider_Connected_Vertical_standard_300_dpi.png"),
+  dark: require("../assets/images/Insider_Connected_Dark.png"),
+  light: require("../assets/images/Insider_Connected_Light.png"),
 };
 
 const Title = ({ machine }) => {
