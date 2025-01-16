@@ -28,7 +28,7 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
           }}
           trackColor={{
             true: theme.purple,
-            false: theme.theme === "dark" ? theme.red2 : theme.base4, // Not used on iOS
+            false: theme.theme === "dark" ? theme.red3 : theme.base4, // Not used on iOS
           }}
           ios_backgroundColor={
             theme.theme === "dark" ? theme.red3 : theme.base4
