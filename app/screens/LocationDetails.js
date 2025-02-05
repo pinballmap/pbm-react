@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
-import { ListItem, Icon } from "@rneui/base";
+import { Icon } from "@rneui/base";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
@@ -22,6 +22,7 @@ import {
   FavoriteLocation,
   LocationActivity,
   PbmButton,
+  ReadMore,
   Text,
   WarningButton,
 } from "../components";
@@ -55,7 +56,6 @@ const LocationDetails = (props) => {
   const s = getStyles(theme);
   const scrollViewRef = createRef(null);
   const [locationId, setLocationId] = useState(props.route.params["id"]);
-  const [detailsExpanded, setDetailsExpanded] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const insets = useSafeAreaInsets();
@@ -421,117 +421,76 @@ const LocationDetails = (props) => {
                   </View>
                 ) : null}
 
-                {location.phone ||
-                location.website ||
-                opName ||
-                location.description ? (
-                  <ListItem.Accordion
-                    containerStyle={s.accordionContainer}
-                    icon={
-                      <Icon
-                        name={"chevron-down"}
-                        type="material-community"
-                        color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
-                        }
-                      />
-                    }
-                    content={
-                      <>
-                        <ListItem.Content>
-                          <ListItem.Title
-                            style={[
-                              {
-                                color: theme.text2,
-                                fontFamily: "Nunito-SemiBold",
-                              },
-                              s.fontSize15,
-                            ]}
-                          >
-                            Location details
-                          </ListItem.Title>
-                        </ListItem.Content>
-                      </>
-                    }
-                    isExpanded={detailsExpanded}
-                    onPress={() => setDetailsExpanded(!detailsExpanded)}
-                  >
-                    {location.phone ? (
-                      <View style={[s.row, s.marginB]}>
-                        <MaterialIcons name="local-phone" style={s.metaIcon} />
-                        <Text
-                          style={[s.fontSize14, s.link]}
-                          onPress={() =>
-                            Linking.openURL(`tel://${location.phone}`)
-                          }
-                        >
-                          {location.phone}
-                        </Text>
-                      </View>
-                    ) : null}
-
-                    {location.website ? (
-                      <View style={[s.row, s.marginB]}>
-                        <MaterialCommunityIcons name="web" style={s.metaIcon} />
-                        <Text
-                          style={[s.fontSize14, s.link]}
-                          onPress={() =>
-                            WebBrowser.openBrowserAsync(location.website)
-                          }
-                        >
-                          Website
-                        </Text>
-                      </View>
-                    ) : null}
-
-                    {!!opName && (
-                      <View style={[s.row, s.marginB]}>
-                        <MaterialCommunityIcons
-                          name="wrench-outline"
-                          style={s.metaIcon}
-                        />
-                        <Text style={[s.text, s.fontSize15, s.marginRight]}>
-                          Operator:{" "}
-                          <Text
-                            style={opWebsite ? s.link : s.text3}
-                            onPress={
-                              opWebsite
-                                ? () => WebBrowser.openBrowserAsync(opWebsite)
-                                : null
-                            }
-                          >
-                            {opName}
-                          </Text>
-                        </Text>
-                      </View>
-                    )}
-
-                    {location.description ? (
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "top",
-                          paddingRight: 5,
-                        }}
-                      >
-                        <MaterialCommunityIcons
-                          name="notebook-outline"
-                          style={s.metaIcon}
-                        />
-                        <Text
-                          style={[
-                            s.text3,
-                            s.fontSize14,
-                            s.marginB,
-                            s.marginRight,
-                          ]}
-                        >
-                          {location.description}
-                        </Text>
-                      </View>
-                    ) : null}
-                  </ListItem.Accordion>
+                {location.phone ? (
+                  <View style={[s.row, s.marginB]}>
+                    <MaterialIcons name="local-phone" style={s.metaIcon} />
+                    <Text
+                      style={[s.fontSize14, s.link]}
+                      onPress={() => Linking.openURL(`tel://${location.phone}`)}
+                    >
+                      {location.phone}
+                    </Text>
+                  </View>
                 ) : null}
+
+                {location.website ? (
+                  <View style={[s.row, s.marginB]}>
+                    <MaterialCommunityIcons name="web" style={s.metaIcon} />
+                    <Text
+                      style={[s.fontSize14, s.link]}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(location.website)
+                      }
+                    >
+                      Website
+                    </Text>
+                  </View>
+                ) : null}
+
+                {!!opName && (
+                  <View style={[s.row, s.marginB]}>
+                    <MaterialCommunityIcons
+                      name="wrench-outline"
+                      style={s.metaIcon}
+                    />
+                    <Text style={[s.text, s.fontSize15, s.marginRight]}>
+                      Operator:{" "}
+                      <Text
+                        style={opWebsite ? s.link : s.text3}
+                        onPress={
+                          opWebsite
+                            ? () => WebBrowser.openBrowserAsync(opWebsite)
+                            : null
+                        }
+                      >
+                        {opName}
+                      </Text>
+                    </Text>
+                  </View>
+                )}
+
+                {!!location.description && (
+                  <View
+                    style={[
+                      s.marginB,
+                      {
+                        flexDirection: "row",
+                        alignItems: "top",
+                        paddingRight: 5,
+                      },
+                    ]}
+                  >
+                    <MaterialCommunityIcons
+                      name="notebook-outline"
+                      style={s.metaIcon}
+                    />
+                    <ReadMore
+                      text={location.description}
+                      numLines={2}
+                      style={[s.text3, s.fontSize14, s.marginRight]}
+                    />
+                  </View>
+                )}
 
                 {!!location.date_last_updated && (
                   <View style={[s.row, s.marginB]}>

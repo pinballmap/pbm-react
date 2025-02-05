@@ -24,6 +24,7 @@ import CustomMapMarkers from "./CustomMapMarkers";
 import LocationBottomSheet from "./LocationBottomSheet";
 import BackglassImage from "./BackglassImage";
 import MachineComment from "./MachineComment";
+import ReadMore from "./ReadMore";
 
 export {
   LocationCard,
@@ -52,4 +53,5 @@ export {
   LocationBottomSheet,
   BackglassImage,
   MachineComment,
+  ReadMore,
 };
