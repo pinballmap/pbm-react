@@ -173,7 +173,7 @@ const LocationActivity = ({ locationId }) => {
         >
           <MaterialCommunityIcons
             name="newspaper-variant-multiple-outline"
-            color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+            color={theme.theme == "dark" ? theme.purpleLight : theme.purple}
             size={28}
             style={{
               height: 28,

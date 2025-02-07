@@ -487,7 +487,7 @@ const LocationDetails = (props) => {
                     <ReadMore
                       text={location.description}
                       numLines={2}
-                      style={[s.text3, s.fontSize14, s.marginRight]}
+                      style={[s.text3, s.italic, s.fontSize14, s.marginRight]}
                     />
                   </View>
                 )}
@@ -537,7 +537,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"plus-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          theme.theme == "dark"
+                            ? theme.purpleLight
+                            : theme.purple
                         }
                         size={30}
                         style={{
@@ -564,7 +566,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"check-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          theme.theme == "dark"
+                            ? theme.purpleLight
+                            : theme.purple
                         }
                         size={26}
                         style={{
@@ -596,7 +600,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name={"pencil-outline"}
                         color={
-                          theme.theme == "dark" ? theme.purple2 : theme.purple
+                          theme.theme == "dark"
+                            ? theme.purpleLight
+                            : theme.purple
                         }
                         size={30}
                         style={{
