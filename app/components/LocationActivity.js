@@ -237,7 +237,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
     },
     quickButtonText: {
-      color: theme.purpleLight,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.text,
       fontSize: 12,
       lineHeight: 14,
       marginTop: 8,

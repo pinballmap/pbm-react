@@ -454,9 +454,9 @@ const LocationDetails = (props) => {
                       style={s.metaIcon}
                     />
                     <Text style={[s.text, s.fontSize15, s.marginRight]}>
-                      Operator:{" "}
+                      <Text style={s.opacity}>Operator: </Text>
                       <Text
-                        style={opWebsite ? s.link : s.text3}
+                        style={[s.opacity1, opWebsite ? s.link : s.text3]}
                         onPress={
                           opWebsite
                             ? () => WebBrowser.openBrowserAsync(opWebsite)
@@ -486,8 +486,13 @@ const LocationDetails = (props) => {
                     />
                     <ReadMore
                       text={location.description}
-                      numLines={2}
-                      style={[s.text3, s.italic, s.fontSize14, s.marginRight]}
+                      style={[
+                        s.text2,
+                        s.italic,
+                        s.fontSize14,
+                        s.marginRight,
+                        s.opacity,
+                      ]}
                     />
                   </View>
                 )}
@@ -773,6 +778,12 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
+    },
+    opacity: {
+      opacity: 0.8,
+    },
+    opacity1: {
+      opacity: 1,
     },
     staleView: {
       marginVertical: 5,
