@@ -16,7 +16,6 @@ import {
   EvilIcons,
   FontAwesome6,
   FontAwesome5,
-  Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import {
@@ -305,16 +304,27 @@ const MachineDetails = ({
             />
           )}
           {!!ic_eligible && (
-            <View style={{ marginBottom: 10 }}>
+            <View
+              style={{
+                marginBottom: 20,
+                marginHorizontal: 40,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
               <Text
+                maxFontSizeMultiplier={1.1}
                 style={{
-                  textAlign: "center",
-                  fontSize: 12,
+                  textAlign: "right",
+                  fontSize: 13,
                   color: theme.text3,
-                  marginBottom: -10,
+                  width: "40%",
+                  marginRight: 20,
                 }}
               >
-                Click to toggle Stern Insider Connected status
+                Toggle Stern Insider Connected status
               </Text>
               <PbmButton
                 title={`${
@@ -336,27 +346,32 @@ const MachineDetails = ({
                 buttonStyle={
                   ic_enabled === null ? s.nullIC : ic_enabled ? s.yesIC : s.noIC
                 }
+                containerStyle={{ width: 180 }}
                 icon={
                   ic_enabled === null ? (
                     <FontAwesome5
                       name="question-circle"
-                      size={24}
+                      size={28}
                       color="#665b50"
                       style={{ marginRight: 8 }}
                     />
                   ) : ic_enabled ? (
-                    <Ionicons
-                      name="qr-code"
-                      size={22}
-                      color="#66017b"
-                      style={{ marginRight: 8 }}
+                    <Image
+                      source={require("../assets/images/Insider_Connected_Light.png")}
+                      style={{
+                        width: 38,
+                        height: 38,
+                        // Translation accounts for the space on the right and small TM symbol so the card feels balanced
+                        transform: [{ translateX: -8 }],
+                      }}
+                      resizeMode="contain"
                     />
                   ) : (
                     <MaterialCommunityIcons
                       name="close-circle-outline"
-                      size={24}
+                      size={34}
                       color="#533a3a"
-                      style={{ marginRight: 8 }}
+                      style={{ transform: [{ translateX: -8 }] }}
                     />
                   )
                 }
