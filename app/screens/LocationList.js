@@ -60,7 +60,9 @@ export class LocationList extends Component {
         });
       case 2:
         return this.setState({
-          locations: locations.sort((a, b) => b.num_machines - a.num_machines),
+          locations: locations.sort(
+            (a, b) => b.machine_count - a.machine_count,
+          ),
         });
       case 3:
         return this.setState({
@@ -158,7 +160,7 @@ export class LocationList extends Component {
                       machines={item.machine_names_first}
                       navigation={this.props.navigation}
                       id={item.id}
-                      numMachines={item.num_machines}
+                      numMachines={item.machine_count}
                     />
                   )}
                   keyExtractor={(item, index) => `list-item-${index}`}

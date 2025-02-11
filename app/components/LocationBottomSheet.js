@@ -31,7 +31,7 @@ const LocationBottomSheet = React.memo(
       state,
       zip,
       machine_names_first,
-      num_machines,
+      machine_count,
       street,
       location_type_id,
       lat,
@@ -98,9 +98,9 @@ const LocationBottomSheet = React.memo(
                         </Text>
                       );
                     })}
-                    {num_machines > NUM_MACHINES_TO_SHOW ? (
+                    {machine_count > NUM_MACHINES_TO_SHOW ? (
                       <Text style={[s.plus, s.italic]}>{`  ...plus ${
-                        num_machines - NUM_MACHINES_TO_SHOW
+                        machine_count - NUM_MACHINES_TO_SHOW
                       } more!`}</Text>
                     ) : null}
                   </Text>

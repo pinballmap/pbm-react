@@ -55,15 +55,15 @@ export const getMapLocations = createSelector(
   [mapLocations, faveLocations, selectedMapLocation],
   (locations = [], faveLocations = [], selectedMapLocation) => {
     return locations
-      .sort((a, b) => a.num_machines - b.num_machines)
+      .sort((a, b) => a.machine_count - b.machine_count)
       .map((loc, index) => {
         const getIcon = () => {
           if (loc.id === selectedMapLocation) {
-            return loc.num_machines < 10 ? "oneSelected" : "moreOneSelected";
+            return loc.machine_count < 10 ? "oneSelected" : "moreOneSelected";
           }
           const isFave =
             faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
-          return loc.num_machines < 10
+          return loc.machine_count < 10
             ? `one${isFave ? "Heart" : ""}`
             : `moreOne${isFave ? "Heart" : ""}`;
         };
@@ -87,7 +87,7 @@ export const getMapLocations = createSelector(
           properties: {
             order: index,
             textOrder: locations.length - index,
-            num_machines: loc.num_machines,
+            machine_count: loc.machine_count,
             name: loc.name,
             icon: getIcon(),
             textColor: getTextColor(),

@@ -86,7 +86,7 @@ export default (state = initialState, action) => {
           return {
             ...loc,
             updated_at: moment.utc().format(),
-            num_machines: loc.num_machines - 1,
+            machine_count: loc.machine_count - 1,
             machine_ids,
           };
         }
@@ -106,7 +106,7 @@ export default (state = initialState, action) => {
           return {
             ...loc,
             updated_at: moment.utc().format(),
-            num_machines: loc.num_machines + 1,
+            machine_count: loc.machine_count + 1,
             machine_ids,
           };
         }

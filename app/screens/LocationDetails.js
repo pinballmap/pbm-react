@@ -169,7 +169,7 @@ const LocationDetails = (props) => {
     iconImage: ["get", "icon"],
     iconSize: 0.5,
     textSize: 20,
-    textField: ["get", "num_machines"],
+    textField: ["get", "machine_count"],
     textColor: "#fdebfc",
     textOffset: [0, 0.05],
     textFont: ["Nunito Sans ExtraBold"],
@@ -182,7 +182,7 @@ const LocationDetails = (props) => {
         id: location.id,
         properties: {
           icon: "moreOne",
-          num_machines: location.num_machines,
+          machine_count: location.machine_count,
         },
         geometry: {
           type: "Point",
@@ -473,6 +473,7 @@ const LocationDetails = (props) => {
                   <View
                     style={[
                       s.marginB,
+                      s.marginRight,
                       {
                         flexDirection: "row",
                         alignItems: "top",
@@ -486,13 +487,7 @@ const LocationDetails = (props) => {
                     />
                     <ReadMore
                       text={location.description}
-                      style={[
-                        s.text2,
-                        s.italic,
-                        s.fontSize14,
-                        s.marginRight,
-                        s.opacity,
-                      ]}
+                      style={[s.text2, s.italic, s.fontSize14, s.opacity]}
                     />
                   </View>
                 )}
