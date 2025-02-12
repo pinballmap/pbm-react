@@ -307,7 +307,8 @@ const MachineDetails = ({
             <View
               style={{
                 marginBottom: 20,
-                marginHorizontal: 40,
+                marginRight: 30,
+                marginLeft: 20,
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-around",
@@ -315,13 +316,13 @@ const MachineDetails = ({
               }}
             >
               <Text
-                maxFontSizeMultiplier={1.1}
+                maxFontSizeMultiplier={1}
                 style={{
                   textAlign: "right",
-                  fontSize: 13,
+                  fontSize: 14,
                   color: theme.text3,
-                  width: "40%",
-                  marginRight: 20,
+                  width: deviceWidth - 260,
+                  marginRight: 10,
                 }}
               >
                 Toggle Stern Insider Connected status
@@ -353,15 +354,14 @@ const MachineDetails = ({
                       name="question-circle"
                       size={28}
                       color="#665b50"
-                      style={{ marginRight: 8 }}
+                      style={{ transform: [{ translateX: -12 }] }}
                     />
                   ) : ic_enabled ? (
                     <Image
                       source={require("../assets/images/Insider_Connected_Light.png")}
                       style={{
-                        width: 38,
-                        height: 38,
-                        // Translation accounts for the space on the right and small TM symbol so the card feels balanced
+                        width: 55,
+                        height: 55,
                         transform: [{ translateX: -8 }],
                       }}
                       resizeMode="contain"
@@ -716,16 +716,19 @@ const getStyles = (theme) =>
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e4dddd",
+      paddingHorizontal: 30,
     },
     yesIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#e3fae5",
+      paddingHorizontal: 30,
     },
     noIC: {
       width: "100%",
       borderRadius: 25,
       backgroundColor: "#f0d8d8",
+      paddingHorizontal: 30,
     },
     italic: {
       fontFamily: "Nunito-Italic",

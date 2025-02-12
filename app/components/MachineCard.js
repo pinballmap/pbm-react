@@ -80,7 +80,6 @@ const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
               style={{
                 width: 55,
                 height: 55,
-                // Translation accounts for the space on the right and small TM symbol so the card feels balanced
                 transform: [{ translateX: 10 }],
               }}
               resizeMode="contain"

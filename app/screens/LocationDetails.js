@@ -493,7 +493,7 @@ const LocationDetails = (props) => {
                 )}
 
                 {!!location.date_last_updated && (
-                  <View style={[s.row, s.marginB]}>
+                  <View style={[s.row, s.marginB, s.marginRight]}>
                     <MaterialCommunityIcons
                       name="clock-time-four-outline"
                       style={s.metaIcon}
