@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Image, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
+import { Image } from "expo-image";
+
 const moment = require("moment");
 
 const insiderConnectedImage = {
@@ -82,7 +84,7 @@ const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
                 height: 55,
                 transform: [{ translateX: 10 }],
               }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </View>
         )}

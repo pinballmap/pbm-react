@@ -364,7 +364,7 @@ const MachineDetails = ({
                         height: 55,
                         transform: [{ translateX: -8 }],
                       }}
-                      resizeMode="contain"
+                      contentFit="contain"
                     />
                   ) : (
                     <MaterialCommunityIcons
