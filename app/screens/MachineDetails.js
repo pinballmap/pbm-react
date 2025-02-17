@@ -316,7 +316,7 @@ const MachineDetails = ({
               }}
             >
               <Text
-                maxFontSizeMultiplier={1}
+                maxFontSizeMultiplier={1.2}
                 style={{
                   textAlign: "right",
                   fontSize: 14,
@@ -328,9 +328,10 @@ const MachineDetails = ({
                 Toggle Stern Insider Connected status
               </Text>
               <PbmButton
+                titleProps={{ maxFontSizeMultiplier: 1.3 }}
                 title={`${
                   ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                } Insider Connected`}
+                } Insider\nConnected`}
                 onPress={
                   loggedIn
                     ? () => updateIcEnabled(curLmx.id)
@@ -344,17 +345,22 @@ const MachineDetails = ({
                       ? s.yesICTitle
                       : s.noICTitle,
                 ]}
-                buttonStyle={
-                  ic_enabled === null ? s.nullIC : ic_enabled ? s.yesIC : s.noIC
-                }
-                containerStyle={{ width: 180 }}
+                buttonStyle={[
+                  s.buttonStyle,
+                  ic_enabled === null
+                    ? s.nullIC
+                    : ic_enabled
+                      ? s.yesIC
+                      : s.noIC,
+                ]}
+                containerStyle={{ width: 180, height: 65 }}
                 icon={
                   ic_enabled === null ? (
                     <FontAwesome5
                       name="question-circle"
                       size={28}
                       color="#665b50"
-                      style={{ transform: [{ translateX: -12 }] }}
+                      style={{ width: 55 }}
                     />
                   ) : ic_enabled ? (
                     <Image
@@ -362,16 +368,15 @@ const MachineDetails = ({
                       style={{
                         width: 55,
                         height: 55,
-                        transform: [{ translateX: -8 }],
                       }}
                       contentFit="contain"
                     />
                   ) : (
                     <MaterialCommunityIcons
-                      name="close-circle-outline"
+                      name="circle-off-outline"
                       size={34}
                       color="#533a3a"
-                      style={{ transform: [{ translateX: -8 }] }}
+                      style={{ width: 55 }}
                     />
                   )
                 }
@@ -702,6 +707,7 @@ const getStyles = (theme) =>
     titleStyle: {
       fontSize: 16,
       fontFamily: "Nunito-Bold",
+      marginHorizontal: "auto",
     },
     nullICTitle: {
       color: "#665b50",
@@ -712,23 +718,19 @@ const getStyles = (theme) =>
     noICTitle: {
       color: "#533a3a",
     },
-    nullIC: {
+    buttonStyle: {
       width: "100%",
       borderRadius: 25,
+      height: 65,
+    },
+    nullIC: {
       backgroundColor: "#e4dddd",
-      paddingHorizontal: 30,
     },
     yesIC: {
-      width: "100%",
-      borderRadius: 25,
       backgroundColor: "#e3fae5",
-      paddingHorizontal: 30,
     },
     noIC: {
-      width: "100%",
-      borderRadius: 25,
       backgroundColor: "#f0d8d8",
-      paddingHorizontal: 30,
     },
     italic: {
       fontFamily: "Nunito-Italic",

@@ -4,6 +4,7 @@ import { Button } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 
 const PbmButton = ({
+  titleProps,
   title,
   accessibilityLabel,
   buttonStyle,
@@ -19,6 +20,7 @@ const PbmButton = ({
 
   return (
     <Button
+      titleProps={titleProps}
       title={title}
       onPress={onPress}
       accessibilityLabel={accessibilityLabel}
