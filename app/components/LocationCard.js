@@ -56,7 +56,7 @@ const LocationCard = ({
         onPress={() =>
           navigation.navigate("LocationDetails", {
             id,
-            ...(saved && { refreshMap: true }),
+            ...(saved && { refreshMap: false }),
           })
         }
       >
