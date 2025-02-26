@@ -12,7 +12,7 @@
     "@redux-devtools/extension": "^3.3.0",
     "@rneui/base": "^4.0.0-rc.6",
     "@rneui/themed": "^4.0.0-rc.6",
-    "@rnmapbox/maps": "^10.1.35",
+    "@rnmapbox/maps": "^10.1.37",
     "@sentry/react-native": "~6.3.0",
     "@shopify/flash-list": "1.7.3",
     "enzyme-to-json": "^3.3.4",

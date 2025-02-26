@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.27
+
+February 25, 2025
+
+- Added a Setting to display a Stern Insider Connected icon next to machines that have it enabled on the location details screen. (Thank you [mikedg1](https://github.com/mikedg1))
+- Design tweak to location details screen: added a "show more" button for long location descriptions.
+- Bug fix.
+
 ### 5.3.26
 
 December 21, 2024
@@ -116,7 +124,7 @@ March 27, 2024
 
 - Show backglass image (if available) when adding a machine to location, to try and help users know they have the right version.
 - Include a "scroll to top" button on the location details screen.
-- Show "Added on" date for machines on the location details screen. (Thank you [@unitof](https://github.com/unitof))
+- Show "Added on" date for machines on the location details screen. (Thank you [unitof](https://github.com/unitof))
 - Fixed some issues with text input design.
 - Bug fix for when a City that no longer has locations is in your Recent Search History.
 
@@ -124,7 +132,7 @@ March 27, 2024
 
 February 23, 2024
 
-- Fixed minor bug on About page (Thank you [@ErikGraciosa](https://github.com/ErikGraciosa)).
+- Fixed minor bug on About page (Thank you [ErikGraciosa](https://github.com/ErikGraciosa)).
 - A couple small design tweaks and package updates.
 
 ### 5.3.11
