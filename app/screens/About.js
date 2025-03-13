@@ -157,16 +157,27 @@ const About = ({ navigation, appAlert }) => {
             />
           </Pressable>
           <Text style={s.text}>
-            {`Follow `}
+            {`Follow us on `}
             <Text
               style={s.textLink}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://fosstodon.org/@pinballmap")
               }
             >
-              @pinballmap
+              Mastodon
             </Text>
-            {` on Mastodon.`}
+            {` or `}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://bsky.app/profile/pinballmap.com",
+                )
+              }
+            >
+              Bluesky
+            </Text>
+            {`.`}
           </Text>
           <Text style={s.text}>
             {`Join `}
@@ -290,7 +301,7 @@ const About = ({ navigation, appAlert }) => {
                 )
               }
             >{`Stern Pinball`}</Text>{" "}
-            uses our data for their machine locator. Out API is also used by{" "}
+            uses our data for their machine locator. Our API is also used by{" "}
             <Text
               style={s.textLink}
               onPress={() =>
