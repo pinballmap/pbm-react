@@ -84,7 +84,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             >{`Check the FAQ first for common questions.`}</Text>
             <Text
               style={[s.text, s.boldFont, s.pinkText]}
-            >{`Do not tell us that a location closed or are all the machines gone!`}</Text>
+            >{`Do not tell us that a location closed or all the machines are gone!`}</Text>
             <Text style={[s.subText]}>
               {`Instead, just `}
               <Text
