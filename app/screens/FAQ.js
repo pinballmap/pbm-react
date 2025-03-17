@@ -127,7 +127,7 @@ const FAQ = ({ navigation }) => {
             >{`No. If a place is seasonal or closed due to restrictions, and is expected to re-open, please do not remove the machines from it. Just edit the location description to say it's temporarily closed. You can also make sure the phone number is listed so that people can easily call and check on the status.`}</Text>
             <Text
               style={s.bold}
-            >{`The location name has changed. Can I change it?`}</Text>
+            >{`The name of this location has changed. Can I change it?`}</Text>
             <Text style={s.text}>
               {`Only administrators can edit location names. Please `}
               <Text
@@ -184,7 +184,7 @@ const FAQ = ({ navigation }) => {
             >{`Can I add my private collection to the map?`}</Text>
             <Text
               style={s.text}
-            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members. We also exclude short-term house rentals.`}</Text>
+            >{`No. Pinball Map only lists publicly-accessible locations. The definition of "public" varies - some places have entrance fees, or limited hours. But overall, the location has to be inclusive and accessible. So please don't submit your house or a private club that excludes people from becoming members. We don't list distributors, either, unless there's also an arcade component to the place. We also exclude short-term house rentals.`}</Text>
             <Text
               style={s.bold}
             >{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
@@ -207,9 +207,7 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 The location you submitted isn't open yet. Many locations are submitted by the business owners themselves (and people helping out those businesses), and we are honored that they think of us when they are prepping to launch their business. But guess who are also eager folks? Pinball players! So if a location gets added to the map before it's open to the world, people will drive all the way there, discover an un-opened business, and then... you guessed it! They then yell at us about it. It doesn't matter if there's a location description saying "Opens on May 5." People do not read (except you).\n\n`}
 
-              {`\u2022 Your submission didn't utilize the "machine autocomplete". In the "machines" field of the submission form, you gotta start typing a machine name, and then select the correct machine from the list that pops up (note, this magically adds a comma after the machine name). When we approve the location, our system can correctly read the machine name, match it to a machine in our database, and successfully add it to the location. If instead you type in a machine name, then it's not formatted in a way that will match to the database. The end result is that we'll approve the location and the location will have zero machines (unless the admin happens to notice that the machine list is weird and then manually adds the machine after it's on the map), and then a week later the location will get auto-deleted from the map.\n\n`}
-
-              {`\u2022 The location you submitted is a private residence. Or private in some other way.`}
+              {`\u2022 The location you submitted is a private residence. Or private in some other way. See the question above this.`}
             </Text>
             <Text style={s.category}>Operators</Text>
             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
@@ -234,7 +232,7 @@ const FAQ = ({ navigation }) => {
               style={s.bold}
             >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
-              {`The short answer is that we can't disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave "general" machine comments and not "specific" comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.\n\n`}
+              {`The short answer is that we can't disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave very specific types of comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.\n\n`}
               {`In some circumstances, comments may be removed and/or accounts can be disabled (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.\n\n`}
               <Text style={{ fontFamily: "Nunito-Bold" }}>
                 To users leaving comments:
@@ -243,8 +241,19 @@ const FAQ = ({ navigation }) => {
               <Text style={{ fontFamily: "Nunito-Bold" }}>To operators:</Text>{" "}
               {`A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. Pinball Map does not make you do this.\n\n`}
               {`According to nearly everyone, it is really valuable to see a history of comments (thing is broken, thing is fixed, etc.). Everyone understands that machines break all the time. Seeing a dialog demonstrates that upkeep is occurring. The "latest comment" noting a problem is not particularly important to users and will not drive them away. Some operators choose to delete machines and re-add them in order to clear out comments rather than simply responding to a comment. This is bad practice - both for your business and for the map - and can result in your account being disabled. It makes it seem like the operator is whitewashing comments rather than fixing issues. Users definitely notice this, and we strongly discourage it.\n\n`}
-              {`We regularly get messages from operators and owners demanding that a user be banned from leaving comments on their location. Most often, the comments in question are not slanderous, but have some sass or "off-topic" messages. These requests are a big headache for us, especially because they do not warrant any action toward the user. So please, help us! Be mindful that operators are very sensitive about the content on this site, and they take it out on us.`}
             </Text>
+            <Text
+              style={s.bold}
+            >{`Can you make it so only the operator can update a location's line-up of machines?`}</Text>
+            <Text
+              style={s.text}
+            >{`No. It's not ideal to limit the control of a location listing to a small group of people. According to the evidence, that would seriously degrade the quantity of map updates, resulting in an out of date map. The purpose of this map is for all users to have equal power to update the map, and that's what has helped it flourish.`}</Text>
+            <Text
+              style={s.bold}
+            >{`After a machine issue has been resolved, can you remove the machine comment that mentioned the issue?`}</Text>
+            <Text
+              style={s.text}
+            >{`No. It may seem "bad" for there to be a public record of problems with your machines, but it's actually good! All machines have problems. What we're showing here is a record of you fixing the machines! Users love that, and we think operators should, too!`}</Text>
             <Text style={s.category}>Users</Text>
             <Text
               style={s.bold}
@@ -293,22 +302,24 @@ const FAQ = ({ navigation }) => {
               </Text>
               .
             </Text>
-            <Text style={s.bold}>{`Why was my comment removed?`}</Text>
-            <Text style={s.text}>
-              {`Our administrators may deem your machine or location comment to be inappropriate because:\n\n`}
-
-              {`\u2022 It contains a personal attack.\n\n`}
-
-              {`\u2022 It isn't relevant (for example, promoting a tournament in a machine comment) or constructive.\n\n`}
-
-              {`\u2022 It is offensive.`}
-            </Text>
             <Text
               style={s.bold}
             >{`I left a machine comment, but I made a typo. Or, I just woke up and I regret a comment I made last night. Can I edit or delete my comment?`}</Text>
             <Text style={s.text}>
               {`Yes. Click the machine and below your comment you'll see "edit" and "delete" buttons.\n\n`}
               {`Note that recent/location activity feeds contain a log of the original machine comments. Those are public and cannot be edited or deleted (and kind of serve as a deterrent to people leaving troublesome comments that they intend to delete later).`}
+            </Text>
+            <Text style={s.bold}>{`Why was my comment removed?`}</Text>
+            <Text style={s.text}>
+              {`The machine comment field is for machine comments. These comments are useful for operators to be informed of machine issues, and for other users to understand the general condition of machines. When comments stray, the site becomes less useful to both operators and users. Pinball Map administrators may remove your comment as a means of maintaining the site's goals and value.\n\n`}
+              {`For example, if you wrote a comment about a great flavor of potato chips you just discovered, it would be removed (that's not a machine comment and isn't appropriate for this context). Likewise, if you wrote about an upcoming tournament, or treated the machine comments section like a message board or social media site (responding to other users in an off-topic manner for the sake of dialog), or left general trash-talking of operators - those are likely to be removed (those are not a machine comments, detract from the goals, and aren't appropriate for this context). Make sense?\n\n`}
+              {`Additionally, Pinball Map administrators may deem your machine comment (or location description) to be inappropriate because:\n\n`}
+
+              {`\u2022 It is some form of spam. Spam can be defined as writing the same comment on many machines.\n\n`}
+
+              {`\u2022 It contains a personal attack.\n\n`}
+
+              {`\u2022 It is offensive.`}
             </Text>
             <Text style={s.bold}>{`Why was my account disabled?`}</Text>
             <Text style={s.text}>
