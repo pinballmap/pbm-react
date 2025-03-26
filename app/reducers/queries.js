@@ -28,7 +28,12 @@ export const initialState = {
   locationType: "",
   numMachines: 0,
   selectedOperator: "",
-  selectedActivities: [],
+  selectedActivities: [
+    "new_lmx",
+    "remove_machine",
+    "new_condition",
+    "confirm_location",
+  ],
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
