@@ -8,12 +8,41 @@ import { setSelectedMapLocation } from "../actions";
 import { useDispatch } from "react-redux";
 
 const iconStyles = {
-  iconImage: ["get", "icon"],
+  iconImage: [
+    "step",
+    ["zoom"],
+    [
+      "case",
+      ["<=", ["get", "machine_count"], 1],
+      "marker_z_1",
+      [
+        "case",
+        ["<=", ["get", "machine_count"], 9],
+        "marker_z_2",
+        "marker_z_10",
+      ],
+    ],
+    8,
+    ["get", "icon"],
+  ],
   iconAllowOverlap: true,
-  iconSize: ["interpolate", ["linear"], ["zoom"], 11, 0.44, 24, 0.6],
+  iconSize: [
+    "interpolate",
+    ["linear"],
+    ["zoom"],
+    1,
+    0.14,
+    4,
+    0.3,
+    9,
+    0.6,
+    22,
+    0.8,
+  ],
+
   textSize: ["interpolate", ["linear"], ["zoom"], 11, 20, 24, 26],
   symbolSortKey: ["get", "order"],
-  textField: ["get", "machine_count"],
+  textField: ["step", ["zoom"], "", 8, ["get", "machine_count"]],
   textAllowOverlap: true,
   textColor: ["get", "textColor"],
   textOffset: [0, 0.05],
@@ -64,12 +93,17 @@ const CustomMapMarkers = React.memo(() => {
       <Mapbox.SymbolLayer id={"symbol-id1"} style={iconStyles} />
       <Mapbox.Images
         images={{
-          one: require("../assets/marker-one.png"),
-          moreOne: require("../assets/marker-more.png"),
-          oneHeart: require("../assets/marker-one-heart.png"),
-          moreOneHeart: require("../assets/marker-more-heart.png"),
-          oneSelected: require("../assets/marker-one-selected.png"),
-          moreOneSelected: require("../assets/marker-more-selected.png"),
+          marker_1: require("../assets/marker-1.png"),
+          marker_2: require("../assets/marker-2.png"),
+          marker_2Heart: require("../assets/marker-2Heart.png"),
+          marker_2_1_sel: require("../assets/marker-2-1-sel.png"),
+          marker_10: require("../assets/marker-10.png"),
+          marker_10Heart: require("../assets/marker-10Heart.png"),
+          marker_10_sel: require("../assets/marker-10-sel.png"),
+          marker_z_1: require("../assets/marker-z-1.png"),
+          marker_z_2: require("../assets/marker-z-2.png"),
+          marker_z_10: require("../assets/marker-z-10.png"),
+          marker_z_sel: require("../assets/marker-z-sel.png"),
         }}
       />
       <Mapbox.SymbolLayer
