@@ -59,22 +59,30 @@ export const getMapLocations = createSelector(
       .map((loc, index) => {
         const getIcon = () => {
           if (loc.id === selectedMapLocation) {
-            return loc.machine_count < 10 ? "oneSelected" : "moreOneSelected";
-          }
-          const isFave =
-            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
-          return loc.machine_count < 10
-            ? `one${isFave ? "Heart" : ""}`
-            : `moreOne${isFave ? "Heart" : ""}`;
-        };
-        const getTextColor = () => {
-          if (loc.id === selectedMapLocation) {
-            return "#fdebfc";
+            return loc.machine_count < 10 ? "marker_2_1_sel" : "marker_10_sel";
           }
           const isFave =
             faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
 
-          if (isFave) {
+          if (loc.machine_count > 9) {
+            return `marker_10${isFave ? "Heart" : ""}`;
+          } else if (isFave) {
+            return `marker_2Heart`;
+          } else if (loc.machine_count > 1) {
+            return `marker_2`;
+          } else {
+            return `marker_1`;
+          }
+        };
+        const getTextColor = () => {
+          const isFave =
+            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
+
+          if (
+            loc.id === selectedMapLocation ||
+            loc.machine_count > 1 ||
+            isFave
+          ) {
             return "#fdebfc";
           }
 
