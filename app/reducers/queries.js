@@ -28,12 +28,7 @@ export const initialState = {
   locationType: "",
   numMachines: 0,
   selectedOperator: "",
-  selectedActivities: [
-    "new_lmx",
-    "remove_machine",
-    "new_condition",
-    "confirm_location",
-  ],
+  selectedActivities: [],
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
@@ -122,16 +117,24 @@ export default (state = initialState, action) => {
         viewByFavoriteLocations: false,
         machineGroupId: undefined,
       };
-    case SET_SELECTED_ACTIVITY_FILTER:
+    case SET_SELECTED_ACTIVITY_FILTER: {
+      AsyncStorage.setItem(
+        "selectedActivities",
+        JSON.stringify(action.selectedActivities),
+      );
       return {
         ...state,
         selectedActivities: action.selectedActivities,
       };
-    case CLEAR_ACTIVITY_FILTER:
+    }
+    case CLEAR_ACTIVITY_FILTER: {
+      AsyncStorage.setItem("selectedActivities", JSON.stringify([]));
+
       return {
         ...state,
         selectedActivities: [],
       };
+    }
     case SET_MAX_ZOOM:
       return {
         ...state,

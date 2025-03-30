@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { StyleSheet, Text, View } from "react-native";
@@ -8,6 +8,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
+import { retrieveItem } from "../config/utils";
 
 const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +17,15 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const [showModal, setShowModal] = useState(false);
 
   const { selectedActivities = [] } = query;
+
+  useEffect(() => {
+    const getSelectedActivities = async () => {
+      const selectedActivities =
+        (await retrieveItem("selectedActivities")) || [];
+      setSelectedActivitiesFilter(selectedActivities);
+    };
+    getSelectedActivities();
+  }, []);
 
   const setRecentActivitiesFilter = (activity) => {
     const origLength = selectedActivities.length;

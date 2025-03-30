@@ -26,7 +26,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [maxDistance, setMaxDistance] = useState(30);
   const [btnIdx, setBtnIdx] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
-  const { selectedActivities, swLat, swLon, neLat, neLon } = query;
+  const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
 
   useEffect(() => {
