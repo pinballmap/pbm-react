@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.28
+
+March 31, 2025
+
+- Made it so the filters you apply to the Activity screen are remembered each time you revisit that screen.
+- Fixed some typos.
+
 ### 5.3.27
 
 February 25, 2025
