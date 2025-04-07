@@ -15,9 +15,15 @@ import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { loginLater } from "../actions/user_actions";
 import { postData } from "../config/request";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import {
+  EvilIcons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+// import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+// import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ConfirmationModal, PbmButton } from "../components";
+import * as WebBrowser from "expo-web-browser";
 
 let deviceHeight = Dimensions.get("window").height;
 
@@ -244,6 +250,17 @@ const Signup = ({ loginLater, navigation }) => {
               disabledStyle={s.disabledStyle}
               disabledTitleStyle={s.disabledTitleStyle}
             />
+            <View style={[s.externalLinkContainer, s.marginB10]}>
+              <Text
+                style={s.externalLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
+                }
+              >
+                View our privacy policy
+              </Text>
+              <EvilIcons name="external-link" style={s.externalIcon} />
+            </View>
             <Button
               onPress={() => navigation.navigate("Login")}
               titleStyle={s.textLink}
@@ -358,6 +375,25 @@ const getStyles = (theme) =>
       right: -20,
       top: -20,
       color: theme.red2,
+    },
+    externalLink: {
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
+      color: theme.purple2,
+      textAlign: "center",
+    },
+    externalLinkContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginHorizontal: 20,
+    },
+    externalIcon: {
+      fontSize: 24,
+      color: theme.text2,
+    },
+    marginB10: {
+      marginBottom: 20,
     },
   });
 
