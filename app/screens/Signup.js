@@ -180,6 +180,7 @@ const Signup = ({ loginLater, navigation }) => {
               errorStyle={{ color: "red" }}
               errorMessage={usernameError}
               inputContainerStyle={s.inputBox}
+              containerStyle={s.containerStyle}
               inputStyle={s.inputText}
               autoCapitalize="none"
               autoCorrect={false}
@@ -197,6 +198,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={email}
               errorStyle={{ color: "red" }}
               errorMessage={emailError}
+              containerStyle={s.containerStyle}
               inputContainerStyle={s.inputBox}
               inputStyle={s.inputText}
               autoCapitalize="none"
@@ -213,6 +215,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={password}
               errorStyle={{ color: "red" }}
               errorMessage={passwordError}
+              containerStyle={s.containerStyle}
               inputContainerStyle={s.inputBox}
               inputStyle={s.inputText}
               secureTextEntry={true}
@@ -231,6 +234,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={confirm_password}
               errorStyle={{ color: "red" }}
               errorMessage={confirm_passwordError}
+              containerStyle={s.containerStyle}
               inputContainerStyle={s.inputBox}
               inputStyle={s.inputText}
               secureTextEntry={true}
@@ -250,7 +254,7 @@ const Signup = ({ loginLater, navigation }) => {
               disabledStyle={s.disabledStyle}
               disabledTitleStyle={s.disabledTitleStyle}
             />
-            <View style={[s.externalLinkContainer, s.marginB10]}>
+            <View style={[s.externalLinkContainer, s.marginB25]}>
               <Text
                 style={s.externalLink}
                 onPress={() =>
@@ -333,6 +337,9 @@ const getStyles = (theme) =>
       marginBottom: 5,
       paddingLeft: 10,
     },
+    containerStyle: {
+      height: 75,
+    },
     inputText: {
       color: theme.text,
       fontFamily: "Nunito-Regular",
@@ -392,8 +399,8 @@ const getStyles = (theme) =>
       fontSize: 24,
       color: theme.text2,
     },
-    marginB10: {
-      marginBottom: 20,
+    marginB25: {
+      marginBottom: 25,
     },
   });
 
