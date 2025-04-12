@@ -17,11 +17,10 @@ import { loginLater } from "../actions/user_actions";
 import { postData } from "../config/request";
 import {
   EvilIcons,
+  FontAwesome6,
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-// import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-// import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ConfirmationModal, PbmButton } from "../components";
 import * as WebBrowser from "expo-web-browser";
 
@@ -174,7 +173,9 @@ const Signup = ({ loginLater, navigation }) => {
             <Input
               placeholder="Username"
               placeholderTextColor={"#9b9ebb"}
-              leftIcon={<MaterialIcons name="face" style={s.iconStyle} />}
+              leftIcon={
+                <FontAwesome6 name="face-grin-wide" style={s.iconStyle} />
+              }
               onChangeText={(username) => setUsername(username)}
               value={username}
               errorStyle={{ color: "red" }}

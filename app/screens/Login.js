@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import {
   getFavoriteLocations,
   login,
@@ -112,7 +112,10 @@ class Login extends Component {
                       placeholder="Username or Email"
                       placeholderTextColor={"#9b9ebb"}
                       leftIcon={
-                        <MaterialIcons name="face" style={s.iconStyle} />
+                        <FontAwesome6
+                          name="face-grin-wide"
+                          style={s.iconStyle}
+                        />
                       }
                       onChangeText={(login) => this.setState({ login })}
                       value={this.state.login}

@@ -239,9 +239,9 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-circle-outline"
-              size={28}
+            <FontAwesome6
+              name="face-grin-wide"
+              size={25}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
