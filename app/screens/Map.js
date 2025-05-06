@@ -408,31 +408,34 @@ const Map = ({
           icon={<Ionicons name="close-circle" style={s.closeIcon} />}
         />
       ) : null}
-      {showUpdateSearch ? (
-        <Pressable
-          style={({ pressed }) => [
-            { top: topMargin + 60 },
-            s.containerStyle,
-            s.updateContainerStyle,
-            pressed ? s.pressed : s.notPressed,
-          ]}
-          onPress={refreshResults}
-        >
-          {({ pressed }) => (
-            <Text style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}>
-              Refresh this area
-            </Text>
-          )}
-        </Pressable>
-      ) : null}
-      {!!selectedLocation && (
-        <LocationBottomSheet
-          navigation={navigation}
-          location={selectedLocation}
-          setToCurrentBounds={setToCurrentBounds}
-          triggerUpdate={(bounds) => dispatch(updateBounds(bounds))}
-        />
-      )}
+      <View style={s.bottomContainer}>
+        {showUpdateSearch ? (
+          <Pressable
+            style={({ pressed }) => [
+              s.containerStyle,
+              s.updateContainerStyle,
+              pressed ? s.pressed : s.notPressed,
+            ]}
+            onPress={refreshResults}
+          >
+            {({ pressed }) => (
+              <Text
+                style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}
+              >
+                Refresh this area
+              </Text>
+            )}
+          </Pressable>
+        ) : null}
+        {!!selectedLocation && (
+          <LocationBottomSheet
+            navigation={navigation}
+            location={selectedLocation}
+            setToCurrentBounds={setToCurrentBounds}
+            triggerUpdate={(bounds) => dispatch(updateBounds(bounds))}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -496,9 +499,15 @@ const getStyles = (theme) =>
       left: 15,
       borderRadius: 25,
     },
-    updateContainerStyle: {
+    bottomContainer: {
       position: "absolute",
-      right: 15,
+      bottom: 0,
+      width: "100%",
+      alignSelf: "center",
+    },
+    updateContainerStyle: {
+      position: "relative",
+      marginBottom: 15,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,

@@ -164,7 +164,7 @@ const LocationBottomSheet = React.memo(
 const getStyles = (theme) =>
   StyleSheet.create({
     container: {
-      position: "absolute",
+      position: "relative",
       bottom: 0,
       alignSelf: "center",
       justifyContent: "center",
