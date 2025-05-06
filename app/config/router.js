@@ -240,7 +240,7 @@ function BottomTabNavigator() {
           ),
           tabBarIcon: ({ focused }) => (
             <FontAwesome6
-              name="face-grin-wide"
+              name="face-grin-beam"
               size={25}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />

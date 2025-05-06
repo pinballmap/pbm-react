@@ -174,7 +174,7 @@ const Signup = ({ loginLater, navigation }) => {
               placeholder="Username"
               placeholderTextColor={"#9b9ebb"}
               leftIcon={
-                <FontAwesome6 name="face-grin-wide" style={s.iconStyle} />
+                <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
               }
               onChangeText={(username) => setUsername(username)}
               value={username}

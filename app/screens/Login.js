@@ -113,7 +113,7 @@ class Login extends Component {
                       placeholderTextColor={"#9b9ebb"}
                       leftIcon={
                         <FontAwesome6
-                          name="face-grin-wide"
+                          name="face-grin-beam"
                           style={s.iconStyle}
                         />
                       }
