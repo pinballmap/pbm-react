@@ -30,7 +30,7 @@ const textFloat = (theme) => ({
     14,
     ["get", "name"],
   ],
-  textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 24],
+  textSize: ["interpolate", ["linear"], ["zoom"], 11, 15, 24, 24],
   textJustify: "center",
   textVariableAnchor: ["bottom", "top", "right", "left"],
   textRadialOffset: 1.4,
@@ -38,7 +38,7 @@ const textFloat = (theme) => ({
   textColor: theme === "dark" ? "#f0f9ff" : "#463333",
   textHaloColor: theme === "dark" ? "#222221" : "#eeeaea",
   textHaloWidth: 1,
-  textFont: ["Nunito Sans Bold"],
+  textFont: ["Nunito Sans SemiBold"],
   iconAllowOverlap: false,
   symbolSortKey: ["get", "textOrder"],
 });
