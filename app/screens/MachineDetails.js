@@ -230,6 +230,7 @@ const MachineDetails = ({
         >
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
             <KeyboardAwareScrollView
+              keyboardShouldPersistTaps="handled"
               contentContainerStyle={{
                 backgroundColor: theme.base1,
                 paddingBottom: 30,

@@ -379,6 +379,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <GooglePlacesAutocomplete
                   ref={autoCompleteRef}
                   predefinedPlaces={[]}
+                  keepResultsAfterBlur={true}
                   minLength={2}
                   placeholder="ex. Giovanni's Pizza"
                   textInputProps={{
