@@ -347,20 +347,6 @@ function MapStack() {
         options={{
           headerTransparent: true,
           title: null,
-          transitionSpec: {
-            open: {
-              animation: "timing",
-              config: {
-                duration: 180,
-              },
-            },
-            close: {
-              animation: "timing",
-              config: {
-                duration: 180,
-              },
-            },
-          },
         }}
       />
       <Stack.Screen
