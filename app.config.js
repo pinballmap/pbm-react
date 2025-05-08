@@ -78,7 +78,7 @@ export default {
         {
           android: {
             parentTheme: "Default",
-            enforceNavigationBarContrast: false,
+            enforceNavigationBarContrast: true,
           },
         },
       ],
