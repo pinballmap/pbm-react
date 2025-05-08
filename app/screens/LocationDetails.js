@@ -321,10 +321,10 @@ const LocationDetails = (props) => {
                 animationDuration={0}
               />
               <Mapbox.ShapeSource
-                id={"shape-source-id-0"}
+                id={"shape-source-id-1"}
                 shape={featureCollection}
               >
-                <Mapbox.SymbolLayer id={"symbol-id1"} style={iconStyles} />
+                <Mapbox.SymbolLayer id={"symbol-id3"} style={iconStyles} />
                 <Mapbox.Images
                   images={{
                     moreOne: require("../assets/marker-more-selected.png"),
