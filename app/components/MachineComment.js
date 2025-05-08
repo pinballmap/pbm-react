@@ -1,16 +1,15 @@
 import React, { useContext, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
-  KeyboardAvoidingView,
   Modal,
   PixelRatio,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
@@ -90,7 +89,7 @@ const MachineComment = ({ commentObj, user }) => {
               onRequestClose={() => {}}
             >
               <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                <ScrollView
+                <KeyboardAwareScrollView
                   contentContainerStyle={{
                     backgroundColor: theme.base1,
                     paddingBottom: 30,
@@ -98,24 +97,18 @@ const MachineComment = ({ commentObj, user }) => {
                   }}
                 >
                   <Text style={s.modalTitle}>Edit your comment</Text>
-                  <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                  >
-                    <TextInput
-                      defaultValue={initialComment}
-                      multiline={true}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(conditionText) =>
-                        setComment(conditionText)
-                      }
-                      style={[
-                        { padding: 5, height: 100 },
-                        s.textInput,
-                        s.radius10,
-                      ]}
-                      textAlignVertical="top"
-                    />
-                  </KeyboardAvoidingView>
+                  <TextInput
+                    defaultValue={initialComment}
+                    multiline={true}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(conditionText) => setComment(conditionText)}
+                    style={[
+                      { padding: 5, height: 100 },
+                      s.textInput,
+                      s.radius10,
+                    ]}
+                    textAlignVertical="top"
+                  />
                   <PbmButton
                     title={"Save"}
                     onPress={onEditPress}
@@ -126,7 +119,7 @@ const MachineComment = ({ commentObj, user }) => {
                     onPress={() => setEditModalVisible(false)}
                     accessibilityLabel="Cancel"
                   />
-                </ScrollView>
+                </KeyboardAwareScrollView>
               </View>
             </Modal>
             <View style={s.listContainerStyle}>

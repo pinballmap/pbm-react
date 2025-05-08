@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
   Dimensions,
-  KeyboardAvoidingView,
   Modal,
   PixelRatio,
   Platform,
@@ -12,6 +11,10 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
+import {
+  KeyboardAwareScrollView,
+  KeyboardToolbar,
+} from "react-native-keyboard-controller";
 import {
   ActivityIndicator,
   DropDownButton,
@@ -95,7 +98,7 @@ function EditLocationDetails({ navigation, ...props }) {
         const s = getStyles(theme);
         return (
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-            <ScrollView
+            <KeyboardAwareScrollView
               contentContainerStyle={{
                 flex: 1,
                 backgroundColor: theme.base1,
@@ -184,50 +187,43 @@ function EditLocationDetails({ navigation, ...props }) {
                     </Text>
                     {` with the details!`}
                   </Text>
-                  <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    keyboardVerticalOffset={50}
-                  >
-                    <Text style={s.title}>Phone</Text>
-                    <TextInput
-                      style={[{ height: 40 }, s.textInput, s.radius10]}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(phone) => setPhone(phone)}
-                      value={phone}
-                      returnKeyType="done"
-                      placeholder={"(503) xxx-xxxx"}
-                      placeholderTextColor={theme.indigo4}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <Text style={s.title}>Website</Text>
-                    <TextInput
-                      style={[{ height: 40 }, s.textInput, s.radius10]}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(website) => setWebsite(website)}
-                      value={website}
-                      returnKeyType="done"
-                      placeholder={"https://..."}
-                      placeholderTextColor={theme.indigo4}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <Text style={s.title}>Location Notes</Text>
-                    <TextInput
-                      multiline={true}
-                      style={[{ height: 100 }, s.textInput, s.radius10]}
-                      onChangeText={(description) =>
-                        setDescription(description)
-                      }
-                      value={description}
-                      underlineColorAndroid="transparent"
-                      placeholder={
-                        "Hours; what type of payment system(s) they use (door fee, cash, cards)"
-                      }
-                      placeholderTextColor={theme.indigo4}
-                      textAlignVertical="top"
-                    />
-                  </KeyboardAvoidingView>
+                  <Text style={s.title}>Phone</Text>
+                  <TextInput
+                    style={[{ height: 40 }, s.textInput, s.radius10]}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(phone) => setPhone(phone)}
+                    value={phone}
+                    returnKeyType="done"
+                    placeholder={"(503) xxx-xxxx"}
+                    placeholderTextColor={theme.indigo4}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={s.title}>Website</Text>
+                  <TextInput
+                    style={[{ height: 40 }, s.textInput, s.radius10]}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(website) => setWebsite(website)}
+                    value={website}
+                    returnKeyType="done"
+                    placeholder={"https://..."}
+                    placeholderTextColor={theme.indigo4}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Text style={s.title}>Location Notes</Text>
+                  <TextInput
+                    multiline={true}
+                    style={[{ height: 100 }, s.textInput, s.radius10]}
+                    onChangeText={(description) => setDescription(description)}
+                    value={description}
+                    underlineColorAndroid="transparent"
+                    placeholder={
+                      "Hours; what type of payment system(s) they use (door fee, cash, cards)"
+                    }
+                    placeholderTextColor={theme.indigo4}
+                    textAlignVertical="top"
+                  />
                   <Text style={[s.subText, s.margin8]}>
                     Is this location{" "}
                     <Text style={{ fontFamily: "Nunito-Bold" }}>
@@ -254,7 +250,8 @@ function EditLocationDetails({ navigation, ...props }) {
                   />
                 </ScrollView>
               )}
-            </ScrollView>
+            </KeyboardAwareScrollView>
+            <KeyboardToolbar />
           </View>
         );
       }}

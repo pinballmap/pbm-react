@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import {
+  KeyboardAwareScrollView,
+  KeyboardToolbar,
+} from "react-native-keyboard-controller";
 import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { loginLater } from "../actions/user_actions";
@@ -154,137 +155,130 @@ const Signup = ({ loginLater, navigation }) => {
           style={s.xButton}
         />
       </ConfirmationModal>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        keyboardShouldPersistTaps="handled"
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={s.justify}>
-            {errors && (
-              <Text style={s.errorText}>
-                {apiErrorMsg
-                  ? apiErrorMsg
-                  : "There were errors trying to process your submission"}
-              </Text>
-            )}
-            <Text style={s.bold}>Sign Up</Text>
-            <Input
-              placeholder="Username"
-              placeholderTextColor={"#9b9ebb"}
-              leftIcon={
-                <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+        <View style={s.justify}>
+          {errors && (
+            <Text style={s.errorText}>
+              {apiErrorMsg
+                ? apiErrorMsg
+                : "There were errors trying to process your submission"}
+            </Text>
+          )}
+          <Text style={s.bold}>Sign Up</Text>
+          <Input
+            placeholder="Username"
+            placeholderTextColor={"#9b9ebb"}
+            leftIcon={
+              <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+            }
+            onChangeText={(username) => setUsername(username)}
+            value={username}
+            errorStyle={{ color: "red" }}
+            errorMessage={usernameError}
+            inputContainerStyle={s.inputBox}
+            containerStyle={s.containerStyle}
+            inputStyle={s.inputText}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Input
+            placeholder="Email Address"
+            placeholderTextColor={"#9b9ebb"}
+            leftIcon={
+              <MaterialCommunityIcons
+                name="email-outline"
+                style={s.iconStyle}
+              />
+            }
+            onChangeText={(email) => setEmail(email)}
+            value={email}
+            errorStyle={{ color: "red" }}
+            errorMessage={emailError}
+            containerStyle={s.containerStyle}
+            inputContainerStyle={s.inputBox}
+            inputStyle={s.inputText}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+          />
+          <Input
+            placeholder="Password"
+            placeholderTextColor={"#9b9ebb"}
+            leftIcon={<MaterialIcons name="lock-outline" style={s.iconStyle} />}
+            onChangeText={(password) => setPassword(password)}
+            value={password}
+            errorStyle={{ color: "red" }}
+            errorMessage={passwordError}
+            containerStyle={s.containerStyle}
+            inputContainerStyle={s.inputBox}
+            inputStyle={s.inputText}
+            secureTextEntry={true}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Input
+            placeholder="Confirm Password"
+            placeholderTextColor={"#9b9ebb"}
+            leftIcon={<MaterialIcons name="lock-outline" style={s.iconStyle} />}
+            onChangeText={(confirm_password) =>
+              setConfirmPassword(confirm_password)
+            }
+            value={confirm_password}
+            errorStyle={{ color: "red" }}
+            errorMessage={confirm_passwordError}
+            containerStyle={s.containerStyle}
+            inputContainerStyle={s.inputBox}
+            inputStyle={s.inputText}
+            secureTextEntry={true}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <PbmButton
+            onPress={submit}
+            containerStyle={{
+              marginHorizontal: 10,
+              marginTop: 10,
+              marginBottom: 25,
+            }}
+            title="Sign Up"
+            accessibilityLabel="Sign Up"
+            disabled={!username || !email || !password || !confirm_password}
+            disabledStyle={s.disabledStyle}
+            disabledTitleStyle={s.disabledTitleStyle}
+          />
+          <View style={[s.externalLinkContainer, s.marginB25]}>
+            <Text
+              style={s.externalLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
               }
-              onChangeText={(username) => setUsername(username)}
-              value={username}
-              errorStyle={{ color: "red" }}
-              errorMessage={usernameError}
-              inputContainerStyle={s.inputBox}
-              containerStyle={s.containerStyle}
-              inputStyle={s.inputText}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <Input
-              placeholder="Email Address"
-              placeholderTextColor={"#9b9ebb"}
-              leftIcon={
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  style={s.iconStyle}
-                />
-              }
-              onChangeText={(email) => setEmail(email)}
-              value={email}
-              errorStyle={{ color: "red" }}
-              errorMessage={emailError}
-              containerStyle={s.containerStyle}
-              inputContainerStyle={s.inputBox}
-              inputStyle={s.inputText}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-            />
-            <Input
-              placeholder="Password"
-              placeholderTextColor={"#9b9ebb"}
-              leftIcon={
-                <MaterialIcons name="lock-outline" style={s.iconStyle} />
-              }
-              onChangeText={(password) => setPassword(password)}
-              value={password}
-              errorStyle={{ color: "red" }}
-              errorMessage={passwordError}
-              containerStyle={s.containerStyle}
-              inputContainerStyle={s.inputBox}
-              inputStyle={s.inputText}
-              secureTextEntry={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <Input
-              placeholder="Confirm Password"
-              placeholderTextColor={"#9b9ebb"}
-              leftIcon={
-                <MaterialIcons name="lock-outline" style={s.iconStyle} />
-              }
-              onChangeText={(confirm_password) =>
-                setConfirmPassword(confirm_password)
-              }
-              value={confirm_password}
-              errorStyle={{ color: "red" }}
-              errorMessage={confirm_passwordError}
-              containerStyle={s.containerStyle}
-              inputContainerStyle={s.inputBox}
-              inputStyle={s.inputText}
-              secureTextEntry={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <PbmButton
-              onPress={submit}
-              containerStyle={{
-                marginHorizontal: 10,
-                marginTop: 10,
-                marginBottom: 25,
-              }}
-              title="Sign Up"
-              accessibilityLabel="Sign Up"
-              disabled={!username || !email || !password || !confirm_password}
-              disabledStyle={s.disabledStyle}
-              disabledTitleStyle={s.disabledTitleStyle}
-            />
-            <View style={[s.externalLinkContainer, s.marginB25]}>
-              <Text
-                style={s.externalLink}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
-                }
-              >
-                View our privacy policy
-              </Text>
-              <EvilIcons name="external-link" style={s.externalIcon} />
-            </View>
-            <Button
-              onPress={() => navigation.navigate("Login")}
-              titleStyle={s.textLink}
-              containerStyle={{ marginBottom: 15 }}
-              buttonStyle={s.buttonMask}
-              title="Already a user? LOG IN!"
-            />
-            <Button
-              onPress={() => {
-                loginLater();
-                navigation.navigate("MapTab");
-              }}
-              titleStyle={s.textLink}
-              buttonStyle={s.buttonMask}
-              title="skip signing up for now"
-            />
+            >
+              View our privacy policy
+            </Text>
+            <EvilIcons name="external-link" style={s.externalIcon} />
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <Button
+            onPress={() => navigation.navigate("Login")}
+            titleStyle={s.textLink}
+            containerStyle={{ marginBottom: 15 }}
+            buttonStyle={s.buttonMask}
+            title="Already a user? LOG IN!"
+          />
+          <Button
+            onPress={() => {
+              loginLater();
+              navigation.navigate("MapTab");
+            }}
+            titleStyle={s.textLink}
+            buttonStyle={s.buttonMask}
+            title="skip signing up for now"
+          />
+        </View>
+      </KeyboardAwareScrollView>
+      <KeyboardToolbar />
       <ImageBackground
         source={require("../assets/images/t-shirt-logo.png")}
         style={s.backgroundImage}

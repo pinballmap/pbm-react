@@ -1,15 +1,9 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
   ActivityIndicator,
   ConfirmationModal,
@@ -67,72 +61,62 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
       {submittingMessage ? (
         <ActivityIndicator />
       ) : (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={[s.background, Platform.OS === "ios" && { flex: 1 }]}
-          keyboardVerticalOffset={100}
+        <KeyboardAwareScrollView
+          style={{ paddingHorizontal: 20 }}
+          scrollIndicatorInsets={{ right: 1 }}
+          keyboardShouldPersistTaps="handled"
+          overScrollMode="always"
         >
-          <ScrollView
-            style={{ paddingHorizontal: 20 }}
-            scrollIndicatorInsets={{ right: 1 }}
-            keyboardShouldPersistTaps="handled"
-            overScrollMode="always"
-          >
+          <Text
+            onPress={() => navigation.navigate("FAQ")}
+            style={s.textLink}
+          >{`Check the FAQ first for common questions.`}</Text>
+          <Text
+            style={[s.text, s.boldFont, s.pinkText]}
+          >{`Do not tell us that a location closed or all the machines are gone!`}</Text>
+          <Text style={[s.subText]}>
+            {`Instead, just `}
             <Text
-              onPress={() => navigation.navigate("FAQ")}
-              style={s.textLink}
-            >{`Check the FAQ first for common questions.`}</Text>
-            <Text
-              style={[s.text, s.boldFont, s.pinkText]}
-            >{`Do not tell us that a location closed or all the machines are gone!`}</Text>
-            <Text style={[s.subText]}>
-              {`Instead, just `}
-              <Text
-                style={[s.pinkText, s.boldFont]}
-              >{`remove the machines from the location`}</Text>
-              {`, and we'll auto-delete the location within a week.`}
-            </Text>
-            {!loggedIn ? (
-              <View>
-                <TextInput
-                  style={[{ height: 40 }, s.textInput]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(name) => setName(name)}
-                  returnKeyType="done"
-                  placeholder={"Your name..."}
-                  placeholderTextColor={theme.indigo4}
-                  autoCorrect={false}
-                />
-                <TextInput
-                  style={[{ height: 40 }, s.textInput]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(email) => setEmail(email)}
-                  returnKeyType="done"
-                  placeholder={"Your email..."}
-                  placeholderTextColor={theme.indigo4}
-                  keyboardType="email-address"
-                  autoCorrect={false}
-                />
-              </View>
-            ) : null}
-            <TextInput
-              multiline={true}
-              placeholder={
-                "Include the NAME of the location you're writing about! This is a general contact form."
-              }
-              placeholderTextColor={theme.indigo4}
-              style={[{ padding: 5, height: 200 }, s.textInput]}
-              onChangeText={(message) => setMessage(message)}
-              textAlignVertical="top"
-              underlineColorAndroid="transparent"
-            />
-            <PbmButton
-              title={"Submit"}
-              disabled={_disabled()}
-              onPress={submit}
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
+              style={[s.pinkText, s.boldFont]}
+            >{`remove the machines from the location`}</Text>
+            {`, and we'll auto-delete the location within a week.`}
+          </Text>
+          {!loggedIn ? (
+            <View>
+              <TextInput
+                style={[{ height: 40 }, s.textInput]}
+                underlineColorAndroid="transparent"
+                onChangeText={(name) => setName(name)}
+                returnKeyType="done"
+                placeholder={"Your name..."}
+                placeholderTextColor={theme.indigo4}
+                autoCorrect={false}
+              />
+              <TextInput
+                style={[{ height: 40 }, s.textInput]}
+                underlineColorAndroid="transparent"
+                onChangeText={(email) => setEmail(email)}
+                returnKeyType="done"
+                placeholder={"Your email..."}
+                placeholderTextColor={theme.indigo4}
+                keyboardType="email-address"
+                autoCorrect={false}
+              />
+            </View>
+          ) : null}
+          <TextInput
+            multiline={true}
+            placeholder={
+              "Include the NAME of the location you're writing about! This is a general contact form."
+            }
+            placeholderTextColor={theme.indigo4}
+            style={[{ padding: 5, height: 200 }, s.textInput]}
+            onChangeText={(message) => setMessage(message)}
+            textAlignVertical="top"
+            underlineColorAndroid="transparent"
+          />
+          <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
+        </KeyboardAwareScrollView>
       )}
     </View>
   );

@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import {
+  KeyboardAwareScrollView,
+  KeyboardToolbar,
+} from "react-native-keyboard-controller";
 import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
@@ -89,112 +90,103 @@ class Login extends Component {
                 backgroundColor: "transparent",
               }}
             >
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              <KeyboardAwareScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  justifyContent: "center",
+                }}
+                keyboardShouldPersistTaps="handled"
               >
-                <ScrollView
-                  contentContainerStyle={{
-                    flexGrow: 1,
-                    justifyContent: "center",
-                  }}
-                  keyboardShouldPersistTaps="handled"
-                >
-                  <View style={s.justify}>
-                    {this.state.errors && (
-                      <Text style={s.errorText}>
-                        {this.state.apiErrorMsg
-                          ? this.state.apiErrorMsg
-                          : "There were errors trying to process your submission"}
-                      </Text>
-                    )}
-                    <Text style={s.bold}>Log In</Text>
-                    <Input
-                      placeholder="Username or Email"
-                      placeholderTextColor={"#9b9ebb"}
-                      leftIcon={
-                        <FontAwesome6
-                          name="face-grin-beam"
-                          style={s.iconStyle}
-                        />
-                      }
-                      onChangeText={(login) => this.setState({ login })}
-                      value={this.state.login}
-                      errorStyle={{ color: "red" }}
-                      errorMessage={this.state.loginError}
-                      inputContainerStyle={s.inputBox}
-                      inputStyle={s.inputText}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <Input
-                      placeholder="Password"
-                      placeholderTextColor={"#9b9ebb"}
-                      leftIcon={
-                        <MaterialIcons
-                          name="lock-outline"
-                          style={s.iconStyle}
-                        />
-                      }
-                      onChangeText={(password) => this.setState({ password })}
-                      value={this.state.password}
-                      errorStyle={{ color: "red" }}
-                      errorMessage={this.state.passwordError}
-                      inputContainerStyle={s.inputBox}
-                      inputStyle={s.inputText}
-                      secureTextEntry={true}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <PbmButton
-                      onPress={() => this.submit()}
-                      title="Log In"
-                      accessibilityLabel="Log In"
-                      disabled={!this.state.login || !this.state.password}
-                      disabledStyle={s.disabledStyle}
-                      disabledTitleStyle={s.disabledTitleStyle}
-                      containerStyle={{
-                        marginHorizontal: 10,
-                        marginTop: 10,
-                        marginBottom: 25,
-                      }}
-                    />
-                    <Button
-                      onPress={() => this.props.navigation.navigate("Signup")}
-                      titleStyle={s.textLink}
-                      containerStyle={{ marginBottom: 10 }}
-                      buttonStyle={s.buttonMask}
-                      title="Not a user? SIGN UP!"
-                    />
-                    <Button
-                      onPress={() =>
-                        this.props.navigation.navigate("PasswordReset")
-                      }
-                      title="I forgot my password"
-                      titleStyle={s.textLink}
-                      containerStyle={{ marginBottom: 10 }}
-                      buttonStyle={s.buttonMask}
-                    />
-                    <Button
-                      onPress={() =>
-                        this.props.navigation.navigate("ResendConfirmation")
-                      }
-                      title="Resend my confirmation email"
-                      titleStyle={s.textLink}
-                      containerStyle={{ marginBottom: 10 }}
-                      buttonStyle={s.buttonMask}
-                    />
-                    <Button
-                      onPress={() => {
-                        this.props.loginLater();
-                        this.props.navigation.navigate("MapTab");
-                      }}
-                      titleStyle={s.textLink}
-                      buttonStyle={s.buttonMask}
-                      title="Skip logging in for now"
-                    />
-                  </View>
-                </ScrollView>
-              </KeyboardAvoidingView>
+                <View style={s.justify}>
+                  {this.state.errors && (
+                    <Text style={s.errorText}>
+                      {this.state.apiErrorMsg
+                        ? this.state.apiErrorMsg
+                        : "There were errors trying to process your submission"}
+                    </Text>
+                  )}
+                  <Text style={s.bold}>Log In</Text>
+                  <Input
+                    placeholder="Username or Email"
+                    placeholderTextColor={"#9b9ebb"}
+                    leftIcon={
+                      <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+                    }
+                    onChangeText={(login) => this.setState({ login })}
+                    value={this.state.login}
+                    errorStyle={{ color: "red" }}
+                    errorMessage={this.state.loginError}
+                    inputContainerStyle={s.inputBox}
+                    inputStyle={s.inputText}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <Input
+                    placeholder="Password"
+                    placeholderTextColor={"#9b9ebb"}
+                    leftIcon={
+                      <MaterialIcons name="lock-outline" style={s.iconStyle} />
+                    }
+                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.password}
+                    errorStyle={{ color: "red" }}
+                    errorMessage={this.state.passwordError}
+                    inputContainerStyle={s.inputBox}
+                    inputStyle={s.inputText}
+                    secureTextEntry={true}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <PbmButton
+                    onPress={() => this.submit()}
+                    title="Log In"
+                    accessibilityLabel="Log In"
+                    disabled={!this.state.login || !this.state.password}
+                    disabledStyle={s.disabledStyle}
+                    disabledTitleStyle={s.disabledTitleStyle}
+                    containerStyle={{
+                      marginHorizontal: 10,
+                      marginTop: 10,
+                      marginBottom: 25,
+                    }}
+                  />
+                  <Button
+                    onPress={() => this.props.navigation.navigate("Signup")}
+                    titleStyle={s.textLink}
+                    containerStyle={{ marginBottom: 10 }}
+                    buttonStyle={s.buttonMask}
+                    title="Not a user? SIGN UP!"
+                  />
+                  <Button
+                    onPress={() =>
+                      this.props.navigation.navigate("PasswordReset")
+                    }
+                    title="I forgot my password"
+                    titleStyle={s.textLink}
+                    containerStyle={{ marginBottom: 10 }}
+                    buttonStyle={s.buttonMask}
+                  />
+                  <Button
+                    onPress={() =>
+                      this.props.navigation.navigate("ResendConfirmation")
+                    }
+                    title="Resend my confirmation email"
+                    titleStyle={s.textLink}
+                    containerStyle={{ marginBottom: 10 }}
+                    buttonStyle={s.buttonMask}
+                  />
+                  <Button
+                    onPress={() => {
+                      this.props.loginLater();
+                      this.props.navigation.navigate("MapTab");
+                    }}
+                    titleStyle={s.textLink}
+                    buttonStyle={s.buttonMask}
+                    title="Skip logging in for now"
+                  />
+                </View>
+              </KeyboardAwareScrollView>
+              <KeyboardToolbar />
               <ImageBackground
                 source={require("../assets/images/pbm-fade-tall.png")}
                 style={s.backgroundImage}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Appearance, Platform } from "react-native";
 import { retrieveItem } from "./app/config/utils";
 import { ThemeContext } from "./app/theme-context";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { dark, standard } from "./app/utils/themes";
@@ -120,19 +121,21 @@ const App = () => {
         theme: selectedTheme === "dark" ? dark : standard,
       }}
     >
-      <Provider store={store}>
-        <AppWrapper>
-          <NavigationContainer
-            theme={selectedTheme === "dark" ? dark : standard}
-          >
-            <MapNavigator />
-          </NavigationContainer>
-        </AppWrapper>
-      </Provider>
-      <StatusBar
-        style={selectedTheme === "dark" ? "light" : "dark"}
-        translucent={true}
-      />
+      <KeyboardProvider>
+        <Provider store={store}>
+          <AppWrapper>
+            <NavigationContainer
+              theme={selectedTheme === "dark" ? dark : standard}
+            >
+              <MapNavigator />
+            </NavigationContainer>
+          </AppWrapper>
+        </Provider>
+        <StatusBar
+          style={selectedTheme === "dark" ? "light" : "dark"}
+          translucent={true}
+        />
+      </KeyboardProvider>
     </ThemeContext.Provider>
   );
 };

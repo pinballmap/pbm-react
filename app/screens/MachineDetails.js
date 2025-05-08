@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   Dimensions,
-  KeyboardAvoidingView,
   Modal,
   PixelRatio,
   Platform,
@@ -11,6 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Image } from "expo-image";
 import {
   EvilIcons,
@@ -171,7 +171,7 @@ const MachineDetails = ({
           onRequestClose={() => {}}
         >
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-            <ScrollView
+            <KeyboardAwareScrollView
               contentContainerStyle={{
                 backgroundColor: theme.base1,
                 paddingBottom: 30,
@@ -182,23 +182,19 @@ const MachineDetails = ({
                 Comment on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
                 at <Text style={s.modalLocationName}>{location.name}</Text>
               </Text>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-              >
-                <TextInput
-                  multiline={true}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(conditionText) =>
-                    setConditionText(conditionText)
-                  }
-                  style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-                  placeholder={
-                    "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
-                  }
-                  placeholderTextColor={theme.indigo4}
-                  textAlignVertical="top"
-                />
-              </KeyboardAvoidingView>
+              <TextInput
+                multiline={true}
+                underlineColorAndroid="transparent"
+                onChangeText={(conditionText) =>
+                  setConditionText(conditionText)
+                }
+                style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+                placeholder={
+                  "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
+                }
+                placeholderTextColor={theme.indigo4}
+                textAlignVertical="top"
+              />
               <Text style={[s.modalSubText, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
                 {`it's often best to tell technicians about issues on-site rather than leaving them "on the record" here.`}
@@ -221,7 +217,7 @@ const MachineDetails = ({
                 onPress={() => addCondition(curLmx.id)}
               />
               <WarningButton title={"Cancel"} onPress={cancelAddCondition} />
-            </ScrollView>
+            </KeyboardAwareScrollView>
           </View>
         </Modal>
         <Modal
@@ -233,7 +229,7 @@ const MachineDetails = ({
           onRequestClose={() => {}}
         >
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-            <ScrollView
+            <KeyboardAwareScrollView
               contentContainerStyle={{
                 backgroundColor: theme.base1,
                 paddingBottom: 30,
@@ -245,33 +241,29 @@ const MachineDetails = ({
                 <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
                 <Text style={s.modalLocationName}>{location.name}</Text>
               </Text>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-              >
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "center" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  keyboardType="numeric"
-                  underlineColorAndroid="transparent"
-                  onChangeText={(score) => setScore(score)}
-                  defaultValue={formatInputNumWithCommas(score)}
-                  returnKeyType="done"
-                  placeholder={"123..."}
-                  placeholderTextColor={theme.indigo4}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
-              </KeyboardAvoidingView>
+              <TextInput
+                style={[
+                  { height: 40, textAlign: "center" },
+                  s.textInput,
+                  s.radius10,
+                ]}
+                keyboardType="numeric"
+                underlineColorAndroid="transparent"
+                onChangeText={(score) => setScore(score)}
+                defaultValue={formatInputNumWithCommas(score)}
+                returnKeyType="done"
+                placeholder={"123..."}
+                placeholderTextColor={theme.indigo4}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
               <PbmButton
                 title={"Add Score"}
                 disabled={score.length === 0}
                 onPress={() => addScore(curLmx.id)}
               />
               <WarningButton title={"Cancel"} onPress={cancelAddScore} />
-            </ScrollView>
+            </KeyboardAwareScrollView>
           </View>
         </Modal>
         {showRemoveMachineModal && (
