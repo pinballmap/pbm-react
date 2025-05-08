@@ -106,6 +106,8 @@ function EditLocationDetails({ navigation, ...props }) {
               <Modal
                 animationType="slide"
                 transparent={false}
+                statusBarTranslucent={true}
+                navigationBarTranslucent={true}
                 visible={showEditLocationDetailsModal}
                 onRequestClose={() => {}}
               >

@@ -393,6 +393,7 @@ class Search extends Component {
             <View>
               <Modal
                 statusBarTranslucent={true}
+                navigationBarTranslucent={true}
                 transparent={false}
                 visible={searchModalVisible}
                 onShow={() => {

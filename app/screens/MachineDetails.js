@@ -165,6 +165,8 @@ const MachineDetails = ({
         <Modal
           animationType="slide"
           transparent={false}
+          statusBarTranslucent={true}
+          navigationBarTranslucent={true}
           visible={showAddConditionModal}
           onRequestClose={() => {}}
         >
@@ -225,6 +227,8 @@ const MachineDetails = ({
         <Modal
           animationType="slide"
           transparent={false}
+          statusBarTranslucent={true}
+          navigationBarTranslucent={true}
           visible={showAddScoreModal}
           onRequestClose={() => {}}
         >

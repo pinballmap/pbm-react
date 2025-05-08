@@ -333,6 +333,8 @@ class FindMachine extends React.PureComponent {
           visible={this.state.showModal}
           onRequestClose={() => {}}
           transparent={false}
+          statusBarTranslucent={true}
+          navigationBarTranslucent={true}
         >
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
             <KeyboardAvoidingView

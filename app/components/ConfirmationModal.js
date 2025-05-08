@@ -12,6 +12,8 @@ const ConfirmationModal = ({ children, visible, wide, noPad, loading }) => {
     <Modal
       animationType="slide"
       transparent={true}
+      statusBarTranslucent={true}
+      navigationBarTranslucent={true}
       onRequestClose={() => {}}
       visible={visible}
     >

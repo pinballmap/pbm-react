@@ -83,6 +83,8 @@ const MachineComment = ({ commentObj, user }) => {
             <Modal
               animationType="slide"
               transparent={false}
+              statusBarTranslucent={true}
+              navigationBarTranslucent={true}
               loading={loading}
               visible={editModalVisible}
               onRequestClose={() => {}}

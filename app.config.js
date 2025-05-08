@@ -73,6 +73,15 @@ export default {
           ],
         },
       ],
+      [
+        "react-native-edge-to-edge",
+        {
+          android: {
+            parentTheme: "Default",
+            enforceNavigationBarContrast: false,
+          },
+        },
+      ],
     ],
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
@@ -82,7 +91,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "213",
+      buildNumber: "218",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -128,6 +137,7 @@ export default {
     android: {
       package: IS_DEV ? "com.pbm.dev" : "com.pbm",
       userInterfaceStyle: "automatic",
+      edgeToEdgeEnabled: true,
       config: {
         googleMaps: {
           apiKey: process.env.GOOGLE_MAPS_KEY,
