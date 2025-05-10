@@ -30,7 +30,7 @@ const textFloat = (theme) => ({
     14,
     ["get", "name"],
   ],
-  textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 24],
+  textSize: ["interpolate", ["linear"], ["zoom"], 11, 16, 24, 22],
   textJustify: "center",
   textVariableAnchor: ["bottom", "top", "right", "left"],
   textRadialOffset: 1.4,

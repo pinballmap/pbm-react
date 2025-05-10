@@ -334,7 +334,7 @@ const LocationDetails = (props) => {
             </Mapbox.MapView>
           </View>
 
-          <View style={[s.locationOuterContainer, s.boxShadow]}>
+          <View style={s.locationOuterContainer}>
             <View style={s.locationContainer}>
               <View style={s.locationNameContainer}>
                 <View style={s.nameItem}>
