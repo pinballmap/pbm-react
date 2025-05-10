@@ -140,7 +140,7 @@ const FilterMap = ({
                 }
                 selectedIndex={machineGroupId ? 0 : 1}
                 buttons={["All Versions", "Selected Version"]}
-                containerStyle={s.buttonGroupContainer}
+                containerStyle={[s.buttonGroupContainer, s.boxShadow]}
                 textStyle={s.buttonGroupInactive}
                 selectedButtonStyle={s.selButtonStyle}
                 selectedTextStyle={s.selTextStyle}
@@ -155,7 +155,7 @@ const FilterMap = ({
             onPress={setNumMachinesSelected}
             selectedIndex={getIdx(numMachines)}
             buttons={["All", "2+", "5+", "10+", "20+"]}
-            containerStyle={s.buttonGroupContainer}
+            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
             textStyle={s.buttonGroupInactive}
             selectedButtonStyle={s.selButtonStyle}
             selectedTextStyle={s.selTextStyle}
@@ -182,7 +182,7 @@ const FilterMap = ({
             onPress={updateViewFavorites}
             selectedIndex={viewByFavoriteLocations ? 1 : 0}
             buttons={["All", "My Saved"]}
-            containerStyle={s.buttonGroupContainer}
+            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
             textStyle={s.buttonGroupInactive}
             selectedButtonStyle={s.selButtonStyle}
             selectedTextStyle={s.selTextStyle}
@@ -191,14 +191,14 @@ const FilterMap = ({
         </View>
       </Screen>
       {hasFilterSelected ? (
-        <View style={s.bottomTab}>
+        <View style={[s.bottomTab, s.boxShadow]}>
           <Text
             style={s.bottomTabClear}
             onPress={() => dispatch(clearFilters())}
           >
             Clear Filters
           </Text>
-          <View style={s.bottomTabApplyButton}>
+          <View style={[s.bottomTabApplyButton, s.boxShadow]}>
             <Text style={s.bottomTabApply} onPress={() => goToMap()}>
               Apply Filters
             </Text>
@@ -234,11 +234,6 @@ const getStyles = (theme) =>
       borderWidth: 0,
       borderRadius: 25,
       backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
-      overflow: "visible",
     },
     buttonGroupInactive: {
       color: theme.text2,
@@ -268,11 +263,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       width: "100%",
       height: 80,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
-      overflow: "visible",
     },
     bottomTabClear: {
       textDecorationLine: "underline",
@@ -281,11 +271,6 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? "#e3fae5" : theme.text,
     },
     bottomTabApplyButton: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
-      overflow: "visible",
       borderRadius: 30,
       backgroundColor: theme.purple,
     },
@@ -295,6 +280,18 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
       fontSize: 15,
       color: "#ffffff",
+    },
+    boxShadow: {
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
   });
 

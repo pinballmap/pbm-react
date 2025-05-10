@@ -98,7 +98,8 @@ const getStyles = (theme) =>
     pressed: {
       borderColor: theme.pink2,
       borderWidth: 2,
-      boxShadow: null,
+      shadowOpacity: 0,
+      elevation: 0,
       opacity: 0.8,
     },
     notPressed: {
@@ -130,16 +131,20 @@ const getStyles = (theme) =>
     machineListContainer: {
       borderRadius: 25,
       marginBottom: 20,
-      marginRight: 20,
-      marginLeft: 20,
+      marginHorizontal: 20,
       backgroundColor: theme.white,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
       paddingVertical: 10,
-      paddingLeft: 15,
-      paddingRight: 15,
+      paddingHorizontal: 15,
     },
     metaIcon: {
       paddingTop: 0,

@@ -426,7 +426,11 @@ class FindMachine extends React.PureComponent {
           onChangeText={(query) =>
             this.handleSearch(query, this.state.machinesInView)
           }
-          inputStyle={{ color: theme.text, fontFamily: "Nunito-Regular" }}
+          inputStyle={{
+            color: theme.text,
+            fontFamily: "Nunito-Regular",
+            height: 50,
+          }}
           value={this.state.query}
           inputContainerStyle={s.filterInput}
           containerStyle={{
@@ -526,10 +530,15 @@ const getStyles = (theme) =>
       borderWidth: 0,
       borderRadius: 25,
       backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3))",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
       overflow: "visible",
     },
     buttonGroupInactive: {

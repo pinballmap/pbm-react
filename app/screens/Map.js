@@ -285,17 +285,17 @@ const Map = ({
         />
       </View>
       {isFetchingLocations ? (
-        <View style={[{ top: topMargin + 170 }, s.loading]}>
+        <View style={[{ top: topMargin + 150 }, s.loading]}>
           <Text style={s.loadingText}>Loading...</Text>
         </View>
       ) : null}
       {numLocations === 0 && !isFetchingLocations && !isFirstLoad && (
-        <View style={[{ top: topMargin + 170 }, s.loading]}>
+        <View style={[{ top: topMargin + 150 }, s.loading]}>
           <Text style={s.loadingText}>No Results</Text>
         </View>
       )}
       {maxZoom ? (
-        <View style={[{ top: topMargin + 170 }, s.loading]}>
+        <View style={[{ top: topMargin + 150 }, s.loading]}>
           <Text style={s.loadingText}>Zoom in to update results</Text>
         </View>
       ) : null}
@@ -398,7 +398,7 @@ const Map = ({
           title={"Filter"}
           onPress={() => dispatch(clearFilters(true))}
           containerStyle={[
-            { top: topMargin + 110 },
+            { top: topMargin + 60 },
             s.filterContainer,
             s.containerStyle,
           ]}
@@ -488,10 +488,15 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     containerStyle: {
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
       overflow: "visible",
     },
     listButtonContainer: {
@@ -507,7 +512,7 @@ const getStyles = (theme) =>
     },
     updateContainerStyle: {
       position: "relative",
-      marginBottom: 15,
+      marginBottom: 20,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
@@ -538,7 +543,7 @@ const getStyles = (theme) =>
     filterContainer: {
       position: "absolute",
       alignSelf: "center",
-      left: 15,
+      right: 15,
       borderRadius: 25,
     },
     filterTitleStyle: {

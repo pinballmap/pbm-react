@@ -39,7 +39,8 @@ const Stack = createStackNavigator();
 const TabsOptionsStyle = {
   headerStyle: {
     borderBottomWidth: 0,
-    boxShadow: null,
+    shadowOpacity: 0,
+    elevation: 0,
   },
   headerTitleStyle: {
     textAlign: "center",
@@ -295,7 +296,8 @@ function MapStack() {
         gestureEnabled: true,
         headerStyle: {
           borderBottomWidth: 0,
-          boxShadow: null,
+          shadowOpacity: 0,
+          elevation: 0,
         },
         headerTitleStyle: {
           textAlign: "center",

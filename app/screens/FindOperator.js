@@ -80,7 +80,11 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
           />
         }
         onChangeText={handleSearch}
-        inputStyle={{ color: theme.text, fontFamily: "Nunito-Regular" }}
+        inputStyle={{
+          color: theme.text,
+          fontFamily: "Nunito-Regular",
+          height: 50,
+        }}
         value={query}
         inputContainerStyle={s.filterInput}
         containerStyle={{

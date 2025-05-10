@@ -30,10 +30,15 @@ const WarningButton = ({
           overflow: "visible",
           borderRadius: 25,
           backgroundColor: theme.base1,
-          boxShadow:
-            theme.theme == "dark"
-              ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-              : "0 0 10 0 rgba(170, 170, 199, 0.3)",
+          shadowColor:
+            theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         },
         containerStyle ? containerStyle : s.margin15,
       ]}

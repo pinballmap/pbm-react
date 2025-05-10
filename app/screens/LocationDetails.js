@@ -305,7 +305,7 @@ const LocationDetails = (props) => {
               scaleBarEnabled={false}
               pitchEnabled={false}
               rotateEnabled={false}
-              attributionPosition={{ bottom: 33, left: 85 }}
+              attributionPosition={{ bottom: 35, left: 90 }}
               logoPosition={{ bottom: 35, left: 5 }}
               styleURL={
                 theme.theme === "dark"
@@ -334,7 +334,7 @@ const LocationDetails = (props) => {
             </Mapbox.MapView>
           </View>
 
-          <View style={s.locationOuterContainer}>
+          <View style={[s.locationOuterContainer, s.boxShadow]}>
             <View style={s.locationContainer}>
               <View style={s.locationNameContainer}>
                 <View style={s.nameItem}>
@@ -524,6 +524,7 @@ const LocationDetails = (props) => {
                     <Pressable
                       style={({ pressed }) => [
                         s.quickButton,
+                        s.boxShadow,
                         pressed
                           ? s.quickButtonPressed
                           : s.quickButtonNotPressed,
@@ -557,6 +558,7 @@ const LocationDetails = (props) => {
                     <Pressable
                       style={({ pressed }) => [
                         s.quickButton,
+                        s.boxShadow,
                         pressed
                           ? s.quickButtonPressed
                           : s.quickButtonNotPressed,
@@ -585,6 +587,7 @@ const LocationDetails = (props) => {
                     <Pressable
                       style={({ pressed }) => [
                         s.quickButton,
+                        s.boxShadow,
                         pressed
                           ? s.quickButtonPressed
                           : s.quickButtonNotPressed,
@@ -653,7 +656,7 @@ const LocationDetails = (props) => {
         </View>
       </ScrollView>
       {showScrollToTop && (
-        <Pressable onPress={scrollToTop} style={s.upButton}>
+        <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
           <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
         </Pressable>
       )}
@@ -679,10 +682,18 @@ const getStyles = (theme) =>
       marginBottom: 10,
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 -8 6 0 rgba(0, 0, 0, 0.2)"
-          : "0 -8 6 0 rgba(170, 170, 199, 0.1)",
+    },
+    boxShadow: {
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     locationContainer: {
       marginHorizontal: 15,
@@ -701,20 +712,6 @@ const getStyles = (theme) =>
       fontSize: deviceWidth < 325 ? 24 : 26,
       lineHeight: deviceWidth < 325 ? 30 : 32,
       color: theme.pink1,
-    },
-    machineListContainer: {
-      borderRadius: 25,
-      marginBottom: 20,
-      marginRight: 20,
-      marginLeft: 20,
-      backgroundColor: theme.white,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
-      paddingVertical: 10,
-      paddingLeft: 15,
-      paddingRight: 15,
     },
     locationMetaContainer: {
       paddingTop: 0,
@@ -802,10 +799,6 @@ const getStyles = (theme) =>
       width: 44,
       alignSelf: "center",
       justifyContent: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       backgroundColor: theme.white,
     },
     quickButtonText: {
@@ -896,28 +889,8 @@ const getStyles = (theme) =>
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
     },
-    accordionContainer: {
-      paddingVertical: 3,
-      paddingright: 8,
-      paddingLeft: 15,
-      marginLeft: 0,
-      marginRight: 0,
-      marginTop: 5,
-      marginBottom: 15,
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
-      justifyContent: "center",
-      borderRadius: 15,
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
-    },
     upButton: {
       justifyContent: "center",
-      boxShadow:
-        theme.theme == "dark"
-          ? "0 0 10 0 rgba(0, 0, 0, 0.6)"
-          : "0 0 10 0 rgba(170, 170, 199, 0.3)",
       position: "absolute",
       right: 25,
       bottom: 25,
