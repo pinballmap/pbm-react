@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.29
+
+May 10, 2025
+
+- Bug fixes, especially with an iOS map marker disappearing issue.
+- Performance updates.
+- Minor things.
+
 ### 5.3.28
 
 March 31, 2025
