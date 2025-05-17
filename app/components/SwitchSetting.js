@@ -1,6 +1,5 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, Switch, View } from "react-native";
 import { Text } from "./index";
-import { Switch } from "@rneui/themed";
 import React, { useContext } from "react";
 import { ThemeContext } from "../theme-context";
 
