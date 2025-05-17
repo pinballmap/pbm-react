@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
-import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { loginLater } from "../actions/user_actions";
 import { postData } from "../config/request";
@@ -168,79 +169,72 @@ const Signup = ({ loginLater, navigation }) => {
             </Text>
           )}
           <Text style={s.bold}>Sign Up</Text>
-          <Input
-            placeholder="Username"
-            placeholderTextColor={"#9b9ebb"}
-            leftIcon={
-              <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
-            }
-            onChangeText={(username) => setUsername(username)}
-            value={username}
-            errorStyle={{ color: "red" }}
-            errorMessage={usernameError}
-            inputContainerStyle={s.inputBox}
-            containerStyle={s.containerStyle}
-            inputStyle={s.inputText}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-          <Input
-            placeholder="Email Address"
-            placeholderTextColor={"#9b9ebb"}
-            leftIcon={
-              <MaterialCommunityIcons
-                name="email-outline"
-                style={s.iconStyle}
-              />
-            }
-            onChangeText={(email) => setEmail(email)}
-            value={email}
-            errorStyle={{ color: "red" }}
-            errorMessage={emailError}
-            containerStyle={s.containerStyle}
-            inputContainerStyle={s.inputBox}
-            inputStyle={s.inputText}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-          />
-          <Input
-            placeholder="Password"
-            placeholderTextColor={"#9b9ebb"}
-            leftIcon={<MaterialIcons name="lock-outline" style={s.iconStyle} />}
-            onChangeText={(password) => setPassword(password)}
-            value={password}
-            errorStyle={{ color: "red" }}
-            errorMessage={passwordError}
-            containerStyle={s.containerStyle}
-            inputContainerStyle={s.inputBox}
-            inputStyle={s.inputText}
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-          <Input
-            placeholder="Confirm Password"
-            placeholderTextColor={"#9b9ebb"}
-            leftIcon={<MaterialIcons name="lock-outline" style={s.iconStyle} />}
-            onChangeText={(confirm_password) =>
-              setConfirmPassword(confirm_password)
-            }
-            value={confirm_password}
-            errorStyle={{ color: "red" }}
-            errorMessage={confirm_passwordError}
-            containerStyle={s.containerStyle}
-            inputContainerStyle={s.inputBox}
-            inputStyle={s.inputText}
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
+          <View style={s.inputContainer}>
+            <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+            <TextInput
+              placeholder="Username"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={(username) => setUsername(username)}
+              value={username}
+              errorStyle={{ color: "red" }}
+              errorMessage={usernameError}
+              style={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+          <View style={s.inputContainer}>
+            <MaterialCommunityIcons name="email-outline" style={s.iconStyle} />
+            <TextInput
+              placeholder="Email Address"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={(email) => setEmail(email)}
+              value={email}
+              errorStyle={{ color: "red" }}
+              errorMessage={emailError}
+              style={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+            />
+          </View>
+          <View style={s.inputContainer}>
+            <MaterialIcons name="lock-outline" style={s.iconStyle} />
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={(password) => setPassword(password)}
+              value={password}
+              errorStyle={{ color: "red" }}
+              errorMessage={passwordError}
+              style={s.inputText}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+          <View style={s.inputContainer}>
+            <MaterialIcons name="lock-outline" style={s.iconStyle} />
+            <TextInput
+              placeholder="Confirm Password"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={(confirm_password) =>
+                setConfirmPassword(confirm_password)
+              }
+              value={confirm_password}
+              errorStyle={{ color: "red" }}
+              errorMessage={confirm_passwordError}
+              style={s.inputText}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
           <PbmButton
             onPress={submit}
             containerStyle={{
               marginHorizontal: 10,
-              marginTop: 10,
+              marginTop: 15,
               marginBottom: 25,
             }}
             title="Sign Up"
@@ -250,32 +244,30 @@ const Signup = ({ loginLater, navigation }) => {
             disabledTitleStyle={s.disabledTitleStyle}
           />
           <View style={[s.externalLinkContainer, s.marginB25]}>
-            <Text
-              style={s.externalLink}
+            <Pressable
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
               }
             >
-              View our privacy policy
-            </Text>
+              <Text style={s.externalLink}> View our privacy policy</Text>
+            </Pressable>
             <EvilIcons name="external-link" style={s.externalIcon} />
           </View>
-          <Button
+          <Pressable
             onPress={() => navigation.navigate("Login")}
-            titleStyle={s.textLink}
-            containerStyle={{ marginBottom: 15 }}
-            buttonStyle={s.buttonMask}
-            title="Already a user? LOG IN!"
-          />
-          <Button
+            style={[s.buttonMask, s.marginB25]}
+          >
+            <Text style={s.textLink}>Already a user? LOG IN!</Text>
+          </Pressable>
+          <Pressable
             onPress={() => {
               loginLater();
               navigation.navigate("MapTab");
             }}
-            titleStyle={s.textLink}
-            buttonStyle={s.buttonMask}
-            title="skip signing up for now"
-          />
+            style={s.buttonMask}
+          >
+            <Text style={s.textLink}>skip signing up for now</Text>
+          </Pressable>
         </View>
       </KeyboardAwareScrollView>
       <KeyboardToolbar />
@@ -322,21 +314,22 @@ const getStyles = (theme) =>
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
     },
-    inputBox: {
-      width: "100%",
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: 50,
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      marginTop: 5,
-      marginBottom: 5,
+      marginVertical: 15,
+      marginHorizontal: 10,
       paddingLeft: 10,
     },
-    containerStyle: {
-      height: 75,
-    },
     inputText: {
+      paddingLeft: 5,
       color: theme.text,
+      fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
     textLink: {

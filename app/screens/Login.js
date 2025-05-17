@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
-import { Button, Input } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import {
@@ -106,37 +107,36 @@ class Login extends Component {
                     </Text>
                   )}
                   <Text style={s.bold}>Log In</Text>
-                  <Input
-                    placeholder="Username or Email"
-                    placeholderTextColor={"#9b9ebb"}
-                    leftIcon={
-                      <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
-                    }
-                    onChangeText={(login) => this.setState({ login })}
-                    value={this.state.login}
-                    errorStyle={{ color: "red" }}
-                    errorMessage={this.state.loginError}
-                    inputContainerStyle={s.inputBox}
-                    inputStyle={s.inputText}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  <Input
-                    placeholder="Password"
-                    placeholderTextColor={"#9b9ebb"}
-                    leftIcon={
-                      <MaterialIcons name="lock-outline" style={s.iconStyle} />
-                    }
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.password}
-                    errorStyle={{ color: "red" }}
-                    errorMessage={this.state.passwordError}
-                    inputContainerStyle={s.inputBox}
-                    inputStyle={s.inputText}
-                    secureTextEntry={true}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
+                  <View style={s.inputContainer}>
+                    <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+                    <TextInput
+                      placeholder="Username or Email"
+                      placeholderTextColor={"#9b9ebb"}
+                      onChangeText={(login) => this.setState({ login })}
+                      value={this.state.login}
+                      errorStyle={{ color: "red" }}
+                      errorMessage={this.state.loginError}
+                      style={s.inputText}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                  </View>
+                  <View style={s.inputContainer}>
+                    <MaterialIcons name="lock-outline" style={s.iconStyle} />
+                    <TextInput
+                      placeholder="Password"
+                      placeholderTextColor={"#9b9ebb"}
+                      onChangeText={(password) => this.setState({ password })}
+                      value={this.state.password}
+                      errorStyle={{ color: "red" }}
+                      errorMessage={this.state.passwordError}
+                      style={s.inputText}
+                      secureTextEntry={true}
+                      underlineColorAndroid="transparent"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                  </View>
                   <PbmButton
                     onPress={() => this.submit()}
                     title="Log In"
@@ -150,40 +150,37 @@ class Login extends Component {
                       marginBottom: 25,
                     }}
                   />
-                  <Button
+                  <Pressable
                     onPress={() => this.props.navigation.navigate("Signup")}
-                    titleStyle={s.textLink}
-                    containerStyle={{ marginBottom: 10 }}
-                    buttonStyle={s.buttonMask}
-                    title="Not a user? SIGN UP!"
-                  />
-                  <Button
+                    style={[s.buttonMask, s.marginBottom]}
+                  >
+                    <Text style={s.textLink}>Not a user? SIGN UP!</Text>
+                  </Pressable>
+                  <Pressable
                     onPress={() =>
                       this.props.navigation.navigate("PasswordReset")
                     }
-                    title="I forgot my password"
-                    titleStyle={s.textLink}
-                    containerStyle={{ marginBottom: 10 }}
-                    buttonStyle={s.buttonMask}
-                  />
-                  <Button
+                    style={[s.buttonMask, s.marginBottom]}
+                  >
+                    <Text style={s.textLink}>I forgot my password</Text>
+                  </Pressable>
+                  <Pressable
                     onPress={() =>
                       this.props.navigation.navigate("ResendConfirmation")
                     }
-                    title="Resend my confirmation email"
-                    titleStyle={s.textLink}
-                    containerStyle={{ marginBottom: 10 }}
-                    buttonStyle={s.buttonMask}
-                  />
-                  <Button
+                    style={[s.buttonMask, s.marginBottom]}
+                  >
+                    <Text style={s.textLink}>Resend my confirmation email</Text>
+                  </Pressable>
+                  <Pressable
                     onPress={() => {
                       this.props.loginLater();
                       this.props.navigation.navigate("MapTab");
                     }}
-                    titleStyle={s.textLink}
-                    buttonStyle={s.buttonMask}
-                    title="Skip logging in for now"
-                  />
+                    style={s.buttonMask}
+                  >
+                    <Text style={s.textLink}>Skip logging in for now</Text>
+                  </Pressable>
                 </View>
               </KeyboardAwareScrollView>
               <KeyboardToolbar />
@@ -215,6 +212,9 @@ const getStyles = (theme) =>
     buttonMask: {
       backgroundColor: theme.buttonMask,
     },
+    marginBottom: {
+      marginBottom: 20,
+    },
     errorText: {
       color: "red",
       fontFamily: "Nunito-Bold",
@@ -229,18 +229,22 @@ const getStyles = (theme) =>
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
     },
-    inputBox: {
-      width: "100%",
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: 50,
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      marginTop: 5,
-      marginBottom: 5,
+      marginVertical: 15,
+      marginHorizontal: 10,
       paddingLeft: 10,
     },
     inputText: {
+      paddingLeft: 5,
       color: theme.text,
+      fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
     textLink: {

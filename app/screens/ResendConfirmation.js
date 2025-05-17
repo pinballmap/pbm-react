@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Keyboard, StyleSheet, Pressable, View } from "react-native";
-import { Input } from "@rneui/base";
+import { Keyboard, StyleSheet, Pressable, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
@@ -51,18 +50,21 @@ const ResendConfirmation = ({ navigation }) => {
           />
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
-          <Input
-            placeholder="Username or email..."
-            placeholderTextColor={theme.indigo4}
-            onChangeText={(identification) => setIdentification(identification)}
-            value={identification}
-            errorStyle={{ color: "red" }}
-            errorMessage={identificationError}
-            inputContainerStyle={s.inputBox}
-            inputStyle={s.inputText}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
+          <View style={s.inputContainer}>
+            <TextInput
+              placeholder="Username or email..."
+              placeholderTextColor={theme.indigo4}
+              onChangeText={(identification) =>
+                setIdentification(identification)
+              }
+              value={identification}
+              errorStyle={{ color: "red" }}
+              errorMessage={identificationError}
+              style={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
           <PbmButton
             title={"Submit"}
             onPress={submit}
@@ -81,16 +83,21 @@ const getStyles = (theme) =>
       marginLeft: 25,
       marginRight: 25,
     },
-    inputBox: {
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: 50,
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      margin: 15,
+      margin: 25,
       paddingLeft: 10,
     },
     inputText: {
+      paddingLeft: 5,
       color: theme.text,
+      fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
     confirmText: {

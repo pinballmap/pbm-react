@@ -14,10 +14,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Input, ListItem } from "@rneui/base";
+import { ListItem } from "@rneui/base";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { getData } from "../config/request";
@@ -410,7 +411,9 @@ class Search extends Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          height: 65,
+                          alignItems: "center",
+                          height: 45,
+                          marginBottom: 10,
                         }}
                       >
                         <MaterialIcons
@@ -423,46 +426,42 @@ class Search extends Component {
                           size={30}
                           style={s.clear}
                         />
-                        <Input
-                          placeholder="City, Region, Venue..."
-                          placeholderTextColor={theme.indigo4}
-                          leftIcon={
-                            <MaterialIcons
-                              name="search"
-                              size={25}
-                              color={theme.indigo4}
-                              style={{ marginLeft: 10, marginRight: 0 }}
-                            />
-                          }
-                          rightIcon={
-                            q ? (
-                              <MaterialCommunityIcons
-                                name="close-circle"
-                                size={20}
-                                color={theme.purple}
-                                style={{ marginRight: 2 }}
-                                onPress={() => this.changeQuery("")}
-                              />
-                            ) : null
-                          }
-                          onChangeText={(query) => this.changeQuery(query)}
-                          value={q}
-                          containerStyle={{ paddingTop: 4 }}
-                          key={"search"}
-                          returnKeyType={"search"}
-                          onSubmitEditing={
-                            submitButton
-                              ? ({ nativeEvent }) =>
-                                  this.geocodeSearch(nativeEvent.text)
-                              : () => {}
-                          }
-                          inputContainerStyle={s.inputContainerStyle}
-                          inputStyle={s.inputStyle}
-                          ref={(input) => {
-                            this.textInput = input;
-                          }}
-                          autoCorrect={false}
-                        />
+                        <View style={s.inputContainer}>
+                          <MaterialIcons
+                            name="search"
+                            size={25}
+                            color={theme.indigo4}
+                            style={{ marginLeft: 10, marginRight: 0 }}
+                          />
+                          <TextInput
+                            placeholder="City, Region, Venue..."
+                            placeholderTextColor={theme.indigo4}
+                            onChangeText={(query) => this.changeQuery(query)}
+                            value={q}
+                            key={"search"}
+                            returnKeyType={"search"}
+                            onSubmitEditing={
+                              submitButton
+                                ? ({ nativeEvent }) =>
+                                    this.geocodeSearch(nativeEvent.text)
+                                : () => {}
+                            }
+                            style={s.inputStyle}
+                            ref={(input) => {
+                              this.textInput = input;
+                            }}
+                            autoCorrect={false}
+                          />
+                        </View>
+                        {q ? (
+                          <MaterialCommunityIcons
+                            name="close-circle"
+                            size={20}
+                            color={theme.purple}
+                            style={{ position: "absolute", right: 30 }}
+                            onPress={() => this.changeQuery("")}
+                          />
+                        ) : null}
                       </View>
                       <ScrollView
                         style={{ paddingTop: 3 }}
@@ -589,10 +588,14 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     inputStyle: {
+      paddingLeft: 5,
+      paddingRight: 65,
+      width: deviceWidth - 60,
       color: theme.text,
+      fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
-    inputContainerStyle: {
+    inputContainer: {
       borderWidth: 1,
       backgroundColor: theme.white,
       borderRadius: 25,
@@ -640,8 +643,7 @@ const getStyles = (theme) =>
     clear: {
       color: theme.text2,
       marginLeft: 5,
-      marginRight: -5,
-      marginTop: 10,
+      marginRight: 5,
     },
     cityRegionRow: {
       position: "absolute",
