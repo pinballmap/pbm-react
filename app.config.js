@@ -4,7 +4,7 @@ export default {
   expo: {
     assetBundlePatterns: ["app/assets/images/*"],
     updates: {
-      url: "https://u.expo.dev/7488ea00-6c89-11e9-8ab8-0157f5861c1f",
+      enabled: false,
     },
     runtimeVersion: {
       policy: "sdkVersion",
@@ -150,7 +150,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 188,
+      versionCode: 189,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
