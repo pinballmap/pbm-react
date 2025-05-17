@@ -1,16 +1,10 @@
 import { Platform, StyleSheet, View } from "react-native";
 import { Text } from "./index";
-import { CheckBox } from "@rneui/themed";
+import Checkbox from "expo-checkbox";
 import React, { useContext } from "react";
 import { ThemeContext } from "../theme-context";
 
-const CheckBoxSetting = ({
-  title,
-  description,
-  checkTitle,
-  onPress,
-  checked,
-}) => {
+const CheckBoxSetting = ({ title, description, onPress, checked }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -19,17 +13,14 @@ const CheckBoxSetting = ({
       <View style={[s.title, { marginBottom: 4 }]}>
         <Text style={s.titleText}>{title}</Text>
       </View>
-      <CheckBox
-        checked={checked}
-        title={checkTitle}
-        onPress={() => {
+      <Checkbox
+        value={checked}
+        onValueChange={() => {
           // Sends the new checked value
           return onPress(!checked);
         }}
-        containerStyle={s.checkBoxContainer}
-        fontFamily="Nunito-Bold"
-        textStyle={s.checkBoxTextStyle}
-        checkedColor={theme.purple}
+        style={s.checkBoxContainer}
+        color={theme.purple}
       />
       <Text style={s.descriptionText}>{description}</Text>
     </View>

@@ -23,7 +23,7 @@ import {
   setMachineFilter,
 } from "../actions";
 import { BackglassImage, PbmButton, Text, WarningButton } from "../components";
-import { CheckBox } from "@rneui/themed";
+import Checkbox from "expo-checkbox";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
 
@@ -373,28 +373,28 @@ class FindMachine extends React.PureComponent {
                   <View
                     style={{ justifyContent: "center", alignItems: "center" }}
                   >
-                    <Text>Does this machine have Stern Insider Connected?</Text>
+                    <Text>
+                      Does machine have Stern Insider Connected enabled?
+                    </Text>
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                      <CheckBox
-                        checked={this.state.ic_enabled}
-                        title="Yes"
-                        onPress={() => this.onIcEnabledPressed(true)}
-                        containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="Nunito-Bold"
-                        textStyle={{ fontSize: 16, color: theme.text }}
-                        checkedColor={theme.purple}
+                      <Checkbox
+                        value={this.state.ic_enabled}
+                        onValueChange={() => this.onIcEnabledPressed(true)}
+                        color={theme.purple}
+                        style={s.checkStyle}
                       />
-                      <CheckBox
-                        checked={this.state.ic_enabled === false}
-                        title="No"
-                        onPress={() => this.onIcEnabledPressed(false)}
-                        containerStyle={{ backgroundColor: theme.base1 }}
-                        fontFamily="Nunito-Bold"
-                        textStyle={{ fontSize: 16, color: theme.text }}
-                        checkedColor={theme.purple}
+                      <Text style={[s.checkText, { marginRight: 20 }]}>
+                        Yes
+                      </Text>
+                      <Checkbox
+                        value={this.state.ic_enabled === false}
+                        onValueChange={() => this.onIcEnabledPressed(false)}
+                        color={theme.purple}
+                        style={s.checkStyle}
                       />
+                      <Text style={s.checkText}>No</Text>
                     </View>
                   </View>
                 )}
@@ -588,6 +588,15 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
+    },
+    checkText: {
+      fontFamily: "Nunito-Bold",
+      fontSize: 16,
+      color: theme.text,
+    },
+    checkStyle: {
+      backgroundColor: theme.base1,
+      marginRight: 5,
     },
   });
 

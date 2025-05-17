@@ -48,7 +48,8 @@
     "redux-thunk": "^3.1.0",
     "reselect": "^4.0.0",
     "throttle-debounce": "^2.1.0",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.2",
+    "expo-checkbox": "~4.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
