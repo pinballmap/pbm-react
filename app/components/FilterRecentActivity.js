@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
-import { Avatar, ListItem } from "@rneui/base";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedActivitiesFilter } from "../actions";
@@ -50,167 +49,148 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
             />
           </View>
           <View>
-            <ListItem
-              containerStyle={
+            <Pressable
+              style={[
+                s.container,
                 selectedActivities.find((activity) => activity === "new_lmx")
                   ? s.containerBg
-                  : s.containerNotSelected
-              }
+                  : s.containerNotSelected,
+              ]}
               onPress={() => setRecentActivitiesFilter("new_lmx")}
             >
-              <Avatar>
-                {
-                  <MaterialCommunityIcons
-                    name="plus-box"
-                    size={32}
-                    color="#58a467"
-                  />
-                }
-              </Avatar>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={
-                    selectedActivities.find(
-                      (activity) => activity === "new_lmx",
-                    )
-                      ? s.activeTitleStyle
-                      : s.titleStyle
-                  }
-                >
-                  Added Machines
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              containerStyle={
+              <MaterialCommunityIcons
+                name="plus-box"
+                size={32}
+                color="#58a467"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  selectedActivities.find((activity) => activity === "new_lmx")
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                Added Machines
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
                 selectedActivities.find(
                   (activity) => activity === "remove_machine",
                 )
                   ? s.containerBg
-                  : s.containerNotSelected
-              }
+                  : s.containerNotSelected,
+              ]}
               onPress={() => setRecentActivitiesFilter("remove_machine")}
             >
-              <Avatar>
-                {
-                  <MaterialCommunityIcons
-                    name="minus-box"
-                    size={32}
-                    color="#f56f79"
-                  />
-                }
-              </Avatar>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={
-                    selectedActivities.find(
-                      (activity) => activity === "remove_machine",
-                    )
-                      ? s.activeTitleStyle
-                      : s.titleStyle
-                  }
-                >
-                  Removed Machines
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              containerStyle={
+              <MaterialCommunityIcons
+                name="minus-box"
+                size={32}
+                color="#f56f79"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  selectedActivities.find(
+                    (activity) => activity === "remove_machine",
+                  )
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                Removed Machines
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
                 selectedActivities.find(
                   (activity) => activity === "new_condition",
                 )
                   ? s.containerBg
-                  : s.containerNotSelected
-              }
+                  : s.containerNotSelected,
+              ]}
               onPress={() => setRecentActivitiesFilter("new_condition")}
             >
-              <Avatar>
-                {
-                  <MaterialCommunityIcons
-                    name="comment-text"
-                    size={32}
-                    color="#6cbffe"
-                  />
-                }
-              </Avatar>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={
-                    selectedActivities.find(
-                      (activity) => activity === "new_condition",
-                    )
-                      ? s.activeTitleStyle
-                      : s.titleStyle
-                  }
-                >
-                  New Comments
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              containerStyle={
+              <MaterialCommunityIcons
+                name="comment-text"
+                size={32}
+                color="#6cbffe"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  selectedActivities.find(
+                    (activity) => activity === "new_condition",
+                  )
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                New Comments
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
                 selectedActivities.find((activity) => activity === "new_msx")
                   ? s.containerBg
-                  : s.containerNotSelected
-              }
+                  : s.containerNotSelected,
+              ]}
               onPress={() => setRecentActivitiesFilter("new_msx")}
             >
-              <Avatar>
-                {
-                  <MaterialCommunityIcons
-                    name="numeric"
-                    size={32}
-                    color="#eeb152"
-                  />
-                }
-              </Avatar>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={
-                    selectedActivities.find(
-                      (activity) => activity === "new_msx",
-                    )
-                      ? s.activeTitleStyle
-                      : s.titleStyle
-                  }
-                >
-                  High Scores
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              containerStyle={
+              <MaterialCommunityIcons
+                name="numeric"
+                size={32}
+                color="#eeb152"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  selectedActivities.find((activity) => activity === "new_msx")
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                High Scores
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
                 selectedActivities.find(
                   (activity) => activity === "confirm_location",
                 )
                   ? s.containerBg
-                  : s.containerNotSelected
-              }
+                  : s.containerNotSelected,
+              ]}
               onPress={() => setRecentActivitiesFilter("confirm_location")}
             >
-              <Avatar>
-                {
-                  <MaterialCommunityIcons
-                    name="clipboard-check"
-                    size={32}
-                    color="#d473df"
-                  />
-                }
-              </Avatar>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={
-                    selectedActivities.find(
-                      (activity) => activity === "confirm_location",
-                    )
-                      ? s.activeTitleStyle
-                      : s.titleStyle
-                  }
-                >
-                  Location Confirmations
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
+              <MaterialCommunityIcons
+                name="clipboard-check"
+                size={32}
+                color="#d473df"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  selectedActivities.find(
+                    (activity) => activity === "confirm_location",
+                  )
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                Location Confirmations
+              </Text>
+            </Pressable>
             <PbmButton
               title="Apply Filters"
               onPress={() => setShowModal(false)}
@@ -230,6 +210,12 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      alignItems: "center",
+      height: 60,
+      paddingHorizontal: 15,
+    },
     containerNotSelected: {
       backgroundColor: theme.base1,
     },
@@ -254,12 +240,14 @@ const getStyles = (theme) =>
       color: theme.red2,
     },
     titleStyle: {
-      color: theme.text3,
+      fontSize: 17,
       fontFamily: "Nunito-Bold",
+    },
+    inactiveTitleStyle: {
+      color: theme.text3,
     },
     activeTitleStyle: {
       color: theme.pink1,
-      fontFamily: "Nunito-Bold",
     },
     containerBg: {
       backgroundColor: theme.pink2,
@@ -267,6 +255,9 @@ const getStyles = (theme) =>
     filterIcon: {
       paddingRight: 10,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
+    },
+    iconStyle: {
+      marginRight: 10,
     },
   });
 
