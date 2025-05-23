@@ -235,13 +235,12 @@ function EditLocationDetails({ navigation, ...props }) {
                   <Text style={s.title}>Location Type</Text>
                   <DropDownButton
                     title={locationTypeName}
-                    containerStyle={[s.containerStyle]}
                     onPress={() => goToFindLocationType()}
                   />
                   <Text style={s.title}>Operator</Text>
                   <DropDownButton
                     title={operatorName}
-                    containerStyle={[{ marginBottom: 10 }, s.containerStyle]}
+                    margin={{ marginBottom: 20, marginHorizontal: 20 }}
                     onPress={() => goToFindOperator()}
                   />
                   <PbmButton
@@ -331,10 +330,6 @@ const getStyles = (theme) =>
       height: 2,
       marginTop: 10,
       backgroundColor: theme.indigo4,
-    },
-    containerStyle: {
-      marginTop: 0,
-      marginHorizontal: 20,
     },
     subText: {
       marginHorizontal: 30,

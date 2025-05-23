@@ -126,6 +126,7 @@ const FilterMap = ({
               navigate("FindMachine", { machineFilter: true });
               dispatch(setMachineFilter());
             }}
+            margin={s.dropdownMargin}
           />
           {machine && machine.machine_group_id && (
             <>
@@ -167,6 +168,7 @@ const FilterMap = ({
           <DropDownButton
             title={locationTypeName}
             onPress={() => goToFindLocationType()}
+            margin={s.dropdownMargin}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Operator
@@ -174,6 +176,7 @@ const FilterMap = ({
           <DropDownButton
             title={operatorName}
             onPress={() => goToFindOperator()}
+            margin={s.dropdownMargin}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Saved locations or all
@@ -216,6 +219,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Bold",
       color: theme.text2,
+      marginBottom: 5,
     },
     pink: {
       color: theme.pink1,
@@ -229,6 +233,11 @@ const getStyles = (theme) =>
     paddingFirst: {
       paddingTop: 10,
       paddingHorizontal: 10,
+    },
+    dropdownMargin: {
+      marginHorizontal: 10,
+      marginTop: 0,
+      marginBottom: 5,
     },
     buttonGroupContainer: {
       borderWidth: 0,

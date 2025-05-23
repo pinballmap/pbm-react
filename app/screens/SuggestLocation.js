@@ -481,7 +481,6 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <Text style={s.title}>Country</Text>
                 <DropDownButton
                   title={countryName}
-                  containerStyle={[{ marginTop: 0, marginHorizontal: 20 }]}
                   onPress={() => goToFindCountry()}
                 />
                 <Text style={s.title}>Phone</Text>
@@ -531,12 +530,10 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <Text style={s.title}>Location Type</Text>
                 <DropDownButton
                   title={locationTypeName}
-                  containerStyle={[{ marginTop: 0, marginHorizontal: 20 }]}
                   onPress={() => goToFindLocationType()}
                 />
                 <Text style={s.title}>Operator</Text>
                 <DropDownButton
-                  containerStyle={[{ marginTop: 0, marginHorizontal: 20 }]}
                   title={operatorName}
                   onPress={() => goToFindOperator()}
                 />
