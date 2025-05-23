@@ -35,16 +35,11 @@ const RemoveMachineModal = ({
       <PbmButton
         title={"Yes, Remove It"}
         onPress={() => removeLmx(curLmx, location.id)}
-        containerStyle={s.buttonContainer}
       />
-      <WarningButton
-        title={"Cancel"}
-        onPress={() => closeModal()}
-        containerStyle={s.buttonContainer}
-      />
+      <WarningButton title={"Cancel"} onPress={() => closeModal()} />
       <Text style={s.modalSubText}>
-        Please do not remove and re-add the same machine because you want to
-        clear out comments.
+        Do not remove and re-add this machine because you want to clear out
+        comments.
       </Text>
     </ConfirmationModal>
   );
@@ -69,12 +64,6 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Bold",
-    },
-    buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 10,
-      marginBottom: 10,
     },
     modalSubText: {
       marginHorizontal: 18,

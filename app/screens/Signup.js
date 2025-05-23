@@ -232,16 +232,8 @@ const Signup = ({ loginLater, navigation }) => {
           </View>
           <PbmButton
             onPress={submit}
-            containerStyle={{
-              marginHorizontal: 10,
-              marginTop: 15,
-              marginBottom: 25,
-            }}
             title="Sign Up"
-            accessibilityLabel="Sign Up"
             disabled={!username || !email || !password || !confirm_password}
-            disabledStyle={s.disabledStyle}
-            disabledTitleStyle={s.disabledTitleStyle}
           />
           <View style={[s.externalLinkContainer, s.marginB25]}>
             <Pressable
@@ -350,12 +342,6 @@ const getStyles = (theme) =>
       height: deviceHeight,
       marginLeft: 15,
       marginRight: 15,
-    },
-    disabledStyle: {
-      backgroundColor: theme.white,
-    },
-    disabledTitleStyle: {
-      color: theme.pink3,
     },
     confirmText: {
       textAlign: "center",

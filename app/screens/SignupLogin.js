@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   ImageBackground,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { Image } from "expo-image";
-import { Button } from "@rneui/base";
 import { loginLater } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 
@@ -81,41 +81,40 @@ const SignupLogin = ({
             marginRight: 15,
           }}
         >
-          <Button
+          <Pressable
             onPress={() => navigation.navigate("Login")}
-            raised
-            buttonStyle={s.buttonBlue}
-            titleStyle={s.titleStyle}
-            title="Current user? Log in"
-            accessibilityLabel="Log in"
-            containerStyle={{ overflow: "hidden", borderRadius: 25 }}
-          />
-          <Button
+            style={({ pressed }) => [
+              s.buttonStyle,
+              s.buttonBlue,
+              pressed ? s.bluePressed : undefined,
+            ]}
+          >
+            <Text style={s.titleStyle}>Current user? Log in</Text>
+          </Pressable>
+          <Pressable
             onPress={() => navigation.navigate("Signup")}
-            raised
-            buttonStyle={s.buttonPink}
-            titleStyle={s.titleStyle}
-            title="New user? Sign up"
-            accessibilityLabel="Sign up"
-            containerStyle={{
-              marginTop: 20,
-              marginBottom: 20,
-              overflow: "hidden",
-              borderRadius: 25,
-            }}
-          />
-          <Button
+            style={({ pressed }) => [
+              { marginVertical: 20 },
+              s.buttonStyle,
+              s.buttonPink,
+              pressed ? s.pinkPressed : undefined,
+            ]}
+          >
+            <Text style={s.titleStyle}>New user? Sign up</Text>
+          </Pressable>
+          <Pressable
             onPress={() => {
               loginLater();
               navigation.navigate("MapTab");
             }}
-            title="Or skip signing in"
-            accessibilityLabel="Skip signing in"
-            raised
-            titleStyle={s.titleStyle}
-            buttonStyle={s.buttonWhite}
-            containerStyle={{ overflow: "hidden", borderRadius: 25 }}
-          />
+            style={({ pressed }) => [
+              s.buttonStyle,
+              s.buttonWhite,
+              pressed ? s.whitePressed : undefined,
+            ]}
+          >
+            <Text style={s.titleStyle}>Or skip signing in</Text>
+          </Pressable>
         </View>
       </ScrollView>
       <ImageBackground
@@ -169,15 +168,21 @@ const getStyles = () =>
     },
     buttonPink: {
       backgroundColor: "#8e83ce",
-      borderRadius: 25,
+    },
+    pinkPressed: {
+      backgroundColor: "#796fb3",
     },
     buttonBlue: {
       backgroundColor: "#cf8dde",
-      borderRadius: 25,
+    },
+    bluePressed: {
+      backgroundColor: "#b97bc7",
     },
     buttonWhite: {
       backgroundColor: "#514953",
-      borderRadius: 25,
+    },
+    whitePressed: {
+      backgroundColor: "#3e3540",
     },
     titleStyle: {
       color: "#fafaff",
@@ -188,6 +193,23 @@ const getStyles = () =>
       flexDirection: "column",
       justifyContent: "center",
       height: deviceHeight,
+    },
+    buttonStyle: {
+      borderRadius: 25,
+      paddingHorizontal: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      height: 40,
+      overflow: "visible",
+      shadowColor: "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
   });
 

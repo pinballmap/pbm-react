@@ -363,10 +363,12 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                             machineList.length === 0 ||
                             locationName.length === 0
                           }
+                          margin={s.buttonMargin}
                         />
                         <WarningButton
                           title={"Go Back"}
                           onPress={() => setShowSuggestLocationModal(false)}
+                          margin={s.buttonMargin}
                         />
                       </ScrollView>
                     </View>
@@ -539,16 +541,12 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   onPress={() => goToFindOperator()}
                 />
                 <Text style={s.title}>Machines</Text>
-                <PbmButton
+                <DropDownButton
                   title={"Select machines"}
-                  titleStyle={s.titleStyle}
                   onPress={() => navigate("FindMachine", { multiSelect: true })}
-                  icon={
+                  rightIcon={
                     <MaterialCommunityIcons name="plus" style={s.plusButton} />
                   }
-                  iconPosition="right"
-                  containerStyle={s.addMachinesContainer}
-                  buttonStyle={s.addMachinesButton}
                 />
                 {machineList.length > 0 ? (
                   <View style={s.machineContainer}>
@@ -576,6 +574,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <PbmButton
                   title={"Review Submission"}
                   onPress={reviewSubmission}
+                  margin={{ marginVertical: 30, marginHorizontal: 40 }}
                 />
               </KeyboardAwareScrollView>
             )}
@@ -695,14 +694,6 @@ const getStyles = (theme) =>
       fontSize: 24,
       marginLeft: 5,
     },
-    addMachinesContainer: {
-      marginBottom: 15,
-      marginHorizontal: 20,
-    },
-    addMachinesButton: {
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      borderRadius: 25,
-    },
     listContainerStyle: {
       backgroundColor: "transparent",
     },
@@ -724,6 +715,10 @@ const getStyles = (theme) =>
     containerStyle: {
       marginTop: 0,
       marginHorizontal: 20,
+    },
+    buttonMargin: {
+      marginVertical: 15,
+      marginHorizontal: 40,
     },
   });
 

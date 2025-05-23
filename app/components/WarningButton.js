@@ -1,78 +1,61 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import { StyleSheet } from "react-native";
-import { Button } from "@rneui/base";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const WarningButton = ({
-  title,
-  onPress,
-  accessibilityLabel,
-  containerStyle,
-  icon,
-  iconPosition,
-}) => {
+const WarningButton = ({ title, margin, onPress, leftIcon }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
   return (
-    <Button
-      title={title}
+    <Pressable
       onPress={onPress}
-      accessibilityLabel={accessibilityLabel}
-      icon={icon}
-      iconPosition={iconPosition}
-      buttonStyle={s.redButton}
-      titleStyle={s.titleStyle}
-      containerViewStyle={{ alignSelf: "stretch" }}
-      containerStyle={[
-        {
-          overflow: "visible",
-          borderRadius: 25,
-          backgroundColor: theme.base1,
-          shadowColor:
-            theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        },
-        containerStyle ? containerStyle : s.margin15,
+      style={({ pressed }) => [
+        s.buttonStyle,
+        margin ? margin : s.margin,
+        pressed ? s.pressed : undefined,
       ]}
-    />
+    >
+      {leftIcon}
+      <Text style={s.titleStyle}>{title}</Text>
+    </Pressable>
   );
-};
-
-WarningButton.propTypes = {
-  onPress: PropTypes.func,
-  title: PropTypes.string,
-  iconPosition: PropTypes.string,
-  icon: PropTypes.node,
-  accessibilityLabel: PropTypes.string,
-  containerStyle: PropTypes.object,
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    margin15: {
-      marginLeft: 40,
-      marginRight: 40,
-      marginTop: 15,
-      marginBottom: 15,
-    },
     titleStyle: {
       fontSize: 16,
-      color: "white",
-      textTransform: "capitalize",
       fontFamily: "Nunito-Bold",
+      textTransform: "capitalize",
+      color: "white",
     },
-    redButton: {
-      backgroundColor: theme.red2,
-      width: "100%",
+    buttonStyle: {
       borderRadius: 25,
+      paddingHorizontal: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.red2,
+      height: 40,
+      overflow: "visible",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    margin: {
+      marginHorizontal: 20,
+      marginVertical: 15,
+    },
+    pressed: {
+      shadowOpacity: 0,
+      elevation: 0,
+      backgroundColor: "#a8434a",
     },
   });
 

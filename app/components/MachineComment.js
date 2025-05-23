@@ -66,17 +66,10 @@ const MachineComment = ({ commentObj, user }) => {
           <>
             <ConfirmationModal loading={loading} visible={deleteModalVisible}>
               <Text style={s.modalTitle}>Delete your comment?</Text>
-              <PbmButton
-                title={"Delete Comment"}
-                onPress={onDeletePress}
-                accessibilityLabel="Delete Comment"
-                containerStyle={s.buttonContainer}
-              />
+              <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
               <WarningButton
                 title={"Cancel"}
                 onPress={() => setDeleteModalVisible(false)}
-                accessibilityLabel="Cancel"
-                containerStyle={s.buttonContainer}
               />
             </ConfirmationModal>
             <Modal
@@ -109,15 +102,10 @@ const MachineComment = ({ commentObj, user }) => {
                     ]}
                     textAlignVertical="top"
                   />
-                  <PbmButton
-                    title={"Save"}
-                    onPress={onEditPress}
-                    accessibilityLabel="Edit Comment"
-                  />
+                  <PbmButton title={"Save"} onPress={onEditPress} />
                   <WarningButton
                     title={"Cancel"}
                     onPress={() => setEditModalVisible(false)}
-                    accessibilityLabel="Cancel"
                   />
                 </KeyboardAwareScrollView>
               </View>
@@ -191,12 +179,6 @@ const getStyles = (theme) =>
     username: {
       color: theme.pink1,
       marginLeft: 6,
-    },
-    buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 10,
-      marginBottom: 10,
     },
     italic: {
       fontFamily: "Nunito-Italic",

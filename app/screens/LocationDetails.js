@@ -206,12 +206,10 @@ const LocationDetails = (props) => {
           <PbmButton
             title={"Confirm Lineup"}
             onPress={() => handleConfirmPress(location.id, loggedIn)}
-            containerStyle={s.buttonContainer}
           />
           <WarningButton
             title={"Cancel"}
             onPress={() => setConfirmModalVisible(false)}
-            containerStyle={s.buttonContainer}
           />
         </ConfirmationModal>
         <View
@@ -897,12 +895,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.purple,
       padding: 10,
       borderRadius: 15,
-    },
-    buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 10,
-      marginBottom: 10,
     },
   });
 

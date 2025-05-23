@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
-import { Button } from "@rneui/base";
 import { retrieveItem } from "../config/utils";
 import { sleep } from "../utils";
 import { getData } from "../config/request";
@@ -333,28 +332,26 @@ const Map = ({
         )}
         <CustomMapMarkers navigation={navigation} />
       </Mapbox.MapView>
-      <Button
+      <Pressable
         onPress={() => navigation.navigate("LocationList")}
-        icon={
-          <MaterialCommunityIcons
-            name="format-list-bulleted"
-            style={s.buttonIcon}
-          />
-        }
-        containerStyle={[
+        style={({ pressed }) => [
+          s.buttonStyle,
+          s.shadow,
           { top: topMargin + 60 },
           s.listButtonContainer,
-          s.containerStyle,
+          pressed ? s.filterListPressed : undefined,
         ]}
-        buttonStyle={s.buttonStyle}
-        titleStyle={s.buttonTitle}
-        title="List"
-        underlayColor="transparent"
-      />
+      >
+        <MaterialCommunityIcons
+          name="format-list-bulleted"
+          style={s.buttonIcon}
+        />
+        <Text style={s.buttonTitle}>List</Text>
+      </Pressable>
       <Pressable
         style={({ pressed }) => [
           {},
-          s.containerStyle,
+          s.shadow,
           s.myLocationContainer,
           pressed ? s.pressedMyLocation : s.notPressed,
         ]}
@@ -394,25 +391,25 @@ const Map = ({
         )}
       </Pressable>
       {filterApplied ? (
-        <Button
-          title={"Filter"}
+        <Pressable
           onPress={() => dispatch(clearFilters(true))}
-          containerStyle={[
+          style={({ pressed }) => [
+            s.buttonStyle,
+            s.shadow,
             { top: topMargin + 60 },
             s.filterContainer,
-            s.containerStyle,
+            pressed ? s.filterListPressed : undefined,
           ]}
-          buttonStyle={s.buttonStyle}
-          titleStyle={s.filterTitleStyle}
-          iconLeft
-          icon={<Ionicons name="close-circle" style={s.closeIcon} />}
-        />
+        >
+          <Ionicons name="close-circle" style={s.closeIcon} />
+          <Text style={s.filterTitleStyle}>Filter</Text>
+        </Pressable>
       ) : null}
       <View style={s.bottomContainer}>
         {showUpdateSearch ? (
           <Pressable
             style={({ pressed }) => [
-              s.containerStyle,
+              s.shadow,
               s.updateContainerStyle,
               pressed ? s.pressed : s.notPressed,
             ]}
@@ -477,17 +474,24 @@ const getStyles = (theme) =>
       paddingRight: 5,
     },
     buttonStyle: {
+      borderRadius: 25,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      height: 40,
+      backgroundColor: theme.pink2,
       paddingVertical: 5,
       paddingHorizontal: 15,
-      borderRadius: 25,
-      backgroundColor: theme.pink2,
     },
     buttonTitle: {
       color: theme.text2,
       fontSize: 18,
       fontFamily: "Nunito-SemiBold",
     },
-    containerStyle: {
+    filterListPressed: {
+      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.pink3,
+    },
+    shadow: {
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
       shadowOffset: {
@@ -502,7 +506,6 @@ const getStyles = (theme) =>
     listButtonContainer: {
       position: "absolute",
       left: 15,
-      borderRadius: 25,
     },
     bottomContainer: {
       position: "absolute",

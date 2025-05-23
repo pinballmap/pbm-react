@@ -5,6 +5,7 @@ import {
   Modal,
   PixelRatio,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -190,7 +191,7 @@ const MachineDetails = ({
                 }
                 style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
                 placeholder={
-                  "(note: if this machine is gone, please just remove it. no need to leave a comment saying it's gone)"
+                  "(note: if this machine is gone, just remove it. no need to leave a comment saying it's gone)"
                 }
                 placeholderTextColor={theme.indigo4}
                 textAlignVertical="top"
@@ -322,62 +323,70 @@ const MachineDetails = ({
                   marginRight: 10,
                 }}
               >
-                Toggle Stern Insider Connected status
+                Toggle{" "}
+                <Text style={{ fontFamily: "Nunito-Bold", color: "#d0021b" }}>
+                  Stern
+                </Text>{" "}
+                <Text style={{ fontFamily: "Nunito-Bold" }}>
+                  Insider Connected
+                </Text>{" "}
+                status
               </Text>
-              <PbmButton
-                titleProps={{ maxFontSizeMultiplier: 1.3 }}
-                title={`${
-                  ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                } Insider\nConnected`}
+              <Pressable
                 onPress={
                   loggedIn
                     ? () => updateIcEnabled(curLmx.id)
                     : () => navigation.navigate("Login")
                 }
-                titleStyle={[
-                  s.titleStyle,
-                  ic_enabled === null
-                    ? s.nullICTitle
-                    : ic_enabled
-                      ? s.yesICTitle
-                      : s.noICTitle,
-                ]}
-                buttonStyle={[
-                  s.buttonStyle,
+                style={[
+                  s.buttonIC,
                   ic_enabled === null
                     ? s.nullIC
                     : ic_enabled
                       ? s.yesIC
                       : s.noIC,
                 ]}
-                containerStyle={{ width: 180, height: 65 }}
-                icon={
-                  ic_enabled === null ? (
-                    <FontAwesome5
-                      name="question-circle"
-                      size={28}
-                      color="#665b50"
-                      style={{ width: 55 }}
-                    />
-                  ) : ic_enabled ? (
-                    <Image
-                      source={require("../assets/images/Insider_Connected_Light.png")}
-                      style={{
-                        width: 55,
-                        height: 55,
-                      }}
-                      contentFit="contain"
-                    />
-                  ) : (
-                    <MaterialCommunityIcons
-                      name="circle-off-outline"
-                      size={34}
-                      color="#533a3a"
-                      style={{ width: 55 }}
-                    />
-                  )
-                }
-              />
+              >
+                {ic_enabled === null ? (
+                  <FontAwesome5
+                    name="question-circle"
+                    size={28}
+                    color="#665b50"
+                    style={{ width: 55 }}
+                  />
+                ) : ic_enabled ? (
+                  <Image
+                    source={require("../assets/images/Insider_Connected_Light.png")}
+                    style={{
+                      width: 55,
+                      height: 55,
+                    }}
+                    contentFit="contain"
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="circle-off-outline"
+                    size={34}
+                    color="#533a3a"
+                    style={{ width: 55 }}
+                  />
+                )}
+                <Text
+                  fontMultiplier={1.3}
+                  style={[
+                    s.titleStyle,
+                    ic_enabled === null
+                      ? s.nullICTitle
+                      : ic_enabled
+                        ? s.yesICTitle
+                        : s.noICTitle,
+                  ]}
+                >
+                  {`${
+                    ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
+                  } Insider\nConnected`}
+                </Text>
+              </Pressable>
             </View>
           )}
           <View style={s.containerStyle}>
@@ -491,14 +500,14 @@ const MachineDetails = ({
             </View>
           )}
           <WarningButton
-            containerStyle={s.removeButtonMargins}
             title={"Remove Machine"}
+            margin={s.removeButtonMargins}
             onPress={
               loggedIn
                 ? () => setShowRemoveMachineModal(true)
                 : () => navigation.navigate("Login")
             }
-            icon={
+            leftIcon={
               <FontAwesome6
                 size={24}
                 color="#ffffff"
@@ -506,7 +515,6 @@ const MachineDetails = ({
                 style={s.removeButton}
               />
             }
-            iconPosition="left"
           />
         </ScrollView>
       </ScrollView>
@@ -704,7 +712,7 @@ const getStyles = (theme) =>
     titleStyle: {
       fontSize: 16,
       fontFamily: "Nunito-Bold",
-      marginHorizontal: "auto",
+      textTransform: "capitalize",
     },
     nullICTitle: {
       color: "#665b50",
@@ -715,19 +723,36 @@ const getStyles = (theme) =>
     noICTitle: {
       color: "#533a3a",
     },
-    buttonStyle: {
-      width: "100%",
-      borderRadius: 25,
+    buttonIC: {
       height: 65,
+      borderRadius: 25,
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "visible",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
     nullIC: {
       backgroundColor: "#e4dddd",
+      borderColor: "#e4dddd",
     },
     yesIC: {
       backgroundColor: "#e3fae5",
+      borderColor: "#e3fae5",
     },
     noIC: {
       backgroundColor: "#f0d8d8",
+      borderColor: "#f0d8d8",
     },
     italic: {
       fontFamily: "Nunito-Italic",
@@ -737,8 +762,7 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     removeButtonMargins: {
-      marginLeft: 40,
-      marginRight: 40,
+      marginHorizontal: 40,
       marginTop: 15,
       marginBottom: 40,
     },

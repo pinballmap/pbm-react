@@ -11,11 +11,7 @@ const NotLoggedIn = ({ onPress, text }) => {
   return (
     <ScrollView style={s.container}>
       <Text style={s.hiya}>{text}</Text>
-      <PbmButton
-        title={"Log In"}
-        onPress={onPress}
-        accessibilityLabel="Log In"
-      />
+      <PbmButton title={"Log In"} onPress={onPress} />
     </ScrollView>
   );
 };

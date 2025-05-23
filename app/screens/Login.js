@@ -140,19 +140,11 @@ class Login extends Component {
                   <PbmButton
                     onPress={() => this.submit()}
                     title="Log In"
-                    accessibilityLabel="Log In"
                     disabled={!this.state.login || !this.state.password}
-                    disabledStyle={s.disabledStyle}
-                    disabledTitleStyle={s.disabledTitleStyle}
-                    containerStyle={{
-                      marginHorizontal: 10,
-                      marginTop: 10,
-                      marginBottom: 25,
-                    }}
                   />
                   <Pressable
                     onPress={() => this.props.navigation.navigate("Signup")}
-                    style={[s.buttonMask, s.marginBottom]}
+                    style={[{ marginTop: 15 }, s.buttonMask, s.marginBottom]}
                   >
                     <Text style={s.textLink}>Not a user? SIGN UP!</Text>
                   </Pressable>

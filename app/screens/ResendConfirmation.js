@@ -69,7 +69,7 @@ const ResendConfirmation = ({ navigation }) => {
             title={"Submit"}
             onPress={submit}
             disabled={identification.length === 0}
-            containerStyle={s.container}
+            margin={s.margin}
           />
         </View>
       </Pressable>
@@ -79,9 +79,8 @@ const ResendConfirmation = ({ navigation }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    container: {
-      marginLeft: 25,
-      marginRight: 25,
+    margin: {
+      marginHorizontal: 25,
     },
     inputContainer: {
       flexDirection: "row",

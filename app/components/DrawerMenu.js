@@ -41,14 +41,11 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             logout();
             props.navigation.navigate("Login");
           }}
-          accessibilityLabel="Logout"
-          containerStyle={s.buttonContainer}
         />
         <WarningButton
           title={"Stay Logged In"}
           onPress={() => setModalVisible(false)}
           accessibilityLabel="Stay Logged In"
-          containerStyle={s.buttonContainer}
         />
       </ConfirmationModal>
       <DrawerItemList {...props} />
@@ -284,10 +281,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-ExtraBold",
       fontSize: 22,
       marginLeft: 20,
-    },
-    buttonContainer: {
-      marginVertical: 10,
-      marginHorizontal: 20,
     },
     labelStyle: {
       color: theme.colors.primary,

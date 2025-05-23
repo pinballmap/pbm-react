@@ -1,80 +1,66 @@
 import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
-import { Button } from "@rneui/base";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const PbmButton = ({
-  titleProps,
-  title,
-  accessibilityLabel,
-  buttonStyle,
-  containerStyle,
-  titleStyle,
-  onPress,
-  icon,
-  iconPosition,
-  disabled,
-}) => {
+const PbmButton = ({ title, margin, onPress, rightIcon, disabled }) => {
   const { theme } = useContext(ThemeContext);
-  const styles = getStyles(theme);
+  const s = getStyles(theme);
 
   return (
-    <Button
-      titleProps={titleProps}
-      title={title}
-      onPress={onPress}
-      accessibilityLabel={accessibilityLabel}
-      icon={icon}
-      iconPosition={iconPosition}
+    <Pressable
       disabled={disabled}
-      disabledStyle={styles.disabledStyle}
-      disabledTitleStyle={styles.disabledTitleStyle}
-      buttonStyle={buttonStyle ? buttonStyle : styles.blueButton}
-      titleStyle={titleStyle ? titleStyle : styles.titleStyle}
-      containerViewStyle={{ alignSelf: "stretch" }}
-      containerStyle={[
-        {
-          overflow: "visible",
-          borderRadius: 25,
-          backgroundColor: theme.base1,
-          shadowColor:
-            theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        },
-        containerStyle ? containerStyle : styles.margin15,
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.buttonStyle,
+        margin ? margin : s.margin,
+        pressed ? s.pressed : undefined,
+        disabled ? { opacity: 0.5 } : { opacity: 1.0 },
       ]}
-    />
+    >
+      <Text style={s.titleStyle}>{title}</Text>
+      {rightIcon}
+    </Pressable>
   );
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    blueButton: {
-      backgroundColor: theme.theme == "dark" ? "#736aaf" : "#8e83ce",
-      width: "100%",
-      borderRadius: 25,
-    },
     titleStyle: {
-      color: "white",
       fontSize: 16,
       fontFamily: "Nunito-Bold",
+      textTransform: "capitalize",
+      color: theme.theme == "dark" ? "white" : theme.purple,
     },
-    disabledStyle: {
-      backgroundColor: theme.white,
+    buttonStyle: {
+      borderRadius: 25,
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.theme == "dark" ? "#736aaf" : theme.base4,
+      borderColor: theme.theme == "dark" ? "#736aaf" : "#a79de3",
+      height: 40,
+      overflow: "visible",
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
-    disabledTitleStyle: {
-      color: theme.pink3,
-      fontFamily: "Nunito-Bold",
-    },
-    margin15: {
-      marginHorizontal: 40,
+    margin: {
+      marginHorizontal: 20,
       marginVertical: 15,
+    },
+    pressed: {
+      shadowOpacity: 0,
+      elevation: 0,
+      backgroundColor: theme.theme == "dark" ? "#5b5391" : "#cccceb",
+      borderColor: theme.theme == "dark" ? "#5b5391" : "#86869c",
     },
   });
 

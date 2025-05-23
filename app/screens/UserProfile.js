@@ -106,14 +106,10 @@ class UserProfile extends Component {
                         this.props.logout();
                         this.props.navigation.navigate("Login");
                       }}
-                      accessibilityLabel="Logout"
-                      containerStyle={s.buttonContainer}
                     />
                     <WarningButton
                       title={"Stay Logged In"}
                       onPress={() => this.setModalVisible(false)}
-                      accessibilityLabel="Stay LoggedIn"
-                      containerStyle={s.buttonContainer}
                     />
                   </ConfirmationModal>
                   <View style={s.usernameContainer}>
@@ -252,7 +248,6 @@ class UserProfile extends Component {
                   <WarningButton
                     title={"Logout"}
                     onPress={() => this.setModalVisible(true)}
-                    accessibilityLabel="Logout"
                   />
                   <View style={s.externalUpdateContainer}>
                     <Text style={s.externalUpdateText}>
@@ -401,12 +396,6 @@ const getStyles = (theme) =>
       color: theme.text3,
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
-    },
-    buttonContainer: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 10,
-      marginBottom: 10,
     },
     pressed: {
       shadowOpacity: 0,
