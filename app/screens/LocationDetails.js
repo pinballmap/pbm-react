@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef } from "react";
+import React, { useEffect, useState, useRef, createRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
   Alert,
@@ -61,11 +61,29 @@ const LocationDetails = (props) => {
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
+  const location = props.location.location;
+  const { operators } = props.operators;
+  const {
+    loggedIn,
+    lat: userLat,
+    lon: userLon,
+    locationTrackingServicesEnabled,
+    unitPreference,
+    displayInsiderConnectedBadgePreference,
+  } = props.user;
+  const { website: opWebsite, name: opName } =
+    operators.find((operator) => operator.id === location.operator_id) ?? {};
+
+  const locationRef = useRef(props.location.location);
+  useEffect(() => {
+    locationRef.current = props.location.location;
+  }, [props.location.location]);
+
   useEffect(() => {
     const onMount = async () => {
       try {
-        const { location } = await dispatch(fetchLocation(locationId));
-        if (location.errors) throw new Error("Unable to find location");
+        const { location: l } = await dispatch(fetchLocation(locationId));
+        if (l.errors) throw new Error("Unable to find location");
       } catch (e) {
         Alert.alert("Location is gone, friend.");
         navigation.goBack();
@@ -78,7 +96,7 @@ const LocationDetails = (props) => {
     // component unmount
     return () => {
       if (!!route.params["refreshMap"]) {
-        dispatch(updateMap(location.lat, location.lon));
+        dispatch(updateMap(locationRef.current.lat, locationRef.current.lon));
       }
     };
   }, []);
@@ -130,19 +148,6 @@ const LocationDetails = (props) => {
   ) {
     return <ActivityIndicator />;
   }
-
-  const location = props.location.location;
-  const { operators } = props.operators;
-  const {
-    loggedIn,
-    lat: userLat,
-    lon: userLon,
-    locationTrackingServicesEnabled,
-    unitPreference,
-    displayInsiderConnectedBadgePreference,
-  } = props.user;
-  const { website: opWebsite, name: opName } =
-    operators.find((operator) => operator.id === location.operator_id) ?? {};
 
   const sortedMachines = alphaSortNameObj(
     location.location_machine_xrefs.map((machine) => {
