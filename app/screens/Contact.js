@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Platform, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
@@ -74,13 +74,60 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           <Text
             style={[s.text, s.boldFont, s.pinkText]}
           >{`Do not tell us that a location closed or all the machines are gone!`}</Text>
-          <Text style={[s.subText]}>
-            {`Instead, just `}
+          <Text style={[s.text]}>
+            {`Just `}
             <Text
               style={[s.pinkText, s.boldFont]}
             >{`remove the machines from the location`}</Text>
-            {`, and we'll auto-delete the location within a week.`}
+            {`. We'll auto-delete it within a week.`}
           </Text>
+          <View style={s.bombContainer}>
+            <View style={s.bombInner}>
+              <MaterialCommunityIcons
+                name="bomb"
+                size={25}
+                color={"#66017b"}
+                style={{ marginRight: 10, width: 25, height: 25 }}
+              />
+              <MaterialCommunityIcons
+                name="bomb"
+                size={25}
+                color={"#66017b"}
+                style={{ marginRight: 10, width: 25, height: 25 }}
+              />
+              <MaterialCommunityIcons
+                name="bomb"
+                size={25}
+                color={"#66017b"}
+                style={{ width: 25, height: 25 }}
+              />
+            </View>
+            <View style={{ flex: 1, width: "100%" }}>
+              <Text
+                style={{
+                  color: "#392f3a",
+                  fontSize: 17,
+                  fontFamily: "Nunito-Medium",
+                }}
+              >
+                {`Tell us the`}{" "}
+                <Text
+                  style={{ fontFamily: "Nunito-ExtraBold", color: "#1543a3" }}
+                >{`NAME of the location`}</Text>{" "}
+                {`you're writing about!`}
+                <Text
+                  style={{
+                    fontFamily: "Nunito-Italic",
+                    fontStyle: Platform.OS === "android" ? undefined : "italic",
+                    color: "#514953",
+                  }}
+                >
+                  {" "}
+                  {`This is a general contact form.`}
+                </Text>
+              </Text>
+            </View>
+          </View>
           {!loggedIn ? (
             <View>
               <TextInput
@@ -106,9 +153,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           ) : null}
           <TextInput
             multiline={true}
-            placeholder={
-              "Include the NAME of the location you're writing about! This is a general contact form."
-            }
+            placeholder={"Make sure to read all the above!!"}
             placeholderTextColor={theme.indigo4}
             style={[{ padding: 5, height: 200 }, s.textInput]}
             onChangeText={(message) => setMessage(message)}
@@ -130,15 +175,8 @@ const getStyles = (theme) =>
     },
     text: {
       fontSize: 16,
-      lineHeight: 22,
-      marginTop: 5,
+      marginVertical: 5,
       marginHorizontal: 5,
-    },
-    subText: {
-      marginHorizontal: 5,
-      marginTop: 15,
-      fontSize: 14,
-      fontFamily: "Nunito-Medium",
     },
     textInput: {
       backgroundColor: theme.white,
@@ -184,6 +222,20 @@ const getStyles = (theme) =>
       right: -20,
       top: -20,
       color: theme.red2,
+    },
+    bombContainer: {
+      backgroundColor: "#adc7fd",
+      borderRadius: 15,
+      marginTop: 10,
+      padding: 10,
+      flexDirection: "column",
+      flex: 1,
+    },
+    bombInner: {
+      flexDirection: "row",
+      justifyContent: "center",
+      width: "100%",
+      marginBottom: 5,
     },
   });
 
