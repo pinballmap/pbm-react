@@ -12,7 +12,7 @@ import { useTheme } from "@react-navigation/native";
 
 const moment = require("moment");
 
-Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
+Geocode.setApiKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const Events = ({ locations, query, user }) => {
   const [gettingEvents, setGettingEvents] = useState(true);

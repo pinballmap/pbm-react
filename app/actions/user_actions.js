@@ -92,7 +92,7 @@ export const hideNoLocationTrackingModal = () => ({
 
 export const login = (credentials) => {
   if (process.env.STORE_TESTERS.includes(credentials.username)) {
-    global.API_URL = process.env.STAGING_API_URL;
+    global.API_URL = process.env.EXPO_PUBLIC_STAGING_API_URL;
   }
   return {
     type: LOG_IN,
@@ -102,7 +102,7 @@ export const login = (credentials) => {
 
 export const logout = () => {
   // Go back to standard API on logout in case we were pointing to the staging API
-  global.API_URL = process.env.API_URL;
+  global.API_URL = process.env.EXPO_PUBLIC_API_URL;
 
   return {
     type: LOG_OUT,

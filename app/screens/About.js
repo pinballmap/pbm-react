@@ -92,7 +92,7 @@ const About = ({ navigation, appAlert }) => {
                 )
               }
             >{`the code`}</Text>{" "}
-            is open source. The site is maintained by over 100 administrators
+            is open source. The data is maintained by over 100 administrators
             and thousands of active users.
           </Text>
           <Text style={s.text}>

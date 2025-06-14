@@ -76,7 +76,7 @@ export const getData = (uri) => {
 
 export const getIfpaData = (address, radius, distanceUnit) => {
   return fetch(
-    `https://api.ifpapinball.com/v1/calendar/search?api_key=${process.env.IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`,
+    `https://api.ifpapinball.com/v1/calendar/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`,
   )
     .then((response) => {
       if (response.status === 200) return response.json();

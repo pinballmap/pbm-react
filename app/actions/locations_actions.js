@@ -15,7 +15,7 @@ import {
 import { getData } from "../config/request";
 import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
 
-Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
+Geocode.setApiKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const fetchLocationTypes = (url) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TYPES });

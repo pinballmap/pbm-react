@@ -12,7 +12,7 @@
       "distribution": "internal",
       "env": {
         "APP_VARIANT": "development",
-        "API_URL": "https://www.pinballmap.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://www.pinballmap.com/api/v1"
       },
     },
     "developmentSim": {
@@ -23,7 +23,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "API_URL": "https://www.pinballmap.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://www.pinballmap.com/api/v1"
       },
     },
     "preview": {
@@ -35,7 +35,7 @@
         "buildType": "apk"
       },
       "env": {
-        "API_URL": "https://www.pinballmap.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://www.pinballmap.com/api/v1"
       },
       "channel": "androidapk"
     },
@@ -47,7 +47,7 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "API_URL": "https://www.pinballmap.com/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://www.pinballmap.com/api/v1"
       }
     }
   },

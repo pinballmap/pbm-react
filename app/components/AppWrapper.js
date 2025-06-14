@@ -27,7 +27,7 @@ const AppWrapper = ({
 }) => {
   const [loading, setIsLoading] = useState(true);
   // Global variable to let us swap out to use the staging server if a store tester logs in
-  global.API_URL = process.env.API_URL;
+  global.API_URL = process.env.EXPO_PUBLIC_API_URL;
 
   const loaded = async () => {
     await SplashScreen.hideAsync();

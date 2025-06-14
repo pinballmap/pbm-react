@@ -42,7 +42,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MachineCard from "../components/MachineCard";
 
-Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
+Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
 let deviceWidth = Dimensions.get("window").width;
 

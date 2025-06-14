@@ -36,7 +36,7 @@ import {
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { useNavigation, useTheme } from "@react-navigation/native";
 
-Mapbox.setAccessToken(process.env.MAPBOX_PUBLIC);
+Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
 const Map = ({
   isFetchingLocations,

@@ -401,7 +401,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   }}
                   fetchDetails
                   query={{
-                    key: process.env.GOOGLE_MAPS_KEY,
+                    key: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
                     language: "en",
                   }}
                   styles={{

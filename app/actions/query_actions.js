@@ -13,7 +13,7 @@ import {
   SET_MACHINE_VERSION_FILTER,
 } from "./types";
 import { updateFilterLocations } from "./locations_actions";
-Geocode.setApiKey(process.env.GOOGLE_MAPS_KEY);
+Geocode.setApiKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const clearFilters = (updateLocations) => (dispatch) => {
   dispatch({ type: CLEAR_FILTERS });
