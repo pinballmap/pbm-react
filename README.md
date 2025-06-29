@@ -14,9 +14,17 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.30
+
+June 27, 2025
+
+- For Android, the things from 5.3.29 below.
+- Design tweaks.
+- Made the Insider Connected toggle button more clear that we're referring to having IC functionality enabled or disabled.
+
 ### 5.3.29
 
-May 10, 2025
+May 10, 2025 (iOS only)
 
 - Bug fixes, especially with an iOS map marker disappearing issue.
 - Performance updates.
