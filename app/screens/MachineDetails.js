@@ -9,6 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -305,88 +306,115 @@ const MachineDetails = ({
             <View
               style={{
                 marginBottom: 20,
-                marginRight: 30,
-                marginLeft: 20,
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Text
-                maxFontSizeMultiplier={1.2}
+              <View
                 style={{
-                  textAlign: "right",
-                  fontSize: 14,
-                  color: theme.text3,
-                  width: deviceWidth - 260,
-                  marginRight: 10,
+                  width: deviceWidth - 60,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                Toggle{" "}
-                <Text style={{ fontFamily: "Nunito-Bold", color: "#d0021b" }}>
-                  Stern
-                </Text>{" "}
-                <Text style={{ fontFamily: "Nunito-Bold" }}>
-                  Insider Connected
-                </Text>{" "}
-                status
-              </Text>
-              <Pressable
-                onPress={
-                  loggedIn
-                    ? () => updateIcEnabled(curLmx.id)
-                    : () => navigation.navigate("Login")
-                }
-                style={[
-                  s.buttonIC,
-                  ic_enabled === null
-                    ? s.nullIC
-                    : ic_enabled
-                      ? s.yesIC
-                      : s.noIC,
-                ]}
-              >
-                {ic_enabled === null ? (
-                  <FontAwesome5
-                    name="question-circle"
-                    size={28}
-                    color="#665b50"
-                    style={{ width: 55 }}
-                  />
-                ) : ic_enabled ? (
-                  <Image
-                    source={require("../assets/images/Insider_Connected_Light.png")}
-                    style={{
-                      width: 55,
-                      height: 55,
-                    }}
-                    contentFit="contain"
-                  />
-                ) : (
-                  <MaterialCommunityIcons
-                    name="circle-off-outline"
-                    size={34}
-                    color="#533a3a"
-                    style={{ width: 55 }}
-                  />
-                )}
-                <Text
-                  fontMultiplier={1.3}
-                  style={[
-                    s.titleStyle,
-                    ic_enabled === null
-                      ? s.nullICTitle
-                      : ic_enabled
-                        ? s.yesICTitle
-                        : s.noICTitle,
-                  ]}
+                <View style={{ width: 160 }}>
+                  <Pressable
+                    onPress={
+                      loggedIn
+                        ? () => updateIcEnabled(curLmx.id)
+                        : () => navigation.navigate("Login")
+                    }
+                    style={[
+                      s.buttonIC,
+                      ic_enabled === null
+                        ? s.nullIC
+                        : ic_enabled
+                          ? s.yesIC
+                          : s.noIC,
+                    ]}
+                  >
+                    {ic_enabled === null ? (
+                      <FontAwesome5
+                        name="question-circle"
+                        size={26}
+                        color="#665b50"
+                        style={{ width: 28 }}
+                      />
+                    ) : ic_enabled ? (
+                      <FontAwesome6
+                        name="check"
+                        size={28}
+                        color="green"
+                        style={{ width: 28 }}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="circle-off-outline"
+                        size={28}
+                        color="red"
+                        style={{ width: 28 }}
+                      />
+                    )}
+                    <Image
+                      source={require("../assets/images/Insider_Connected_Light_Horizontal.png")}
+                      style={{
+                        width: 120,
+                        height: 43,
+                      }}
+                      contentFit="contain"
+                    />
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    display: "flex",
+                    flexDirection: "column",
+                    width: deviceWidth - 220,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  {`${
-                    ic_enabled === null ? "" : ic_enabled ? "Has" : "Not"
-                  } Insider\nConnected`}
-                </Text>
-              </Pressable>
+                  <TouchableOpacity
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        "https://insider.sternpinball.com/",
+                      )
+                    }
+                  >
+                    <Image
+                      source={require("../assets/images/Stern-Logo-sm.png")}
+                      style={{
+                        width: 70,
+                        height: 45,
+                      }}
+                      contentFit="contain"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    maxFontSizeMultiplier={1.2}
+                    style={{
+                      textAlign: "center",
+                      fontSize: 14,
+                      color: theme.text3,
+                    }}
+                  >
+                    {`${ic_enabled === null ? "Is " : ""}`}
+                    <Text style={{ fontFamily: "Nunito-Bold" }}>
+                      Insider Connected
+                    </Text>{" "}
+                    {`${
+                      ic_enabled === null
+                        ? "enabled?"
+                        : ic_enabled
+                          ? "is enabled"
+                          : "is disabled"
+                    }`}
+                  </Text>
+                </View>
+              </View>
             </View>
           )}
           <View style={s.containerStyle}>
@@ -725,9 +753,8 @@ const getStyles = (theme) =>
     },
     buttonIC: {
       height: 65,
-      borderRadius: 25,
-      borderWidth: 1,
-      paddingHorizontal: 10,
+      width: 160,
+      borderRadius: 15,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
@@ -743,18 +770,17 @@ const getStyles = (theme) =>
       elevation: 5,
     },
     nullIC: {
-      backgroundColor: "#e4dddd",
-      borderColor: "#e4dddd",
+      backgroundColor: "#cfc4c4",
     },
     yesIC: {
       backgroundColor: "#e3fae5",
-      borderColor: "#e3fae5",
     },
     noIC: {
       backgroundColor: "#f0d8d8",
-      borderColor: "#f0d8d8",
     },
     italic: {
+      fontSize: 14,
+      color: theme.text3,
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
