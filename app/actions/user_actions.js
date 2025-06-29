@@ -91,7 +91,7 @@ export const hideNoLocationTrackingModal = () => ({
 });
 
 export const login = (credentials) => {
-  if (process.env.STORE_TESTERS.includes(credentials.username)) {
+  if (process.env.EXPO_PUBLIC_STORE_TESTERS.includes(credentials.username)) {
     global.API_URL = process.env.EXPO_PUBLIC_STAGING_API_URL;
   }
   return {

@@ -1,4 +1,4 @@
-const IS_DEV = process.env.APP_VARIANT === "development";
+const IS_DEV = process.env.PUBLIC_EXPO_APP_VARIANT === "development";
 
 export default {
   expo: {
@@ -9,13 +9,13 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.29",
+    version: "5.3.30",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
     scheme: "pinballmap",
     description:
-      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 44,000 pinball machines.",
+      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 48,000 pinball machines.",
     githubUrl: "https://github.com/pinballmap/pbm-react/",
     primaryColor: "#ebecff",
     newArchEnabled: true,
@@ -48,8 +48,8 @@ export default {
       [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.8.0",
-          RNMapboxMapsDownloadToken: process.env.MAPBOX_DOWNLOAD,
+          RNMapboxMapsVersion: "11.12.1",
+          RNMapboxMapsDownloadToken: process.env.EXPO_PUBLIC_MAPBOX_DOWNLOAD,
         },
       ],
       [
@@ -82,6 +82,7 @@ export default {
           },
         },
       ],
+      ["expo-web-browser"],
     ],
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
@@ -91,7 +92,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "221",
+      buildNumber: "229",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -104,7 +105,7 @@ export default {
       appStoreUrl:
         "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       config: {
-        googleMapsApiKey: process.env.GOOGLE_MAPS_KEY,
+        googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
         usesNonExemptEncryption: false,
       },
       entitlements: {
@@ -140,7 +141,7 @@ export default {
       edgeToEdgeEnabled: true,
       config: {
         googleMaps: {
-          apiKey: process.env.GOOGLE_MAPS_KEY,
+          apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
         },
       },
       permissions: [
@@ -150,7 +151,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 189,
+      versionCode: 206,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
