@@ -71,13 +71,31 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             onPress={() => navigation.navigate("FAQ")}
             style={s.textLink}
           >{`Check the FAQ first for common questions.`}</Text>
-          <Text
-            style={[s.text, s.boldFont, s.pinkText]}
-          >{`Do not tell us that a location closed or all the machines are gone!`}</Text>
+          <Text style={[s.text, s.boldFont]}>
+            {`No need to tell us that a `}
+            <Text
+              style={[
+                s.text,
+                s.boldFont,
+                s.pinkText,
+                { textTransform: "uppercase" },
+              ]}
+            >{`location closed`}</Text>
+            {` or `}
+            <Text
+              style={[
+                s.text,
+                s.boldFont,
+                s.pinkText,
+                { textTransform: "uppercase" },
+              ]}
+            >{`all the machines are gone`}</Text>
+            {`!`}
+          </Text>
           <Text style={[s.text]}>
             {`Just `}
             <Text
-              style={[s.pinkText, s.boldFont]}
+              style={[s.boldFont]}
             >{`remove the machines from the location`}</Text>
             {`. We'll auto-delete it within a week.`}
           </Text>
