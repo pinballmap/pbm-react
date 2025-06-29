@@ -381,6 +381,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <GooglePlacesAutocomplete
                   ref={autoCompleteRef}
                   predefinedPlaces={[]}
+                  keyboardShouldPersistTaps="always"
+                  timeout={20000}
                   keepResultsAfterBlur={true}
                   minLength={2}
                   placeholder="ex. Giovanni's Pizza"
@@ -695,6 +697,7 @@ const getStyles = (theme) =>
       backgroundColor: "transparent",
     },
     machineContainer: {
+      marginTop: 20,
       marginHorizontal: 20,
       borderRadius: 25,
       backgroundColor: theme.white,
