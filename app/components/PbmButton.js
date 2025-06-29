@@ -28,8 +28,7 @@ const getStyles = (theme) =>
     titleStyle: {
       fontSize: 16,
       fontFamily: "Nunito-Bold",
-      textTransform: "capitalize",
-      color: theme.theme == "dark" ? "white" : theme.purple,
+      color: theme.theme == "dark" ? "white" : theme.text,
     },
     buttonStyle: {
       borderRadius: 25,
@@ -38,12 +37,11 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: theme.theme == "dark" ? "#736aaf" : theme.base4,
+      backgroundColor: theme.theme == "dark" ? "#736aaf" : theme.base2,
       borderColor: theme.theme == "dark" ? "#736aaf" : "#a79de3",
       height: 40,
       overflow: "visible",
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowColor: theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(91, 83, 145)",
       shadowOffset: {
         width: 0,
         height: 2,
@@ -61,6 +59,7 @@ const getStyles = (theme) =>
       elevation: 0,
       backgroundColor: theme.theme == "dark" ? "#5b5391" : "#cccceb",
       borderColor: theme.theme == "dark" ? "#5b5391" : "#86869c",
+      borderWidth: 0,
     },
   });
 
