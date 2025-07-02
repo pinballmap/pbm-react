@@ -27,6 +27,7 @@ import { ConfirmationModal, PbmButton } from "../components";
 import * as WebBrowser from "expo-web-browser";
 
 let deviceHeight = Dimensions.get("window").height;
+let deviceWidth = Dimensions.get("window").width;
 
 const Signup = ({ loginLater, navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -323,6 +324,7 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      width: deviceWidth - 110,
     },
     textLink: {
       fontSize: 16,

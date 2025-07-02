@@ -1,10 +1,19 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Keyboard, StyleSheet, Pressable, TextInput, View } from "react-native";
+import {
+  Dimensions,
+  Keyboard,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
+let deviceWidth = Dimensions.get("window").width;
 
 const PasswordReset = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -98,6 +107,7 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      width: deviceWidth - 110,
     },
     confirmText: {
       textAlign: "center",

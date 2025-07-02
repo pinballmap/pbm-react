@@ -25,6 +25,7 @@ import { getData } from "../config/request";
 import { PbmButton } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
+let deviceWidth = Dimensions.get("window").width;
 
 class Login extends Component {
   constructor(props) {
@@ -247,6 +248,7 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      width: deviceWidth - 110,
     },
     textLink: {
       fontSize: 16,
