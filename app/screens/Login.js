@@ -62,6 +62,15 @@ class Login extends Component {
 
           if (
             data.errors ===
+            "Your account is disabled. Please contact us if you think this is a mistake."
+          )
+            this.setState({
+              apiErrorMsg:
+                "Your account is disabled. Please contact us if you think this is a mistake.",
+            });
+
+          if (
+            data.errors ===
             "User is not yet confirmed. Please follow emailed confirmation instructions."
           )
             this.setState({
