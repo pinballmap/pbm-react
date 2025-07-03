@@ -27,7 +27,6 @@ import { ConfirmationModal, PbmButton } from "../components";
 import * as WebBrowser from "expo-web-browser";
 
 let deviceHeight = Dimensions.get("window").height;
-let deviceWidth = Dimensions.get("window").width;
 
 const Signup = ({ loginLater, navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -235,6 +234,7 @@ const Signup = ({ loginLater, navigation }) => {
             onPress={submit}
             title="Sign Up"
             disabled={!username || !email || !password || !confirm_password}
+            margin={{ marginHorizontal: 25, marginVertical: 15 }}
           />
           <View style={[s.externalLinkContainer, s.marginB25]}>
             <Pressable
@@ -316,15 +316,15 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       marginVertical: 15,
-      marginHorizontal: 10,
-      paddingLeft: 10,
+      marginHorizontal: 25,
+      paddingHorizontal: 10,
     },
     inputText: {
       paddingLeft: 5,
       color: theme.text,
       fontSize: 18,
+      flex: 1,
       fontFamily: "Nunito-Regular",
-      width: deviceWidth - 110,
     },
     textLink: {
       fontSize: 16,
@@ -342,8 +342,6 @@ const getStyles = (theme) =>
       flexDirection: "column",
       justifyContent: "center",
       height: deviceHeight,
-      marginLeft: 15,
-      marginRight: 15,
     },
     confirmText: {
       textAlign: "center",

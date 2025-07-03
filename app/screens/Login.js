@@ -25,7 +25,6 @@ import { getData } from "../config/request";
 import { PbmButton } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
-let deviceWidth = Dimensions.get("window").width;
 
 class Login extends Component {
   constructor(props) {
@@ -151,6 +150,7 @@ class Login extends Component {
                     onPress={() => this.submit()}
                     title="Log In"
                     disabled={!this.state.login || !this.state.password}
+                    margin={{ marginHorizontal: 25, marginVertical: 15 }}
                   />
                   <Pressable
                     onPress={() => this.props.navigation.navigate("Signup")}
@@ -240,15 +240,15 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       marginVertical: 15,
-      marginHorizontal: 10,
-      paddingLeft: 10,
+      marginHorizontal: 25,
+      paddingHorizontal: 10,
     },
     inputText: {
       paddingLeft: 5,
       color: theme.text,
       fontSize: 18,
+      flex: 1,
       fontFamily: "Nunito-Regular",
-      width: deviceWidth - 110,
     },
     textLink: {
       fontSize: 16,
@@ -268,8 +268,6 @@ const getStyles = (theme) =>
       flexDirection: "column",
       justifyContent: "center",
       height: deviceHeight,
-      marginLeft: 15,
-      marginRight: 15,
     },
     disabledStyle: {
       backgroundColor: theme.white,

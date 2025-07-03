@@ -1,19 +1,10 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Dimensions,
-  Keyboard,
-  StyleSheet,
-  Pressable,
-  TextInput,
-  View,
-} from "react-native";
+import { Keyboard, StyleSheet, Pressable, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const ResendConfirmation = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -100,14 +91,14 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       margin: 25,
-      paddingLeft: 10,
+      paddingHorizontal: 10,
     },
     inputText: {
       paddingLeft: 5,
       color: theme.text,
       fontSize: 18,
+      flex: 1,
       fontFamily: "Nunito-Regular",
-      width: deviceWidth - 110,
     },
     confirmText: {
       textAlign: "center",
