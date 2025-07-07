@@ -18,7 +18,7 @@ import getActivityIcon from "../utils/getActivityIcon";
 
 const moment = require("moment");
 
-const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
+const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true);
@@ -28,6 +28,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
+  const distanceUnit = user.unitPreference ? "kilometers" : "miles";
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
@@ -183,7 +184,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation }) => {
       ) : recentActivity.length === 0 ? (
         <Text
           style={s.problem}
-        >{`No recent map edits within ${maxDistance} miles of the map's current position`}</Text>
+        >{`No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}</Text>
       ) : (
         recentActivity
           .filter((activity) => {
@@ -371,7 +372,7 @@ RecentActivity.propTypes = {
   clearActivityFilter: PropTypes.func,
 };
 
-const mapStateToProps = ({ query }) => ({ query });
+const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   clearActivityFilter: () => dispatch(clearActivityFilter()),
 });
