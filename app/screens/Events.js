@@ -312,21 +312,11 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     cardContainer: {
-      padding: 0,
       borderRadius: 15,
       marginVertical: 12,
       marginHorizontal: 20,
       backgroundColor: theme.white,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      borderColor: "transparent",
       borderWidth: 2,
     },
     center: {
@@ -346,7 +336,16 @@ const getStyles = (theme) =>
       opacity: 0.8,
     },
     notPressed: {
-      opacity: 1.0,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     textLink: {
       textDecorationLine: "underline",
