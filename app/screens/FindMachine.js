@@ -11,10 +11,11 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { ButtonGroup, SearchBar } from "@rneui/base";
+import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
 import {
   addMachineToLocation,
@@ -186,6 +187,10 @@ class FindMachine extends React.PureComponent {
       );
       this.setState({ query, machines });
     }
+  };
+
+  handleClear = () => {
+    this.setState({ query: "" });
   };
 
   toggleViewMachinesInMapArea = (idx) => {
@@ -407,39 +412,44 @@ class FindMachine extends React.PureComponent {
             </KeyboardAwareScrollView>
           </View>
         </Modal>
-        <SearchBar
-          lightTheme={theme.theme !== "dark"}
-          placeholder="Filter machines..."
-          placeholderTextColor={theme.indigo4}
-          platform="default"
-          searchIcon={
-            <MaterialIcons name="search" size={25} color={theme.indigo4} />
-          }
-          clearIcon={
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            height: 40,
+            marginBottom: 10,
+          }}
+        >
+          <View style={s.inputContainer}>
             <MaterialIcons
-              name="cancel"
-              size={20}
+              name="search"
+              size={25}
               color={theme.indigo4}
-              onPress={() => this.handleSearch("")}
+              style={{ marginLeft: 10, marginRight: 0 }}
             />
-          }
-          onChangeText={(query) =>
-            this.handleSearch(query, this.state.machinesInView)
-          }
-          inputStyle={{
-            color: theme.text,
-            fontFamily: "Nunito-Regular",
-            height: 50,
-          }}
-          value={this.state.query}
-          inputContainerStyle={s.filterInput}
-          containerStyle={{
-            backgroundColor: theme.base1,
-            borderBottomWidth: 0,
-            borderTopWidth: 0,
-          }}
-          autoCorrect={false}
-        />
+            <TextInput
+              placeholder="Filter machines..."
+              placeholderTextColor={theme.indigo4}
+              onChangeText={(query) =>
+                this.handleSearch(query, this.state.machinesInView)
+              }
+              value={this.state.query}
+              style={s.inputStyle}
+              autoCorrect={false}
+            />
+          </View>
+          {this.state.query.length > 0 && (
+            <Pressable onPress={this.handleClear} style={{ height: 20 }}>
+              <MaterialCommunityIcons
+                name="close-circle"
+                size={20}
+                color={theme.purple}
+                style={{ position: "absolute", right: 30 }}
+              />
+            </Pressable>
+          )}
+        </View>
         {isFiltering ? (
           <View style={{ backgroundColor: theme.base1 }}>
             <ButtonGroup
@@ -493,15 +503,28 @@ const getStyles = (theme) =>
     background: {
       backgroundColor: theme.base1,
     },
-    filterInput: {
-      height: 40,
+    inputContainer: {
+      borderWidth: 1,
       backgroundColor: theme.white,
       borderRadius: 25,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      borderWidth: 1,
-      borderBottomWidth: 1,
-      marginHorizontal: 5,
+      height: 40,
+      display: "flex",
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      paddingLeft: 0,
+      marginHorizontal: 20,
     },
+    inputStyle: {
+      paddingLeft: 5,
+      paddingRight: 65,
+      height: 40,
+      color: theme.text,
+      fontSize: 18,
+      fontFamily: "Nunito-Regular",
+    },
+
     textInput: {
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,

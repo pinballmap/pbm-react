@@ -1,8 +1,14 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Keyboard, Platform, Pressable, StyleSheet, View } from "react-native";
-import { SearchBar } from "@rneui/base";
+import {
+  Keyboard,
+  Platform,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -32,6 +38,10 @@ const FindLocationType = ({
     );
     setQuery(search);
     setLocationTypes(selectedLocationTypes);
+  };
+
+  const handleClear = () => {
+    setQuery("");
   };
 
   const _selectLocationType = (id) => {
@@ -67,36 +77,43 @@ const FindLocationType = ({
 
   return (
     <>
-      <SearchBar
-        lightTheme={theme.theme !== "dark"}
-        placeholder="Filter location types..."
-        placeholderTextColor={theme.indigo4}
-        platform="default"
-        searchIcon={
-          <MaterialIcons name="search" size={25} color={theme.indigo4} />
-        }
-        clearIcon={
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={20}
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          height: 40,
+          marginBottom: 10,
+        }}
+      >
+        <View style={s.inputContainer}>
+          <MaterialIcons
+            name="search"
+            size={25}
             color={theme.indigo4}
-            onPress={() => handleSearch()}
+            style={{ marginLeft: 10, marginRight: 0 }}
           />
-        }
-        onChangeText={handleSearch}
-        inputStyle={{
-          color: theme.text,
-          fontFamily: "Nunito-Regular",
-          height: 50,
-        }}
-        value={query}
-        inputContainerStyle={s.filterInput}
-        containerStyle={{
-          backgroundColor: theme.base1,
-          borderBottomWidth: 0,
-          borderTopWidth: 0,
-        }}
-      />
+          <TextInput
+            placeholder="Filter location types..."
+            placeholderTextColor={theme.indigo4}
+            onPress={() => handleSearch()}
+            onChangeText={handleSearch}
+            value={query}
+            style={s.inputStyle}
+            autoCorrect={false}
+          />
+        </View>
+        {query.length > 0 && (
+          <Pressable onPress={handleClear} style={{ height: 20 }}>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={20}
+              color={theme.purple}
+              style={{ position: "absolute", right: 30 }}
+            />
+          </Pressable>
+        )}
+      </View>
       <FlashList
         {...keyboardDismissProp}
         data={selectedLocationTypes}
@@ -114,14 +131,26 @@ const FindLocationType = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    filterInput: {
-      height: 40,
+    inputContainer: {
+      borderWidth: 1,
       backgroundColor: theme.white,
       borderRadius: 25,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      borderWidth: 1,
-      borderBottomWidth: 1,
-      marginHorizontal: 10,
+      height: 40,
+      display: "flex",
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      paddingLeft: 0,
+      marginHorizontal: 20,
+    },
+    inputStyle: {
+      paddingLeft: 5,
+      paddingRight: 65,
+      height: 40,
+      color: theme.text,
+      fontSize: 18,
+      fontFamily: "Nunito-Regular",
     },
   });
 
