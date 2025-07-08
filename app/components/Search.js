@@ -18,7 +18,6 @@ import {
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ListItem } from "@rneui/base";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { getData } from "../config/request";
@@ -241,16 +240,10 @@ class Search extends Component {
       key={region.id}
       onPress={() => this.getLocationsByRegion(region)}
     >
-      <ListItem containerStyle={s.listContainerStyle}>
-        <ListItem.Content>
-          <ListItem.Title style={s.listItemTitle}>
-            {region.full_name}
-          </ListItem.Title>
-          <ListItem.Title right style={s.cityRegionRow}>
-            {"Region"}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={s.listContainerStyle}>
+        <Text style={s.listItemTitle}>{region.full_name}</Text>
+        <Text style={s.cityRegionRow}>Region</Text>
+      </View>
     </Pressable>
   );
 
@@ -260,16 +253,10 @@ class Search extends Component {
       key={location.value}
       onPress={() => this.getLocationsByCity(location, idx)}
     >
-      <ListItem containerStyle={s.listContainerStyle}>
-        <ListItem.Content>
-          <ListItem.Title style={s.listItemTitle}>
-            {location.value}
-          </ListItem.Title>
-          <ListItem.Title right style={s.cityRegionRow}>
-            {"City"}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={s.listContainerStyle}>
+        <Text style={s.listItemTitle}>{location.value}</Text>
+        <Text style={s.cityRegionRow}>City</Text>
+      </View>
     </Pressable>
   );
 
@@ -279,13 +266,9 @@ class Search extends Component {
       key={location.id}
       onPress={() => this.goToLocation(location, idx)}
     >
-      <ListItem containerStyle={s.listContainerStyle}>
-        <ListItem.Content>
-          <ListItem.Title style={s.listItemTitle}>
-            {location.label}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={s.listContainerStyle}>
+        <Text style={s.listItemTitle}>{location.label}</Text>
+      </View>
     </Pressable>
   );
 
@@ -612,6 +595,12 @@ const getStyles = (theme) =>
       color: theme.purple2,
     },
     listContainerStyle: {
+      paddingVertical: 15,
+      paddingHorizontal: 15,
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       borderBottomColor: theme.indigo4,
       borderBottomWidth: 1,
       backgroundColor: "transparent",
@@ -646,8 +635,7 @@ const getStyles = (theme) =>
       marginRight: 5,
     },
     cityRegionRow: {
-      position: "absolute",
-      right: 0,
+      fontSize: 16,
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
       color: theme.pink1,

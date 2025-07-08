@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { EvilIcons } from "@expo/vector-icons";
-import { ListItem } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import {
   ActivityIndicator,
@@ -179,7 +178,7 @@ class UserProfile extends Component {
                     </View>
                   </View>
                   <Text style={s.section}>Some recently edited locations</Text>
-                  <View style={{ paddingVertical: 8 }}>
+                  <View style={{ paddingTop: 8, paddingBottom: 15 }}>
                     {profile_list_of_edited_locations.length === 0 ? (
                       <Text style={s.none}>No edits yet</Text>
                     ) : (
@@ -219,28 +218,25 @@ class UserProfile extends Component {
                     )}
                   </View>
                   <Text style={s.section}>High scores</Text>
-                  <View style={{ paddingTop: 8, paddingBottom: 15 }}>
+                  <View style={{ paddingTop: 8 }}>
                     {profile_list_of_high_scores.length === 0 ? (
                       <Text style={s.none}>No high scores yet</Text>
                     ) : (
                       profile_list_of_high_scores.map((score, idx) => {
                         return (
-                          <ListItem
-                            containerStyle={s.background}
+                          <View
                             key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
+                            style={{ marginHorizontal: 25, marginBottom: 20 }}
                           >
-                            <ListItem.Content
-                              style={{
-                                marginHorizontal: 5,
-                                backgroundColor: theme.white,
-                                borderRadius: 15,
-                              }}
-                            >
-                              <ListItem.Title style={s.scoreTitle}>
-                                {`${score[2]} on ${score[1]} at ${score[0]} on ${score[3]}`}
-                              </ListItem.Title>
-                            </ListItem.Content>
-                          </ListItem>
+                            <Text style={s.score}>{score[2]}</Text>
+                            <Text style={[s.scoreMachine, s.marginB8]}>
+                              {score[1]}
+                            </Text>
+                            <Text style={s.pbmText}>
+                              <Text style={s.scoreLocation}>{score[0]}</Text>
+                            </Text>
+                            <Text style={s.italic}>{score[3]}</Text>
+                          </View>
                         );
                       })
                     )}
@@ -328,13 +324,6 @@ const getStyles = (theme) =>
       fontSize: 18,
       paddingVertical: 10,
       fontFamily: "Nunito-Bold",
-    },
-    scoreTitle: {
-      marginHorizontal: 10,
-      fontSize: 16,
-      paddingVertical: 10,
-      color: theme.text,
-      fontFamily: "Nunito-Medium",
     },
     usernameContainer: {
       paddingTop: 10,
@@ -453,6 +442,34 @@ const getStyles = (theme) =>
     externalIcon: {
       fontSize: 24,
       color: theme.text2,
+    },
+    score: {
+      color: theme.purple,
+      fontSize: 20,
+      fontFamily: "Nunito-Bold",
+    },
+    scoreLocation: {
+      color: theme.text2,
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
+    },
+    scoreMachine: {
+      color: theme.text,
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
+    },
+    pbmText: {
+      color: theme.text2,
+      fontSize: 16,
+      fontFamily: "Nunito-Regular",
+    },
+    marginB8: {
+      marginBottom: 8,
+    },
+    italic: {
+      fontFamily: "Nunito-Italic",
+      color: theme.text3,
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
   });
 

@@ -6,6 +6,7 @@ import {
   Modal,
   PixelRatio,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -15,7 +16,7 @@ import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
-import { Icon, ListItem } from "@rneui/base";
+import { Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
@@ -550,23 +551,22 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 {machineList.length > 0 ? (
                   <View style={s.machineContainer}>
                     {machineList.map((machine) => (
-                      <ListItem
-                        key={machine.id}
-                        containerStyle={s.listContainerStyle}
-                        onPress={() => dispatch(removeMachineFromList(machine))}
-                      >
-                        <Icon
-                          name="cancel"
-                          type="material"
-                          color={theme.indigo4}
-                          size={15}
-                        />
-                        <ListItem.Content>
-                          <ListItem.Title>
-                            {getDisplayText(machine)}
-                          </ListItem.Title>
-                        </ListItem.Content>
-                      </ListItem>
+                      <View key={machine.id} style={s.listContainerStyle}>
+                        <Pressable
+                          style={{ paddingRight: 10 }}
+                          onPress={() =>
+                            dispatch(removeMachineFromList(machine))
+                          }
+                        >
+                          <Icon
+                            name="cancel"
+                            type="material"
+                            color={theme.indigo4}
+                            size={15}
+                          />
+                        </Pressable>
+                        <Text>{getDisplayText(machine)}</Text>
+                      </View>
                     ))}
                   </View>
                 ) : null}
@@ -695,6 +695,12 @@ const getStyles = (theme) =>
     },
     listContainerStyle: {
       backgroundColor: "transparent",
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+      marginVertical: 5,
+      marginHorizontal: 10,
+      alignItems: "center",
     },
     machineContainer: {
       marginTop: 20,
