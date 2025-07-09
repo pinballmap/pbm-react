@@ -25,6 +25,7 @@ import LocationBottomSheet from "./LocationBottomSheet";
 import BackglassImage from "./BackglassImage";
 import MachineComment from "./MachineComment";
 import ReadMore from "./ReadMore";
+import CustomIcon from "./CustomIcon";
 
 export {
   LocationCard,
@@ -54,4 +55,5 @@ export {
   BackglassImage,
   MachineComment,
   ReadMore,
+  CustomIcon,
 };

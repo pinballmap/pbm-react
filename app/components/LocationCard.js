@@ -8,11 +8,11 @@ import {
   Pressable,
   View,
 } from "react-native";
-import { Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import FavoriteLocation from "./FavoriteLocation";
+import { CustomIcon } from "../components";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -134,11 +134,11 @@ const LocationCard = ({
                 ) : null}
                 {type ? (
                   <View style={s.vertAlign}>
-                    <Icon
+                    <CustomIcon
                       name={icon}
-                      type={library}
-                      color={theme.theme == "dark" ? theme.pink1 : theme.pink3}
                       size={30}
+                      color={theme.theme == "dark" ? theme.pink1 : theme.pink3}
+                      type={library}
                       style={s.icon}
                     />
                     <Text

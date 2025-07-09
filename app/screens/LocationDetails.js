@@ -13,12 +13,12 @@ import {
 } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
-import { Icon } from "@rneui/base";
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
   ActivityIndicator,
   ConfirmationModal,
+  CustomIcon,
   FavoriteLocation,
   LocationActivity,
   PbmButton,
@@ -397,15 +397,15 @@ const LocationDetails = (props) => {
 
                     {location.location_type_id && (
                       <View style={[s.row]}>
-                        <Icon
+                        <CustomIcon
                           name={locationIcon}
-                          type={iconLibrary}
+                          size={24}
                           color={
                             theme.theme == "dark"
                               ? theme.purpleLight
                               : theme.pink3
                           }
-                          size={24}
+                          type={iconLibrary}
                         />
                         <Text
                           style={[

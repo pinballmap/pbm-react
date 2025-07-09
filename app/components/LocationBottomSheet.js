@@ -6,9 +6,9 @@ import { ThemeContext } from "../theme-context";
 import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Icon } from "@rneui/base";
 import { getDistanceWithUnit } from "../utils/utilityFunctions";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { CustomIcon } from "../components";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -131,13 +131,13 @@ const LocationBottomSheet = React.memo(
                   ) : null}
                   {locationType ? (
                     <View style={s.vertAlign}>
-                      <Icon
+                      <CustomIcon
                         name={locationType.icon}
-                        type={locationType.library}
+                        size={30}
                         color={
                           theme.theme == "dark" ? theme.pink1 : theme.pink3
                         }
-                        size={30}
+                        type={locationType.library}
                         style={s.icon}
                       />
                       <Text

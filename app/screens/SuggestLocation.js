@@ -16,7 +16,6 @@ import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
-import { Icon } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {
@@ -558,9 +557,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                             dispatch(removeMachineFromList(machine))
                           }
                         >
-                          <Icon
-                            name="cancel"
-                            type="material"
+                          <MaterialCommunityIcons
+                            name="close-circle"
                             color={theme.indigo4}
                             size={15}
                           />
@@ -701,8 +699,10 @@ const getStyles = (theme) =>
       marginVertical: 5,
       marginHorizontal: 10,
       alignItems: "center",
+      paddingLeft: 5,
     },
     machineContainer: {
+      paddingVertical: 5,
       marginTop: 20,
       marginHorizontal: 20,
       borderRadius: 25,
