@@ -12,7 +12,7 @@ type ButtonObject = {
   element: React.ElementType<any & { isSelected?: boolean }>;
 };
 
-const ButtonGroupCustom = ({ onPress, buttons, selectedIndex, containerStyle, innerBorderStyle, textStyle, selectedTextStyle, selectedButtonStyle }) => {
+const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBorderStyle, textStyle, selectedTextStyle, selectedButtonStyle }) => {
   return (
     <View
       style={StyleSheet.flatten([
@@ -46,26 +46,22 @@ const ButtonGroupCustom = ({ onPress, buttons, selectedIndex, containerStyle, in
                   isSelected && selectedButtonStyle && selectedButtonStyle,
                 ])}
               >
-                {hasElementKey(button) ? (
-                  <button.element isSelected={isSelected} />
-                ) : (
-                  <Text
-                    style={StyleSheet.flatten([
-                      {
-                        fontSize: 13,
-                        ...Platform.select({
-                          android: {},
-                          default: {
-                            fontWeight: '500',
-                          },
-                        }),
-                      },
-                      textStyle && textStyle,
-                    ])}
-                  >
-                    {button}
-                  </Text>
-                )}
+                <Text
+                  style={StyleSheet.flatten([
+                    {
+                      fontSize: 13,
+                      ...Platform.select({
+                        android: {},
+                        default: {
+                          fontWeight: '500',
+                        },
+                      }),
+                    },
+                    textStyle && textStyle,
+                  ])}
+                >
+                  {button}
+                </Text>
               </View>
             </Pressable>
           </View>
@@ -97,12 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const hasElementKey = (
-  button: string | ButtonComponent | ButtonObject
-): button is ButtonObject => {
-  return (
-    typeof button === 'object' && Boolean((button as ButtonObject).element)
-  );
-};
-
-export default ButtonGroupCustom;
+export default ButtonGroup;
