@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Linking, StyleSheet, View } from "react-native";
-import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import { ConfirmationModal, LocationCard, Text } from "../components";
+import {
+  ButtonGroup,
+  ConfirmationModal,
+  LocationCard,
+  Text,
+} from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
 import { FlashList } from "@shopify/flash-list";

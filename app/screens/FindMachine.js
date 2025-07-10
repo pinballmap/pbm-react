@@ -11,7 +11,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -23,7 +22,13 @@ import {
   removeMachineFromList,
   setMachineFilter,
 } from "../actions";
-import { BackglassImage, PbmButton, Text, WarningButton } from "../components";
+import {
+  BackglassImage,
+  ButtonGroup,
+  PbmButton,
+  Text,
+  WarningButton,
+} from "../components";
 import Checkbox from "expo-checkbox";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";

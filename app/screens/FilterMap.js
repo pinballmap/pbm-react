@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
-import { ButtonGroup } from "@rneui/base";
 import { ThemeContext } from "../theme-context";
-import { DropDownButton, Screen, Text } from "../components";
+import { ButtonGroup, DropDownButton, Screen, Text } from "../components";
 import {
   updateNumMachinesSelected,
   updateViewFavoriteLocations,

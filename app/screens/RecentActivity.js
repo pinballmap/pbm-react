@@ -7,13 +7,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getData } from "../config/request";
 import {
   ActivityIndicator,
+  ButtonGroup,
   FilterRecentActivity,
   Screen,
   Text,
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
 import { clearActivityFilter } from "../actions";
-import { ButtonGroup } from "@rneui/base";
 import getActivityIcon from "../utils/getActivityIcon";
 
 const moment = require("moment");

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Platform, StyleSheet, View } from "react-native";
-import { ButtonGroup } from "@rneui/base";
-import { Text } from "../components";
+import { ButtonGroup, Text } from "../components";
 import { ThemeContext } from "../theme-context";
 
 const ButtonGroupSetting = ({
