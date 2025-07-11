@@ -28,10 +28,11 @@ export const Events = ({ locations, query, user }) => {
   const { lat, lon } = user;
   const { neLat, neLon, swLat, swLon } = query;
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
+  const distanceUnitAbbrev = user.unitPreference ? "ki" : "mi";
   const buttons = [
-    `50 ${distanceUnit}`,
-    `150 ${distanceUnit}`,
-    `250 ${distanceUnit}`,
+    `50 ${distanceUnitAbbrev}`,
+    `150 ${distanceUnitAbbrev}`,
+    `250 ${distanceUnitAbbrev}`,
   ];
 
   const updateIdx = (selectedIdx) => {
