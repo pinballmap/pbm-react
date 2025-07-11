@@ -361,8 +361,6 @@ const getStyles = (theme) =>
     },
   });
 
-// export default LocationActivity;
-
 LocationActivity.propTypes = {
   query: PropTypes.object,
   locationId: PropTypes.number,
