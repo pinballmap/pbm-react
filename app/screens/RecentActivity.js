@@ -31,8 +31,8 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
   const distanceUnitAbbrev = user.unitPreference ? "ki" : "mi";
   const buttons = [
-    `30 ${distanceUnitAbbrev}`,
-    `75 ${distanceUnitAbbrev}`,
+    `10 ${distanceUnitAbbrev}`,
+    `50 ${distanceUnitAbbrev}`,
     `150 ${distanceUnitAbbrev}`,
   ];
 
@@ -69,7 +69,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   );
 
   const updateIdx = (selectedIdx) => {
-    const distanceMap = [30, 75, 150];
+    const distanceMap = [10, 50, 150];
     setBtnIdx(selectedIdx);
     setMaxDistance(distanceMap[selectedIdx]);
     fetchData(null, distanceMap[selectedIdx]);
