@@ -3,7 +3,9 @@ import {
   UPDATE_BOUNDS,
   CLEAR_FILTERS,
   SET_SELECTED_ACTIVITY_FILTER,
+  SET_SELECTED_LOCATION_ACTIVITY_FILTER,
   CLEAR_ACTIVITY_FILTER,
+  CLEAR_LOCATION_ACTIVITY_FILTER,
   SET_MACHINE_FILTER,
   SET_NUM_MACHINES_FILTER,
   SET_VIEW_FAVORITE_LOCATIONS_FILTER,
@@ -29,6 +31,7 @@ export const initialState = {
   numMachines: 0,
   selectedOperator: "",
   selectedActivities: [],
+  selectedLocationActivities: [],
   machine: {},
   maxZoom: false,
   viewByFavoriteLocations: false,
@@ -133,6 +136,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedActivities: [],
+      };
+    }
+    case SET_SELECTED_LOCATION_ACTIVITY_FILTER: {
+      AsyncStorage.setItem(
+        "selectedLocationActivities",
+        JSON.stringify(action.selectedLocationActivities),
+      );
+      return {
+        ...state,
+        selectedLocationActivities: action.selectedLocationActivities,
+      };
+    }
+    case CLEAR_LOCATION_ACTIVITY_FILTER: {
+      AsyncStorage.setItem("selectedLocationActivities", JSON.stringify([]));
+
+      return {
+        ...state,
+        selectedLocationActivities: [],
       };
     }
     case SET_MAX_ZOOM:

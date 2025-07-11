@@ -4,7 +4,9 @@ import {
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   SET_SELECTED_ACTIVITY_FILTER,
+  SET_SELECTED_LOCATION_ACTIVITY_FILTER,
   CLEAR_ACTIVITY_FILTER,
+  CLEAR_LOCATION_ACTIVITY_FILTER,
   SET_MACHINE_FILTER,
   SET_NUM_MACHINES_FILTER,
   SET_VIEW_FAVORITE_LOCATIONS_FILTER,
@@ -50,6 +52,17 @@ export const setSelectedActivitiesFilter = (selectedActivities) => ({
 });
 
 export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER });
+
+export const setSelectedLocationActivitiesFilter = (
+  selectedLocationActivities,
+) => ({
+  type: SET_SELECTED_LOCATION_ACTIVITY_FILTER,
+  selectedLocationActivities,
+});
+
+export const clearLocationActivityFilter = () => ({
+  type: CLEAR_LOCATION_ACTIVITY_FILTER,
+});
 
 export const clearSearchBarText = () => ({ type: CLEAR_SEARCH_BAR_TEXT });
 export const setSearchBarText = (searchBarText) => ({

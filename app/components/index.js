@@ -8,6 +8,7 @@ import PbmButton from "./PbmButton";
 import DropDownButton from "./DropDownButton";
 import Text from "./PbmText";
 import FilterRecentActivity from "./FilterRecentActivity";
+import FilterLocationActivity from "./FilterLocationActivity";
 import Search from "./Search";
 import DrawerMenu from "./DrawerMenu";
 import ButtonGroupSetting from "./ButtonGroupSetting";
@@ -39,6 +40,7 @@ export {
   DropDownButton,
   Text,
   FilterRecentActivity,
+  FilterLocationActivity,
   Search,
   DrawerMenu,
   ButtonGroupSetting,

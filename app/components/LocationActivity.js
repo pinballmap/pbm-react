@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   Platform,
   Pressable,
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import { FilterLocationActivity } from "../components";
 import { ThemeContext } from "../theme-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActivityIndicator from "./ActivityIndicator";
@@ -14,15 +16,22 @@ import Text from "./PbmText";
 import ConfirmationModal from "./ConfirmationModal";
 import { getData } from "../config/request";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
+import { clearLocationActivityFilter } from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
+
 const moment = require("moment");
 
-const LocationActivity = ({ locationId }) => {
+const LocationActivity = ({
+  query,
+  clearLocationActivityFilter,
+  locationId,
+}) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [locationActivityModalOpen, setLocationActivityModalOpen] =
     useState(false);
   const [locationActivityLoading, setLocationActivityLoading] = useState(true);
+  const { selectedLocationActivities = [] } = query;
   const [recentActivity, setRecentActivity] = useState([]);
 
   useEffect(() => {
@@ -129,6 +138,7 @@ const LocationActivity = ({ locationId }) => {
         <>
           <View style={s.header}>
             <Text style={s.title}>Location Activity</Text>
+            <FilterLocationActivity />
             <MaterialCommunityIcons
               name="close-circle"
               size={45}
@@ -137,6 +147,17 @@ const LocationActivity = ({ locationId }) => {
             />
           </View>
           <ScrollView style={{ height: "80%" }}>
+            {selectedLocationActivities.length ? (
+              <View style={s.filterView}>
+                <Text style={s.filter}>Clear applied filters</Text>
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  size={24}
+                  onPress={() => clearLocationActivityFilter()}
+                  style={s.xButton2}
+                />
+              </View>
+            ) : null}
             {locationActivityLoading ? (
               <ActivityIndicator />
             ) : recentActivity.length === 0 ? (
@@ -145,7 +166,14 @@ const LocationActivity = ({ locationId }) => {
               recentActivity
                 .filter((activity) => {
                   const icon = getActivityIcon(activity.submission_type);
-                  if (icon) {
+
+                  const showType = selectedLocationActivities.length
+                    ? selectedLocationActivities.find(
+                        (a) => a === activity.submission_type,
+                      )
+                    : true;
+
+                  if (icon && showType) {
                     activity.icon = icon;
                     return activity;
                   }
@@ -189,11 +217,6 @@ const LocationActivity = ({ locationId }) => {
   );
 };
 
-LocationActivity.propTypes = {
-  locationId: PropTypes.number,
-  style: PropTypes.object,
-};
-
 const getStyles = (theme) =>
   StyleSheet.create({
     header: {
@@ -215,6 +238,10 @@ const getStyles = (theme) =>
       right: -20,
       top: -20,
       color: theme.red2,
+    },
+    xButton2: {
+      color: theme.red2,
+      marginLeft: 8,
     },
     activityButton: {
       right: 60,
@@ -317,6 +344,34 @@ const getStyles = (theme) =>
     textContainer: {
       width: "85%",
     },
+    filterView: {
+      backgroundColor: theme.base3,
+      marginBottom: 10,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    filter: {
+      fontSize: 14,
+      textAlign: "center",
+      color: theme.text,
+      fontFamily: "Nunito-Bold",
+      paddingVertical: 8,
+    },
   });
 
-export default LocationActivity;
+// export default LocationActivity;
+
+LocationActivity.propTypes = {
+  query: PropTypes.object,
+  locationId: PropTypes.number,
+  style: PropTypes.object,
+  clearLocationActivityFilter: PropTypes.func,
+};
+
+const mapStateToProps = ({ query }) => ({ query });
+const mapDispatchToProps = (dispatch) => ({
+  clearLocationActivityFilter: () => dispatch(clearLocationActivityFilter()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(LocationActivity);
