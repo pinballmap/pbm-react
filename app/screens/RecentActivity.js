@@ -29,6 +29,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
+  const distanceUnitAbbrev = user.unitPreference ? "ki" : "mi";
+  const buttons = [
+    `30 ${distanceUnitAbbrev}`,
+    `75 ${distanceUnitAbbrev}`,
+    `150 ${distanceUnitAbbrev}`,
+  ];
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
@@ -160,7 +166,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         <ButtonGroup
           onPress={updateIdx}
           selectedIndex={btnIdx}
-          buttons={["30 mi", "75 mi", "150 mi"]}
+          buttons={buttons}
           containerStyle={s.buttonGroupContainer}
           textStyle={s.buttonGroupInactive}
           selectedButtonStyle={s.selButtonStyle}
