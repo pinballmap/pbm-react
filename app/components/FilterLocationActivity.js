@@ -64,7 +64,7 @@ const FilterLocationActivity = ({
                 selectedLocationActivities.find(
                   (activity) => activity === "new_lmx",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setLocationActivitiesFilter("new_lmx")}
@@ -94,7 +94,7 @@ const FilterLocationActivity = ({
                 selectedLocationActivities.find(
                   (activity) => activity === "remove_machine",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setLocationActivitiesFilter("remove_machine")}
@@ -124,7 +124,7 @@ const FilterLocationActivity = ({
                 selectedLocationActivities.find(
                   (activity) => activity === "new_condition",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setLocationActivitiesFilter("new_condition")}
@@ -154,7 +154,7 @@ const FilterLocationActivity = ({
                 selectedLocationActivities.find(
                   (activity) => activity === "new_msx",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setLocationActivitiesFilter("new_msx")}
@@ -184,7 +184,7 @@ const FilterLocationActivity = ({
                 selectedLocationActivities.find(
                   (activity) => activity === "confirm_location",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setLocationActivitiesFilter("confirm_location")}
@@ -230,6 +230,9 @@ const getStyles = (theme) =>
     containerNotSelected: {
       backgroundColor: theme.base1,
     },
+    containerSelected: {
+      backgroundColor: theme.base3,
+    },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
@@ -258,10 +261,7 @@ const getStyles = (theme) =>
       color: theme.text3,
     },
     activeTitleStyle: {
-      color: theme.pink1,
-    },
-    containerBg: {
-      backgroundColor: theme.pink2,
+      color: theme.purple,
     },
     filterIcon: {
       position: "absolute",

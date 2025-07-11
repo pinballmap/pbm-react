@@ -53,7 +53,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               style={[
                 s.container,
                 selectedActivities.find((activity) => activity === "new_lmx")
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setRecentActivitiesFilter("new_lmx")}
@@ -81,7 +81,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 selectedActivities.find(
                   (activity) => activity === "remove_machine",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setRecentActivitiesFilter("remove_machine")}
@@ -111,7 +111,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 selectedActivities.find(
                   (activity) => activity === "new_condition",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setRecentActivitiesFilter("new_condition")}
@@ -139,7 +139,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               style={[
                 s.container,
                 selectedActivities.find((activity) => activity === "new_msx")
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setRecentActivitiesFilter("new_msx")}
@@ -167,7 +167,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 selectedActivities.find(
                   (activity) => activity === "confirm_location",
                 )
-                  ? s.containerBg
+                  ? s.containerSelected
                   : s.containerNotSelected,
               ]}
               onPress={() => setRecentActivitiesFilter("confirm_location")}
@@ -219,6 +219,9 @@ const getStyles = (theme) =>
     containerNotSelected: {
       backgroundColor: theme.base1,
     },
+    containerSelected: {
+      backgroundColor: theme.base3,
+    },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
@@ -247,10 +250,7 @@ const getStyles = (theme) =>
       color: theme.text3,
     },
     activeTitleStyle: {
-      color: theme.pink1,
-    },
-    containerBg: {
-      backgroundColor: theme.pink2,
+      color: theme.purple,
     },
     filterIcon: {
       paddingRight: 10,
