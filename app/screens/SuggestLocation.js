@@ -217,7 +217,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   onRequestClose={() => {}}
                 >
                   {isSuggestingLocation ? (
-                    <View style={{ flex: 1, backgroundColor: theme.base2 }}>
+                    <View
+                      style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.7)" }}
+                    >
                       <ActivityIndicator />
                     </View>
                   ) : locationSuggested ? (
@@ -672,7 +674,7 @@ const getStyles = (theme) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: theme.theme == "dark" ? theme.base2 : "rgba(0,0,0,0.5)",
+      backgroundColor: "rgba(0,0,0,0.7)",
     },
     successInner: {
       backgroundColor: theme.base1,
