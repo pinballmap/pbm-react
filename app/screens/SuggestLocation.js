@@ -210,40 +210,36 @@ function SuggestLocation({ navigation, route, location, ...props }) {
               >
                 <Modal
                   animationType="slide"
-                  transparent={false}
+                  transparent={true}
                   statusBarTranslucent={true}
                   navigationBarTranslucent={true}
                   visible={showSuggestLocationModal}
                   onRequestClose={() => {}}
                 >
                   {isSuggestingLocation ? (
-                    <ActivityIndicator />
+                    <View style={{ flex: 1, backgroundColor: theme.base2 }}>
+                      <ActivityIndicator />
+                    </View>
                   ) : locationSuggested ? (
-                    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                      <ScrollView
-                        contentContainerStyle={{
-                          backgroundColor: theme.base1,
-                          paddingBottom: 30,
-                          paddingTop: machineNameMargin + 50,
-                        }}
-                      >
+                    <View style={s.successContainer}>
+                      <View style={s.successInner}>
+                        <MaterialCommunityIcons
+                          name="close-circle"
+                          size={45}
+                          onPress={() => {
+                            setShowSuggestLocationModal(false);
+                            dispatch(resetSuggestLocation());
+                            navigation.navigate("MapTab");
+                          }}
+                          style={s.xButton}
+                        />
                         <Text style={s.success}>
                           <Text style={s.successBanner}>
                             {`Thanks for submitting that location!\n\n`}
                           </Text>
                           {`Please allow us 0-7 days to review and add it. No need to re-submit it or remind us (unless it's opening day!).\n\nNote: you usually won't get a message from us confirming that it's been added.`}
                         </Text>
-                        <MaterialCommunityIcons
-                          name="close-circle"
-                          size={45}
-                          onPress={() => {
-                            navigation.navigate("MapTab");
-                            setShowSuggestLocationModal(false);
-                            dispatch(resetSuggestLocation());
-                          }}
-                          style={s.xButton}
-                        />
-                      </ScrollView>
+                      </View>
                     </View>
                   ) : (
                     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
@@ -257,7 +253,12 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                         <View style={s.pageTitle}>
                           {machineList.length === 0 ||
                           locationName?.length === 0 ? (
-                            <Text style={[s.pageTitleText, s.error]}>
+                            <Text
+                              style={[
+                                { color: theme.purpleLight },
+                                s.pageTitleText,
+                              ]}
+                            >
                               Please fill in required fields
                             </Text>
                           ) : (
@@ -667,7 +668,17 @@ const getStyles = (theme) =>
       backgroundColor: theme.indigo4,
     },
     successContainer: {
-      paddingHorizontal: 30,
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme.theme == "dark" ? theme.base2 : "rgba(0,0,0,0.5)",
+    },
+    successInner: {
+      backgroundColor: theme.base1,
+      borderRadius: 15,
+      width: "80%",
+      paddingVertical: 15,
     },
     success: {
       textAlign: "center",
@@ -713,9 +724,12 @@ const getStyles = (theme) =>
     machineVersionContainer: {
       marginHorizontal: 20,
       backgroundColor: theme.white,
+      borderRadius: 15,
     },
     xButton: {
-      textAlign: "right",
+      position: "absolute",
+      right: -20,
+      top: -20,
       color: theme.red2,
     },
     containerStyle: {
