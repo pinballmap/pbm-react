@@ -38,11 +38,12 @@ const FAQ = ({ navigation }) => {
                 style={s.filterIcon}
                 onPress={() => navigation.navigate("FilterMap")}
               />
+              {` `}
               <Text
                 style={s.textLink}
                 onPress={() => navigation.navigate("FilterMap")}
               >
-                {` filter`}
+                {`filter`}
               </Text>
               {` button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine. When the map is filtered, you can zoom further out.`}
             </Text>
