@@ -14,9 +14,18 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.31
+
+July 13, 2025
+
+- Added a filter to the location activity feed.
+- Fixed some km/mi unit display stuff.
+- Some design tweaks.
+- Code maintenance.
+
 ### 5.3.30
 
-June 27, 2025
+June 29, 2025
 
 - For Android, the things from 5.3.29 below.
 - Design tweaks.
