@@ -1,14 +1,13 @@
 diff --git a/node_modules/react-native/ReactCommon/react/nativemodule/core/platform/android/ReactCommon/JavaTurboModule.cpp b/node_modules/react-native/ReactCommon/react/nativemodule/core/platform/android/ReactCommon/JavaTurboModule.cpp
-index b36755e..4038ec6 100644
+index b36755e..0ec23fc 100644
 --- a/node_modules/react-native/ReactCommon/react/nativemodule/core/platform/android/ReactCommon/JavaTurboModule.cpp
 +++ b/node_modules/react-native/ReactCommon/react/nativemodule/core/platform/android/ReactCommon/JavaTurboModule.cpp
-@@ -970,34 +970,33 @@ jsi::Value JavaTurboModule::invokeJavaMethod(
+@@ -970,34 +970,32 @@ jsi::Value JavaTurboModule::invokeJavaMethod(
    }
  }
  
 -void JavaTurboModule::setEventEmitterCallback(
 -    jni::alias_ref<jobject> jinstance) {
-+
 +void JavaTurboModule::configureEventEmitterCallback() {
    JNIEnv* env = jni::Environment::current();
 -  auto instance = jinstance.get();
