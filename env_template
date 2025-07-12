@@ -8,10 +8,11 @@
 ## Copy this file to .env and remove this
 ## header to populate the ENV variables
 ############################################
-GOOGLE_MAPS_KEY='<key>'
-IFPA_API_KEY='<key>'
-#API_URL='https://pinballmapstaging.herokuapp.com/api/v1'
-API_URL='https://www.pinballmap.com/api/v1'
-SENTRY_AUTH_TOKEN='<key>'
-MAPBOX_DOWNLOAD='<key>'
-MAPBOX_PUBLIC='<key>'
+EXPO_PUBLIC_GOOGLE_MAPS_KEY='<key>'
+EXPO_PUBLIC_IFPA_API_KEY='<key>'
+EXPO_PUBLIC_API_URL='https://www.pinballmap.com/api/v1'
+EXPO_PUBLIC_STAGING_API_URL='https://pbmstaging.com/api/v1'
+EXPO_PUBLIC_STORE_TESTERS=['googleplay', 'appletest']
+EXPO_PUBLIC_SENTRY_AUTH_TOKEN='<key>'
+EXPO_PUBLIC_MAPBOX_DOWNLOAD='<key>'
+EXPO_PUBLIC_MAPBOX_PUBLIC='<key>'
