@@ -23,7 +23,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const s = getStyles(theme);
   const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true);
   const [recentActivity, setRecentActivity] = useState([]);
-  const [maxDistance, setMaxDistance] = useState(30);
+  const [maxDistance, setMaxDistance] = useState(10);
   const [btnIdx, setBtnIdx] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
