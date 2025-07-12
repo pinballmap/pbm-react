@@ -43,7 +43,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const fetchData = useCallback(
     (_, distance) => {
       // Once the recent activity screen is mounted, it never unmounts for the app. With that in mind, we typically
-      // want to get a fresh request of the recent activity when the screen is focused with the caveat being if the
+      // want to get a fresh request of the recent activity when the screen is focused with the exception being if the
       // user has come from navigating to a location detail screen via the recent activity list.
       // To accomplish this behavior, we have to now explicitly call fetchData when the user updates the search radius
       // and we must track if the data should be refreshed (i.e. not coming back from location details)

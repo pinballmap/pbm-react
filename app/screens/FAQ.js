@@ -51,7 +51,7 @@ const FAQ = ({ navigation }) => {
             >{`The Location List isn't showing a location that I think it should.`}</Text>
             <Text
               style={s.text}
-            >{`The Location List lists what is currently shown on the map. If you pan/zoom the map, it will list different things.`}</Text>
+            >{`The Location List lists the locations currently shown on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
             <Text
               style={s.bold}
             >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
