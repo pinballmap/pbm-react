@@ -74,9 +74,28 @@ export const getData = (uri) => {
     .catch((err) => Promise.reject(err));
 };
 
-export const getIfpaData = (address, radius, distanceUnit) => {
+export const getIfpaData = (
+  radius,
+  distanceUnit,
+  lat,
+  lon,
+  date_today,
+  date_1year,
+) => {
   return fetch(
-    `https://api.ifpapinball.com/v1/calendar/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&address=${address}&${distanceUnit}=${radius}`,
+    `https://api.ifpapinball.com/tournament/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&latitude=${lat}&longitude=${lon}&distance_unit=${distanceUnit}&radius=${radius}&total=50&start_date=${date_today}&end_date=${date_1year}`,
+  )
+    .then((response) => {
+      if (response.status === 200) return response.json();
+
+      throw new Error("IFPA API response was not ok");
+    })
+    .catch((err) => Promise.reject(err));
+};
+
+export const getIfpaTournament = (tournament_id) => {
+  return fetch(
+    `https://api.ifpapinball.com/tournament/${tournament_id}?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}`,
   )
     .then((response) => {
       if (response.status === 200) return response.json();
