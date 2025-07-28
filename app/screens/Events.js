@@ -50,28 +50,6 @@ export const Events = ({ query, user }) => {
   });
   const [tournamentModalOpen, setTournamentModalOpen] = useState(false);
 
-  const getError = (theme) => (
-    <Text
-      style={{
-        textAlign: "center",
-        fontFamily: "Nunito-Bold",
-        marginTop: 15,
-        color: theme.text2,
-      }}
-    >
-      {`Something went wrong. In the meantime, you can check the `}
-      <Text
-        style={s.textLink}
-        onPress={() =>
-          WebBrowser.openBrowserAsync("https://www.ifpapinball.com/calendar/")
-        }
-      >
-        IFPA calendar
-      </Text>
-      {` on their site.`}
-    </Text>
-  );
-
   const updateIdx = (selectedIdx) => {
     const radiusArray = [50, 150, 250];
     const radius = radiusArray[selectedIdx];
@@ -126,16 +104,40 @@ export const Events = ({ query, user }) => {
           <ActivityIndicator />
         </View>
       ) : error ? (
-        { getError }
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "Nunito-Bold",
+            marginTop: 15,
+            color: theme.text2,
+          }}
+        >
+          {`Something went wrong. In the meantime, you can check the `}
+          <Text
+            style={s.textLink}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://www.ifpapinball.com/calendar/",
+              )
+            }
+          >
+            IFPA calendar
+          </Text>
+          {` on their site.`}
+        </Text>
       ) : (
         <>
           <ConfirmationModal visible={tournamentModalOpen} wide>
             {gettingTournament ? (
-              <View style={s.background}>
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  justifyContent: "center",
+                }}
+                style={{ height: "80%", paddingHorizontal: 10 }}
+              >
                 <ActivityIndicator />
-              </View>
-            ) : modalError ? (
-              { getError }
+              </ScrollView>
             ) : (
               <>
                 <View>
@@ -146,62 +148,95 @@ export const Events = ({ query, user }) => {
                     style={s.xButton}
                   />
                 </View>
-                <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
-                  <Text style={[s.locationName]}>
-                    {tournament.tournament_name.trim()}
-                  </Text>
-                  <Text style={[s.address, s.margin]}>
-                    {tournament.raw_address}
-                  </Text>
-                  <Text style={[s.margin, s.cardTextStyle]}>
-                    {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                      "MMM DD, YYYY",
-                    ) ===
-                    moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                      "MMM DD, YYYY",
-                    ) ? (
-                      <Text style={s.bold}>
-                        {moment(
-                          tournament.event_start_date,
-                          "YYYY-MM-DD",
-                        ).format("MMM DD, YYYY")}
-                      </Text>
-                    ) : (
-                      <Text style={s.bold}>
-                        {moment(
-                          tournament.event_start_date,
-                          "YYYY-MM-DD",
-                        ).format("MMM DD, YYYY")}{" "}
-                        -{" "}
-                        {moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                          "MMM DD, YYYY",
-                        )}
-                      </Text>
-                    )}
-                  </Text>
-                  <Text
-                    style={[s.margin, s.link]}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
-                      )
-                    }
+                {modalError ? (
+                  <ScrollView
+                    contentContainerStyle={{
+                      flexGrow: 1,
+                      justifyContent: "center",
+                    }}
+                    style={{ height: "80%", paddingHorizontal: 10 }}
                   >
-                    IFPA Calendar Website
-                  </Text>
-                  <Text
-                    style={[s.margin, s.link]}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(`${tournament.website}`)
-                    }
-                  >
-                    Event Website
-                  </Text>
-                  <Text style={s.margin}>
-                    Tournament or league? {tournament.tournament_type}
-                  </Text>
-                  <Text style={s.margin}>{tournament.details}</Text>
-                </ScrollView>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontFamily: "Nunito-Bold",
+                        marginTop: 15,
+                        color: theme.text2,
+                      }}
+                    >
+                      {`Something went wrong. In the meantime, you can check the `}
+                      <Text
+                        style={s.textLink}
+                        onPress={() =>
+                          WebBrowser.openBrowserAsync(
+                            "https://www.ifpapinball.com/calendar/",
+                          )
+                        }
+                      >
+                        IFPA calendar
+                      </Text>
+                      {` on their site.`}
+                    </Text>
+                  </ScrollView>
+                ) : (
+                  <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
+                    <Text style={[s.locationName]}>
+                      {tournament.tournament_name.trim()}
+                    </Text>
+                    <Text style={[s.address, s.margin]}>
+                      {tournament.raw_address}
+                    </Text>
+                    <Text style={[s.margin, s.cardTextStyle]}>
+                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
+                        "MMM DD, YYYY",
+                      ) ===
+                      moment(tournament.event_end_date, "YYYY-MM-DD").format(
+                        "MMM DD, YYYY",
+                      ) ? (
+                        <Text style={s.bold}>
+                          {moment(
+                            tournament.event_start_date,
+                            "YYYY-MM-DD",
+                          ).format("MMM DD, YYYY")}
+                        </Text>
+                      ) : (
+                        <Text style={s.bold}>
+                          {moment(
+                            tournament.event_start_date,
+                            "YYYY-MM-DD",
+                          ).format("MMM DD, YYYY")}{" "}
+                          -{" "}
+                          {moment(
+                            tournament.event_end_date,
+                            "YYYY-MM-DD",
+                          ).format("MMM DD, YYYY")}
+                        </Text>
+                      )}
+                    </Text>
+                    <Text
+                      style={[s.margin, s.link]}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(
+                          `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
+                        )
+                      }
+                    >
+                      IFPA Calendar Website
+                    </Text>
+                    <Text
+                      style={[s.margin, s.link]}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(`${tournament.website}`)
+                      }
+                    >
+                      Event Website
+                    </Text>
+                    <Text style={s.margin}>
+                      Tournament or league? {tournament.tournament_type}
+                    </Text>
+                    <Text style={s.margin}>{tournament.details}</Text>
+                  </ScrollView>
+                )}
               </>
             )}
           </ConfirmationModal>
