@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
-import Geocode from "react-geocode";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   ActivityIndicator,
@@ -16,8 +15,6 @@ import { useTheme } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const moment = require("moment");
-
-Geocode.setApiKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const Events = ({ query, user }) => {
   const [gettingEvents, setGettingEvents] = useState(true);
