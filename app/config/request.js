@@ -1,6 +1,6 @@
 import * as Location from "expo-location";
 import * as Application from "expo-application";
-// import { useState } from 'react';
+const moment = require("moment");
 
 export const postData = (uri, body) => {
   return fetch(global.API_URL + uri, {
@@ -74,14 +74,10 @@ export const getData = (uri) => {
     .catch((err) => Promise.reject(err));
 };
 
-export const getIfpaData = (
-  radius,
-  distanceUnit,
-  lat,
-  lon,
-  date_today,
-  date_1year,
-) => {
+export const getIfpaData = (radius, distanceUnit, lat, lon) => {
+  const date_today = moment().format("YYYY-MM-DD");
+  const date_1year = moment().add(1, "year").format("YYYY-MM-DD");
+
   return fetch(
     `https://api.ifpapinball.com/tournament/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&latitude=${lat}&longitude=${lon}&distance_unit=${distanceUnit}&radius=${radius}&total=50&start_date=${date_today}&end_date=${date_1year}`,
   )

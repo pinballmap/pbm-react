@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import Geocode from "react-geocode";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -40,8 +41,7 @@ export const Events = ({ query, user }) => {
     `150 ${distanceUnitAbbrev}`,
     `250 ${distanceUnitAbbrev}`,
   ];
-  const date_today = moment().format("YYYY-MM-DD");
-  const date_1year = moment().add(1, "year").format("YYYY-MM-DD");
+
   const { lat: mapLat, lon: mapLon } = boundsToCoords({
     neLat,
     neLon,
@@ -55,34 +55,33 @@ export const Events = ({ query, user }) => {
     const radius = radiusArray[selectedIdx];
     setSelectedIdx(selectedIdx);
     setRadius(radius);
-    setRefetchingEvents(true);
     fetchEvents(radius);
   };
 
   const fetchEvents = async (radius) => {
+    setRefetchingEvents(true);
     try {
       const data = await getIfpaData(
         radius,
         user.unitPreference ? "k" : "m",
         mapLat,
         mapLon,
-        date_today,
-        date_1year,
       );
       setError(false);
       setEvents(data.tournaments ? data.tournaments : []);
-      setGettingEvents(false);
-      setRefetchingEvents(false);
     } catch (e) {
       setError(true);
+    } finally {
       setGettingEvents(false);
       setRefetchingEvents(false);
     }
   };
 
-  useEffect(() => {
-    fetchEvents(50);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchEvents(radius);
+    }, [mapLat]),
+  );
 
   const fetchTournament = async (tournament_id) => {
     try {
@@ -90,9 +89,9 @@ export const Events = ({ query, user }) => {
       const data = await getIfpaTournament(tournament_id);
       setModalError(false);
       setTournament(data ? data : []);
-      setGettingTournament(false);
     } catch (e) {
       setModalError(true);
+    } finally {
       setGettingTournament(false);
     }
   };
