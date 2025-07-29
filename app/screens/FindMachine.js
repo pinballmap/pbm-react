@@ -535,7 +535,7 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       marginHorizontal: 30,
-      marginTop: 10,
+      marginTop: 5,
       marginBottom: 10,
       borderRadius: 10,
       fontFamily: "Nunito-Regular",
@@ -604,6 +604,7 @@ const getStyles = (theme) =>
     modalTitle: {
       textAlign: "center",
       marginHorizontal: 40,
+      marginBottom: 15,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
