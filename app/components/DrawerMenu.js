@@ -85,7 +85,13 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         </View>
         {user.loggedIn ? (
-          <Text allowFontScaling={false} style={s.nameText}>
+          <Text
+            allowFontScaling={false}
+            style={s.nameText}
+            onPress={() =>
+              props.navigation.navigate("Map", { screen: "UserProfile" })
+            }
+          >
             {user.username}
           </Text>
         ) : (
