@@ -1,7 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import Text from "../components/PbmText";
 import {
   ActivityIndicator,
   ButtonGroup,
@@ -228,9 +235,10 @@ export const Events = ({ query, user }) => {
                       Event Website
                     </Text>
                     <Text style={s.margin}>
-                      Tournament or league? {tournament.tournament_type}
+                      <Text style={s.italic}>Tournament or league?</Text>{" "}
+                      {tournament.tournament_type}
                     </Text>
-                    <Text style={s.margin}>{tournament.details}</Text>
+                    <Text style={s.margin}>{tournament.details.trim()}</Text>
                   </ScrollView>
                 )}
               </>
@@ -453,6 +461,10 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: theme.blue4,
       fontFamily: "Nunito-Regular",
+    },
+    italic: {
+      fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
   });
 
