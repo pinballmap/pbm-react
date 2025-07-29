@@ -4,7 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
 import LocationDetails from "../screens/LocationDetails";
@@ -30,7 +34,6 @@ import FindLocationType from "../screens/FindLocationType";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
-import { FontAwesome6 } from "@expo/vector-icons";
 
 import { DrawerMenu } from "../components";
 
@@ -95,15 +98,15 @@ function ActivityStackNavigator() {
   );
 }
 
-function ProfileStackNavigator() {
+function EventsStackNavigator() {
   return (
     <Stack.Navigator screenOptions={TabsOptionsStyle}>
       <Stack.Screen
-        name="UserProfileStack"
-        component={UserProfile}
+        name="EventsStack"
+        component={Events}
         options={{
           headerTitleAlign: "center",
-          title: "Your Profile",
+          title: "Nearby Events",
           headerLeft: null,
         }}
       />
@@ -222,8 +225,8 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="UserProfile"
-        component={ProfileStackNavigator}
+        name="Events"
+        component={EventsStackNavigator}
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
@@ -236,13 +239,13 @@ function BottomTabNavigator() {
                 s.labelText,
               ]}
             >
-              You
+              Events
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <FontAwesome6
-              name="face-grin-beam"
-              size={25}
+            <MaterialIcons
+              name="event-note"
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -380,9 +383,9 @@ function MapStack() {
         options={{ title: "Submit Location" }}
       />
       <Stack.Screen
-        name="Events"
-        component={Events}
-        options={{ title: "Nearby Events" }}
+        name="UserProfile"
+        component={UserProfile}
+        options={{ title: "Your Profile" }}
       />
       <Stack.Screen name="FAQ" component={FAQ} />
       <Stack.Screen

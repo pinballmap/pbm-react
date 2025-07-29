@@ -16,7 +16,11 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
@@ -165,6 +169,22 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
+        label="Your Profile"
+        labelStyle={s.labelStyle}
+        allowFontScaling={false}
+        icon={() => (
+          <FontAwesome6
+            name="face-grin-beam"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
+        )}
+        onPress={() =>
+          props.navigation.navigate("Map", { screen: "UserProfile" })
+        }
+      />
+      <DrawerItem
         label="About"
         labelStyle={s.labelStyle}
         allowFontScaling={false}
@@ -177,20 +197,6 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "About" })}
-      />
-      <DrawerItem
-        label="Events"
-        labelStyle={s.labelStyle}
-        allowFontScaling={false}
-        icon={() => (
-          <MaterialIcons
-            name="event-note"
-            size={iconSize}
-            color={iconColor}
-            style={s.iconStyle}
-          />
-        )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="FAQ"
