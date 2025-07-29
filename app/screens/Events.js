@@ -240,7 +240,7 @@ export const Events = ({ query, user }) => {
               </>
             )}
           </ConfirmationModal>
-          <View style={s.header}>
+          <View>
             <ButtonGroup
               onPress={updateIdx}
               selectedIndex={selectedIdx}
@@ -266,7 +266,7 @@ export const Events = ({ query, user }) => {
                     )
                   }
                 >
-                  International Flipper Pinball Association
+                  International Flipper Pinball Association (IFPA)
                 </Text>
               </Text>
               <FlashList
@@ -331,9 +331,6 @@ const getStyles = (theme) =>
     background: {
       padding: 30,
       backgroundColor: theme.base1,
-    },
-    header: {
-      paddingVertical: 10,
     },
     buttonGroupContainer: {
       borderWidth: 0,
