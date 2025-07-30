@@ -130,6 +130,7 @@ const LocationActivity = ({
   return (
     <>
       <ConfirmationModal
+        closeModal={() => setLocationActivityModalOpen(false)}
         visible={locationActivityModalOpen}
         onRequestClose={() => {}}
         wide

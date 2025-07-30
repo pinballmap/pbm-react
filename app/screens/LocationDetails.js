@@ -204,7 +204,10 @@ const LocationDetails = (props) => {
         onScroll={handleScroll}
         scrollIndicatorInsets={{ right: 1 }}
       >
-        <ConfirmationModal visible={confirmModalVisible}>
+        <ConfirmationModal
+          visible={confirmModalVisible}
+          closeModal={() => setConfirmModalVisible(false)}
+        >
           <Text style={s.confirmText}>
             Confirm the lineup at {location.name}?
           </Text>

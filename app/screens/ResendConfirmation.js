@@ -35,7 +35,10 @@ const ResendConfirmation = ({ navigation }) => {
           Keyboard.dismiss();
         }}
       >
-        <ConfirmationModal visible={modalVisible}>
+        <ConfirmationModal
+          visible={modalVisible}
+          closeModal={() => setModalVisible(false)}
+        >
           <Text style={s.confirmText}>
             Confirmation info resent (check your SPAM folder).
           </Text>

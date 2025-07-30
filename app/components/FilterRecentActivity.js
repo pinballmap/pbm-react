@@ -38,7 +38,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   return (
     <View>
       {showModal && (
-        <ConfirmationModal>
+        <ConfirmationModal closeModal={() => setShowModal(false)}>
           <View style={s.header}>
             <Text style={s.filterTitle}>Filter Recent Activity</Text>
             <MaterialCommunityIcons
@@ -198,12 +198,16 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
           </View>
         </ConfirmationModal>
       )}
-      <Entypo
-        name="sound-mix"
-        size={24}
-        style={s.filterIcon}
+      <Pressable
+        style={({ pressed }) => [
+          s.filterIconPressable,
+          pressed && s.filterIconPressed,
+        ]}
         onPress={() => setShowModal(true)}
-      />
+        hitSlop={{ top: 20, bottom: 20, left: 60, right: 10 }}
+      >
+        <Entypo name="sound-mix" size={24} style={s.filterIcon} />
+      </Pressable>
     </View>
   );
 };
@@ -253,11 +257,17 @@ const getStyles = (theme) =>
       color: theme.purple,
     },
     filterIcon: {
-      paddingRight: 10,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
     },
     iconStyle: {
       marginRight: 10,
+    },
+    filterIconPressable: {
+      marginRight: 5,
+      padding: 5,
+    },
+    filterIconPressed: {
+      backgroundColor: theme.indigo4,
     },
   });
 

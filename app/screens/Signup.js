@@ -142,7 +142,10 @@ const Signup = ({ loginLater, navigation }) => {
         backgroundColor: "transparent",
       }}
     >
-      <ConfirmationModal visible={modalVisible}>
+      <ConfirmationModal
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+      >
         <Text style={s.confirmText}>
           {`Please check your email and confirm your account. If you don't see it, check your SPAM folder!`}
         </Text>

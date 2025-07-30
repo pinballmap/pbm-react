@@ -49,7 +49,10 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 0 }}>
-      <ConfirmationModal visible={confirmationMessage.length > 0}>
+      <ConfirmationModal
+        visible={confirmationMessage.length > 0}
+        closeModal={acknowledgeConfirmation}
+      >
         <Text style={s.confirmText}>{confirmationMessage}</Text>
         <MaterialCommunityIcons
           name="close-circle"

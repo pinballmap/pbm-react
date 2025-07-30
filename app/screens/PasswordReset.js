@@ -35,7 +35,10 @@ const PasswordReset = ({ navigation }) => {
           Keyboard.dismiss();
         }}
       >
-        <ConfirmationModal visible={modalVisible}>
+        <ConfirmationModal
+          visible={modalVisible}
+          closeModal={() => setModalVisible(false)}
+        >
           <Text style={s.confirmText}>
             Password reset was successful. Check your email (and SPAM folder).
           </Text>

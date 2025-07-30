@@ -16,7 +16,10 @@ const NoLocationTrackingModal = ({
   const s = getStyles(theme);
 
   return (
-    <ConfirmationModal visible={showNoLocationTrackingModal}>
+    <ConfirmationModal
+      visible={showNoLocationTrackingModal}
+      closeModal={hideNoLocationTrackingModal}
+    >
       <View>
         <Text style={s.confirmText}>
           Location tracking must be enabled to use this feature!

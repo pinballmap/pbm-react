@@ -37,7 +37,10 @@ const DrawerMenu = ({ logout, user, ...props }) => {
 
   return (
     <DrawerContentScrollView {...props}>
-      <ConfirmationModal visible={modalVisible}>
+      <ConfirmationModal
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+      >
         <PbmButton
           title={"Log Me Out"}
           onPress={() => {

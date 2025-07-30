@@ -25,7 +25,7 @@ const RemoveMachineModal = ({
   const { curLmx, location } = loc;
 
   return (
-    <ConfirmationModal>
+    <ConfirmationModal closeModal={() => closeModal()}>
       {machineName && (
         <Text style={s.confirmText}>
           Remove <Text style={s.machineName}>{machineName}</Text> from{" "}

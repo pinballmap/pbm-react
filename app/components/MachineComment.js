@@ -64,7 +64,11 @@ const MachineComment = ({ commentObj, user }) => {
       {({ theme }) => {
         return (
           <>
-            <ConfirmationModal loading={loading} visible={deleteModalVisible}>
+            <ConfirmationModal
+              loading={loading}
+              visible={deleteModalVisible}
+              closeModal={() => setDeleteModalVisible(false)}
+            >
               <Text style={s.modalTitle}>Delete your comment?</Text>
               <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
               <WarningButton

@@ -97,7 +97,12 @@ export class LocationList extends Component {
           const s = getStyles(theme);
           return (
             <>
-              <ConfirmationModal visible={showNoLocationTrackingModal}>
+              <ConfirmationModal
+                visible={showNoLocationTrackingModal}
+                closeModal={() =>
+                  this.setState({ showNoLocationTrackingModal: false })
+                }
+              >
                 <View>
                   <Text style={s.confirmText}>
                     Location tracking must be enabled to use this feature!

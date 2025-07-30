@@ -103,7 +103,11 @@ export const Events = ({ query, user }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      <ConfirmationModal visible={tournamentModalOpen} wide>
+      <ConfirmationModal
+        visible={tournamentModalOpen}
+        wide
+        closeModal={() => setTournamentModalOpen(false)}
+      >
         {gettingTournament ? (
           <ScrollView
             contentContainerStyle={{

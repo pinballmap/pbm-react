@@ -33,7 +33,7 @@ const AppAlert = ({ motd }) => {
   }, [motd]);
 
   return (
-    <ConfirmationModal visible={visible}>
+    <ConfirmationModal visible={visible} closeModal={() => setIsVisible(false)}>
       <View style={s.appAlertHeader}>
         <Text style={s.appAlertTitle}>Message of the Day!</Text>
         <MaterialCommunityIcons

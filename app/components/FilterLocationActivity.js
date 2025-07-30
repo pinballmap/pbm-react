@@ -40,14 +40,18 @@ const FilterLocationActivity = ({
 
   return (
     <View>
-      <Entypo
-        name="sound-mix"
-        size={24}
-        style={s.filterIcon}
+      <Pressable
+        style={({ pressed }) => [
+          s.filterIconPressable,
+          pressed && s.filterIconPressed,
+        ]}
         onPress={() => setShowModal(true)}
-      />
+        hitSlop={{ top: 20, bottom: 20, left: 50, right: 10 }}
+      >
+        <Entypo name="sound-mix" size={24} style={s.filterIcon} />
+      </Pressable>
       {showModal && (
-        <ConfirmationModal>
+        <ConfirmationModal closeModal={() => setShowModal(false)}>
           <View style={s.header}>
             <Text style={s.filterTitle}>Filter Location Activity</Text>
             <MaterialCommunityIcons
@@ -263,11 +267,16 @@ const getStyles = (theme) =>
     activeTitleStyle: {
       color: theme.purple,
     },
-    filterIcon: {
+    filterIconPressable: {
       position: "absolute",
-      right: 0,
-      bottom: 0,
-      paddingRight: 30,
+      right: 25,
+      bottom: -5,
+      padding: 5,
+    },
+    filterIconPressed: {
+      backgroundColor: theme.indigo4,
+    },
+    filterIcon: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
     },
     iconStyle: {

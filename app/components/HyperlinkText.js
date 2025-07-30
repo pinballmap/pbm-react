@@ -41,6 +41,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     regularText: {
+      color: theme.text,
       fontFamily: "Nunito-Regular",
     },
   });

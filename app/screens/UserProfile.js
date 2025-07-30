@@ -97,7 +97,10 @@ class UserProfile extends Component {
                 />
               ) : (
                 <View>
-                  <ConfirmationModal visible={this.state.modalVisible}>
+                  <ConfirmationModal
+                    visible={this.state.modalVisible}
+                    closeModal={() => this.setModalVisible(false)}
+                  >
                     <PbmButton
                       title={"Log Me Out"}
                       onPress={() => {
