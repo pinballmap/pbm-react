@@ -7,6 +7,7 @@ import WarningButton from "./WarningButton";
 import PbmButton from "./PbmButton";
 import DropDownButton from "./DropDownButton";
 import Text from "./PbmText";
+import HyperlinkText from "./HyperlinkText";
 import FilterRecentActivity from "./FilterRecentActivity";
 import FilterLocationActivity from "./FilterLocationActivity";
 import Search from "./Search";
@@ -39,6 +40,7 @@ export {
   PbmButton,
   DropDownButton,
   Text,
+  HyperlinkText,
   FilterRecentActivity,
   FilterLocationActivity,
   Search,

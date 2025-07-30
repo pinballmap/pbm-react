@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   ButtonGroup,
   ConfirmationModal,
+  HyperlinkText,
 } from "../components";
 import { getIfpaData, getIfpaTournament } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
@@ -203,11 +204,14 @@ export const Events = ({ query, user }) => {
                 >
                   Event Website
                 </Text>
-                <Text style={s.margin}>
-                  <Text style={s.italic}>Tournament or league?</Text>{" "}
-                  {tournament.tournament_type}
+                <Text style={[s.margin, { marginBottom: 10 }]}>
+                  <Text style={s.bold}>Tournament or league?</Text>{" "}
+                  <Text style={s.italic}>{tournament.tournament_type}</Text>
                 </Text>
-                <Text style={s.margin}>{tournament.details.trim()}</Text>
+                <Text style={[s.bold, { marginBottom: 10 }]}>
+                  Event details:
+                </Text>
+                <HyperlinkText text={tournament.details.trim()} />
               </ScrollView>
             )}
           </>
