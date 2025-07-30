@@ -26,7 +26,6 @@ const moment = require("moment");
 export const Events = ({ query, user }) => {
   const [gettingEvents, setGettingEvents] = useState(true);
   const [gettingTournament, setGettingTournament] = useState(true);
-  const [refetchingEvents, setRefetchingEvents] = useState(false);
   const [events, setEvents] = useState([]);
   const [tournament, setTournament] = useState([]);
   const [error, setError] = useState(false);
@@ -62,8 +61,7 @@ export const Events = ({ query, user }) => {
     fetchEvents(radius);
   };
 
-  const fetchEvents = async (radius) => {
-    setRefetchingEvents(true);
+  const fetchEvents = async () => {
     try {
       const data = await getIfpaData(
         radius,
@@ -77,14 +75,16 @@ export const Events = ({ query, user }) => {
       setError(true);
     } finally {
       setGettingEvents(false);
-      setRefetchingEvents(false);
     }
   };
 
   useFocusEffect(
     useCallback(() => {
-      fetchEvents(radius);
-    }, [mapLat]),
+      // Clear or reset data BEFORE the screen is rendered
+      setEvents([]);
+      setGettingEvents(true);
+      fetchEvents();
+    }, [radius, mapLat, mapLon, user.unitPreference]),
   );
 
   const fetchTournament = async (tournament_id) => {
@@ -102,6 +102,129 @@ export const Events = ({ query, user }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+      <ConfirmationModal visible={tournamentModalOpen} wide>
+        {gettingTournament ? (
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "center",
+            }}
+            style={{ height: "80%", paddingHorizontal: 10 }}
+          >
+            <ActivityIndicator />
+          </ScrollView>
+        ) : (
+          <>
+            <View>
+              <MaterialCommunityIcons
+                name="close-circle"
+                size={45}
+                onPress={() => setTournamentModalOpen(false)}
+                style={s.xButton}
+              />
+            </View>
+            {modalError ? (
+              <ScrollView
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  justifyContent: "center",
+                }}
+                style={{ height: "80%", paddingHorizontal: 10 }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "Nunito-Bold",
+                    marginTop: 15,
+                    color: theme.text2,
+                  }}
+                >
+                  {`Something went wrong. In the meantime, you can check the `}
+                  <Text
+                    style={s.textLink}
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        "https://www.ifpapinball.com/calendar/",
+                      )
+                    }
+                  >
+                    IFPA calendar
+                  </Text>
+                  {` on their site.`}
+                </Text>
+              </ScrollView>
+            ) : (
+              <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
+                <Text style={[s.locationName]}>
+                  {tournament.tournament_name.trim()}
+                </Text>
+                <Text style={[s.address, s.margin]}>
+                  {tournament.raw_address}
+                </Text>
+                <Text style={[s.margin, s.cardTextStyle]}>
+                  {moment(tournament.event_start_date, "YYYY-MM-DD").format(
+                    "MMM DD, YYYY",
+                  ) ===
+                  moment(tournament.event_end_date, "YYYY-MM-DD").format(
+                    "MMM DD, YYYY",
+                  ) ? (
+                    <Text style={s.bold}>
+                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
+                        "MMM DD, YYYY",
+                      )}
+                    </Text>
+                  ) : (
+                    <Text style={s.bold}>
+                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
+                        "MMM DD, YYYY",
+                      )}{" "}
+                      -{" "}
+                      {moment(tournament.event_end_date, "YYYY-MM-DD").format(
+                        "MMM DD, YYYY",
+                      )}
+                    </Text>
+                  )}
+                </Text>
+                <Text
+                  style={[s.margin, s.link]}
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
+                    )
+                  }
+                >
+                  IFPA Calendar Website
+                </Text>
+                <Text
+                  style={[s.margin, s.link]}
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(`${tournament.website}`)
+                  }
+                >
+                  Event Website
+                </Text>
+                <Text style={s.margin}>
+                  <Text style={s.italic}>Tournament or league?</Text>{" "}
+                  {tournament.tournament_type}
+                </Text>
+                <Text style={s.margin}>{tournament.details.trim()}</Text>
+              </ScrollView>
+            )}
+          </>
+        )}
+      </ConfirmationModal>
+      <View>
+        <ButtonGroup
+          onPress={updateIdx}
+          selectedIndex={selectedIdx}
+          buttons={buttons}
+          containerStyle={s.buttonGroupContainer}
+          textStyle={s.buttonGroupInactive}
+          selectedButtonStyle={s.selButtonStyle}
+          selectedTextStyle={s.selTextStyle}
+          innerBorderStyle={s.innerBorderStyle}
+        />
+      </View>
       {gettingEvents ? (
         <View style={s.background}>
           <ActivityIndicator />
@@ -129,202 +252,70 @@ export const Events = ({ query, user }) => {
           {` on their site.`}
         </Text>
       ) : (
-        <>
-          <ConfirmationModal visible={tournamentModalOpen} wide>
-            {gettingTournament ? (
-              <ScrollView
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  justifyContent: "center",
-                }}
-                style={{ height: "80%", paddingHorizontal: 10 }}
-              >
-                <ActivityIndicator />
-              </ScrollView>
-            ) : (
-              <>
-                <View>
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={45}
-                    onPress={() => setTournamentModalOpen(false)}
-                    style={s.xButton}
-                  />
-                </View>
-                {modalError ? (
-                  <ScrollView
-                    contentContainerStyle={{
-                      flexGrow: 1,
-                      justifyContent: "center",
-                    }}
-                    style={{ height: "80%", paddingHorizontal: 10 }}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontFamily: "Nunito-Bold",
-                        marginTop: 15,
-                        color: theme.text2,
-                      }}
-                    >
-                      {`Something went wrong. In the meantime, you can check the `}
-                      <Text
-                        style={s.textLink}
-                        onPress={() =>
-                          WebBrowser.openBrowserAsync(
-                            "https://www.ifpapinball.com/calendar/",
-                          )
-                        }
-                      >
-                        IFPA calendar
-                      </Text>
-                      {` on their site.`}
-                    </Text>
-                  </ScrollView>
-                ) : (
-                  <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
-                    <Text style={[s.locationName]}>
-                      {tournament.tournament_name.trim()}
-                    </Text>
-                    <Text style={[s.address, s.margin]}>
-                      {tournament.raw_address}
-                    </Text>
-                    <Text style={[s.margin, s.cardTextStyle]}>
-                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                        "MMM DD, YYYY",
-                      ) ===
-                      moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                        "MMM DD, YYYY",
-                      ) ? (
-                        <Text style={s.bold}>
-                          {moment(
-                            tournament.event_start_date,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY")}
-                        </Text>
-                      ) : (
-                        <Text style={s.bold}>
-                          {moment(
-                            tournament.event_start_date,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY")}{" "}
-                          -{" "}
-                          {moment(
-                            tournament.event_end_date,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY")}
-                        </Text>
-                      )}
-                    </Text>
-                    <Text
-                      style={[s.margin, s.link]}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(
-                          `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
-                        )
-                      }
-                    >
-                      IFPA Calendar Website
-                    </Text>
-                    <Text
-                      style={[s.margin, s.link]}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(`${tournament.website}`)
-                      }
-                    >
-                      Event Website
-                    </Text>
-                    <Text style={s.margin}>
-                      <Text style={s.italic}>Tournament or league?</Text>{" "}
-                      {tournament.tournament_type}
-                    </Text>
-                    <Text style={s.margin}>{tournament.details.trim()}</Text>
-                  </ScrollView>
-                )}
-              </>
-            )}
-          </ConfirmationModal>
-          <View>
-            <ButtonGroup
-              onPress={updateIdx}
-              selectedIndex={selectedIdx}
-              buttons={buttons}
-              containerStyle={s.buttonGroupContainer}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
-            />
-          </View>
-          {refetchingEvents ? (
-            <ActivityIndicator />
-          ) : events.length > 0 ? (
-            <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-              <Text style={s.sourceText}>
-                These events are brought to you by the{" "}
-                <Text
-                  style={s.smallLink}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      "https://www.ifpapinball.com/calendar/",
-                    )
-                  }
-                >
-                  International Flipper Pinball Association (IFPA)
-                </Text>
-              </Text>
-              <FlashList
-                data={events}
-                estimatedItemSize={214}
-                renderItem={({ item }) => {
-                  const tournament_id = item.tournament_id;
-                  const start_date = moment(
-                    item.event_start_date,
-                    "YYYY-MM-DD",
-                  ).format("MMM DD, YYYY");
-                  const end_date = moment(
-                    item.event_end_date,
-                    "YYYY-MM-DD",
-                  ).format("MMM DD, YYYY");
-                  return (
-                    <Pressable
-                      style={({ pressed }) => [
-                        {},
-                        s.cardContainer,
-                        pressed ? s.pressed : s.notPressed,
-                      ]}
-                      onPress={() => {
-                        fetchTournament(tournament_id);
-                        setTournamentModalOpen(true);
-                      }}
-                    >
-                      <Text style={[s.margin, s.padding, s.locationName]}>
-                        {item.tournament_name.trim()}
-                      </Text>
-                      <Text style={[s.center, s.cardTextStyle]}>
-                        {start_date === end_date ? (
-                          <Text style={s.bold}>{start_date}</Text>
-                        ) : (
-                          <Text style={s.bold}>
-                            {start_date} - {end_date}
-                          </Text>
-                        )}
-                      </Text>
-                      <Text style={[s.address, s.margin, s.padding]}>
-                        {item.raw_address}
-                      </Text>
-                    </Pressable>
-                  );
-                }}
-                keyExtractor={(event) => `${event.tournament_id}`}
-              />
-            </View>
-          ) : (
+        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+          <Text style={s.sourceText}>
+            These events are brought to you by the{" "}
             <Text
-              style={s.problem}
-            >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
-          )}
-        </>
+              style={s.smallLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://www.ifpapinball.com/calendar/",
+                )
+              }
+            >
+              International Flipper Pinball Association (IFPA)
+            </Text>
+          </Text>
+          <FlashList
+            data={events}
+            estimatedItemSize={214}
+            ListEmptyComponent={
+              <Text
+                style={s.problem}
+              >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
+            }
+            renderItem={({ item }) => {
+              const tournament_id = item.tournament_id;
+              const start_date = moment(
+                item.event_start_date,
+                "YYYY-MM-DD",
+              ).format("MMM DD, YYYY");
+              const end_date = moment(item.event_end_date, "YYYY-MM-DD").format(
+                "MMM DD, YYYY",
+              );
+              return (
+                <Pressable
+                  style={({ pressed }) => [
+                    {},
+                    s.cardContainer,
+                    pressed ? s.pressed : s.notPressed,
+                  ]}
+                  onPress={() => {
+                    fetchTournament(tournament_id);
+                    setTournamentModalOpen(true);
+                  }}
+                >
+                  <Text style={[s.margin, s.padding, s.locationName]}>
+                    {item.tournament_name.trim()}
+                  </Text>
+                  <Text style={[s.center, s.cardTextStyle]}>
+                    {start_date === end_date ? (
+                      <Text style={s.bold}>{start_date}</Text>
+                    ) : (
+                      <Text style={s.bold}>
+                        {start_date} - {end_date}
+                      </Text>
+                    )}
+                  </Text>
+                  <Text style={[s.address, s.margin, s.padding]}>
+                    {item.raw_address}
+                  </Text>
+                </Pressable>
+              );
+            }}
+            keyExtractor={(event) => `${event.tournament_id}`}
+          />
+        </View>
       )}
     </View>
   );
