@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.32
+
+July 31, 2025
+
+- Switch to the latest IFPA API.
+- Move Events to bottom tab navigation, and Profile to menu.
+- Show event details on press.
+
 ### 5.3.31
 
 July 13, 2025
