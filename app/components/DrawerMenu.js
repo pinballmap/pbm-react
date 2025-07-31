@@ -139,7 +139,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
-            name="search"
+            name="map"
             size={iconSize}
             color={iconColor}
             style={s.iconStyle}
@@ -164,20 +164,6 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         }
       />
       <DrawerItem
-        label="Contact"
-        labelStyle={s.labelStyle}
-        allowFontScaling={false}
-        icon={() => (
-          <MaterialCommunityIcons
-            name="email-outline"
-            size={iconSize}
-            color={iconColor}
-            style={s.iconStyle}
-          />
-        )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
-      />
-      <DrawerItem
         label="Your Profile"
         labelStyle={s.labelStyle}
         allowFontScaling={false}
@@ -192,6 +178,20 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         onPress={() =>
           props.navigation.navigate("Map", { screen: "UserProfile" })
         }
+      />
+      <DrawerItem
+        label="Contact"
+        labelStyle={s.labelStyle}
+        allowFontScaling={false}
+        icon={() => (
+          <MaterialCommunityIcons
+            name="email-outline"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
+        )}
+        onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"
