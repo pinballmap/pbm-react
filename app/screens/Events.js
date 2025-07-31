@@ -303,7 +303,7 @@ export const Events = ({ query, user }) => {
                     setTournamentModalOpen(true);
                   }}
                 >
-                  <Text style={[s.margin, s.padding, s.locationName]}>
+                  <Text style={[s.padding, s.locationName]}>
                     {item.tournament_name.trim()}
                   </Text>
                   <Text style={[s.center, s.cardTextStyle]}>
@@ -315,9 +315,11 @@ export const Events = ({ query, user }) => {
                       </Text>
                     )}
                   </Text>
-                  <Text style={[s.address, s.margin, s.padding]}>
-                    {item.raw_address}
-                  </Text>
+                  {item.raw_address.length > 0 ? (
+                    <Text style={[s.address, s.margin]}>
+                      {item.raw_address}
+                    </Text>
+                  ) : null}
                 </Pressable>
               );
             }}
@@ -379,7 +381,6 @@ const getStyles = (theme) =>
       marginTop: 10,
     },
     padding: {
-      paddingHorizontal: 10,
       paddingBottom: 10,
     },
     bold: {
@@ -415,6 +416,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderColor: "transparent",
       borderWidth: 2,
+      padding: 10,
     },
     center: {
       textAlign: "center",
