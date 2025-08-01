@@ -137,55 +137,59 @@ const LocationActivity = ({
         noPad
       >
         <>
-          <View style={s.header}>
-            <Text style={s.title}>Location Activity</Text>
-            <FilterLocationActivity />
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={45}
-              onPress={() => setLocationActivityModalOpen(false)}
-              style={s.xButton}
-            />
-          </View>
+          <Pressable>
+            <View style={s.header}>
+              <Text style={s.title}>Location Activity</Text>
+              <FilterLocationActivity />
+              <MaterialCommunityIcons
+                name="close-circle"
+                size={45}
+                onPress={() => setLocationActivityModalOpen(false)}
+                style={s.xButton}
+              />
+            </View>
+          </Pressable>
           <ScrollView style={{ height: "80%" }}>
-            {selectedLocationActivities.length ? (
-              <View style={s.filterView}>
-                <Text style={s.filter}>Clear applied filters</Text>
-                <MaterialCommunityIcons
-                  name="close-circle"
-                  size={24}
-                  onPress={() => clearLocationActivityFilter()}
-                  style={s.xButton2}
-                />
-              </View>
-            ) : null}
-            {locationActivityLoading ? (
-              <ActivityIndicator />
-            ) : recentActivity.length === 0 ? (
-              <Text style={s.problem}>No location activity found</Text>
-            ) : (
-              recentActivity
-                .filter((activity) => {
-                  const icon = getActivityIcon(activity.submission_type);
+            <Pressable>
+              {selectedLocationActivities.length ? (
+                <View style={s.filterView}>
+                  <Text style={s.filter}>Clear applied filters</Text>
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={24}
+                    onPress={() => clearLocationActivityFilter()}
+                    style={s.xButton2}
+                  />
+                </View>
+              ) : null}
+              {locationActivityLoading ? (
+                <ActivityIndicator />
+              ) : recentActivity.length === 0 ? (
+                <Text style={s.problem}>No location activity found</Text>
+              ) : (
+                recentActivity
+                  .filter((activity) => {
+                    const icon = getActivityIcon(activity.submission_type);
 
-                  const showType = selectedLocationActivities.length
-                    ? selectedLocationActivities.find(
-                        (a) => a === activity.submission_type,
-                      )
-                    : true;
+                    const showType = selectedLocationActivities.length
+                      ? selectedLocationActivities.find(
+                          (a) => a === activity.submission_type,
+                        )
+                      : true;
 
-                  if (icon && showType) {
-                    activity.icon = icon;
-                    return activity;
-                  }
-                })
-                .map((activity) => (
-                  <View key={activity.id} style={[s.list, s.flexi]}>
-                    <View style={{ width: "15%" }}>{activity.icon}</View>
-                    {getText(activity)}
-                  </View>
-                ))
-            )}
+                    if (icon && showType) {
+                      activity.icon = icon;
+                      return activity;
+                    }
+                  })
+                  .map((activity) => (
+                    <View key={activity.id} style={[s.list, s.flexi]}>
+                      <View style={{ width: "15%" }}>{activity.icon}</View>
+                      {getText(activity)}
+                    </View>
+                  ))
+              )}
+            </Pressable>
           </ScrollView>
         </>
       </ConfirmationModal>

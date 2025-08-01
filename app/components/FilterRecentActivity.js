@@ -39,163 +39,169 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
     <View>
       {showModal && (
         <ConfirmationModal closeModal={() => setShowModal(false)}>
-          <View style={s.header}>
-            <Text style={s.filterTitle}>Filter Recent Activity</Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={45}
-              onPress={() => setShowModal(false)}
-              style={s.xButton}
-            />
-          </View>
-          <View>
-            <Pressable
-              style={[
-                s.container,
-                selectedActivities.find((activity) => activity === "new_lmx")
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setRecentActivitiesFilter("new_lmx")}
-            >
+          <Pressable>
+            <View style={s.header}>
+              <Text style={s.filterTitle}>Filter Recent Activity</Text>
               <MaterialCommunityIcons
-                name="plus-box"
-                size={32}
-                color="#58a467"
-                style={s.iconStyle}
+                name="close-circle"
+                size={45}
+                onPress={() => setShowModal(false)}
+                style={s.xButton}
               />
-              <Text
+            </View>
+            <View>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedActivities.find((activity) => activity === "new_lmx")
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setRecentActivitiesFilter("new_lmx")}
               >
-                Added Machines
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedActivities.find(
-                  (activity) => activity === "remove_machine",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setRecentActivitiesFilter("remove_machine")}
-            >
-              <MaterialCommunityIcons
-                name="minus-box"
-                size={32}
-                color="#f56f79"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="plus-box"
+                  size={32}
+                  color="#58a467"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "new_lmx",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Added Machines
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedActivities.find(
                     (activity) => activity === "remove_machine",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setRecentActivitiesFilter("remove_machine")}
               >
-                Removed Machines
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedActivities.find(
-                  (activity) => activity === "new_condition",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setRecentActivitiesFilter("new_condition")}
-            >
-              <MaterialCommunityIcons
-                name="comment-text"
-                size={32}
-                color="#6cbffe"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="minus-box"
+                  size={32}
+                  color="#f56f79"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "remove_machine",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Removed Machines
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedActivities.find(
                     (activity) => activity === "new_condition",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setRecentActivitiesFilter("new_condition")}
               >
-                New Comments
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedActivities.find((activity) => activity === "new_msx")
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setRecentActivitiesFilter("new_msx")}
-            >
-              <MaterialCommunityIcons
-                name="numeric"
-                size={32}
-                color="#eeb152"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="comment-text"
+                  size={32}
+                  color="#6cbffe"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "new_condition",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  New Comments
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedActivities.find((activity) => activity === "new_msx")
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setRecentActivitiesFilter("new_msx")}
               >
-                High Scores
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedActivities.find(
-                  (activity) => activity === "confirm_location",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setRecentActivitiesFilter("confirm_location")}
-            >
-              <MaterialCommunityIcons
-                name="clipboard-check"
-                size={32}
-                color="#d473df"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="numeric"
+                  size={32}
+                  color="#eeb152"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "new_msx",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  High Scores
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedActivities.find(
                     (activity) => activity === "confirm_location",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setRecentActivitiesFilter("confirm_location")}
               >
-                Location Confirmations
-              </Text>
-            </Pressable>
-            <PbmButton
-              title="Apply Filters"
-              onPress={() => setShowModal(false)}
-            />
-          </View>
+                <MaterialCommunityIcons
+                  name="clipboard-check"
+                  size={32}
+                  color="#d473df"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "confirm_location",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Location Confirmations
+                </Text>
+              </Pressable>
+              <PbmButton
+                title="Apply Filters"
+                onPress={() => setShowModal(false)}
+              />
+            </View>
+          </Pressable>
         </ConfirmationModal>
       )}
       <Pressable

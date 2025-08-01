@@ -116,11 +116,13 @@ export const Events = ({ query, user }) => {
             }}
             style={{ height: "80%", paddingHorizontal: 10 }}
           >
-            <ActivityIndicator />
+            <Pressable>
+              <ActivityIndicator />
+            </Pressable>
           </ScrollView>
         ) : (
           <>
-            <View>
+            <View style={{ width: "100%" }}>
               <MaterialCommunityIcons
                 name="close-circle"
                 size={45}
@@ -136,86 +138,92 @@ export const Events = ({ query, user }) => {
                 }}
                 style={{ height: "80%", paddingHorizontal: 10 }}
               >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "Nunito-Bold",
-                    marginTop: 15,
-                    color: theme.text2,
-                  }}
-                >
-                  {`Something went wrong. In the meantime, you can check the `}
+                <Pressable>
                   <Text
-                    style={s.textLink}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        "https://www.ifpapinball.com/calendar/",
-                      )
-                    }
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "Nunito-Bold",
+                      marginTop: 15,
+                      color: theme.text2,
+                    }}
                   >
-                    IFPA calendar
+                    {`Something went wrong. In the meantime, you can check the `}
+                    <Text
+                      style={s.textLink}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(
+                          "https://www.ifpapinball.com/calendar/",
+                        )
+                      }
+                    >
+                      IFPA calendar
+                    </Text>
+                    {` on their site.`}
                   </Text>
-                  {` on their site.`}
-                </Text>
+                </Pressable>
               </ScrollView>
             ) : (
               <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
-                <Text style={[s.locationName]}>
-                  {tournament.tournament_name.trim()}
-                </Text>
-                <Text style={[s.address, s.margin]}>
-                  {tournament.raw_address}
-                </Text>
-                <Text style={[s.margin, s.cardTextStyle]}>
-                  {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                    "MMM DD, YYYY",
-                  ) ===
-                  moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                    "MMM DD, YYYY",
-                  ) ? (
-                    <Text style={s.bold}>
-                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                        "MMM DD, YYYY",
-                      )}
-                    </Text>
-                  ) : (
-                    <Text style={s.bold}>
-                      {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                        "MMM DD, YYYY",
-                      )}{" "}
-                      -{" "}
-                      {moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                        "MMM DD, YYYY",
-                      )}
-                    </Text>
-                  )}
-                </Text>
-                <Text
-                  style={[s.margin, s.link]}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
-                    )
-                  }
-                >
-                  IFPA Calendar Website
-                </Text>
-                <Text
-                  style={[s.margin, s.link]}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(`${tournament.website}`)
-                  }
-                >
-                  Event Website
-                </Text>
-                <Text style={[s.margin, { marginBottom: 10 }]}>
-                  <Text style={s.bold}>Tournament or league?</Text>{" "}
-                  <Text style={s.italic}>{tournament.tournament_type}</Text>
-                </Text>
-                <Text style={[s.bold, { marginBottom: 10 }]}>
-                  Event details:
-                </Text>
-                <HyperlinkText text={tournament.details.trim()} />
+                <Pressable>
+                  <Text style={[s.locationName]}>
+                    {tournament.tournament_name.trim()}
+                  </Text>
+                  <Text style={[s.address, s.margin]}>
+                    {tournament.raw_address}
+                  </Text>
+                  <Text style={[s.margin, s.cardTextStyle]}>
+                    {moment(tournament.event_start_date, "YYYY-MM-DD").format(
+                      "MMM DD, YYYY",
+                    ) ===
+                    moment(tournament.event_end_date, "YYYY-MM-DD").format(
+                      "MMM DD, YYYY",
+                    ) ? (
+                      <Text style={s.bold}>
+                        {moment(
+                          tournament.event_start_date,
+                          "YYYY-MM-DD",
+                        ).format("MMM DD, YYYY")}
+                      </Text>
+                    ) : (
+                      <Text style={s.bold}>
+                        {moment(
+                          tournament.event_start_date,
+                          "YYYY-MM-DD",
+                        ).format("MMM DD, YYYY")}{" "}
+                        -{" "}
+                        {moment(tournament.event_end_date, "YYYY-MM-DD").format(
+                          "MMM DD, YYYY",
+                        )}
+                      </Text>
+                    )}
+                  </Text>
+                  <Text
+                    style={[s.margin, s.link]}
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
+                      )
+                    }
+                  >
+                    IFPA Calendar Website
+                  </Text>
+                  <Text
+                    style={[s.margin, s.link]}
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(`${tournament.website}`)
+                    }
+                  >
+                    Event Website
+                  </Text>
+                  <Text style={[s.margin, { marginBottom: 10 }]}>
+                    <Text style={s.bold}>Tournament or league?</Text>{" "}
+                    <Text style={s.italic}>{tournament.tournament_type}</Text>
+                  </Text>
+                  <Text style={[s.bold, { marginBottom: 10 }]}>
+                    Event details:
+                  </Text>
+                  <HyperlinkText text={tournament.details.trim()} />
+                </Pressable>
               </ScrollView>
             )}
           </>

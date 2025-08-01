@@ -41,19 +41,21 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         visible={modalVisible}
         closeModal={() => setModalVisible(false)}
       >
-        <PbmButton
-          title={"Log Me Out"}
-          onPress={() => {
-            setModalVisible(false);
-            logout();
-            props.navigation.navigate("Login");
-          }}
-        />
-        <WarningButton
-          title={"Stay Logged In"}
-          onPress={() => setModalVisible(false)}
-          accessibilityLabel="Stay Logged In"
-        />
+        <Pressable>
+          <PbmButton
+            title={"Log Me Out"}
+            onPress={() => {
+              setModalVisible(false);
+              logout();
+              props.navigation.navigate("Login");
+            }}
+          />
+          <WarningButton
+            title={"Stay Logged In"}
+            onPress={() => setModalVisible(false)}
+            accessibilityLabel="Stay Logged In"
+          />
+        </Pressable>
       </ConfirmationModal>
       <DrawerItemList {...props} />
       <View

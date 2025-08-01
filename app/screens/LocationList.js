@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
   ButtonGroup,
@@ -103,25 +103,27 @@ export class LocationList extends Component {
                   this.setState({ showNoLocationTrackingModal: false })
                 }
               >
-                <View>
-                  <Text style={s.confirmText}>
-                    Location tracking must be enabled to use this feature!
-                  </Text>
-                  <Text
-                    style={[s.confirmText, s.link, s.margin10]}
-                    onPress={() => Linking.openSettings()}
-                  >
-                    Go to phone settings to enable.
-                  </Text>
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={45}
-                    onPress={() =>
-                      this.setState({ showNoLocationTrackingModal: false })
-                    }
-                    style={s.xButton}
-                  />
-                </View>
+                <Pressable>
+                  <View>
+                    <Text style={s.confirmText}>
+                      Location tracking must be enabled to use this feature!
+                    </Text>
+                    <Text
+                      style={[s.confirmText, s.link, s.margin10]}
+                      onPress={() => Linking.openSettings()}
+                    >
+                      Go to phone settings to enable.
+                    </Text>
+                    <MaterialCommunityIcons
+                      name="close-circle"
+                      size={45}
+                      onPress={() =>
+                        this.setState({ showNoLocationTrackingModal: false })
+                      }
+                      style={s.xButton}
+                    />
+                  </View>
+                </Pressable>
               </ConfirmationModal>
               <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                 <ButtonGroup

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { hideNoLocationTrackingModal } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
@@ -20,23 +20,25 @@ const NoLocationTrackingModal = ({
       visible={showNoLocationTrackingModal}
       closeModal={hideNoLocationTrackingModal}
     >
-      <View>
-        <Text style={s.confirmText}>
-          Location tracking must be enabled to use this feature!
-        </Text>
-        <Text
-          style={[s.confirmText, s.link, s.margin10]}
-          onPress={() => Linking.openSettings()}
-        >
-          Go to phone settings to enable.
-        </Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={45}
-          onPress={hideNoLocationTrackingModal}
-          style={s.xButton}
-        />
-      </View>
+      <Pressable>
+        <View>
+          <Text style={s.confirmText}>
+            Location tracking must be enabled to use this feature!
+          </Text>
+          <Text
+            style={[s.confirmText, s.link, s.margin10]}
+            onPress={() => Linking.openSettings()}
+          >
+            Go to phone settings to enable.
+          </Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={45}
+            onPress={hideNoLocationTrackingModal}
+            style={s.xButton}
+          />
+        </View>
+      </Pressable>
     </ConfirmationModal>
   );
 };

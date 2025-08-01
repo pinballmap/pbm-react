@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet } from "react-native";
 import { removeMachineFromLocation } from "../actions/location_actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
@@ -26,21 +26,23 @@ const RemoveMachineModal = ({
 
   return (
     <ConfirmationModal closeModal={() => closeModal()}>
-      {machineName && (
-        <Text style={s.confirmText}>
-          Remove <Text style={s.machineName}>{machineName}</Text> from{" "}
-          <Text style={s.locationName}>{location.name}</Text>?
+      <Pressable>
+        {machineName && (
+          <Text style={s.confirmText}>
+            Remove <Text style={s.machineName}>{machineName}</Text> from{" "}
+            <Text style={s.locationName}>{location.name}</Text>?
+          </Text>
+        )}
+        <PbmButton
+          title={"Yes, Remove It"}
+          onPress={() => removeLmx(curLmx, location.id)}
+        />
+        <WarningButton title={"Cancel"} onPress={() => closeModal()} />
+        <Text style={s.modalSubText}>
+          Do not remove and re-add this machine because you want to clear out
+          comments.
         </Text>
-      )}
-      <PbmButton
-        title={"Yes, Remove It"}
-        onPress={() => removeLmx(curLmx, location.id)}
-      />
-      <WarningButton title={"Cancel"} onPress={() => closeModal()} />
-      <Text style={s.modalSubText}>
-        Do not remove and re-add this machine because you want to clear out
-        comments.
-      </Text>
+      </Pressable>
     </ConfirmationModal>
   );
 };

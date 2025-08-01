@@ -101,18 +101,20 @@ class UserProfile extends Component {
                     visible={this.state.modalVisible}
                     closeModal={() => this.setModalVisible(false)}
                   >
-                    <PbmButton
-                      title={"Log Me Out"}
-                      onPress={() => {
-                        this.setModalVisible(false);
-                        this.props.logout();
-                        this.props.navigation.navigate("Login");
-                      }}
-                    />
-                    <WarningButton
-                      title={"Stay Logged In"}
-                      onPress={() => this.setModalVisible(false)}
-                    />
+                    <Pressable>
+                      <PbmButton
+                        title={"Log Me Out"}
+                        onPress={() => {
+                          this.setModalVisible(false);
+                          this.props.logout();
+                          this.props.navigation.navigate("Login");
+                        }}
+                      />
+                      <WarningButton
+                        title={"Stay Logged In"}
+                        onPress={() => this.setModalVisible(false)}
+                      />
+                    </Pressable>
                   </ConfirmationModal>
                   <View style={s.usernameContainer}>
                     <Text style={s.username}>{user.username}</Text>
@@ -428,7 +430,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: 15,
+      marginBottom: 25,
     },
     externalUpdateText: {
       fontSize: 14,
