@@ -10,6 +10,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  TouchableOpacity,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -30,8 +31,8 @@ import {
   WarningButton,
 } from "../components";
 import Checkbox from "expo-checkbox";
-
 import { alphaSortNameObj } from "../utils/utilityFunctions";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -57,7 +58,6 @@ class MultiSelectRow extends React.PureComponent {
     const { index, machine, selected } = this.props;
     const theme = this.context.theme;
     const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2;
-
     return (
       <Pressable
         onPress={this._onPress}
@@ -230,11 +230,22 @@ class FindMachine extends React.PureComponent {
     this.props.navigation.goBack();
   };
 
-  cancelAddMachine = () => {
+  returnToMachineSelection = () => {
     this.setState({
       showModal: false,
       machine: {},
       condition: "",
+    });
+  };
+
+  returnToLocationDetails = () => {
+    this.setState({
+      showModal: false,
+      machine: {},
+      condition: "",
+    });
+    this.props.navigation.navigate("LocationDetails", {
+      id: this.props.location.location.id,
     });
   };
 
@@ -353,16 +364,37 @@ class FindMachine extends React.PureComponent {
               keyboardShouldPersistTaps="handled"
             >
               <View style={s.verticalAlign}>
-                <Text style={s.modalTitle}>
-                  Add{" "}
-                  <Text style={s.modalMachineName}>
-                    {this.state.machine.name}
-                  </Text>{" "}
-                  to{" "}
-                  <Text style={s.modalLocationName}>
-                    {this.props.location.location.name}
+                <View style={s.headerContainer}>
+                  <TouchableOpacity
+                    onPress={() => this.returnToMachineSelection()}
+                    style={s.backButton}
+                    activeOpacity={0.5}
+                  >
+                    <FontAwesome6
+                      name={
+                        Platform.OS === "android"
+                          ? "arrow-left"
+                          : "chevron-left"
+                      }
+                      size={24}
+                      color={theme.theme == "dark" ? theme.pink1 : theme.purple}
+                      style={{
+                        marginLeft: Platform.OS === "android" ? 0 : 10,
+                        marginRight: 5,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <Text style={s.modalTitle}>
+                    Add{" "}
+                    <Text style={s.modalMachineName}>
+                      {this.state.machine.name}
+                    </Text>{" "}
+                    to{" "}
+                    <Text style={s.modalLocationName}>
+                      {this.props.location.location.name}
+                    </Text>
                   </Text>
-                </Text>
+                </View>
                 {!!opdb_img && (
                   <BackglassImage
                     width={opdbImgWidth}
@@ -411,7 +443,7 @@ class FindMachine extends React.PureComponent {
                 <PbmButton title={"Add"} onPress={this.addMachine} />
                 <WarningButton
                   title={"Cancel"}
-                  onPress={this.cancelAddMachine}
+                  onPress={this.returnToLocationDetails}
                 />
               </View>
             </KeyboardAwareScrollView>
@@ -529,13 +561,24 @@ const getStyles = (theme) =>
       fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
-
+    headerContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      position: "relative",
+      justifyContent: "center",
+    },
+    backButton: {
+      position: "absolute",
+      left: 10,
+      top: 0,
+      bottom: 0,
+      justifyContent: "center",
+    },
     textInput: {
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       marginHorizontal: 30,
-      marginTop: 5,
       marginBottom: 10,
       borderRadius: 10,
       fontFamily: "Nunito-Regular",
@@ -545,7 +588,7 @@ const getStyles = (theme) =>
     verticalAlign: {
       flexDirection: "column",
       justifyContent: "top",
-      marginTop: 80,
+      marginTop: 60,
       marginBottom: 40,
     },
     multiSelect: {
@@ -604,7 +647,7 @@ const getStyles = (theme) =>
     modalTitle: {
       textAlign: "center",
       marginHorizontal: 40,
-      marginBottom: 15,
+      marginVertical: 20,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
     },
