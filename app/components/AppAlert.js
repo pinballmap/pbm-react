@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import ConfirmationModal from "./ConfirmationModal";
@@ -33,19 +33,21 @@ const AppAlert = ({ motd }) => {
   }, [motd]);
 
   return (
-    <ConfirmationModal visible={visible}>
-      <View style={s.appAlertHeader}>
-        <Text style={s.appAlertTitle}>Message of the Day!</Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={45}
-          onPress={() => setIsVisible(false)}
-          style={s.xButton}
-        />
-      </View>
-      <View style={s.appAlert}>
-        <Text style={{ fontSize: 16 }}>{motd}</Text>
-      </View>
+    <ConfirmationModal visible={visible} closeModal={() => setIsVisible(false)}>
+      <Pressable>
+        <View style={s.appAlertHeader}>
+          <Text style={s.appAlertTitle}>Message of the Day!</Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={45}
+            onPress={() => setIsVisible(false)}
+            style={s.xButton}
+          />
+        </View>
+        <View style={s.appAlert}>
+          <Text style={{ fontSize: 16 }}>{motd}</Text>
+        </View>
+      </Pressable>
     </ConfirmationModal>
   );
 };

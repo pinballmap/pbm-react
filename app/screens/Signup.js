@@ -142,19 +142,24 @@ const Signup = ({ loginLater, navigation }) => {
         backgroundColor: "transparent",
       }}
     >
-      <ConfirmationModal visible={modalVisible}>
-        <Text style={s.confirmText}>
-          {`Please check your email and confirm your account. If you don't see it, check your SPAM folder!`}
-        </Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={45}
-          onPress={() => {
-            setModalVisible(false);
-            navigation.navigate("Login");
-          }}
-          style={s.xButton}
-        />
+      <ConfirmationModal
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+      >
+        <Pressable>
+          <Text style={s.confirmText}>
+            {`Please check your email and confirm your account. If you don't see it, check your SPAM folder!`}
+          </Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={45}
+            onPress={() => {
+              setModalVisible(false);
+              navigation.navigate("Login");
+            }}
+            style={s.xButton}
+          />
+        </Pressable>
       </ConfirmationModal>
       <KeyboardAwareScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}

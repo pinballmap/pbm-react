@@ -40,179 +40,185 @@ const FilterLocationActivity = ({
 
   return (
     <View>
-      <Entypo
-        name="sound-mix"
-        size={24}
-        style={s.filterIcon}
+      <Pressable
+        style={({ pressed }) => [
+          s.filterIconPressable,
+          pressed && s.filterIconPressed,
+        ]}
         onPress={() => setShowModal(true)}
-      />
+        hitSlop={{ top: 20, bottom: 20, left: 50, right: 10 }}
+      >
+        <Entypo name="sound-mix" size={24} style={s.filterIcon} />
+      </Pressable>
       {showModal && (
-        <ConfirmationModal>
-          <View style={s.header}>
-            <Text style={s.filterTitle}>Filter Location Activity</Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={45}
-              onPress={() => setShowModal(false)}
-              style={s.xButton}
-            />
-          </View>
-          <View>
-            <Pressable
-              style={[
-                s.container,
-                selectedLocationActivities.find(
-                  (activity) => activity === "new_lmx",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setLocationActivitiesFilter("new_lmx")}
-            >
+        <ConfirmationModal closeModal={() => setShowModal(false)}>
+          <Pressable>
+            <View style={s.header}>
+              <Text style={s.filterTitle}>Filter Location Activity</Text>
               <MaterialCommunityIcons
-                name="plus-box"
-                size={32}
-                color="#58a467"
-                style={s.iconStyle}
+                name="close-circle"
+                size={45}
+                onPress={() => setShowModal(false)}
+                style={s.xButton}
               />
-              <Text
+            </View>
+            <View>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedLocationActivities.find(
                     (activity) => activity === "new_lmx",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setLocationActivitiesFilter("new_lmx")}
               >
-                Added Machines
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedLocationActivities.find(
-                  (activity) => activity === "remove_machine",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setLocationActivitiesFilter("remove_machine")}
-            >
-              <MaterialCommunityIcons
-                name="minus-box"
-                size={32}
-                color="#f56f79"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="plus-box"
+                  size={32}
+                  color="#58a467"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "new_lmx",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Added Machines
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedLocationActivities.find(
                     (activity) => activity === "remove_machine",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setLocationActivitiesFilter("remove_machine")}
               >
-                Removed Machines
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedLocationActivities.find(
-                  (activity) => activity === "new_condition",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setLocationActivitiesFilter("new_condition")}
-            >
-              <MaterialCommunityIcons
-                name="comment-text"
-                size={32}
-                color="#6cbffe"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="minus-box"
+                  size={32}
+                  color="#f56f79"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "remove_machine",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Removed Machines
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedLocationActivities.find(
                     (activity) => activity === "new_condition",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setLocationActivitiesFilter("new_condition")}
               >
-                New Comments
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedLocationActivities.find(
-                  (activity) => activity === "new_msx",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setLocationActivitiesFilter("new_msx")}
-            >
-              <MaterialCommunityIcons
-                name="numeric"
-                size={32}
-                color="#eeb152"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="comment-text"
+                  size={32}
+                  color="#6cbffe"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "new_condition",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  New Comments
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedLocationActivities.find(
                     (activity) => activity === "new_msx",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setLocationActivitiesFilter("new_msx")}
               >
-                High Scores
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[
-                s.container,
-                selectedLocationActivities.find(
-                  (activity) => activity === "confirm_location",
-                )
-                  ? s.containerSelected
-                  : s.containerNotSelected,
-              ]}
-              onPress={() => setLocationActivitiesFilter("confirm_location")}
-            >
-              <MaterialCommunityIcons
-                name="clipboard-check"
-                size={32}
-                color="#d473df"
-                style={s.iconStyle}
-              />
-              <Text
+                <MaterialCommunityIcons
+                  name="numeric"
+                  size={32}
+                  color="#eeb152"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "new_msx",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  High Scores
+                </Text>
+              </Pressable>
+              <Pressable
                 style={[
-                  s.titleStyle,
+                  s.container,
                   selectedLocationActivities.find(
                     (activity) => activity === "confirm_location",
                   )
-                    ? s.activeTitleStyle
-                    : s.inactiveTitleStyle,
+                    ? s.containerSelected
+                    : s.containerNotSelected,
                 ]}
+                onPress={() => setLocationActivitiesFilter("confirm_location")}
               >
-                Location Confirmations
-              </Text>
-            </Pressable>
-            <PbmButton
-              title="Apply Filters"
-              onPress={() => setShowModal(false)}
-            />
-          </View>
+                <MaterialCommunityIcons
+                  name="clipboard-check"
+                  size={32}
+                  color="#d473df"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "confirm_location",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Location Confirmations
+                </Text>
+              </Pressable>
+              <PbmButton
+                title="Apply Filters"
+                onPress={() => setShowModal(false)}
+              />
+            </View>
+          </Pressable>
         </ConfirmationModal>
       )}
     </View>
@@ -263,11 +269,16 @@ const getStyles = (theme) =>
     activeTitleStyle: {
       color: theme.purple,
     },
-    filterIcon: {
+    filterIconPressable: {
       position: "absolute",
-      right: 0,
-      bottom: 0,
-      paddingRight: 30,
+      right: 25,
+      bottom: -5,
+      padding: 5,
+    },
+    filterIconPressed: {
+      backgroundColor: theme.indigo4,
+    },
+    filterIcon: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
     },
     iconStyle: {

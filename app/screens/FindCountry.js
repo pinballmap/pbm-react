@@ -13,7 +13,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
 import countries from "../utils/countries";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 
 const FindCountry = ({ navigation, route }) => {
   const { theme } = useContext(ThemeContext);
@@ -108,10 +108,11 @@ const FindCountry = ({ navigation, route }) => {
           </Pressable>
         )}
       </View>
-      <FlashList
+      <LegendList
         {...keyboardDismissProp}
         data={selectedCountries}
         estimatedItemSize={41}
+        recycleItems
         renderItem={renderRow}
         keyExtractor={_keyExtractor}
         contentContainerStyle={{

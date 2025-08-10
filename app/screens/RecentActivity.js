@@ -1,7 +1,13 @@
 import React, { useContext, useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Platform, Pressable, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getData } from "../config/request";
@@ -9,7 +15,6 @@ import {
   ActivityIndicator,
   ButtonGroup,
   FilterRecentActivity,
-  Screen,
   Text,
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
@@ -161,19 +166,17 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   };
 
   return (
-    <Screen>
-      <View style={s.header}>
-        <ButtonGroup
-          onPress={updateIdx}
-          selectedIndex={btnIdx}
-          buttons={buttons}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
-        />
-      </View>
+    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+      <ButtonGroup
+        onPress={updateIdx}
+        selectedIndex={btnIdx}
+        buttons={buttons}
+        containerStyle={s.buttonGroupContainer}
+        textStyle={s.buttonGroupInactive}
+        selectedButtonStyle={s.selButtonStyle}
+        selectedTextStyle={s.selTextStyle}
+        innerBorderStyle={s.innerBorderStyle}
+      />
       {selectedActivities.length ? (
         <View style={s.filterView}>
           <Text style={s.filter}>Clear applied filters</Text>
@@ -185,52 +188,58 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           />
         </View>
       ) : null}
-      {fetchingRecentActivity ? (
-        <ActivityIndicator />
-      ) : recentActivity.length === 0 ? (
-        <Text
-          style={s.problem}
-        >{`No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}</Text>
-      ) : (
-        recentActivity
-          .filter((activity) => {
-            const submissionTypeIcon = getActivityIcon(
-              activity.submission_type,
-            );
+      <ScrollView style={{ marginTop: 10 }}>
+        {fetchingRecentActivity ? (
+          <ActivityIndicator />
+        ) : recentActivity.length === 0 ? (
+          <Text
+            style={s.problem}
+          >{`No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}</Text>
+        ) : (
+          recentActivity
+            .filter((activity) => {
+              const submissionTypeIcon = getActivityIcon(
+                activity.submission_type,
+              );
 
-            const showType = selectedActivities.length
-              ? selectedActivities.find((a) => a === activity.submission_type)
-              : true;
+              const showType = selectedActivities.length
+                ? selectedActivities.find((a) => a === activity.submission_type)
+                : true;
 
-            if (submissionTypeIcon && showType) {
-              activity.submissionTypeIcon = submissionTypeIcon;
-              return activity;
-            }
-          })
-          .map((activity) => (
-            <Pressable
-              key={activity.id}
-              onPress={() => {
-                setShouldRefresh(false);
-                navigation.navigate("LocationDetails", {
-                  id: activity.location_id,
-                });
-              }}
-            >
-              {({ pressed }) => (
-                <View
-                  style={[s.list, s.flexi, pressed ? s.pressed : s.notPressed]}
-                >
-                  <View style={{ width: "15%" }}>
-                    {activity.submissionTypeIcon}
+              if (submissionTypeIcon && showType) {
+                activity.submissionTypeIcon = submissionTypeIcon;
+                return activity;
+              }
+            })
+            .map((activity) => (
+              <Pressable
+                key={activity.id}
+                onPress={() => {
+                  setShouldRefresh(false);
+                  navigation.navigate("LocationDetails", {
+                    id: activity.location_id,
+                  });
+                }}
+              >
+                {({ pressed }) => (
+                  <View
+                    style={[
+                      s.list,
+                      s.flexi,
+                      pressed ? s.pressed : s.notPressed,
+                    ]}
+                  >
+                    <View style={{ width: "15%" }}>
+                      {activity.submissionTypeIcon}
+                    </View>
+                    {getSubmission(activity)}
                   </View>
-                  {getSubmission(activity)}
-                </View>
-              )}
-            </Pressable>
-          ))
-      )}
-    </Screen>
+                )}
+              </Pressable>
+            ))
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -268,12 +277,9 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Bold",
     },
-    header: {
-      paddingVertical: 10,
-    },
     filterView: {
       backgroundColor: theme.base3,
-      marginBottom: 10,
+      marginTop: 10,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",

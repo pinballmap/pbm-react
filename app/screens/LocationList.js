@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
   ButtonGroup,
@@ -11,7 +11,7 @@ import {
 } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const moment = require("moment");
@@ -97,26 +97,33 @@ export class LocationList extends Component {
           const s = getStyles(theme);
           return (
             <>
-              <ConfirmationModal visible={showNoLocationTrackingModal}>
-                <View>
-                  <Text style={s.confirmText}>
-                    Location tracking must be enabled to use this feature!
-                  </Text>
-                  <Text
-                    style={[s.confirmText, s.link, s.margin10]}
-                    onPress={() => Linking.openSettings()}
-                  >
-                    Go to phone settings to enable.
-                  </Text>
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={45}
-                    onPress={() =>
-                      this.setState({ showNoLocationTrackingModal: false })
-                    }
-                    style={s.xButton}
-                  />
-                </View>
+              <ConfirmationModal
+                visible={showNoLocationTrackingModal}
+                closeModal={() =>
+                  this.setState({ showNoLocationTrackingModal: false })
+                }
+              >
+                <Pressable>
+                  <View>
+                    <Text style={s.confirmText}>
+                      Location tracking must be enabled to use this feature!
+                    </Text>
+                    <Text
+                      style={[s.confirmText, s.link, s.margin10]}
+                      onPress={() => Linking.openSettings()}
+                    >
+                      Go to phone settings to enable.
+                    </Text>
+                    <MaterialCommunityIcons
+                      name="close-circle"
+                      size={45}
+                      onPress={() =>
+                        this.setState({ showNoLocationTrackingModal: false })
+                      }
+                      style={s.xButton}
+                    />
+                  </View>
+                </Pressable>
               </ConfirmationModal>
               <View style={{ flex: 1, backgroundColor: theme.base1 }}>
                 <ButtonGroup
@@ -131,8 +138,9 @@ export class LocationList extends Component {
                   selectedTextStyle={s.selTextStyle}
                   innerBorderStyle={s.innerBorderStyle}
                 />
-                <FlashList
-                  estimatedItemSize={400}
+                estimatedItemSize={400}
+                <LegendList
+                  recycleItems
                   data={locations}
                   extraData={this.state}
                   renderItem={({ item }) => (

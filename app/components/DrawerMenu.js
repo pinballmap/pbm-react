@@ -16,7 +16,11 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
@@ -33,20 +37,25 @@ const DrawerMenu = ({ logout, user, ...props }) => {
 
   return (
     <DrawerContentScrollView {...props}>
-      <ConfirmationModal visible={modalVisible}>
-        <PbmButton
-          title={"Log Me Out"}
-          onPress={() => {
-            setModalVisible(false);
-            logout();
-            props.navigation.navigate("Login");
-          }}
-        />
-        <WarningButton
-          title={"Stay Logged In"}
-          onPress={() => setModalVisible(false)}
-          accessibilityLabel="Stay Logged In"
-        />
+      <ConfirmationModal
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+      >
+        <Pressable>
+          <PbmButton
+            title={"Log Me Out"}
+            onPress={() => {
+              setModalVisible(false);
+              logout();
+              props.navigation.navigate("Login");
+            }}
+          />
+          <WarningButton
+            title={"Stay Logged In"}
+            onPress={() => setModalVisible(false)}
+            accessibilityLabel="Stay Logged In"
+          />
+        </Pressable>
       </ConfirmationModal>
       <DrawerItemList {...props} />
       <View
@@ -81,7 +90,13 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         </View>
         {user.loggedIn ? (
-          <Text allowFontScaling={false} style={s.nameText}>
+          <Text
+            allowFontScaling={false}
+            style={s.nameText}
+            onPress={() =>
+              props.navigation.navigate("Map", { screen: "UserProfile" })
+            }
+          >
             {user.username}
           </Text>
         ) : (
@@ -126,7 +141,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
-            name="search"
+            name="map"
             size={iconSize}
             color={iconColor}
             style={s.iconStyle}
@@ -148,6 +163,22 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         )}
         onPress={() =>
           props.navigation.navigate("Map", { screen: "SuggestLocation" })
+        }
+      />
+      <DrawerItem
+        label="Your Profile"
+        labelStyle={s.labelStyle}
+        allowFontScaling={false}
+        icon={() => (
+          <FontAwesome6
+            name="face-grin-beam"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
+        )}
+        onPress={() =>
+          props.navigation.navigate("Map", { screen: "UserProfile" })
         }
       />
       <DrawerItem
@@ -177,20 +208,6 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() => props.navigation.navigate("Map", { screen: "About" })}
-      />
-      <DrawerItem
-        label="Events"
-        labelStyle={s.labelStyle}
-        allowFontScaling={false}
-        icon={() => (
-          <MaterialIcons
-            name="event-note"
-            size={iconSize}
-            color={iconColor}
-            style={s.iconStyle}
-          />
-        )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="FAQ"

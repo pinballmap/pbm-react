@@ -1,4 +1,4 @@
-const IS_DEV = process.env.PUBLIC_EXPO_APP_VARIANT === "development";
+const IS_DEV = process.env.EXPO_PUBLIC_APP_VARIANT === "development";
 
 export default {
   expo: {
@@ -9,7 +9,7 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.31",
+    version: "5.3.32",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -92,7 +92,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "232",
+      buildNumber: "237",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -151,7 +151,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 208,
+      versionCode: 213,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

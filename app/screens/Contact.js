@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Platform, StyleSheet, TextInput, View } from "react-native";
+import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
@@ -49,14 +49,19 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 0 }}>
-      <ConfirmationModal visible={confirmationMessage.length > 0}>
-        <Text style={s.confirmText}>{confirmationMessage}</Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={45}
-          onPress={acknowledgeConfirmation}
-          style={s.xButton}
-        />
+      <ConfirmationModal
+        visible={confirmationMessage.length > 0}
+        closeModal={acknowledgeConfirmation}
+      >
+        <Pressable>
+          <Text style={s.confirmText}>{confirmationMessage}</Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={45}
+            onPress={acknowledgeConfirmation}
+            style={s.xButton}
+          />
+        </Pressable>
       </ConfirmationModal>
       {submittingMessage ? (
         <ActivityIndicator />

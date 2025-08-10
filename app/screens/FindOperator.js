@@ -13,7 +13,7 @@ import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 
 const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const { theme } = useContext(ThemeContext);
@@ -110,10 +110,11 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
           </Pressable>
         )}
       </View>
-      <FlashList
+      <LegendList
         {...keyboardDismissProp}
         data={selectedOperators}
         estimatedItemSize={41}
+        recycleItems
         renderItem={renderRow}
         keyExtractor={_keyExtractor}
         contentContainerStyle={{

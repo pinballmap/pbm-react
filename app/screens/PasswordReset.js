@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Keyboard, StyleSheet, Pressable, TextInput, View } from "react-native";
+import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
@@ -35,19 +35,24 @@ const PasswordReset = ({ navigation }) => {
           Keyboard.dismiss();
         }}
       >
-        <ConfirmationModal visible={modalVisible}>
-          <Text style={s.confirmText}>
-            Password reset was successful. Check your email (and SPAM folder).
-          </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={45}
-            onPress={() => {
-              setModalVisible(false);
-              navigation.navigate("Login");
-            }}
-            style={s.xButton}
-          />
+        <ConfirmationModal
+          visible={modalVisible}
+          closeModal={() => setModalVisible(false)}
+        >
+          <Pressable>
+            <Text style={s.confirmText}>
+              Password reset was successful. Check your email (and SPAM folder).
+            </Text>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={45}
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate("Login");
+              }}
+              style={s.xButton}
+            />
+          </Pressable>
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
           <View style={s.inputContainer}>
