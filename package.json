@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@legendapp/list": "^1.1.4",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/drawer": "^6.7.2",
@@ -12,7 +13,6 @@
     "@redux-devtools/extension": "^3.3.0",
     "@rnmapbox/maps": "10.1.39",
     "@sentry/react-native": "~6.14.0",
-    "@shopify/flash-list": "1.7.6",
     "enzyme-to-json": "^3.3.4",
     "eslint-plugin-react-native": "^4.0.0",
     "expo": "53.0.19",

@@ -11,7 +11,7 @@ import {
 } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectLocationListFilterBy } from "../actions/locations_actions";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const moment = require("moment");
@@ -138,8 +138,9 @@ export class LocationList extends Component {
                   selectedTextStyle={s.selTextStyle}
                   innerBorderStyle={s.innerBorderStyle}
                 />
-                <FlashList
-                  estimatedItemSize={400}
+                estimatedItemSize={400}
+                <LegendList
+                  recycleItems
                   data={locations}
                   extraData={this.state}
                   renderItem={({ item }) => (
