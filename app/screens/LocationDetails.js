@@ -41,6 +41,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MachineCard from "../components/MachineCard";
+import { formatNumWithCommas } from "../utils/utilityFunctions";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
@@ -499,13 +500,26 @@ const LocationDetails = (props) => {
                 )}
 
                 {!!location.date_last_updated && (
-                  <View style={[s.row, s.marginB, s.marginRight]}>
+                  <View
+                    style={[
+                      s.marginB,
+                      s.marginRight,
+                      {
+                        flexDirection: "row",
+                        alignItems: "top",
+                        paddingRight: 5,
+                      },
+                    ]}
+                  >
                     <MaterialCommunityIcons
                       name="clock-time-four-outline"
                       style={s.metaIcon}
                     />
-                    <Text style={[s.text3, s.fontSize15, s.italic]}>
-                      Updated:{" "}
+                    <Text style={[s.text3, s.fontSize14]}>
+                      Location edited{" "}
+                      {formatNumWithCommas(location.user_submissions_count)}{" "}
+                      times by {formatNumWithCommas(location.users_count)}{" "}
+                      users. Last updated:{" "}
                       <Text style={s.text3}>
                         <Text style={s.italic}>
                           {moment(
