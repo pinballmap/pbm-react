@@ -506,7 +506,6 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       borderWidth: 1,
       marginHorizontal: 30,
-      marginTop: 5,
       marginBottom: 10,
       borderRadius: 10,
       fontFamily: "Nunito-Regular",
