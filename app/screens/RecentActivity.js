@@ -115,7 +115,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       case "new_condition": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>{`"${comment}"`}</Text>
+            <Text style={[s.pbmText, s.marginB8]}>{`"${comment}"`}</Text>
             <Text style={[s.machineName, s.marginB8]}>{machine_name}</Text>
             <Text style={s.pbmText}>
               <Text style={s.locationName}>{location_name}</Text> in {city_name}
@@ -138,7 +138,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       case "new_msx": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>
+            <Text style={[s.pbmText, s.marginB8]}>
               High score: {formatNumWithCommas(high_score)}
             </Text>
             <Text style={[s.machineName, s.marginB8]}>{machine_name}</Text>

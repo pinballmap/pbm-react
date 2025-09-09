@@ -79,7 +79,7 @@ const LocationActivity = ({
       case "new_condition": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>{`"${comment}"`}</Text>
+            <Text style={[s.pbmText, s.marginB8]}>{`"${comment}"`}</Text>
             <Text style={s.machineName}>{machine_name}</Text>
             {timeAndUser}
           </View>
@@ -105,7 +105,7 @@ const LocationActivity = ({
           );
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>
+            <Text style={[s.pbmText, s.marginB8]}>
               High score:{" "}
               <Text style={s.score}>{formatNumWithCommas(high_score)}</Text>
             </Text>
@@ -296,7 +296,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     date: {
-      paddingTop: 6,
+      paddingTop: 8,
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Regular",
@@ -363,6 +363,9 @@ const getStyles = (theme) =>
       color: theme.text,
       fontFamily: "Nunito-Bold",
       paddingVertical: 8,
+    },
+    marginB8: {
+      marginBottom: 8,
     },
   });
 
