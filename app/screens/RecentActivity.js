@@ -191,7 +191,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       <ScrollView style={{ marginTop: 10 }}>
         {fetchingRecentActivity ? (
           <ActivityIndicator />
-        ) : recentActivity.length === 0 ? (
+        ) : !recentActivity || recentActivity.length === 0 ? (
           <Text
             style={s.problem}
           >{`No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}</Text>
