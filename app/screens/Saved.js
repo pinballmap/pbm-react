@@ -7,7 +7,7 @@ import { ThemeContext } from "../theme-context";
 import { ButtonGroup, LocationCard, NotLoggedIn, Text } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import { selectFavoriteLocationFilterBy } from "../actions/user_actions";
-import { LegendList } from "@legendapp/list";
+import { FlashList } from "@shopify/flash-list";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -126,9 +126,7 @@ export class Saved extends Component {
                           right: 0,
                         }}
                       >
-                        estimatedItemSize={400}
-                        <LegendList
-                          recycleItems
+                        <FlashList
                           data={this.state.locations}
                           extraData={this.state}
                           renderItem={({ item }) => (

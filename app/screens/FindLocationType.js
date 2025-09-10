@@ -13,7 +13,7 @@ import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
-import { LegendList } from "@legendapp/list";
+import { FlashList } from "@shopify/flash-list";
 
 const FindLocationType = ({
   navigation,
@@ -114,11 +114,9 @@ const FindLocationType = ({
           </Pressable>
         )}
       </View>
-      <LegendList
+      <FlashList
         {...keyboardDismissProp}
         data={selectedLocationTypes}
-        estimatedItemSize={41}
-        recycleItems
         renderItem={renderRow}
         keyExtractor={_keyExtractor}
         contentContainerStyle={{

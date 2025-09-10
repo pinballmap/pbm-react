@@ -15,7 +15,7 @@ import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { LegendList } from "@legendapp/list";
+import { FlashList } from "@shopify/flash-list";
 import {
   addMachineToLocation,
   addMachineToList,
@@ -488,10 +488,8 @@ class FindMachine extends React.PureComponent {
             )}
           </View>
         ) : null}
-        <LegendList
+        <FlashList
           {...keyboardDismissProp}
-          estimatedItemSize={41}
-          recycleItems
           keyboardShouldPersistTaps="always"
           data={this.state.machines}
           extraData={this.state.refresh}
