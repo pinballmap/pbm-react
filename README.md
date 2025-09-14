@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.33
+
+September 12, 2025
+
+- Fix bug where Activity screen with no activity crashes app.
+- Show number of edits per location on location details screen.
+
 ### 5.3.32
 
 July 31, 2025
