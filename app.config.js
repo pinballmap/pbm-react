@@ -9,13 +9,13 @@ export default {
     runtimeVersion: {
       policy: "sdkVersion",
     },
-    version: "5.3.33",
+    version: "5.3.34",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
     scheme: "pinballmap",
     description:
-      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 48,000 pinball machines.",
+      "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 49,000 pinball machines.",
     githubUrl: "https://github.com/pinballmap/pbm-react/",
     primaryColor: "#ebecff",
     newArchEnabled: true,
@@ -48,7 +48,7 @@ export default {
       [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.12.1",
+          RNMapboxMapsVersion: "11.13.4",
           RNMapboxMapsDownloadToken: process.env.EXPO_PUBLIC_MAPBOX_DOWNLOAD,
         },
       ],
@@ -93,7 +93,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "241",
+      buildNumber: "243",
       supportsTablet: true,
       infoPlist: {
         NSLocationWhenInUseUsageDescription:
@@ -152,7 +152,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 215,
+      versionCode: 217,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
