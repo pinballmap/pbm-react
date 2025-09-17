@@ -291,7 +291,7 @@ const getStyles = (theme) =>
     list: {
       borderRadius: 25,
       paddingVertical: 2,
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
       borderWidth: 0,
       backgroundColor: theme.theme == "dark" ? "#312433" : theme.base4,
       shadowColor:

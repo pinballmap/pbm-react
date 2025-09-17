@@ -16,7 +16,9 @@ const DropDownButton = ({ title, margin, onPress, rightIcon }) => {
         pressed ? s.pressed : undefined,
       ]}
     >
-      <Text style={s.titleStyle}>{title}</Text>
+      <Text numberOfLines={1} ellipsizeMode="clip" style={s.titleStyle}>
+        {title}
+      </Text>
       {rightIcon ? (
         rightIcon
       ) : (
@@ -31,12 +33,11 @@ const getStyles = (theme) =>
     titleStyle: {
       fontSize: 16,
       fontFamily: "Nunito-Regular",
-      textTransform: "capitalize",
       color: theme.text3,
     },
     buttonStyle: {
       borderRadius: 25,
-      paddingHorizontal: 10,
+      paddingHorizontal: 20,
       backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
       height: 40,
       flexDirection: "row",
