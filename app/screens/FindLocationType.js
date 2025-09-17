@@ -40,10 +40,6 @@ const FindLocationType = ({
     setLocationTypes(selectedLocationTypes);
   };
 
-  const handleClear = () => {
-    setQuery("");
-  };
-
   const _selectLocationType = (id) => {
     onGoBack(id);
     navigation.goBack();
@@ -104,7 +100,7 @@ const FindLocationType = ({
           />
         </View>
         {query.length > 0 && (
-          <Pressable onPress={handleClear} style={{ height: 20 }}>
+          <Pressable onPress={() => handleSearch("")} style={{ height: 20 }}>
             <MaterialCommunityIcons
               name="close-circle"
               size={20}

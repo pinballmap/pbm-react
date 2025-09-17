@@ -194,10 +194,6 @@ class FindMachine extends React.PureComponent {
     }
   };
 
-  handleClear = () => {
-    this.setState({ query: "" });
-  };
-
   toggleViewMachinesInMapArea = (idx) => {
     if (idx === 0 && !!this.state.machinesInView) {
       this.handleSearch(this.state.query, false);
@@ -445,7 +441,10 @@ class FindMachine extends React.PureComponent {
             />
           </View>
           {this.state.query.length > 0 && (
-            <Pressable onPress={this.handleClear} style={{ height: 20 }}>
+            <Pressable
+              onPress={() => this.handleSearch("")}
+              style={{ height: 20 }}
+            >
               <MaterialCommunityIcons
                 name="close-circle"
                 size={20}

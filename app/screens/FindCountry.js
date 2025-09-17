@@ -31,10 +31,6 @@ const FindCountry = ({ navigation, route }) => {
     );
   };
 
-  const handleClear = () => {
-    setQuery("");
-  };
-
   const _selectCountry = (countryName, countryCode) => {
     navigation.navigate({
       name: previous_screen,
@@ -98,7 +94,7 @@ const FindCountry = ({ navigation, route }) => {
           />
         </View>
         {query.length > 0 && (
-          <Pressable onPress={handleClear} style={{ height: 20 }}>
+          <Pressable onPress={() => handleSearch("")} style={{ height: 20 }}>
             <MaterialCommunityIcons
               name="close-circle"
               size={20}

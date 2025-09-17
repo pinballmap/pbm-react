@@ -36,10 +36,6 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
     setSelectedOperators(operators);
   };
 
-  const handleClear = () => {
-    setQuery("");
-  };
-
   const _selectOperator = (id) => {
     onGoBack(id);
     navigation.goBack();
@@ -100,7 +96,7 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
           />
         </View>
         {query.length > 0 && (
-          <Pressable onPress={handleClear} style={{ height: 20 }}>
+          <Pressable onPress={() => handleSearch("")} style={{ height: 20 }}>
             <MaterialCommunityIcons
               name="close-circle"
               size={20}
