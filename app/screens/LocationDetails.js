@@ -312,6 +312,7 @@ const LocationDetails = (props) => {
               scaleBarEnabled={false}
               pitchEnabled={false}
               rotateEnabled={false}
+              projection="mercator"
               attributionPosition={{ bottom: 35, left: 90 }}
               logoPosition={{ bottom: 35, left: 5 }}
               styleURL={

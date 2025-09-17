@@ -301,6 +301,7 @@ const Map = ({
       <Mapbox.MapView
         ref={(c) => (_map.current = c)}
         style={s.map}
+        projection="mercator"
         scaleBarEnabled={false}
         pitchEnabled={false}
         rotateEnabled={false}
