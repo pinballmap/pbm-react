@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
@@ -112,53 +112,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             >{`remove the machines from the location`}</Text>
             {`. We'll auto-delete it within a week.`}
           </Text>
-          <View style={s.bombContainer}>
-            <View style={s.bombInner}>
-              <MaterialCommunityIcons
-                name="bomb"
-                size={25}
-                color={"#66017b"}
-                style={{ marginRight: 10, width: 25, height: 25 }}
-              />
-              <MaterialCommunityIcons
-                name="bomb"
-                size={25}
-                color={"#66017b"}
-                style={{ marginRight: 10, width: 25, height: 25 }}
-              />
-              <MaterialCommunityIcons
-                name="bomb"
-                size={25}
-                color={"#66017b"}
-                style={{ width: 25, height: 25 }}
-              />
-            </View>
-            <View style={{ flex: 1, width: "100%" }}>
-              <Text
-                style={{
-                  color: "#392f3a",
-                  fontSize: 17,
-                  fontFamily: "Nunito-Medium",
-                }}
-              >
-                {`Tell us the`}{" "}
-                <Text
-                  style={{ fontFamily: "Nunito-ExtraBold", color: "#1543a3" }}
-                >{`NAME of the location`}</Text>{" "}
-                {`you're writing about!`}
-                <Text
-                  style={{
-                    fontFamily: "Nunito-Italic",
-                    fontStyle: Platform.OS === "android" ? undefined : "italic",
-                    color: "#514953",
-                  }}
-                >
-                  {" "}
-                  {`This is a general contact form.`}
-                </Text>
-              </Text>
-            </View>
-          </View>
           {!loggedIn ? (
             <View>
               <TextInput
@@ -184,7 +137,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           ) : null}
           <TextInput
             multiline={true}
-            placeholder={"Make sure to read all the above!!"}
+            placeholder={"This is a general contact form - include details!"}
             placeholderTextColor={theme.indigo4}
             style={[{ padding: 5, height: 200 }, s.textInput]}
             onChangeText={(message) => setMessage(message)}
@@ -271,20 +224,6 @@ const getStyles = (theme) =>
       shadowRadius: 3.84,
       elevation: 5,
       overflow: "visible",
-    },
-    bombContainer: {
-      backgroundColor: "#adc7fd",
-      borderRadius: 15,
-      marginTop: 10,
-      padding: 10,
-      flexDirection: "column",
-      flex: 1,
-    },
-    bombInner: {
-      flexDirection: "row",
-      justifyContent: "center",
-      width: "100%",
-      marginBottom: 5,
     },
   });
 
