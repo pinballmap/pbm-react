@@ -39,7 +39,7 @@ const AppAlert = ({ motd }) => {
           <Text style={s.appAlertTitle}>Message of the Day!</Text>
           <MaterialCommunityIcons
             name="close-circle"
-            size={45}
+            size={35}
             onPress={() => setIsVisible(false)}
             style={s.xButton}
           />
@@ -70,6 +70,8 @@ const getStyles = (theme) =>
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       paddingVertical: 8,
+      justifyContent: "center",
+      paddingHorizontal: 35,
     },
     appAlert: {
       padding: 10,
@@ -77,9 +79,18 @@ const getStyles = (theme) =>
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
   });
 

@@ -45,19 +45,27 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
     return true;
   };
 
-  const { loggedIn, submittingMessage, confirmationMessage } = user;
+  const {
+    loggedIn,
+    submittingMessage,
+    confirmationMessage1,
+    confirmationMessage2,
+  } = user;
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 0 }}>
       <ConfirmationModal
-        visible={confirmationMessage.length > 0}
+        visible={confirmationMessage1.length > 0}
         closeModal={acknowledgeConfirmation}
       >
         <Pressable>
-          <Text style={s.confirmText}>{confirmationMessage}</Text>
+          <Text style={[s.confirmText, s.bold]}>{confirmationMessage1}</Text>
+          <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
+            {confirmationMessage2}
+          </Text>
           <MaterialCommunityIcons
             name="close-circle"
-            size={45}
+            size={35}
             onPress={acknowledgeConfirmation}
             style={s.xButton}
           />
@@ -236,15 +244,33 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginLeft: 15,
       marginRight: 15,
+      paddingHorizontal: 30,
+    },
+    notBold: {
+      fontSize: 16,
+      fontFamily: "Nunito-Regular",
+      color: theme.text3,
+    },
+    bold: {
       fontSize: 18,
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      right: 3,
+      top: -10,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     bombContainer: {
       backgroundColor: "#adc7fd",

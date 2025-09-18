@@ -152,7 +152,7 @@ const Signup = ({ loginLater, navigation }) => {
           </Text>
           <MaterialCommunityIcons
             name="close-circle"
-            size={45}
+            size={35}
             onPress={() => {
               setModalVisible(false);
               navigation.navigate("Login");
@@ -355,12 +355,23 @@ const getStyles = (theme) =>
       fontSize: 18,
       color: theme.purple,
       fontFamily: "Nunito-Bold",
+      paddingHorizontal: 30,
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      top: -10,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     externalLink: {
       fontSize: 16,

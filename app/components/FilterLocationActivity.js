@@ -48,7 +48,7 @@ const FilterLocationActivity = ({
         onPress={() => setShowModal(true)}
         hitSlop={{ top: 20, bottom: 20, left: 50, right: 10 }}
       >
-        <Entypo name="sound-mix" size={24} style={s.filterIcon} />
+        <Entypo name="sound-mix" size={24} style={[s.filterIcon, s.shadow]} />
       </Pressable>
       {showModal && (
         <ConfirmationModal closeModal={() => setShowModal(false)}>
@@ -57,9 +57,9 @@ const FilterLocationActivity = ({
               <Text style={s.filterTitle}>Filter Location Activity</Text>
               <MaterialCommunityIcons
                 name="close-circle"
-                size={45}
+                size={35}
                 onPress={() => setShowModal(false)}
-                style={s.xButton}
+                style={[s.xButton, s.shadow]}
               />
             </View>
             <View>
@@ -246,6 +246,7 @@ const getStyles = (theme) =>
       marginTop: -25,
       paddingVertical: 8,
       justifyContent: "center",
+      paddingHorizontal: 45,
     },
     filterTitle: {
       color: theme.purple2,
@@ -255,9 +256,20 @@ const getStyles = (theme) =>
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+    },
+    shadow: {
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     titleStyle: {
       fontSize: 17,
@@ -271,7 +283,7 @@ const getStyles = (theme) =>
     },
     filterIconPressable: {
       position: "absolute",
-      right: 25,
+      right: 40,
       bottom: -5,
       padding: 5,
     },
@@ -280,6 +292,7 @@ const getStyles = (theme) =>
     },
     filterIcon: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple2,
+      height: 24,
     },
     iconStyle: {
       marginRight: 10,

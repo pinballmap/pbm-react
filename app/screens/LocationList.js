@@ -116,7 +116,7 @@ export class LocationList extends Component {
                     </Text>
                     <MaterialCommunityIcons
                       name="close-circle"
-                      size={45}
+                      size={35}
                       onPress={() =>
                         this.setState({ showNoLocationTrackingModal: false })
                       }
@@ -226,12 +226,23 @@ const getStyles = (theme) =>
       marginRight: 10,
       fontFamily: "Nunito-Regular",
       color: theme.purple,
+      paddingHorizontal: 30,
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -40,
-      color: theme.red2,
+      top: -10,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     margin10: {
       marginTop: 10,

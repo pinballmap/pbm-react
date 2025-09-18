@@ -36,6 +36,8 @@ export const initialState = {
   selectedFavoriteLocationFilter: 0,
   submittingMessage: false,
   confirmationMessage: "",
+  confirmationMessage1: "",
+  confirmationMessage2: "",
   unitPreference: 0,
   displayInsiderConnectedBadge: false,
   showNoLocationTrackingModal: false,
@@ -153,8 +155,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         submittingMessage: false,
-        confirmationMessage:
-          "Thanks for the message! We'll try to respond soon. Check your spam folder or whitelist admin@pinballmap.com!",
+        confirmationMessage1: "Thanks for the message!",
+        confirmationMessage2:
+          "We'll try to respond soon. Check your spam folder or whitelist admin@pinballmap.com!",
       };
     case MESSAGE_SUBMISSION_FAILED:
       return {

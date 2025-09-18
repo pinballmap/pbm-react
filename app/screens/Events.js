@@ -125,7 +125,7 @@ export const Events = ({ query, user }) => {
             <View style={{ width: "100%" }}>
               <MaterialCommunityIcons
                 name="close-circle"
-                size={45}
+                size={35}
                 onPress={() => setTournamentModalOpen(false)}
                 style={s.xButton}
               />
@@ -165,7 +165,7 @@ export const Events = ({ query, user }) => {
             ) : (
               <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
                 <Pressable>
-                  <Text style={[s.locationName]}>
+                  <Text style={[s.locationName, { width: "90%" }]}>
                     {tournament.tournament_name.trim()}
                   </Text>
                   <Text style={[s.address, s.margin]}>
@@ -460,10 +460,21 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
     },
     xButton: {
+      zIndex: 20,
       position: "absolute",
-      right: -20,
-      top: -35,
-      color: theme.red2,
+      top: -5,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     link: {
       textDecorationLine: "underline",

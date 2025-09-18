@@ -884,12 +884,6 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    xButton: {
-      position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
-    },
     quickButtonPressed: {
       backgroundColor: theme.indigo4,
     },

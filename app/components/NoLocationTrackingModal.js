@@ -33,7 +33,7 @@ const NoLocationTrackingModal = ({
           </Text>
           <MaterialCommunityIcons
             name="close-circle"
-            size={45}
+            size={35}
             onPress={hideNoLocationTrackingModal}
             style={s.xButton}
           />
@@ -51,12 +51,23 @@ const getStyles = (theme) =>
       marginLeft: 10,
       marginRight: 10,
       fontFamily: "Nunito-Regular",
+      paddingHorizontal: 35,
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -40,
-      color: theme.red2,
+      right: 3,
+      top: -10,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     margin10: {
       marginTop: 10,

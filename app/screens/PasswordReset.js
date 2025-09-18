@@ -40,12 +40,15 @@ const PasswordReset = ({ navigation }) => {
           closeModal={() => setModalVisible(false)}
         >
           <Pressable>
-            <Text style={s.confirmText}>
-              Password reset was successful. Check your email (and SPAM folder).
+            <Text style={[s.confirmText, s.bold]}>
+              Password reset was successful.
+            </Text>
+            <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
+              Check your email (and SPAM folder)
             </Text>
             <MaterialCommunityIcons
               name="close-circle"
-              size={45}
+              size={35}
               onPress={() => {
                 setModalVisible(false);
                 navigation.navigate("Login");
@@ -109,15 +112,33 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginLeft: 15,
       marginRight: 15,
+      paddingHorizontal: 30,
+    },
+    bold: {
       fontSize: 18,
       color: theme.purple,
       fontFamily: "Nunito-Bold",
     },
+    notBold: {
+      fontSize: 16,
+      color: theme.text3,
+      fontFamily: "Nunito-Regular",
+    },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      right: 3,
+      top: -10,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
   });
 

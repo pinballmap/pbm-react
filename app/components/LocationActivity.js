@@ -143,7 +143,7 @@ const LocationActivity = ({
               <FilterLocationActivity />
               <MaterialCommunityIcons
                 name="close-circle"
-                size={45}
+                size={35}
                 onPress={() => setLocationActivityModalOpen(false)}
                 style={s.xButton}
               />
@@ -237,12 +237,22 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
+      paddingHorizontal: 70,
     },
     xButton: {
       position: "absolute",
-      right: -20,
-      top: -20,
-      color: theme.red2,
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     xButton2: {
       color: theme.red2,
