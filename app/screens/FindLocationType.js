@@ -140,6 +140,7 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
     },
     inputStyle: {
+      flex: 1,
       paddingLeft: 5,
       paddingRight: 65,
       height: 40,
