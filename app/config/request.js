@@ -152,7 +152,11 @@ const fetchGPSLocation = async () => {
 
 export const getCurrentLocation = async () => {
   try {
-    await Location.requestForegroundPermissionsAsync();
+    const { status: currentStatus } =
+      await Location.getForegroundPermissionsAsync();
+    if (currentStatus !== "granted") {
+      await Location.requestForegroundPermissionsAsync();
+    }
     const position = await fetchGPSLocation();
     return position;
   } catch (e) {
