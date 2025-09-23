@@ -15,7 +15,6 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Image } from "expo-image";
 import {
-  EvilIcons,
   FontAwesome6,
   FontAwesome5,
   MaterialCommunityIcons,
@@ -511,7 +510,7 @@ const MachineDetails = ({
                 style={{
                   width: 24,
                   height: 24,
-                  marginLeft: 5,
+                  marginLeft: 10,
                 }}
               />
             </View>
@@ -524,7 +523,11 @@ const MachineDetails = ({
               >
                 View playing tips on PinTips
               </Text>
-              <EvilIcons name="external-link" style={s.externalIcon} />
+              <FontAwesome5
+                name="external-link-alt"
+                size={16}
+                style={s.externalIcon}
+              />
             </View>
           )}
           <WarningButton
@@ -559,14 +562,13 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
     locationName: {
-      marginTop: 5,
+      marginTop: 10,
       textAlign: "center",
       fontSize: 20,
       color: theme.text2,
       fontFamily: "Nunito-SemiBold",
     },
     machineNameContainer: {
-      marginBottom: 5,
       marginHorizontal: 38,
       borderWidth: 0,
       paddingVertical: 5,
@@ -585,20 +587,21 @@ const getStyles = (theme) =>
     },
     externalLink: {
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
+      fontFamily: "Nunito-Regular",
       color: theme.purple2,
       textAlign: "center",
     },
     externalLinkContainer: {
-      flex: 1,
+      display: "flex",
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginHorizontal: 20,
+      marginHorizontal: 15,
     },
     externalIcon: {
-      fontSize: 24,
       color: theme.text2,
+      height: 16,
+      marginLeft: 10,
     },
     marginB10: {
       marginBottom: 10,
