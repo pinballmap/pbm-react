@@ -84,6 +84,14 @@ export default {
       ],
       ["expo-web-browser"],
       ["expo-asset"],
+      [
+        "expo-location",
+        {
+          locationWhenInUsePermission:
+            "Allow access to device location to show nearby places with pinball machines.",
+          isAndroidForegroundServiceEnabled: true,
+        },
+      ],
     ],
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
@@ -93,12 +101,8 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "243",
+      buildNumber: "244",
       supportsTablet: true,
-      infoPlist: {
-        NSLocationWhenInUseUsageDescription:
-          "Allow access to device location to show nearby places with pinball machines",
-      },
       associatedDomains: [
         "applinks:pinballmap.com",
         "applinks:www.pinballmap.com",
@@ -149,10 +153,11 @@ export default {
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
         "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION",
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 217,
+      versionCode: 218,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
