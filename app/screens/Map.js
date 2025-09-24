@@ -57,7 +57,6 @@ const Map = ({
   const [showUpdateSearch, setShowUpdateSearch] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [toCurrentLocation, setToCurrentLocation] = useState(false);
-  const [loadAgain, setLoadAgain] = useState(false);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -110,14 +109,12 @@ const Map = ({
 
   useEffect(() => {
     const run = async () => {
-      if (shouldTriggerUpdateBounds || loadAgain || forceTriggerUpdateBounds) {
-        if (!cameraRef?.current) {
-          await sleep(500);
-          setLoadAgain(true);
-        }
-
+      if (
+        !isFirstLoad &&
+        (shouldTriggerUpdateBounds || forceTriggerUpdateBounds)
+      ) {
         if (!toCurrentLocation) {
-          await sleep(500);
+          await sleep(100);
         } else {
           setToCurrentLocation(false);
         }
@@ -130,12 +127,7 @@ const Map = ({
           },
         });
 
-        if (loadAgain) {
-          await sleep(500);
-          setLoadAgain(false);
-        } else {
-          await sleep(50);
-        }
+        await sleep(50);
         const bounds = await getBounds();
         dispatch(updateBounds(bounds));
         dispatch(getLocationsConsideringZoom(bounds));
@@ -147,7 +139,6 @@ const Map = ({
     cameraRef,
     shouldTriggerUpdateBounds,
     forceTriggerUpdateBounds,
-    loadAgain,
     toCurrentLocation,
   ]);
 
@@ -235,6 +226,15 @@ const Map = ({
     }
   };
 
+  const onFinishedLoading = async () => {
+    setIsFirstLoad(true);
+    await sleep(50);
+    const bounds = await getBounds();
+    dispatch(updateBounds(bounds));
+    dispatch(getLocationsConsideringZoom(bounds));
+    setIsFirstLoad(false);
+  };
+
   const setToCurrentBounds = async () => {
     setShowUpdateSearch(false);
     const bounds = await getBounds();
@@ -300,6 +300,7 @@ const Map = ({
       ) : null}
       <Mapbox.MapView
         ref={(c) => (_map.current = c)}
+        onDidFinishLoadingMap={onFinishedLoading}
         style={s.map}
         projection="mercator"
         scaleBarEnabled={false}
