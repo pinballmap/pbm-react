@@ -25,6 +25,7 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
+import { useNavigation } from "@react-navigation/native";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -34,6 +35,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
   const iconSize = 28;
   const iconColor = "#bec2e6";
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <DrawerContentScrollView {...props}>
@@ -47,7 +49,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             onPress={() => {
               setModalVisible(false);
               logout();
-              props.navigation.navigate("Login");
+              navigation.navigate("Map", { screen: "Login" });
             }}
           />
           <WarningButton
@@ -101,7 +103,9 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           </Text>
         ) : (
           <Pressable
-            onPress={() => props.navigation.navigate("Signup")}
+            onPress={() =>
+              props.navigation.navigate("Map", { screen: "Signup" })
+            }
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
           >
             <Text allowFontScaling={false} style={s.nameText}>
@@ -147,7 +151,12 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("MapTab")}
+        onPress={() =>
+          navigation.navigate("Map", {
+            screen: "MapStack",
+            params: { screen: "MapTab" },
+          })
+        }
       />
       <DrawerItem
         label="Submit Location"
@@ -162,7 +171,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() =>
-          props.navigation.navigate("Map", { screen: "SuggestLocation" })
+          navigation.navigate("Map", { screen: "SuggestLocation" })
         }
       />
       <DrawerItem
@@ -177,9 +186,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() =>
-          props.navigation.navigate("Map", { screen: "UserProfile" })
-        }
+        onPress={() => navigation.navigate("Map", { screen: "UserProfile" })}
       />
       <DrawerItem
         label="Contact"
@@ -193,7 +200,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Contact" })}
+        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"
@@ -207,7 +214,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "About" })}
+        onPress={() => navigation.navigate("Map", { screen: "About" })}
       />
       <DrawerItem
         label="FAQ"
@@ -221,7 +228,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "FAQ" })}
+        onPress={() => navigation.navigate("Map", { screen: "FAQ" })}
       />
       <DrawerItem
         label="Settings"
@@ -235,7 +242,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => props.navigation.navigate("Map", { screen: "Settings" })}
+        onPress={() => navigation.navigate("Map", { screen: "Settings" })}
       />
       {user.loggedIn ? (
         <Pressable
@@ -252,7 +259,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         </Pressable>
       ) : (
         <Pressable
-          onPress={() => props.navigation.navigate("Login")}
+          onPress={() => navigation.navigate("Map", { screen: "Login" })}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,
@@ -278,7 +285,7 @@ const getStyles = (theme) =>
       color: theme.colors.activeTab,
       position: "absolute",
       opacity: 0.9,
-      paddingLeft: Platform.OS === "ios" ? 17 : 15,
+      paddingLeft: 15,
       marginTop: 8,
     },
     iconStyle: {
@@ -289,7 +296,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
       fontSize: 20,
       position: "absolute",
-      paddingLeft: 78,
+      paddingLeft: 58,
       paddingRight: 120,
       top: 8,
     },

@@ -4,11 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
-import {
-  FontAwesome6,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
 import LocationDetails from "../screens/LocationDetails";
@@ -52,19 +48,6 @@ const TabsOptionsStyle = {
     fontSize: 18,
   },
 };
-
-function MapNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="MapNavStack"
-        title="Map"
-        component={Map}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-}
 
 function SavedStackNavigator() {
   return (
@@ -145,7 +128,7 @@ function BottomTabNavigator() {
       <Tab.Screen
         name="MapTab"
         title="Map"
-        component={MapNavigator}
+        component={Map}
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
@@ -313,18 +296,7 @@ function MapStack() {
           fontFamily: "Nunito-Bold",
         },
         headerTitleAllowFontScaling: false,
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <FontAwesome6
-            name={Platform.OS === "android" ? "arrow-left" : "chevron-left"}
-            size={24}
-            color={colors.text}
-            style={{
-              marginLeft: Platform.OS === "android" ? 0 : 10,
-              marginRight: 5,
-            }}
-          />
-        ),
+        headerBackButtonDisplayMode: "minimal",
       })}
     >
       <Stack.Screen
@@ -342,7 +314,7 @@ function MapStack() {
         name="LocationList"
         component={LocationList}
         options={{
-          headerBackTitleVisible: true,
+          headerBackButtonDisplayMode: "default",
           title: "Locations on the Map",
         }}
       />
@@ -368,7 +340,8 @@ function MapStack() {
         name="FilterMap"
         component={FilterMap}
         options={{
-          headerBackTitleVisible: true,
+          headerBackTitle: "Map",
+          headerBackButtonDisplayMode: "default",
           title: "Filter Map Results",
         }}
       />

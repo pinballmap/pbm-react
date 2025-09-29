@@ -161,7 +161,7 @@ const Map = ({
         });
         dispatch(triggerUpdateBounds(bounds));
       }
-      navigation.navigate("MapTab");
+      navigation.navigate("MapTab", { pop: true });
     } else if (url.indexOf("region=") > 0) {
       const regionSegment = url.split("region=")[1];
       const regionName = regionSegment.split("&")[0];
@@ -191,7 +191,7 @@ const Map = ({
       if (region && locations.length === 0) {
         dispatch(getLocationsByRegion(region));
       }
-      navigation.navigate("MapTab");
+      navigation.navigate("MapTab", { pop: true });
     } else if (url.indexOf("about") > 0) {
       navigation.navigate("Contact");
     } else if (url.indexOf("events") > 0) {
@@ -205,7 +205,7 @@ const Map = ({
       if (region) {
         dispatch(getLocationsByRegion(region));
       }
-      navigation.navigate("MapTab");
+      navigation.navigate("MapTab", { pop: true });
     }
   };
 

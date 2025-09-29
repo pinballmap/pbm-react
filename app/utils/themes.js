@@ -32,6 +32,13 @@ export const dark = {
     inactiveTab: "#E0D6E0",
     tabBar: "#303041",
   },
+  fonts: {
+    default: {
+      medium: {
+        fontFamily: "Nunito-Medium",
+      },
+    },
+  },
 };
 
 export const standard = {
@@ -67,5 +74,12 @@ export const standard = {
     activeTab: "#9718b1",
     inactiveTab: "#786D7A",
     tabBar: "#fafaff",
+  },
+  fonts: {
+    default: {
+      medium: {
+        fontFamily: "Nunito-Medium",
+      },
+    },
   },
 };

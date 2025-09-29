@@ -106,10 +106,7 @@ const FilterMap = ({
   };
 
   const goToMap = () => {
-    navigation.navigate("MapTab", {
-      previous_screen: "FilterMap",
-      type: "filter",
-    });
+    navigation.navigate("MapTab", { pop: true });
   };
 
   return (

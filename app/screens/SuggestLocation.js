@@ -231,7 +231,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                           onPress={() => {
                             setShowSuggestLocationModal(false);
                             dispatch(resetSuggestLocation());
-                            navigation.navigate("MapTab");
+                            navigation.navigate("MapTab", { pop: true });
                           }}
                           style={s.xButton}
                         />

@@ -260,7 +260,7 @@ const Signup = ({ loginLater, navigation }) => {
           <Pressable
             onPress={() => {
               loginLater();
-              navigation.navigate("MapTab");
+              navigation.navigate("MapTab", { pop: true });
             }}
             style={s.buttonMask}
           >

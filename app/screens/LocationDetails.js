@@ -139,7 +139,7 @@ const LocationDetails = (props) => {
   const onMapPress = () => {
     dispatch(updateMap(location.lat, location.lon));
     dispatch(setSelectedMapLocation(location.id));
-    navigation.navigate("MapTab");
+    navigation.navigate("MapTab", { pop: true });
   };
 
   if (
