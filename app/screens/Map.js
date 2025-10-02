@@ -114,7 +114,7 @@ const Map = ({
         (shouldTriggerUpdateBounds || forceTriggerUpdateBounds)
       ) {
         if (!toCurrentLocation) {
-          await sleep(100);
+          await sleep(500);
         } else {
           setToCurrentLocation(false);
         }
