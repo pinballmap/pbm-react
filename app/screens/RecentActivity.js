@@ -179,12 +179,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       />
       {selectedActivities.length ? (
         <View style={s.filterView}>
-          <Text style={s.filter}>Clear applied filters</Text>
+          <Text style={s.filter}>Clear filters</Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={24}
             onPress={() => clearActivityFilter()}
-            style={s.xButton}
+            style={s.xButton2}
           />
         </View>
       ) : null}
@@ -325,6 +325,20 @@ const getStyles = (theme) =>
     },
     xButton: {
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
+      marginLeft: 8,
+    },
+    xButton2: {
+      color: theme.red2,
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
       shadowOffset: {

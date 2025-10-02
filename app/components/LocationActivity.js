@@ -153,7 +153,7 @@ const LocationActivity = ({
             <Pressable>
               {selectedLocationActivities.length ? (
                 <View style={s.filterView}>
-                  <Text style={s.filter}>Clear applied filters</Text>
+                  <Text style={s.filter}>Clear filters</Text>
                   <MaterialCommunityIcons
                     name="close-circle"
                     size={24}
@@ -256,6 +256,16 @@ const getStyles = (theme) =>
     },
     xButton2: {
       color: theme.red2,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
       marginLeft: 8,
     },
     activityButton: {
