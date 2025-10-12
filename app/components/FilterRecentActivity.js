@@ -135,7 +135,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  New Comments
+                  Machine Comments
                 </Text>
               </Pressable>
               <Pressable

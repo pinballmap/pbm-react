@@ -150,7 +150,7 @@ const FilterLocationActivity = ({
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  New Comments
+                  Machine Comments
                 </Text>
               </Pressable>
               <Pressable
