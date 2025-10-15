@@ -37,7 +37,7 @@ import { coordsToBounds } from "../utils/utilityFunctions";
 
 let deviceWidth = Dimensions.get("window").width;
 
-Geocode.setApiKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
+Geocode.setKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 class Search extends Component {
   constructor(props) {
