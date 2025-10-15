@@ -78,7 +78,8 @@ const MachineDetails = ({
     name: machineName,
     ic_eligible,
   } = machineDetails;
-  const pintipsUrl = opdb_id && `https://pintips.net/opdb/${opdb_id}`;
+  const matchplayUrl =
+    opdb_id && `https://app.matchplay.events/opdb/entries/${opdb_id}`;
   const opdb_resized = opdb_img_width - (deviceWidth - 48);
   const opdb_img_height_calc =
     (deviceWidth - 48) * (opdb_img_height / opdb_img_width);
@@ -89,6 +90,10 @@ const MachineDetails = ({
     Platform.OS === "android"
       ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
       : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
+  const matchplayImage = {
+    dark: require("../assets/images/Resource_Matchplay_Dark.png"),
+    light: require("../assets/images/Resource_Matchplay_Light.png"),
+  };
 
   const operator =
     location.operator_id &&
@@ -497,37 +502,58 @@ const MachineDetails = ({
               }
             />
           </View>
-          {!!kineticist_url && (
-            <View style={[{ marginBottom: 15 }, s.externalLinkContainer]}>
-              <Text
-                style={s.externalLink}
-                onPress={() => WebBrowser.openBrowserAsync(kineticist_url)}
-              >
-                View machine info on Kineticist
-              </Text>
-              <Image
-                source={require("../assets/images/kineticist.png")}
-                style={{
-                  width: 24,
-                  height: 24,
-                  marginLeft: 10,
-                }}
-              />
-            </View>
-          )}
-          {!!pintipsUrl && (
+          {(!!kineticist_url || !!matchplayUrl) && (
             <View style={[s.externalLinkContainer, s.marginB10]}>
-              <Text
-                style={s.externalLink}
-                onPress={() => WebBrowser.openBrowserAsync(pintipsUrl)}
-              >
-                View playing tips on PinTips
+              <Text style={s.externalLink}>
+                Find machine tips, rules, & videos on
               </Text>
-              <FontAwesome5
-                name="external-link-alt"
-                size={16}
-                style={s.externalIcon}
-              />
+              {!!matchplayUrl && (
+                <Pressable
+                  style={{
+                    height: 40,
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => WebBrowser.openBrowserAsync(matchplayUrl)}
+                >
+                  <Image
+                    source={
+                      theme.theme === "dark"
+                        ? matchplayImage.dark
+                        : matchplayImage.light
+                    }
+                    contentFit="contain"
+                    style={{
+                      height: 20,
+                      width: 160,
+                    }}
+                  />
+                </Pressable>
+              )}
+              {!!kineticist_url && !!matchplayUrl && (
+                <Text style={s.externalLink}>and</Text>
+              )}
+              {!!kineticist_url && (
+                <Pressable
+                  style={{
+                    height: 40,
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => WebBrowser.openBrowserAsync(kineticist_url)}
+                >
+                  <Image
+                    source={require("../assets/images/Resource_Kineticist_sm.png")}
+                    contentFit="contain"
+                    style={{
+                      height: 40,
+                      width: 100,
+                    }}
+                  />
+                </Pressable>
+              )}
             </View>
           )}
           <WarningButton
@@ -588,20 +614,15 @@ const getStyles = (theme) =>
     externalLink: {
       fontSize: 16,
       fontFamily: "Nunito-Regular",
-      color: theme.purple2,
+      color: theme.text3,
       textAlign: "center",
     },
     externalLinkContainer: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
+      flexDirection: "column",
       marginHorizontal: 15,
-    },
-    externalIcon: {
-      color: theme.text2,
-      height: 16,
-      marginLeft: 10,
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
     },
     marginB10: {
       marginBottom: 10,

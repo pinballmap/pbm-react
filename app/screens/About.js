@@ -318,11 +318,6 @@ const About = ({ navigation, appAlert }) => {
             and{" "}
             <Text
               style={s.textLink}
-              onPress={() => WebBrowser.openBrowserAsync("https://pintips.net")}
-            >{`PinTips`}</Text>{" "}
-            and{" "}
-            <Text
-              style={s.textLink}
               onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
             >{`Scorbit`}</Text>{" "}
             and{" "}

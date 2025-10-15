@@ -45,7 +45,7 @@ const Resources = () => {
               WebBrowser.openBrowserAsync("https://matchplay.events/")
             }
           >{`Match Play Events`}</Text>
-          {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices.`}
+          {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices. Matchplay also contains the OPDB database, and includes PinTips, tutorial and gameplay videos, and rulesheets.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -126,26 +126,6 @@ const Resources = () => {
             onPress={() => WebBrowser.openBrowserAsync("https://opdb.org/")}
           >{`OPDB`}</Text>
           {` - or the Open Pinball Database - is a machine database with an API. Its API is used by us, and a number of other apps. So it's like we're all talking to each other.`}
-        </Text>
-        <View style={s.hr}></View>
-        <Pressable
-          onPress={() => WebBrowser.openBrowserAsync("https://pintips.net")}
-          style={[s.logoWrapper]}
-        >
-          <Image
-            source={require("../assets/images/Resource_Pintips.png")}
-            style={{
-              width: deviceWidth - 50,
-              height: (deviceWidth - 50) / 7.63,
-            }}
-          />
-        </Pressable>
-        <Text style={s.text}>
-          <Text
-            style={s.textLink}
-            onPress={() => WebBrowser.openBrowserAsync("https://pintips.net")}
-          >{`PinTips`}</Text>
-          {` is a great place to quickly pick up tips about how to play specific machines. And it's very easy to contribute your own tips!`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
