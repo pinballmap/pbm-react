@@ -19,6 +19,7 @@ Release dates are approximate, given that review times vary between the App Stor
 October 14, 2025
 
 - Bug fix: Directions button was causing crash.
+- Replace PinTips links with Matchplay.
 
 ### 5.3.35
 
