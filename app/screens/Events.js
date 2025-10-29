@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
+  FlatList,
   Platform,
   Pressable,
   ScrollView,
@@ -17,7 +18,6 @@ import {
 } from "../components";
 import { getIfpaData, getIfpaTournament } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
-import { FlashList } from "@shopify/flash-list";
 import { boundsToCoords } from "../utils/utilityFunctions";
 import { useTheme } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -282,7 +282,7 @@ export const Events = ({ query, user }) => {
               International Flipper Pinball Association (IFPA)
             </Text>
           </Text>
-          <FlashList
+          <FlatList
             data={events}
             ListEmptyComponent={
               <Text
