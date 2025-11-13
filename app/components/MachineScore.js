@@ -204,7 +204,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
     },
     subtitleMargin: {
-      marginTop: 5,
+      marginTop: 4,
       marginHorizontal: 0,
       fontSize: 14,
     },

@@ -121,9 +121,9 @@ const MachineComment = ({ commentObj, user }) => {
             </Modal>
             <View style={s.listContainerStyle}>
               <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-              <Text style={[s.subtitleStyle]}>
+              <Text style={[s.subtitleStyle, s.subtitleMargin]}>
                 {!!username && (
-                  <Text style={s.username}>
+                  <Text style={[s.subtitleStyle, s.username]}>
                     {username}
                     {"  "}
                   </Text>
@@ -184,6 +184,11 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-SemiBold",
+    },
+    subtitleMargin: {
+      marginTop: 4,
+      marginHorizontal: 0,
+      fontSize: 14,
     },
     username: {
       color: theme.pink1,
