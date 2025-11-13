@@ -7,6 +7,8 @@ import {
   MACHINE_CONDITION_UPDATED,
   MACHINE_CONDITION_REMOVED,
   MACHINE_SCORE_ADDED,
+  MACHINE_SCORE_EDITED,
+  MACHINE_SCORE_REMOVED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION,
@@ -155,6 +157,36 @@ export default (state = initialState, action) => {
         location: {
           ...state.location,
           location_machine_xrefs,
+        },
+      };
+    }
+    case MACHINE_SCORE_REMOVED: {
+      const machine_score_xrefs = state.curLmx.machine_score_xrefs.filter(
+        (high_score) => high_score.id !== action.scoreId,
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_score_xrefs,
+        },
+      };
+    }
+    case MACHINE_SCORE_EDITED: {
+      const machine_score_xrefs = state.curLmx.machine_score_xrefs.map(
+        (high_score) => {
+          if (high_score.id === action.scoreId) {
+            high_score.score = action.score;
+            high_score.updated_at = moment().format("YYYY-MM-DD");
+          }
+          return high_score;
+        },
+      );
+      return {
+        ...state,
+        curLmx: {
+          ...state.curLmx,
+          machine_score_xrefs,
         },
       };
     }
