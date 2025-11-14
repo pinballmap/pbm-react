@@ -27,6 +27,7 @@ import CustomMapMarkers from "./CustomMapMarkers";
 import LocationBottomSheet from "./LocationBottomSheet";
 import BackglassImage from "./BackglassImage";
 import MachineComment from "./MachineComment";
+import MachineScore from "./MachineScore";
 import ReadMore from "./ReadMore";
 import CustomIcon from "./CustomIcon";
 
@@ -60,6 +61,7 @@ export {
   LocationBottomSheet,
   BackglassImage,
   MachineComment,
+  MachineScore,
   ReadMore,
   CustomIcon,
 };

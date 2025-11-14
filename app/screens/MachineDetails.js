@@ -33,6 +33,7 @@ import {
   ActivityIndicator,
   BackglassImage,
   MachineComment,
+  MachineScore,
   PbmButton,
   RemoveMachineModal,
   RemoveMachine,
@@ -470,26 +471,9 @@ const MachineDetails = ({
               </View>
             )}
             {scores.length > 0 ? (
-              scores.map((scoreObj) => {
-                const { id, score, created_at, username } = scoreObj;
-
-                return (
-                  <View style={s.listContainerStyle} key={id}>
-                    <Text style={s.scoreText}>
-                      {formatNumWithCommas(score)}
-                    </Text>
-                    <Text style={[s.subtitleStyle, s.subtitleMargin]}>
-                      <Text
-                        style={[s.subtitleStyle, s.username]}
-                      >{`${username}`}</Text>
-                      {"  "}
-                      <Text style={s.italic}>
-                        {moment(created_at).format("MMM DD, YYYY")}
-                      </Text>
-                    </Text>
-                  </View>
-                );
-              })
+              scores.map((scoreObj) => (
+                <MachineScore scoreObj={scoreObj} key={scoreObj.id} />
+              ))
             ) : (
               <Text style={s.noneYet}>No scores yet</Text>
             )}
@@ -631,12 +615,6 @@ const getStyles = (theme) =>
       marginHorizontal: 40,
       marginVertical: 15,
     },
-    scoreText: {
-      color: theme.text2,
-      fontSize: 18,
-      marginTop: 5,
-      fontFamily: "Nunito-SemiBold",
-    },
     noneYet: {
       textAlign: "center",
       paddingHorizontal: 15,
@@ -704,28 +682,6 @@ const getStyles = (theme) =>
     },
     margin4: {
       marginVertical: 4,
-    },
-    subtitleStyle: {
-      paddingTop: 3,
-      fontSize: 14,
-      color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
-    },
-    subtitleMargin: {
-      marginTop: 5,
-      marginHorizontal: 0,
-      fontSize: 14,
-    },
-    username: {
-      color: theme.pink1,
-    },
-    listContainerStyle: {
-      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
-      marginHorizontal: 15,
-      paddingTop: 5,
-      paddingBottom: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.indigo4,
     },
     containerStyle: {
       borderRadius: 15,
@@ -801,12 +757,6 @@ const getStyles = (theme) =>
     },
     noIC: {
       backgroundColor: "#f0d8d8",
-    },
-    italic: {
-      fontSize: 14,
-      color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     removeButton: {
       marginRight: 10,

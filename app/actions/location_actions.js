@@ -7,6 +7,8 @@ import {
   MACHINE_CONDITION_REMOVED,
   MACHINE_CONDITION_EDITED,
   MACHINE_SCORE_ADDED,
+  MACHINE_SCORE_REMOVED,
+  MACHINE_SCORE_EDITED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION,
@@ -385,6 +387,34 @@ export const editCondition = (conditionId, comment, user) => (dispatch) => {
   return putData(`/machine_conditions/${conditionId}.json`, body)
     .then(() => {
       dispatch({ type: MACHINE_CONDITION_EDITED, conditionId, comment });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteScore = (scoreId, user) => (dispatch) => {
+  const body = {
+    user_email: user.email,
+    user_token: user.authentication_token,
+  };
+  return deleteData(`/machine_score_xrefs/${scoreId}.json`, body)
+    .then(() => {
+      dispatch({ type: MACHINE_SCORE_REMOVED, scoreId });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const editScore = (scoreId, score, user) => (dispatch) => {
+  const body = {
+    user_email: user.email,
+    user_token: user.authentication_token,
+    score,
+  };
+
+  return putData(`/machine_score_xrefs/${scoreId}.json`, body)
+    .then(() => {
+      dispatch({ type: MACHINE_SCORE_EDITED, scoreId, score });
     })
     .catch((err) => console.log(err));
 };

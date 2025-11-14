@@ -10,41 +10,53 @@ import {
   TextInput,
   View,
 } from "react-native";
+import {
+  formatInputNumWithCommas,
+  formatNumWithCommas,
+  removeCommasFromNum,
+} from "../utils/utilityFunctions";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
-import { deleteCondition, editCondition } from "../actions";
+import { deleteScore, editScore } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const moment = require("moment");
 
-const MachineComment = ({ commentObj, user }) => {
+const MachineScore = ({ scoreObj, user }) => {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [loading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const {
-    comment: initialComment,
+    score: initialScore,
     created_at,
     updated_at,
     username,
-    user_id: commentUserId,
-    id: commentId,
-  } = commentObj;
+    user_id: scoreUserId,
+    id: scoreId,
+  } = scoreObj;
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [comment, setComment] = useState(initialComment);
+  const [score, setScore] = useState(initialScore);
+
+  const handleScoreEdit = (inputScore) => {
+    const formattedScore = formatInputNumWithCommas(inputScore);
+    setScore(formattedScore);
+  };
+
   const onEditPress = async () => {
     try {
       setIsLoading(true);
-      comment.length &&
-        (await dispatch(editCondition(commentId, comment, user)));
+      score.length &&
+        (await dispatch(editScore(scoreId, removeCommasFromNum(score), user)));
     } finally {
       setIsLoading(false);
       setEditModalVisible(false);
     }
   };
+
   const machineNameMargin =
     Platform.OS === "android"
       ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
@@ -53,16 +65,16 @@ const MachineComment = ({ commentObj, user }) => {
   const onDeletePress = async () => {
     try {
       setIsLoading(true);
-      await dispatch(deleteCondition(commentId, user));
+      await dispatch(deleteScore(scoreId, user));
     } finally {
       setIsLoading(false);
       setDeleteModalVisible(false);
     }
   };
 
-  const cancelEditComment = () => {
+  const cancelEditScore = () => {
     setEditModalVisible(false);
-    setComment(initialComment);
+    setScore(initialScore);
   };
 
   return (
@@ -76,8 +88,8 @@ const MachineComment = ({ commentObj, user }) => {
               closeModal={() => setDeleteModalVisible(false)}
             >
               <Pressable>
-                <Text style={s.modalTitle}>Delete your comment?</Text>
-                <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
+                <Text style={s.modalTitle}>Delete your score?</Text>
+                <PbmButton title={"Delete Score"} onPress={onDeletePress} />
                 <WarningButton
                   title={"Cancel"}
                   onPress={() => setDeleteModalVisible(false)}
@@ -101,29 +113,36 @@ const MachineComment = ({ commentObj, user }) => {
                     paddingTop: machineNameMargin + 50,
                   }}
                 >
-                  <Text style={s.modalTitle}>Edit your comment</Text>
+                  <Text style={s.modalTitle}>Edit your score</Text>
                   <TextInput
-                    defaultValue={initialComment}
-                    multiline={true}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(conditionText) => setComment(conditionText)}
                     style={[
-                      { padding: 5, height: 100 },
+                      { height: 40, textAlign: "center" },
                       s.textInput,
                       s.radius10,
                     ]}
-                    textAlignVertical="top"
+                    keyboardType="numeric"
+                    underlineColorAndroid="transparent"
+                    onChangeText={handleScoreEdit}
+                    value={score}
+                    defaultValue={formatNumWithCommas(initialScore)}
+                    returnKeyType="done"
+                    placeholder={"123..."}
+                    placeholderTextColor={theme.indigo4}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                   />
                   <PbmButton title={"Save"} onPress={onEditPress} />
-                  <WarningButton title={"Cancel"} onPress={cancelEditComment} />
+                  <WarningButton title={"Cancel"} onPress={cancelEditScore} />
                 </KeyboardAwareScrollView>
               </View>
             </Modal>
             <View style={s.listContainerStyle}>
-              <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-              <Text style={[s.subtitleStyle]}>
+              <Text style={s.scoreText}>
+                {formatNumWithCommas(initialScore)}
+              </Text>
+              <Text style={[s.subtitleStyle, s.subtitleMargin]}>
                 {!!username && (
-                  <Text style={s.username}>
+                  <Text style={[s.subtitleStyle, s.username]}>
                     {username}
                     {"  "}
                   </Text>
@@ -133,7 +152,7 @@ const MachineComment = ({ commentObj, user }) => {
                 </Text>
                 {created_at !== updated_at && "*"}
                 {"  "}
-                {user?.id && user.id === commentUserId && (
+                {user?.id && user.id === scoreUserId && (
                   <>
                     <Text
                       style={s.editDelete}
@@ -172,18 +191,22 @@ const getStyles = (theme) =>
       borderBottomWidth: 1,
       borderBottomColor: theme.indigo4,
     },
-    conditionText: {
+    scoreText: {
       color: theme.text2,
-      fontSize: 16,
+      fontSize: 18,
       marginTop: 5,
-      marginRight: 5,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
     },
     subtitleStyle: {
       paddingTop: 5,
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-SemiBold",
+    },
+    subtitleMargin: {
+      marginTop: 5,
+      marginHorizontal: 0,
+      fontSize: 14,
     },
     username: {
       color: theme.pink1,
@@ -222,4 +245,4 @@ const getStyles = (theme) =>
 const mapStateToProps = ({ user }) => {
   return { user };
 };
-export default connect(mapStateToProps)(MachineComment);
+export default connect(mapStateToProps)(MachineScore);
