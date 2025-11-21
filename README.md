@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.37
+
+November 21, 2025
+
+- Add functionality to edit or delete high scores
+
 ### 5.3.36
 
 October 14, 2025
