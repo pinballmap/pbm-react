@@ -75,7 +75,6 @@ const MachineDetails = ({
     opdb_img,
     opdb_img_height,
     opdb_img_width,
-    kineticist_url,
     name: machineName,
     ic_eligible,
   } = machineDetails;
@@ -486,8 +485,8 @@ const MachineDetails = ({
               }
             />
           </View>
-          {(!!kineticist_url || !!matchplayUrl) && (
-            <View style={[s.externalLinkContainer, s.marginB10]}>
+          {!!matchplayUrl && (
+            <View style={s.externalLinkContainer}>
               <Text style={s.externalLink}>
                 Find machine tips, rules, & videos on
               </Text>
@@ -511,29 +510,6 @@ const MachineDetails = ({
                     style={{
                       height: 20,
                       width: 160,
-                    }}
-                  />
-                </Pressable>
-              )}
-              {!!kineticist_url && !!matchplayUrl && (
-                <Text style={s.externalLink}>and</Text>
-              )}
-              {!!kineticist_url && (
-                <Pressable
-                  style={{
-                    height: 40,
-                    flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                  onPress={() => WebBrowser.openBrowserAsync(kineticist_url)}
-                >
-                  <Image
-                    source={require("../assets/images/Resource_Kineticist_sm.png")}
-                    contentFit="contain"
-                    style={{
-                      height: 40,
-                      width: 100,
                     }}
                   />
                 </Pressable>
