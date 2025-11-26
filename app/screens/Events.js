@@ -39,7 +39,7 @@ export const Events = ({ query, user }) => {
 
   const { neLat, neLon, swLat, swLon } = query;
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
-  const distanceUnitAbbrev = user.unitPreference ? "ki" : "mi";
+  const distanceUnitAbbrev = user.unitPreference ? "km" : "mi";
   const buttons = [
     `50 ${distanceUnitAbbrev}`,
     `150 ${distanceUnitAbbrev}`,

@@ -34,7 +34,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
-  const distanceUnitAbbrev = user.unitPreference ? "ki" : "mi";
+  const distanceUnitAbbrev = user.unitPreference ? "km" : "mi";
   const buttons = [
     `10 ${distanceUnitAbbrev}`,
     `50 ${distanceUnitAbbrev}`,
