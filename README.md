@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.38
+
+December 16, 2025
+
+- Fixed "km" abbreviation
+- Other minor design tweaks
+
 ### 5.3.37
 
 November 21, 2025
