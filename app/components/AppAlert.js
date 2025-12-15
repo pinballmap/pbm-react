@@ -45,7 +45,7 @@ const AppAlert = ({ motd }) => {
           />
         </View>
         <View style={s.appAlert}>
-          <Text style={{ fontSize: 16 }}>{motd}</Text>
+          <Text style={{ fontSize: 15 }}>{motd}</Text>
         </View>
       </Pressable>
     </ConfirmationModal>

@@ -379,8 +379,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "Nunito-ExtraBold",
-      fontSize: 22,
-      lineHeight: 28,
+      fontSize: 18,
+      lineHeight: 22,
       textAlign: "left",
       color: theme.purpleLight,
     },
@@ -456,7 +456,6 @@ const getStyles = (theme) =>
     textLink: {
       textDecorationLine: "underline",
       color: "#7cc5ff",
-      fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
     xButton: {

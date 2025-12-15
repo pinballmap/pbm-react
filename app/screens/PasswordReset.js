@@ -120,7 +120,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
     },
     notBold: {
-      fontSize: 16,
+      fontSize: 15,
       color: theme.text3,
       fontFamily: "Nunito-Regular",
     },

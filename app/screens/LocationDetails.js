@@ -730,8 +730,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "Nunito-ExtraBold",
-      fontSize: deviceWidth < 325 ? 24 : 26,
-      lineHeight: deviceWidth < 325 ? 30 : 32,
+      fontSize: deviceWidth < 325 ? 22 : 24,
+      lineHeight: deviceWidth < 325 ? 28 : 30,
       color: theme.pink1,
     },
     locationMetaContainer: {

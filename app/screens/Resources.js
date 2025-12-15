@@ -294,7 +294,7 @@ const getStyles = (theme) =>
       marginBottom: 20,
     },
     text: {
-      fontSize: 16,
+      fontSize: 15,
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,
@@ -306,7 +306,7 @@ const getStyles = (theme) =>
     textLink: {
       textDecorationLine: "underline",
       color: theme.purple,
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Medium",
     },
     hr: {

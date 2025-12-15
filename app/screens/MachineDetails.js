@@ -566,7 +566,7 @@ const getStyles = (theme) =>
     },
     addedText: {
       textAlign: "center",
-      fontSize: 16,
+      fontSize: 15,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
@@ -597,7 +597,7 @@ const getStyles = (theme) =>
       color: theme.text3,
       paddingVertical: 5,
       fontFamily: "Nunito-Regular",
-      fontSize: 16,
+      fontSize: 15,
     },
     textInput: {
       backgroundColor: theme.white,

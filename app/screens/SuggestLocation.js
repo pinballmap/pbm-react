@@ -684,7 +684,7 @@ const getStyles = (theme) =>
     },
     success: {
       textAlign: "center",
-      fontSize: 16,
+      fontSize: 15,
       marginLeft: 40,
       marginRight: 40,
       fontFamily: "Nunito-Regular",

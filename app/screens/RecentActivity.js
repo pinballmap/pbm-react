@@ -247,7 +247,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     pbmText: {
       color: theme.text2,
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Regular",
     },
     marginB8: {
@@ -269,12 +269,10 @@ const getStyles = (theme) =>
     },
     locationName: {
       color: theme.text,
-      fontSize: 16,
       fontFamily: "Nunito-SemiBold",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
-      fontSize: 16,
       fontFamily: "Nunito-Bold",
     },
     filterView: {

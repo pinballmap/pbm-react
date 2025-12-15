@@ -174,7 +174,7 @@ const getStyles = (theme) =>
     },
     conditionText: {
       color: theme.text2,
-      fontSize: 16,
+      fontSize: 15,
       marginTop: 5,
       marginRight: 5,
       fontFamily: "Nunito-Regular",

@@ -355,8 +355,8 @@ const About = ({ navigation, appAlert }) => {
           >
             Scott Wainstock
           </Text>
-          <Text style={{ fontSize: 16 }}>Elijah St Clair</Text>
-          <Text style={{ fontSize: 16, marginBottom: 10 }}>
+          <Text>Elijah St Clair</Text>
+          <Text style={{ marginBottom: 10 }}>
             And other great folks (noted on Github)!
           </Text>
           <Text style={s.category}>Support Us</Text>
@@ -386,9 +386,9 @@ const About = ({ navigation, appAlert }) => {
             ! And tell your friends about it.
           </Text>
           <Text style={s.text}>Thanks to our beta testers!</Text>
-          <Text style={{ fontSize: 16 }}>
-            And thanks to all our <Text style={{ fontSize: 16 }}>Ko-fi</Text>{" "}
-            and <Text style={{ fontSize: 16 }}>Patreon</Text> supporters!
+          <Text>
+            And thanks to all our <Text>Ko-fi</Text> and <Text>Patreon</Text>{" "}
+            supporters!
           </Text>
           {Platform.OS === "android" ? (
             <Pressable
@@ -438,7 +438,7 @@ const getStyles = (theme) =>
       padding: 15,
     },
     text: {
-      fontSize: 16,
+      fontSize: 15,
       lineHeight: 22,
       marginBottom: 10,
     },
@@ -453,7 +453,7 @@ const getStyles = (theme) =>
     textLink: {
       textDecorationLine: "underline",
       color: theme.purple2,
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Medium",
     },
     appAlert: {
@@ -469,7 +469,7 @@ const getStyles = (theme) =>
     pink: {
       color: theme.pink1,
       textDecorationLine: "underline",
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Medium",
     },
     category: {

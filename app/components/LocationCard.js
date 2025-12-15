@@ -98,7 +98,7 @@ const LocationCard = ({
                   return (
                     <Text key={key} style={s.machineName}>
                       <Text
-                        style={{ fontFamily: "Nunito-ExtraBold", fontSize: 18 }}
+                        style={{ fontFamily: "Nunito-ExtraBold", fontSize: 17 }}
                       >
                         {title}
                       </Text>
@@ -204,8 +204,8 @@ const getStyles = (theme) =>
     },
     locationName: {
       fontFamily: "Nunito-ExtraBold",
-      fontSize: 24,
-      lineHeight: 28,
+      fontSize: 22,
+      lineHeight: 26,
       textAlign: "left",
       color: theme.pink1,
     },
@@ -252,7 +252,7 @@ const getStyles = (theme) =>
     manufacturer: {
       color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Medium",
-      fontSize: 18,
+      fontSize: 17,
     },
     mediumFont: {
       fontFamily: "Nunito-Medium",

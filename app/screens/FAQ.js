@@ -393,7 +393,7 @@ const getStyles = (theme) =>
       margin: "auto",
     },
     text: {
-      fontSize: 16,
+      fontSize: 15,
       color: theme.text2,
       lineHeight: 22,
       marginBottom: 15,
@@ -402,7 +402,7 @@ const getStyles = (theme) =>
     },
     bold: {
       fontFamily: "Nunito-Bold",
-      fontSize: 17,
+      fontSize: 16,
       marginBottom: 10,
       padding: 10,
       color: "#fef3e8",

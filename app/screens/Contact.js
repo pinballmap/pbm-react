@@ -158,7 +158,7 @@ const getStyles = (theme) =>
       backgroundColor: theme.base1,
     },
     text: {
-      fontSize: 16,
+      fontSize: 15,
       marginVertical: 5,
       marginHorizontal: 5,
     },
@@ -200,7 +200,7 @@ const getStyles = (theme) =>
       paddingHorizontal: 30,
     },
     notBold: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Regular",
       color: theme.text3,
     },
