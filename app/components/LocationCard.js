@@ -104,7 +104,7 @@ const LocationCard = ({
                       </Text>
                       <Text
                         style={[s.manufacturer, s.mediumFont]}
-                      >{`${info}\n`}</Text>
+                      >{`${info}`}</Text>
                     </Text>
                   );
                 })}
@@ -179,7 +179,7 @@ const getStyles = (theme) =>
       alignContent: "space-around",
     },
     machineName: {
-      marginBottom: Platform.OS === "android" ? 0 : -12,
+      marginBottom: 10,
       color: theme.theme == "dark" ? theme.text : theme.purple,
     },
     plus: {
