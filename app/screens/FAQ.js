@@ -157,20 +157,25 @@ const FAQ = ({ navigation }) => {
               style={s.bold}
             >{`Can I use Pinball Map data on my own site?`}</Text>
             <Text style={s.text}>
-              {`You can use our public API to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
+              {`You can use our `}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://pinballmap.com/api/v1/docs",
+                  )
+                }
+              >
+                public API
+              </Text>
+              {` to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
             </Text>
             <Text style={s.category}>Data Management</Text>
             <Text
               style={s.bold}
             >{`Can you include "bat games", or other non-pinball but pinball-adjacent games??`}</Text>
             <Text style={s.text}>
-              No, no bat games. We fully understand that pitch and bat games
-              resemble pinball machines and the collectors that collect them
-              also usually collect pinball machines. We used to include bat
-              games, but found that non-pinball machines like that were a
-              slippery slope toward including more and more non-pinball
-              machines. We only want to map pinball machines. In general, if the
-              machine is not listed on{" "}
+              {`No, no bat games. We fully understand that pitch and bat games resemble pinball machines and the collectors that collect them also usually collect pinball machines. We used to include bat games, but non-pinball machines like that were a slippery slope toward (people constantly requesting) including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on `}
               <Text
                 style={s.textLink}
                 onPress={() => WebBrowser.openBrowserAsync("https://opdb.org")}
@@ -228,7 +233,7 @@ const FAQ = ({ navigation }) => {
             >{`How do I tag myself as the operator at a location?`}</Text>
             <Text
               style={s.text}
-            >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "location details" button and then the pencil edit icon. Choose your operator business from the list. Then save.`}</Text>
+            >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "edit details" button and then the pencil edit icon. Choose your operator business from the list. Then save.`}</Text>
             <Text
               style={s.bold}
             >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
@@ -310,7 +315,7 @@ const FAQ = ({ navigation }) => {
             >{`I left a machine comment, but I made a typo. Or, I just woke up and I regret a comment I made last night. Can I edit or delete my comment?`}</Text>
             <Text style={s.text}>
               {`Yes. Click the machine and below your comment you'll see "edit" and "delete" buttons.\n\n`}
-              {`Note that recent/location activity feeds contain a log of the original machine comments. Those are public and cannot be edited or deleted (and kind of serve as a deterrent to people leaving troublesome comments that they intend to delete later).`}
+              {`You can do the same for scores, too.`}
             </Text>
             <Text style={s.bold}>{`Why was my comment removed?`}</Text>
             <Text style={s.text}>
@@ -326,7 +331,7 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text style={s.bold}>{`Why was my account disabled?`}</Text>
             <Text style={s.text}>
-              {`\u2022 If your account has been used to mess with data on the site, then we may disable it. Bad behavior includes, but is not limited to: removing machines that are at a location (or removing+adding to clear out comments); adding machines that are not at a location; leaving lots of inappropriate/abusive comments; or adding Slugfest over and over (see above).\n\n`}
+              {`\u2022 If your account has been used to mess with data on the site, then we may disable it. Bad behavior includes, but is not limited to: removing machines that are at a location (or removing+adding to clear out comments); adding machines that are not at a location; leaving lots of inappropriate/abusive comments; or adding a machine as a proxy for a non-pinball machine (such as Slugfest) over and over.\n\n`}
 
               {`\u2022 You created a sockpuppet account to hype your location and/or disparage the competition. This is unethical and it makes the site worse. Don't do this. Look in the mirror.\n\n`}
 
