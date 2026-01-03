@@ -42,6 +42,13 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MachineCard from "../components/MachineCard";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withRepeat,
+  Easing,
+} from "react-native-reanimated";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
@@ -50,6 +57,7 @@ let deviceWidth = Dimensions.get("window").width;
 const moment = require("moment");
 
 const LocationDetails = (props) => {
+  const scale = useSharedValue(1);
   const { route } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -101,6 +109,20 @@ const LocationDetails = (props) => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    scale.value = withRepeat(
+      withTiming(1.1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+      4,
+      true,
+    );
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
 
   useEffect(() => {
     if (locationId !== route.params["id"]) {
@@ -537,13 +559,13 @@ const LocationDetails = (props) => {
                   </View>
                 )}
                 {dateDiff >= 2 && (
-                  <View style={s.staleView}>
+                  <Animated.View style={[s.staleView, animatedStyle]}>
                     <Text style={s.staleText}>
-                      {`No updates in `}
+                      {`No updates in over `}
                       <Text style={s.staleTextBold}>{`${dateDiff} years`}</Text>
                       {`. Please help update the listing!`}
                     </Text>
-                  </View>
+                  </Animated.View>
                 )}
 
                 <View style={s.quickButtonContainer}>
@@ -806,6 +828,7 @@ const getStyles = (theme) =>
     staleText: {
       color: theme.red2,
       fontFamily: "Nunito-SemiBold",
+      textAlign: "center",
     },
     staleTextBold: {
       color: theme.red2,
