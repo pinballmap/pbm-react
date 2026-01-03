@@ -517,10 +517,7 @@ const LocationDetails = (props) => {
                       style={s.metaIcon}
                     />
                     <Text style={[s.text3, s.fontSize14]}>
-                      Location edited{" "}
-                      {formatNumWithCommas(location.user_submissions_count)}{" "}
-                      times by {formatNumWithCommas(location.users_count)}{" "}
-                      users. Last updated:{" "}
+                      {`Location edited ${formatNumWithCommas(location.user_submissions_count)} times by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}. Last updated: `}
                       <Text style={s.text3}>
                         <Text style={s.italic}>
                           {moment(
@@ -536,6 +533,15 @@ const LocationDetails = (props) => {
                           }}
                         >{` ${location.last_updated_by_username}`}</Text>
                       </Text>
+                    </Text>
+                  </View>
+                )}
+                {dateDiff >= 2 && (
+                  <View style={s.staleView}>
+                    <Text style={s.staleText}>
+                      {`No updates in `}
+                      <Text style={s.staleTextBold}>{`${dateDiff} years`}</Text>
+                      {`. Please help update the listing!`}
                     </Text>
                   </View>
                 )}
@@ -641,14 +647,6 @@ const LocationDetails = (props) => {
                   </View>
                 </View>
               </View>
-
-              {dateDiff >= 2 && (
-                <View style={s.staleView}>
-                  <Text
-                    style={s.staleText}
-                  >{`Last updated over ${dateDiff} years ago! The listing may be out of date. Please remove the machines if they're gone.`}</Text>
-                </View>
-              )}
             </View>
             <View style={s.backgroundColor}>
               {sortedMachines.map((machine) => (
@@ -801,13 +799,17 @@ const getStyles = (theme) =>
     staleView: {
       marginVertical: 5,
       borderRadius: 10,
-      backgroundColor: theme.red3,
+      backgroundColor: "rgba(127, 182, 227, 0.2)",
       paddingHorizontal: 10,
       paddingVertical: 5,
     },
     staleText: {
       color: theme.red2,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
+    },
+    staleTextBold: {
+      color: theme.red2,
+      fontFamily: "Nunito-ExtraBold",
     },
     quickButton: {
       borderWidth: 1,
