@@ -34,6 +34,7 @@ import { ThemeContext } from "../theme-context";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import PbmButton from "./PbmButton";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -446,6 +447,16 @@ class Search extends Component {
                           />
                         ) : null}
                       </View>
+                      {!!submitButton && (
+                        <View style={{ marginHorizontal: 50 }}>
+                          <PbmButton
+                            title={"Search"}
+                            onPress={() => {
+                              this.geocodeSearch(q);
+                            }}
+                          />
+                        </View>
+                      )}
                       <ScrollView
                         style={{ paddingTop: 3 }}
                         keyboardShouldPersistTaps="handled"
