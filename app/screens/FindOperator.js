@@ -21,7 +21,7 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const { onGoBack } = route.params;
 
   const allOperators = [
-    { name: route.params?.type === "search" ? "N/A" : "All", id: -1 },
+    { name: route.params?.optionNA ? "N/A (or unknown)" : "All", id: -1 },
     ...operators,
   ];
   const [selectedOperators, setSelectedOperators] = useState(allOperators);

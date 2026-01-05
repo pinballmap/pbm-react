@@ -25,7 +25,7 @@ const FindLocationType = ({
   const { onGoBack } = route.params;
 
   const allLocationTypes = [
-    { name: route.params?.type === "search" ? "N/A" : "All", id: -1 },
+    { name: route.params?.optionNA ? "N/A (or unknown)" : "All", id: -1 },
     ...locationTypes,
   ];
   const [selectedLocationTypes, setLocationTypes] = useState(allLocationTypes);

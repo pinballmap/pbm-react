@@ -117,12 +117,14 @@ function SuggestLocation({ navigation, route, location, ...props }) {
 
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
+      optionNA: true,
       onGoBack: (id) => dispatch(setSelectedLocationType(id)),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
+      optionNA: true,
       onGoBack: (id) => dispatch(setSelectedOperator(id)),
     });
   };
