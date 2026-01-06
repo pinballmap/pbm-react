@@ -529,7 +529,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   onChangeText={(description) => setDescription(description)}
                   underlineColorAndroid="transparent"
                   placeholder={
-                    "Hours; what type of payment system(s) they use (door fee, cash, cards); opening date"
+                    "Opening date; hours; what type of payment system(s) they use (door fee, cash, cards); accessibility issues"
                   }
                   placeholderTextColor={theme.indigo4}
                   textAlignVertical="top"

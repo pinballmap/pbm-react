@@ -567,6 +567,7 @@ const getStyles = (theme) =>
     addedText: {
       textAlign: "center",
       fontSize: 15,
+      lineHeight: 20,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",

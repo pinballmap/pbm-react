@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.39
+
+January 6, 2025
+
+- Add a search button when no autocomplete results on search screen in order to make it more obvious what to do.
+- Add graceful animation to stale location notice in order to incite users to update.
+- Updated the FAQ.
+- Fix issue with N/A not being option in operator and location type lists, depending on context.
+
 ### 5.3.38
 
 December 16, 2025
