@@ -1,4 +1,3 @@
-import Geocode from "react-geocode";
 import {
   FETCHING_LOCATION_TYPES,
   FETCHING_LOCATION_TYPES_SUCCESS,
@@ -14,8 +13,6 @@ import {
 } from "./types";
 import { getData } from "../config/request";
 import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
-
-Geocode.setKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const fetchLocationTypes = (url) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TYPES });

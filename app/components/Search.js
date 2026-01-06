@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 //https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from "throttle-debounce";
-import Geocode from "react-geocode";
 import {
   Alert,
   Dimensions,
@@ -37,8 +36,6 @@ import { coordsToBounds } from "../utils/utilityFunctions";
 import PbmButton from "./PbmButton";
 
 let deviceWidth = Dimensions.get("window").width;
-
-Geocode.setKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 class Search extends Component {
   constructor(props) {
@@ -107,11 +104,14 @@ class Search extends Component {
   geocodeSearch = (query) => {
     this.props.setSearchBarText(query);
     this.setState({ searching: true });
-    Geocode.fromAddress(query)
+    getData(
+      `/locations/geocode_lat_lon.json?address=${query};geocode_key=${process.env.EXPO_PUBLIC_GEOCODE_KEY}`,
+    )
       .then(
         (response) => {
-          const { lat, lng } = response.results[0].geometry.location;
-          const bounds = coordsToBounds({ lat, lon: lng });
+          const lat = response.geocode_lat_lon[0],
+            lon = response.geocode_lat_lon[1];
+          const bounds = coordsToBounds({ lat, lon });
           this.props.triggerUpdateBounds(bounds);
         },
         () => {

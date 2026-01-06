@@ -1,4 +1,3 @@
-import Geocode from "react-geocode";
 import {
   CLEAR_FILTERS,
   CLEAR_SEARCH_BAR_TEXT,
@@ -15,7 +14,6 @@ import {
   SET_MACHINE_VERSION_FILTER,
 } from "./types";
 import { updateFilterLocations } from "./locations_actions";
-Geocode.setKey(process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY);
 
 export const clearFilters = (updateLocations) => (dispatch) => {
   dispatch({ type: CLEAR_FILTERS });
