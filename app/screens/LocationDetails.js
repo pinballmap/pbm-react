@@ -477,13 +477,44 @@ const LocationDetails = (props) => {
                   </View>
                 ) : null}
 
+                {location.place_id ? (
+                  <View style={[s.row, s.marginB]}>
+                    <MaterialCommunityIcons
+                      name="clock-time-four-outline"
+                      style={s.metaIcon}
+                    />
+                    <Text
+                      style={[s.fontSize14, s.link]}
+                      onPress={() =>
+                        Linking.openURL(
+                          `https://www.google.com/maps/search/?api=1&query=${location.name}&query_place_id=${location.place_id}`,
+                        )
+                      }
+                    >
+                      Hours
+                      <Text
+                        style={[
+                          s.text3,
+                          s.fontSize14,
+                          s.opacity,
+                          s.italic,
+                          s.noUnderline,
+                        ]}
+                      >
+                        {" "}
+                        (Google Maps)
+                      </Text>
+                    </Text>
+                  </View>
+                ) : null}
+
                 {!!opName && (
                   <View style={[s.row, s.marginB]}>
                     <MaterialCommunityIcons
                       name="wrench-outline"
                       style={s.metaIcon}
                     />
-                    <Text style={[s.text, s.fontSize15, s.marginRight]}>
+                    <Text style={[s.text, s.fontSize14, s.marginRight]}>
                       <Text style={s.opacity}>Operator: </Text>
                       <Text
                         style={[s.opacity1, opWebsite ? s.link : s.text3]}
@@ -535,7 +566,7 @@ const LocationDetails = (props) => {
                     ]}
                   >
                     <MaterialCommunityIcons
-                      name="clock-time-four-outline"
+                      name="lightning-bolt"
                       style={s.metaIcon}
                     />
                     <Text style={[s.text3, s.fontSize14]}>
@@ -790,6 +821,9 @@ const getStyles = (theme) =>
     row: {
       flexDirection: "row",
       alignItems: "center",
+    },
+    noUnderline: {
+      textDecorationLine: "none",
     },
     link: {
       textDecorationLine: "underline",
