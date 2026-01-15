@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.3.40
+
+January 15, 2025
+
+- Add link in location details to Google Maps to find up to date hours.
+
 ### 5.3.39
 
 January 6, 2025
