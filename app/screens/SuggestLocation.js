@@ -47,6 +47,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
+  const [placeId, setPlaceId] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
@@ -80,6 +81,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
       phone,
       website,
       description,
+      placeId,
     };
     dispatch(suggestLocation(locationDetails));
   };
@@ -139,6 +141,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const setLocation = (details) => {
     setWebsite(details.website);
     setLocationName(details.name);
+    setPlaceId(details.place_id);
     autoCompleteRef.current.setAddressText(details.name);
     let streetNum = "";
     let locationStreet = "";

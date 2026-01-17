@@ -292,6 +292,7 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     phone: location_phone,
     website: location_website,
     description: location_comments,
+    placeId: place_id,
   } = locationDetails;
 
   const location_type = locationType > -1 ? locationType : null;
@@ -315,6 +316,7 @@ export const suggestLocation = (locationDetails) => (dispatch, getState) => {
     location_type,
     location_operator,
     location_machines,
+    place_id,
   };
 
   if (locationTrackingServicesEnabled) {
