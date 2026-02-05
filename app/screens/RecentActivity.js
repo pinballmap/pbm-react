@@ -20,6 +20,7 @@ import {
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
 import { clearActivityFilter } from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
+import { Image } from "expo-image";
 
 const moment = require("moment");
 
@@ -90,12 +91,57 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       user_name,
       comment,
       updated_at,
+      user_operator_id,
+      location_operator_id,
+      admin_title,
+      contributor_rank,
     } = activity;
     const time = moment(updated_at).format("LL");
+    let contributor_icon;
+    if (contributor_rank == "Super Mapper") {
+      contributor_icon = require("../assets/images/SuperMapper.png");
+    } else if (contributor_rank == "Legendary Mapper") {
+      contributor_icon = require("../assets/images/LegendaryMapper.png");
+    } else if (contributor_rank == "Grand Champ Mapper") {
+      contributor_icon = require("../assets/images/GrandChampMapper.png");
+    }
     const timeAndUser = user_name ? (
       <Text style={s.date}>
         <Text style={s.italic}>{time}</Text> by{" "}
         <Text style={s.username}>{user_name}</Text>
+        <View
+          style={{
+            height: 14,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+          }}
+        >
+          {!!admin_title && (
+            <MaterialCommunityIcons
+              name="shield-account"
+              size={15}
+              style={s.rankIcon}
+              color={theme.shield}
+            />
+          )}
+          {!!contributor_rank && (
+            <Image
+              contentFit="contain"
+              source={contributor_icon}
+              style={s.rankIcon}
+              contentPosition="bottom"
+            />
+          )}
+          {!!user_operator_id && user_operator_id === location_operator_id && (
+            <MaterialCommunityIcons
+              name="wrench"
+              style={[s.rankIcon, s.operatorIcon]}
+              size={15}
+              color={theme.wrench}
+            />
+          )}
+        </View>
       </Text>
     ) : (
       <Text style={[s.date, s.italic]}>{time}</Text>
@@ -396,6 +442,15 @@ const getStyles = (theme) =>
     },
     textContainer: {
       width: "85%",
+    },
+    rankIcon: {
+      width: 15,
+      height: 15,
+      marginLeft: 6,
+      marginBottom: -3,
+    },
+    operatorIcon: {
+      marginLeft: 7,
     },
   });
 

@@ -49,6 +49,7 @@ import Animated, {
   withRepeat,
   Easing,
 } from "react-native-reanimated";
+import { Image } from "expo-image";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
@@ -80,8 +81,11 @@ const LocationDetails = (props) => {
     unitPreference,
     displayInsiderConnectedBadgePreference,
   } = props.user;
-  const { website: opWebsite, name: opName } =
-    operators.find((operator) => operator.id === location.operator_id) ?? {};
+  const {
+    website: opWebsite,
+    name: opName,
+    id: opId,
+  } = operators.find((operator) => operator.id === location.operator_id) ?? {};
 
   const locationRef = useRef(props.location.location);
   useEffect(() => {
@@ -219,6 +223,17 @@ const LocationDetails = (props) => {
       },
     ],
   };
+
+  let contributor_icon;
+  if (location.last_updated_by_contributor_rank == "Super Mapper") {
+    contributor_icon = require("../assets/images/SuperMapper.png");
+  } else if (location.last_updated_by_contributor_rank == "Legendary Mapper") {
+    contributor_icon = require("../assets/images/LegendaryMapper.png");
+  } else if (
+    location.last_updated_by_contributor_rank == "Grand Champ Mapper"
+  ) {
+    contributor_icon = require("../assets/images/GrandChampMapper.png");
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
@@ -510,10 +525,7 @@ const LocationDetails = (props) => {
 
                 {!!opName && (
                   <View style={[s.row, s.marginB]}>
-                    <MaterialCommunityIcons
-                      name="wrench-outline"
-                      style={s.metaIcon}
-                    />
+                    <MaterialCommunityIcons name="wrench" style={s.metaIcon} />
                     <Text style={[s.text, s.fontSize14, s.marginRight]}>
                       <Text style={s.opacity}>Operator: </Text>
                       <Text
@@ -560,7 +572,7 @@ const LocationDetails = (props) => {
                       s.marginRight,
                       {
                         flexDirection: "row",
-                        alignItems: "top",
+                        alignItems: "center",
                         paddingRight: 5,
                       },
                     ]}
@@ -584,7 +596,37 @@ const LocationDetails = (props) => {
                             fontFamily: "Nunito-SemiBold",
                             color: theme.pink1,
                           }}
-                        >{` ${location.last_updated_by_username}`}</Text>
+                        >
+                          {` ${location.last_updated_by_username}`}
+                        </Text>
+                        <View style={s.iconView}>
+                          {!!location.last_updated_by_admin_title && (
+                            <MaterialCommunityIcons
+                              name="shield-account"
+                              size={15}
+                              style={s.rankIcon}
+                              color={theme.shield}
+                            />
+                          )}
+                          {!!location.last_updated_by_contributor_rank && (
+                            <Image
+                              contentFit="contain"
+                              source={contributor_icon}
+                              style={s.rankIcon}
+                              contentPosition="bottom"
+                            />
+                          )}
+                          {!!location.last_updated_by_user_id &&
+                            !!opId &&
+                            opId === location.last_updated_by_operator_id && (
+                              <MaterialCommunityIcons
+                                name="wrench"
+                                style={[s.rankIcon, s.operatorIcon]}
+                                size={15}
+                                color={theme.wrench}
+                              />
+                            )}
+                        </View>
                       </Text>
                     </Text>
                   </View>
@@ -971,6 +1013,20 @@ const getStyles = (theme) =>
       backgroundColor: theme.purple,
       padding: 10,
       borderRadius: 15,
+    },
+    rankIcon: {
+      width: 15,
+      height: 15,
+      marginLeft: 6,
+      marginBottom: -3,
+    },
+    operatorIcon: {
+      marginLeft: 7,
+    },
+    iconView: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
     },
   });
 

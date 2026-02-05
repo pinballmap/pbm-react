@@ -20,6 +20,8 @@ import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteScore, editScore } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 
 const moment = require("moment");
 
@@ -36,6 +38,8 @@ const MachineScore = ({ scoreObj, user }) => {
     username,
     user_id: scoreUserId,
     id: scoreId,
+    admin_title,
+    contributor_rank,
   } = scoreObj;
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -76,6 +80,15 @@ const MachineScore = ({ scoreObj, user }) => {
     setEditModalVisible(false);
     setScore(initialScore);
   };
+
+  let contributor_icon;
+  if (contributor_rank == "Super Mapper") {
+    contributor_icon = require("../assets/images/SuperMapper.png");
+  } else if (contributor_rank == "Legendary Mapper") {
+    contributor_icon = require("../assets/images/LegendaryMapper.png");
+  } else if (contributor_rank == "Grand Champ Mapper") {
+    contributor_icon = require("../assets/images/GrandChampMapper.png");
+  }
 
   return (
     <ThemeContext.Consumer>
@@ -140,27 +153,49 @@ const MachineScore = ({ scoreObj, user }) => {
               <Text style={s.scoreText}>
                 {formatNumWithCommas(initialScore)}
               </Text>
-              <Text style={[s.subtitleStyle, s.subtitleMargin]}>
+              <View
+                style={[
+                  s.subtitleStyle,
+                  s.subtitleMargin,
+                  { flexDirection: "row", alignItems: "center" },
+                ]}
+              >
                 {!!username && (
-                  <Text style={[s.subtitleStyle, s.username]}>
+                  <Text style={[s.username]}>
                     {username}
                     {"  "}
                   </Text>
                 )}
-                <Text style={s.italic}>
+                {!!admin_title && (
+                  <MaterialCommunityIcons
+                    name="shield-account"
+                    size={15}
+                    color={theme.shield}
+                    style={{ marginRight: 3 }}
+                  />
+                )}
+                {!!contributor_rank && (
+                  <Image
+                    contentFit="fill"
+                    source={contributor_icon}
+                    style={s.rankIcon}
+                  />
+                )}
+                <Text style={[s.italic, s.date]}>
                   {moment(updated_at).format("MMM DD, YYYY")}
                 </Text>
-                {created_at !== updated_at && "*"}
-                {"  "}
+                <Text style={{ color: theme.text3 }}>
+                  {created_at !== updated_at && "*"}
+                  {"  "}
+                </Text>
                 {user?.id && user.id === scoreUserId && (
                   <>
                     <Text
                       style={s.editDelete}
                       onPress={() => setEditModalVisible(true)}
                     >
-                      edit
+                      edit{`  `}
                     </Text>
-                    {"  "}
                     <Text
                       style={s.editDelete}
                       onPress={() => setDeleteModalVisible(true)}
@@ -169,7 +204,7 @@ const MachineScore = ({ scoreObj, user }) => {
                     </Text>
                   </>
                 )}
-              </Text>
+              </View>
             </View>
           </>
         );
@@ -195,6 +230,7 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontSize: 18,
       marginTop: 5,
+      marginHorizontal: 5,
       fontFamily: "Nunito-SemiBold",
     },
     subtitleStyle: {
@@ -214,10 +250,15 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
+      color: theme.text3,
       fontStyle: Platform.OS === "android" ? undefined : "italic",
+    },
+    date: {
+      marginLeft: 8,
     },
     editDelete: {
       textDecorationLine: "underline",
+      color: theme.text3,
     },
     textInput: {
       backgroundColor: theme.white,
@@ -239,6 +280,11 @@ const getStyles = (theme) =>
       fontSize: 18,
       fontFamily: "Nunito-Bold",
       color: theme.text,
+    },
+    rankIcon: {
+      width: 15,
+      height: 15,
+      marginLeft: 3,
     },
   });
 

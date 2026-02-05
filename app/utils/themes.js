@@ -20,6 +20,8 @@ export const dark = {
   purple: "#cf8dde",
   purple2: "#ebc9f3",
   purpleLight: "#f4e7f8",
+  wrench: "#ffd700",
+  shield: "#fc8e88",
   dark: true,
   colors: {
     primary: "#d9d9e0",
@@ -63,6 +65,8 @@ export const standard = {
   purple: "#66017b",
   purple2: "#9718b1",
   purpleLight: "#66017b",
+  wrench: "#c64800",
+  shield: "#7a2121",
   dark: false,
   colors: {
     primary: "#47475f",

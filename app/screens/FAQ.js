@@ -4,8 +4,9 @@ import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
+import { Image } from "expo-image";
 
 const FAQ = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -53,6 +54,59 @@ const FAQ = ({ navigation }) => {
             <Text
               style={s.text}
             >{`The Location List lists the locations currently shown on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
+            <Text
+              style={s.bold}
+            >{`What are the different icons I sometimes see next to usernames?`}</Text>
+            <View style={s.iconView}>
+              <MaterialCommunityIcons
+                name="shield-account"
+                size={15}
+                style={s.rankIcon}
+                color={theme.shield}
+              />
+              <Text style={s.iconText}>Administrator</Text>
+            </View>
+            <View style={s.iconView}>
+              <MaterialCommunityIcons
+                name="wrench"
+                style={[s.rankIcon, s.operatorIcon]}
+                size={15}
+                color={theme.wrench}
+              />
+              <Text style={s.iconText}>
+                Operator (of that particular location)
+              </Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                contentFit="fill"
+                source={require("../assets/images/SuperMapper.png")}
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Super Mapper</Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                contentFit="fill"
+                source={require("../assets/images/LegendaryMapper.png")}
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Legendary Mapper</Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                contentFit="fill"
+                source={require("../assets/images/GrandChampMapper.png")}
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Grand Champ Mapper</Text>
+            </View>
+            <Text style={s.text}>
+              {`As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}
+            </Text>
             <Text
               style={s.bold}
             >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
@@ -263,12 +317,6 @@ const FAQ = ({ navigation }) => {
               style={s.text}
             >{`No. It may seem "bad" for there to be a public record of problems with your machines, but it's actually good! All machines have problems. What we're showing here is a record of you fixing the machines! Users love that, and we think operators should, too!`}</Text>
             <Text style={s.category}>Users</Text>
-            <Text
-              style={s.bold}
-            >{`I see you have a ranking system for contributors. How do I earn a contributor badge and title?`}</Text>
-            <Text
-              style={s.text}
-            >{`Great question! As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}</Text>
             <Text style={s.bold}>{`Can I change my username?`}</Text>
             <Text style={s.text}>
               {`Only administrators can change your username. `}
@@ -430,6 +478,25 @@ const getStyles = (theme) =>
       backgroundColor: "#adc7fd",
       color: "#503d49",
       textTransform: "uppercase",
+    },
+    rankIcon: {
+      width: 15,
+      height: 15,
+      marginRight: 10,
+      marginBottom: 4,
+    },
+    iconView: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "flex-end",
+      marginBottom: 6,
+      marginLeft: 15,
+    },
+    iconText: {
+      fontSize: 15,
+      color: theme.text2,
+      lineHeight: 22,
+      marginRight: 15,
     },
   });
 

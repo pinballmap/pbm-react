@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { EvilIcons } from "@expo/vector-icons";
+import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ThemeContext } from "../theme-context";
 import {
   ActivityIndicator,
@@ -67,14 +67,9 @@ class UserProfile extends Component {
       num_total_submissions,
       admin_title,
       contributor_rank,
+      operator_name,
     } = profileInfo;
 
-    let admin_icon;
-    if (admin_title == "Global Administrator") {
-      admin_icon = require("../assets/images/GlobalAdministrator.png");
-    } else if (admin_title == "Regional Administrator") {
-      admin_icon = require("../assets/images/RegionalAdministrator.png");
-    }
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");
@@ -121,16 +116,32 @@ class UserProfile extends Component {
                     {!!admin_title && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{admin_title}</Text>
-                        <Image source={admin_icon} style={s.rankIcon} />
+                        <MaterialCommunityIcons
+                          name="shield-account"
+                          size={20}
+                          style={s.rankIcon}
+                          color={theme.shield}
+                        />
                       </View>
                     )}
-                    {!admin_title && !!contributor_rank && (
+                    {!!contributor_rank && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{contributor_rank}</Text>
                         <Image
                           contentFit="fill"
                           source={contributor_icon}
                           style={s.rankIcon}
+                        />
+                      </View>
+                    )}
+                    {!!operator_name && (
+                      <View style={s.rankView}>
+                        <Text style={s.rankText}>{operator_name}</Text>
+                        <MaterialCommunityIcons
+                          name="wrench"
+                          style={s.rankIcon}
+                          size={20}
+                          color={theme.wrench}
                         />
                       </View>
                     )}
