@@ -385,6 +385,12 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <Text
                   style={[{ marginTop: 10 }, s.text]}
                 >{`Only submit NEW locations (check first! please).`}</Text>
+                <Text
+                  style={[{ marginTop: 10 }, s.text]}
+                >{`Do not submit your home (even if it's a short-term rental).`}</Text>
+                <Text
+                  style={[{ marginTop: 10 }, s.text]}
+                >{`We review all location submissions (0 - 7 days).`}</Text>
                 <Text style={s.title}>Location Name</Text>
                 <GooglePlacesAutocomplete
                   ref={autoCompleteRef}
