@@ -488,6 +488,7 @@ const getStyles = (theme) =>
     buttonTitle: {
       color: theme.text2,
       fontSize: 18,
+      lineHeight: 24,
       fontFamily: "Nunito-SemiBold",
     },
     filterListPressed: {
@@ -508,6 +509,7 @@ const getStyles = (theme) =>
     listButtonContainer: {
       position: "absolute",
       left: 15,
+      alignSelf: "center",
     },
     bottomContainer: {
       position: "absolute",
@@ -554,6 +556,7 @@ const getStyles = (theme) =>
     filterTitleStyle: {
       color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
       fontSize: 18,
+      lineHeight: 24,
       fontFamily: "Nunito-SemiBold",
     },
     closeIcon: {

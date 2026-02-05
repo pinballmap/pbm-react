@@ -615,8 +615,8 @@ const getStyles = (theme) =>
     },
     userScoreTitle: {
       textAlign: "center",
-      marginTop: 5,
-      marginBottom: 5,
+      marginVertical: 5,
+      marginHorizontal: 10,
       color: theme.text2,
       fontFamily: "Nunito-SemiBold",
       fontSize: 13,
