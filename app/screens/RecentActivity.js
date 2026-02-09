@@ -90,13 +90,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       machine_name,
       user_name,
       comment,
-      updated_at,
+      created_at,
       user_operator_id,
       location_operator_id,
       admin_title,
       contributor_rank,
     } = activity;
-    const time = moment(updated_at).format("LL");
+    const time = moment(created_at).format("LL");
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");
