@@ -27,6 +27,10 @@ export default function (type) {
           color="#d473df"
         />
       );
+    case "add_location":
+      return (
+        <MaterialCommunityIcons name="star-face" size={28} color="#ffe500" />
+      );
     default:
       return null;
   }

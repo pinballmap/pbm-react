@@ -213,6 +213,36 @@ const FilterLocationActivity = ({
                   Location Confirmations
                 </Text>
               </Pressable>
+              <Pressable
+                style={[
+                  s.container,
+                  selectedLocationActivities.find(
+                    (activity) => activity === "add_location",
+                  )
+                    ? s.containerSelected
+                    : s.containerNotSelected,
+                ]}
+                onPress={() => setLocationActivitiesFilter("add_location")}
+              >
+                <MaterialCommunityIcons
+                  name="star-face"
+                  size={32}
+                  color="#ffe500"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedLocationActivities.find(
+                      (activity) => activity === "add_location",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Location added
+                </Text>
+              </Pressable>
               <PbmButton
                 title="Apply Filters"
                 onPress={() => setShowModal(false)}

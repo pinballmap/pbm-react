@@ -206,6 +206,17 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           </View>
         );
       }
+      case "add_location": {
+        return (
+          <View style={s.textContainer}>
+            <Text style={[s.pbmText, s.marginB8]}>
+              New location added:{" "}
+              <Text style={s.locationName}>{location_name}</Text> in {city_name}
+            </Text>
+            {timeAndUser}
+          </View>
+        );
+      }
       default:
         return null;
     }

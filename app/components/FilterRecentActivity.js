@@ -196,6 +196,36 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                   Location Confirmations
                 </Text>
               </Pressable>
+              <Pressable
+                style={[
+                  s.container,
+                  selectedActivities.find(
+                    (activity) => activity === "add_location",
+                  )
+                    ? s.containerSelected
+                    : s.containerNotSelected,
+                ]}
+                onPress={() => setRecentActivitiesFilter("add_location")}
+              >
+                <MaterialCommunityIcons
+                  name="star-face"
+                  size={32}
+                  color="#ffe500"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    selectedActivities.find(
+                      (activity) => activity === "add_location",
+                    )
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  Location Confirmations
+                </Text>
+              </Pressable>
               <PbmButton
                 title="Apply Filters"
                 onPress={() => setShowModal(false)}

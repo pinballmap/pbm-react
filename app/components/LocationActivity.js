@@ -168,6 +168,14 @@ const LocationActivity = ({
           </View>
         );
       }
+      case "add_location": {
+        return (
+          <View style={s.textContainer}>
+            <Text style={s.pbmText}>New location added</Text>
+            {timeAndUser}
+          </View>
+        );
+      }
       default:
         return null;
     }
