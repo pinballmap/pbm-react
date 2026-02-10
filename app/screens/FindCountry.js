@@ -24,13 +24,18 @@ const FindCountry = ({ navigation, route }) => {
   const [query, setQuery] = useState("");
 
   const handleSearch = (search = "") => {
-    const formattedQuery = search.toLowerCase();
+    const formattedQuery = search
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/[^\w\s]/g, "")
+      .toLowerCase();
     setQuery(search);
     setSelectedCountries(
       countries.filter((o) =>
         o.name
           .normalize("NFD")
           .replace(/\p{Diacritic}/gu, "")
+          .replace(/[^\w\s]/g, "")
           .toLowerCase()
           .includes(formattedQuery),
       ),

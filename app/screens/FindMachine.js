@@ -167,7 +167,11 @@ class FindMachine extends React.PureComponent {
   static contextType = ThemeContext;
 
   handleSearch = (query, machinesInView) => {
-    const formattedQuery = query.replace(/[^\w\s]/g, "").toLowerCase();
+    const formattedQuery = query
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/[^\w\s]/g, "")
+      .toLowerCase();
 
     if (machinesInView) {
       const machinesInView = this.props.mapLocations.reduce((machines, loc) => {
