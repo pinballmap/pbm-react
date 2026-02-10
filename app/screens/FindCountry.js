@@ -27,7 +27,13 @@ const FindCountry = ({ navigation, route }) => {
     const formattedQuery = search.toLowerCase();
     setQuery(search);
     setSelectedCountries(
-      countries.filter((o) => o.name.toLowerCase().includes(formattedQuery)),
+      countries.filter((o) =>
+        o.name
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .toLowerCase()
+          .includes(formattedQuery),
+      ),
     );
   };
 

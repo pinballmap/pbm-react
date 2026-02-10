@@ -30,7 +30,11 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const handleSearch = (search = "") => {
     const formattedQuery = search.toLowerCase();
     const operators = allOperators.filter((o) =>
-      o.name.toLowerCase().includes(formattedQuery),
+      o.name
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .includes(formattedQuery),
     );
     setQuery(search);
     setSelectedOperators(operators);

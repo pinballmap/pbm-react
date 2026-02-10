@@ -167,7 +167,7 @@ class FindMachine extends React.PureComponent {
   static contextType = ThemeContext;
 
   handleSearch = (query, machinesInView) => {
-    const formattedQuery = query.toLowerCase();
+    const formattedQuery = query.replace(/[^\w\s]/g, "").toLowerCase();
 
     if (machinesInView) {
       const machinesInView = this.props.mapLocations.reduce((machines, loc) => {
@@ -183,12 +183,22 @@ class FindMachine extends React.PureComponent {
         (mach) => machinesInView.indexOf(mach.id) > -1,
       );
       const machines = curMachines.filter((m) =>
-        m.name.toLowerCase().includes(formattedQuery),
+        m.name
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .replace(/[^\w\s]/g, "")
+          .toLowerCase()
+          .includes(formattedQuery),
       );
       this.setState({ query, machines });
     } else {
       const machines = this.state.allMachines.filter((m) =>
-        m.name.toLowerCase().includes(formattedQuery),
+        m.name
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .replace(/[^\w\s]/g, "")
+          .toLowerCase()
+          .includes(formattedQuery),
       );
       this.setState({ query, machines });
     }
