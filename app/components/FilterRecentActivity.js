@@ -223,7 +223,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  Location Confirmations
+                  Locations added
                 </Text>
               </Pressable>
               <PbmButton
