@@ -41,6 +41,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     `50 ${distanceUnitAbbrev}`,
     `150 ${distanceUnitAbbrev}`,
   ];
+  const { id: userId, loggedIn } = user;
 
   useEffect(() => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
@@ -58,7 +59,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         getData(
           `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
             distance || maxDistance
-          }`,
+          };restrict_to=new_msx${loggedIn ? `;user_id=${userId}` : ""}`,
         ).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);

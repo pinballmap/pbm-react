@@ -23,6 +23,7 @@ import { Image } from "expo-image";
 const moment = require("moment");
 
 const LocationActivity = ({
+  user,
   query,
   clearLocationActivityFilter,
   locationId,
@@ -34,16 +35,17 @@ const LocationActivity = ({
   const [locationActivityLoading, setLocationActivityLoading] = useState(true);
   const { selectedLocationActivities = [] } = query;
   const [recentActivity, setRecentActivity] = useState([]);
+  const { id: userId, loggedIn } = user;
 
   useEffect(() => {
     if (locationActivityModalOpen) {
       setLocationActivityLoading(true);
-      getData(`/user_submissions/location.json?id=${locationId}`).then(
-        (data) => {
-          setLocationActivityLoading(false);
-          setRecentActivity(data.user_submissions);
-        },
-      );
+      getData(
+        `/user_submissions/location.json?id=${locationId};restrict_to=new_msx${loggedIn ? `;user_id=${userId}` : ""}`,
+      ).then((data) => {
+        setLocationActivityLoading(false);
+        setRecentActivity(data.user_submissions);
+      });
     }
   }, [locationActivityModalOpen]);
 
@@ -458,7 +460,7 @@ LocationActivity.propTypes = {
   clearLocationActivityFilter: PropTypes.func,
 };
 
-const mapStateToProps = ({ query }) => ({ query });
+const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   clearLocationActivityFilter: () => dispatch(clearLocationActivityFilter()),
 });
