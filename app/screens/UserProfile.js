@@ -37,12 +37,14 @@ class UserProfile extends Component {
     this.focusListener = this.props.navigation.addListener("focus", () => {
       const id = this.props.user.id;
       if (id) {
-        getData(`/users/${id}/profile_info.json`).then((data) => {
-          this.setState({
-            fetchingUserInfo: false,
-            profile_info: data.profile_info,
-          });
-        });
+        getData(`/users/${id}/profile_info.json?new_score_list_only=`).then(
+          (data) => {
+            this.setState({
+              fetchingUserInfo: false,
+              profile_info: data.profile_info,
+            });
+          },
+        );
       }
     });
   }
@@ -57,7 +59,7 @@ class UserProfile extends Component {
     const profileInfo = this.state.profile_info ?? {};
     const {
       profile_list_of_edited_locations = [],
-      profile_list_of_high_scores = [],
+      profile_list_of_highest_scores = [],
       created_at,
       num_machines_added,
       num_machines_removed,
@@ -233,25 +235,23 @@ class UserProfile extends Component {
                         ))
                     )}
                   </View>
-                  <Text style={s.section}>High scores</Text>
+                  <Text style={s.section}>Your highest scores</Text>
                   <View style={{ paddingTop: 8 }}>
-                    {profile_list_of_high_scores.length === 0 ? (
+                    {profile_list_of_highest_scores.length === 0 ? (
                       <Text style={s.none}>No high scores yet</Text>
                     ) : (
-                      profile_list_of_high_scores.map((score, idx) => {
+                      profile_list_of_highest_scores.map((score, idx) => {
                         return (
                           <View
-                            key={`${score[0]}-${score[1]}-${score[2]}-${score[3]}-${idx}`}
+                            key={`${score.score}-${idx}`}
                             style={{ marginHorizontal: 25, marginBottom: 20 }}
                           >
-                            <Text style={s.score}>{score[2]}</Text>
-                            <Text style={[s.scoreMachine, s.marginB8]}>
-                              {score[1]}
+                            <Text style={s.scoreMachine}>
+                              {score.machine.name}
                             </Text>
-                            <Text style={s.pbmText}>
-                              <Text style={s.scoreLocation}>{score[0]}</Text>
+                            <Text style={[s.score, s.marginB8]}>
+                              {formatNumWithCommas(score.score)}
                             </Text>
-                            <Text style={s.italic}>{score[3]}</Text>
                           </View>
                         );
                       })
@@ -315,7 +315,7 @@ const getStyles = (theme) =>
       shadowRadius: 3.84,
       elevation: 5,
       overflow: "visible",
-      marginHorizontal: 15,
+      marginHorizontal: 20,
       marginVertical: 6,
     },
     section: {
@@ -459,20 +459,17 @@ const getStyles = (theme) =>
       fontSize: 24,
       color: theme.text2,
     },
-    score: {
+    scoreMachine: {
       color: theme.purple,
       fontSize: 20,
       fontFamily: "Nunito-Bold",
+      textAlign: "center",
     },
-    scoreLocation: {
-      color: theme.text2,
-      fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
-    },
-    scoreMachine: {
+    score: {
       color: theme.text,
       fontSize: 16,
       fontFamily: "Nunito-SemiBold",
+      textAlign: "center",
     },
     pbmText: {
       color: theme.text2,
