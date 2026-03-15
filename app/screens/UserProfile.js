@@ -59,7 +59,7 @@ class UserProfile extends Component {
     const profileInfo = this.state.profile_info ?? {};
     const {
       profile_list_of_edited_locations = [],
-      profile_list_of_highest_scores = [],
+      profile_machine_scores_stats = [],
       created_at,
       num_machines_added,
       num_machines_removed,
@@ -237,21 +237,53 @@ class UserProfile extends Component {
                   </View>
                   <Text style={s.section}>Your highest scores</Text>
                   <View style={{ paddingTop: 8 }}>
-                    {profile_list_of_highest_scores.length === 0 ? (
+                    {profile_machine_scores_stats.length === 0 ? (
                       <Text style={s.none}>No high scores yet</Text>
                     ) : (
-                      profile_list_of_highest_scores.map((score, idx) => {
+                      profile_machine_scores_stats.map((score, idx) => {
                         return (
                           <View
                             key={`${score.score}-${idx}`}
-                            style={{ marginHorizontal: 25, marginBottom: 20 }}
+                            style={{ marginHorizontal: 25, marginBottom: 10 }}
                           >
                             <Text style={s.scoreMachine}>
-                              {score.machine.name}
+                              {score.machine_name}
                             </Text>
-                            <Text style={[s.score, s.marginB8]}>
-                              {formatNumWithCommas(score.score)}
+                            <Text style={[s.score, s.marginB12]}>
+                              {score.list.length > 1 ? (
+                                <Text style={s.bold}>Highest: </Text>
+                              ) : null}
+                              {formatNumWithCommas(score.list[0])}
                             </Text>
+                            {score.list.length > 1 ? (
+                              <>
+                                <Text style={[{ marginBottom: 6 }, s.bold]}>
+                                  All scores:
+                                </Text>
+                                {score.list.map((ll) => (
+                                  <Text
+                                    key={ll.id}
+                                    style={[{ paddingLeft: 5 }, s.score]}
+                                  >
+                                    {formatNumWithCommas(ll)}
+                                  </Text>
+                                ))}
+                                <Text
+                                  style={[
+                                    { marginTop: 12 },
+                                    s.score,
+                                    s.marginB12,
+                                  ]}
+                                >
+                                  <Text style={s.bold}>Average: </Text>
+                                  {formatNumWithCommas(score.average)}
+                                </Text>
+                                <Text style={[s.score, s.marginB12]}>
+                                  <Text style={s.bold}>Count: </Text>
+                                  {score.count}
+                                </Text>
+                              </>
+                            ) : null}
                           </View>
                         );
                       })
@@ -463,21 +495,26 @@ const getStyles = (theme) =>
       color: theme.purple,
       fontSize: 20,
       fontFamily: "Nunito-Bold",
-      textAlign: "center",
+      marginBottom: 10,
+      textDecorationLine: "underline",
+    },
+    bold: {
+      color: theme.text,
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
     },
     score: {
       color: theme.text,
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
-      textAlign: "center",
+      fontFamily: "Nunito-Regular",
     },
     pbmText: {
       color: theme.text2,
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
-    marginB8: {
-      marginBottom: 8,
+    marginB12: {
+      marginBottom: 12,
     },
     italic: {
       fontFamily: "Nunito-Italic",
