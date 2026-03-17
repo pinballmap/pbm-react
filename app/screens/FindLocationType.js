@@ -36,13 +36,15 @@ const FindLocationType = ({
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, "")
       .replace(/[^\w\s]/g, "")
-      .toLowerCase();
+      .toLowerCase()
+      .trim();
     const selectedLocationTypes = allLocationTypes.filter((o) =>
       o.name
         .normalize("NFD")
         .replace(/\p{Diacritic}/gu, "")
         .replace(/[^\w\s]/g, "")
         .toLowerCase()
+        .trim()
         .includes(formattedQuery),
     );
     setQuery(search);

@@ -84,10 +84,10 @@ class Search extends Component {
               r.full_name.toLowerCase().includes(query.toLowerCase()),
             );
       const foundLocations = await getData(
-        `/locations/autocomplete?name=${encodeURIComponent(query)}`,
+        `/locations/autocomplete?name=${encodeURIComponent(query.trim())}`,
       );
       let foundCities = await getData(
-        `/locations/autocomplete_city.json?name=${encodeURIComponent(query)}`,
+        `/locations/autocomplete_city.json?name=${encodeURIComponent(query.trim())}`,
       );
       if (query === this.waitingFor) {
         this.setState({

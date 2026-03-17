@@ -171,7 +171,8 @@ class FindMachine extends React.PureComponent {
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, "")
       .replace(/[^\w\s]/g, "")
-      .toLowerCase();
+      .toLowerCase()
+      .trim();
 
     if (machinesInView) {
       const machinesInView = this.props.mapLocations.reduce((machines, loc) => {
@@ -192,6 +193,7 @@ class FindMachine extends React.PureComponent {
           .replace(/\p{Diacritic}/gu, "")
           .replace(/[^\w\s]/g, "")
           .toLowerCase()
+          .trim()
           .includes(formattedQuery),
       );
       this.setState({ query, machines });
@@ -202,6 +204,7 @@ class FindMachine extends React.PureComponent {
           .replace(/\p{Diacritic}/gu, "")
           .replace(/[^\w\s]/g, "")
           .toLowerCase()
+          .trim()
           .includes(formattedQuery),
       );
       this.setState({ query, machines });
