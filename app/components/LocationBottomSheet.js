@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Platform, StyleSheet, View, Pressable } from "react-native";
+import { Platform, Share, StyleSheet, View, Pressable } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ThemeContext } from "../theme-context";
@@ -61,6 +61,28 @@ const LocationBottomSheet = React.memo(
                 <View style={s.nameItem}>
                   <Text style={s.locationName}>{name}</Text>
                 </View>
+                <Pressable
+                  style={({ pressed }) => [
+                    [{ marginRight: 4 }, pressed ? s.pressed : s.notPressed],
+                  ]}
+                  onPress={async () => {
+                    await Share.share({
+                      message: `${location.name} https://pinballmap.com/map/?by_location_id=${location.id}`,
+                    });
+                  }}
+                >
+                  <MaterialIcons
+                    name={"ios-share"}
+                    color={theme.text3}
+                    size={24}
+                    style={{
+                      height: 24,
+                      width: 24,
+                      justifyContent: "center",
+                      alignSelf: "center",
+                    }}
+                  />
+                </Pressable>
                 <View style={s.heartItem}>
                   <FavoriteLocation
                     locationId={id}
