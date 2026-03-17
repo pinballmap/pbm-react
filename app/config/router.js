@@ -4,7 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome6,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
 import LocationDetails from "../screens/LocationDetails";
@@ -81,15 +85,15 @@ function ActivityStackNavigator() {
   );
 }
 
-function EventsStackNavigator() {
+function ProfileStackNavigator() {
   return (
     <Stack.Navigator screenOptions={TabsOptionsStyle}>
       <Stack.Screen
-        name="EventsStack"
-        component={Events}
+        name="UserProfileStack"
+        component={UserProfile}
         options={{
           headerTitleAlign: "center",
-          title: "Nearby Events",
+          title: "Your Profile",
           headerLeft: null,
         }}
       />
@@ -208,8 +212,8 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Events"
-        component={EventsStackNavigator}
+        name="UserProfile"
+        component={ProfileStackNavigator}
         options={{
           headerShown: false,
           tabBarLabel: ({ focused }) => (
@@ -222,13 +226,13 @@ function BottomTabNavigator() {
                 s.labelText,
               ]}
             >
-              Events
+              You
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="event-note"
-              size={28}
+            <FontAwesome6
+              name="face-grin-beam"
+              size={25}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -356,9 +360,9 @@ function MapStack() {
         options={{ title: "Submit Location" }}
       />
       <Stack.Screen
-        name="UserProfile"
-        component={UserProfile}
-        options={{ title: "Your Profile" }}
+        name="Events"
+        component={Events}
+        options={{ title: "Nearby Events" }}
       />
       <Stack.Screen name="FAQ" component={FAQ} />
       <Stack.Screen

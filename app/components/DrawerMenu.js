@@ -16,11 +16,7 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import {
-  FontAwesome6,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
@@ -175,18 +171,18 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         }
       />
       <DrawerItem
-        label="Your Profile"
+        label="Nearby Events"
         labelStyle={s.labelStyle}
         allowFontScaling={false}
         icon={() => (
-          <FontAwesome6
-            name="face-grin-beam"
+          <MaterialIcons
+            name="info-outline"
             size={iconSize}
             color={iconColor}
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "UserProfile" })}
+        onPress={() => navigation.navigate("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="Contact"
