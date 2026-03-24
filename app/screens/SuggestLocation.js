@@ -143,48 +143,61 @@ function SuggestLocation({ navigation, route, location, ...props }) {
     setLocationName(details.name);
     setPlaceId(details.place_id);
     autoCompleteRef.current.setAddressText(details.name);
-    let streetNum = "";
-    let locationStreet = "";
-    Object.values(details.address_components).map((component) => {
-      const componentType = component.types[0];
+    const countryList = [
+      "AT",
+      "BE",
+      "DE",
+      "GB",
+      "FI",
+      "FR",
+      "HK",
+      "HR",
+      "HU",
+      "NL",
+      "NO",
+      "PL",
+      "PT",
+      "NZ",
+      "RO",
+      "SI",
+      "SE",
+    ];
+    const addressComponents = details.address_components;
+    const componentsMapLong = {};
+    const componentsMapShort = {};
 
-      switch (componentType) {
-        case "street_number": {
-          streetNum = component.long_name;
-          break;
-        }
-        case "route": {
-          locationStreet = component.short_name;
-          break;
-        }
-        case "locality": {
-          setCity(component.long_name);
-          break;
-        }
-        case "administrative_area_level_1": {
-          setState(component.short_name);
-          break;
-        }
-        case "country": {
-          if (component.short_name == "US" && details.formatted_phone_number) {
-            setPhone(details.formatted_phone_number);
-          } else if (
-            component.short_name != "US" &&
-            details.international_phone_number
-          ) {
-            setPhone(details.international_phone_number);
-          }
-          setCountryCode(component.short_name);
-          setCountryName(component.long_name);
-          break;
-        }
-        case "postal_code": {
-          setZip(component.long_name);
-          break;
-        }
-      }
+    addressComponents.forEach((component) => {
+      component.types.forEach((type) => {
+        componentsMapLong[type] = component.long_name;
+        componentsMapShort[type] = component.short_name;
+      });
     });
-    setStreet(`${streetNum} ${locationStreet}`);
+
+    setCity(componentsMapLong["postal_town"] || componentsMapLong["locality"]);
+    setZip(componentsMapLong["postal_code"]);
+
+    if (countryList.includes(componentsMapShort["country"])) {
+      setState(null);
+    } else {
+      setState(componentsMapShort["administrative_area_level_1"]);
+    }
+
+    setCountryCode(componentsMapShort["country"]);
+    setCountryName(componentsMapLong["country"]);
+
+    if (
+      componentsMapShort["country"] == "US" &&
+      details.formatted_phone_number
+    ) {
+      setPhone(details.formatted_phone_number);
+    } else if (
+      componentsMapShort["country"] != "US" &&
+      details.international_phone_number
+    ) {
+      setPhone(details.international_phone_number);
+    }
+
+    setStreet(details.formatted_address.split(",")[0]);
   };
 
   const reviewSubmission = () => {
