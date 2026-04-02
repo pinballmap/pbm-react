@@ -1,4 +1,10 @@
-import React, { useContext, useState, useCallback, useEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -32,6 +38,9 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const [maxDistance, setMaxDistance] = useState(10);
   const [btnIdx, setBtnIdx] = useState(0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pagy, setPagy] = useState(null);
+  const scrollViewRef = useRef(null);
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
@@ -56,19 +65,34 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       // and we must track if the data should be refreshed (i.e. not coming back from location details)
       if (distance || shouldRefresh) {
         setFetchingRecentActivity(true);
+        setPage(1);
         getData(
           `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
             distance || maxDistance
-          };restrict_to=new_msx${loggedIn ? `;user_id=${userId}` : ""}`,
+          }&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`,
         ).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);
+          setPagy(data.pagy ?? null);
         });
       }
       setShouldRefresh(true);
     },
     [lat, lon, maxDistance, shouldRefresh],
   );
+
+  const goToPage = (newPage) => {
+    setFetchingRecentActivity(true);
+    setPage(newPage);
+    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    getData(
+      `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`,
+    ).then((data) => {
+      setFetchingRecentActivity(false);
+      setRecentActivity(data.user_submissions);
+      setPagy(data.pagy ?? null);
+    });
+  };
 
   useEffect(
     () => navigation.addListener("focus", fetchData),
@@ -246,7 +270,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           />
         </View>
       ) : null}
-      <ScrollView style={{ marginTop: 10 }}>
+      <ScrollView ref={scrollViewRef} style={{ marginTop: 10 }}>
         {fetchingRecentActivity ? (
           <ActivityIndicator />
         ) : !recentActivity || recentActivity.length === 0 ? (
@@ -295,6 +319,51 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
                 )}
               </Pressable>
             ))
+        )}
+        {pagy && pagy.pages > 1 && !fetchingRecentActivity && (
+          <View style={s.paginationContainer}>
+            <Pressable
+              onPress={() => goToPage(page - 1)}
+              disabled={page === 1}
+              style={[s.pageButton, page === 1 && s.pageButtonInactive]}
+            >
+              <MaterialCommunityIcons
+                name="chevron-left"
+                size={22}
+                color={page === 1 ? theme.text3 : theme.text2}
+              />
+              <Text
+                style={[
+                  s.pageButtonText,
+                  page === 1 && s.pageButtonTextInactive,
+                ]}
+              >
+                Prev
+              </Text>
+            </Pressable>
+            <Text style={s.pageIndicator}>
+              {page} / {pagy.pages}
+            </Text>
+            <Pressable
+              onPress={() => goToPage(page + 1)}
+              disabled={!pagy.next}
+              style={[s.pageButton, !pagy.next && s.pageButtonInactive]}
+            >
+              <Text
+                style={[
+                  s.pageButtonText,
+                  !pagy.next && s.pageButtonTextInactive,
+                ]}
+              >
+                Next
+              </Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={22}
+                color={!pagy.next ? theme.text3 : theme.text2}
+              />
+            </Pressable>
+          </View>
         )}
       </ScrollView>
     </View>
@@ -463,6 +532,50 @@ const getStyles = (theme) =>
     },
     operatorIcon: {
       marginLeft: 7,
+    },
+    paginationContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 16,
+      paddingHorizontal: 20,
+      gap: 12,
+    },
+    pageButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 8,
+      paddingHorizontal: 14,
+      borderRadius: 20,
+      backgroundColor: theme.white,
+      borderWidth: 1,
+      borderColor: theme.pink2,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 3,
+    },
+    pageButtonInactive: {
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base2,
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+    pageButtonText: {
+      color: theme.text2,
+      fontFamily: "Nunito-SemiBold",
+      fontSize: 14,
+    },
+    pageButtonTextInactive: {
+      color: theme.text3,
+    },
+    pageIndicator: {
+      color: theme.text3,
+      fontFamily: "Nunito-Regular",
+      fontSize: 14,
+      minWidth: 40,
+      textAlign: "center",
     },
   });
 

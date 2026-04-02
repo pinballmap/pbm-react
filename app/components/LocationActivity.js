@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -35,19 +35,38 @@ const LocationActivity = ({
   const [locationActivityLoading, setLocationActivityLoading] = useState(true);
   const { selectedLocationActivities = [] } = query;
   const [recentActivity, setRecentActivity] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pagy, setPagy] = useState(null);
+  const scrollViewRef = useRef(null);
   const { id: userId, loggedIn } = user;
 
   useEffect(() => {
     if (locationActivityModalOpen) {
       setLocationActivityLoading(true);
+      setPage(1);
+      setPagy(null);
       getData(
-        `/user_submissions/location.json?id=${locationId};restrict_to=new_msx${loggedIn ? `;user_id=${userId}` : ""}`,
+        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`,
       ).then((data) => {
         setLocationActivityLoading(false);
         setRecentActivity(data.user_submissions);
+        setPagy(data.pagy ?? null);
       });
     }
   }, [locationActivityModalOpen]);
+
+  const goToPage = (newPage) => {
+    setLocationActivityLoading(true);
+    setPage(newPage);
+    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    getData(
+      `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`,
+    ).then((data) => {
+      setLocationActivityLoading(false);
+      setRecentActivity(data.user_submissions);
+      setPagy(data.pagy ?? null);
+    });
+  };
 
   const getText = (activity) => {
     const {
@@ -205,7 +224,7 @@ const LocationActivity = ({
               />
             </View>
           </Pressable>
-          <ScrollView style={{ height: "80%" }}>
+          <ScrollView ref={scrollViewRef} style={{ height: "80%" }}>
             <Pressable>
               {selectedLocationActivities.length ? (
                 <View style={s.filterView}>
@@ -244,6 +263,51 @@ const LocationActivity = ({
                       {getText(activity)}
                     </View>
                   ))
+              )}
+              {pagy && pagy.pages > 1 && !locationActivityLoading && (
+                <View style={s.paginationContainer}>
+                  <Pressable
+                    onPress={() => goToPage(page - 1)}
+                    disabled={page === 1}
+                    style={[s.pageButton, page === 1 && s.pageButtonInactive]}
+                  >
+                    <MaterialCommunityIcons
+                      name="chevron-left"
+                      size={22}
+                      color={page === 1 ? theme.text3 : theme.text2}
+                    />
+                    <Text
+                      style={[
+                        s.pageButtonText,
+                        page === 1 && s.pageButtonTextInactive,
+                      ]}
+                    >
+                      Prev
+                    </Text>
+                  </Pressable>
+                  <Text style={s.pageIndicator}>
+                    {page} / {pagy.pages}
+                  </Text>
+                  <Pressable
+                    onPress={() => goToPage(page + 1)}
+                    disabled={!pagy.next}
+                    style={[s.pageButton, !pagy.next && s.pageButtonInactive]}
+                  >
+                    <Text
+                      style={[
+                        s.pageButtonText,
+                        !pagy.next && s.pageButtonTextInactive,
+                      ]}
+                    >
+                      Next
+                    </Text>
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      size={22}
+                      color={!pagy.next ? theme.text3 : theme.text2}
+                    />
+                  </Pressable>
+                </View>
               )}
             </Pressable>
           </ScrollView>
@@ -450,6 +514,50 @@ const getStyles = (theme) =>
     },
     operatorIcon: {
       marginLeft: 7,
+    },
+    paginationContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 16,
+      paddingHorizontal: 20,
+      gap: 12,
+    },
+    pageButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 8,
+      paddingHorizontal: 14,
+      borderRadius: 20,
+      backgroundColor: theme.white,
+      borderWidth: 1,
+      borderColor: theme.pink2,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 3,
+    },
+    pageButtonInactive: {
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base2,
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+    pageButtonText: {
+      color: theme.text2,
+      fontFamily: "Nunito-SemiBold",
+      fontSize: 14,
+    },
+    pageButtonTextInactive: {
+      color: theme.text3,
+    },
+    pageIndicator: {
+      color: theme.text3,
+      fontFamily: "Nunito-Regular",
+      fontSize: 14,
+      minWidth: 40,
+      textAlign: "center",
     },
   });
 
