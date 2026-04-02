@@ -49,6 +49,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     `10 ${distanceUnitAbbrev}`,
     `50 ${distanceUnitAbbrev}`,
     `150 ${distanceUnitAbbrev}`,
+    "Global",
   ];
   const { id: userId, loggedIn } = user;
 
@@ -57,20 +58,21 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   }, []);
 
   const fetchData = useCallback(
-    (_, distance) => {
+    (_, distance, global = false) => {
       // Once the recent activity screen is mounted, it never unmounts for the app. With that in mind, we typically
       // want to get a fresh request of the recent activity when the screen is focused with the exception being if the
       // user has come from navigating to a location detail screen via the recent activity list.
       // To accomplish this behavior, we have to now explicitly call fetchData when the user updates the search radius
       // and we must track if the data should be refreshed (i.e. not coming back from location details)
-      if (distance || shouldRefresh) {
+      if (distance || shouldRefresh || global) {
         setFetchingRecentActivity(true);
         setPage(1);
-        getData(
-          `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
-            distance || maxDistance
-          }&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`,
-        ).then((data) => {
+        const url = global
+          ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`
+          : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
+              distance || maxDistance
+            }&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`;
+        getData(url).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);
           setPagy(data.pagy ?? null);
@@ -85,9 +87,11 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     setFetchingRecentActivity(true);
     setPage(newPage);
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
-    getData(
-      `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`,
-    ).then((data) => {
+    const url =
+      btnIdx === 3
+        ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`
+        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`;
+    getData(url).then((data) => {
       setFetchingRecentActivity(false);
       setRecentActivity(data.user_submissions);
       setPagy(data.pagy ?? null);
@@ -102,8 +106,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const updateIdx = (selectedIdx) => {
     const distanceMap = [10, 50, 150];
     setBtnIdx(selectedIdx);
-    setMaxDistance(distanceMap[selectedIdx]);
-    fetchData(null, distanceMap[selectedIdx]);
+    if (selectedIdx === 3) {
+      fetchData(null, null, true);
+    } else {
+      setMaxDistance(distanceMap[selectedIdx]);
+      fetchData(null, distanceMap[selectedIdx]);
+    }
   };
 
   const getSubmission = (activity) => {
