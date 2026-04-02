@@ -34,6 +34,7 @@ import {
   suggestLocation,
   resetSuggestLocation,
 } from "../actions";
+import { getData } from "../config/request";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
@@ -55,6 +56,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
     useState(false);
   const [countryName, setCountryName] = useState("United States");
   const [countryCode, setCountryCode] = useState("US");
+  const [locationAlreadyExists, setLocationAlreadyExists] = useState(false);
   const insets = useSafeAreaInsets();
   const machineNameMargin =
     Platform.OS === "android"
@@ -200,10 +202,20 @@ function SuggestLocation({ navigation, route, location, ...props }) {
     setStreet(details.formatted_address.split(",")[0]);
   };
 
-  const reviewSubmission = () => {
+  const reviewSubmission = async () => {
     // Set location name in case the user has typed something that didn't
     // resolve to a location via autocomplete selection
     setLocationName(autoCompleteRef.current.getAddressText());
+    if (placeId) {
+      try {
+        const data = await getData(`/locations.json?place_id=${placeId}`);
+        setLocationAlreadyExists(!!data?.locations);
+      } catch {
+        setLocationAlreadyExists(false);
+      }
+    } else {
+      setLocationAlreadyExists(false);
+    }
     setShowSuggestLocationModal(true);
   };
 
@@ -377,6 +389,13 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                             {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
                           </Text>
                         </View>
+                        {locationAlreadyExists && (
+                          <View style={s.alreadyExistsContainer}>
+                            <Text style={s.alreadyExistsText}>
+                              {`This location seems to already be on the map. Did you search first? Are you sure you want to submit it?`}
+                            </Text>
+                          </View>
+                        )}
                         <PbmButton
                           title={"Submit Location"}
                           onPress={() => confirmSuggestLocationDetails()}
@@ -775,6 +794,20 @@ const getStyles = (theme) =>
     buttonMargin: {
       marginVertical: 15,
       marginHorizontal: 40,
+    },
+    alreadyExistsContainer: {
+      marginHorizontal: 20,
+      marginTop: 10,
+      backgroundColor: theme.white,
+      borderRadius: 15,
+      borderColor: theme.red2,
+      borderWidth: 1,
+    },
+    alreadyExistsText: {
+      paddingHorizontal: 15,
+      paddingVertical: 10,
+      color: theme.red2,
+      textAlign: "center",
     },
   });
 
