@@ -14,25 +14,35 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
   const s = getStyles(theme);
 
   const [showModal, setShowModal] = useState(false);
+  const [pendingActivities, setPendingActivities] = useState([]);
 
   const { selectedActivities = [] } = query;
 
   useEffect(() => {
     const getSelectedActivities = async () => {
-      const selectedActivities =
-        (await retrieveItem("selectedActivities")) || [];
-      setSelectedActivitiesFilter(selectedActivities);
+      const savedActivities = (await retrieveItem("selectedActivities")) || [];
+      setSelectedActivitiesFilter(savedActivities);
     };
     getSelectedActivities();
   }, []);
 
-  const setRecentActivitiesFilter = (activity) => {
-    const origLength = selectedActivities.length;
-    const activities = selectedActivities.filter((a) => a !== activity);
+  const openModal = () => {
+    setPendingActivities(selectedActivities);
+    setShowModal(true);
+  };
+
+  const togglePendingActivity = (activity) => {
+    const origLength = pendingActivities.length;
+    const activities = pendingActivities.filter((a) => a !== activity);
     if (activities.length === origLength) {
       activities.push(activity);
     }
-    setSelectedActivitiesFilter(activities);
+    setPendingActivities(activities);
+  };
+
+  const applyFilters = () => {
+    setSelectedActivitiesFilter(pendingActivities);
+    setShowModal(false);
   };
 
   return (
@@ -53,11 +63,11 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find((activity) => activity === "new_lmx")
+                  pendingActivities.find((activity) => activity === "new_lmx")
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("new_lmx")}
+                onPress={() => togglePendingActivity("new_lmx")}
               >
                 <MaterialCommunityIcons
                   name="plus-box"
@@ -68,9 +78,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
-                      (activity) => activity === "new_lmx",
-                    )
+                    pendingActivities.find((activity) => activity === "new_lmx")
                       ? s.activeTitleStyle
                       : s.inactiveTitleStyle,
                   ]}
@@ -81,13 +89,13 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "remove_machine",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("remove_machine")}
+                onPress={() => togglePendingActivity("remove_machine")}
               >
                 <MaterialCommunityIcons
                   name="minus-box"
@@ -98,7 +106,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "remove_machine",
                     )
                       ? s.activeTitleStyle
@@ -111,13 +119,13 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "new_condition",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("new_condition")}
+                onPress={() => togglePendingActivity("new_condition")}
               >
                 <MaterialCommunityIcons
                   name="comment-text"
@@ -128,7 +136,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "new_condition",
                     )
                       ? s.activeTitleStyle
@@ -141,11 +149,11 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find((activity) => activity === "new_msx")
+                  pendingActivities.find((activity) => activity === "new_msx")
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("new_msx")}
+                onPress={() => togglePendingActivity("new_msx")}
               >
                 <MaterialCommunityIcons
                   name="numeric"
@@ -156,9 +164,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
-                      (activity) => activity === "new_msx",
-                    )
+                    pendingActivities.find((activity) => activity === "new_msx")
                       ? s.activeTitleStyle
                       : s.inactiveTitleStyle,
                   ]}
@@ -169,13 +175,13 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "confirm_location",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("confirm_location")}
+                onPress={() => togglePendingActivity("confirm_location")}
               >
                 <MaterialCommunityIcons
                   name="clipboard-check"
@@ -186,7 +192,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "confirm_location",
                     )
                       ? s.activeTitleStyle
@@ -199,13 +205,13 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
               <Pressable
                 style={[
                   s.container,
-                  selectedActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "add_location",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setRecentActivitiesFilter("add_location")}
+                onPress={() => togglePendingActivity("add_location")}
               >
                 <MaterialCommunityIcons
                   name="star-face"
@@ -216,7 +222,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "add_location",
                     )
                       ? s.activeTitleStyle
@@ -226,10 +232,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                   Locations added
                 </Text>
               </Pressable>
-              <PbmButton
-                title="Apply Filters"
-                onPress={() => setShowModal(false)}
-              />
+              <PbmButton title="Apply Filters" onPress={applyFilters} />
             </View>
           </Pressable>
         </ConfirmationModal>
@@ -239,7 +242,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
           s.filterIconPressable,
           pressed && s.filterIconPressed,
         ]}
-        onPress={() => setShowModal(true)}
+        onPress={openModal}
         hitSlop={{ top: 20, bottom: 20, left: 60, right: 10 }}
       >
         <Entypo name="sound-mix" size={24} style={s.filterIcon} />

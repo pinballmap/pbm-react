@@ -41,6 +41,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const [page, setPage] = useState(1);
   const [pagy, setPagy] = useState(null);
   const scrollViewRef = useRef(null);
+  const filtersChangedRef = useRef(false);
   const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
@@ -57,8 +58,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
   }, []);
 
+  const buildSubmissionTypeParam = (activities) =>
+    activities.length
+      ? activities.map((a) => `&submission_type[]=${a}`).join("")
+      : "";
+
   const fetchData = useCallback(
-    (_, distance, global = false) => {
+    (_, distance, global = btnIdx === 3) => {
       // Once the recent activity screen is mounted, it never unmounts for the app. With that in mind, we typically
       // want to get a fresh request of the recent activity when the screen is focused with the exception being if the
       // user has come from navigating to a location detail screen via the recent activity list.
@@ -67,11 +73,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       if (distance || shouldRefresh || global) {
         setFetchingRecentActivity(true);
         setPage(1);
+        const submissionTypeParam =
+          buildSubmissionTypeParam(selectedActivities);
         const url = global
-          ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`
+          ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
           : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
               distance || maxDistance
-            }&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`;
+            }&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
         getData(url).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);
@@ -80,17 +88,27 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       }
       setShouldRefresh(true);
     },
-    [lat, lon, maxDistance, shouldRefresh],
+    [
+      lat,
+      lon,
+      maxDistance,
+      shouldRefresh,
+      selectedActivities,
+      userId,
+      loggedIn,
+      btnIdx,
+    ],
   );
 
   const goToPage = (newPage) => {
     setFetchingRecentActivity(true);
     setPage(newPage);
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    const submissionTypeParam = buildSubmissionTypeParam(selectedActivities);
     const url =
       btnIdx === 3
-        ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`
-        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`;
+        ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
+        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url).then((data) => {
       setFetchingRecentActivity(false);
       setRecentActivity(data.user_submissions);
@@ -100,8 +118,26 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
 
   useEffect(
     () => navigation.addListener("focus", fetchData),
-    [navigation, lat, lon, maxDistance, shouldRefresh],
+    [
+      navigation,
+      lat,
+      lon,
+      maxDistance,
+      shouldRefresh,
+      selectedActivities,
+      userId,
+      loggedIn,
+      btnIdx,
+    ],
   );
+
+  useEffect(() => {
+    if (!filtersChangedRef.current) {
+      filtersChangedRef.current = true;
+      return;
+    }
+    fetchData(null, null, btnIdx === 3);
+  }, [selectedActivities]);
 
   const updateIdx = (selectedIdx) => {
     const distanceMap = [10, 50, 150];
@@ -282,24 +318,22 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         {fetchingRecentActivity ? (
           <ActivityIndicator />
         ) : !recentActivity || recentActivity.length === 0 ? (
-          <Text
-            style={s.problem}
-          >{`No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}</Text>
+          <Text style={s.problem}>
+            {btnIdx === 3 && selectedActivities.length
+              ? "No recent maps found with the applied filters."
+              : `No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}
+          </Text>
         ) : (
           recentActivity
             .filter((activity) => {
               const submissionTypeIcon = getActivityIcon(
                 activity.submission_type,
               );
-
-              const showType = selectedActivities.length
-                ? selectedActivities.find((a) => a === activity.submission_type)
-                : true;
-
-              if (submissionTypeIcon && showType) {
+              if (submissionTypeIcon) {
                 activity.submissionTypeIcon = submissionTypeIcon;
-                return activity;
+                return true;
               }
+              return false;
             })
             .map((activity) => (
               <Pressable

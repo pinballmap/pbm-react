@@ -38,15 +38,24 @@ const LocationActivity = ({
   const [page, setPage] = useState(1);
   const [pagy, setPagy] = useState(null);
   const scrollViewRef = useRef(null);
+  const filtersChangedRef = useRef(false);
   const { id: userId, loggedIn } = user;
+
+  const buildSubmissionTypeParam = (activities) =>
+    activities.length
+      ? activities.map((a) => `&submission_type[]=${a}`).join("")
+      : "";
 
   useEffect(() => {
     if (locationActivityModalOpen) {
       setLocationActivityLoading(true);
       setPage(1);
       setPagy(null);
+      const submissionTypeParam = buildSubmissionTypeParam(
+        selectedLocationActivities,
+      );
       getData(
-        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${loggedIn ? `&user_id=${userId}` : ""}`,
+        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
       ).then((data) => {
         setLocationActivityLoading(false);
         setRecentActivity(data.user_submissions);
@@ -55,12 +64,36 @@ const LocationActivity = ({
     }
   }, [locationActivityModalOpen]);
 
+  useEffect(() => {
+    if (!filtersChangedRef.current) {
+      filtersChangedRef.current = true;
+      return;
+    }
+    if (locationActivityModalOpen) {
+      setLocationActivityLoading(true);
+      setPage(1);
+      const submissionTypeParam = buildSubmissionTypeParam(
+        selectedLocationActivities,
+      );
+      getData(
+        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
+      ).then((data) => {
+        setLocationActivityLoading(false);
+        setRecentActivity(data.user_submissions);
+        setPagy(data.pagy ?? null);
+      });
+    }
+  }, [selectedLocationActivities]);
+
   const goToPage = (newPage) => {
     setLocationActivityLoading(true);
     setPage(newPage);
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+    const submissionTypeParam = buildSubmissionTypeParam(
+      selectedLocationActivities,
+    );
     getData(
-      `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=${newPage}${loggedIn ? `&user_id=${userId}` : ""}`,
+      `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
     ).then((data) => {
       setLocationActivityLoading(false);
       setRecentActivity(data.user_submissions);
@@ -245,17 +278,11 @@ const LocationActivity = ({
                 recentActivity
                   .filter((activity) => {
                     const icon = getActivityIcon(activity.submission_type);
-
-                    const showType = selectedLocationActivities.length
-                      ? selectedLocationActivities.find(
-                          (a) => a === activity.submission_type,
-                        )
-                      : true;
-
-                    if (icon && showType) {
+                    if (icon) {
                       activity.icon = icon;
-                      return activity;
+                      return true;
                     }
+                    return false;
                   })
                   .map((activity) => (
                     <View key={activity.id} style={[s.list, s.flexi]}>

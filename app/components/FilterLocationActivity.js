@@ -17,25 +17,36 @@ const FilterLocationActivity = ({
   const s = getStyles(theme);
 
   const [showModal, setShowModal] = useState(false);
+  const [pendingActivities, setPendingActivities] = useState([]);
 
   const { selectedLocationActivities = [] } = query;
 
   useEffect(() => {
     const getSelectedLocationActivities = async () => {
-      const selectedLocationActivities =
+      const savedActivities =
         (await retrieveItem("selectedLocationActivities")) || [];
-      setSelectedLocationActivitiesFilter(selectedLocationActivities);
+      setSelectedLocationActivitiesFilter(savedActivities);
     };
     getSelectedLocationActivities();
   }, []);
 
-  const setLocationActivitiesFilter = (activity) => {
-    const origLength = selectedLocationActivities.length;
-    const activities = selectedLocationActivities.filter((a) => a !== activity);
+  const openModal = () => {
+    setPendingActivities(selectedLocationActivities);
+    setShowModal(true);
+  };
+
+  const togglePendingActivity = (activity) => {
+    const origLength = pendingActivities.length;
+    const activities = pendingActivities.filter((a) => a !== activity);
     if (activities.length === origLength) {
       activities.push(activity);
     }
-    setSelectedLocationActivitiesFilter(activities);
+    setPendingActivities(activities);
+  };
+
+  const applyFilters = () => {
+    setSelectedLocationActivitiesFilter(pendingActivities);
+    setShowModal(false);
   };
 
   return (
@@ -45,7 +56,7 @@ const FilterLocationActivity = ({
           s.filterIconPressable,
           pressed && s.filterIconPressed,
         ]}
-        onPress={() => setShowModal(true)}
+        onPress={openModal}
         hitSlop={{ top: 20, bottom: 20, left: 50, right: 10 }}
       >
         <Entypo name="sound-mix" size={24} style={[s.filterIcon, s.shadow]} />
@@ -66,13 +77,11 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
-                    (activity) => activity === "new_lmx",
-                  )
+                  pendingActivities.find((activity) => activity === "new_lmx")
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("new_lmx")}
+                onPress={() => togglePendingActivity("new_lmx")}
               >
                 <MaterialCommunityIcons
                   name="plus-box"
@@ -83,9 +92,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
-                      (activity) => activity === "new_lmx",
-                    )
+                    pendingActivities.find((activity) => activity === "new_lmx")
                       ? s.activeTitleStyle
                       : s.inactiveTitleStyle,
                   ]}
@@ -96,13 +103,13 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "remove_machine",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("remove_machine")}
+                onPress={() => togglePendingActivity("remove_machine")}
               >
                 <MaterialCommunityIcons
                   name="minus-box"
@@ -113,7 +120,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "remove_machine",
                     )
                       ? s.activeTitleStyle
@@ -126,13 +133,13 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "new_condition",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("new_condition")}
+                onPress={() => togglePendingActivity("new_condition")}
               >
                 <MaterialCommunityIcons
                   name="comment-text"
@@ -143,7 +150,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "new_condition",
                     )
                       ? s.activeTitleStyle
@@ -156,13 +163,11 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
-                    (activity) => activity === "new_msx",
-                  )
+                  pendingActivities.find((activity) => activity === "new_msx")
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("new_msx")}
+                onPress={() => togglePendingActivity("new_msx")}
               >
                 <MaterialCommunityIcons
                   name="numeric"
@@ -173,9 +178,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
-                      (activity) => activity === "new_msx",
-                    )
+                    pendingActivities.find((activity) => activity === "new_msx")
                       ? s.activeTitleStyle
                       : s.inactiveTitleStyle,
                   ]}
@@ -186,13 +189,13 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "confirm_location",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("confirm_location")}
+                onPress={() => togglePendingActivity("confirm_location")}
               >
                 <MaterialCommunityIcons
                   name="clipboard-check"
@@ -203,7 +206,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "confirm_location",
                     )
                       ? s.activeTitleStyle
@@ -216,13 +219,13 @@ const FilterLocationActivity = ({
               <Pressable
                 style={[
                   s.container,
-                  selectedLocationActivities.find(
+                  pendingActivities.find(
                     (activity) => activity === "add_location",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => setLocationActivitiesFilter("add_location")}
+                onPress={() => togglePendingActivity("add_location")}
               >
                 <MaterialCommunityIcons
                   name="star-face"
@@ -233,7 +236,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
-                    selectedLocationActivities.find(
+                    pendingActivities.find(
                       (activity) => activity === "add_location",
                     )
                       ? s.activeTitleStyle
@@ -243,10 +246,7 @@ const FilterLocationActivity = ({
                   Location added
                 </Text>
               </Pressable>
-              <PbmButton
-                title="Apply Filters"
-                onPress={() => setShowModal(false)}
-              />
+              <PbmButton title="Apply Filters" onPress={applyFilters} />
             </View>
           </Pressable>
         </ConfirmationModal>
