@@ -183,7 +183,7 @@ const FilterLocationActivity = ({
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  High Scores
+                  Your Scores
                 </Text>
               </Pressable>
               <Pressable

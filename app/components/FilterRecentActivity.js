@@ -169,7 +169,7 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  High Scores
+                  Your Scores
                 </Text>
               </Pressable>
               <Pressable
