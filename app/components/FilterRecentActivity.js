@@ -2,16 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  Entypo,
+  FontAwesome6,
+} from "@expo/vector-icons";
 import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
 import { retrieveItem } from "../config/utils";
 
-const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
+const FilterRecentActivity = ({ setSelectedActivitiesFilter, query, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const { loggedIn } = user;
 
   const [showModal, setShowModal] = useState(false);
   const [pendingActivities, setPendingActivities] = useState([]);
@@ -232,6 +237,38 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query }) => {
                   Locations added
                 </Text>
               </Pressable>
+              {loggedIn && (
+                <Pressable
+                  style={[
+                    s.container,
+                    pendingActivities.find(
+                      (activity) => activity === "your_activity",
+                    )
+                      ? s.containerSelected
+                      : s.containerNotSelected,
+                  ]}
+                  onPress={() => togglePendingActivity("your_activity")}
+                >
+                  <FontAwesome6
+                    name="face-grin-beam"
+                    size={32}
+                    color="#7b97e3"
+                    style={s.iconStyle}
+                  />
+                  <Text
+                    style={[
+                      s.titleStyle,
+                      pendingActivities.find(
+                        (activity) => activity === "your_activity",
+                      )
+                        ? s.activeTitleStyle
+                        : s.inactiveTitleStyle,
+                    ]}
+                  >
+                    Your Activity
+                  </Text>
+                </Pressable>
+              )}
               <PbmButton title="Apply Filters" onPress={applyFilters} />
             </View>
           </Pressable>
@@ -321,10 +358,11 @@ const getStyles = (theme) =>
 
 FilterRecentActivity.propTypes = {
   query: PropTypes.object,
+  user: PropTypes.object,
   setSelectedActivityFilter: PropTypes.func,
 };
 
-const mapStateToProps = ({ query }) => ({ query });
+const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   setSelectedActivitiesFilter: (activity) =>
     dispatch(setSelectedActivitiesFilter(activity)),

@@ -41,10 +41,15 @@ const LocationActivity = ({
   const filtersChangedRef = useRef(false);
   const { id: userId, loggedIn } = user;
 
-  const buildSubmissionTypeParam = (activities) =>
-    activities.length
-      ? activities.map((a) => `&submission_type[]=${a}`).join("")
+  const yourActivitySelected =
+    loggedIn && selectedLocationActivities.includes("your_activity");
+
+  const buildSubmissionTypeParam = (activities) => {
+    const types = activities.filter((a) => a !== "your_activity");
+    return types.length
+      ? types.map((a) => `&submission_type[]=${a}`).join("")
       : "";
+  };
 
   useEffect(() => {
     if (locationActivityModalOpen) {
@@ -54,8 +59,9 @@ const LocationActivity = ({
       const submissionTypeParam = buildSubmissionTypeParam(
         selectedLocationActivities,
       );
+      const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
       getData(
-        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
+        `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
       ).then((data) => {
         setLocationActivityLoading(false);
         setRecentActivity(data.user_submissions);
@@ -75,8 +81,9 @@ const LocationActivity = ({
       const submissionTypeParam = buildSubmissionTypeParam(
         selectedLocationActivities,
       );
+      const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
       getData(
-        `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
+        `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
       ).then((data) => {
         setLocationActivityLoading(false);
         setRecentActivity(data.user_submissions);
@@ -92,8 +99,9 @@ const LocationActivity = ({
     const submissionTypeParam = buildSubmissionTypeParam(
       selectedLocationActivities,
     );
+    const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
     getData(
-      `/user_submissions/location.json?id=${locationId}&restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
+      `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
     ).then((data) => {
       setLocationActivityLoading(false);
       setRecentActivity(data.user_submissions);

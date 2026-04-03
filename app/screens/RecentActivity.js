@@ -58,10 +58,15 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
   }, []);
 
-  const buildSubmissionTypeParam = (activities) =>
-    activities.length
-      ? activities.map((a) => `&submission_type[]=${a}`).join("")
+  const yourActivitySelected =
+    loggedIn && selectedActivities.includes("your_activity");
+
+  const buildSubmissionTypeParam = (activities) => {
+    const types = activities.filter((a) => a !== "your_activity");
+    return types.length
+      ? types.map((a) => `&submission_type[]=${a}`).join("")
       : "";
+  };
 
   const fetchData = useCallback(
     (_, distance, global = btnIdx === 3) => {
@@ -75,11 +80,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         setPage(1);
         const submissionTypeParam =
           buildSubmissionTypeParam(selectedActivities);
+        const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
         const url = global
-          ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
+          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
           : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
               distance || maxDistance
-            }&restrict_to=new_msx&limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+            }&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
         getData(url).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);
@@ -105,10 +111,11 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     setPage(newPage);
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
     const submissionTypeParam = buildSubmissionTypeParam(selectedActivities);
+    const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
     const url =
       btnIdx === 3
-        ? `/user_submissions.json?restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
-        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&restrict_to=new_msx&limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
+        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url).then((data) => {
       setFetchingRecentActivity(false);
       setRecentActivity(data.user_submissions);
@@ -146,7 +153,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       fetchData(null, null, true);
     } else {
       setMaxDistance(distanceMap[selectedIdx]);
-      fetchData(null, distanceMap[selectedIdx]);
+      fetchData(null, distanceMap[selectedIdx], false);
     }
   };
 
