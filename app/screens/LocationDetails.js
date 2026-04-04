@@ -590,15 +590,17 @@ const LocationDetails = (props) => {
                             "YYYY-MM-DD",
                           ).format("MMM DD, YYYY")}
                         </Text>
-                        {location.last_updated_by_username && ` by`}
-                        <Text
-                          style={{
-                            fontFamily: "Nunito-SemiBold",
-                            color: theme.pink1,
-                          }}
-                        >
-                          {` ${location.last_updated_by_username}`}
-                        </Text>
+                        {!!location.last_updated_by_username && ` by`}
+                        {!!location.last_updated_by_username && (
+                          <Text
+                            style={{
+                              fontFamily: "Nunito-SemiBold",
+                              color: theme.pink1,
+                            }}
+                          >
+                            {` ${location.last_updated_by_username}`}
+                          </Text>
+                        )}
                         <View style={s.iconView}>
                           {!!location.last_updated_by_admin_title && (
                             <MaterialCommunityIcons

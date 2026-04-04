@@ -2,13 +2,11 @@ import {
   FETCHING_LOCATION,
   FETCHING_LOCATION_SUCCESS,
   FETCHING_LOCATION_FAILURE,
+  LOCATION_METADATA_SUCCESS,
+  FETCHING_LMX_SUCCESS,
+  LMX_MUTATED,
   LOCATION_DETAILS_CONFIRMED,
   SET_SELECTED_LMX,
-  MACHINE_CONDITION_UPDATED,
-  MACHINE_CONDITION_REMOVED,
-  MACHINE_SCORE_ADDED,
-  MACHINE_SCORE_EDITED,
-  MACHINE_SCORE_REMOVED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION,
@@ -24,13 +22,14 @@ import {
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
   IC_ENABLED_UPDATED,
-  MACHINE_CONDITION_EDITED,
 } from "../actions/types";
 
 const moment = require("moment");
 
 export const initialState = {
   isFetchingLocation: false,
+  isFetchingLmx: false,
+  lmxMutated: false,
   location: {},
   confirmationMessage: "",
   curLmx: null,
@@ -54,7 +53,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetchingLocation: false,
+        lmxMutated: false,
         location: action.location,
+      };
+    case LOCATION_METADATA_SUCCESS:
+      return {
+        ...state,
+        lmxMutated: false,
+        location: {
+          ...state.location,
+          ...action.location,
+          location_machine_xrefs: state.location.location_machine_xrefs,
+        },
       };
     case FETCHING_LOCATION_FAILURE:
       return {
@@ -74,119 +84,28 @@ export default (state = initialState, action) => {
     case SET_SELECTED_LMX:
       return {
         ...state,
+        isFetchingLmx: true,
         curLmx: action.lmx,
       };
-    case MACHINE_CONDITION_UPDATED: {
-      const location_machine_xrefs = state.location.location_machine_xrefs.map(
-        (m) => {
-          if (m.id === action.machine.id) {
-            const obj = action.machine;
-            obj["machine_score_xrefs"] = m.machine_score_xrefs;
-            return obj;
-          }
-          return m;
-        },
-      );
-
+    case LMX_MUTATED:
       return {
         ...state,
-        curLmx: action.machine,
-        location: {
-          ...state.location,
-          last_updated_by_username: action.username,
-          date_last_updated: moment().format("YYYY-MM-DD"),
-          location_machine_xrefs,
-        },
+        lmxMutated: true,
       };
-    }
-    case MACHINE_CONDITION_REMOVED: {
-      const machine_conditions = state.curLmx.machine_conditions.filter(
-        (condition) => condition.id !== action.conditionId,
+    case FETCHING_LMX_SUCCESS: {
+      const location_machine_xrefs = state.location.location_machine_xrefs?.map(
+        (m) =>
+          m.id === action.lmx.id
+            ? { ...m, updated_at: action.lmx.updated_at }
+            : m,
       );
       return {
         ...state,
-        curLmx: {
-          ...state.curLmx,
-          machine_conditions,
-        },
-      };
-    }
-    case MACHINE_CONDITION_EDITED: {
-      const machine_conditions = state.curLmx.machine_conditions.map(
-        (condition) => {
-          if (condition.id === action.conditionId) {
-            condition.comment = action.comment;
-            condition.updated_at = moment().format("YYYY-MM-DD");
-          }
-          return condition;
-        },
-      );
-      return {
-        ...state,
-        curLmx: {
-          ...state.curLmx,
-          machine_conditions,
-        },
-      };
-    }
-    case MACHINE_SCORE_ADDED: {
-      const machine_score_xrefs = state.curLmx.machine_score_xrefs.concat([
-        action.score,
-      ]);
-
-      const location_machine_xrefs = state.location.location_machine_xrefs.map(
-        (lmx) => {
-          if (lmx.id === action.score.location_machine_xref_id) {
-            const machine_score_xrefs = lmx.machine_score_xrefs.concat([
-              action.score,
-            ]);
-            return {
-              ...lmx,
-              machine_score_xrefs,
-            };
-          } else return lmx;
-        },
-      );
-
-      return {
-        ...state,
-        curLmx: {
-          ...state.curLmx,
-          machine_score_xrefs,
-        },
+        isFetchingLmx: false,
+        curLmx: action.lmx,
         location: {
           ...state.location,
           location_machine_xrefs,
-        },
-      };
-    }
-    case MACHINE_SCORE_REMOVED: {
-      const machine_score_xrefs = state.curLmx.machine_score_xrefs.filter(
-        (high_score) => high_score.id !== action.scoreId,
-      );
-      return {
-        ...state,
-        curLmx: {
-          ...state.curLmx,
-          machine_score_xrefs,
-        },
-      };
-    }
-    case MACHINE_SCORE_EDITED: {
-      const machine_score_xrefs = state.curLmx.machine_score_xrefs.map(
-        (high_score) => {
-          if (high_score.id === action.scoreId) {
-            high_score.score = action.score;
-            high_score.updated_at = moment().format("YYYY-MM-DD");
-          }
-          return high_score;
-        },
-      );
-      return {
-        ...state,
-        curLmx: {
-          ...state.curLmx,
-          machine_score_xrefs,
         },
       };
     }
@@ -211,8 +130,7 @@ export default (state = initialState, action) => {
       const location_machine_xrefs = state.location.location_machine_xrefs.map(
         (m) => {
           if (m.id === action.machine.id) {
-            m["ic_enabled"] = action.machine.ic_enabled;
-            return m;
+            return { ...m, ic_enabled: action.machine.ic_enabled };
           }
           return m;
         },
@@ -220,15 +138,9 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        curLmx: {
-          ...state.curLmx,
-          ...action.machine,
-        },
         location: {
           ...state.location,
           location_machine_xrefs,
-          last_updated_by_username: action.username,
-          date_last_updated: moment().format("YYYY-MM-DD"),
         },
       };
     }

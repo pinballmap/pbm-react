@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {
   Dimensions,
   Modal,
@@ -22,6 +22,8 @@ import {
 import {
   addMachineCondition,
   addMachineScore,
+  fetchLocationMetadata,
+  fetchLmx,
   updateIcEnabled,
 } from "../actions/location_actions";
 import {
@@ -42,7 +44,7 @@ import {
 } from "../components";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const moment = require("moment");
@@ -58,6 +60,7 @@ const MachineDetails = ({
   addMachineScore,
   updateIcEnabled,
 }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const theme = useTheme();
   const s = getStyles(theme);
@@ -68,7 +71,11 @@ const MachineDetails = ({
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const insets = useSafeAreaInsets();
 
-  const { curLmx, location } = locationProp;
+  const { curLmx, location, isFetchingLmx, lmxMutated } = locationProp;
+  const lmxMutatedRef = useRef(lmxMutated);
+  useEffect(() => {
+    lmxMutatedRef.current = lmxMutated;
+  }, [lmxMutated]);
   const { id: userId, loggedIn } = user;
   const {
     opdb_id,
@@ -114,6 +121,17 @@ const MachineDetails = ({
   }, []);
 
   useEffect(() => {
+    if (curLmx) {
+      dispatch(fetchLmx(curLmx.id, userId));
+    }
+    return () => {
+      if (lmxMutatedRef.current) {
+        dispatch(fetchLocationMetadata(location.id));
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (!locationProp.curLmx) {
       navigation.goBack();
     }
@@ -141,7 +159,7 @@ const MachineDetails = ({
     setScore("");
   };
 
-  if (!curLmx) {
+  if (!curLmx || isFetchingLmx) {
     return <ActivityIndicator />;
   }
 

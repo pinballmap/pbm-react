@@ -1,14 +1,10 @@
 import {
   FETCHING_LOCATION,
   FETCHING_LOCATION_SUCCESS,
+  LOCATION_METADATA_SUCCESS,
+  FETCHING_LMX_SUCCESS,
   LOCATION_DETAILS_CONFIRMED,
   SET_SELECTED_LMX,
-  MACHINE_CONDITION_UPDATED,
-  MACHINE_CONDITION_REMOVED,
-  MACHINE_CONDITION_EDITED,
-  MACHINE_SCORE_ADDED,
-  MACHINE_SCORE_REMOVED,
-  MACHINE_SCORE_EDITED,
   LOCATION_MACHINE_REMOVED,
   ADDING_MACHINE_TO_LOCATION,
   MACHINE_ADDED_TO_LOCATION,
@@ -25,6 +21,7 @@ import {
   SET_SELECTED_OPERATOR,
   SET_SELECTED_LOCATION_TYPE,
   IC_ENABLED_UPDATED,
+  LMX_MUTATED,
 } from "./types";
 
 import { getData, postData, putData, deleteData } from "../config/request";
@@ -34,8 +31,22 @@ import { triggerUpdateBounds } from "./locations_actions";
 export const fetchLocation = (id) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION });
 
-  return getData(`/locations/${id}.json`).then((data) =>
+  return getData(`/locations/${id}.json?no_details=1`).then((data) =>
     dispatch(getLocationSuccess(data)),
+  );
+};
+
+export const fetchLocationMetadata = (id) => (dispatch) => {
+  return getData(`/locations/${id}.json?metadata_only=1`).then((data) =>
+    dispatch({ type: LOCATION_METADATA_SUCCESS, location: data }),
+  );
+};
+
+export const fetchLmx = (lmxId, userId) => (dispatch) => {
+  return getData(
+    `/location_machine_xrefs/${lmxId}.json?user_id=${userId || 0}`,
+  ).then((data) =>
+    dispatch({ type: FETCHING_LMX_SUCCESS, lmx: data.location_machine }),
   );
 };
 
@@ -54,7 +65,10 @@ export const getLocationSuccess = (data) => {
 export const confirmLocationIsUpToDate = (body, id, username) => (dispatch) => {
   return putData(`/locations/${id}/confirm.json`, body)
     .then(
-      () => dispatch(locationDetailsConfirmed(username, id)),
+      () => {
+        dispatch(locationDetailsConfirmed(username, id));
+        dispatch(fetchLocationMetadata(id));
+      },
       (err) => {
         throw err;
       },
@@ -82,7 +96,7 @@ export const setCurrentMachine = (id) => (dispatch, getState) => {
 };
 
 export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
-  const { email, authentication_token, username } = getState().user;
+  const { email, authentication_token, id: userId } = getState().user;
   const body = {
     user_email: email,
     user_token: authentication_token,
@@ -90,20 +104,15 @@ export const addMachineCondition = (condition, lmx) => (dispatch, getState) => {
   };
 
   return putData(`/location_machine_xrefs/${lmx}.json`, body)
-    .then((data) => dispatch(machineConditionUpdated(data, username)))
+    .then(() => {
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(lmx, userId));
+    })
     .catch((err) => console.log(err));
 };
 
-export const machineConditionUpdated = (data, username) => {
-  return {
-    type: MACHINE_CONDITION_UPDATED,
-    machine: data.location_machine,
-    username,
-  };
-};
-
 export const addMachineScore = (score, lmx) => (dispatch, getState) => {
-  const { email, authentication_token } = getState().user;
+  const { email, authentication_token, id: userId } = getState().user;
   const body = {
     user_email: email,
     user_token: authentication_token,
@@ -112,35 +121,27 @@ export const addMachineScore = (score, lmx) => (dispatch, getState) => {
   };
 
   return postData(`/machine_score_xrefs.json`, body)
-    .then((data) => dispatch(machineScoreAdded(data)))
+    .then(() => {
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(lmx, userId));
+    })
     .catch((err) => console.log(err));
 };
 
-export const machineScoreAdded = (data) => {
-  return {
-    type: MACHINE_SCORE_ADDED,
-    score: data.machine_score_xref,
-  };
-};
-
 export const updateIcEnabled = (id, ic_enabled) => (dispatch, getState) => {
-  const { email, authentication_token, username } = getState().user;
+  const { email, authentication_token, id: userId } = getState().user;
   const body = {
     user_email: email,
     user_token: authentication_token,
     ...(ic_enabled !== undefined && { ic_enabled }),
   };
   return putData(`/location_machine_xrefs/${id}/ic_toggle.json`, body)
-    .then((data) => dispatch(icEnabledUpdated(data, username)))
+    .then((data) => {
+      dispatch({ type: IC_ENABLED_UPDATED, machine: data.location_machine });
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(id, userId));
+    })
     .catch((err) => console.log(err));
-};
-
-export const icEnabledUpdated = (data, username) => {
-  return {
-    type: IC_ENABLED_UPDATED,
-    machine: data.location_machine,
-    username,
-  };
 };
 
 export const removeMachineFromLocation =
@@ -253,6 +254,7 @@ export const updateLocationDetails =
 export const locationDetailsUpdated =
   (goBack, data, username) => (dispatch) => {
     dispatch({ type: LOCATION_DETAILS_UPDATED, data, username });
+    dispatch(fetchLocationMetadata(data.location.id));
     goBack();
   };
 
@@ -365,58 +367,65 @@ export const setSelectedLocationType = (id) => {
   };
 };
 
-export const deleteCondition = (conditionId, user) => (dispatch) => {
+export const deleteCondition = (conditionId, user) => (dispatch, getState) => {
   const body = {
     user_email: user.email,
     user_token: user.authentication_token,
   };
+  const { id: lmxId } = getState().location.curLmx;
+  const { id: userId } = getState().user;
   return deleteData(`/machine_conditions/${conditionId}.json`, body)
     .then(() => {
-      dispatch({ type: MACHINE_CONDITION_REMOVED, conditionId });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const editCondition = (conditionId, comment, user) => (dispatch) => {
-  const body = {
-    user_email: user.email,
-    user_token: user.authentication_token,
-    comment,
-  };
-
-  return putData(`/machine_conditions/${conditionId}.json`, body)
-    .then(() => {
-      dispatch({ type: MACHINE_CONDITION_EDITED, conditionId, comment });
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(lmxId, userId));
     })
     .catch((err) => console.log(err));
 };
 
-export const deleteScore = (scoreId, user) => (dispatch) => {
+export const editCondition =
+  (conditionId, comment, user) => (dispatch, getState) => {
+    const body = {
+      user_email: user.email,
+      user_token: user.authentication_token,
+      comment,
+    };
+    const { id: lmxId } = getState().location.curLmx;
+    const { id: userId } = getState().user;
+    return putData(`/machine_conditions/${conditionId}.json`, body)
+      .then(() => {
+        dispatch({ type: LMX_MUTATED });
+        dispatch(fetchLmx(lmxId, userId));
+      })
+      .catch((err) => console.log(err));
+  };
+
+export const deleteScore = (scoreId, user) => (dispatch, getState) => {
   const body = {
     user_email: user.email,
     user_token: user.authentication_token,
   };
+  const { id: lmxId } = getState().location.curLmx;
+  const { id: userId } = getState().user;
   return deleteData(`/machine_score_xrefs/${scoreId}.json`, body)
     .then(() => {
-      dispatch({ type: MACHINE_SCORE_REMOVED, scoreId });
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(lmxId, userId));
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 };
 
-export const editScore = (scoreId, score, user) => (dispatch) => {
+export const editScore = (scoreId, score, user) => (dispatch, getState) => {
   const body = {
     user_email: user.email,
     user_token: user.authentication_token,
     score,
   };
-
+  const { id: lmxId } = getState().location.curLmx;
+  const { id: userId } = getState().user;
   return putData(`/machine_score_xrefs/${scoreId}.json`, body)
     .then(() => {
-      dispatch({ type: MACHINE_SCORE_EDITED, scoreId, score });
+      dispatch({ type: LMX_MUTATED });
+      dispatch(fetchLmx(lmxId, userId));
     })
     .catch((err) => console.log(err));
 };
