@@ -185,7 +185,8 @@ const MachineDetails = ({
     curLmx.machine_conditions.length > 0
       ? curLmx.machine_conditions.slice(0, 5)
       : undefined;
-  const scores = curLmx.machine_score_xrefs
+  const scoreArray = curLmx?.machine_score_xrefs || [];
+  const scores = scoreArray
     .sort((a, b) => (a.score > b.score ? -1 : b.score > a.score ? 1 : 0))
     .slice(0, 10);
 
