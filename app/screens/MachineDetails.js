@@ -24,6 +24,7 @@ import {
   addMachineScore,
   fetchLocationMetadata,
   fetchLmx,
+  fetchUserHighScore,
   updateIcEnabled,
 } from "../actions/location_actions";
 import {
@@ -69,6 +70,8 @@ const MachineDetails = ({
   const [showAddScoreModal, setShowAddScoreModal] = useState(false);
   const [score, setScore] = useState("");
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
+  const [userAllTimeHighScore, setUserAllTimeHighScore] = useState(null);
+  const [highScoreFetched, setHighScoreFetched] = useState(false);
   const insets = useSafeAreaInsets();
 
   const { curLmx, location, isFetchingLmx, lmxMutated } = locationProp;
@@ -112,6 +115,19 @@ const MachineDetails = ({
       ? operator.operator_has_email
       : false;
 
+  const refreshHighScore = () => {
+    if (loggedIn) {
+      dispatch(fetchUserHighScore(userId)).then((data) => {
+        setUserAllTimeHighScore(data.highest_scores[0]?.score ?? null);
+        setHighScoreFetched(true);
+      });
+    }
+  };
+
+  useEffect(() => {
+    refreshHighScore();
+  }, []);
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: ({ navigation }) => (
@@ -153,10 +169,11 @@ const MachineDetails = ({
     setConditionText("");
   };
 
-  const addScore = (lmx) => {
-    addMachineScore(removeCommasFromNum(score), lmx);
+  const addScore = async (lmx) => {
+    await addMachineScore(removeCommasFromNum(score), lmx);
     setShowAddScoreModal(false);
     setScore("");
+    refreshHighScore();
   };
 
   if (!curLmx || isFetchingLmx) {
@@ -171,12 +188,6 @@ const MachineDetails = ({
   const scores = curLmx.machine_score_xrefs
     .sort((a, b) => (a.score > b.score ? -1 : b.score > a.score ? 1 : 0))
     .slice(0, 10);
-  const { score: userHighScore } = curLmx.machine_score_xrefs
-    .filter((score) => score.user_id === userId)
-    .reduce(
-      (prev, current) => (prev.score > current.score ? prev : current),
-      -1,
-    );
 
   return (
     <>
@@ -475,25 +486,31 @@ const MachineDetails = ({
           </View>
           <View style={s.containerStyle}>
             <View style={s.locationNameContainer}>
-              <Text style={s.sectionTitle}>High Scores</Text>
+              <Text style={s.sectionTitle}>Your Scores</Text>
             </View>
-            {!!userHighScore && (
+            {(!loggedIn || highScoreFetched) && (
               <View>
                 <Text
                   style={s.userScoreTitle}
-                >{`Your personal best on this machine is`}</Text>
-                <Text style={s.userHighScore}>
-                  {formatNumWithCommas(userHighScore)}
-                </Text>
+                >{`Your highest score on ${machineName}`}</Text>
+                {userAllTimeHighScore ? (
+                  <Text style={s.userHighScore}>
+                    {formatNumWithCommas(userAllTimeHighScore)}
+                  </Text>
+                ) : (
+                  <Text style={s.noneYet}>none yet (track your scores!)</Text>
+                )}
               </View>
             )}
-            {scores.length > 0 ? (
-              scores.map((scoreObj) => (
-                <MachineScore scoreObj={scoreObj} key={scoreObj.id} />
-              ))
-            ) : (
-              <Text style={s.noneYet}>No scores yet</Text>
-            )}
+            {scores.length > 0
+              ? scores.map((scoreObj) => (
+                  <MachineScore
+                    scoreObj={scoreObj}
+                    key={scoreObj.id}
+                    onScoreMutated={refreshHighScore}
+                  />
+                ))
+              : null}
             <PbmButton
               title={"Add Your Score"}
               onPress={

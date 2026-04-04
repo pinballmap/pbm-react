@@ -25,7 +25,7 @@ import { Image } from "expo-image";
 
 const moment = require("moment");
 
-const MachineScore = ({ scoreObj, user }) => {
+const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -58,6 +58,7 @@ const MachineScore = ({ scoreObj, user }) => {
     } finally {
       setIsLoading(false);
       setEditModalVisible(false);
+      onScoreMutated?.();
     }
   };
 
@@ -73,6 +74,7 @@ const MachineScore = ({ scoreObj, user }) => {
     } finally {
       setIsLoading(false);
       setDeleteModalVisible(false);
+      onScoreMutated?.();
     }
   };
 

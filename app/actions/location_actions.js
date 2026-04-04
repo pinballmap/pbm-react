@@ -36,6 +36,13 @@ export const fetchLocation = (id) => (dispatch) => {
   );
 };
 
+export const fetchUserHighScore = (userId) => (dispatch, getState) => {
+  const { machine_id } = getState().location.curLmx;
+  return getData(
+    `/machine_score_xrefs/highest.json?by_user_id=${userId};by_machine_id=${machine_id}`,
+  );
+};
+
 export const fetchLocationMetadata = (id) => (dispatch) => {
   return getData(`/locations/${id}.json?metadata_only=1`).then((data) =>
     dispatch({ type: LOCATION_METADATA_SUCCESS, location: data }),
