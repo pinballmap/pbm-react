@@ -10,3 +10,11 @@ export async function retrieveItem(key) {
   }
   return;
 }
+
+export async function storeItem(key, value) {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.log(error.message);
+  }
+}
