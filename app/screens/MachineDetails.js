@@ -35,6 +35,7 @@ import {
 import {
   ActivityIndicator,
   BackglassImage,
+  ConfirmationModal,
   MachineComment,
   MachineScore,
   PbmButton,
@@ -72,6 +73,7 @@ const MachineDetails = ({
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const [userAllTimeHighScore, setUserAllTimeHighScore] = useState(null);
   const [highScoreFetched, setHighScoreFetched] = useState(false);
+  const [ictoggleModalVisible, setIctoggleModalVisible] = useState(false);
   const insets = useSafeAreaInsets();
 
   const { curLmx, location, isFetchingLmx, lmxMutated } = locationProp;
@@ -176,6 +178,11 @@ const MachineDetails = ({
     refreshHighScore();
   };
 
+  const onIctogglePress = () => {
+    updateIcEnabled(curLmx.id);
+    setIctoggleModalVisible(false);
+  };
+
   if (!curLmx || isFetchingLmx) {
     return <ActivityIndicator />;
   }
@@ -198,6 +205,25 @@ const MachineDetails = ({
           backgroundColor: theme.base1,
         }}
       >
+        <ConfirmationModal
+          visible={ictoggleModalVisible}
+          closeModal={() => setIctoggleModalVisible(false)}
+        >
+          <Pressable>
+            <Text style={s.modalTitle}>
+              Toggle Stern Insider Connected
+              <Text style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}>
+                {ic_enabled === true ? ` OFF ` : ` ON `}
+              </Text>
+              on this machine?
+            </Text>
+            <PbmButton title={"Toggle NOW"} onPress={onIctogglePress} />
+            <WarningButton
+              title={"Cancel"}
+              onPress={() => setIctoggleModalVisible(false)}
+            />
+          </Pressable>
+        </ConfirmationModal>
         <Modal
           animationType="slide"
           transparent={false}
@@ -338,13 +364,17 @@ const MachineDetails = ({
           )}
           {!!ic_eligible && (
             <View
-              style={{
-                marginBottom: 20,
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={[
+                s.containerStyle,
+                {
+                  padding: 10,
+                  marginBottom: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                },
+              ]}
             >
               <View
                 style={{
@@ -353,11 +383,58 @@ const MachineDetails = ({
                   alignItems: "center",
                 }}
               >
+                <View
+                  style={{
+                    marginRight: 10,
+                    display: "flex",
+                    flexDirection: "column",
+                    width: deviceWidth - 240,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        "https://insider.sternpinball.com/",
+                      )
+                    }
+                  >
+                    <Image
+                      source={require("../assets/images/Stern-Logo-sm.png")}
+                      style={{
+                        width: 70,
+                        height: 45,
+                      }}
+                      contentFit="contain"
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    maxFontSizeMultiplier={1.2}
+                    style={{
+                      textAlign: "center",
+                      fontSize: 14,
+                      color: theme.text3,
+                    }}
+                  >
+                    {`${ic_enabled === null ? "Is " : ""}`}
+                    <Text style={{ fontFamily: "Nunito-Bold" }}>
+                      Insider Connected
+                    </Text>{" "}
+                    {`${
+                      ic_enabled === null
+                        ? "enabled?"
+                        : ic_enabled
+                          ? "is enabled"
+                          : "is disabled"
+                    }`}
+                  </Text>
+                </View>
                 <View style={{ width: 160 }}>
                   <Pressable
                     onPress={
                       loggedIn
-                        ? () => updateIcEnabled(curLmx.id)
+                        ? () => setIctoggleModalVisible(true)
                         : () => navigation.navigate("Login")
                     }
                     style={[
@@ -400,52 +477,14 @@ const MachineDetails = ({
                       contentFit="contain"
                     />
                   </Pressable>
-                </View>
-                <View
-                  style={{
-                    marginLeft: 10,
-                    display: "flex",
-                    flexDirection: "column",
-                    width: deviceWidth - 220,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        "https://insider.sternpinball.com/",
-                      )
-                    }
-                  >
-                    <Image
-                      source={require("../assets/images/Stern-Logo-sm.png")}
-                      style={{
-                        width: 70,
-                        height: 45,
-                      }}
-                      contentFit="contain"
-                    />
-                  </TouchableOpacity>
                   <Text
-                    maxFontSizeMultiplier={1.2}
                     style={{
-                      textAlign: "center",
-                      fontSize: 14,
+                      fontSize: 12,
                       color: theme.text3,
+                      textAlign: "center",
                     }}
                   >
-                    {`${ic_enabled === null ? "Is " : ""}`}
-                    <Text style={{ fontFamily: "Nunito-Bold" }}>
-                      Insider Connected
-                    </Text>{" "}
-                    {`${
-                      ic_enabled === null
-                        ? "enabled?"
-                        : ic_enabled
-                          ? "is enabled"
-                          : "is disabled"
-                    }`}
+                    (click to toggle)
                   </Text>
                 </View>
               </View>
@@ -499,7 +538,22 @@ const MachineDetails = ({
                     {formatNumWithCommas(userAllTimeHighScore)}
                   </Text>
                 ) : (
-                  <Text style={s.noneYet}>none yet (track your scores!)</Text>
+                  <>
+                    <Text style={s.noneYet}>none yet</Text>
+                    <Text
+                      style={[
+                        s.noneYet,
+                        {
+                          fontFamily: "Nunito-Italic",
+                          fontStyle:
+                            Platform.OS === "android" ? undefined : "italic",
+                          fontSize: 13,
+                        },
+                      ]}
+                    >
+                      track your scores and see them all on your profile!
+                    </Text>
+                  </>
                 )}
               </View>
             )}
@@ -748,17 +802,18 @@ const getStyles = (theme) =>
       height: 65,
       width: 160,
       borderRadius: 15,
+      borderWidth: 2,
+      borderColor: "white",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
       overflow: "visible",
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowColor: theme.theme == "dark" ? theme.purple : "rgb(126, 126, 145)",
       shadowOffset: {
-        width: 0,
+        width: 2,
         height: 2,
       },
-      shadowOpacity: 0.5,
+      shadowOpacity: theme.theme == "dark" ? 0.8 : 0.6,
       shadowRadius: 3.84,
       elevation: 5,
     },
