@@ -190,7 +190,7 @@ const MachineDetails = ({
   const { ic_enabled } = curLmx;
   const mostRecentComments =
     curLmx.machine_conditions.length > 0
-      ? curLmx.machine_conditions.slice(0, 5)
+      ? curLmx.machine_conditions.slice(0, 8)
       : undefined;
   const scoreArray = curLmx?.machine_score_xrefs || [];
   const scores = scoreArray
