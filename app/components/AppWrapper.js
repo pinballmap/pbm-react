@@ -9,6 +9,8 @@ import {
   getLocationAndMachineCounts,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
+  setSelectedActivitiesFilter,
+  setSelectedLocationActivitiesFilter,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
@@ -24,6 +26,8 @@ const AppWrapper = ({
   getLocationAndMachineCounts,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
+  setSelectedActivitiesFilter,
+  setSelectedLocationActivitiesFilter,
 }) => {
   const [loading, setIsLoading] = useState(true);
   // Global variable to let us swap out to use the staging server if a store tester logs in
@@ -54,6 +58,17 @@ const AppWrapper = ({
         (displayInsiderConnectedPreference) =>
           setDisplayInsiderConnectedBadge(!!displayInsiderConnectedPreference),
       );
+
+      const savedActivities = (await retrieveItem("selectedActivities")) || [];
+      if (savedActivities.length > 0) {
+        setSelectedActivitiesFilter(savedActivities);
+      }
+
+      const savedLocationActivities =
+        (await retrieveItem("selectedLocationActivities")) || [];
+      if (savedLocationActivities.length > 0) {
+        setSelectedLocationActivitiesFilter(savedLocationActivities);
+      }
 
       try {
         await allSettled([
@@ -98,5 +113,9 @@ const mapDispatchToProps = (dispatch) => ({
   setUnitPreference: (pref) => dispatch(setUnitPreference(pref)),
   setDisplayInsiderConnectedBadge: (pref) =>
     dispatch(setDisplayInsiderConnectedBadge(pref)),
+  setSelectedActivitiesFilter: (activities) =>
+    dispatch(setSelectedActivitiesFilter(activities)),
+  setSelectedLocationActivitiesFilter: (activities) =>
+    dispatch(setSelectedLocationActivitiesFilter(activities)),
 });
 export default connect(null, mapDispatchToProps)(AppWrapper);

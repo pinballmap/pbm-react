@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -11,7 +11,6 @@ import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedLocationActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
-import { retrieveItem } from "../config/utils";
 
 const FilterLocationActivity = ({
   setSelectedLocationActivitiesFilter,
@@ -26,15 +25,6 @@ const FilterLocationActivity = ({
   const [pendingActivities, setPendingActivities] = useState([]);
 
   const { selectedLocationActivities = [] } = query;
-
-  useEffect(() => {
-    const getSelectedLocationActivities = async () => {
-      const savedActivities =
-        (await retrieveItem("selectedLocationActivities")) || [];
-      setSelectedLocationActivitiesFilter(savedActivities);
-    };
-    getSelectedLocationActivities();
-  }, []);
 
   const openModal = () => {
     setPendingActivities(selectedLocationActivities);
