@@ -1,4 +1,17 @@
 /**
+ * Keys used to cache startup API responses
+ */
+export const CACHE_KEY_REGIONS = "cache_regions";
+export const CACHE_KEY_REGIONS_TIMESTAMP = "cache_regions_timestamp";
+export const CACHE_KEY_MACHINES = "cache_machines";
+export const CACHE_KEY_MACHINES_TIMESTAMP = "cache_machines_timestamp";
+export const CACHE_KEY_LOCATION_TYPES = "cache_location_types";
+export const CACHE_KEY_LOCATION_TYPES_TIMESTAMP =
+  "cache_location_types_timestamp";
+export const CACHE_KEY_OPERATORS = "cache_operators";
+export const CACHE_KEY_OPERATORS_TIMESTAMP = "cache_operators_timestamp";
+
+/**
  * Keys used to persist setting values
  */
 export const KEY_THEME = "themeOverride"; // Which visual theme to use for te app
