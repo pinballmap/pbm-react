@@ -149,6 +149,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
       "AT",
       "BE",
       "DE",
+      "EE",
       "GB",
       "FI",
       "FR",
