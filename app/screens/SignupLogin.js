@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -12,17 +12,28 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { loginLater } from "../actions";
+import { getData } from "../config/request";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 
 let deviceHeight = Dimensions.get("window").height;
 
-const SignupLogin = ({
-  navigation,
-  allMachinesCount,
-  allLocationsCount,
-  loginLater,
-}) => {
+const SignupLogin = ({ navigation, loginLater }) => {
   const s = getStyles();
+  const [allLocationsCount, setAllLocationsCount] = useState(null);
+  const [allMachinesCount, setAllMachinesCount] = useState(null);
+
+  useEffect(() => {
+    let isCancelled = false;
+    getData("/regions/location_and_machine_counts.json").then((data) => {
+      if (!isCancelled && data && data.num_lmxes && data.num_locations) {
+        setAllLocationsCount(data.num_locations);
+        setAllMachinesCount(data.num_lmxes);
+      }
+    });
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   return (
     <View style={[s.mask, s.justify]}>
@@ -216,22 +227,14 @@ const getStyles = () =>
 SignupLogin.propTypes = {
   loginLater: PropTypes.func,
   navigation: PropTypes.object,
-  regions: PropTypes.object,
-  allMachinesCount: PropTypes.number,
-  allLocationsCount: PropTypes.number,
 };
 
 SignupLogin.navigationOptions = () => ({
   headerShown: false,
 });
 
-const mapStateToProps = ({ regions }) => ({
-  allMachinesCount: regions.allMachinesCount,
-  allLocationsCount: regions.allLocationsCount,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   loginLater: () => dispatch(loginLater()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupLogin);
+export default connect(null, mapDispatchToProps)(SignupLogin);

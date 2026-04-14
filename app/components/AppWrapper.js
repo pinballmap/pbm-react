@@ -11,7 +11,6 @@ import {
   getMachinesSuccess,
   fetchOperators,
   getOperatorsSuccess,
-  getLocationAndMachineCounts,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
   setSelectedActivitiesFilter,
@@ -105,7 +104,6 @@ const AppWrapper = ({
   getLocationTypes,
   getMachines,
   getOperators,
-  getLocationAndMachineCounts,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
   setSelectedActivitiesFilter,
@@ -170,12 +168,7 @@ const AppWrapper = ({
       }
 
       try {
-        await Promise.all([
-          refreshData(),
-          getLocationAndMachineCounts(
-            "/regions/location_and_machine_counts.json",
-          ),
-        ]);
+        await refreshData();
       } finally {
         lastStatusCheckRef.current = Date.now();
         loaded();
@@ -218,7 +211,6 @@ AppWrapper.propTypes = {
   getLocationTypes: PropTypes.func,
   getMachines: PropTypes.func,
   getOperators: PropTypes.func,
-  getLocationAndMachineCounts: PropTypes.func,
   loadRegionsFromCache: PropTypes.func,
   loadMachinesFromCache: PropTypes.func,
   loadLocationTypesFromCache: PropTypes.func,
@@ -230,8 +222,6 @@ const mapDispatchToProps = (dispatch) => ({
   getLocationTypes: (url) => dispatch(fetchLocationTypes(url)),
   getMachines: (url) => dispatch(fetchMachines(url)),
   getOperators: (url) => dispatch(fetchOperators(url)),
-  getLocationAndMachineCounts: (url) =>
-    dispatch(getLocationAndMachineCounts(url)),
   setUnitPreference: (pref) => dispatch(setUnitPreference(pref)),
   setDisplayInsiderConnectedBadge: (pref) =>
     dispatch(setDisplayInsiderConnectedBadge(pref)),
