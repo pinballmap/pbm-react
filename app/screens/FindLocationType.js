@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -23,6 +23,7 @@ const FindLocationType = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const { onGoBack } = route.params;
+  const multiSelect = route.params?.multiSelect || false;
 
   const allLocationTypes = [
     { name: route.params?.optionNA ? "N/A (or unknown)" : "All", id: -1 },
@@ -30,6 +31,42 @@ const FindLocationType = ({
   ];
   const [selectedLocationTypes, setLocationTypes] = useState(allLocationTypes);
   const [query, setQuery] = useState("");
+  const [selectedIds, setSelectedIds] = useState(
+    route.params?.selectedIds || [],
+  );
+  const selectedIdsRef = React.useRef(route.params?.selectedIds || []);
+
+  const updateSelectedIds = (ids) => {
+    selectedIdsRef.current = ids;
+    setSelectedIds(ids);
+  };
+
+  useEffect(() => {
+    if (!multiSelect) return;
+    return navigation.addListener("beforeRemove", () => {
+      onGoBack(selectedIdsRef.current);
+    });
+  }, [multiSelect, navigation]);
+
+  useEffect(() => {
+    if (!multiSelect) return;
+    navigation.setOptions({
+      headerRight: () =>
+        selectedIds.length > 0 ? (
+          <Pressable onPress={() => navigation.goBack()}>
+            {({ pressed }) => (
+              <View style={{ marginRight: 10 }}>
+                <MaterialIcons
+                  name="check-box"
+                  size={32}
+                  color={pressed ? "#95867c" : "#68b0f3"}
+                />
+              </View>
+            )}
+          </Pressable>
+        ) : null,
+    });
+  }, [multiSelect, selectedIds]);
 
   const handleSearch = (search = "") => {
     const formattedQuery = search
@@ -56,25 +93,61 @@ const FindLocationType = ({
     navigation.goBack();
   };
 
-  const renderRow = ({ item, index }) => (
-    <Pressable onPress={() => _selectLocationType(item.id)}>
-      {({ pressed }) => (
-        <View
-          style={[
-            { padding: 8 },
-            pressed
-              ? { backgroundColor: theme.base4, opacity: 0.8 }
-              : {
-                  backgroundColor: index % 2 === 0 ? theme.base1 : theme.base2,
-                  opacity: 1,
-                },
-          ]}
-        >
-          <Text style={{ fontSize: 18 }}>{item.name}</Text>
-        </View>
-      )}
-    </Pressable>
-  );
+  const _toggleLocationType = (id) => {
+    if (id === -1) {
+      updateSelectedIds([]);
+      navigation.goBack();
+      return;
+    }
+    if (selectedIds.includes(id)) {
+      updateSelectedIds(selectedIds.filter((i) => i !== id));
+    } else {
+      updateSelectedIds([...selectedIds, id]);
+    }
+  };
+
+  const renderRow = ({ item, index }) => {
+    const isSelected = multiSelect && selectedIds.includes(item.id);
+    return (
+      <Pressable
+        onPress={() =>
+          multiSelect
+            ? _toggleLocationType(item.id)
+            : _selectLocationType(item.id)
+        }
+      >
+        {({ pressed }) => (
+          <View
+            style={[
+              {
+                padding: 8,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              },
+              pressed
+                ? { backgroundColor: theme.base4, opacity: 0.8 }
+                : {
+                    backgroundColor:
+                      index % 2 === 0 ? theme.base1 : theme.base2,
+                    opacity: 1,
+                  },
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}>{item.name}</Text>
+            {isSelected ? (
+              <MaterialIcons
+                name="cancel"
+                size={18}
+                color="#fd0091"
+                style={{ paddingTop: 3 }}
+              />
+            ) : null}
+          </View>
+        )}
+      </Pressable>
+    );
+  };
 
   const _keyExtractor = (locationType) => `${locationType.id}`;
   const keyboardDismissProp =
@@ -121,6 +194,17 @@ const FindLocationType = ({
           </Pressable>
         )}
       </View>
+      {multiSelect ? (
+        <View style={s.multiSelect}>
+          {selectedIds.length === 0 ? (
+            <Text style={{ color: theme.purple2 }}>0 types selected</Text>
+          ) : (
+            <Text
+              style={{ color: theme.purple2 }}
+            >{`${selectedIds.length} type${selectedIds.length > 1 ? "s" : ""} selected`}</Text>
+          )}
+        </View>
+      ) : null}
       <FlatList
         {...keyboardDismissProp}
         data={selectedLocationTypes}
@@ -158,6 +242,11 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+    },
+    multiSelect: {
+      alignItems: "center",
+      paddingBottom: 5,
+      backgroundColor: theme.base1,
     },
   });
 

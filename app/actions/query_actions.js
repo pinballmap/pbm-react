@@ -22,6 +22,9 @@ export const clearFilters = (updateLocations) => (dispatch) => {
 export const setMachineFilter = (machine) => (dispatch) => {
   dispatch({ type: SET_MACHINE_FILTER, machine });
 };
+export const setMachineFilterMulti = (machines) => (dispatch) => {
+  dispatch({ type: SET_MACHINE_FILTER, machines });
+};
 export const setMachineVersionFilter = (machine_group_id) => (dispatch) => {
   dispatch({
     type: SET_MACHINE_VERSION_FILTER,
@@ -40,6 +43,10 @@ export const updateViewFavoriteLocations = (idx) => (dispatch) => {
 export const selectedLocationTypeFilter = (locationType) => (dispatch) => {
   dispatch({ type: SET_LOCATION_TYPE_FILTER, locationType });
 };
+export const selectedLocationTypeFilterMulti =
+  (locationTypeIds) => (dispatch) => {
+    dispatch({ type: SET_LOCATION_TYPE_FILTER, locationTypeIds });
+  };
 export const selectedOperatorFilter = (selectedOperator) => (dispatch) => {
   dispatch({ type: SET_OPERATOR_FILTER, selectedOperator });
 };

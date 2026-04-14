@@ -37,7 +37,9 @@ export const getOperatorName = createSelector(
 const queryState = ({ query }) => query;
 
 export const filterSelected = createSelector(queryState, (query) =>
+  query.machineIds?.length > 0 ||
   query.machineId !== "" ||
+  query.locationTypeIds?.length > 0 ||
   query.locationType !== "" ||
   query.selectedOperator !== "" ||
   query.numMachines !== 0 ||

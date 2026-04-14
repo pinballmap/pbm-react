@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
@@ -6,13 +6,15 @@ import { ButtonGroup, DropDownButton, Screen, Text } from "../components";
 import {
   updateNumMachinesSelected,
   updateViewFavoriteLocations,
-  selectedLocationTypeFilter,
+  selectedLocationTypeFilterMulti,
   selectedOperatorFilter,
   clearFilters,
-  setMachineFilter,
+  setMachineFilterMulti,
   setMachineVersionFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
+  clearSelectedState,
+  addMachineToList,
 } from "../actions";
 import {
   getLocationTypeName,
@@ -26,27 +28,47 @@ const FilterMap = ({
   operatorName,
   hasFilterSelected,
   query,
+  machineList,
   navigation,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const dispatch = useDispatch();
 
-  const { machine, numMachines, viewByFavoriteLocations, machineGroupId } =
-    query;
+  const {
+    machines = [],
+    locationTypeIds = [],
+    numMachines,
+    viewByFavoriteLocations,
+    machineGroupId,
+  } = query;
   const { navigate } = navigation;
 
-  useEffect(
-    () =>
-      navigation.addListener("blur", () => {
-        // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
-        // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
-        if (navigation.getState().routes.length === 1) {
-          dispatch(reloadMapMarkers());
-        }
-      }),
-    [navigation],
-  );
+  const navigatingToFindMachine = useRef(false);
+  const machineListRef = useRef(machineList);
+  useEffect(() => {
+    machineListRef.current = machineList;
+  }, [machineList]);
+
+  useEffect(() => {
+    const unsubscribeBlur = navigation.addListener("blur", () => {
+      // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
+      // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
+      if (navigation.getState().routes.length === 1) {
+        dispatch(reloadMapMarkers());
+      }
+    });
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      if (navigatingToFindMachine.current) {
+        navigatingToFindMachine.current = false;
+        dispatch(setMachineFilterMulti(machineListRef.current));
+      }
+    });
+    return () => {
+      unsubscribeBlur();
+      unsubscribeFocus();
+    };
+  }, [navigation]);
 
   const getIdx = (value) => {
     switch (value) {
@@ -92,8 +114,10 @@ const FilterMap = ({
 
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
-      onGoBack: (id) => {
-        dispatch(selectedLocationTypeFilter(id));
+      multiSelect: true,
+      selectedIds: locationTypeIds,
+      onGoBack: (ids) => {
+        dispatch(selectedLocationTypeFilterMulti(ids));
       },
     });
   };
@@ -118,15 +142,27 @@ const FilterMap = ({
             Locations with this machine
           </Text>
           <DropDownButton
-            title={machine && machine.name ? machine.name : "All"}
+            title={
+              machines.length > 1
+                ? "Multiple machines"
+                : machines.length === 1
+                  ? machines[0].name
+                  : "All"
+            }
             onPress={() => {
-              dispatch(setMachineFilter());
+              dispatch(clearSelectedState());
+              machines.forEach((m) => dispatch(addMachineToList(m)));
+              navigatingToFindMachine.current = true;
               dispatch(getMapAreaMachineIds());
-              navigate("FindMachine", { machineFilter: true });
+              navigate("FindMachine", {
+                machineFilter: true,
+                multiSelect: true,
+                showDone: machines.length > 0,
+              });
             }}
             margin={s.dropdownMargin}
           />
-          {machine && machine.machine_group_id && (
+          {machines.length === 1 && machines[0].machine_group_id && (
             <>
               <Text
                 style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
@@ -135,7 +171,7 @@ const FilterMap = ({
               </Text>
               <ButtonGroup
                 onPress={(idx) =>
-                  setFilterByMachineVersion(idx, machine.machine_group_id)
+                  setFilterByMachineVersion(idx, machines[0].machine_group_id)
                 }
                 selectedIndex={machineGroupId ? 0 : 1}
                 buttons={["All Versions", "Selected Version"]}
@@ -164,7 +200,9 @@ const FilterMap = ({
             Location type
           </Text>
           <DropDownButton
-            title={locationTypeName}
+            title={
+              locationTypeIds.length > 1 ? "Multiple types" : locationTypeName
+            }
             onPress={() => goToFindLocationType()}
             margin={s.dropdownMargin}
           />
@@ -307,12 +345,14 @@ const mapStateToProps = (state) => {
   const locationTypeName = getLocationTypeName(state);
   const operatorName = getOperatorName(state);
   const hasFilterSelected = filterSelected(state);
+  const machineList = state.location.machineList;
 
   return {
     locationTypeName,
     query,
     operatorName,
     hasFilterSelected,
+    machineList,
   };
 };
 

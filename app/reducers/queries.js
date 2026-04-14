@@ -25,7 +25,10 @@ export const initialState = {
   neLat: null,
   neLon: null,
   machineId: "",
+  machineIds: [],
+  machines: [],
   locationType: "",
+  locationTypeIds: [],
   numMachines: 0,
   selectedOperator: "",
   selectedActivities: [],
@@ -64,7 +67,17 @@ export default (state = initialState, action) => {
       };
     }
     case SET_MACHINE_FILTER: {
-      if (!action.machine) {
+      if (action.machines) {
+        const machines = action.machines;
+        return {
+          ...state,
+          machines,
+          machineIds: machines.map((m) => m.id),
+          machineGroupId: undefined,
+          machineId: "",
+          machine: {},
+        };
+      } else if (!action.machine) {
         return {
           ...state,
           machineId: "",
@@ -89,11 +102,21 @@ export default (state = initialState, action) => {
         ...state,
         viewByFavoriteLocations: action.viewByFavoriteLocations,
       };
-    case SET_LOCATION_TYPE_FILTER:
+    case SET_LOCATION_TYPE_FILTER: {
+      if (action.locationTypeIds) {
+        const ids = action.locationTypeIds;
+        return {
+          ...state,
+          locationTypeIds: ids,
+          locationType: ids.length === 1 ? ids[0] : "",
+        };
+      }
       return {
         ...state,
         locationType: action.locationType > -1 ? action.locationType : "",
+        locationTypeIds: action.locationType > -1 ? [action.locationType] : [],
       };
+    }
     case SET_OPERATOR_FILTER:
       return {
         ...state,
@@ -104,7 +127,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         machineId: "",
+        machineIds: [],
+        machines: [],
         locationType: "",
+        locationTypeIds: [],
         numMachines: 0,
         selectedOperator: "",
         machine: {},

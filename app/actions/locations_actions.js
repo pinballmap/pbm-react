@@ -39,20 +39,32 @@ export const getLocationTypeFailure = () => ({
 const buildFilterQueryString = (query, userId) => {
   const {
     machineId,
+    machineIds = [],
     machineGroupId,
     locationType,
+    locationTypeIds = [],
     numMachines,
     selectedOperator,
     viewByFavoriteLocations,
   } = query;
-  const machineQueryString = machineGroupId
-    ? `by_machine_group_id=${machineGroupId}&`
-    : machineId
-      ? `by_machine_single_id=${machineId}&`
-      : "";
-  const locationTypeQueryString = locationType
-    ? `by_type_id=${locationType}&`
-    : "";
+  const machineQueryString =
+    machineIds.length > 1
+      ? machineIds.map((id) => `by_machine_id[]=${id}`).join("&") + "&"
+      : machineGroupId
+        ? `by_machine_group_id=${machineGroupId}&`
+        : machineIds.length === 1
+          ? `by_machine_single_id=${machineIds[0]}&`
+          : machineId
+            ? `by_machine_single_id=${machineId}&`
+            : "";
+  const locationTypeQueryString =
+    locationTypeIds.length > 1
+      ? locationTypeIds.map((id) => `by_type_id[]=${id}`).join("&") + "&"
+      : locationTypeIds.length === 1
+        ? `by_type_id=${locationTypeIds[0]}&`
+        : locationType
+          ? `by_type_id=${locationType}&`
+          : "";
   const numMachinesQueryString = numMachines
     ? `by_at_least_n_machines_type=${numMachines}&`
     : "";
