@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FlatList, Linking, Pressable, StyleSheet, View } from "react-native";
@@ -9,179 +9,193 @@ import {
   LocationCard,
   Text,
 } from "../components";
-import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
-import { selectLocationListFilterBy } from "../actions/locations_actions";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { getDistanceWithUnit } from "../utils/utilityFunctions";
+import {
+  selectLocationListFilterBy,
+  getListLocations,
+} from "../actions/locations_actions";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const moment = require("moment");
+const NEAR_FILTER_IDX = 0;
 
-export class LocationList extends Component {
-  constructor(props) {
-    super(props);
+const LocationList = ({
+  locations,
+  user,
+  query,
+  selectLocationListFilterBy,
+  getListLocations,
+}) => {
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
+  const navigation = useNavigation();
+  const [page, setPage] = useState(1);
+  const [showNoLocationTrackingModal, setShowNoLocationTrackingModal] =
+    useState(false);
+  const flatListRef = useRef(null);
 
-    this.state = {
-      locations: this.props.locations.mapLocations,
-      showNoLocationTrackingModal: false,
-    };
-  }
+  const { listLocations, listPagy, isFetchingList, locationTypes } = locations;
+  const { lat, lon, locationTrackingServicesEnabled, unitPreference } = user;
+  const { swLat, swLon, neLat, neLon } = query;
+  const filterIdx = locations.selectedLocationListFilter;
+  const bounds = { swLat, swLon, neLat, neLon };
 
-  updateIndex = (buttonIndex) => {
-    if (buttonIndex === 0 && !this.props.user.locationTrackingServicesEnabled) {
-      this.setState({ showNoLocationTrackingModal: true });
+  // Fetch on mount and when navigation focus fires
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      setPage(1);
+      getListLocations(bounds, 1, filterIdx);
+    });
+  }, [navigation, swLat, swLon, neLat, neLon, filterIdx]);
+
+  const updateIndex = (buttonIndex) => {
+    if (buttonIndex === NEAR_FILTER_IDX && !locationTrackingServicesEnabled) {
+      setShowNoLocationTrackingModal(true);
     }
-    this.props.selectLocationListFilterBy(buttonIndex);
-    this.sortLocations(this.state.locations, buttonIndex);
+    selectLocationListFilterBy(buttonIndex);
+    setPage(1);
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
+    getListLocations(bounds, 1, buttonIndex);
   };
 
-  sortLocations(locations, idx) {
-    switch (idx) {
-      case 0:
-        return this.setState({
-          locations: locations.sort(
-            (a, b) =>
-              getDistance(
-                this.props.user.lat,
-                this.props.user.lon,
-                a.lat,
-                a.lon,
-              ) -
-              getDistance(
-                this.props.user.lat,
-                this.props.user.lon,
-                b.lat,
-                b.lon,
-              ),
-          ),
-        });
-      case 1:
-        return this.setState({
-          locations: locations.sort((a, b) => {
-            const locA = a.name.toUpperCase();
-            const locB = b.name.toUpperCase();
-            return locA < locB ? -1 : locA === locB ? 0 : 1;
-          }),
-        });
-      case 2:
-        return this.setState({
-          locations: locations.sort(
-            (a, b) => b.machine_count - a.machine_count,
-          ),
-        });
-      case 3:
-        return this.setState({
-          locations: locations.sort(
-            (a, b) =>
-              moment(b.updated_at, "YYYY-MM-DDTh:mm:ss").unix() -
-              moment(a.updated_at, "YYYY-MM-DDTh:mm:ss").unix(),
-          ),
-        });
-    }
-  }
+  const goToPage = (newPage) => {
+    setPage(newPage);
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
+    getListLocations(bounds, newPage, filterIdx);
+  };
 
-  componentDidMount() {
-    this.sortLocations(
-      this.state.locations,
-      this.props.locations.selectedLocationListFilter,
-    );
-  }
+  const displayLocations = listLocations;
 
-  render() {
-    const { lat, lon, locationTrackingServicesEnabled, unitPreference } =
-      this.props.user;
-    const { locations = [], showNoLocationTrackingModal } = this.state;
+  const showPagination = listPagy && listPagy.pages > 1;
 
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
-            <>
-              <ConfirmationModal
-                visible={showNoLocationTrackingModal}
-                closeModal={() =>
-                  this.setState({ showNoLocationTrackingModal: false })
-                }
-              >
-                <Pressable>
-                  <View>
-                    <Text style={s.confirmText}>
-                      Location tracking must be enabled to use this feature!
-                    </Text>
-                    <Text
-                      style={[s.confirmText, s.link, s.margin10]}
-                      onPress={() => Linking.openSettings()}
-                    >
-                      Go to phone settings to enable.
-                    </Text>
-                    <MaterialCommunityIcons
-                      name="close-circle"
-                      size={35}
-                      onPress={() =>
-                        this.setState({ showNoLocationTrackingModal: false })
-                      }
-                      style={s.xButton}
-                    />
-                  </View>
+  return (
+    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+      <ConfirmationModal
+        visible={showNoLocationTrackingModal}
+        closeModal={() => setShowNoLocationTrackingModal(false)}
+      >
+        <Pressable>
+          <View>
+            <Text style={s.confirmText}>
+              Location tracking must be enabled to use this feature!
+            </Text>
+            <Text
+              style={[s.confirmText, s.link, s.margin10]}
+              onPress={() => Linking.openSettings()}
+            >
+              Go to phone settings to enable.
+            </Text>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={35}
+              onPress={() => setShowNoLocationTrackingModal(false)}
+              style={s.xButton}
+            />
+          </View>
+        </Pressable>
+      </ConfirmationModal>
+      <ButtonGroup
+        onPress={updateIndex}
+        selectedIndex={filterIdx}
+        buttons={["Near", "A-Z", "# Pins", "Date"]}
+        containerStyle={s.buttonGroupContainer}
+        textStyle={s.buttonGroupInactive}
+        selectedButtonStyle={s.selButtonStyle}
+        selectedTextStyle={s.selTextStyle}
+        innerBorderStyle={s.innerBorderStyle}
+      />
+      {isFetchingList ? (
+        <View style={s.loadingContainer}>
+          <Text style={s.loadingText}>Loading...</Text>
+        </View>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={displayLocations}
+          renderItem={({ item }) => (
+            <LocationCard
+              locationType={
+                item.location_type_id
+                  ? (locationTypes.find(
+                      (location) => location.id === item.location_type_id,
+                    ) ?? {})
+                  : {}
+              }
+              name={item.name}
+              distance={
+                locationTrackingServicesEnabled
+                  ? getDistanceWithUnit(
+                      lat,
+                      lon,
+                      item.lat,
+                      item.lon,
+                      unitPreference,
+                    )
+                  : undefined
+              }
+              street={item.street}
+              city={item.city}
+              state={item.state}
+              zip={item.zip}
+              machines={item.machine_names_first}
+              navigation={navigation}
+              id={item.id}
+              numMachines={item.machine_count}
+            />
+          )}
+          keyExtractor={(item) => `list-item-${item.id}`}
+          ListFooterComponent={
+            showPagination ? (
+              <View style={s.paginationContainer}>
+                <Pressable
+                  onPress={() => goToPage(page - 1)}
+                  disabled={page === 1}
+                  style={[s.pageButton, page === 1 && s.pageButtonInactive]}
+                >
+                  <MaterialCommunityIcons
+                    name="chevron-left"
+                    size={22}
+                    color={page === 1 ? theme.text3 : theme.text2}
+                  />
+                  <Text
+                    style={[
+                      s.pageButtonText,
+                      page === 1 && s.pageButtonTextInactive,
+                    ]}
+                  >
+                    Prev
+                  </Text>
                 </Pressable>
-              </ConfirmationModal>
-              <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                <ButtonGroup
-                  onPress={this.updateIndex}
-                  selectedIndex={
-                    this.props.locations.selectedLocationListFilter
-                  }
-                  buttons={["Near", "A-Z", "# Pins", "Date"]}
-                  containerStyle={s.buttonGroupContainer}
-                  textStyle={s.buttonGroupInactive}
-                  selectedButtonStyle={s.selButtonStyle}
-                  selectedTextStyle={s.selTextStyle}
-                  innerBorderStyle={s.innerBorderStyle}
-                />
-                <FlatList
-                  data={locations}
-                  extraData={this.state}
-                  renderItem={({ item }) => (
-                    <LocationCard
-                      locationType={
-                        item.location_type_id
-                          ? this.props.locations.locationTypes.find(
-                              (location) =>
-                                location.id === item.location_type_id,
-                            )
-                          : {}
-                      }
-                      name={item.name}
-                      distance={
-                        locationTrackingServicesEnabled
-                          ? getDistanceWithUnit(
-                              lat,
-                              lon,
-                              item.lat,
-                              item.lon,
-                              unitPreference,
-                            )
-                          : undefined
-                      }
-                      street={item.street}
-                      city={item.city}
-                      state={item.state}
-                      zip={item.zip}
-                      machines={item.machine_names_first}
-                      navigation={this.props.navigation}
-                      id={item.id}
-                      numMachines={item.machine_count}
-                    />
-                  )}
-                  keyExtractor={(item, index) => `list-item-${index}`}
-                />
+                <Text style={s.pageIndicator}>
+                  {page} / {listPagy.pages}
+                </Text>
+                <Pressable
+                  onPress={() => goToPage(page + 1)}
+                  disabled={!listPagy.next}
+                  style={[s.pageButton, !listPagy.next && s.pageButtonInactive]}
+                >
+                  <Text
+                    style={[
+                      s.pageButtonText,
+                      !listPagy.next && s.pageButtonTextInactive,
+                    ]}
+                  >
+                    Next
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    size={22}
+                    color={!listPagy.next ? theme.text3 : theme.text2}
+                  />
+                </Pressable>
               </View>
-            </>
-          );
-        }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+            ) : null
+          }
+        />
+      )}
+    </View>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -218,6 +232,16 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontFamily: "Nunito-Bold",
     },
+    loadingContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    loadingText: {
+      color: theme.text2,
+      fontFamily: "Nunito-Regular",
+      fontSize: 16,
+    },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
@@ -252,18 +276,69 @@ const getStyles = (theme) =>
       color: theme.blue4,
       fontFamily: "Nunito-Regular",
     },
+    paginationContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 16,
+      paddingHorizontal: 20,
+      gap: 12,
+    },
+    pageButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 8,
+      paddingHorizontal: 14,
+      borderRadius: 20,
+      backgroundColor: theme.white,
+      borderWidth: 1,
+      borderColor: theme.pink2,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 3,
+    },
+    pageButtonInactive: {
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base2,
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+    pageButtonText: {
+      color: theme.text2,
+      fontFamily: "Nunito-SemiBold",
+      fontSize: 14,
+    },
+    pageButtonTextInactive: {
+      color: theme.text3,
+    },
+    pageIndicator: {
+      color: theme.text3,
+      fontFamily: "Nunito-Regular",
+      fontSize: 14,
+      minWidth: 40,
+      textAlign: "center",
+    },
   });
 
 LocationList.propTypes = {
   locations: PropTypes.object,
   user: PropTypes.object,
-  navigation: PropTypes.object,
+  query: PropTypes.object,
   selectLocationListFilterBy: PropTypes.func,
+  getListLocations: PropTypes.func,
 };
 
-const mapStateToProps = ({ locations, user }) => ({ locations, user });
+const mapStateToProps = ({ locations, user, query }) => ({
+  locations,
+  user,
+  query,
+});
 const mapDispatchToProps = (dispatch) => ({
   selectLocationListFilterBy: (idx) =>
     dispatch(selectLocationListFilterBy(idx)),
+  getListLocations: (bounds, page, filterIdx) =>
+    dispatch(getListLocations(bounds, page, filterIdx)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LocationList);

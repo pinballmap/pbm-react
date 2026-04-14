@@ -213,7 +213,7 @@ const LocationDetails = (props) => {
         type: "Feature",
         id: location.id,
         properties: {
-          icon: "moreOne",
+          icon: "marker_10_sel",
           machine_count: location.machine_count,
         },
         geometry: {
@@ -372,7 +372,7 @@ const LocationDetails = (props) => {
                 <Mapbox.SymbolLayer id={"symbol-id3"} style={iconStyles} />
                 <Mapbox.Images
                   images={{
-                    moreOne: require("../assets/marker-more-selected.png"),
+                    marker_10_sel: require("../assets/marker-10-sel.png"),
                   }}
                 />
               </Mapbox.ShapeSource>

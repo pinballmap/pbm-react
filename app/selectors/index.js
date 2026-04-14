@@ -46,68 +46,53 @@ export const filterSelected = createSelector(queryState, (query) =>
     : false,
 );
 
-const mapLocations = ({ locations }) => locations.mapLocations;
+const mapMarkers = ({ locations }) => locations.mapMarkers;
 const faveLocations = ({ user }) => user.faveLocations;
 export const selectedMapLocation = ({ locations }) =>
   locations.selectedMapLocation;
 
 export const getMapLocations = createSelector(
-  [mapLocations, faveLocations, selectedMapLocation],
-  (locations = [], faveLocations = [], selectedMapLocation) => {
-    return locations
-      .sort((a, b) => a.machine_count - b.machine_count)
-      .map((loc, index) => {
-        const getIcon = () => {
-          if (loc.id === selectedMapLocation) {
-            return loc.machine_count < 10 ? "oneSelected" : "moreOneSelected";
-          }
-          const isFave =
-            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
-          return loc.machine_count < 10
-            ? `one${isFave ? "Heart" : ""}`
-            : `moreOne${isFave ? "Heart" : ""}`;
-        };
-        const getTextColor = () => {
-          if (loc.id === selectedMapLocation) {
-            return "#fdebfc";
-          }
-          const isFave =
-            faveLocations.findIndex((fave) => fave.location_id === loc.id) > -1;
+  [mapMarkers, faveLocations, selectedMapLocation],
+  (markers = [], faveLocations = [], selectedMapLocation) => {
+    return [...markers]
+      .sort((a, b) => a.properties.machine_count - b.properties.machine_count)
+      .map((feature, index) => {
+        const id = feature.id;
+        const { machine_count } = feature.properties;
+        const isSelected = id === selectedMapLocation;
+        const isFave =
+          faveLocations.findIndex((fave) => fave.location_id === id) > -1;
 
-          if (isFave) {
-            return "#fdebfc";
-          }
+        const icon = isSelected
+          ? machine_count < 10
+            ? "marker_2_1_sel"
+            : "marker_10_sel"
+          : machine_count > 9
+            ? `marker_10${isFave ? "Heart" : ""}`
+            : isFave
+              ? "marker_2Heart"
+              : machine_count > 1
+                ? "marker_2"
+                : "marker_1";
 
-          // default case
-          return "#4c504d";
-        };
+        const textColor =
+          isSelected || (machine_count > 1 && !isFave) ? "#fdebfc" : "#4c504d";
+
         return {
-          type: "Feature",
-          id: loc.id,
+          ...feature,
           properties: {
+            ...feature.properties,
             order: index,
-            textOrder: locations.length - index,
-            machine_count: loc.machine_count,
-            name: loc.name,
-            icon: getIcon(),
-            textColor: getTextColor(),
-          },
-          geometry: {
-            type: "Point",
-            coordinates: [Number(loc.lon), Number(loc.lat)],
+            textOrder: markers.length - index,
+            icon,
+            textColor,
+            isSelected,
+            isFave,
           },
         };
       });
   },
 );
 
-export const getSelectedMapLocation = createSelector(
-  [mapLocations, selectedMapLocation],
-  (locations = [], selectedMapLocation) => {
-    if (!selectedMapLocation) {
-      return null;
-    }
-    const location = locations.find((l) => l.id === selectedMapLocation);
-    return location;
-  },
-);
+export const getSelectedMapLocation = ({ locations }) =>
+  locations.selectedMapLocationDetails ?? null;

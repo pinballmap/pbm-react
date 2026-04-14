@@ -166,7 +166,7 @@ class FindMachine extends React.PureComponent {
 
   static contextType = ThemeContext;
 
-  handleSearch = (query, machinesInView) => {
+  handleSearch = (query, machinesInView = this.state.machinesInView) => {
     const formattedQuery = query
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, "")
@@ -174,51 +174,29 @@ class FindMachine extends React.PureComponent {
       .toLowerCase()
       .trim();
 
-    if (machinesInView) {
-      const machinesInView = this.props.mapLocations.reduce((machines, loc) => {
-        loc.machine_ids &&
-          loc.machine_ids.map((machineId) => {
-            if (machines.indexOf(machineId) === -1) machines.push(machineId);
-          });
+    const { mapAreaMachineIds } = this.props.machines;
+    const baseList =
+      machinesInView && mapAreaMachineIds.length > 0
+        ? this.state.allMachines.filter((m) => mapAreaMachineIds.includes(m.id))
+        : this.state.allMachines;
 
-        return machines;
-      }, []);
-
-      const curMachines = this.state.allMachines.filter(
-        (mach) => machinesInView.indexOf(mach.id) > -1,
-      );
-      const machines = curMachines.filter((m) =>
-        m.name
-          .normalize("NFD")
-          .replace(/\p{Diacritic}/gu, "")
-          .replace(/[^\w\s]/g, "")
-          .toLowerCase()
-          .trim()
-          .includes(formattedQuery),
-      );
-      this.setState({ query, machines });
-    } else {
-      const machines = this.state.allMachines.filter((m) =>
-        m.name
-          .normalize("NFD")
-          .replace(/\p{Diacritic}/gu, "")
-          .replace(/[^\w\s]/g, "")
-          .toLowerCase()
-          .trim()
-          .includes(formattedQuery),
-      );
-      this.setState({ query, machines });
-    }
+    const machines = baseList.filter((m) =>
+      m.name
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .replace(/[^\w\s]/g, "")
+        .toLowerCase()
+        .trim()
+        .includes(formattedQuery),
+    );
+    this.setState({ query, machines });
   };
 
   toggleViewMachinesInMapArea = (idx) => {
-    if (idx === 0 && !!this.state.machinesInView) {
-      this.handleSearch(this.state.query, false);
-      this.setState({ machinesInView: false });
-    } else if (idx === 1 && !!!this.state.machinesInView) {
-      this.handleSearch(this.state.query, true);
-      this.setState({ machinesInView: true });
-    }
+    const machinesInView = idx === 1;
+    if (machinesInView === this.state.machinesInView) return;
+    this.handleSearch(this.state.query, machinesInView);
+    this.setState({ machinesInView });
   };
 
   setSelected = (machine) => {
@@ -654,14 +632,13 @@ FindMachine.propTypes = {
   location: PropTypes.object,
   multiSelect: PropTypes.bool,
   setMachineFilter: PropTypes.func,
-  mapLocations: PropTypes.array,
   route: PropTypes.object,
+  mapAreaMachineIds: PropTypes.array,
 };
 
-const mapStateToProps = ({ location, machines, locations }) => ({
+const mapStateToProps = ({ location, machines }) => ({
   location,
   machines,
-  mapLocations: locations.mapLocations || {},
 });
 const mapDispatchToProps = (dispatch) => ({
   addMachineToLocation: (machine, condition, ic_enabled) =>

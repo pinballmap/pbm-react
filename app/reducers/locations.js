@@ -2,25 +2,30 @@ import {
   FETCHING_LOCATION_TYPES,
   FETCHING_LOCATION_TYPES_SUCCESS,
   FETCHING_LOCATION_TYPES_FAILURE,
-  FETCHING_LOCATIONS,
-  FETCHING_LOCATIONS_SUCCESS,
-  FETCHING_LOCATIONS_FAILURE,
+  FETCHING_MAP_MARKERS,
+  FETCHING_MAP_MARKERS_SUCCESS,
+  FETCHING_MAP_MARKERS_FAILURE,
+  FETCHING_LIST_LOCATIONS,
+  FETCHING_LIST_LOCATIONS_SUCCESS,
+  FETCHING_LIST_LOCATIONS_FAILURE,
+  FETCHING_SELECTED_LOCATION_DETAILS_SUCCESS,
   SELECT_LOCATION_LIST_FILTER_BY,
-  LOCATION_DETAILS_CONFIRMED,
   LOCATION_MACHINE_REMOVED,
   MACHINE_ADDED_TO_LOCATION,
   SET_SELECTED_MAP_LOCATION,
 } from "../actions/types";
 
-const moment = require("moment");
-
 export const initialState = {
   isFetchingLocationTypes: false,
   locationTypes: [],
-  isFetchingLocations: false,
-  mapLocations: [],
+  isFetchingMarkers: false,
+  mapMarkers: [],
+  isFetchingList: false,
+  listLocations: [],
+  listPagy: null,
   selectedLocationListFilter: 0,
   selectedMapLocation: null,
+  selectedMapLocationDetails: null,
 };
 
 export default (state = initialState, action) => {
@@ -42,86 +47,91 @@ export default (state = initialState, action) => {
         isFetchingLocationTypes: false,
         locationTypes: [],
       };
-    case FETCHING_LOCATIONS:
+    case FETCHING_MAP_MARKERS:
       return {
         ...state,
-        isFetchingLocations: true,
+        isFetchingMarkers: true,
       };
-    case FETCHING_LOCATIONS_SUCCESS:
+    case FETCHING_MAP_MARKERS_SUCCESS:
       return {
         ...state,
-        isFetchingLocations: false,
-        mapLocations: action.locations,
+        isFetchingMarkers: false,
+        mapMarkers: action.features,
       };
-    case FETCHING_LOCATIONS_FAILURE:
+    case FETCHING_MAP_MARKERS_FAILURE:
       return {
         ...state,
-        isFetchingLocations: false,
-        mapLocations: [],
+        isFetchingMarkers: false,
+        mapMarkers: [],
+      };
+    case FETCHING_LIST_LOCATIONS:
+      return {
+        ...state,
+        isFetchingList: true,
+      };
+    case FETCHING_LIST_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        isFetchingList: false,
+        listLocations: action.locations,
+        listPagy: action.pagy,
+      };
+    case FETCHING_LIST_LOCATIONS_FAILURE:
+      return {
+        ...state,
+        isFetchingList: false,
+        listLocations: [],
+        listPagy: null,
+      };
+    case FETCHING_SELECTED_LOCATION_DETAILS_SUCCESS:
+      return {
+        ...state,
+        selectedMapLocationDetails: action.location,
       };
     case SELECT_LOCATION_LIST_FILTER_BY:
       return {
         ...state,
         selectedLocationListFilter: action.idx,
       };
-    case LOCATION_DETAILS_CONFIRMED: {
-      const mapLocations = state.mapLocations.map((loc) => {
-        if (loc.id === action.id) {
-          return {
-            ...loc,
-            updated_at: moment.utc().format(),
-          };
-        } else return loc;
-      });
-      return {
-        ...state,
-        mapLocations,
-      };
-    }
     case LOCATION_MACHINE_REMOVED: {
-      const { machine_id, location_id } = action;
-      const mapLocations = state.mapLocations.map((loc) => {
-        if (loc.id === location_id) {
-          const machine_ids = loc.machine_ids.filter((id) => id !== machine_id);
+      const { location_id } = action;
+      const mapMarkers = state.mapMarkers.map((feature) => {
+        if (feature.id === location_id) {
           return {
-            ...loc,
-            updated_at: moment.utc().format(),
-            machine_count: loc.machine_count - 1,
-            machine_ids,
+            ...feature,
+            properties: {
+              ...feature.properties,
+              machine_count: feature.properties.machine_count - 1,
+            },
           };
         }
-        return loc;
+        return feature;
       });
-
-      return {
-        ...state,
-        mapLocations,
-      };
+      return { ...state, mapMarkers };
     }
     case MACHINE_ADDED_TO_LOCATION: {
-      const { machine_id, location_id } = action;
-      const mapLocations = state.mapLocations.map((loc) => {
-        if (loc.id === location_id) {
-          const machine_ids = loc.machine_ids.concat(machine_id);
+      const { location_id } = action;
+      const mapMarkers = state.mapMarkers.map((feature) => {
+        if (feature.id === location_id) {
           return {
-            ...loc,
-            updated_at: moment.utc().format(),
-            machine_count: loc.machine_count + 1,
-            machine_ids,
+            ...feature,
+            properties: {
+              ...feature.properties,
+              machine_count: feature.properties.machine_count + 1,
+            },
           };
         }
-        return loc;
+        return feature;
       });
-
-      return {
-        ...state,
-        mapLocations,
-      };
+      return { ...state, mapMarkers };
     }
     case SET_SELECTED_MAP_LOCATION: {
       return {
         ...state,
         selectedMapLocation: action.id,
+        selectedMapLocationDetails: action.id
+          ? state.selectedMapLocationDetails
+          : null,
       };
     }
     default:

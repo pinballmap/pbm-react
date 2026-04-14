@@ -30,7 +30,7 @@ const LocationBottomSheet = React.memo(
       name,
       state,
       zip,
-      machine_names_first,
+      machine_names_first_no_year,
       machine_count,
       street,
       location_type_id,
@@ -102,24 +102,17 @@ const LocationBottomSheet = React.memo(
                 </View>
                 <View style={s.margin}>
                   <Text>
-                    {machine_names_first.map((m, index) => {
-                      const idx =
-                        typeof m === "string" ? m.lastIndexOf("(") : -1;
-                      const title =
-                        typeof m === "string" ? m.slice(0, idx) : m.name;
-                      const key = typeof m === "string" ? m : m.name;
-                      return (
-                        <Text key={key}>
-                          <Text style={s.machineName}>
-                            {`${title.trim()}${
-                              index !== machine_names_first.length - 1
-                                ? " \u2022 "
-                                : ""
-                            }`}
-                          </Text>
+                    {machine_names_first_no_year.map((name, index) => (
+                      <Text key={name}>
+                        <Text style={s.machineName}>
+                          {`${name}${
+                            index !== machine_names_first_no_year.length - 1
+                              ? " \u2022 "
+                              : ""
+                          }`}
                         </Text>
-                      );
-                    })}
+                      </Text>
+                    ))}
                     {machine_count > NUM_MACHINES_TO_SHOW ? (
                       <Text style={[s.plus, s.italic]}>{`  ...plus ${
                         machine_count - NUM_MACHINES_TO_SHOW

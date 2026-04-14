@@ -13,11 +13,11 @@ import {
   SET_OPERATOR_FILTER,
   SET_MACHINE_VERSION_FILTER,
 } from "./types";
-import { updateFilterLocations } from "./locations_actions";
+import { reloadMapMarkers } from "./locations_actions";
 
 export const clearFilters = (updateLocations) => (dispatch) => {
   dispatch({ type: CLEAR_FILTERS });
-  updateLocations && dispatch(updateFilterLocations());
+  updateLocations && dispatch(reloadMapMarkers());
 };
 export const setMachineFilter = (machine) => (dispatch) => {
   dispatch({ type: SET_MACHINE_FILTER, machine });

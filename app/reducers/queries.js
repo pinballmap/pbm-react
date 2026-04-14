@@ -11,11 +11,9 @@ import {
   SET_VIEW_FAVORITE_LOCATIONS_FILTER,
   SET_LOCATION_TYPE_FILTER,
   SET_OPERATOR_FILTER,
-  SET_MAX_ZOOM,
   SET_MACHINE_VERSION_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
-  UPDATE_IGNORE_MAX_ZOOM,
   TRIGGER_UPDATE_BOUNDS,
 } from "../actions/types";
 import { boundsToCoords } from "../utils/utilityFunctions";
@@ -33,7 +31,6 @@ export const initialState = {
   selectedActivities: [],
   selectedLocationActivities: [],
   machine: {},
-  maxZoom: false,
   viewByFavoriteLocations: false,
   machineGroupId: undefined,
   searchBarText: "",
@@ -64,12 +61,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         forceTriggerUpdateBounds: true,
-      };
-    }
-    case UPDATE_IGNORE_MAX_ZOOM: {
-      return {
-        ...state,
-        ignoreZoom: action.ignoreZoom,
       };
     }
     case SET_MACHINE_FILTER: {
@@ -156,11 +147,6 @@ export default (state = initialState, action) => {
         selectedLocationActivities: [],
       };
     }
-    case SET_MAX_ZOOM:
-      return {
-        ...state,
-        maxZoom: action.maxZoom || false,
-      };
     case SET_MACHINE_VERSION_FILTER:
       return {
         ...state,

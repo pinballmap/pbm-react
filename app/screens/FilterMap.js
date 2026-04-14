@@ -11,7 +11,8 @@ import {
   clearFilters,
   setMachineFilter,
   setMachineVersionFilter,
-  updateFilterLocations,
+  reloadMapMarkers,
+  getMapAreaMachineIds,
 } from "../actions";
 import {
   getLocationTypeName,
@@ -41,7 +42,7 @@ const FilterMap = ({
         // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
         // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
         if (navigation.getState().routes.length === 1) {
-          dispatch(updateFilterLocations());
+          dispatch(reloadMapMarkers());
         }
       }),
     [navigation],
@@ -119,8 +120,9 @@ const FilterMap = ({
           <DropDownButton
             title={machine && machine.name ? machine.name : "All"}
             onPress={() => {
-              navigate("FindMachine", { machineFilter: true });
               dispatch(setMachineFilter());
+              dispatch(getMapAreaMachineIds());
+              navigate("FindMachine", { machineFilter: true });
             }}
             margin={s.dropdownMargin}
           />

@@ -24,7 +24,7 @@ import {
   login,
   updateBounds,
   getLocationsByRegion,
-  getLocationsConsideringZoom,
+  getMapMarkers,
   triggerUpdateBounds,
   setSelectedMapLocation,
 } from "../actions";
@@ -39,7 +39,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
 const Map = ({
-  isFetchingLocations,
+  isFetchingMarkers,
   query,
   selectedLocation,
   numLocations,
@@ -70,7 +70,6 @@ const Map = ({
     numMachines = false,
     selectedOperator = false,
     viewByFavoriteLocations,
-    maxZoom,
     forceTriggerUpdateBounds,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
@@ -130,7 +129,7 @@ const Map = ({
         await sleep(50);
         const bounds = await getBounds();
         dispatch(updateBounds(bounds));
-        dispatch(getLocationsConsideringZoom(bounds));
+        dispatch(getMapMarkers(bounds));
       }
     };
     run();
@@ -231,7 +230,7 @@ const Map = ({
     await sleep(50);
     const bounds = await getBounds();
     dispatch(updateBounds(bounds));
-    dispatch(getLocationsConsideringZoom(bounds));
+    dispatch(getMapMarkers(bounds));
     setIsFirstLoad(false);
   };
 
@@ -255,7 +254,7 @@ const Map = ({
   const refreshResults = async () => {
     dispatch(clearSearchBarText());
     const bounds = await setToCurrentBounds();
-    dispatch(getLocationsConsideringZoom(bounds));
+    dispatch(getMapMarkers(bounds));
   };
 
   const updateCurrentLocation = () => {
@@ -283,21 +282,16 @@ const Map = ({
           onPressFilter={onPressFilter}
         />
       </View>
-      {isFetchingLocations ? (
+      {isFetchingMarkers ? (
         <View style={[{ top: topMargin + 150 }, s.loading]}>
           <Text style={s.loadingText}>Loading...</Text>
         </View>
       ) : null}
-      {numLocations === 0 && !isFetchingLocations && !isFirstLoad && (
+      {numLocations === 0 && !isFetchingMarkers && !isFirstLoad && (
         <View style={[{ top: topMargin + 150 }, s.loading]}>
           <Text style={s.loadingText}>No Results</Text>
         </View>
       )}
-      {maxZoom ? (
-        <View style={[{ top: topMargin + 150 }, s.loading]}>
-          <Text style={s.loadingText}>Zoom in to update results</Text>
-        </View>
-      ) : null}
       <Mapbox.MapView
         ref={(c) => (_map.current = c)}
         onDidFinishLoadingMap={onFinishedLoading}
@@ -579,13 +573,13 @@ const getStyles = (theme) =>
 const mapStateToProps = (state) => {
   const { locations, query, regions, user } = state;
   const selectedLocation = getSelectedMapLocation(state);
-  const numLocations = locations.mapLocations.length;
+  const numLocations = locations.mapMarkers.length;
   const { locationTrackingServicesEnabled, isLocationServicesEnabled } = user;
 
   return {
     query,
     regions,
-    isFetchingLocations: locations.isFetchingLocations,
+    isFetchingMarkers: locations.isFetchingMarkers,
     selectedLocation,
     numLocations,
     isLocationServicesEnabled,

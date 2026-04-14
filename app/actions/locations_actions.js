@@ -2,14 +2,17 @@ import {
   FETCHING_LOCATION_TYPES,
   FETCHING_LOCATION_TYPES_SUCCESS,
   FETCHING_LOCATION_TYPES_FAILURE,
-  FETCHING_LOCATIONS,
-  FETCHING_LOCATIONS_SUCCESS,
-  FETCHING_LOCATIONS_FAILURE,
+  FETCHING_MAP_MARKERS,
+  FETCHING_MAP_MARKERS_SUCCESS,
+  FETCHING_MAP_MARKERS_FAILURE,
+  FETCHING_LIST_LOCATIONS,
+  FETCHING_LIST_LOCATIONS_SUCCESS,
+  FETCHING_LIST_LOCATIONS_FAILURE,
+  FETCHING_SELECTED_LOCATION_DETAILS_SUCCESS,
   SELECT_LOCATION_LIST_FILTER_BY,
-  SET_MAX_ZOOM,
   UPDATE_BOUNDS,
-  UPDATE_IGNORE_MAX_ZOOM,
   SET_SELECTED_MAP_LOCATION,
+  FETCHING_MAP_AREA_MACHINE_IDS_SUCCESS,
 } from "./types";
 import { getData } from "../config/request";
 import { atLeastMinZoom, coordsToBounds } from "../utils/utilityFunctions";
@@ -33,7 +36,7 @@ export const getLocationTypeFailure = () => ({
   type: FETCHING_LOCATION_TYPES_FAILURE,
 });
 
-export const getFilterState = (filterState) => {
+const buildFilterQueryString = (query, userId) => {
   const {
     machineId,
     machineGroupId,
@@ -41,96 +44,81 @@ export const getFilterState = (filterState) => {
     numMachines,
     selectedOperator,
     viewByFavoriteLocations,
-    ignoreZoom,
-  } = filterState;
-  const noFilterNeeded = !!selectedOperator || !!viewByFavoriteLocations;
-  const filteringMachineOrType = !!machineId || !!locationType;
-  const multipleFilters =
-    (!!machineId && !!locationType) ||
-    (filteringMachineOrType && numMachines > 1);
-  const filteringByTwoMachines = numMachines === "2";
-  const filteringByMoreMachines = numMachines > 2;
-  const maxDelta = noFilterNeeded
-    ? 100 // A large number so that all locations are included for Operator and Fave Locations
-    : multipleFilters
-      ? 80 // A pretty large delta when multiple filters are applied
-      : filteringByTwoMachines
-        ? 12
-        : filteringByMoreMachines
-          ? numMachines * 4
-          : !!machineGroupId
-            ? 20
-            : filteringMachineOrType
-              ? 40
-              : 6;
-  return {
-    maxDelta,
-    ignoreZoom,
-  };
+  } = query;
+  const machineQueryString = machineGroupId
+    ? `by_machine_group_id=${machineGroupId}&`
+    : machineId
+      ? `by_machine_single_id=${machineId}&`
+      : "";
+  const locationTypeQueryString = locationType
+    ? `by_type_id=${locationType}&`
+    : "";
+  const numMachinesQueryString = numMachines
+    ? `by_at_least_n_machines_type=${numMachines}&`
+    : "";
+  const byOperator = selectedOperator
+    ? `by_operator_id=${selectedOperator}&`
+    : "";
+  const byUserFaved =
+    viewByFavoriteLocations && userId ? `user_faved=${userId}&` : "";
+  return `${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved}`;
 };
 
-export const getLocationsByBounds =
+export const getMapMarkers =
   ({ swLat, swLon, neLat, neLon }) =>
   (dispatch, getState) => {
-    const {
-      machineId,
-      locationType,
-      numMachines,
-      selectedOperator,
-      machineGroupId,
-      viewByFavoriteLocations,
-    } = getState().query;
-    const { id: userId } = getState().user;
-    const machineQueryString = machineGroupId
-      ? `by_machine_group_id=${machineGroupId}&`
-      : machineId
-        ? `by_machine_single_id=${machineId}&`
-        : "";
-    const locationTypeQueryString = locationType
-      ? `by_type_id=${locationType}&`
-      : "";
-    const numMachinesQueryString = numMachines
-      ? `by_at_least_n_machines_type=${numMachines}&`
-      : "";
-    const byOperator = selectedOperator
-      ? `by_operator_id=${selectedOperator}&`
-      : "";
-    const byUserFaved =
-      viewByFavoriteLocations && userId ? `user_faved=${userId}&` : "";
-    const url = `/locations/within_bounding_box.json?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${machineQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved}no_details=1`;
-    dispatch({ type: FETCHING_LOCATIONS });
+    const { query, user } = getState();
+    const filterParams = buildFilterQueryString(query, user.id);
+    const url = `/locations/within_bounding_box.geojson?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${filterParams}no_details=2`;
+    dispatch({ type: FETCHING_MAP_MARKERS });
     return getData(url)
-      .then((data) => {
-        dispatch(getLocationsSuccess(data));
-      })
-      .catch((err) => dispatch(getLocationsFailure(err)));
+      .then((data) =>
+        dispatch({
+          type: FETCHING_MAP_MARKERS_SUCCESS,
+          features: data.features ?? [],
+        }),
+      )
+      .catch(() => dispatch({ type: FETCHING_MAP_MARKERS_FAILURE }));
   };
 
-export const getLocationsConsideringZoom = (bounds) => (dispatch, getState) => {
-  const { neLat, neLon, swLat, swLon } = bounds;
-  const { maxDelta, ignoreZoom } = getFilterState(getState().query);
-  const latDelta = Math.abs(neLat - swLat);
-  const lonDelta = Math.abs(neLon - swLon);
-  const maxZoom = latDelta > maxDelta || lonDelta > maxDelta;
+// Sort order for list requests. Index matches the ButtonGroup in LocationList:
+// 0=Near, 1=A-Z, 2=# Pins, 3=Date
+const ORDER_BY_MAP = ["distance", "name", "machine_count", "updated_at"];
+const DEFAULT_LIST_LIMIT = 50;
 
-  dispatch({ type: SET_MAX_ZOOM, maxZoom });
-  if (ignoreZoom || !maxZoom) {
-    ignoreZoom && dispatch({ type: UPDATE_IGNORE_MAX_ZOOM, ignoreZoom: false });
-    dispatch(getLocationsByBounds(bounds));
-  }
-};
+export const getListLocations =
+  ({ swLat, swLon, neLat, neLon }, page = 1, filterIdx = 0) =>
+  (dispatch, getState) => {
+    const { query, user } = getState();
+    const filterParams = buildFilterQueryString(query, user.id);
+    const isNear = filterIdx === 0;
+    const orderBy = ORDER_BY_MAP[filterIdx] ?? "name";
+    const nearParams =
+      isNear && user.lat && user.lon
+        ? `&user_lat=${user.lat}&user_lon=${user.lon}`
+        : "";
+    const url = `/locations/within_bounding_box.json?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${filterParams}no_details=1&limit=${DEFAULT_LIST_LIMIT}&page=${page}&order_by=${orderBy}${nearParams}`;
+    dispatch({ type: FETCHING_LIST_LOCATIONS });
+    return getData(url)
+      .then((data) =>
+        dispatch({
+          type: FETCHING_LIST_LOCATIONS_SUCCESS,
+          locations: data.locations ?? [],
+          pagy: data.pagy ?? null,
+        }),
+      )
+      .catch(() => dispatch({ type: FETCHING_LIST_LOCATIONS_FAILURE }));
+  };
 
-export const updateFilterLocations = () => (dispatch, getState) => {
-  const { swLat, swLon, neLat, neLon } = getState().query;
-  const { maxDelta } = getFilterState(getState().query);
-  const latDelta = Math.abs(neLat - swLat);
-  const lonDelta = Math.abs(neLon - swLon);
-  const maxZoom = latDelta > maxDelta || lonDelta > maxDelta;
-
-  dispatch({ type: SET_MAX_ZOOM, maxZoom });
-  if (!maxZoom) {
-    dispatch(getLocationsByBounds({ neLat, neLon, swLat, swLon }));
-  }
+export const fetchSelectedLocationDetails = (id) => (dispatch) => {
+  return getData(`/locations/${id}.json?no_details=2`)
+    .then((data) =>
+      dispatch({
+        type: FETCHING_SELECTED_LOCATION_DETAILS_SUCCESS,
+        location: data,
+      }),
+    )
+    .catch((err) => console.log(err));
 };
 
 export const updateBounds = (bounds) => (dispatch) => {
@@ -145,17 +133,6 @@ export const triggerUpdateBounds = (bounds) => (dispatch) => {
   });
 };
 
-export const getLocationsSuccess = (data) => {
-  return {
-    type: FETCHING_LOCATIONS_SUCCESS,
-    locations: data.locations ?? [],
-  };
-};
-
-export const getLocationsFailure = () => (dispatch) => {
-  dispatch({ type: FETCHING_LOCATIONS_FAILURE });
-};
-
 export const selectLocationListFilterBy = (idx) => {
   return {
     type: SELECT_LOCATION_LIST_FILTER_BY,
@@ -167,7 +144,6 @@ export const getLocationsByRegion = (region) => (dispatch) => {
   const { lat, lon, effective_radius } = region;
 
   const getDelta = () => {
-    // Approximate hacks for an appropriate zoom depending on region's effective radius
     switch (true) {
       case effective_radius > 301:
         return 14;
@@ -200,12 +176,33 @@ export const getLocationsByRegion = (region) => (dispatch) => {
     lonDelta: delta,
   });
   dispatch({ type: UPDATE_BOUNDS, bounds, triggerUpdateBounds: true });
-  dispatch({ type: UPDATE_IGNORE_MAX_ZOOM, ignoreZoom: true });
+};
+
+export const getMapAreaMachineIds = () => (dispatch, getState) => {
+  const { query, user } = getState();
+  const { swLat, swLon, neLat, neLon } = query;
+  const filterParams = buildFilterQueryString(query, user.id);
+  const url = `/locations/within_bounding_box.json?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${filterParams}machines_only=1`;
+  return getData(url)
+    .then((data) =>
+      dispatch({
+        type: FETCHING_MAP_AREA_MACHINE_IDS_SUCCESS,
+        machineIds: data.machine_ids ?? [],
+      }),
+    )
+    .catch(() => {});
+};
+
+// Convenience: re-fetch markers using the currently stored bounds + filters.
+// Use this after filter changes instead of the old updateFilterLocations.
+export const reloadMapMarkers = () => (dispatch, getState) => {
+  const { swLat, swLon, neLat, neLon } = getState().query;
+  dispatch(getMapMarkers({ swLat, swLon, neLat, neLon }));
 };
 
 export const setSelectedMapLocation = (id) => (dispatch) => {
-  dispatch({
-    type: SET_SELECTED_MAP_LOCATION,
-    id,
-  });
+  dispatch({ type: SET_SELECTED_MAP_LOCATION, id });
+  if (id) {
+    dispatch(fetchSelectedLocationDetails(id));
+  }
 };
