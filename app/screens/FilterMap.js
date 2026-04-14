@@ -11,6 +11,7 @@ import {
   clearFilters,
   setMachineFilterMulti,
   setMachineVersionFilter,
+  setIcFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
   clearSelectedState,
@@ -41,6 +42,7 @@ const FilterMap = ({
     numMachines,
     viewByFavoriteLocations,
     machineGroupId,
+    icFilter,
   } = query;
   const { navigate } = navigation;
 
@@ -175,6 +177,23 @@ const FilterMap = ({
                 }
                 selectedIndex={machineGroupId ? 0 : 1}
                 buttons={["All Versions", "Selected Version"]}
+                containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+                textStyle={s.buttonGroupInactive}
+                selectedButtonStyle={s.selButtonStyle}
+                selectedTextStyle={s.selTextStyle}
+                innerBorderStyle={s.innerBorderStyle}
+              />
+            </>
+          )}
+          {machines.length === 1 && machines[0].ic_eligible && (
+            <>
+              <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+                Has Stern Insider Connected?
+              </Text>
+              <ButtonGroup
+                onPress={(idx) => dispatch(setIcFilter(idx === 1))}
+                selectedIndex={icFilter ? 1 : 0}
+                buttons={["Doesn't matter", "Has IC"]}
                 containerStyle={[s.buttonGroupContainer, s.boxShadow]}
                 textStyle={s.buttonGroupInactive}
                 selectedButtonStyle={s.selButtonStyle}

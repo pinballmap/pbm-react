@@ -66,10 +66,13 @@ const Map = ({
     neLat,
     neLon,
     machineId = false,
+    machineIds = [],
     locationType = false,
+    locationTypeIds = [],
     numMachines = false,
     selectedOperator = false,
     viewByFavoriteLocations,
+    icFilter,
     forceTriggerUpdateBounds,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
@@ -77,10 +80,13 @@ const Map = ({
   const longitude = (swLon + neLon) / 2;
   const filterApplied =
     machineId ||
+    machineIds.length > 0 ||
     locationType ||
+    locationTypeIds.length > 0 ||
     numMachines ||
     selectedOperator ||
-    viewByFavoriteLocations
+    viewByFavoriteLocations ||
+    icFilter
       ? true
       : false;
 

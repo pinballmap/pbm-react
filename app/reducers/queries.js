@@ -12,6 +12,7 @@ import {
   SET_LOCATION_TYPE_FILTER,
   SET_OPERATOR_FILTER,
   SET_MACHINE_VERSION_FILTER,
+  SET_IC_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   TRIGGER_UPDATE_BOUNDS,
@@ -36,6 +37,7 @@ export const initialState = {
   machine: {},
   viewByFavoriteLocations: false,
   machineGroupId: undefined,
+  icFilter: false,
   searchBarText: "",
   triggerUpdateBounds: false,
   forceTriggerUpdateBounds: false,
@@ -74,6 +76,7 @@ export default (state = initialState, action) => {
           machines,
           machineIds: machines.map((m) => m.id),
           machineGroupId: undefined,
+          icFilter: false,
           machineId: "",
           machine: {},
         };
@@ -136,6 +139,12 @@ export default (state = initialState, action) => {
         machine: {},
         viewByFavoriteLocations: false,
         machineGroupId: undefined,
+        icFilter: false,
+      };
+    case SET_IC_FILTER:
+      return {
+        ...state,
+        icFilter: action.icFilter,
       };
     case SET_SELECTED_ACTIVITY_FILTER: {
       AsyncStorage.setItem(

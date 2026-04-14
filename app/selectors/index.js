@@ -43,7 +43,8 @@ export const filterSelected = createSelector(queryState, (query) =>
   query.locationType !== "" ||
   query.selectedOperator !== "" ||
   query.numMachines !== 0 ||
-  query.viewByFavoriteLocations
+  query.viewByFavoriteLocations ||
+  query.icFilter
     ? true
     : false,
 );
