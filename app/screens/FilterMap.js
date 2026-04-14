@@ -12,6 +12,7 @@ import {
   setMachineFilterMulti,
   setMachineVersionFilter,
   setIcFilter,
+  selectedManufacturerFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
   clearSelectedState,
@@ -43,6 +44,7 @@ const FilterMap = ({
     viewByFavoriteLocations,
     machineGroupId,
     icFilter,
+    manufacturerFilter = [],
   } = query;
   const { navigate } = navigation;
 
@@ -160,6 +162,7 @@ const FilterMap = ({
                 machineFilter: true,
                 multiSelect: true,
                 showDone: machines.length > 0,
+                manufacturerFilter,
               });
             }}
             margin={s.dropdownMargin}
@@ -202,6 +205,27 @@ const FilterMap = ({
               />
             </>
           )}
+          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+            Manufacturer
+          </Text>
+          <DropDownButton
+            title={
+              manufacturerFilter.length > 1
+                ? "Multiple manufacturers"
+                : manufacturerFilter.length === 1
+                  ? manufacturerFilter[0]
+                  : "All"
+            }
+            onPress={() =>
+              navigation.navigate("FindManufacturer", {
+                selectedManufacturers: manufacturerFilter,
+                onGoBack: (manufacturers) => {
+                  dispatch(selectedManufacturerFilter(manufacturers));
+                },
+              })
+            }
+            margin={s.dropdownMargin}
+          />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Limit by number of machines
           </Text>

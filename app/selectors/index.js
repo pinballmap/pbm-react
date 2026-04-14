@@ -44,7 +44,8 @@ export const filterSelected = createSelector(queryState, (query) =>
   query.selectedOperator !== "" ||
   query.numMachines !== 0 ||
   query.viewByFavoriteLocations ||
-  query.icFilter
+  query.icFilter ||
+  query.manufacturerFilter?.length > 0
     ? true
     : false,
 );

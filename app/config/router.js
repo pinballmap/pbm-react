@@ -31,6 +31,7 @@ import PasswordReset from "../screens/PasswordReset";
 import ResendConfirmation from "../screens/ResendConfirmation";
 import FindOperator from "../screens/FindOperator";
 import FindLocationType from "../screens/FindLocationType";
+import FindManufacturer from "../screens/FindManufacturer";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
@@ -400,6 +401,11 @@ function MapStack() {
         name="FindLocationType"
         component={FindLocationType}
         options={{ title: "Select Location Type" }}
+      />
+      <Stack.Screen
+        name="FindManufacturer"
+        component={FindManufacturer}
+        options={{ title: "Select Manufacturer" }}
       />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen

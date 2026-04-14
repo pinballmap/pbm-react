@@ -101,10 +101,17 @@ class FindMachine extends React.PureComponent {
   constructor(props) {
     super(props);
     const sortedMachines = alphaSortNameObj(props.machines.machines);
+    const manufacturerFilter = props.route.params?.manufacturerFilter || [];
+    const filteredMachines =
+      manufacturerFilter.length > 0
+        ? sortedMachines.filter((m) =>
+            manufacturerFilter.includes(m.manufacturer),
+          )
+        : sortedMachines;
 
     this.state = {
-      machines: sortedMachines,
-      allMachines: sortedMachines,
+      machines: filteredMachines,
+      allMachines: filteredMachines,
       query: "",
       showModal: false,
       machine: {},

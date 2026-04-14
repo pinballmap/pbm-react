@@ -13,6 +13,7 @@ import {
   SET_OPERATOR_FILTER,
   SET_MACHINE_VERSION_FILTER,
   SET_IC_FILTER,
+  SET_MANUFACTURER_FILTER,
 } from "./types";
 import { reloadMapMarkers } from "./locations_actions";
 
@@ -25,6 +26,9 @@ export const setMachineFilter = (machine) => (dispatch) => {
 };
 export const setMachineFilterMulti = (machines) => (dispatch) => {
   dispatch({ type: SET_MACHINE_FILTER, machines });
+};
+export const selectedManufacturerFilter = (manufacturers) => (dispatch) => {
+  dispatch({ type: SET_MANUFACTURER_FILTER, manufacturers });
 };
 export const setIcFilter = (value) => (dispatch) => {
   dispatch({ type: SET_IC_FILTER, icFilter: value });

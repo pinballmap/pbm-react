@@ -13,6 +13,7 @@ import {
   SET_OPERATOR_FILTER,
   SET_MACHINE_VERSION_FILTER,
   SET_IC_FILTER,
+  SET_MANUFACTURER_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   TRIGGER_UPDATE_BOUNDS,
@@ -38,6 +39,7 @@ export const initialState = {
   viewByFavoriteLocations: false,
   machineGroupId: undefined,
   icFilter: false,
+  manufacturerFilter: [],
   searchBarText: "",
   triggerUpdateBounds: false,
   forceTriggerUpdateBounds: false,
@@ -140,12 +142,31 @@ export default (state = initialState, action) => {
         viewByFavoriteLocations: false,
         machineGroupId: undefined,
         icFilter: false,
+        manufacturerFilter: [],
       };
     case SET_IC_FILTER:
       return {
         ...state,
         icFilter: action.icFilter,
       };
+    case SET_MANUFACTURER_FILTER: {
+      const manufacturers = action.manufacturers;
+      if (manufacturers.length === 0) {
+        return { ...state, manufacturerFilter: [] };
+      }
+      const filteredMachines = state.machines.filter((m) =>
+        manufacturers.includes(m.manufacturer),
+      );
+      const machinesChanged = filteredMachines.length !== state.machines.length;
+      return {
+        ...state,
+        manufacturerFilter: manufacturers,
+        machines: filteredMachines,
+        machineIds: filteredMachines.map((m) => m.id),
+        machineGroupId: machinesChanged ? undefined : state.machineGroupId,
+        icFilter: filteredMachines.length === 0 ? false : state.icFilter,
+      };
+    }
     case SET_SELECTED_ACTIVITY_FILTER: {
       AsyncStorage.setItem(
         "selectedActivities",
