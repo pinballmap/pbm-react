@@ -42,7 +42,14 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const [pagy, setPagy] = useState(null);
   const scrollViewRef = useRef(null);
   const filtersChangedRef = useRef(false);
-  const { selectedActivities = [], swLat, swLon, neLat, neLon } = query;
+  const {
+    selectedActivities = [],
+    selectedActivityMachines = [],
+    swLat,
+    swLon,
+    neLat,
+    neLon,
+  } = query;
   const { lat, lon } = boundsToCoords({ swLat, swLon, neLat, neLon });
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
   const distanceUnitAbbrev = user.unitPreference ? "km" : "mi";
@@ -55,7 +62,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { id: userId, loggedIn } = user;
 
   useEffect(() => {
-    navigation.setOptions({ headerRight: () => <FilterRecentActivity /> });
+    navigation.setOptions({
+      headerRight: () => (
+        <FilterRecentActivity
+          onNavigateToFindMachine={() => setShouldRefresh(false)}
+        />
+      ),
+    });
   }, []);
 
   const yourActivitySelected =
@@ -67,6 +80,11 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       ? types.map((a) => `&submission_type[]=${a}`).join("")
       : "";
   };
+
+  const buildMachineIdParam = (machines) =>
+    machines.length
+      ? machines.map((m) => `&machine_id[]=${m.id}`).join("")
+      : "";
 
   const fetchData = useCallback(
     (_, distance, global = btnIdx === 3) => {
@@ -80,12 +98,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         setPage(1);
         const submissionTypeParam =
           buildSubmissionTypeParam(selectedActivities);
+        const machineIdParam = buildMachineIdParam(selectedActivityMachines);
         const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
         const url = global
-          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
+          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
           : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
               distance || maxDistance
-            }&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+            }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
         getData(url).then((data) => {
           setFetchingRecentActivity(false);
           setRecentActivity(data.user_submissions);
@@ -100,6 +119,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       maxDistance,
       shouldRefresh,
       selectedActivities,
+      selectedActivityMachines,
       userId,
       loggedIn,
       btnIdx,
@@ -111,11 +131,12 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     setPage(newPage);
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
     const submissionTypeParam = buildSubmissionTypeParam(selectedActivities);
+    const machineIdParam = buildMachineIdParam(selectedActivityMachines);
     const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
     const url =
       btnIdx === 3
-        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`
-        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
+        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url).then((data) => {
       setFetchingRecentActivity(false);
       setRecentActivity(data.user_submissions);
@@ -132,6 +153,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       maxDistance,
       shouldRefresh,
       selectedActivities,
+      selectedActivityMachines,
       userId,
       loggedIn,
       btnIdx,
@@ -144,7 +166,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       return;
     }
     fetchData(null, null, btnIdx === 3);
-  }, [selectedActivities]);
+  }, [selectedActivities, selectedActivityMachines]);
 
   const updateIdx = (selectedIdx) => {
     const distanceMap = [10, 50, 150];
@@ -310,7 +332,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         selectedTextStyle={s.selTextStyle}
         innerBorderStyle={s.innerBorderStyle}
       />
-      {selectedActivities.length ? (
+      {selectedActivities.length || selectedActivityMachines.length ? (
         <View style={s.filterView}>
           <Text style={s.filter}>Clear filters</Text>
           <MaterialCommunityIcons

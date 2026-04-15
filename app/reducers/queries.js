@@ -20,6 +20,7 @@ import {
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   TRIGGER_UPDATE_BOUNDS,
+  SET_ACTIVITY_MACHINE_FILTER,
 } from "../actions/types";
 import { boundsToCoords } from "../utils/utilityFunctions";
 
@@ -37,6 +38,7 @@ export const initialState = {
   numMachines: 0,
   selectedOperator: "",
   selectedActivities: [],
+  selectedActivityMachines: [],
   selectedLocationActivities: [],
   machine: {},
   viewByFavoriteLocations: false,
@@ -194,8 +196,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedActivities: [],
+        selectedActivityMachines: [],
       };
     }
+    case SET_ACTIVITY_MACHINE_FILTER:
+      return {
+        ...state,
+        selectedActivityMachines: action.machines,
+      };
     case SET_SELECTED_LOCATION_ACTIVITY_FILTER: {
       AsyncStorage.setItem(
         "selectedLocationActivities",

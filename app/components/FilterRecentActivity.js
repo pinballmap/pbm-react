@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -7,23 +7,56 @@ import {
   Entypo,
   FontAwesome6,
 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
 import ConfirmationModal from "./ConfirmationModal";
-import { setSelectedActivitiesFilter } from "../actions";
+import {
+  setSelectedActivitiesFilter,
+  setActivityMachinesFilter,
+  addMachineToList,
+  clearSelectedState,
+} from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
 
-const FilterRecentActivity = ({ setSelectedActivitiesFilter, query, user }) => {
+const FilterRecentActivity = ({
+  setSelectedActivitiesFilter,
+  setActivityMachinesFilter,
+  addMachineToList,
+  clearSelectedState,
+  onNavigateToFindMachine,
+  query,
+  user,
+}) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const { loggedIn } = user;
+  const navigation = useNavigation();
+  const store = useStore();
 
   const [showModal, setShowModal] = useState(false);
   const [pendingActivities, setPendingActivities] = useState([]);
+  const [pendingActivityMachines, setPendingActivityMachines] = useState([]);
 
-  const { selectedActivities = [] } = query;
+  const shouldReopenModal = useRef(false);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (shouldReopenModal.current) {
+        shouldReopenModal.current = false;
+        const machineList = store.getState().location.machineList;
+        setPendingActivityMachines([...machineList]);
+        setShowModal(true);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const { selectedActivities = [], selectedActivityMachines = [] } = query;
 
   const openModal = () => {
     setPendingActivities(selectedActivities);
+    setPendingActivityMachines(selectedActivityMachines);
     setShowModal(true);
   };
 
@@ -36,10 +69,25 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query, user }) => {
     setPendingActivities(activities);
   };
 
+  const navigateToFindMachine = () => {
+    onNavigateToFindMachine?.();
+    clearSelectedState();
+    pendingActivityMachines.forEach((m) => addMachineToList(m));
+    shouldReopenModal.current = true;
+    setShowModal(false);
+    navigation.navigate("FindMachine", {
+      multiSelect: true,
+      showDone: pendingActivityMachines.length > 0,
+    });
+  };
+
   const applyFilters = () => {
     setSelectedActivitiesFilter(pendingActivities);
+    setActivityMachinesFilter(pendingActivityMachines);
     setShowModal(false);
   };
+
+  const specificMachinesSelected = pendingActivityMachines.length > 0;
 
   return (
     <View>
@@ -228,6 +276,34 @@ const FilterRecentActivity = ({ setSelectedActivitiesFilter, query, user }) => {
                   Locations added
                 </Text>
               </Pressable>
+              <Pressable
+                style={[
+                  s.container,
+                  specificMachinesSelected
+                    ? s.containerSelected
+                    : s.containerNotSelected,
+                ]}
+                onPress={navigateToFindMachine}
+              >
+                <MaterialCommunityIcons
+                  name="format-list-checks"
+                  size={32}
+                  color="#4db8c8"
+                  style={s.iconStyle}
+                />
+                <Text
+                  style={[
+                    s.titleStyle,
+                    specificMachinesSelected
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
+                  ]}
+                >
+                  {specificMachinesSelected
+                    ? `${pendingActivityMachines.length} Machine${pendingActivityMachines.length > 1 ? "s" : ""} Selected`
+                    : "Specific Machines"}
+                </Text>
+              </Pressable>
               {loggedIn && (
                 <Pressable
                   style={[
@@ -350,13 +426,21 @@ const getStyles = (theme) =>
 FilterRecentActivity.propTypes = {
   query: PropTypes.object,
   user: PropTypes.object,
-  setSelectedActivityFilter: PropTypes.func,
+  setSelectedActivitiesFilter: PropTypes.func,
+  setActivityMachinesFilter: PropTypes.func,
+  addMachineToList: PropTypes.func,
+  clearSelectedState: PropTypes.func,
+  onNavigateToFindMachine: PropTypes.func,
 };
 
 const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   setSelectedActivitiesFilter: (activity) =>
     dispatch(setSelectedActivitiesFilter(activity)),
+  setActivityMachinesFilter: (machines) =>
+    dispatch(setActivityMachinesFilter(machines)),
+  addMachineToList: (machine) => dispatch(addMachineToList(machine)),
+  clearSelectedState: () => dispatch(clearSelectedState()),
 });
 export default connect(
   mapStateToProps,

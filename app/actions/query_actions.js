@@ -17,6 +17,7 @@ import {
   SET_MACHINE_TYPE_FILTER,
   SET_MACHINE_YEAR_FILTER,
   SET_LOCATION_IC_FILTER,
+  SET_ACTIVITY_MACHINE_FILTER,
 } from "./types";
 import { reloadMapMarkers } from "./locations_actions";
 
@@ -77,6 +78,11 @@ export const setSelectedActivitiesFilter = (selectedActivities) => ({
 });
 
 export const clearActivityFilter = () => ({ type: CLEAR_ACTIVITY_FILTER });
+
+export const setActivityMachinesFilter = (machines) => ({
+  type: SET_ACTIVITY_MACHINE_FILTER,
+  machines,
+});
 
 export const setSelectedLocationActivitiesFilter = (
   selectedLocationActivities,
