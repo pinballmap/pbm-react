@@ -48,7 +48,8 @@ export const filterSelected = createSelector(queryState, (query) =>
   query.manufacturerFilter?.length > 0 ||
   query.machineTypeFilter !== "" ||
   query.machineYearGte !== null ||
-  query.machineYearLte !== null
+  query.machineYearLte !== null ||
+  query.locationIcFilter
     ? true
     : false,
 );

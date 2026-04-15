@@ -16,6 +16,7 @@ import {
   SET_MANUFACTURER_FILTER,
   SET_MACHINE_TYPE_FILTER,
   SET_MACHINE_YEAR_FILTER,
+  SET_LOCATION_IC_FILTER,
 } from "./types";
 import { reloadMapMarkers } from "./locations_actions";
 
@@ -37,6 +38,9 @@ export const setMachineTypeFilter = (machineType) => (dispatch) => {
 };
 export const setMachineYearFilter = (gte, lte) => (dispatch) => {
   dispatch({ type: SET_MACHINE_YEAR_FILTER, gte, lte });
+};
+export const setLocationIcFilter = (value) => (dispatch) => {
+  dispatch({ type: SET_LOCATION_IC_FILTER, locationIcFilter: value });
 };
 export const setIcFilter = (value) => (dispatch) => {
   dispatch({ type: SET_IC_FILTER, icFilter: value });

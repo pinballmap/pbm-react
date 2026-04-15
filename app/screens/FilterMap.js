@@ -15,6 +15,7 @@ import {
   selectedManufacturerFilter,
   setMachineTypeFilter,
   setMachineYearFilter,
+  setLocationIcFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
   clearSelectedState,
@@ -52,6 +53,7 @@ const FilterMap = ({
     machineTypeFilter = "",
     machineYearGte = null,
     machineYearLte = null,
+    locationIcFilter = false,
   } = query;
   const { navigate } = navigation;
 
@@ -378,6 +380,19 @@ const FilterMap = ({
               </View>
             </Pressable>
           </Modal>
+          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+            Has &gt; 0 Stern Insider Connected Machine
+          </Text>
+          <ButtonGroup
+            onPress={(idx) => dispatch(setLocationIcFilter(idx === 1))}
+            selectedIndex={locationIcFilter ? 1 : 0}
+            buttons={["All", "With IC"]}
+            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+            textStyle={s.buttonGroupInactive}
+            selectedButtonStyle={s.selButtonStyle}
+            selectedTextStyle={s.selTextStyle}
+            innerBorderStyle={s.innerBorderStyle}
+          />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Limit by number of machines
           </Text>

@@ -77,6 +77,7 @@ const Map = ({
     machineTypeFilter = "",
     machineYearGte = null,
     machineYearLte = null,
+    locationIcFilter = false,
     forceTriggerUpdateBounds,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
@@ -94,7 +95,8 @@ const Map = ({
     manufacturerFilter.length > 0 ||
     machineTypeFilter !== "" ||
     machineYearGte !== null ||
-    machineYearLte !== null
+    machineYearLte !== null ||
+    locationIcFilter
       ? true
       : false;
 
