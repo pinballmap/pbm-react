@@ -103,6 +103,8 @@ class FindMachine extends React.PureComponent {
     const sortedMachines = alphaSortNameObj(props.machines.machines);
     const manufacturerFilter = props.route.params?.manufacturerFilter || [];
     const machineTypeFilter = props.route.params?.machineTypeFilter || "";
+    const machineYearGte = props.route.params?.machineYearGte ?? null;
+    const machineYearLte = props.route.params?.machineYearLte ?? null;
     let filteredMachines = sortedMachines;
     if (manufacturerFilter.length > 0) {
       filteredMachines = filteredMachines.filter((m) =>
@@ -112,6 +114,16 @@ class FindMachine extends React.PureComponent {
     if (machineTypeFilter === "em") {
       filteredMachines = filteredMachines.filter(
         (m) => m.machine_type === "em" || m.machine_type === "me",
+      );
+    }
+    if (machineYearGte !== null) {
+      filteredMachines = filteredMachines.filter(
+        (m) => m.year >= machineYearGte,
+      );
+    }
+    if (machineYearLte !== null) {
+      filteredMachines = filteredMachines.filter(
+        (m) => m.year <= machineYearLte,
       );
     }
 

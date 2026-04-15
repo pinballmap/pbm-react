@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { StyleSheet, View } from "react-native";
+import { FlatList, Modal, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, DropDownButton, Screen, Text } from "../components";
 import {
@@ -14,6 +14,7 @@ import {
   setIcFilter,
   selectedManufacturerFilter,
   setMachineTypeFilter,
+  setMachineYearFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
   clearSelectedState,
@@ -32,6 +33,8 @@ const FilterMap = ({
   hasFilterSelected,
   query,
   machineList,
+  minMachineYear,
+  maxMachineYear,
   navigation,
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -47,8 +50,22 @@ const FilterMap = ({
     icFilter,
     manufacturerFilter = [],
     machineTypeFilter = "",
+    machineYearGte = null,
+    machineYearLte = null,
   } = query;
   const { navigate } = navigation;
+
+  const allYears = Array.from(
+    { length: maxMachineYear - minMachineYear + 1 },
+    (_, i) => minMachineYear + i,
+  );
+
+  const [yearModalTarget, setYearModalTarget] = useState(null); // 'gte' | 'lte'
+
+  const updateYearGte = (val) =>
+    dispatch(setMachineYearFilter(val, machineYearLte));
+  const updateYearLte = (val) =>
+    dispatch(setMachineYearFilter(machineYearGte, val));
 
   const navigatingToFindMachine = useRef(false);
   const machineListRef = useRef(machineList);
@@ -166,6 +183,8 @@ const FilterMap = ({
                 showDone: machines.length > 0,
                 manufacturerFilter,
                 machineTypeFilter,
+                machineYearGte,
+                machineYearLte,
               });
             }}
             margin={s.dropdownMargin}
@@ -244,6 +263,121 @@ const FilterMap = ({
             selectedTextStyle={s.selTextStyle}
             innerBorderStyle={s.innerBorderStyle}
           />
+          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+            Machine year
+          </Text>
+          <View style={s.yearRangeContainer}>
+            {[
+              { label: "From", value: machineYearGte, target: "gte" },
+              { label: "To", value: machineYearLte, target: "lte" },
+            ].map(({ label, value, target }) => {
+              const isGte = target === "gte";
+              const update = isGte ? updateYearGte : updateYearLte;
+              const minVal = isGte
+                ? minMachineYear
+                : (machineYearGte ?? minMachineYear);
+              const maxVal = isGte
+                ? (machineYearLte ?? maxMachineYear)
+                : maxMachineYear;
+              return (
+                <View key={target} style={s.yearStepper}>
+                  <Text style={s.yearLabel}>{label}</Text>
+                  <View style={s.yearControls}>
+                    <Pressable
+                      onPress={() => {
+                        if (value === null) return;
+                        const next = value - 1;
+                        update(next < minVal ? null : next);
+                      }}
+                      style={({ pressed }) => [
+                        s.yearButton,
+                        pressed && s.yearButtonPressed,
+                      ]}
+                    >
+                      <Text style={s.yearButtonText}>−</Text>
+                    </Pressable>
+                    <Pressable onPress={() => setYearModalTarget(target)}>
+                      <Text style={s.yearValue}>{value ?? "--"}</Text>
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        if (value === null) {
+                          update(isGte ? minVal : maxVal);
+                        } else {
+                          const next = value + 1;
+                          update(next > maxVal ? null : next);
+                        }
+                      }}
+                      style={({ pressed }) => [
+                        s.yearButton,
+                        pressed && s.yearButtonPressed,
+                      ]}
+                    >
+                      <Text style={s.yearButtonText}>+</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+          <Modal
+            visible={yearModalTarget !== null}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setYearModalTarget(null)}
+          >
+            <Pressable
+              style={s.yearModalOverlay}
+              onPress={() => setYearModalTarget(null)}
+            >
+              <View style={[s.yearModalContent, s.boxShadow]}>
+                <FlatList
+                  data={
+                    yearModalTarget === "lte"
+                      ? [...allYears].reverse()
+                      : allYears
+                  }
+                  keyExtractor={(item) => String(item)}
+                  initialScrollIndex={0}
+                  getItemLayout={(_, index) => ({
+                    length: 44,
+                    offset: 44 * index,
+                    index,
+                  })}
+                  renderItem={({ item }) => {
+                    const currentVal =
+                      yearModalTarget === "gte"
+                        ? machineYearGte
+                        : machineYearLte;
+                    const isSelected = item === currentVal;
+                    return (
+                      <Pressable
+                        onPress={() => {
+                          if (yearModalTarget === "gte") updateYearGte(item);
+                          else updateYearLte(item);
+                          setYearModalTarget(null);
+                        }}
+                        style={({ pressed }) => [
+                          s.yearModalItem,
+                          isSelected && s.yearModalItemSelected,
+                          pressed && s.yearButtonPressed,
+                        ]}
+                      >
+                        <Text
+                          style={[
+                            s.yearModalItemText,
+                            isSelected && s.yearModalItemTextSelected,
+                          ]}
+                        >
+                          {item}
+                        </Text>
+                      </Pressable>
+                    );
+                  }}
+                />
+              </View>
+            </Pressable>
+          </Modal>
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Limit by number of machines
           </Text>
@@ -387,6 +521,79 @@ const getStyles = (theme) =>
       fontSize: 15,
       color: "#ffffff",
     },
+    yearRangeContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      marginHorizontal: 10,
+      marginTop: 5,
+    },
+    yearStepper: {
+      alignItems: "center",
+    },
+    yearLabel: {
+      fontFamily: "Nunito-Bold",
+      fontSize: 13,
+      color: theme.text2,
+      marginBottom: 4,
+    },
+    yearControls: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    yearButton: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    yearButtonPressed: {
+      opacity: 0.6,
+    },
+    yearButtonText: {
+      fontSize: 20,
+      color: theme.text2,
+      fontFamily: "Nunito-Bold",
+      lineHeight: 24,
+    },
+    yearValue: {
+      width: 52,
+      textAlign: "center",
+      fontSize: 18,
+      fontFamily: "Nunito-Bold",
+      color: theme.text,
+    },
+    yearModalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0,0,0,0.4)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    yearModalContent: {
+      backgroundColor: theme.white,
+      borderRadius: 12,
+      width: 160,
+      maxHeight: 300,
+      overflow: "hidden",
+    },
+    yearModalItem: {
+      height: 44,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    yearModalItemSelected: {
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+    },
+    yearModalItemText: {
+      fontSize: 16,
+      fontFamily: "Nunito-Medium",
+      color: theme.text,
+    },
+    yearModalItemTextSelected: {
+      fontFamily: "Nunito-Bold",
+      color: theme.text2,
+    },
     boxShadow: {
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
@@ -407,6 +614,11 @@ const mapStateToProps = (state) => {
   const operatorName = getOperatorName(state);
   const hasFilterSelected = filterSelected(state);
   const machineList = state.location.machineList;
+  const allMachineYears = state.machines.machines
+    .map((m) => m.year)
+    .filter(Boolean);
+  const minMachineYear = Math.min(...allMachineYears);
+  const maxMachineYear = Math.max(...allMachineYears);
 
   return {
     locationTypeName,
@@ -414,6 +626,8 @@ const mapStateToProps = (state) => {
     operatorName,
     hasFilterSelected,
     machineList,
+    minMachineYear,
+    maxMachineYear,
   };
 };
 

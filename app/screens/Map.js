@@ -75,6 +75,8 @@ const Map = ({
     icFilter,
     manufacturerFilter = [],
     machineTypeFilter = "",
+    machineYearGte = null,
+    machineYearLte = null,
     forceTriggerUpdateBounds,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
@@ -90,7 +92,9 @@ const Map = ({
     viewByFavoriteLocations ||
     icFilter ||
     manufacturerFilter.length > 0 ||
-    machineTypeFilter !== ""
+    machineTypeFilter !== "" ||
+    machineYearGte !== null ||
+    machineYearLte !== null
       ? true
       : false;
 

@@ -15,6 +15,7 @@ import {
   SET_IC_FILTER,
   SET_MANUFACTURER_FILTER,
   SET_MACHINE_TYPE_FILTER,
+  SET_MACHINE_YEAR_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   TRIGGER_UPDATE_BOUNDS,
@@ -42,6 +43,8 @@ export const initialState = {
   icFilter: false,
   manufacturerFilter: [],
   machineTypeFilter: "",
+  machineYearGte: null,
+  machineYearLte: null,
   searchBarText: "",
   triggerUpdateBounds: false,
   forceTriggerUpdateBounds: false,
@@ -146,6 +149,8 @@ export default (state = initialState, action) => {
         icFilter: false,
         manufacturerFilter: [],
         machineTypeFilter: "",
+        machineYearGte: null,
+        machineYearLte: null,
       };
     case SET_IC_FILTER:
       return {
@@ -215,6 +220,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         machineTypeFilter: action.machineType,
+      };
+    case SET_MACHINE_YEAR_FILTER:
+      return {
+        ...state,
+        machineYearGte: action.gte,
+        machineYearLte: action.lte,
       };
     case SET_SEARCH_BAR_TEXT:
       return {
