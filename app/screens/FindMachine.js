@@ -102,12 +102,18 @@ class FindMachine extends React.PureComponent {
     super(props);
     const sortedMachines = alphaSortNameObj(props.machines.machines);
     const manufacturerFilter = props.route.params?.manufacturerFilter || [];
-    const filteredMachines =
-      manufacturerFilter.length > 0
-        ? sortedMachines.filter((m) =>
-            manufacturerFilter.includes(m.manufacturer),
-          )
-        : sortedMachines;
+    const machineTypeFilter = props.route.params?.machineTypeFilter || "";
+    let filteredMachines = sortedMachines;
+    if (manufacturerFilter.length > 0) {
+      filteredMachines = filteredMachines.filter((m) =>
+        manufacturerFilter.includes(m.manufacturer),
+      );
+    }
+    if (machineTypeFilter === "em") {
+      filteredMachines = filteredMachines.filter(
+        (m) => m.machine_type === "em" || m.machine_type === "me",
+      );
+    }
 
     this.state = {
       machines: filteredMachines,

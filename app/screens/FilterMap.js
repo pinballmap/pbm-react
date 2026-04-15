@@ -13,6 +13,7 @@ import {
   setMachineVersionFilter,
   setIcFilter,
   selectedManufacturerFilter,
+  setMachineTypeFilter,
   reloadMapMarkers,
   getMapAreaMachineIds,
   clearSelectedState,
@@ -45,6 +46,7 @@ const FilterMap = ({
     machineGroupId,
     icFilter,
     manufacturerFilter = [],
+    machineTypeFilter = "",
   } = query;
   const { navigate } = navigation;
 
@@ -163,6 +165,7 @@ const FilterMap = ({
                 multiSelect: true,
                 showDone: machines.length > 0,
                 manufacturerFilter,
+                machineTypeFilter,
               });
             }}
             margin={s.dropdownMargin}
@@ -225,6 +228,21 @@ const FilterMap = ({
               })
             }
             margin={s.dropdownMargin}
+          />
+          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+            Machine type
+          </Text>
+          <ButtonGroup
+            onPress={(idx) =>
+              dispatch(setMachineTypeFilter(idx === 1 ? "em" : ""))
+            }
+            selectedIndex={machineTypeFilter === "em" ? 1 : 0}
+            buttons={["All", "EM"]}
+            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+            textStyle={s.buttonGroupInactive}
+            selectedButtonStyle={s.selButtonStyle}
+            selectedTextStyle={s.selTextStyle}
+            innerBorderStyle={s.innerBorderStyle}
           />
           <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
             Limit by number of machines

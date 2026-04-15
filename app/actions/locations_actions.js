@@ -43,6 +43,7 @@ const buildFilterQueryString = (query, userId) => {
     machineGroupId,
     icFilter,
     manufacturerFilter = [],
+    machineTypeFilter = "",
     locationType,
     locationTypeIds = [],
     numMachines,
@@ -81,6 +82,10 @@ const buildFilterQueryString = (query, userId) => {
             .map((m) => `manufacturer[]=${encodeURIComponent(m)}`)
             .join("&") + "&"
       : "";
+  const machineTypeQueryString =
+    machineTypeFilter === "em"
+      ? "by_machine_type[]=em&by_machine_type[]=me&"
+      : "";
   const numMachinesQueryString = numMachines
     ? `by_at_least_n_machines_type=${numMachines}&`
     : "";
@@ -89,7 +94,7 @@ const buildFilterQueryString = (query, userId) => {
     : "";
   const byUserFaved =
     viewByFavoriteLocations && userId ? `user_faved=${userId}&` : "";
-  return `${machineQueryString}${icQueryString}${manufacturerQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved}`;
+  return `${machineQueryString}${icQueryString}${manufacturerQueryString}${machineTypeQueryString}${locationTypeQueryString}${numMachinesQueryString}${byOperator}${byUserFaved}`;
 };
 
 export const getMapMarkers =

@@ -14,6 +14,7 @@ import {
   SET_MACHINE_VERSION_FILTER,
   SET_IC_FILTER,
   SET_MANUFACTURER_FILTER,
+  SET_MACHINE_TYPE_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   TRIGGER_UPDATE_BOUNDS,
@@ -40,6 +41,7 @@ export const initialState = {
   machineGroupId: undefined,
   icFilter: false,
   manufacturerFilter: [],
+  machineTypeFilter: "",
   searchBarText: "",
   triggerUpdateBounds: false,
   forceTriggerUpdateBounds: false,
@@ -143,6 +145,7 @@ export default (state = initialState, action) => {
         machineGroupId: undefined,
         icFilter: false,
         manufacturerFilter: [],
+        machineTypeFilter: "",
       };
     case SET_IC_FILTER:
       return {
@@ -207,6 +210,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         machineGroupId: action.machineGroupId,
+      };
+    case SET_MACHINE_TYPE_FILTER:
+      return {
+        ...state,
+        machineTypeFilter: action.machineType,
       };
     case SET_SEARCH_BAR_TEXT:
       return {

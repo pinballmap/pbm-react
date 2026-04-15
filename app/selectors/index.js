@@ -45,7 +45,8 @@ export const filterSelected = createSelector(queryState, (query) =>
   query.numMachines !== 0 ||
   query.viewByFavoriteLocations ||
   query.icFilter ||
-  query.manufacturerFilter?.length > 0
+  query.manufacturerFilter?.length > 0 ||
+  query.machineTypeFilter !== ""
     ? true
     : false,
 );
