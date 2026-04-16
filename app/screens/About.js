@@ -122,6 +122,14 @@ const About = ({ navigation, appAlert }) => {
             >{`in the FAQ`}</Text>
             .
           </Text>
+          <Text style={s.text}>
+            {"Here's a page filled with "}
+            <Text
+              onPress={() => navigation.navigate("Stats")}
+              style={s.textLink}
+            >{`Pinball Map stats`}</Text>
+            .
+          </Text>
 
           <Image
             source={require("../assets/images/purple-machine.png")}

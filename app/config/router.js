@@ -35,6 +35,7 @@ import FindManufacturer from "../screens/FindManufacturer";
 import Settings from "../screens/Settings";
 import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
+import Stats from "../screens/Stats";
 
 import { DrawerMenu } from "../components";
 
@@ -376,6 +377,11 @@ function MapStack() {
         component={About}
         options={{ title: "About Pinball Map" }}
       />
+      <Stack.Screen
+        name="Stats"
+        component={Stats}
+        options={{ title: "Pinball Map Stats" }}
+      />
       <Stack.Screen name="FindMachine" component={FindMachine} />
       <Stack.Screen
         name="EditLocationDetails"
@@ -412,6 +418,13 @@ function MapStack() {
         name="FindCountry"
         component={FindCountry}
         options={{ title: "Select Country" }}
+      />
+      <Stack.Screen
+        name="UserProfilePublic"
+        component={UserProfile}
+        options={({ route }) => ({
+          title: route.params?.username ?? "Profile",
+        })}
       />
     </Stack.Navigator>
   );
