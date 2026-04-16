@@ -555,7 +555,7 @@ const getStyles = (theme) =>
       height: 45,
     },
     searchMap: {
-      width: deviceWidth - 85,
+      flex: 1,
       borderBottomLeftRadius: 25,
       borderTopLeftRadius: 25,
       paddingLeft: 10,
@@ -584,7 +584,7 @@ const getStyles = (theme) =>
     inputStyle: {
       paddingLeft: 5,
       paddingRight: 65,
-      width: deviceWidth - 60,
+      flex: 1,
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
@@ -593,7 +593,7 @@ const getStyles = (theme) =>
       borderWidth: 1,
       backgroundColor: theme.white,
       borderRadius: 25,
-      width: deviceWidth - 60,
+      flex: 1,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       height: 45,
       display: "flex",

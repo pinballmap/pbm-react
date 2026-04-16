@@ -74,7 +74,7 @@ class MultiSelectRow extends React.PureComponent {
             : { backgroundColor, opacity: 1 },
         ]}
       >
-        <Text style={{ fontSize: 18, width: deviceWidth - 40 }}>
+        <Text style={{ fontSize: 18, flex: 1 }}>
           {getDisplayText(machine, theme)}
         </Text>
         {selected ? (
