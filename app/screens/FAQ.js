@@ -56,6 +56,45 @@ const FAQ = ({ navigation }) => {
             >{`The Location List lists the locations currently shown on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
             <Text
               style={s.bold}
+            >{`What do the different map marker colors mean?`}</Text>
+            <View style={s.iconView}>
+              <Image
+                source={require("../assets/images/marker-z-1-noShadow.png")}
+                contentFit="fill"
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Location has 1 machine</Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                source={require("../assets/images/marker-z-2-noShadow.png")}
+                contentFit="fill"
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Location has 2 to 9 machines</Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                source={require("../assets/images/marker-z-10-noShadow.png")}
+                contentFit="fill"
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>Location has 10 or more machines</Text>
+            </View>
+            <View style={s.iconView}>
+              <Image
+                source={require("../assets/images/marker-z-Heart-noShadow.png")}
+                contentFit="fill"
+                style={s.rankIcon}
+                contentPosition="bottom"
+              />
+              <Text style={s.iconText}>One of your Saved locations</Text>
+            </View>
+            <Text
+              style={s.bold}
             >{`What are the different icons I sometimes see next to usernames?`}</Text>
             <View style={s.iconView}>
               <MaterialCommunityIcons
