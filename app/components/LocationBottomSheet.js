@@ -73,7 +73,7 @@ const LocationBottomSheet = React.memo(
                 >
                   <MaterialIcons
                     name={"ios-share"}
-                    color={theme.text3}
+                    color={theme.theme == "dark" ? theme.text3 : "#786D7A"}
                     size={24}
                     style={{
                       height: 24,

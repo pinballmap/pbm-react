@@ -126,7 +126,7 @@ const About = ({ navigation, appAlert }) => {
             {"Here's a page filled with "}
             <Text
               onPress={() => navigation.navigate("Stats")}
-              style={s.textLink}
+              style={[s.pink, s.boldText]}
             >{`Pinball Map stats`}</Text>
             .
           </Text>

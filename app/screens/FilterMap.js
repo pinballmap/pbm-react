@@ -196,7 +196,7 @@ const FilterMap = ({
               <Text
                 style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
               >
-                ...This machine version, or all
+                ...This machine version, or all?
               </Text>
               <ButtonGroup
                 onPress={(idx) =>
@@ -214,8 +214,10 @@ const FilterMap = ({
           )}
           {machines.length === 1 && machines[0].ic_eligible && (
             <>
-              <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
-                Has Stern Insider Connected?
+              <Text
+                style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
+              >
+                ...Has Stern Insider Connected?
               </Text>
               <ButtonGroup
                 onPress={(idx) => dispatch(setIcFilter(idx === 1))}
