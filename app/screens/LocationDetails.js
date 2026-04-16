@@ -590,15 +590,23 @@ const LocationDetails = (props) => {
                             "YYYY-MM-DD",
                           ).format("MMM DD, YYYY")}
                         </Text>
-                        {!!location.last_updated_by_username && ` by`}
+                        {!!location.last_updated_by_username && ` by `}
                         {!!location.last_updated_by_username && (
                           <Text
                             style={{
                               fontFamily: "Nunito-SemiBold",
                               color: theme.pink1,
+                              textDecorationLine: "underline",
                             }}
+                            onPress={() =>
+                              location.last_updated_by_user_id &&
+                              navigation.navigate("UserProfilePublic", {
+                                userId: location.last_updated_by_user_id,
+                                username: location.last_updated_by_username,
+                              })
+                            }
                           >
-                            {` ${location.last_updated_by_username}`}
+                            {`${location.last_updated_by_username}`}
                           </Text>
                         )}
                         <View style={s.iconView}>

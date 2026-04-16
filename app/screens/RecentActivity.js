@@ -187,6 +187,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       location_name,
       machine_name,
       user_name,
+      user_id,
       comment,
       created_at,
       user_operator_id,
@@ -206,7 +207,18 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     const timeAndUser = user_name ? (
       <Text style={s.date}>
         <Text style={s.italic}>{time}</Text> by{" "}
-        <Text style={s.username}>{user_name}</Text>
+        <Text
+          style={s.username}
+          onPress={() =>
+            user_id &&
+            navigation.navigate("UserProfilePublic", {
+              userId: user_id,
+              username: user_name,
+            })
+          }
+        >
+          {user_name}
+        </Text>
         <View
           style={{
             height: 14,
@@ -464,6 +476,7 @@ const getStyles = (theme) =>
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
       fontFamily: "Nunito-Medium",
+      textDecorationLine: "underline",
     },
     locationName: {
       color: theme.text,

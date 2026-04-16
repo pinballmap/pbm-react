@@ -21,6 +21,7 @@ import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteScore, editScore } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 
 const moment = require("moment");
@@ -29,6 +30,7 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const navigation = useNavigation();
   const [loading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
   const {
@@ -163,7 +165,16 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
                 ]}
               >
                 {!!username && (
-                  <Text style={[s.username]}>
+                  <Text
+                    style={[s.username]}
+                    onPress={() =>
+                      scoreUserId &&
+                      navigation.navigate("UserProfilePublic", {
+                        userId: scoreUserId,
+                        username,
+                      })
+                    }
+                  >
                     {username}
                     {"  "}
                   </Text>
@@ -249,6 +260,7 @@ const getStyles = (theme) =>
     username: {
       color: theme.pink1,
       marginLeft: 6,
+      textDecorationLine: "underline",
     },
     italic: {
       fontFamily: "Nunito-Italic",

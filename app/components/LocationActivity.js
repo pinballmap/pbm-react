@@ -19,6 +19,7 @@ import { formatNumWithCommas } from "../utils/utilityFunctions";
 import { clearLocationActivityFilter } from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
+import { useNavigation } from "@react-navigation/native";
 
 const moment = require("moment");
 
@@ -30,6 +31,7 @@ const LocationActivity = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const navigation = useNavigation();
   const [locationActivityModalOpen, setLocationActivityModalOpen] =
     useState(false);
   const [locationActivityLoading, setLocationActivityLoading] = useState(true);
@@ -116,6 +118,7 @@ const LocationActivity = ({
       high_score,
       machine_name,
       user_name,
+      user_id,
       comment,
       created_at,
       user_operator_id,
@@ -135,7 +138,18 @@ const LocationActivity = ({
     const timeAndUser = user_name ? (
       <Text style={s.date}>
         <Text style={s.italic}>{time}</Text> by{" "}
-        <Text style={s.username}>{user_name}</Text>
+        <Text
+          style={s.username}
+          onPress={() =>
+            user_id &&
+            navigation.navigate("UserProfilePublic", {
+              userId: user_id,
+              username: user_name,
+            })
+          }
+        >
+          {user_name}
+        </Text>
         <View
           style={{
             height: 14,
@@ -484,6 +498,7 @@ const getStyles = (theme) =>
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
       fontFamily: "Nunito-SemiBold",
+      textDecorationLine: "underline",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,

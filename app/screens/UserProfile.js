@@ -24,7 +24,11 @@ const moment = require("moment");
 class UserProfile extends Component {
   state = {
     modalVisible: false,
-    fetchingUserInfo: this.props.user.loggedIn ? true : false,
+    fetchingUserInfo: this.props.route?.params?.userId
+      ? true
+      : this.props.user.loggedIn
+        ? true
+        : false,
     profile_info: {},
   };
 
@@ -35,7 +39,7 @@ class UserProfile extends Component {
   componentDidMount() {
     //The listener will refetch user profile data every time the profile screen is navigated to
     this.focusListener = this.props.navigation.addListener("focus", () => {
-      const id = this.props.user.id;
+      const id = this.props.route?.params?.userId ?? this.props.user.id;
       if (id) {
         getData(`/users/${id}/profile_info.json?new_score_list_only=`).then(
           (data) => {
@@ -56,6 +60,10 @@ class UserProfile extends Component {
   render() {
     if (this.state.fetchingUserInfo) return <ActivityIndicator />;
     const { user } = this.props;
+    const isOwnProfile = !this.props.route?.params?.userId;
+    const displayUsername = isOwnProfile
+      ? user.username
+      : this.props.route.params.username;
     const profileInfo = this.state.profile_info ?? {};
     const {
       profile_list_of_edited_locations = [],
@@ -87,34 +95,36 @@ class UserProfile extends Component {
           const s = getStyles(theme);
           return (
             <Screen>
-              {!user.loggedIn ? (
+              {isOwnProfile && !user.loggedIn ? (
                 <NotLoggedIn
                   text={`You're not logged in, so you don't have a profile!`}
                   onPress={() => this.props.navigation.navigate("Login")}
                 />
               ) : (
                 <View>
-                  <ConfirmationModal
-                    visible={this.state.modalVisible}
-                    closeModal={() => this.setModalVisible(false)}
-                  >
-                    <Pressable>
-                      <PbmButton
-                        title={"Log Me Out"}
-                        onPress={() => {
-                          this.setModalVisible(false);
-                          this.props.logout();
-                          this.props.navigation.navigate("Login");
-                        }}
-                      />
-                      <WarningButton
-                        title={"Stay Logged In"}
-                        onPress={() => this.setModalVisible(false)}
-                      />
-                    </Pressable>
-                  </ConfirmationModal>
+                  {isOwnProfile && (
+                    <ConfirmationModal
+                      visible={this.state.modalVisible}
+                      closeModal={() => this.setModalVisible(false)}
+                    >
+                      <Pressable>
+                        <PbmButton
+                          title={"Log Me Out"}
+                          onPress={() => {
+                            this.setModalVisible(false);
+                            this.props.logout();
+                            this.props.navigation.navigate("Login");
+                          }}
+                        />
+                        <WarningButton
+                          title={"Stay Logged In"}
+                          onPress={() => this.setModalVisible(false)}
+                        />
+                      </Pressable>
+                    </ConfirmationModal>
+                  )}
                   <View style={s.usernameContainer}>
-                    <Text style={s.username}>{user.username}</Text>
+                    <Text style={s.username}>{displayUsername}</Text>
                     {!!admin_title && (
                       <View style={s.rankView}>
                         <Text style={s.rankText}>{admin_title}</Text>
@@ -150,12 +160,14 @@ class UserProfile extends Component {
                     <Text style={s.joined}>
                       {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
                     </Text>
-                    <Text
-                      style={s.savedLink}
-                      onPress={() => this.props.navigation.navigate("Saved")}
-                    >
-                      View saved locations
-                    </Text>
+                    {isOwnProfile && (
+                      <Text
+                        style={s.savedLink}
+                        onPress={() => this.props.navigation.navigate("Saved")}
+                      >
+                        View saved locations
+                      </Text>
+                    )}
                   </View>
                   <View style={s.statContainer}>
                     <View style={s.statItem}>
@@ -235,8 +247,10 @@ class UserProfile extends Component {
                         ))
                     )}
                   </View>
-                  <Text style={s.section}>Your highest scores</Text>
-                  <View style={{ paddingTop: 8 }}>
+                  <Text style={s.section}>
+                    {isOwnProfile ? "Your highest scores" : "Highest scores"}
+                  </Text>
+                  <View style={{ paddingVertical: 8 }}>
                     {profile_machine_scores_stats.length === 0 ? (
                       <Text style={s.none}>No high scores yet</Text>
                     ) : (
@@ -260,9 +274,9 @@ class UserProfile extends Component {
                                 <Text style={[{ marginBottom: 6 }, s.bold]}>
                                   All scores:
                                 </Text>
-                                {score.list.map((ll) => (
+                                {score.list.map((ll, idx) => (
                                   <Text
-                                    key={ll.id}
+                                    key={idx}
                                     style={[{ paddingLeft: 5 }, s.score]}
                                   >
                                     {formatNumWithCommas(ll)}
@@ -289,31 +303,38 @@ class UserProfile extends Component {
                       })
                     )}
                   </View>
-                  <WarningButton
-                    title={"Logout"}
-                    onPress={() => this.setModalVisible(true)}
-                  />
-                  <View style={s.externalUpdateContainer}>
-                    <Text style={s.externalUpdateText}>
-                      Want to update your password, or email, or delete your
-                      account? These can be done on your
-                    </Text>
-                    <View style={s.externalLinkContainer}>
-                      <Text
-                        style={s.externalLink}
-                        onPress={() =>
-                          WebBrowser.openBrowserAsync(
-                            "https://pinballmap.com/users/" +
-                              user.username +
-                              "/profile",
-                          )
-                        }
-                      >
-                        Profile page on the website
-                      </Text>
-                      <EvilIcons name="external-link" style={s.externalIcon} />
-                    </View>
-                  </View>
+                  {isOwnProfile && (
+                    <>
+                      <WarningButton
+                        title={"Logout"}
+                        onPress={() => this.setModalVisible(true)}
+                      />
+                      <View style={s.externalUpdateContainer}>
+                        <Text style={s.externalUpdateText}>
+                          Want to update your password, or email, or delete your
+                          account? These can be done on your
+                        </Text>
+                        <View style={s.externalLinkContainer}>
+                          <Text
+                            style={s.externalLink}
+                            onPress={() =>
+                              WebBrowser.openBrowserAsync(
+                                "https://pinballmap.com/users/" +
+                                  user.username +
+                                  "/profile",
+                              )
+                            }
+                          >
+                            Profile page on the website
+                          </Text>
+                          <EvilIcons
+                            name="external-link"
+                            style={s.externalIcon}
+                          />
+                        </View>
+                      </View>
+                    </>
+                  )}
                 </View>
               )}
             </Screen>
