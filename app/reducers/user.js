@@ -19,6 +19,7 @@ import {
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  ACCOUNT_DISABLED,
 } from "../actions/types";
 
 export const initialState = {
@@ -42,6 +43,7 @@ export const initialState = {
   displayInsiderConnectedBadge: false,
   showNoLocationTrackingModal: false,
   isLocationServicesEnabled: true,
+  accountDisabled: false,
 };
 
 export default (state = initialState, action) => {
@@ -111,6 +113,7 @@ export default (state = initialState, action) => {
         id: null,
         username: "",
         faveLocations: [],
+        accountDisabled: false,
       };
     }
     case LOGIN_LATER: {
@@ -180,6 +183,11 @@ export default (state = initialState, action) => {
         ...state,
         displayInsiderConnectedBadgePreference:
           action.displayInsiderConnectedBadge,
+      };
+    case ACCOUNT_DISABLED:
+      return {
+        ...state,
+        accountDisabled: true,
       };
     default:
       return state;

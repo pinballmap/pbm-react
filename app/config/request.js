@@ -1,6 +1,16 @@
 import * as Location from "expo-location";
 import * as Application from "expo-application";
+import store from "../store";
+import { ACCOUNT_DISABLED } from "../actions/types";
 const moment = require("moment");
+
+const ACCOUNT_DISABLED_MSG =
+  "Your account has been disabled. Please contact us if you think this is a mistake.";
+
+const handleAccountDisabled = () => {
+  store.dispatch({ type: ACCOUNT_DISABLED });
+  throw ACCOUNT_DISABLED_MSG;
+};
 
 export const postData = (uri, body) => {
   return fetch(global.API_URL + uri, {
@@ -13,6 +23,8 @@ export const postData = (uri, body) => {
     body: JSON.stringify(body),
   })
     .then(async (response) => {
+      if (response.status === 401) handleAccountDisabled();
+
       const data = await response.json();
 
       if (data.errors) {
@@ -42,6 +54,8 @@ export const putData = (uri, body) => {
     body: JSON.stringify(body),
   })
     .then(async (response) => {
+      if (response.status === 401) handleAccountDisabled();
+
       const data = await response.json();
 
       if (data.errors) {
@@ -66,8 +80,10 @@ export const getData = (uri) => {
       AppVersion: Application.nativeApplicationVersion,
     },
   })
-    .then((response) => {
+    .then(async (response) => {
       if (response.status === 200) return response.json();
+
+      if (response.status === 401) handleAccountDisabled();
 
       throw new Error("API response was not ok");
     })
@@ -111,6 +127,8 @@ export const deleteData = (uri, body) => {
     body: JSON.stringify(body),
   })
     .then(async (response) => {
+      if (response.status === 401) handleAccountDisabled();
+
       try {
         const data = await response.json();
         if (response.ok) return data;

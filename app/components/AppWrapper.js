@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { AppState } from "react-native";
+import { AppState, Animated, Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import {
   getRegions,
@@ -100,6 +100,7 @@ const checkAndRefreshCachedData = async (loaders) => {
 
 const AppWrapper = ({
   children,
+  accountDisabled,
   getRegions,
   getLocationTypes,
   getMachines,
@@ -114,6 +115,25 @@ const AppWrapper = ({
   loadOperatorsFromCache,
 }) => {
   const [loading, setIsLoading] = useState(true);
+  const flashOpacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!accountDisabled) return;
+    Animated.sequence([
+      Animated.timing(flashOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.delay(4000),
+      Animated.timing(flashOpacity, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [accountDisabled]);
+
   // Global variable to let us swap out to use the staging server if a store tester logs in
   global.API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -202,11 +222,45 @@ const AppWrapper = ({
 
   if (loading) return <ActivityIndicator />;
 
-  return <>{children}</>;
+  return (
+    <>
+      <Animated.View
+        style={[styles.disabledBanner, { opacity: flashOpacity }]}
+        pointerEvents="none"
+      >
+        <Text style={styles.disabledBannerText}>
+          Your account has been disabled. Please contact us if you think this is
+          a mistake.
+        </Text>
+      </Animated.View>
+      {children}
+    </>
+  );
 };
+
+const styles = StyleSheet.create({
+  disabledBanner: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#b91c1c",
+    paddingTop: Platform.OS === "ios" ? 50 : 36,
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    zIndex: 999,
+  },
+  disabledBannerText: {
+    color: "#fff",
+    fontFamily: "Nunito-Bold",
+    fontSize: 14,
+    textAlign: "center",
+  },
+});
 
 AppWrapper.propTypes = {
   children: PropTypes.node,
+  accountDisabled: PropTypes.bool,
   getRegions: PropTypes.func,
   getLocationTypes: PropTypes.func,
   getMachines: PropTypes.func,
@@ -238,4 +292,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getOperatorsSuccess({ operators })),
 });
 
-export default connect(null, mapDispatchToProps)(AppWrapper);
+const mapStateToProps = ({ user }) => ({
+  accountDisabled: user.accountDisabled,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppWrapper);
