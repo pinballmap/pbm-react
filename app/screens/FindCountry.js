@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
@@ -18,6 +19,7 @@ import countries from "../utils/countries";
 const FindCountry = ({ navigation, route }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
   const { previous_screen } = route.params;
 
   const [selectedCountries, setSelectedCountries] = useState(countries);
@@ -124,7 +126,7 @@ const FindCountry = ({ navigation, route }) => {
         keyExtractor={_keyExtractor}
         contentContainerStyle={{
           backgroundColor: theme.base1,
-          paddingBottom: 20,
+          paddingBottom: insets.bottom,
         }}
       />
     </>

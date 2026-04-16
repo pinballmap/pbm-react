@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
@@ -22,6 +23,7 @@ const FindManufacturer = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
   const { onGoBack } = route.params;
 
   const allManufacturers = [
@@ -119,12 +121,7 @@ const FindManufacturer = ({
           >
             <Text style={{ fontSize: 18 }}>{item}</Text>
             {isSelected ? (
-              <MaterialIcons
-                name="cancel"
-                size={18}
-                color="#fd0091"
-                style={{ paddingTop: 3 }}
-              />
+              <MaterialIcons name="cancel" size={18} color="#fd0091" />
             ) : null}
           </View>
         )}
@@ -179,9 +176,17 @@ const FindManufacturer = ({
         {selectedManufacturers.length === 0 ? (
           <Text style={{ color: theme.purple2 }}>0 manufacturers selected</Text>
         ) : (
-          <Text
-            style={{ color: theme.purple2 }}
-          >{`${selectedManufacturers.length} manufacturer${selectedManufacturers.length > 1 ? "s" : ""} selected`}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text
+              style={{ color: theme.purple2 }}
+            >{`${selectedManufacturers.length} manufacturer${selectedManufacturers.length > 1 ? "s" : ""} selected`}</Text>
+            <Pressable
+              onPress={() => updateSelected([])}
+              style={{ marginLeft: 8 }}
+            >
+              <MaterialIcons name="cancel" size={18} color="#fd0091" />
+            </Pressable>
+          </View>
         )}
       </View>
       <FlatList
@@ -192,7 +197,7 @@ const FindManufacturer = ({
         keyExtractor={(item) => item}
         contentContainerStyle={{
           backgroundColor: theme.base1,
-          paddingBottom: 20,
+          paddingBottom: insets.bottom,
         }}
       />
     </>
