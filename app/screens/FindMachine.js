@@ -459,7 +459,7 @@ const FindMachine = ({
         {...keyboardDismissProp}
         keyboardShouldPersistTaps="always"
         data={machines}
-        extraData={machineList}
+        extraData={multiSelect ? machineList : undefined}
         renderItem={multiSelect ? renderMultiSelectRow : renderRow}
         keyExtractor={keyExtractor}
         contentContainerStyle={{
