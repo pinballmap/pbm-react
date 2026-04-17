@@ -271,13 +271,18 @@ class UserProfile extends Component {
                             </Text>
                             {score.list.length > 1 ? (
                               <>
-                                <Text style={[{ marginBottom: 6 }, s.bold]}>
+                                <Text
+                                  style={[
+                                    { paddingLeft: 10, marginBottom: 6 },
+                                    s.bold,
+                                  ]}
+                                >
                                   All scores:
                                 </Text>
                                 {score.list.map((ll, idx) => (
                                   <Text
                                     key={idx}
-                                    style={[{ paddingLeft: 5 }, s.score]}
+                                    style={[s.score, { paddingLeft: 16 }]}
                                   >
                                     {formatNumWithCommas(ll)}
                                   </Text>
@@ -513,18 +518,18 @@ const getStyles = (theme) =>
       color: theme.text2,
     },
     scoreMachine: {
-      color: theme.purple,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.purple,
       fontSize: 20,
-      fontFamily: "Nunito-Bold",
+      fontFamily: "Nunito-ExtraBold",
       marginBottom: 10,
-      textDecorationLine: "underline",
     },
     bold: {
       color: theme.text,
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
+      fontFamily: "Nunito-Bold",
     },
     score: {
+      paddingLeft: 10,
       color: theme.text,
       fontSize: 16,
       fontFamily: "Nunito-Regular",
