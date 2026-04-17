@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {
   Dimensions,
   FlatList,
@@ -29,8 +29,10 @@ import {
   addMachineToList,
   removeMachineFromList,
   setMachineFilter,
+  getMapAreaMachineIds,
 } from "../actions";
 import {
+  ActivityIndicator,
   BackglassImage,
   ButtonGroup,
   PbmButton,
@@ -108,6 +110,7 @@ const FindMachine = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
 
   const allMachines = useMemo(() => {
     const sorted = alphaSortNameObj(machinesProp.machines);
@@ -137,6 +140,10 @@ const FindMachine = ({
 
   const { machineList = [] } = location;
   const { mapAreaMachineIds } = machinesProp;
+  const mapAreaMachineIdsRef = useRef(mapAreaMachineIds);
+  useEffect(() => {
+    mapAreaMachineIdsRef.current = mapAreaMachineIds;
+  }, [mapAreaMachineIds]);
 
   const [machines, setMachines] = useState(allMachines);
   const [query, setQuery] = useState("");
@@ -144,6 +151,7 @@ const FindMachine = ({
   const [machine, setMachine] = useState({});
   const [condition, setCondition] = useState("");
   const [machinesInView, setMachinesInView] = useState(false);
+  const [isFetchingMapArea, setIsFetchingMapArea] = useState(false);
   const [icEnabled, setIcEnabled] = useState(undefined);
 
   const isFirstRender = useRef(true);
@@ -192,9 +200,10 @@ const FindMachine = ({
       .toLowerCase()
       .trim();
 
+    const ids = mapAreaMachineIdsRef.current;
     const baseList =
-      inView && mapAreaMachineIds.length > 0
-        ? allMachines.filter((m) => mapAreaMachineIds.includes(m.id))
+      inView && ids.length > 0
+        ? allMachines.filter((m) => ids.includes(m.id))
         : allMachines;
 
     setMachines(
@@ -214,7 +223,15 @@ const FindMachine = ({
   const toggleViewMachinesInMapArea = (idx) => {
     const inView = idx === 1;
     if (inView === machinesInView) return;
-    handleSearch(query, inView);
+    if (inView) {
+      setIsFetchingMapArea(true);
+      dispatch(getMapAreaMachineIds()).then(() => {
+        setIsFetchingMapArea(false);
+        handleSearch(query, true);
+      });
+    } else {
+      handleSearch(query, false);
+    }
     setMachinesInView(inView);
   };
 
@@ -455,18 +472,22 @@ const FindMachine = ({
           )}
         </View>
       ) : null}
-      <FlatList
-        {...keyboardDismissProp}
-        keyboardShouldPersistTaps="always"
-        data={machines}
-        extraData={multiSelect ? machineList : undefined}
-        renderItem={multiSelect ? renderMultiSelectRow : renderRow}
-        keyExtractor={keyExtractor}
-        contentContainerStyle={{
-          backgroundColor: theme.base1,
-          paddingBottom: insets.bottom,
-        }}
-      />
+      {isFetchingMapArea ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          {...keyboardDismissProp}
+          keyboardShouldPersistTaps="always"
+          data={machines}
+          extraData={multiSelect ? machineList : undefined}
+          renderItem={multiSelect ? renderMultiSelectRow : renderRow}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={{
+            backgroundColor: theme.base1,
+            paddingBottom: insets.bottom,
+          }}
+        />
+      )}
     </>
   );
 };

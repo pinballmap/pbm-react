@@ -17,7 +17,6 @@ import {
   setMachineYearFilter,
   setLocationIcFilter,
   reloadMapMarkers,
-  getMapAreaMachineIds,
   clearSelectedState,
   addMachineToList,
 } from "../actions";
@@ -75,11 +74,20 @@ const FilterMap = ({
     machineListRef.current = machineList;
   }, [machineList]);
 
+  const initialQueryRef = useRef(query);
+  const queryRef = useRef(query);
+  useEffect(() => {
+    queryRef.current = query;
+  }, [query]);
+
   useEffect(() => {
     const unsubscribeBlur = navigation.addListener("blur", () => {
       // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
       // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
-      if (navigation.getState().routes.length === 1) {
+      if (
+        navigation.getState().routes.length === 1 &&
+        queryRef.current !== initialQueryRef.current
+      ) {
         dispatch(reloadMapMarkers());
       }
     });
@@ -178,7 +186,6 @@ const FilterMap = ({
               dispatch(clearSelectedState());
               machines.forEach((m) => dispatch(addMachineToList(m)));
               navigatingToFindMachine.current = true;
-              dispatch(getMapAreaMachineIds());
               navigate("FindMachine", {
                 machineFilter: true,
                 multiSelect: true,
