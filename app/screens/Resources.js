@@ -172,7 +172,7 @@ const Resources = () => {
               WebBrowser.openBrowserAsync("https://www.kineticist.com/")
             }
           >{`Kineticist`}</Text>
-          {` is a digital publication and community resource for the pinball and physical gaming communities. They have an incredible machine directory and they also run This Week in Pinball! We have `}
+          {` is a digital publication and community resource for the pinball and physical gaming communities. They also run This Week in Pinball! We have `}
           <Text
             style={s.textLink}
             onPress={() =>

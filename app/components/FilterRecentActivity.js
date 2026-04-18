@@ -213,7 +213,7 @@ const FilterRecentActivity = ({
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  Your Scores
+                  High Scores
                 </Text>
               </Pressable>
               <Pressable

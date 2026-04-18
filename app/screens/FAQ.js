@@ -148,6 +148,12 @@ const FAQ = ({ navigation }) => {
             </Text>
             <Text
               style={s.bold}
+            >{`I am not seeing scores in the Activity feeds.`}</Text>
+            <Text style={s.text}>
+              {`That is intentional. By default, those feeds exclude scores that other people add. They show yours, though. If you want to see other people's scores, you can select the "High Scores" filter. If you want to limit the feed to just your scores and nothing else, then select High Scores + Your Activity.`}
+            </Text>
+            <Text
+              style={s.bold}
             >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
             <Text style={s.text}>
               {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
