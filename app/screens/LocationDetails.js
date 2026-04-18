@@ -199,7 +199,7 @@ const LocationDetails = (props) => {
 
   const iconStyles = {
     iconImage: ["get", "icon"],
-    iconSize: 0.5,
+    iconSize: 0.65,
     textSize: 20,
     textField: ["get", "machine_count"],
     textColor: "#fdebfc",

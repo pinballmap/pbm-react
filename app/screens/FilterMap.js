@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { FlatList, Modal, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, DropDownButton, Screen, Text } from "../components";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   updateNumMachinesSelected,
   updateViewFavoriteLocations,
@@ -200,9 +201,12 @@ const FilterMap = ({
           />
           {machines.length === 1 && machines[0].machine_group_id && (
             <>
-              <Text
-                style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
-              >
+              <MaterialCommunityIcons
+                name="arrow-down"
+                size={18}
+                style={[{ textAlign: "center" }, s.pink]}
+              />
+              <Text style={[s.sectionTitle, s.paddingRL10, s.pink]}>
                 ...This machine version, or all?
               </Text>
               <ButtonGroup
@@ -221,9 +225,12 @@ const FilterMap = ({
           )}
           {machines.length === 1 && machines[0].ic_eligible && (
             <>
-              <Text
-                style={[s.sectionTitle, s.marginTop25, s.paddingRL10, s.pink]}
-              >
+              <MaterialCommunityIcons
+                name="arrow-down"
+                size={18}
+                style={[{ textAlign: "center" }, s.pink]}
+              />
+              <Text style={[s.sectionTitle, s.paddingRL10, s.pink]}>
                 ...Has Stern Insider Connected?
               </Text>
               <ButtonGroup
@@ -238,7 +245,7 @@ const FilterMap = ({
               />
             </>
           )}
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Manufacturer
           </Text>
           <DropDownButton
@@ -259,7 +266,7 @@ const FilterMap = ({
             }
             margin={s.dropdownMargin}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Machine type
           </Text>
           <ButtonGroup
@@ -274,7 +281,7 @@ const FilterMap = ({
             selectedTextStyle={s.selTextStyle}
             innerBorderStyle={s.innerBorderStyle}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Machine year
           </Text>
           <View style={s.yearRangeContainer}>
@@ -389,7 +396,7 @@ const FilterMap = ({
               </View>
             </Pressable>
           </Modal>
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Has &gt; 0 Stern Insider Connected Machine
           </Text>
           <ButtonGroup
@@ -402,7 +409,7 @@ const FilterMap = ({
             selectedTextStyle={s.selTextStyle}
             innerBorderStyle={s.innerBorderStyle}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Limit by number of machines
           </Text>
           <ButtonGroup
@@ -415,7 +422,7 @@ const FilterMap = ({
             selectedTextStyle={s.selTextStyle}
             innerBorderStyle={s.innerBorderStyle}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Location type
           </Text>
           <DropDownButton
@@ -425,7 +432,7 @@ const FilterMap = ({
             onPress={() => goToFindLocationType()}
             margin={s.dropdownMargin}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Operator
           </Text>
           <DropDownButton
@@ -433,7 +440,7 @@ const FilterMap = ({
             onPress={() => goToFindOperator()}
             margin={s.dropdownMargin}
           />
-          <Text style={[s.sectionTitle, s.marginTop25, s.paddingRL10]}>
+          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
             Saved locations or all
           </Text>
           <ButtonGroup
@@ -479,8 +486,8 @@ const getStyles = (theme) =>
     pink: {
       color: theme.pink1,
     },
-    marginTop25: {
-      marginTop: 25,
+    marginTop20: {
+      marginTop: 20,
     },
     paddingRL10: {
       paddingHorizontal: 10,
