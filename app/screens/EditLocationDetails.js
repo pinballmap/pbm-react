@@ -226,9 +226,9 @@ function EditLocationDetails({ navigation, ...props }) {
                     placeholderTextColor={theme.indigo4}
                     textAlignVertical="top"
                   />
-                  <Text style={[s.subText, s.margin8]}>
+                  <Text style={[s.subText, s.margin8, s.pink]}>
                     Is this location{" "}
-                    <Text style={{ fontFamily: "Nunito-Bold" }}>
+                    <Text style={[s.pink, { fontFamily: "Nunito-Bold" }]}>
                       closed or are all the machines gone
                     </Text>
                     ? Simply remove the machines!
@@ -337,6 +337,9 @@ const getStyles = (theme) =>
       marginHorizontal: 30,
       fontSize: 14,
       fontFamily: "Nunito-Medium",
+    },
+    pink: {
+      color: theme.pink1,
     },
     purple: {
       color: theme.purple,

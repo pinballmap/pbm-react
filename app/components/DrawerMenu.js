@@ -285,7 +285,7 @@ const getStyles = (theme) =>
       marginTop: 8,
     },
     iconStyle: {
-      marginTop: 0,
+      marginTop: -3,
     },
     text: {
       color: theme.colors.activeTab,

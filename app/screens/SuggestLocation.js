@@ -474,7 +474,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   underlineColorAndroid="transparent"
                   onChangeText={(street) => setStreet(street)}
                   returnKeyType="done"
-                  placeholder={"ex. 123 Coast Village Road"}
+                  placeholder={"ex. 1187 Coast Village Road"}
                   placeholderTextColor={theme.indigo4}
                   textContentType="streetAddressLine1"
                   autoCapitalize="words"

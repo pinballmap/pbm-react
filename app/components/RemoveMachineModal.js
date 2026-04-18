@@ -71,7 +71,7 @@ const getStyles = (theme) =>
       marginHorizontal: 18,
       fontSize: 14,
       fontFamily: "Nunito-Medium",
-      color: theme.text3,
+      color: theme.pink1,
     },
   });
 

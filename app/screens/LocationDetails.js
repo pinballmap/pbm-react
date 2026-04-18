@@ -271,6 +271,7 @@ const LocationDetails = (props) => {
                   { top: topMargin },
                   s.directionsButton,
                   s.mapViewButton,
+                  s.boxShadow,
                   pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
                 ],
               ]}
@@ -300,6 +301,7 @@ const LocationDetails = (props) => {
                   { top: topMargin },
                   s.mapButton,
                   s.mapViewButton,
+                  s.boxShadow,
                   pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
                 ],
               ]}
@@ -324,6 +326,7 @@ const LocationDetails = (props) => {
                   { top: topMargin },
                   s.shareButton,
                   s.mapViewButton,
+                  s.boxShadow,
                   pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
                 ],
               ]}
@@ -1004,8 +1007,8 @@ const getStyles = (theme) =>
     mapViewButtonNotPressed: {
       backgroundColor:
         theme.theme == "dark"
-          ? "rgba(29, 28, 28, 0.7)"
-          : "rgba(255,255,255,.7)",
+          ? "rgba(29, 28, 28, 0.8)"
+          : "rgba(255,255,255, 0.9)",
     },
     confirmText: {
       textAlign: "center",

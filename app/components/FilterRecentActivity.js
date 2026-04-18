@@ -360,7 +360,7 @@ const getStyles = (theme) =>
     container: {
       flexDirection: "row",
       alignItems: "center",
-      height: 60,
+      height: 55,
       paddingHorizontal: 15,
     },
     containerNotSelected: {

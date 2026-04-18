@@ -557,15 +557,18 @@ const MachineDetails = ({
                 )}
               </View>
             )}
-            {scores.length > 0
-              ? scores.map((scoreObj) => (
+            {scores.length > 0 && (
+              <>
+                <Text style={s.copyScores}>Your high scores on this copy</Text>
+                {scores.map((scoreObj) => (
                   <MachineScore
                     scoreObj={scoreObj}
                     key={scoreObj.id}
                     onScoreMutated={refreshHighScore}
                   />
-                ))
-              : null}
+                ))}
+              </>
+            )}
             <PbmButton
               title={"Add Your Score"}
               onPress={
@@ -716,8 +719,15 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 24,
       paddingBottom: 15,
-      color: theme.purple,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontFamily: "Nunito-ExtraBold",
+    },
+    copyScores: {
+      fontFamily: "Nunito-Italic",
+      color: theme.text3,
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      flex: 1,
+      textAlign: "center",
     },
     modalTitle: {
       textAlign: "center",

@@ -135,8 +135,11 @@ const Stats = ({ navigation }) => {
           </Text>
 
           <Text style={s.category}>Top 25 Machines</Text>
-          {topMachines.map((machine, index) => (
-            <View key={index} style={s.row}>
+          {topMachines.map((machine, index, arr) => (
+            <View
+              key={index}
+              style={[s.row, index === arr.length - 1 && s.rowLast]}
+            >
               <Text style={s.rank}>{index + 1}.</Text>
               <View style={s.rowMain}>
                 <Text style={s.rowName}>{machine.machine_name}</Text>
@@ -151,10 +154,10 @@ const Stats = ({ navigation }) => {
           ))}
 
           <Text style={s.category}>25 Biggest Locations</Text>
-          {topLocations.map((location, index) => (
+          {topLocations.map((location, index, arr) => (
             <Pressable
               key={index}
-              style={s.row}
+              style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() =>
                 navigation.navigate("LocationDetails", { id: location.id })
               }
@@ -173,10 +176,10 @@ const Stats = ({ navigation }) => {
           ))}
 
           <Text style={s.category}>Top 10 Cities by Locations</Text>
-          {topCities.map((city, index) => (
+          {topCities.map((city, index, arr) => (
             <Pressable
               key={index}
-              style={s.row}
+              style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
               <Text style={s.rank}>{index + 1}.</Text>
@@ -190,10 +193,10 @@ const Stats = ({ navigation }) => {
           ))}
 
           <Text style={s.category}>Top 10 Cities by Machines</Text>
-          {topCitiesByMachine.map((city, index) => (
+          {topCitiesByMachine.map((city, index, arr) => (
             <Pressable
               key={index}
-              style={s.row}
+              style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
               <Text style={s.rank}>{index + 1}.</Text>
@@ -207,10 +210,10 @@ const Stats = ({ navigation }) => {
           ))}
 
           <Text style={s.category}>Top 25 Users</Text>
-          {topUsers.map((user, index) => (
+          {topUsers.map((user, index, arr) => (
             <Pressable
               key={index}
-              style={s.row}
+              style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() =>
                 navigation.navigate("UserProfilePublic", {
                   userId: user.id,
@@ -291,6 +294,9 @@ const getStyles = (theme) =>
       fontSize: 13,
       color: theme.text3,
       lineHeight: 18,
+    },
+    rowLast: {
+      borderBottomWidth: 0,
     },
     rowCount: {
       fontSize: 14,

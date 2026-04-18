@@ -600,6 +600,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       paddingLeft: 0,
+      marginRight: 15,
     },
     filterIcon: {
       paddingRight: 6,
