@@ -440,8 +440,6 @@ const Map = ({
           <LocationBottomSheet
             navigation={navigation}
             location={selectedLocation}
-            setToCurrentBounds={setToCurrentBounds}
-            triggerUpdate={(bounds) => dispatch(updateBounds(bounds))}
           />
         )}
       </View>

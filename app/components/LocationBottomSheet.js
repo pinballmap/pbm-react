@@ -13,14 +13,7 @@ import { CustomIcon } from "../components";
 const NUM_MACHINES_TO_SHOW = 5;
 
 const LocationBottomSheet = React.memo(
-  ({
-    navigation,
-    location,
-    locations,
-    user,
-    setToCurrentBounds,
-    triggerUpdate,
-  }) => {
+  ({ navigation, location, locations, user }) => {
     const { theme } = useContext(ThemeContext);
     const s = getStyles(theme);
 
@@ -43,9 +36,7 @@ const LocationBottomSheet = React.memo(
       (location) => location.id === location_type_id,
     );
 
-    const onPress = async () => {
-      const bounds = await setToCurrentBounds();
-      await triggerUpdate(bounds);
+    const onPress = () => {
       navigation.navigate("LocationDetails", { id });
     };
 
