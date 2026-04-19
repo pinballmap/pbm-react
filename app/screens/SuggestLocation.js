@@ -38,6 +38,7 @@ import { getData } from "../config/request";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { LinearGradient } from "expo-linear-gradient";
+import { registerCallback } from "../utils/navigationCallbacks";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -123,14 +124,16 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
       optionNA: true,
-      onGoBack: (id) => dispatch(setSelectedLocationType(id)),
+      onGoBackId: registerCallback((id) =>
+        dispatch(setSelectedLocationType(id)),
+      ),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
       optionNA: true,
-      onGoBack: (id) => dispatch(setSelectedOperator(id)),
+      onGoBackId: registerCallback((id) => dispatch(setSelectedOperator(id))),
     });
   };
 

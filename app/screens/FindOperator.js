@@ -16,12 +16,13 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
 import { LinearGradient } from "expo-linear-gradient";
+import { invokeCallback } from "../utils/navigationCallbacks";
 
 const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
-  const { onGoBack } = route.params;
+  const { onGoBackId } = route.params;
 
   const allOperators = [
     { name: route.params?.optionNA ? "N/A (or unknown)" : "All", id: -1 },
@@ -51,7 +52,7 @@ const FindOperator = ({ navigation, route, operators: { operators = [] } }) => {
   };
 
   const _selectOperator = (id) => {
-    onGoBack(id);
+    invokeCallback(onGoBackId, id);
     navigation.goBack();
   };
 

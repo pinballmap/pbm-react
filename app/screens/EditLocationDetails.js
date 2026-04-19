@@ -29,6 +29,7 @@ import {
   updateLocationDetails,
 } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { registerCallback } from "../utils/navigationCallbacks";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -83,14 +84,16 @@ function EditLocationDetails({ navigation, ...props }) {
   const goToFindLocationType = () => {
     navigation.navigate("FindLocationType", {
       optionNA: true,
-      onGoBack: (id) => dispatch(setSelectedLocationType(id)),
+      onGoBackId: registerCallback((id) =>
+        dispatch(setSelectedLocationType(id)),
+      ),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
       optionNA: true,
-      onGoBack: (id) => dispatch(setSelectedOperator(id)),
+      onGoBackId: registerCallback((id) => dispatch(setSelectedOperator(id))),
     });
   };
 

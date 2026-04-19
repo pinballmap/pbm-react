@@ -16,6 +16,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
 import { LinearGradient } from "expo-linear-gradient";
+import { invokeCallback } from "../utils/navigationCallbacks";
 
 const FindLocationType = ({
   navigation,
@@ -25,7 +26,7 @@ const FindLocationType = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
-  const { onGoBack } = route.params;
+  const { onGoBackId } = route.params;
   const multiSelect = route.params?.multiSelect || false;
 
   const allLocationTypes = [
@@ -47,7 +48,7 @@ const FindLocationType = ({
   useEffect(() => {
     if (!multiSelect) return;
     return navigation.addListener("beforeRemove", () => {
-      onGoBack(selectedIdsRef.current);
+      invokeCallback(onGoBackId, selectedIdsRef.current);
     });
   }, [multiSelect, navigation]);
 
@@ -92,7 +93,7 @@ const FindLocationType = ({
   };
 
   const _selectLocationType = (id) => {
-    onGoBack(id);
+    invokeCallback(onGoBackId, id);
     navigation.goBack();
   };
 

@@ -26,6 +26,7 @@ import {
   getOperatorName,
   filterSelected,
 } from "../selectors";
+import { registerCallback } from "../utils/navigationCallbacks";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -155,17 +156,17 @@ const FilterMap = ({
     navigation.navigate("FindLocationType", {
       multiSelect: true,
       selectedIds: locationTypeIds,
-      onGoBack: (ids) => {
+      onGoBackId: registerCallback((ids) => {
         dispatch(selectedLocationTypeFilterMulti(ids));
-      },
+      }),
     });
   };
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
-      onGoBack: (id) => {
+      onGoBackId: registerCallback((id) => {
         dispatch(selectedOperatorFilter(id));
-      },
+      }),
     });
   };
 
@@ -276,9 +277,9 @@ const FilterMap = ({
             onPress={() =>
               navigation.navigate("FindManufacturer", {
                 selectedManufacturers: manufacturerFilter,
-                onGoBack: (manufacturers) => {
+                onGoBackId: registerCallback((manufacturers) => {
                   dispatch(selectedManufacturerFilter(manufacturers));
-                },
+                }),
               })
             }
             margin={s.dropdownMargin}

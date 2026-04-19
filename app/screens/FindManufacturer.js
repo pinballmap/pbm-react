@@ -16,6 +16,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
 import { LinearGradient } from "expo-linear-gradient";
+import { invokeCallback } from "../utils/navigationCallbacks";
 
 const FindManufacturer = ({
   navigation,
@@ -25,7 +26,7 @@ const FindManufacturer = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
-  const { onGoBack } = route.params;
+  const { onGoBackId } = route.params;
 
   const allManufacturers = [
     ...new Set(machines.map((m) => m.manufacturer).filter(Boolean)),
@@ -46,7 +47,7 @@ const FindManufacturer = ({
 
   useEffect(() => {
     return navigation.addListener("beforeRemove", () => {
-      onGoBack(selectedRef.current);
+      invokeCallback(onGoBackId, selectedRef.current);
     });
   }, [navigation]);
 
