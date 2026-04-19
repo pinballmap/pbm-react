@@ -9,7 +9,6 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
-import { LinearGradient } from "expo-linear-gradient";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -23,18 +22,6 @@ const Resources = () => {
       edges={["right", "left"]}
       style={{ flex: 1, backgroundColor: theme.base1 }}
     >
-      <LinearGradient
-        colors={[theme.base1 + "00", theme.base1]}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 50,
-          zIndex: 10,
-          pointerEvents: "none",
-        }}
-      />
       <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <Text style={[{ marginTop: 10 }, s.text]}>
           <Text style={s.bold}>Pinball is fun!</Text>

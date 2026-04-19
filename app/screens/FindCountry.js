@@ -14,7 +14,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
-import { LinearGradient } from "expo-linear-gradient";
 import countries from "../utils/countries";
 
 const FindCountry = ({ navigation, route }) => {
@@ -120,29 +119,16 @@ const FindCountry = ({ navigation, route }) => {
           </Pressable>
         )}
       </View>
-      <View style={{ flex: 1 }}>
-        <FlatList
-          {...keyboardDismissProp}
-          data={selectedCountries}
-          renderItem={renderRow}
-          keyExtractor={_keyExtractor}
-          contentContainerStyle={{
-            backgroundColor: theme.base1,
-            paddingBottom: insets.bottom,
-          }}
-        />
-        <LinearGradient
-          colors={[theme.base1 + "00", theme.base1]}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 50,
-            pointerEvents: "none",
-          }}
-        />
-      </View>
+      <FlatList
+        {...keyboardDismissProp}
+        data={selectedCountries}
+        renderItem={renderRow}
+        keyExtractor={_keyExtractor}
+        contentContainerStyle={{
+          backgroundColor: theme.base1,
+          paddingBottom: insets.bottom,
+        }}
+      />
     </>
   );
 };

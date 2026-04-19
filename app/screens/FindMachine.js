@@ -40,7 +40,6 @@ import {
   WarningButton,
 } from "../components";
 import Checkbox from "expo-checkbox";
-import { LinearGradient } from "expo-linear-gradient";
 
 import { alphaSortNameObj } from "../utils/utilityFunctions";
 
@@ -473,35 +472,22 @@ const FindMachine = ({
           )}
         </View>
       ) : null}
-      <View style={{ flex: 1 }}>
-        {isFetchingMapArea ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            {...keyboardDismissProp}
-            keyboardShouldPersistTaps="always"
-            data={machines}
-            extraData={multiSelect ? machineList : undefined}
-            renderItem={multiSelect ? renderMultiSelectRow : renderRow}
-            keyExtractor={keyExtractor}
-            contentContainerStyle={{
-              backgroundColor: theme.base1,
-              paddingBottom: insets.bottom,
-            }}
-          />
-        )}
-        <LinearGradient
-          colors={[theme.base1 + "00", theme.base1]}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 50,
-            pointerEvents: "none",
+      {isFetchingMapArea ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          {...keyboardDismissProp}
+          keyboardShouldPersistTaps="always"
+          data={machines}
+          extraData={multiSelect ? machineList : undefined}
+          renderItem={multiSelect ? renderMultiSelectRow : renderRow}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={{
+            backgroundColor: theme.base1,
+            paddingBottom: insets.bottom,
           }}
         />
-      </View>
+      )}
     </>
   );
 };

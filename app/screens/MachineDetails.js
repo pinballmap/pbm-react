@@ -48,7 +48,6 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
 
 const moment = require("moment");
 
@@ -200,18 +199,6 @@ const MachineDetails = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      <LinearGradient
-        colors={[theme.base1 + "00", theme.base1]}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 50,
-          zIndex: 10,
-          pointerEvents: "none",
-        }}
-      />
       <ScrollView
         contentContainerStyle={{
           backgroundColor: theme.base1,

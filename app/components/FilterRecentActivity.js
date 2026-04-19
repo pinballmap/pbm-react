@@ -277,11 +277,12 @@ const FilterRecentActivity = ({
                 </Text>
               </Pressable>
               <Pressable
-                style={[
+                style={({ pressed }) => [
                   s.container,
                   specificMachinesSelected
                     ? s.containerSelected
                     : s.containerNotSelected,
+                  pressed && s.containerSelected,
                 ]}
                 onPress={navigateToFindMachine}
               >
