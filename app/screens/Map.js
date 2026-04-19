@@ -57,6 +57,8 @@ const Map = ({
   const [showUpdateSearch, setShowUpdateSearch] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [toCurrentLocation, setToCurrentLocation] = useState(false);
+  const [loadedTheme, setLoadedTheme] = useState(null);
+  const themeRef = useRef(theme.theme);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -99,6 +101,10 @@ const Map = ({
     locationIcFilter
       ? true
       : false;
+
+  useEffect(() => {
+    themeRef.current = theme.theme;
+  }, [theme.theme]);
 
   useEffect(() => {
     const run = async () => {
@@ -325,6 +331,7 @@ const Map = ({
             ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
             : Mapbox.StyleURL.Outdoors
         }
+        onDidFinishLoadingStyle={() => setLoadedTheme(themeRef.current)}
         onPress={mapPress}
       >
         <Mapbox.Camera
@@ -342,7 +349,9 @@ const Map = ({
             renderMode={Platform.OS === "ios" ? "native" : "normal"}
           />
         )}
-        <CustomMapMarkers navigation={navigation} />
+        {loadedTheme === theme.theme && (
+          <CustomMapMarkers navigation={navigation} />
+        )}
       </Mapbox.MapView>
       <Pressable
         onPress={() => navigation.navigate("LocationList")}
