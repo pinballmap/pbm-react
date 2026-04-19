@@ -212,6 +212,8 @@ const getStyles = (theme) =>
       color: "red",
       fontFamily: "Nunito-Bold",
       textAlign: "center",
+      fontSize: 16,
+      paddingHorizontal: 10,
     },
     bold: {
       fontFamily: "Nunito-Bold",

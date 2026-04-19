@@ -20,6 +20,8 @@ import { getIfpaData, getIfpaTournament } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
 import { boundsToCoords } from "../utils/utilityFunctions";
 import { useTheme } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const moment = require("moment");
@@ -36,6 +38,7 @@ export const Events = ({ query, user }) => {
 
   const theme = useTheme();
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
 
   const { neLat, neLon, swLat, swLon } = query;
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
@@ -268,7 +271,25 @@ export const Events = ({ query, user }) => {
           {` on their site.`}
         </Text>
       ) : (
-        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: theme.base1,
+            position: "relative",
+          }}
+        >
+          <LinearGradient
+            colors={[theme.base1 + "00", theme.base1]}
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 50,
+              zIndex: 10,
+              pointerEvents: "none",
+            }}
+          />
           <Text style={s.sourceText}>
             These events are brought to you by the{" "}
             <Text
@@ -284,6 +305,7 @@ export const Events = ({ query, user }) => {
           </Text>
           <FlatList
             data={events}
+            contentContainerStyle={{ paddingBottom: insets.bottom }}
             ListEmptyComponent={
               <Text
                 style={s.problem}

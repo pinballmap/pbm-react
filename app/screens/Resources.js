@@ -4,18 +4,38 @@ import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
+import { LinearGradient } from "expo-linear-gradient";
 
 let deviceWidth = Dimensions.get("window").width;
 
 const Resources = () => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView edges={["right", "bottom", "left"]} style={{ flex: 1 }}>
-      <Screen>
+    <SafeAreaView
+      edges={["right", "left"]}
+      style={{ flex: 1, backgroundColor: theme.base1 }}
+    >
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <Text style={[{ marginTop: 10 }, s.text]}>
           <Text style={s.bold}>Pinball is fun!</Text>
           {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place and maintain machines at your venue.`}
@@ -45,30 +65,14 @@ const Resources = () => {
               WebBrowser.openBrowserAsync("https://matchplay.events/")
             }
           >{`Match Play Events`}</Text>
-          {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices. Matchplay also contains the OPDB database, and includes PinTips, tutorial and gameplay videos, and rulesheets.`}
+          {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices. Matchplay also contains the OPDB database, and includes PinTips, tutorial and gameplay videos, and rulesheets.\n`}
         </Text>
-        <View style={s.hr}></View>
-        <Pressable
-          onPress={() => WebBrowser.openBrowserAsync("https://pindigo.app")}
-          style={[
-            s.logoWrapper,
-            { backgroundColor: "#363377", paddingVertical: 10 },
-          ]}
-        >
-          <Image
-            source={require("../assets/images/Resource_Pindigo.png")}
-            style={{
-              width: deviceWidth - 70,
-              height: (deviceWidth - 70) / 3.53,
-            }}
-          />
-        </Pressable>
         <Text style={s.text}>
           <Text
             style={s.textLink}
-            onPress={() => WebBrowser.openBrowserAsync("https://pindigo.app")}
-          >{`Pindigo`}</Text>
-          {` is an app for recording your scores. You can track all your high scores and compare them with friends.`}
+            onPress={() => WebBrowser.openBrowserAsync("https://opdb.org/")}
+          >{`OPDB`}</Text>
+          {` - or the Open Pinball Database - is a machine database with an API. Its API is used by us, and a number of other apps. So it's like we're all talking to each other.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -120,12 +124,30 @@ const Resources = () => {
           {` - or the International Flipper Pinball Association - is a governing body for competitive pinball. Check out the calendar to find tournaments near you.`}
         </Text>
         <View style={s.hr}></View>
+        <Pressable
+          onPress={() =>
+            WebBrowser.openBrowserAsync("https://discord.com/invite/XffPx6VKTv")
+          }
+          style={[s.logoWrapper]}
+        >
+          <Image
+            source={require("../assets/images/Resource_PinballPeople.png")}
+            style={{
+              width: deviceWidth - 70,
+              height: (deviceWidth - 70) / 1.294,
+            }}
+          />
+        </Pressable>
         <Text style={s.text}>
           <Text
             style={s.textLink}
-            onPress={() => WebBrowser.openBrowserAsync("https://opdb.org/")}
-          >{`OPDB`}</Text>
-          {` - or the Open Pinball Database - is a machine database with an API. Its API is used by us, and a number of other apps. So it's like we're all talking to each other.`}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://discord.com/invite/XffPx6VKTv",
+              )
+            }
+          >{`Pinball People`}</Text>
+          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -185,32 +207,6 @@ const Resources = () => {
         </Text>
         <View style={s.hr}></View>
         <Pressable
-          onPress={() =>
-            WebBrowser.openBrowserAsync("https://discord.com/invite/XffPx6VKTv")
-          }
-          style={[s.logoWrapper]}
-        >
-          <Image
-            source={require("../assets/images/Resource_PinballPeople.png")}
-            style={{
-              width: deviceWidth - 70,
-              height: (deviceWidth - 70) / 1.294,
-            }}
-          />
-        </Pressable>
-        <Text style={s.text}>
-          <Text
-            style={s.textLink}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                "https://discord.com/invite/XffPx6VKTv",
-              )
-            }
-          >{`Pinball People`}</Text>
-          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
-        </Text>
-        <View style={s.hr}></View>
-        <Pressable
           onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
           style={[s.logoWrapper]}
         >
@@ -228,6 +224,29 @@ const Resources = () => {
             onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
           >{`Scorbit`}</Text>
           {` is a platform (hardware/app) for tracking scores - and much more - in real-time. Operators can use it to track earnings. It does a lot, and its compatible with many machines.`}
+        </Text>
+        <View style={s.hr}></View>
+        <Pressable
+          onPress={() => WebBrowser.openBrowserAsync("https://pindigo.app")}
+          style={[
+            s.logoWrapper,
+            { backgroundColor: "#363377", paddingVertical: 10 },
+          ]}
+        >
+          <Image
+            source={require("../assets/images/Resource_Pindigo.png")}
+            style={{
+              width: deviceWidth - 70,
+              height: (deviceWidth - 70) / 3.53,
+            }}
+          />
+        </Pressable>
+        <Text style={s.text}>
+          <Text
+            style={s.textLink}
+            onPress={() => WebBrowser.openBrowserAsync("https://pindigo.app")}
+          >{`Pindigo`}</Text>
+          {` is an app for recording your scores. You can track all your high scores and compare them with friends.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable

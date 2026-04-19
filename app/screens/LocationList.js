@@ -16,6 +16,8 @@ import {
 } from "../actions/locations_actions";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 const NEAR_FILTER_IDX = 0;
 
@@ -28,6 +30,7 @@ const LocationList = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const [page, setPage] = useState(1);
   const [showNoLocationTrackingModal, setShowNoLocationTrackingModal] =
@@ -69,7 +72,9 @@ const LocationList = ({
   const showPagination = listPagy && listPagy.pages > 1;
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+    <View
+      style={{ flex: 1, backgroundColor: theme.base1, position: "relative" }}
+    >
       <ConfirmationModal
         visible={showNoLocationTrackingModal}
         closeModal={() => setShowNoLocationTrackingModal(false)}
@@ -112,6 +117,7 @@ const LocationList = ({
         <FlatList
           ref={flatListRef}
           data={displayLocations}
+          contentContainerStyle={{ paddingBottom: insets.bottom }}
           renderItem={({ item }) => (
             <LocationCard
               locationType={
@@ -193,6 +199,17 @@ const LocationList = ({
           }
         />
       )}
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          pointerEvents: "none",
+        }}
+      />
     </View>
   );
 };

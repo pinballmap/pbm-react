@@ -37,6 +37,7 @@ import {
 import { getData } from "../config/request";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { LinearGradient } from "expo-linear-gradient";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -235,7 +236,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
               <KeyboardAwareScrollView
                 contentContainerStyle={{
                   backgroundColor: theme.base1,
-                  paddingBottom: 40,
+                  paddingBottom: insets.bottom,
                 }}
                 keyboardShouldPersistTaps="handled"
               >
@@ -622,6 +623,17 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 />
               </KeyboardAwareScrollView>
             )}
+            <LinearGradient
+              colors={[theme.base1 + "00", theme.base1]}
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 50,
+                pointerEvents: "none",
+              }}
+            />
             <KeyboardToolbar />
           </View>
         );

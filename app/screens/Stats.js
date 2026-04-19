@@ -6,12 +6,17 @@ import { getData } from "../config/request";
 import { triggerUpdateBounds } from "../actions";
 import { Screen, Text } from "../components";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Stats = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const getLocationsByCity = async (city, state) => {
     try {
@@ -106,8 +111,20 @@ const Stats = ({ navigation }) => {
   const cityDisplay = (city, state) => (state ? `${city}, ${state}` : city);
 
   return (
-    <SafeAreaView edges={["right", "bottom", "left"]} style={s.background}>
-      <Screen>
+    <SafeAreaView edges={["right", "left"]} style={s.background}>
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={s.child}>
           <Text style={s.text}>
             {`Started mapping in 2008. Added "user accounts" in 2017, and since 2018/19 improved the stats we tracked.`}
@@ -164,7 +181,7 @@ const Stats = ({ navigation }) => {
             >
               <Text style={s.rank}>{index + 1}.</Text>
               <View style={s.rowMain}>
-                <Text style={s.rowName}>{location.name}</Text>
+                <Text style={[s.rowName, s.underline]}>{location.name}</Text>
                 <Text style={s.rowSub}>
                   {cityDisplay(location.city, location.state)}
                 </Text>
@@ -183,7 +200,7 @@ const Stats = ({ navigation }) => {
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
               <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName]}>
+              <Text style={[s.rowMain, s.rowName, s.underline]}>
                 {cityDisplay(city.city, city.state)}
               </Text>
               <Text style={s.rowCount}>
@@ -200,7 +217,7 @@ const Stats = ({ navigation }) => {
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
               <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName]}>
+              <Text style={[s.rowMain, s.rowName, s.underline]}>
                 {cityDisplay(city.city, city.state)}
               </Text>
               <Text style={s.rowCount}>
@@ -222,7 +239,9 @@ const Stats = ({ navigation }) => {
               }
             >
               <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName]}>{user.username}</Text>
+              <Text style={[s.rowMain, s.rowName, s.underline]}>
+                {user.username}
+              </Text>
               <Text style={s.rowCount}>
                 {formatNumWithCommas(user.user_submissions_count)}
               </Text>
@@ -303,6 +322,9 @@ const getStyles = (theme) =>
       color: theme.text3,
       fontFamily: "Nunito-SemiBold",
       textAlign: "right",
+    },
+    underline: {
+      textDecorationLine: "underline",
     },
   });
 

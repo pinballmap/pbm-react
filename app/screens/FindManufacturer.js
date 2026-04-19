@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "../components";
+import { LinearGradient } from "expo-linear-gradient";
 
 const FindManufacturer = ({
   navigation,
@@ -189,17 +190,30 @@ const FindManufacturer = ({
           </View>
         )}
       </View>
-      <FlatList
-        {...keyboardDismissProp}
-        keyboardShouldPersistTaps="always"
-        data={filteredManufacturers}
-        renderItem={renderRow}
-        keyExtractor={(item) => item}
-        contentContainerStyle={{
-          backgroundColor: theme.base1,
-          paddingBottom: insets.bottom,
-        }}
-      />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          {...keyboardDismissProp}
+          keyboardShouldPersistTaps="always"
+          data={filteredManufacturers}
+          renderItem={renderRow}
+          keyExtractor={(item) => item}
+          contentContainerStyle={{
+            backgroundColor: theme.base1,
+            paddingBottom: insets.bottom,
+          }}
+        />
+        <LinearGradient
+          colors={[theme.base1 + "00", theme.base1]}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 50,
+            pointerEvents: "none",
+          }}
+        />
+      </View>
     </>
   );
 };

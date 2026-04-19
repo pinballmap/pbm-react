@@ -3,18 +3,35 @@ import PropTypes from "prop-types";
 import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 
 const FAQ = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView edges={["right", "bottom", "left"]} style={s.background}>
-      <Screen>
+    <SafeAreaView edges={["right", "left"]} style={s.background}>
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={s.container}>
           <View style={s.child}>
             <Text style={s.text}>

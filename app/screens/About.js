@@ -13,14 +13,19 @@ import { ThemeContext } from "../theme-context";
 import { getData } from "../config/request";
 import { Screen, Text } from "../components";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
+import { LinearGradient } from "expo-linear-gradient";
 
 let deviceWidth = Dimensions.get("window").width;
 
 const About = ({ navigation, appAlert }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
 
   const [stats, setStats] = useState({
     num_locations: 0,
@@ -47,8 +52,20 @@ const About = ({ navigation, appAlert }) => {
   }, []);
 
   return (
-    <SafeAreaView edges={["right", "bottom", "left"]} style={s.background}>
-      <Screen>
+    <SafeAreaView edges={["right", "left"]} style={s.background}>
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <Image
           source={require("../assets/images/pinballmapcom_nocom.png")}
           contentFit="contain"

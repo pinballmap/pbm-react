@@ -26,7 +26,11 @@ import {
   getOperatorName,
   filterSelected,
 } from "../selectors";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 const FilterMap = ({
   locationTypeName,
@@ -41,6 +45,7 @@ const FilterMap = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const {
     machines = [],
@@ -169,8 +174,20 @@ const FilterMap = ({
   };
 
   return (
-    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
-      <Screen>
+    <SafeAreaView edges={[]} style={{ flex: 1 }}>
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
           <Text style={[s.sectionTitle, s.paddingFirst]}>
             Locations with this machine
@@ -456,17 +473,19 @@ const FilterMap = ({
         </View>
       </Screen>
       {hasFilterSelected ? (
-        <View style={[s.bottomTab, s.boxShadow]}>
-          <Text
-            style={s.bottomTabClear}
-            onPress={() => dispatch(clearFilters())}
-          >
-            Clear Filters
-          </Text>
-          <View style={[s.bottomTabApplyButton, s.boxShadow]}>
-            <Text style={s.bottomTabApply} onPress={() => goToMap()}>
-              Apply Filters
+        <View style={[s.bottomTab, s.boxShadow, s.bottomTabBoxShadow]}>
+          <View style={s.bottomTabInner}>
+            <Text
+              style={s.bottomTabClear}
+              onPress={() => dispatch(clearFilters())}
+            >
+              Clear Filters
             </Text>
+            <View style={[s.bottomTabApplyButton, s.boxShadow]}>
+              <Text style={s.bottomTabApply} onPress={() => goToMap()}>
+                Apply Filters
+              </Text>
+            </View>
           </View>
         </View>
       ) : null}
@@ -528,12 +547,16 @@ const getStyles = (theme) =>
     bottomTab: {
       position: "fixed",
       bottom: 0,
+      backgroundColor: theme.white,
+      width: "100%",
+      height: 100,
+      paddingTop: 10,
+    },
+    bottomTabInner: {
       flexDirection: "row",
       justifyContent: "space-around",
       alignItems: "center",
-      backgroundColor: theme.white,
-      width: "100%",
-      height: 80,
+      height: 50,
     },
     bottomTabClear: {
       textDecorationLine: "underline",
@@ -636,6 +659,12 @@ const getStyles = (theme) =>
       shadowRadius: 3.84,
       elevation: 5,
       overflow: "visible",
+    },
+    bottomTabBoxShadow: {
+      shadowOffset: {
+        width: 0,
+        height: -2,
+      },
     },
   });
 

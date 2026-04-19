@@ -50,6 +50,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
@@ -241,6 +242,7 @@ const LocationDetails = (props) => {
         ref={scrollViewRef}
         onScroll={handleScroll}
         scrollIndicatorInsets={{ right: 1 }}
+        contentContainerStyle={{ paddingBottom: insets.bottom }}
       >
         <ConfirmationModal
           visible={confirmModalVisible}
@@ -787,6 +789,17 @@ const LocationDetails = (props) => {
           <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
         </Pressable>
       )}
+      <LinearGradient
+        colors={[theme.base1 + "00", theme.base1]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 50,
+          pointerEvents: "none",
+        }}
+      />
     </View>
   );
 };

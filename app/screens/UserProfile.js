@@ -18,7 +18,6 @@ import { getData } from "../config/request";
 import { logout } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import * as WebBrowser from "expo-web-browser";
-
 const moment = require("moment");
 
 class UserProfile extends Component {
