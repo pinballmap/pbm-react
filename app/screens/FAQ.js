@@ -422,6 +422,8 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 It is some form of spam. Spam can be defined as writing the same comment on many machines.\n\n`}
 
+              {`\u2022 It is advertising a machine for sale. This is not a marketplace.\n\n`}
+
               {`\u2022 It contains a personal attack.\n\n`}
 
               {`\u2022 It is offensive.`}
