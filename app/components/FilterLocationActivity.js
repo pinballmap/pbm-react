@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import {
   MaterialCommunityIcons,
   Entypo,
@@ -11,6 +11,8 @@ import ConfirmationModal from "./ConfirmationModal";
 import { setSelectedLocationActivitiesFilter } from "../actions";
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
+
+let deviceWidth = Dimensions.get("window").width;
 
 const FilterLocationActivity = ({
   setSelectedLocationActivitiesFilter,
@@ -288,7 +290,7 @@ const getStyles = (theme) =>
     container: {
       flexDirection: "row",
       alignItems: "center",
-      height: 55,
+      height: deviceWidth < 325 ? 45 : 55,
       paddingHorizontal: 15,
     },
     containerNotSelected: {
