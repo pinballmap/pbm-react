@@ -176,7 +176,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
-            name="info-outline"
+            name="event-note"
             size={iconSize}
             color={iconColor}
             style={s.iconStyle}
@@ -217,8 +217,8 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         labelStyle={s.labelStyle}
         allowFontScaling={false}
         icon={() => (
-          <MaterialIcons
-            name="question-answer"
+          <MaterialCommunityIcons
+            name="frequently-asked-questions"
             size={iconSize}
             color={iconColor}
             style={s.iconStyle}
