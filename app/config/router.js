@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
-import {
-  FontAwesome6,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Heart } from "phosphor-react-native/src/icons/Heart";
+import { List } from "phosphor-react-native/src/icons/List";
+import { MapTrifold } from "phosphor-react-native/src/icons/MapTrifold";
+import { Newspaper } from "phosphor-react-native/src/icons/Newspaper";
+import { Smiley } from "phosphor-react-native/src/icons/Smiley";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
 import LocationDetails from "../screens/LocationDetails";
@@ -151,8 +151,8 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="map"
+            <MapTrifold
+              weight="duotone"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
@@ -178,8 +178,8 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="heart-outline"
+            <Heart
+              weight="duotone"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
@@ -205,8 +205,8 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="newspaper-variant-multiple-outline"
+            <Newspaper
+              weight="duotone"
               size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
@@ -232,9 +232,9 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: ({ focused }) => (
-            <FontAwesome6
-              name="face-grin-beam"
-              size={25}
+            <Smiley
+              weight="duotone"
+              size={28}
               color={focused ? colors.activeTab : colors.inactiveTab}
             />
           ),
@@ -265,11 +265,7 @@ function BottomTabNavigator() {
             </Text>
           ),
           tabBarIcon: () => (
-            <MaterialCommunityIcons
-              name="menu"
-              size={28}
-              color={colors.inactiveTab}
-            />
+            <List weight="duotone" size={28} color={colors.inactiveTab} />
           ),
         }}
       />
