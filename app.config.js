@@ -6,10 +6,8 @@ export default {
     updates: {
       enabled: false,
     },
-    runtimeVersion: {
-      policy: "sdkVersion",
-    },
-    version: "5.3.42",
+    runtimeVersion: "1.0.0",
+    version: "5.4.0",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -92,7 +90,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "259",
+      buildNumber: "263",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -148,7 +146,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 232,
+      versionCode: 234,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

@@ -14,9 +14,40 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.0
+
+April 23, 2026
+
+- Remove zoom limits - now you can zoom out to the entire world.
+- Updated map marker colors (based on number of machines).
+- Added pagination to the Location List, and Recent Activity and Location Activity feeds.
+- Added a "Global Activity" feed option to Recent Activity so you can see edits across the entire map.
+- Added a "Your Activity" filter to the activity feeds so you can just see your own edits.
+- Added a "Select Machines" option in Recent Activity so that you can limit activity to particular machines (can include more than one).
+- Added new map Filters. Details:
+  -- Select multiple machines.
+  -- Select multiple location types.
+  -- Choose whether you want see locations where a particular machine (or machine group) has Stern Insider Connected enabled.
+  -- Filter by manufacturer (can select multiple, and this also filters the machine selection list).
+  -- Filter by machine type (All or EM, and this also filters the machine selection list).
+  -- Filter by span of machine years - start and end years.
+  -- Filter by whether the location has at least one Stern IC machine (any machine).
+- Track your highest score across any copy of a machine. Displays highest score on machine details screen (and user profile).
+- Exclude scores from other users - both from machine details screens and from the activity feeds. You can see other people's scores if you select the "High Scores" filter in activity feeds.
+- Profile screen shows your highest score per machine, as well as some high score statistics.
+- Usernames are now clickable, so you view their profile.
+- Added a Stats page (linked in About) that shows cool map statistics.
+- Confirmation modal for IC toggle button.
+- Added a Share button to bottom sheet on map screen.
+- Notify user when a Suggested Location appears to be a duplicate.
+- Speed up initial app load.
+- Location details should load faster.
+- Map results should load faster.
+- Better error message handling for disabled users.
+
 ### 5.3.42
 
-February 16, 2025
+February 16, 2026
 
 - Show icons next to usernames for: site administrator | contributor_rank | operator of that location. See FAQ for more details.
 - Include "New location added" in Activity feeds.
@@ -25,19 +56,19 @@ February 16, 2025
 
 ### 5.3.41
 
-January 16, 2025
+January 16, 2026
 
 - Add internal field (google places ID) to location suggestion form.
 
 ### 5.3.40
 
-January 15, 2025
+January 15, 2026
 
 - Add link in location details to Google Maps to find up-to-date hours.
 
 ### 5.3.39
 
-January 6, 2025
+January 6, 2026
 
 - Add a search button when no autocomplete results on search screen in order to make it more obvious what to do.
 - Add graceful animation to stale location notice in order to incite users to update.
