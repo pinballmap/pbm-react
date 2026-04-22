@@ -17,7 +17,7 @@ const Title = ({ machine }) => {
   const s = getStyles(theme);
 
   return (
-    <Text>
+    <Text style={s.fontSize20}>
       <Text style={s.machineName}>{machine.name}</Text>
       {machine.year ? (
         <Text style={[s.fontSize20, s.pink1, s.mediumFont]}>{` (${
@@ -33,62 +33,54 @@ const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
   const s = getStyles(theme);
 
   return (
-    <View>
-      <View
-        style={[
-          s.machineListContainer,
-          pressed ? s.pressed : s.notPressed,
-          { flexDirection: "row" },
-        ]}
-      >
-        <View style={{ flex: 1 }}>
-          <Title machine={machine} />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 6,
-            }}
-          >
-            <MaterialCommunityIcons
-              name={
-                machine.created_at !== machine.updated_at
-                  ? "clock-time-four-outline"
-                  : "clock-time-three-outline"
-              }
-              style={s.metaIcon}
-            />
-            <Text style={s.updated}>
-              {machine.created_at !== machine.updated_at
-                ? `Updated: ${moment(machine.updated_at).format("MMM DD, YYYY")}`
-                : `Added: ${moment(machine.created_at).format("MMM DD, YYYY")}`}
-            </Text>
-          </View>
+    <View style={[s.machineListContainer, pressed ? s.pressed : s.notPressed]}>
+      <View style={{ flex: 1 }}>
+        <Title machine={machine} />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 6,
+          }}
+        >
+          <MaterialCommunityIcons
+            name={
+              machine.created_at !== machine.updated_at
+                ? "clock-time-four-outline"
+                : "clock-time-three-outline"
+            }
+            style={s.metaIcon}
+          />
+          <Text style={s.updated}>
+            {machine.created_at !== machine.updated_at
+              ? `Updated: ${moment(machine.updated_at).format("MMM DD, YYYY")}`
+              : `Added: ${moment(machine.created_at).format("MMM DD, YYYY")}`}
+          </Text>
         </View>
-        {displayInsiderConnectedBadge && machine.ic_enabled && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={
-                theme.theme === "dark"
-                  ? insiderConnectedImage.dark
-                  : insiderConnectedImage.light
-              }
-              style={{
-                width: 55,
-                height: 55,
-                transform: [{ translateX: 10 }],
-              }}
-              contentFit="contain"
-            />
-          </View>
-        )}
       </View>
+      {displayInsiderConnectedBadge && machine.ic_enabled && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={
+              theme.theme === "dark"
+                ? insiderConnectedImage.dark
+                : insiderConnectedImage.light
+            }
+            style={{
+              width: 55,
+              height: 55,
+              transform: [{ translateX: 10 }],
+            }}
+            contentFit="contain"
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -120,7 +112,6 @@ const getStyles = (theme) =>
     },
     pink1: {
       color: theme.theme === "dark" ? theme.pink1 : theme.text3,
-      fontFamily: "Nunito-Regular",
     },
     updated: {
       fontSize: 14,
@@ -129,6 +120,7 @@ const getStyles = (theme) =>
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     machineListContainer: {
+      flexDirection: "row",
       borderRadius: 25,
       marginBottom: 20,
       marginHorizontal: 20,
