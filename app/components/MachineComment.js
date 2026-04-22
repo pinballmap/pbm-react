@@ -162,15 +162,15 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
                     }
                   >
                     {username}
-                    {"  "}
                   </Text>
                 )}
+                {!!(admin_title || contributor_rank) && <Text>{` `}</Text>}
                 {!!admin_title && (
                   <MaterialCommunityIcons
                     name="shield-account"
                     size={15}
                     color={theme.shield}
-                    style={{ marginRight: 3 }}
+                    style={[s.rankIcon, { marginRight: 3 }]}
                   />
                 )}
                 {!!contributor_rank && (
@@ -183,17 +183,16 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
                 <Text style={[s.italic, s.date]}>
                   {moment(updated_at).format("MMM DD, YYYY")}
                 </Text>
-                <Text style={{ color: theme.text3 }}>
-                  {created_at !== updated_at && "*"}
-                  {"  "}
-                </Text>
+                {created_at !== updated_at && (
+                  <Text style={{ color: theme.text3 }}>{`*`}</Text>
+                )}
                 {user?.id && user.id === commentUserId && (
                   <>
                     <Text
-                      style={s.editDelete}
+                      style={[s.editDelete, { marginHorizontal: 8 }]}
                       onPress={() => setEditModalVisible(true)}
                     >
-                      edit{`  `}
+                      edit
                     </Text>
                     <Text
                       style={s.editDelete}
