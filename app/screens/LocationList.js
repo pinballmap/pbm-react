@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { FlatList, Linking, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
+  ActivityIndicator,
   ButtonGroup,
   ConfirmationModal,
   LocationCard,
@@ -107,9 +108,7 @@ const LocationList = ({
         innerBorderStyle={s.innerBorderStyle}
       />
       {isFetchingList ? (
-        <View style={s.loadingContainer}>
-          <Text style={s.loadingText}>Loading...</Text>
-        </View>
+        <ActivityIndicator />
       ) : (
         <FlatList
           ref={flatListRef}
@@ -234,16 +233,6 @@ const getStyles = (theme) =>
     selTextStyle: {
       color: theme.text2,
       fontFamily: "Nunito-Bold",
-    },
-    loadingContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    loadingText: {
-      color: theme.text2,
-      fontFamily: "Nunito-Regular",
-      fontSize: 16,
     },
     confirmText: {
       textAlign: "center",
