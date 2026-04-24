@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.1
+
+April 24, 2026
+
+- Minor fixes related to the Recent Activity list refreshing.
+- Fix bug with location activity when no activity found
+- When city search name has no state, then show country, and fix issue with those searches
+
 ### 5.4.0
 
 April 23, 2026
