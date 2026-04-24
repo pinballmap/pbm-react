@@ -64,11 +64,16 @@ const LocationActivity = ({
       const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
       getData(
         `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
-      ).then((data) => {
-        setLocationActivityLoading(false);
-        setRecentActivity(data.user_submissions);
-        setPagy(data.pagy ?? null);
-      });
+      )
+        .then((data) => {
+          setLocationActivityLoading(false);
+          setRecentActivity(data.user_submissions ?? []);
+          setPagy(data.pagy ?? null);
+        })
+        .catch(() => {
+          setLocationActivityLoading(false);
+          setRecentActivity([]);
+        });
     }
   }, [locationActivityModalOpen]);
 
@@ -86,11 +91,16 @@ const LocationActivity = ({
       const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
       getData(
         `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=1${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
-      ).then((data) => {
-        setLocationActivityLoading(false);
-        setRecentActivity(data.user_submissions);
-        setPagy(data.pagy ?? null);
-      });
+      )
+        .then((data) => {
+          setLocationActivityLoading(false);
+          setRecentActivity(data.user_submissions ?? []);
+          setPagy(data.pagy ?? null);
+        })
+        .catch(() => {
+          setLocationActivityLoading(false);
+          setRecentActivity([]);
+        });
     }
   }, [selectedLocationActivities]);
 
@@ -104,11 +114,16 @@ const LocationActivity = ({
     const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
     getData(
       `/user_submissions/location.json?id=${locationId}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${loggedIn ? `&user_id=${userId}` : ""}`,
-    ).then((data) => {
-      setLocationActivityLoading(false);
-      setRecentActivity(data.user_submissions);
-      setPagy(data.pagy ?? null);
-    });
+    )
+      .then((data) => {
+        setLocationActivityLoading(false);
+        setRecentActivity(data.user_submissions ?? []);
+        setPagy(data.pagy ?? null);
+      })
+      .catch(() => {
+        setLocationActivityLoading(false);
+        setRecentActivity([]);
+      });
   };
 
   const getText = (activity) => {

@@ -105,11 +105,16 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
               distance || maxDistance
             }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
-        getData(url).then((data) => {
-          setFetchingRecentActivity(false);
-          setRecentActivity(data.user_submissions);
-          setPagy(data.pagy ?? null);
-        });
+        getData(url)
+          .then((data) => {
+            setFetchingRecentActivity(false);
+            setRecentActivity(data.user_submissions ?? []);
+            setPagy(data.pagy ?? null);
+          })
+          .catch(() => {
+            setFetchingRecentActivity(false);
+            setRecentActivity([]);
+          });
       }
       setShouldRefresh(true);
     },
@@ -137,11 +142,16 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       btnIdx === 3
         ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
         : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
-    getData(url).then((data) => {
-      setFetchingRecentActivity(false);
-      setRecentActivity(data.user_submissions);
-      setPagy(data.pagy ?? null);
-    });
+    getData(url)
+      .then((data) => {
+        setFetchingRecentActivity(false);
+        setRecentActivity(data.user_submissions ?? []);
+        setPagy(data.pagy ?? null);
+      })
+      .catch(() => {
+        setFetchingRecentActivity(false);
+        setRecentActivity([]);
+      });
   };
 
   useEffect(
