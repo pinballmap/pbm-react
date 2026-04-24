@@ -93,7 +93,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       // user has come from navigating to a location detail screen via the recent activity list.
       // To accomplish this behavior, we have to now explicitly call fetchData when the user updates the search radius
       // and we must track if the data should be refreshed (i.e. not coming back from location details)
-      if (distance || shouldRefresh || global) {
+      if (distance || shouldRefresh) {
         setFetchingRecentActivity(true);
         setPage(1);
         const submissionTypeParam =
@@ -209,13 +209,15 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         <Text style={s.italic}>{time}</Text> by{" "}
         <Text
           style={s.username}
-          onPress={() =>
-            user_id &&
-            navigation.navigate("UserProfilePublic", {
-              userId: user_id,
-              username: user_name,
-            })
-          }
+          onPress={() => {
+            if (user_id) {
+              setShouldRefresh(false);
+              navigation.navigate("UserProfilePublic", {
+                userId: user_id,
+                username: user_name,
+              });
+            }
+          }}
         >
           {user_name}
         </Text>
