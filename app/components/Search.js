@@ -124,12 +124,15 @@ class Search extends Component {
       });
   };
 
-  getLocationsByCity = async ({ value }, idx) => {
+  getLocationsByCity = async (location, idx) => {
+    const { value } = location;
     try {
       const [city, state] = value.split(", ");
-      const stateParam = state ? `by_state_id=${state}` : "";
+      const cityParam = state
+        ? `by_city_id=${city}&by_state_id=${state}`
+        : `by_city_no_state=${city}`;
       const { locations } = await getData(
-        `/locations?by_city_id=${city}&${stateParam}&no_details=1`,
+        `/locations.json?${cityParam}&no_details=1`,
       );
       if (!Array.isArray(locations) || !locations.length) {
         throw new Error();
@@ -160,7 +163,7 @@ class Search extends Component {
       }, {});
 
       this.props.triggerUpdateBounds(bounds);
-      this.clearSearchState({ value });
+      this.clearSearchState(location);
     } catch (e) {
       Alert.alert("City no longer has machines.");
       this.clearSearchState("");
@@ -255,7 +258,7 @@ class Search extends Component {
       onPress={() => this.getLocationsByCity(location, idx)}
     >
       <View style={s.listContainerStyle}>
-        <Text style={s.listItemTitle}>{location.value}</Text>
+        <Text style={s.listItemTitle}>{location.label ?? location.value}</Text>
         <Text style={s.cityRegionRow}>City</Text>
       </View>
     </Pressable>
