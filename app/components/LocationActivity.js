@@ -140,13 +140,15 @@ const LocationActivity = ({
         <Text style={s.italic}>{time}</Text> by{" "}
         <Text
           style={s.username}
-          onPress={() =>
-            user_id &&
-            navigation.navigate("UserProfilePublic", {
-              userId: user_id,
-              username: user_name,
-            })
-          }
+          onPress={() => {
+            if (user_id) {
+              setLocationActivityModalOpen(false);
+              navigation.navigate("UserProfilePublic", {
+                userId: user_id,
+                username: user_name,
+              });
+            }
+          }}
         >
           {user_name}
         </Text>
