@@ -34,6 +34,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { coordsToBounds } from "../utils/utilityFunctions";
+import { registerGetBounds } from "../utils/mapCenterBridge";
 import { useNavigation, useTheme } from "@react-navigation/native";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
@@ -162,6 +163,10 @@ const Map = ({
     forceTriggerUpdateBounds,
     toCurrentLocation,
   ]);
+
+  useEffect(() => {
+    registerGetBounds(getBounds);
+  }, []);
 
   const navigateToScreen = async (url) => {
     const { regions: allRegions = [] } = regions ?? {};

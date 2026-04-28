@@ -24,6 +24,7 @@ import {
   Text,
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
+import { getMapBounds } from "../utils/mapCenterBridge";
 import { clearActivityFilter } from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
@@ -42,6 +43,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const [pagy, setPagy] = useState(null);
   const scrollViewRef = useRef(null);
   const filtersChangedRef = useRef(false);
+  const lastFetchedCenterRef = useRef({ lat, lon });
   const {
     selectedActivities = [],
     selectedActivityMachines = [],
@@ -87,7 +89,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       : "";
 
   const fetchData = useCallback(
-    (_, distance, global = btnIdx === 3) => {
+    async (_, distance, global = btnIdx === 3) => {
       // Once the recent activity screen is mounted, it never unmounts for the app. With that in mind, we typically
       // want to get a fresh request of the recent activity when the screen is focused with the exception being if the
       // user has come from navigating to a location detail screen via the recent activity list.
@@ -100,9 +102,20 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           buildSubmissionTypeParam(selectedActivities);
         const machineIdParam = buildMachineIdParam(selectedActivityMachines);
         const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
+        let fetchLat = lat,
+          fetchLon = lon;
+        if (!global) {
+          const bounds = await getMapBounds();
+          if (bounds) {
+            const coords = boundsToCoords(bounds);
+            fetchLat = coords.lat;
+            fetchLon = coords.lon;
+          }
+          lastFetchedCenterRef.current = { lat: fetchLat, lon: fetchLon };
+        }
         const url = global
           ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
-          : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${
+          : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${
               distance || maxDistance
             }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
         getData(url)
@@ -138,10 +151,11 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     const submissionTypeParam = buildSubmissionTypeParam(selectedActivities);
     const machineIdParam = buildMachineIdParam(selectedActivityMachines);
     const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
+    const { lat: fetchLat, lon: fetchLon } = lastFetchedCenterRef.current;
     const url =
       btnIdx === 3
         ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
-        : `/user_submissions/list_within_range.json?lat=${lat}&lon=${lon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+        : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url)
       .then((data) => {
         setFetchingRecentActivity(false);
