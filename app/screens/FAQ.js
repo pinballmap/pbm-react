@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Entypo,
+  FontAwesome6,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
 
@@ -15,10 +19,46 @@ const FAQ = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
+  const scrollRef = useRef(null);
+  const sectionRefs = useRef({});
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  const handleScroll = (event) => {
+    setShowScrollToTop(event.nativeEvent.contentOffset.y > 150);
+  };
+
+  const scrollToTop = () => {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
+  const scrollToSection = (key) => {
+    const sectionView = sectionRefs.current[key];
+    if (!sectionView || !scrollRef.current) return;
+    sectionView.measureLayout(
+      scrollRef.current,
+      (x, y) => scrollRef.current.scrollTo({ y, animated: true }),
+      () => {},
+    );
+  };
+
+  const SECTIONS = [
+    { key: "mobile", label: "Mobile App-Specific" },
+    { key: "updating", label: "Updating the Map" },
+    { key: "dataUsage", label: "Data Usage" },
+    { key: "dataManagement", label: "Data Management" },
+    { key: "operators", label: "Operators" },
+    { key: "users", label: "Users" },
+    { key: "misc", label: "Miscellaneous" },
+  ];
 
   return (
     <SafeAreaView edges={["right", "left"]} style={s.background}>
-      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
+      <Screen
+        ref={scrollRef}
+        contentContainerStyle={{ paddingBottom: insets.bottom }}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
         <View style={s.container}>
           <View style={s.child}>
             <Text style={s.text}>
@@ -31,7 +71,26 @@ const FAQ = ({ navigation }) => {
               </Text>
               {`.`}
             </Text>
-            <Text style={s.category}>Mobile App-Specific</Text>
+            <View style={s.toc}>
+              <Text>Jump to:</Text>
+              {SECTIONS.map(({ key, label }) => (
+                <Text
+                  key={key}
+                  style={s.tocRow}
+                  onPress={() => scrollToSection(key)}
+                >
+                  <Text style={s.tocBullet}>{"• "}</Text>
+                  <Text style={s.tocLabel}>{label}</Text>
+                </Text>
+              ))}
+            </View>
+            <View
+              ref={(r) => {
+                sectionRefs.current["mobile"] = r;
+              }}
+            >
+              <Text style={s.category}>Mobile App-Specific</Text>
+            </View>
             <Text
               style={s.bold}
             >{`How do I search for a particular machine?`}</Text>
@@ -193,7 +252,13 @@ const FAQ = ({ navigation }) => {
               : Take photo straight on, not at an angle. Crop image to show only
               artwork. Avoid glare, if possible
             </Text>
-            <Text style={s.category}>Updating the Map</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["updating"] = r;
+              }}
+            >
+              <Text style={s.category}>Updating the Map</Text>
+            </View>
             <Text
               style={s.bold}
             >{`How do I add a machine to a location?`}</Text>
@@ -255,7 +320,13 @@ const FAQ = ({ navigation }) => {
               </Text>
               {`, and make sure to tell us the name of the location that has moved. It's preferable for us to simply change the address because that retains the location history.`}
             </Text>
-            <Text style={s.category}>Data Usage</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["dataUsage"] = r;
+              }}
+            >
+              <Text style={s.category}>Data Usage</Text>
+            </View>
             <Text
               style={s.bold}
             >{`Can I use Pinball Map data on my own site?`}</Text>
@@ -273,7 +344,13 @@ const FAQ = ({ navigation }) => {
               </Text>
               {` to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
             </Text>
-            <Text style={s.category}>Data Management</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["dataManagement"] = r;
+              }}
+            >
+              <Text style={s.category}>Data Management</Text>
+            </View>
             <Text
               style={s.bold}
             >{`Can you include "bat games", or other non-pinball but pinball-adjacent games??`}</Text>
@@ -318,7 +395,13 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 The location you submitted is a private residence. Or private in some other way. See the question above this.`}
             </Text>
-            <Text style={s.category}>Operators</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["operators"] = r;
+              }}
+            >
+              <Text style={s.category}>Operators</Text>
+            </View>
             <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
             <Text style={s.text}>
               {
@@ -365,7 +448,13 @@ const FAQ = ({ navigation }) => {
             <Text
               style={s.text}
             >{`No. It may seem "bad" for there to be a public record of problems with your machines, but it's actually good! All machines have problems. What we're showing here is a record of you fixing the machines! Users love that, and we think operators should, too!`}</Text>
-            <Text style={s.category}>Users</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["users"] = r;
+              }}
+            >
+              <Text style={s.category}>Users</Text>
+            </View>
             <Text style={s.bold}>{`Can I change my username?`}</Text>
             <Text style={s.text}>
               {`Only administrators can change your username. `}
@@ -436,7 +525,13 @@ const FAQ = ({ navigation }) => {
 
               {`\u2022 You signed up with a disposable email account. We sometimes have legitimate reasons for contacting you individually. Disposable emails are most often used by people who abuse the site.`}
             </Text>
-            <Text style={s.category}>Miscellaneous</Text>
+            <View
+              ref={(r) => {
+                sectionRefs.current["misc"] = r;
+              }}
+            >
+              <Text style={s.category}>Miscellaneous</Text>
+            </View>
             <Text style={s.bold}>{`Can you add a feature that I want?`}</Text>
             <Text style={s.text}>
               {`Maybe! We can try. Pinball Map is an open source app. You can submit "issues" to`}{" "}
@@ -477,6 +572,11 @@ const FAQ = ({ navigation }) => {
           </View>
         </View>
       </Screen>
+      {showScrollToTop && (
+        <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
+          <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
+        </Pressable>
+      )}
     </SafeAreaView>
   );
 };
@@ -548,6 +648,42 @@ const getStyles = (theme) =>
       color: theme.text2,
       lineHeight: 22,
       marginRight: 15,
+    },
+    toc: {
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 5,
+      marginBottom: 15,
+    },
+    tocRow: {
+      fontSize: 15,
+      fontFamily: "Nunito-Medium",
+      lineHeight: 28,
+    },
+    tocBullet: {
+      color: theme.text,
+    },
+    tocLabel: {
+      color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
+      textDecorationLine: "underline",
+    },
+    upButton: {
+      justifyContent: "center",
+      position: "absolute",
+      right: 25,
+      bottom: 25,
+      backgroundColor: theme.purple,
+      padding: 10,
+      borderRadius: 15,
+    },
+    boxShadow: {
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
   });
 
