@@ -44,6 +44,7 @@ import {
   Text,
   WarningButton,
 } from "../components";
+import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
@@ -55,7 +56,6 @@ let deviceWidth = Dimensions.get("window").width;
 
 const MachineDetails = ({
   location: locationProp,
-  operators,
   user,
   machineDetails,
   addMachineCondition,
@@ -74,6 +74,8 @@ const MachineDetails = ({
   const [userAllTimeHighScore, setUserAllTimeHighScore] = useState(null);
   const [highScoreFetched, setHighScoreFetched] = useState(false);
   const [ictoggleModalVisible, setIctoggleModalVisible] = useState(false);
+  const [copiedNotice, setCopiedNotice] = useState(false);
+  const copiedTimeoutRef = useRef(null);
   const insets = useSafeAreaInsets();
 
   const { curLmx, location, isFetchingLmx, lmxMutated } = locationProp;
@@ -107,15 +109,7 @@ const MachineDetails = ({
     light: require("../assets/images/Resource_Matchplay_Light.png"),
   };
 
-  const operator =
-    location.operator_id &&
-    operators.operators.find(
-      (operator) => operator.id === location.operator_id,
-    );
-  const operatorHasEmail =
-    operator && operator.operator_has_email
-      ? operator.operator_has_email
-      : false;
+  const operatorHasEmail = location.operator_has_email ?? false;
 
   const refreshHighScore = () => {
     if (loggedIn) {
@@ -154,6 +148,13 @@ const MachineDetails = ({
       navigation.goBack();
     }
   }, [locationProp]);
+
+  const copyToClipboard = async (value) => {
+    await Clipboard.setStringAsync(value);
+    clearTimeout(copiedTimeoutRef.current);
+    setCopiedNotice(true);
+    copiedTimeoutRef.current = setTimeout(() => setCopiedNotice(false), 2000);
+  };
 
   const cancelAddCondition = () => {
     setShowAddConditionModal(false);
@@ -233,6 +234,13 @@ const MachineDetails = ({
           onRequestClose={() => {}}
         >
           <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+            {copiedNotice && (
+              <View style={s.copiedNoticeWrapper}>
+                <View style={s.copiedNoticeContainer}>
+                  <Text style={s.copiedNotice}>Copied!</Text>
+                </View>
+              </View>
+            )}
             <KeyboardAwareScrollView
               contentContainerStyle={{
                 backgroundColor: theme.base1,
@@ -257,6 +265,49 @@ const MachineDetails = ({
                 placeholderTextColor={theme.indigo4}
                 textAlignVertical="top"
               />
+              {(!!location.operator_email_opt_in ||
+                !!location.operator_phone_opt_in) && (
+                <View style={[s.margin4, s.operatorContactRow]}>
+                  <Text
+                    style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}
+                  >
+                    Contact operator directly:{" "}
+                  </Text>
+                  {!!location.operator_email_opt_in && (
+                    <Pressable
+                      style={s.operatorContactIcon}
+                      onPress={() =>
+                        copyToClipboard(location.operator_email_opt_in)
+                      }
+                    >
+                      <MaterialCommunityIcons
+                        name="email-outline"
+                        size={18}
+                        color={theme.indigo4}
+                      />
+                    </Pressable>
+                  )}
+                  {!!location.operator_phone_opt_in && (
+                    <Pressable
+                      style={s.operatorContactIcon}
+                      onPress={() =>
+                        copyToClipboard(location.operator_phone_opt_in)
+                      }
+                    >
+                      <MaterialCommunityIcons
+                        name="phone"
+                        size={18}
+                        color={theme.indigo4}
+                      />
+                    </Pressable>
+                  )}
+                </View>
+              )}
+              {!!location.operator_id && operatorHasEmail && (
+                <Text style={[s.modalSubText, s.margin4, s.bold]}>
+                  {`This operator is signed up to be notified about machine comments.`}
+                </Text>
+              )}
               <Text style={[s.modalSubText, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
                 {`it's often best to tell technicians about issues on-site rather than leaving them "on the record" here.`}
@@ -264,14 +315,9 @@ const MachineDetails = ({
               <Text style={[s.modalSubText, s.margin4]}>
                 {`Please be descriptive about machine issues and considerate toward those fixing them.`}
               </Text>
-              {!!location.operator_id && operatorHasEmail && (
-                <Text style={[s.modalSubText, s.margin4, s.bold]}>
-                  {`This operator is signed up to be notified about machine comments.`}
-                </Text>
-              )}
               <Text style={[s.modalSubText, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
-                {`if you've fixed an issue, please leave a comment saying so.`}
+                {`if you've fixed an issue, please leave a comment saying so, so that everyone knows how great you are`}
               </Text>
               <PbmButton
                 title={"Add Comment"}
@@ -844,13 +890,45 @@ const getStyles = (theme) =>
       marginTop: 15,
       marginBottom: 40,
     },
+    operatorContactRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginHorizontal: 40,
+    },
+    operatorContactIcon: {
+      marginRight: 8,
+      padding: 3,
+    },
+    copiedNoticeWrapper: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      alignItems: "center",
+      justifyContent: "center",
+      pointerEvents: "none",
+      zIndex: 100,
+    },
+    copiedNoticeContainer: {
+      backgroundColor: "rgba(0, 0, 0, 0.65)",
+      borderRadius: 10,
+      paddingHorizontal: 14,
+      paddingVertical: 6,
+    },
+    copiedNotice: {
+      color: "white",
+      fontSize: 13,
+      fontFamily: "Nunito-SemiBold",
+    },
   });
 
-const mapStateToProps = ({ location, operators, user, machines }) => {
+const mapStateToProps = ({ location, user, machines }) => {
   const machineDetails = location.curLmx
     ? machines.machines.find((m) => m.id === location.curLmx.machine_id)
     : {};
-  return { location, operators, user, machineDetails };
+  return { location, user, machineDetails };
 };
 const mapDispatchToProps = (dispatch) => ({
   addMachineCondition: (condition, lmx) =>

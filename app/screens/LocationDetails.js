@@ -37,6 +37,7 @@ import {
   alphaSortNameObj,
   getDistanceWithUnit,
 } from "../utils/utilityFunctions";
+import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -68,6 +69,8 @@ const LocationDetails = (props) => {
   const [locationId, setLocationId] = useState(props.route.params["id"]);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [copiedNotice, setCopiedNotice] = useState(false);
+  const copiedTimeoutRef = useRef(null);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -81,11 +84,8 @@ const LocationDetails = (props) => {
     unitPreference,
     displayInsiderConnectedBadgePreference,
   } = props.user;
-  const {
-    website: opWebsite,
-    name: opName,
-    id: opId,
-  } = operators.find((operator) => operator.id === location.operator_id) ?? {};
+  const { name: opName, id: opId } =
+    operators.find((operator) => operator.id === location.operator_id) ?? {};
 
   const locationRef = useRef(props.location.location);
   useEffect(() => {
@@ -134,6 +134,13 @@ const LocationDetails = (props) => {
       dispatch(fetchLocation(route.params["id"]));
     }
   }, [route.params["id"]]);
+
+  const copyToClipboard = async (value) => {
+    await Clipboard.setStringAsync(value);
+    clearTimeout(copiedTimeoutRef.current);
+    setCopiedNotice(true);
+    copiedTimeoutRef.current = setTimeout(() => setCopiedNotice(false), 2000);
+  };
 
   const scrollToTop = () => {
     scrollViewRef.current?.scrollTo({
@@ -472,7 +479,7 @@ const LocationDetails = (props) => {
 
                 {location.phone ? (
                   <View style={[s.row, s.marginB]}>
-                    <MaterialIcons name="local-phone" style={s.metaIcon} />
+                    <MaterialCommunityIcons name="phone" style={s.metaIcon} />
                     <Text
                       style={[s.fontSize14, s.link]}
                       onPress={() => Linking.openURL(`tel://${location.phone}`)}
@@ -528,21 +535,60 @@ const LocationDetails = (props) => {
                 ) : null}
 
                 {!!opName && (
-                  <View style={[s.row, s.marginB]}>
-                    <MaterialCommunityIcons name="wrench" style={s.metaIcon} />
-                    <Text style={[s.text, s.fontSize14, s.marginRight]}>
-                      <Text style={s.opacity}>Operator: </Text>
-                      <Text
-                        style={[s.opacity1, opWebsite ? s.link : s.text3]}
-                        onPress={
-                          opWebsite
-                            ? () => WebBrowser.openBrowserAsync(opWebsite)
-                            : null
-                        }
-                      >
-                        {opName}
+                  <View style={s.marginB}>
+                    <View style={s.row}>
+                      <MaterialCommunityIcons
+                        name="wrench"
+                        style={s.metaIcon}
+                      />
+                      <Text style={[s.text, s.fontSize14]}>
+                        <Text style={s.opacity}>Operator: </Text>
+                        <Text
+                          style={[
+                            s.opacity1,
+                            location.operator_website ? s.link : s.text3,
+                          ]}
+                          onPress={
+                            location.operator_website
+                              ? () =>
+                                  WebBrowser.openBrowserAsync(
+                                    location.operator_website,
+                                  )
+                              : null
+                          }
+                        >
+                          {opName}
+                        </Text>
                       </Text>
-                    </Text>
+                      {!!location.operator_email_opt_in && (
+                        <Pressable
+                          style={s.operatorContactIcon}
+                          onPress={() =>
+                            copyToClipboard(location.operator_email_opt_in)
+                          }
+                        >
+                          <MaterialCommunityIcons
+                            name="email-outline"
+                            size={18}
+                            color={theme.indigo4}
+                          />
+                        </Pressable>
+                      )}
+                      {!!location.operator_phone_opt_in && (
+                        <Pressable
+                          style={s.operatorContactIcon}
+                          onPress={() =>
+                            copyToClipboard(location.operator_phone_opt_in)
+                          }
+                        >
+                          <MaterialCommunityIcons
+                            name="phone"
+                            size={18}
+                            color={theme.indigo4}
+                          />
+                        </Pressable>
+                      )}
+                    </View>
                   </View>
                 )}
 
@@ -787,6 +833,13 @@ const LocationDetails = (props) => {
         <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
           <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
         </Pressable>
+      )}
+      {copiedNotice && (
+        <View style={s.copiedNoticeWrapper}>
+          <View style={s.copiedNoticeContainer}>
+            <Text style={s.copiedNotice}>Copied!</Text>
+          </View>
+        </View>
       )}
     </View>
   );
@@ -1041,6 +1094,32 @@ const getStyles = (theme) =>
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
+    },
+    operatorContactIcon: {
+      marginLeft: 8,
+      padding: 3,
+    },
+    copiedNoticeWrapper: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      alignItems: "center",
+      justifyContent: "center",
+      pointerEvents: "none",
+      zIndex: 100,
+    },
+    copiedNoticeContainer: {
+      backgroundColor: "rgba(0, 0, 0, 0.65)",
+      borderRadius: 10,
+      paddingHorizontal: 14,
+      paddingVertical: 6,
+    },
+    copiedNotice: {
+      color: "white",
+      fontSize: 13,
+      fontFamily: "Nunito-SemiBold",
     },
   });
 
