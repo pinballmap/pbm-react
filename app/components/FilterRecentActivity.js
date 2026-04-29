@@ -275,7 +275,7 @@ const FilterRecentActivity = ({
                       : s.inactiveTitleStyle,
                   ]}
                 >
-                  Locations added
+                  Locations Added
                 </Text>
               </Pressable>
               <Pressable
@@ -307,6 +307,38 @@ const FilterRecentActivity = ({
                     : "Specific Machines"}
                 </Text>
               </Pressable>
+              {loggedIn && (
+                <Pressable
+                  style={[
+                    s.container,
+                    pendingActivities.find(
+                      (activity) => activity === "user_faved",
+                    )
+                      ? s.containerSelected
+                      : s.containerNotSelected,
+                  ]}
+                  onPress={() => togglePendingActivity("user_faved")}
+                >
+                  <MaterialCommunityIcons
+                    name="heart"
+                    size={32}
+                    color="#fe46b0"
+                    style={s.iconStyle}
+                  />
+                  <Text
+                    style={[
+                      s.titleStyle,
+                      pendingActivities.find(
+                        (activity) => activity === "user_faved",
+                      )
+                        ? s.activeTitleStyle
+                        : s.inactiveTitleStyle,
+                    ]}
+                  >
+                    Saved Locations
+                  </Text>
+                </Pressable>
+              )}
               {loggedIn && (
                 <Pressable
                   style={[

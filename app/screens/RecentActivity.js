@@ -77,11 +77,18 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     loggedIn && selectedActivities.includes("your_activity");
 
   const buildSubmissionTypeParam = (activities) => {
-    const types = activities.filter((a) => a !== "your_activity");
+    const types = activities.filter(
+      (a) => a !== "your_activity" && a !== "user_faved",
+    );
     return types.length
       ? types.map((a) => `&submission_type[]=${a}`).join("")
       : "";
   };
+
+  const buildUserFavedParam = (activities) =>
+    loggedIn && activities.includes("user_faved")
+      ? `&user_faved=${userId}`
+      : "";
 
   const buildMachineIdParam = (machines) =>
     machines.length
@@ -101,6 +108,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         const submissionTypeParam =
           buildSubmissionTypeParam(selectedActivities);
         const machineIdParam = buildMachineIdParam(selectedActivityMachines);
+        const userFavedParam = buildUserFavedParam(selectedActivities);
         const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
         let fetchLat = lat,
           fetchLon = lon;
@@ -114,10 +122,10 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           lastFetchedCenterRef.current = { lat: fetchLat, lon: fetchLon };
         }
         const url = global
-          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
+          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
           : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${
               distance || maxDistance
-            }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+            }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`;
         getData(url)
           .then((data) => {
             setFetchingRecentActivity(false);
@@ -150,12 +158,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     scrollViewRef.current?.scrollTo({ y: 0, animated: false });
     const submissionTypeParam = buildSubmissionTypeParam(selectedActivities);
     const machineIdParam = buildMachineIdParam(selectedActivityMachines);
+    const userFavedParam = buildUserFavedParam(selectedActivities);
     const restrictTo = yourActivitySelected ? "" : "restrict_to=new_msx&";
     const { lat: fetchLat, lon: fetchLon } = lastFetchedCenterRef.current;
     const url =
       btnIdx === 3
-        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`
-        : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${loggedIn ? `&user_id=${userId}` : ""}`;
+        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
+        : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url)
       .then((data) => {
         setFetchingRecentActivity(false);
