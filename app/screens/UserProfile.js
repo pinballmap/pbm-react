@@ -417,6 +417,7 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",
+      marginBottom: 6,
     },
     locationName: {
       marginHorizontal: 10,

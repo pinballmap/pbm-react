@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
@@ -15,10 +16,11 @@ import {
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
 
-const FAQ = ({ navigation }) => {
+const FAQ = ({ navigation, user }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
+  const { loggedIn } = user;
   const scrollRef = useRef(null);
   const sectionRefs = useRef({});
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -109,14 +111,17 @@ const FAQ = ({ navigation }) => {
               >
                 {`filter`}
               </Text>
-              {` button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine. When the map is filtered, you can zoom further out.`}
+              {` button in the upper right, then choose a machine. Then go back to the map and it will only show places with that machine.`}
+            </Text>
+            <Text style={s.text}>
+              {`There are many location/machine filters on that screen.`}
             </Text>
             <Text
               style={s.bold}
             >{`The Location List isn't showing a location that I think it should.`}</Text>
             <Text
               style={s.text}
-            >{`The Location List lists the locations currently shown on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
+            >{`The Location List lists the locations currently loaded on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
             <Text
               style={s.bold}
             >{`What do the different map marker colors mean?`}</Text>
@@ -208,6 +213,22 @@ const FAQ = ({ navigation }) => {
             </View>
             <Text style={s.text}>
               {`As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}
+            </Text>
+            <Text style={s.text}>
+              {`Users can also select a "flag" icon. It can be added/changed on `}
+              {loggedIn ? (
+                <Text
+                  style={s.textLink}
+                  onPress={() =>
+                    navigation.navigate("MapStack", { screen: "UserProfile" })
+                  }
+                >
+                  {"your profile"}
+                </Text>
+              ) : (
+                "your profile"
+              )}
+              {` page.`}
             </Text>
             <Text
               style={s.bold}
@@ -746,6 +767,9 @@ const getStyles = (theme) =>
 
 FAQ.propTypes = {
   navigation: PropTypes.object,
+  user: PropTypes.object,
 };
 
-export default FAQ;
+const mapStateToProps = ({ user }) => ({ user });
+
+export default connect(mapStateToProps)(FAQ);
