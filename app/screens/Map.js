@@ -44,6 +44,7 @@ const Map = ({
   query,
   selectedLocation,
   numLocations,
+  totalMachines,
   isLocationServicesEnabled,
   locationTrackingServicesEnabled,
   regions,
@@ -329,7 +330,7 @@ const Map = ({
         rotateEnabled={false}
         compassPosition={{ bottom: 35, left: 10 }}
         gestureSettings={{ rotateEnabled: false }}
-        attributionPosition={{ bottom: 6, left: 90 }}
+        attributionPosition={{ bottom: 35, left: -4 }}
         onCameraChanged={onCameraChanged}
         styleURL={
           theme.theme === "dark"
@@ -431,12 +432,21 @@ const Map = ({
           <Text style={s.filterTitleStyle}>Filter</Text>
         </Pressable>
       ) : null}
+      {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
+        <View style={s.statsContainer}>
+          <Text style={s.statsText}>
+            {numLocations.toLocaleString()} locations ·{" "}
+            {totalMachines.toLocaleString()} machines
+          </Text>
+        </View>
+      )}
       <View style={s.bottomContainer}>
         {showUpdateSearch ? (
           <Pressable
             style={({ pressed }) => [
               s.shadow,
               s.updateContainerStyle,
+              { marginBottom: selectedLocation ? 8 : 40 },
               pressed ? s.pressed : s.notPressed,
             ]}
             onPress={refreshResults}
@@ -541,7 +551,6 @@ const getStyles = (theme) =>
     },
     updateContainerStyle: {
       position: "relative",
-      marginBottom: 20,
       alignSelf: "center",
       justifyContent: "center",
       borderRadius: 25,
@@ -596,12 +605,31 @@ const getStyles = (theme) =>
     notPressed: {
       opacity: 1.0,
     },
+    statsContainer: {
+      position: "absolute",
+      bottom: 10,
+      alignSelf: "center",
+      paddingVertical: 3,
+      paddingHorizontal: 10,
+      backgroundColor:
+        theme.theme === "dark" ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.7)",
+      borderRadius: 12,
+    },
+    statsText: {
+      fontSize: 11,
+      fontFamily: "Nunito-Regular",
+      color: theme.text,
+    },
   });
 
 const mapStateToProps = (state) => {
   const { locations, query, regions, user } = state;
   const selectedLocation = getSelectedMapLocation(state);
   const numLocations = locations.mapMarkers.length;
+  const numMachines = locations.mapMarkers.reduce(
+    (sum, f) => sum + (f.properties?.machine_count ?? 0),
+    0,
+  );
   const { locationTrackingServicesEnabled, isLocationServicesEnabled } = user;
 
   return {
@@ -610,6 +638,7 @@ const mapStateToProps = (state) => {
     isFetchingMarkers: locations.isFetchingMarkers,
     selectedLocation,
     numLocations,
+    totalMachines: numMachines,
     isLocationServicesEnabled,
     locationTrackingServicesEnabled,
   };
