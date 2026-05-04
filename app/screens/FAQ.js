@@ -430,9 +430,7 @@ const FAQ = ({ navigation, user }) => {
               <Text style={s.category}>Operators</Text>
             </View>
             <Text style={[s.text, { paddingTop: 10 }]}>
-              Hundreds of operators are listed on Pinball Map. They use it to
-              easily track and update all of their locations. And also get
-              notified via email when users leave comments on their machines.
+              {`Hundreds of operators are listed on Pinball Map. They use it to easily track and update all of their locations, and also get notified via email when users leave comments on their machines. In our system, "operators" are distinct from "users", though we can associate the operator listing with your user so that you get a little wrench icon next to your name.`}
             </Text>
             <Text style={[s.text]}>
               {`Check this `}
@@ -460,7 +458,9 @@ const FAQ = ({ navigation, user }) => {
               }
               {` and we'll add you. In your message, tell us:`}
             </Text>
-            <Text style={s.text}>{`\u2022 The name of your business.`}</Text>
+            <Text
+              style={s.text}
+            >{`\u2022 The name of your operating business.`}</Text>
             <Text
               style={s.text}
             >{`\u2022 Whether you want to be notified via email when users leave comments on your machines (once a day email digest).`}</Text>
