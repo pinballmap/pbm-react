@@ -49,7 +49,7 @@ const getStyles = (theme) =>
         theme.theme == "dark" ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.6)",
     },
     modalView: {
-      width: "80%",
+      width: "85%",
       paddingVertical: 15,
       backgroundColor: theme.base1,
       borderRadius: 15,
