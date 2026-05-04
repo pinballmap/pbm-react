@@ -78,7 +78,7 @@ const LocationDetails = (props) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [copiedNotice, setCopiedNotice] = useState(false);
-  const [pictures, setPictures] = useState([]);
+  const [pictures, setPictures] = useState(null);
   const [photoModalVisible, setPhotoModalVisible] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [fullResUrl, setFullResUrl] = useState(null);
@@ -122,7 +122,7 @@ const LocationDetails = (props) => {
       Mapbox.setTelemetryEnabled(false);
       dispatch(fetchLocationPictures(locationId))
         .then(setPictures)
-        .catch(() => {});
+        .catch(() => setPictures([]));
     };
     onMount();
 
@@ -408,21 +408,21 @@ const LocationDetails = (props) => {
                 />
               </Pressable>
               <Text style={s.photoCounter}>
-                {photoIndex + 1} / {pictures.length}
+                {photoIndex + 1} / {pictures?.length}
               </Text>
               <Pressable
                 onPress={goToNextPhoto}
-                disabled={photoIndex === pictures.length - 1}
+                disabled={photoIndex === pictures?.length - 1}
                 style={[
                   s.photoNavButton,
-                  photoIndex === pictures.length - 1 && s.photoNavDisabled,
+                  photoIndex === pictures?.length - 1 && s.photoNavDisabled,
                 ]}
               >
                 <MaterialCommunityIcons
                   name="chevron-right"
                   size={36}
                   color={
-                    photoIndex === pictures.length - 1
+                    photoIndex === pictures?.length - 1
                       ? "rgba(255,255,255,0.3)"
                       : "white"
                   }
@@ -982,7 +982,9 @@ const LocationDetails = (props) => {
                   </Animated.View>
                 )}
 
-                {pictures.length > 0 && (
+                {pictures === null && location.lpx_count > 0 ? (
+                  <ActivityIndicator style={s.photoStripLoading} />
+                ) : pictures?.length > 0 ? (
                   <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -1003,7 +1005,7 @@ const LocationDetails = (props) => {
                       </Pressable>
                     ))}
                   </ScrollView>
-                )}
+                ) : null}
 
                 <View style={s.quickButtonContainer}>
                   <View style={s.quickButtonSubContainer}>
@@ -1099,7 +1101,9 @@ const LocationDetails = (props) => {
                         }}
                       />
                     </Pressable>
-                    <Text style={s.quickButtonText}>Add photo</Text>
+                    <Text style={s.quickButtonText}>
+                      {uploadingPicture ? "Uploading..." : "Add photo"}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -1420,6 +1424,11 @@ const getStyles = (theme) =>
     },
     photoStrip: {
       marginVertical: 8,
+    },
+    photoStripLoading: {
+      marginVertical: 16,
+      alignSelf: "flex-start",
+      marginLeft: 14,
     },
     photoStripContent: {
       paddingHorizontal: 5,
