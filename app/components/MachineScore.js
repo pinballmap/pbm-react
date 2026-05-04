@@ -214,7 +214,8 @@ const getStyles = (theme) =>
     },
     editDelete: {
       textDecorationLine: "underline",
-      color: theme.text3,
+      color: theme.blue4,
+      fontSize: 13,
     },
     textInput: {
       backgroundColor: theme.white,

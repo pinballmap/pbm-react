@@ -827,7 +827,7 @@ const LocationDetails = (props) => {
                           <MaterialCommunityIcons
                             name="email-outline"
                             size={18}
-                            color={theme.indigo4}
+                            color={theme.purple}
                           />
                         </Pressable>
                       )}
@@ -841,7 +841,7 @@ const LocationDetails = (props) => {
                           <MaterialCommunityIcons
                             name="phone"
                             size={18}
-                            color={theme.indigo4}
+                            color={theme.purple}
                           />
                         </Pressable>
                       )}
@@ -1405,7 +1405,7 @@ const getStyles = (theme) =>
       marginLeft: 7,
     },
     operatorContactIcon: {
-      marginLeft: 8,
+      marginLeft: 6,
       padding: 3,
     },
     editDetailsIcon: {

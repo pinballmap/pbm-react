@@ -283,7 +283,7 @@ const MachineDetails = ({
                       <MaterialCommunityIcons
                         name="email-outline"
                         size={18}
-                        color={theme.indigo4}
+                        color={theme.purple}
                       />
                     </Pressable>
                   )}
@@ -297,7 +297,7 @@ const MachineDetails = ({
                       <MaterialCommunityIcons
                         name="phone"
                         size={18}
-                        color={theme.indigo4}
+                        color={theme.purple}
                       />
                     </Pressable>
                   )}

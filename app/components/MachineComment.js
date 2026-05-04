@@ -223,7 +223,7 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
-                      marginLeft: 6,
+                      marginLeft: 8,
                     }}
                   >
                     <MaterialCommunityIcons
@@ -274,21 +274,23 @@ const getStyles = (theme) =>
     subtitleMargin: {
       marginTop: 4,
       marginHorizontal: 0,
-      fontSize: 14,
     },
     username: {
       color: theme.pink1,
-      marginLeft: 6,
+      marginLeft: 8,
+      fontSize: 14,
       textDecorationLine: "underline",
     },
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
+      fontSize: 14,
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     editDelete: {
       textDecorationLine: "underline",
-      color: theme.text3,
+      color: theme.blue4,
+      fontSize: 13,
     },
     date: {
       marginLeft: 8,
