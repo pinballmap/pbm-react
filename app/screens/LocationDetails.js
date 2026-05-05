@@ -115,15 +115,19 @@ const LocationDetails = (props) => {
       try {
         const { location: l } = await dispatch(fetchLocation(locationId));
         if (l.errors) throw new Error("Unable to find location");
+        dispatch(setSelectedMapLocation(null));
+        Mapbox.setTelemetryEnabled(false);
+        if (l.lpx_count > 0) {
+          dispatch(fetchLocationPictures(locationId))
+            .then(setPictures)
+            .catch(() => setPictures([]));
+        } else {
+          setPictures([]);
+        }
       } catch (e) {
         Alert.alert("Location is gone, friend.");
         navigation.goBack();
       }
-      dispatch(setSelectedMapLocation(null));
-      Mapbox.setTelemetryEnabled(false);
-      dispatch(fetchLocationPictures(locationId))
-        .then(setPictures)
-        .catch(() => setPictures([]));
     };
     onMount();
 
