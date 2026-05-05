@@ -29,6 +29,7 @@ import {
   WarningButton,
 } from "../components";
 import {
+  clearFilters,
   confirmLocationIsUpToDate,
   deleteLocationPicture,
   fetchLocation,
@@ -190,6 +191,7 @@ const LocationDetails = (props) => {
   };
 
   const onMapPress = () => {
+    dispatch(clearFilters(false));
     dispatch(updateMap(location.lat, location.lon));
     dispatch(setSelectedMapLocation(location.id));
     navigation.navigate("MapTab", { pop: true });
