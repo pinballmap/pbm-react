@@ -19,7 +19,6 @@ import {
   SET_LOCATION_IC_FILTER,
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
-  TRIGGER_UPDATE_BOUNDS,
   SET_ACTIVITY_MACHINE_FILTER,
 } from "../actions/types";
 import { boundsToCoords } from "../utils/utilityFunctions";
@@ -51,7 +50,6 @@ export const initialState = {
   locationIcFilter: false,
   searchBarText: "",
   triggerUpdateBounds: false,
-  forceTriggerUpdateBounds: false,
 };
 
 export default (state = initialState, action) => {
@@ -59,8 +57,7 @@ export default (state = initialState, action) => {
     case UPDATE_BOUNDS: {
       const { swLat, swLon, neLat, neLon } = action.bounds;
       const coords = boundsToCoords(action.bounds);
-      const { triggerUpdateBounds = false, forceTriggerUpdateBounds = false } =
-        action;
+      const { triggerUpdateBounds = false } = action;
 
       AsyncStorage.setItem("lastCoords", JSON.stringify(coords));
       return {
@@ -70,13 +67,6 @@ export default (state = initialState, action) => {
         neLat,
         neLon,
         triggerUpdateBounds,
-        forceTriggerUpdateBounds,
-      };
-    }
-    case TRIGGER_UPDATE_BOUNDS: {
-      return {
-        ...state,
-        forceTriggerUpdateBounds: true,
       };
     }
     case SET_MACHINE_FILTER: {

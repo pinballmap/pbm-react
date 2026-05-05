@@ -58,9 +58,10 @@ const Map = ({
 
   const [showUpdateSearch, setShowUpdateSearch] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [toCurrentLocation, setToCurrentLocation] = useState(false);
   const [loadedTheme, setLoadedTheme] = useState(null);
+  const toCurrentLocationRef = useRef(false);
   const themeRef = useRef(theme.theme);
+  const mapInitializedRef = useRef(false);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -82,7 +83,6 @@ const Map = ({
     machineYearGte = null,
     machineYearLte = null,
     locationIcFilter = false,
-    forceTriggerUpdateBounds,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
   const latitude = (swLat + neLat) / 2;
@@ -132,14 +132,11 @@ const Map = ({
 
   useEffect(() => {
     const run = async () => {
-      if (
-        !isFirstLoad &&
-        (shouldTriggerUpdateBounds || forceTriggerUpdateBounds)
-      ) {
-        if (!toCurrentLocation) {
+      if (!isFirstLoad && shouldTriggerUpdateBounds) {
+        if (!toCurrentLocationRef.current) {
           await sleep(500);
         } else {
-          setToCurrentLocation(false);
+          toCurrentLocationRef.current = false;
         }
 
         cameraRef?.current?.setCamera({
@@ -157,13 +154,7 @@ const Map = ({
       }
     };
     run();
-  }, [
-    query,
-    cameraRef,
-    shouldTriggerUpdateBounds,
-    forceTriggerUpdateBounds,
-    toCurrentLocation,
-  ]);
+  }, [query]);
 
   useEffect(() => {
     registerGetBounds(getBounds);
@@ -254,7 +245,8 @@ const Map = ({
   };
 
   const onFinishedLoading = async () => {
-    setIsFirstLoad(true);
+    if (mapInitializedRef.current) return;
+    mapInitializedRef.current = true;
     await sleep(50);
     const bounds = await getBounds();
     dispatch(updateBounds(bounds));
@@ -288,7 +280,7 @@ const Map = ({
   const updateCurrentLocation = () => {
     dispatch(fetchCurrentLocation(false));
     setShowUpdateSearch(false);
-    setToCurrentLocation(true);
+    toCurrentLocationRef.current = true;
   };
 
   const mapPress = () => {
