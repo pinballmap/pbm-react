@@ -879,46 +879,31 @@ const LocationDetails = (props) => {
                 )}
 
                 {!!location.date_last_updated && (
-                  <View style={[s.marginB, s.marginRight, { paddingRight: 5 }]}>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "flex-start" }}
-                    >
-                      <MaterialCommunityIcons
-                        name="lightning-bolt"
-                        style={s.metaIcon}
-                      />
-                      <Text style={[s.text3, s.fontSize14]}>
-                        {`Location edited ${formatNumWithCommas(location.user_submissions_count)} times by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}.`}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
+                  <View
+                    style={[
+                      s.marginB,
+                      s.marginRight,
+                      {
                         flexDirection: "row",
-                        alignItems: "center",
-                        flexWrap: "wrap",
-                        marginLeft: 23,
-                      }}
-                    >
-                      <Text style={[s.text3, s.fontSize14]}>
-                        {"Last updated "}
-                        <Text style={s.italic}>
-                          {moment(
-                            location.date_last_updated,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY")}
-                        </Text>
-                        {!!location.last_updated_by_username && " by "}
-                      </Text>
-                      {!!location.last_updated_by_username && (
-                        <View
-                          style={{ flexDirection: "row", alignItems: "center" }}
-                        >
+                        alignItems: "flex-start",
+                        paddingRight: 5,
+                      },
+                    ]}
+                  >
+                    <MaterialCommunityIcons
+                      name="lightning-bolt"
+                      style={s.metaIcon}
+                    />
+                    <Text style={[s.text3, s.fontSize14]}>
+                      {`Location edited ${formatNumWithCommas(location.user_submissions_count)} times by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}. Last updated`}
+                      <Text style={s.text3}>
+                        {!!location.last_updated_by_username && ` by `}
+                        {!!location.last_updated_by_username && (
                           <Text
                             style={{
                               fontFamily: "Nunito-SemiBold",
                               color: theme.pink1,
                               textDecorationLine: "underline",
-                              fontSize: 14,
                             }}
                             onPress={() =>
                               location.last_updated_by_user_id &&
@@ -928,8 +913,10 @@ const LocationDetails = (props) => {
                               })
                             }
                           >
-                            {location.last_updated_by_username}
+                            {`${location.last_updated_by_username}`}
                           </Text>
+                        )}
+                        <View style={s.iconView}>
                           {!!location.last_updated_by_admin_title && (
                             <MaterialCommunityIcons
                               name="shield-account"
@@ -974,8 +961,15 @@ const LocationDetails = (props) => {
                               />
                             )}
                         </View>
-                      )}
-                    </View>
+                        {` on `}
+                        <Text style={s.italic}>
+                          {moment(
+                            location.date_last_updated,
+                            "YYYY-MM-DD",
+                          ).format("MMM DD, YYYY")}
+                        </Text>
+                      </Text>
+                    </Text>
                   </View>
                 )}
                 {dateDiff >= 2 && (
@@ -1404,15 +1398,23 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 15,
       height: 15,
-      marginLeft: 6,
+      marginLeft: 5,
+      marginBottom: -3,
     },
     flagIcon: {
       height: 15,
-      marginLeft: 7,
+      marginLeft: 5,
       borderRadius: 3,
+      marginBottom: -2,
     },
     operatorIcon: {
-      marginLeft: 7,
+      marginLeft: 5,
+    },
+    iconView: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      transform: [{ translateY: 1 }],
     },
     operatorContactIcon: {
       marginLeft: 6,

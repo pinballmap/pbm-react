@@ -243,11 +243,13 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       <View
         style={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}
       >
-        <Text style={s.date}>
-          <Text style={s.italic}>{time}</Text>
-          {" by "}
-        </Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingRight: 8,
+          }}
+        >
           <Text
             style={[s.date, s.username]}
             onPress={() => {
@@ -293,6 +295,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
             />
           )}
         </View>
+        <Text style={[s.date, s.italic]}>{time}</Text>
       </View>
     ) : (
       <Text style={[s.date, s.italic]}>{time}</Text>
@@ -652,15 +655,15 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 15,
       height: 15,
-      marginLeft: 6,
+      marginLeft: 5,
     },
     flagIcon: {
       height: 15,
-      marginLeft: 7,
+      marginLeft: 5,
       borderRadius: 3,
     },
     operatorIcon: {
-      marginLeft: 7,
+      marginLeft: 5,
     },
     paginationContainer: {
       flexDirection: "row",

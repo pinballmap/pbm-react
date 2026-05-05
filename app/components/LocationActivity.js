@@ -161,11 +161,13 @@ const LocationActivity = ({
           paddingTop: 8,
         }}
       >
-        <Text style={[s.date, { paddingTop: 0 }]}>
-          <Text style={s.italic}>{time}</Text>
-          {" by "}
-        </Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingRight: 8,
+          }}
+        >
           <Text
             style={[s.date, s.username, { paddingTop: 0 }]}
             onPress={() => {
@@ -211,6 +213,7 @@ const LocationActivity = ({
             />
           )}
         </View>
+        <Text style={[s.date, s.italic, { paddingTop: 0 }]}>{time}</Text>
       </View>
     ) : (
       <Text style={s.date}>{time}</Text>
@@ -525,12 +528,12 @@ const getStyles = (theme) =>
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
-      fontFamily: "Nunito-SemiBold",
+      fontFamily: "Nunito-Medium",
       textDecorationLine: "underline",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
-      fontFamily: "Nunito-SemiBold",
+      fontFamily: "Nunito-Bold",
     },
     flexi: {
       display: "flex",
@@ -587,15 +590,15 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 15,
       height: 15,
-      marginLeft: 6,
+      marginLeft: 5,
     },
     flagIcon: {
       height: 15,
-      marginLeft: 7,
+      marginLeft: 5,
       borderRadius: 3,
     },
     operatorIcon: {
-      marginLeft: 7,
+      marginLeft: 5,
     },
     paginationContainer: {
       flexDirection: "row",
