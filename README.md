@@ -14,6 +14,16 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.2
+
+May 6, 2026
+
+- View, upload, and delete location photos
+- Added a new Filter Recently Activity option: Saved Locations. It limits activity to only your saved/favorited locations
+- Let users select a "flag" icon (via profile screen). Show that flag icon next to user names
+- Added email and phone buttons that copy operator contact information so you can directly contact operators that opt in to this feature
+- Updated FAQ, including adding a table of content to jump to sections and better new operator instructions
+
 ### 5.4.1
 
 April 24, 2026
