@@ -25,7 +25,6 @@ import {
   triggerUpdateBounds,
   setSearchBarText,
   clearSearchBarText,
-  fetchLocation,
 } from "../actions";
 import withThemeHOC from "./withThemeHOC";
 import { retrieveItem } from "../config/utils";
@@ -173,14 +172,6 @@ class Search extends Component {
 
   goToLocation = async (location, idx) => {
     try {
-      const data = await this.props.dispatch(fetchLocation(location.id));
-      const { lat, lon } = data.location;
-      if (!lat) throw new Error();
-      const bounds = coordsToBounds({
-        lat: parseFloat(lat),
-        lon: parseFloat(lon),
-      });
-      this.props.triggerUpdateBounds(bounds);
       this.props.navigate("LocationDetails", {
         id: location.id,
         refreshMap: true,

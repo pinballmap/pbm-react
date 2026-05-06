@@ -89,6 +89,7 @@ const LocationDetails = (props) => {
   const [photoTipsModalVisible, setPhotoTipsModalVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const copiedTimeoutRef = useRef(null);
+  const mapPressedRef = useRef(false);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -133,7 +134,7 @@ const LocationDetails = (props) => {
 
     // component unmount
     return () => {
-      if (!!route.params["refreshMap"]) {
+      if (!!route.params["refreshMap"] && !mapPressedRef.current) {
         dispatch(updateMap(locationRef.current.lat, locationRef.current.lon));
       }
     };
@@ -195,6 +196,7 @@ const LocationDetails = (props) => {
   };
 
   const onMapPress = () => {
+    mapPressedRef.current = true;
     dispatch(clearFilters(false));
     dispatch(updateMap(location.lat, location.lon));
     dispatch(setSelectedMapLocation(location.id));
@@ -1398,17 +1400,17 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 15,
       height: 15,
-      marginLeft: 5,
+      marginHorizontal: 2,
       marginBottom: -3,
     },
     flagIcon: {
       height: 15,
-      marginLeft: 5,
+      marginHorizontal: 2,
       borderRadius: 3,
       marginBottom: -2,
     },
     operatorIcon: {
-      marginLeft: 5,
+      marginHorizontal: 2,
     },
     iconView: {
       display: "flex",
