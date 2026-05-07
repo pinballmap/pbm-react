@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Platform, Pressable, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { Image } from "expo-image";
-import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ThemeContext } from "../theme-context";
 import {
   ActivityIndicator,
@@ -14,16 +22,30 @@ import {
   Text,
   WarningButton,
 } from "../components";
-import { getData } from "../config/request";
+import { getData, postData, deleteData } from "../config/request";
 import { logout } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
-import * as WebBrowser from "expo-web-browser";
 const moment = require("moment");
+const screenHeight = Dimensions.get("window").height;
 
 class UserProfile extends Component {
   state = {
     modalVisible: false,
+    accountModalVisible: false,
+    newEmail: "",
+    emailError: null,
+    emailSuccess: false,
+    updatingEmail: false,
+    currentPassword: "",
+    newPassword: "",
+    newPasswordConfirmation: "",
+    passwordError: null,
+    passwordSuccess: false,
+    updatingPassword: false,
+    showDeleteConfirm: false,
+    deletingAccount: false,
+    deleteError: null,
     fetchingUserInfo: this.props.route?.params?.userId
       ? true
       : this.props.user.loggedIn
@@ -36,8 +58,89 @@ class UserProfile extends Component {
     this.setState({ modalVisible: visible });
   }
 
+  closeAccountModal = () => {
+    this.setState({
+      accountModalVisible: false,
+      newEmail: "",
+      emailError: null,
+      emailSuccess: false,
+      currentPassword: "",
+      newPassword: "",
+      newPasswordConfirmation: "",
+      passwordError: null,
+      passwordSuccess: false,
+      showDeleteConfirm: false,
+      deleteError: null,
+    });
+  };
+
+  handleUpdateEmail = () => {
+    const { user } = this.props;
+    this.setState({
+      updatingEmail: true,
+      emailError: null,
+      emailSuccess: false,
+    });
+    postData(`/users/${user.id}/update_email.json`, {
+      user_token: user.authentication_token,
+      email: this.state.newEmail,
+    })
+      .then(() => {
+        this.setState({
+          updatingEmail: false,
+          emailSuccess: true,
+          newEmail: "",
+        });
+      })
+      .catch((err) => {
+        this.setState({ updatingEmail: false, emailError: err });
+      });
+  };
+
+  handleUpdatePassword = () => {
+    const { user } = this.props;
+    this.setState({
+      updatingPassword: true,
+      passwordError: null,
+      passwordSuccess: false,
+    });
+    postData(`/users/${user.id}/update_password.json`, {
+      user_token: user.authentication_token,
+      current_password: this.state.currentPassword,
+      password: this.state.newPassword,
+      password_confirmation: this.state.newPasswordConfirmation,
+    })
+      .then(() => {
+        this.setState({
+          updatingPassword: false,
+          passwordSuccess: true,
+          currentPassword: "",
+          newPassword: "",
+          newPasswordConfirmation: "",
+        });
+      })
+      .catch((err) => {
+        this.setState({ updatingPassword: false, passwordError: err });
+      });
+  };
+
+  handleDeleteAccount = () => {
+    const { user } = this.props;
+    this.setState({ deletingAccount: true, deleteError: null });
+    deleteData(`/users/${user.id}.json`, {
+      user_token: user.authentication_token,
+      user_email: user.email,
+    })
+      .then(() => {
+        this.props.logout();
+        this.props.navigation.navigate("Login");
+      })
+      .catch((err) => {
+        this.setState({ deletingAccount: false, deleteError: err });
+      });
+  };
+
   componentDidMount() {
-    //The listener will refetch user profile data every time the profile screen is navigated to
     this.focusListener = this.props.navigation.addListener("focus", () => {
       const id = this.props.route?.params?.userId ?? this.props.user.id;
       if (id) {
@@ -51,6 +154,10 @@ class UserProfile extends Component {
         );
       }
     });
+  }
+
+  componentWillUnmount() {
+    this.focusListener();
   }
 
   getStatNum(stat) {
@@ -104,11 +211,11 @@ class UserProfile extends Component {
               ) : (
                 <View>
                   {isOwnProfile && (
-                    <ConfirmationModal
-                      visible={this.state.modalVisible}
-                      closeModal={() => this.setModalVisible(false)}
-                    >
-                      <Pressable>
+                    <>
+                      <ConfirmationModal
+                        visible={this.state.modalVisible}
+                        closeModal={() => this.setModalVisible(false)}
+                      >
                         <PbmButton
                           title={"Log Me Out"}
                           onPress={() => {
@@ -121,8 +228,174 @@ class UserProfile extends Component {
                           title={"Stay Logged In"}
                           onPress={() => this.setModalVisible(false)}
                         />
-                      </Pressable>
-                    </ConfirmationModal>
+                      </ConfirmationModal>
+                      <ConfirmationModal
+                        visible={this.state.accountModalVisible}
+                        closeModal={this.closeAccountModal}
+                        wide
+                        loading={this.state.deletingAccount}
+                      >
+                        <View style={s.header}>
+                          <Text style={s.modalTitle}>Account Settings</Text>
+                          <MaterialCommunityIcons
+                            name="close-circle"
+                            size={35}
+                            onPress={this.closeAccountModal}
+                            style={s.xButton}
+                          />
+                        </View>
+                        <ScrollView
+                          keyboardShouldPersistTaps="handled"
+                          showsVerticalScrollIndicator={false}
+                          style={{ maxHeight: screenHeight * 0.75 }}
+                        >
+                          <View style={s.modalSection}>
+                            <Text style={[s.sectionLabel, { marginTop: 10 }]}>
+                              Update Email
+                            </Text>
+                            <TextInput
+                              style={s.textInput}
+                              placeholder="New email address"
+                              placeholderTextColor={s.placeholderColor}
+                              value={this.state.newEmail}
+                              onChangeText={(newEmail) =>
+                                this.setState({
+                                  newEmail,
+                                  emailError: null,
+                                  emailSuccess: false,
+                                })
+                              }
+                              autoCapitalize="none"
+                              autoCorrect={false}
+                              keyboardType="email-address"
+                            />
+                            {!!this.state.emailError && (
+                              <Text style={s.formError}>
+                                {this.state.emailError}
+                              </Text>
+                            )}
+                            {this.state.emailSuccess && (
+                              <Text style={s.formSuccess}>Email updated!</Text>
+                            )}
+                            <PbmButton
+                              title={"Update Email"}
+                              onPress={this.handleUpdateEmail}
+                              disabled={
+                                this.state.updatingEmail || !this.state.newEmail
+                              }
+                            />
+                          </View>
+                          <View style={s.divider} />
+                          <View style={s.modalSection}>
+                            <Text style={s.sectionLabel}>Update Password</Text>
+                            <TextInput
+                              style={s.textInput}
+                              placeholder="Current password"
+                              placeholderTextColor={s.placeholderColor}
+                              value={this.state.currentPassword}
+                              onChangeText={(currentPassword) =>
+                                this.setState({
+                                  currentPassword,
+                                  passwordError: null,
+                                  passwordSuccess: false,
+                                })
+                              }
+                              secureTextEntry
+                              autoCapitalize="none"
+                              autoCorrect={false}
+                            />
+                            <TextInput
+                              style={s.textInput}
+                              placeholder="New password"
+                              placeholderTextColor={s.placeholderColor}
+                              value={this.state.newPassword}
+                              onChangeText={(newPassword) =>
+                                this.setState({
+                                  newPassword,
+                                  passwordError: null,
+                                  passwordSuccess: false,
+                                })
+                              }
+                              secureTextEntry
+                              autoCapitalize="none"
+                              autoCorrect={false}
+                            />
+                            <TextInput
+                              style={s.textInput}
+                              placeholder="Confirm new password"
+                              placeholderTextColor={s.placeholderColor}
+                              value={this.state.newPasswordConfirmation}
+                              onChangeText={(newPasswordConfirmation) =>
+                                this.setState({
+                                  newPasswordConfirmation,
+                                  passwordError: null,
+                                  passwordSuccess: false,
+                                })
+                              }
+                              secureTextEntry
+                              autoCapitalize="none"
+                              autoCorrect={false}
+                            />
+                            {!!this.state.passwordError && (
+                              <Text style={s.formError}>
+                                {this.state.passwordError}
+                              </Text>
+                            )}
+                            {this.state.passwordSuccess && (
+                              <Text style={s.formSuccess}>
+                                Password updated!
+                              </Text>
+                            )}
+                            <PbmButton
+                              title={"Update Password"}
+                              onPress={this.handleUpdatePassword}
+                              disabled={
+                                this.state.updatingPassword ||
+                                !this.state.currentPassword ||
+                                !this.state.newPassword ||
+                                !this.state.newPasswordConfirmation
+                              }
+                            />
+                          </View>
+                          <View style={s.divider} />
+                          <View style={s.modalSection}>
+                            {!this.state.showDeleteConfirm ? (
+                              <WarningButton
+                                title={"Delete Account"}
+                                onPress={() =>
+                                  this.setState({ showDeleteConfirm: true })
+                                }
+                              />
+                            ) : (
+                              <>
+                                <Text style={s.deleteWarning}>
+                                  This will permanently delete your account.
+                                  This cannot be undone.
+                                </Text>
+                                {!!this.state.deleteError && (
+                                  <Text style={s.formError}>
+                                    {this.state.deleteError}
+                                  </Text>
+                                )}
+                                <PbmButton
+                                  title={"Yes, Delete My Account"}
+                                  onPress={this.handleDeleteAccount}
+                                />
+                                <WarningButton
+                                  title={"Cancel"}
+                                  onPress={() =>
+                                    this.setState({
+                                      showDeleteConfirm: false,
+                                      deleteError: null,
+                                    })
+                                  }
+                                />
+                              </>
+                            )}
+                          </View>
+                        </ScrollView>
+                      </ConfirmationModal>
+                    </>
                   )}
                   <View style={s.usernameContainer}>
                     <Text style={s.username}>{displayUsername}</Text>
@@ -186,12 +459,22 @@ class UserProfile extends Component {
                       {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
                     </Text>
                     {isOwnProfile && (
-                      <Text
-                        style={s.savedLink}
-                        onPress={() => this.props.navigation.navigate("Saved")}
-                      >
-                        View saved locations
-                      </Text>
+                      <>
+                        <Text
+                          style={s.accountSettingsLink}
+                          onPress={() =>
+                            this.setState({ accountModalVisible: true })
+                          }
+                        >
+                          Account Settings
+                        </Text>
+                        <Text
+                          style={s.logoutLink}
+                          onPress={() => this.setModalVisible(true)}
+                        >
+                          Logout
+                        </Text>
+                      </>
                     )}
                   </View>
                   <View style={s.statContainer}>
@@ -333,38 +616,6 @@ class UserProfile extends Component {
                       })
                     )}
                   </View>
-                  {isOwnProfile && (
-                    <>
-                      <WarningButton
-                        title={"Logout"}
-                        onPress={() => this.setModalVisible(true)}
-                      />
-                      <View style={s.externalUpdateContainer}>
-                        <Text style={s.externalUpdateText}>
-                          Want to update your password, or email, or delete your
-                          account? These can be done on your
-                        </Text>
-                        <View style={s.externalLinkContainer}>
-                          <Text
-                            style={s.externalLink}
-                            onPress={() =>
-                              WebBrowser.openBrowserAsync(
-                                "https://pinballmap.com/users/" +
-                                  user.username +
-                                  "/profile",
-                              )
-                            }
-                          >
-                            Profile page on the website
-                          </Text>
-                          <EvilIcons
-                            name="external-link"
-                            style={s.externalIcon}
-                          />
-                        </View>
-                      </View>
-                    </>
-                  )}
                 </View>
               )}
             </Screen>
@@ -411,13 +662,22 @@ const getStyles = (theme) =>
       color: theme.text3,
       textTransform: "uppercase",
     },
-    savedLink: {
+    accountSettingsLink: {
       fontSize: 16,
       fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",
-      marginBottom: 6,
+      marginTop: 8,
+    },
+    logoutLink: {
+      fontSize: 16,
+      fontFamily: "Nunito-SemiBold",
+      color: theme.red2,
+      textAlign: "center",
+      textDecorationLine: "underline",
+      marginTop: 6,
+      marginBottom: 4,
     },
     locationName: {
       marginHorizontal: 10,
@@ -453,7 +713,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
       textAlign: "center",
       textDecorationLine: "underline",
-      marginTop: 8,
+      marginTop: 6,
       marginBottom: 2,
     },
     statContainer: {
@@ -534,31 +794,81 @@ const getStyles = (theme) =>
       height: 20,
       marginLeft: 8,
     },
-    externalUpdateContainer: {
-      marginHorizontal: 20,
-    },
-    externalLinkContainer: {
-      flex: 1,
-      flexDirection: "row",
+    header: {
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      marginTop: -25,
+      paddingVertical: 8,
       justifyContent: "center",
-      alignItems: "center",
-      marginBottom: 25,
     },
-    externalUpdateText: {
-      fontSize: 14,
-      color: theme.text3,
-      fontFamily: "Nunito-Medium",
+    xButton: {
+      position: "absolute",
+      right: 5,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+    },
+    modalTitle: {
       textAlign: "center",
+      fontSize: 20,
+      fontFamily: "Nunito-Bold",
+      color: theme.text,
+      paddingHorizontal: 44,
     },
-    externalLink: {
+    modalSection: {
+      paddingHorizontal: 5,
+    },
+    sectionLabel: {
       fontSize: 14,
       fontFamily: "Nunito-SemiBold",
-      textDecorationLine: "underline",
-      color: theme.pink1,
+      color: theme.text3,
+      textTransform: "uppercase",
+      textAlign: "center",
+      marginBottom: 10,
     },
-    externalIcon: {
-      fontSize: 24,
-      color: theme.text2,
+    divider: {
+      height: 1,
+      backgroundColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      marginVertical: 16,
+      marginHorizontal: 20,
+      opacity: 0.4,
+    },
+    textInput: {
+      backgroundColor: theme.white,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      color: theme.text,
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: 10,
+      marginHorizontal: 20,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      fontFamily: "Nunito-Regular",
+      fontSize: 16,
+    },
+    placeholderColor: theme.indigo4,
+    formError: {
+      color: "#c0392b",
+      fontSize: 14,
+      fontFamily: "Nunito-SemiBold",
+      textAlign: "center",
+      marginHorizontal: 20,
+      marginBottom: 8,
+    },
+    formSuccess: {
+      color: "#27ae60",
+      fontSize: 14,
+      fontFamily: "Nunito-SemiBold",
+      textAlign: "center",
+      marginHorizontal: 20,
+      marginBottom: 8,
+    },
+    deleteWarning: {
+      fontSize: 14,
+      fontFamily: "Nunito-Medium",
+      color: theme.text3,
+      textAlign: "center",
+      marginHorizontal: 20,
+      marginBottom: 10,
     },
     scoreMachine: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.purple,
