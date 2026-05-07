@@ -116,25 +116,23 @@ const FindFlag = ({ navigation, route, user }) => {
         closeModal={() => setPendingFlag(null)}
         loading={saving}
       >
-        <Pressable>
-          {pendingFlag && (
-            <>
-              <Image
-                source={flagImages[pendingFlag.code]}
-                style={[
-                  s.confirmFlag,
-                  { width: getFlagWidth(pendingFlag.code, 40) },
-                ]}
-              />
-              <Text style={s.confirmName}>{pendingFlag.name}</Text>
-              <PbmButton title="Select this flag" onPress={confirmFlag} />
-              <WarningButton
-                title="Cancel"
-                onPress={() => setPendingFlag(null)}
-              />
-            </>
-          )}
-        </Pressable>
+        {pendingFlag && (
+          <>
+            <Image
+              source={flagImages[pendingFlag.code]}
+              style={[
+                s.confirmFlag,
+                { width: getFlagWidth(pendingFlag.code, 40) },
+              ]}
+            />
+            <Text style={s.confirmName}>{pendingFlag.name}</Text>
+            <PbmButton title="Select this flag" onPress={confirmFlag} />
+            <WarningButton
+              title="Cancel"
+              onPress={() => setPendingFlag(null)}
+            />
+          </>
+        )}
       </ConfirmationModal>
       <View style={s.searchRow}>
         <View style={s.inputContainer}>

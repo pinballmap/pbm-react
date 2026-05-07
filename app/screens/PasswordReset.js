@@ -39,23 +39,21 @@ const PasswordReset = ({ navigation }) => {
           visible={modalVisible}
           closeModal={() => setModalVisible(false)}
         >
-          <Pressable>
-            <Text style={[s.confirmText, s.bold]}>
-              Password reset was successful.
-            </Text>
-            <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
-              Check your email (and SPAM folder)
-            </Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={35}
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate("Login");
-              }}
-              style={s.xButton}
-            />
-          </Pressable>
+          <Text style={[s.confirmText, s.bold]}>
+            Password reset was successful.
+          </Text>
+          <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
+            Check your email (and SPAM folder)
+          </Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={35}
+            onPress={() => {
+              setModalVisible(false);
+              navigation.navigate("Login");
+            }}
+            style={s.xButton}
+          />
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
           <View style={s.inputContainer}>

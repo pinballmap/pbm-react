@@ -4,7 +4,6 @@ import {
   Modal,
   PixelRatio,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -99,14 +98,12 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
               visible={deleteModalVisible}
               closeModal={() => setDeleteModalVisible(false)}
             >
-              <Pressable>
-                <Text style={s.modalTitle}>Delete your comment?</Text>
-                <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
-                <WarningButton
-                  title={"Cancel"}
-                  onPress={() => setDeleteModalVisible(false)}
-                />
-              </Pressable>
+              <Text style={s.modalTitle}>Delete your comment?</Text>
+              <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
+              <WarningButton
+                title={"Cancel"}
+                onPress={() => setDeleteModalVisible(false)}
+              />
             </ConfirmationModal>
             <Modal
               animationType="slide"

@@ -210,20 +210,18 @@ const MachineDetails = ({
           visible={ictoggleModalVisible}
           closeModal={() => setIctoggleModalVisible(false)}
         >
-          <Pressable>
-            <Text style={s.modalTitle}>
-              Toggle Stern Insider Connected
-              <Text style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}>
-                {ic_enabled === true ? ` OFF ` : ` ON `}
-              </Text>
-              on this machine?
+          <Text style={s.modalTitle}>
+            Toggle Stern Insider Connected
+            <Text style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}>
+              {ic_enabled === true ? ` OFF ` : ` ON `}
             </Text>
-            <PbmButton title={"Toggle NOW"} onPress={onIctogglePress} />
-            <WarningButton
-              title={"Cancel"}
-              onPress={() => setIctoggleModalVisible(false)}
-            />
-          </Pressable>
+            on this machine?
+          </Text>
+          <PbmButton title={"Toggle NOW"} onPress={onIctogglePress} />
+          <WarningButton
+            title={"Cancel"}
+            onPress={() => setIctoggleModalVisible(false)}
+          />
         </ConfirmationModal>
         <Modal
           animationType="slide"

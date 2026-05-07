@@ -95,285 +95,283 @@ const FilterRecentActivity = ({
     <View>
       {showModal && (
         <ConfirmationModal closeModal={() => setShowModal(false)}>
-          <Pressable>
-            <View style={s.header}>
-              <Text style={s.filterTitle}>Filter Recent Activity</Text>
+          <View style={s.header}>
+            <Text style={s.filterTitle}>Filter Recent Activity</Text>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={35}
+              onPress={() => setShowModal(false)}
+              style={s.xButton}
+            />
+          </View>
+          <View>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find((activity) => activity === "new_lmx")
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("new_lmx")}
+            >
               <MaterialCommunityIcons
-                name="close-circle"
-                size={35}
-                onPress={() => setShowModal(false)}
-                style={s.xButton}
+                name="plus-box"
+                size={32}
+                color="#58a467"
+                style={s.iconStyle}
               />
-            </View>
-            <View>
-              <Pressable
+              <Text
                 style={[
-                  s.container,
+                  s.titleStyle,
                   pendingActivities.find((activity) => activity === "new_lmx")
-                    ? s.containerSelected
-                    : s.containerNotSelected,
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
                 ]}
-                onPress={() => togglePendingActivity("new_lmx")}
               >
-                <MaterialCommunityIcons
-                  name="plus-box"
-                  size={32}
-                  color="#58a467"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    pendingActivities.find((activity) => activity === "new_lmx")
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  Added Machines
-                </Text>
-              </Pressable>
-              <Pressable
+                Added Machines
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find(
+                  (activity) => activity === "remove_machine",
+                )
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("remove_machine")}
+            >
+              <MaterialCommunityIcons
+                name="minus-box"
+                size={32}
+                color="#f56f79"
+                style={s.iconStyle}
+              />
+              <Text
                 style={[
-                  s.container,
+                  s.titleStyle,
                   pendingActivities.find(
                     (activity) => activity === "remove_machine",
                   )
-                    ? s.containerSelected
-                    : s.containerNotSelected,
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
                 ]}
-                onPress={() => togglePendingActivity("remove_machine")}
               >
-                <MaterialCommunityIcons
-                  name="minus-box"
-                  size={32}
-                  color="#f56f79"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    pendingActivities.find(
-                      (activity) => activity === "remove_machine",
-                    )
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  Removed Machines
-                </Text>
-              </Pressable>
-              <Pressable
+                Removed Machines
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find(
+                  (activity) => activity === "new_condition",
+                )
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("new_condition")}
+            >
+              <MaterialCommunityIcons
+                name="comment-text"
+                size={32}
+                color="#6cbffe"
+                style={s.iconStyle}
+              />
+              <Text
                 style={[
-                  s.container,
+                  s.titleStyle,
                   pendingActivities.find(
                     (activity) => activity === "new_condition",
                   )
-                    ? s.containerSelected
-                    : s.containerNotSelected,
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
                 ]}
-                onPress={() => togglePendingActivity("new_condition")}
               >
-                <MaterialCommunityIcons
-                  name="comment-text"
-                  size={32}
-                  color="#6cbffe"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    pendingActivities.find(
-                      (activity) => activity === "new_condition",
-                    )
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  Machine Comments
-                </Text>
-              </Pressable>
-              <Pressable
+                Machine Comments
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find((activity) => activity === "new_msx")
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("new_msx")}
+            >
+              <MaterialCommunityIcons
+                name="numeric"
+                size={32}
+                color="#eeb152"
+                style={s.iconStyle}
+              />
+              <Text
                 style={[
-                  s.container,
+                  s.titleStyle,
                   pendingActivities.find((activity) => activity === "new_msx")
-                    ? s.containerSelected
-                    : s.containerNotSelected,
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
                 ]}
-                onPress={() => togglePendingActivity("new_msx")}
               >
-                <MaterialCommunityIcons
-                  name="numeric"
-                  size={32}
-                  color="#eeb152"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    pendingActivities.find((activity) => activity === "new_msx")
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  High Scores
-                </Text>
-              </Pressable>
-              <Pressable
+                High Scores
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find(
+                  (activity) => activity === "confirm_location",
+                )
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("confirm_location")}
+            >
+              <MaterialCommunityIcons
+                name="clipboard-check"
+                size={32}
+                color="#d473df"
+                style={s.iconStyle}
+              />
+              <Text
                 style={[
-                  s.container,
+                  s.titleStyle,
                   pendingActivities.find(
                     (activity) => activity === "confirm_location",
                   )
-                    ? s.containerSelected
-                    : s.containerNotSelected,
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
                 ]}
-                onPress={() => togglePendingActivity("confirm_location")}
               >
-                <MaterialCommunityIcons
-                  name="clipboard-check"
-                  size={32}
-                  color="#d473df"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    pendingActivities.find(
-                      (activity) => activity === "confirm_location",
-                    )
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  Location Confirmations
-                </Text>
-              </Pressable>
+                Location Confirmations
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[
+                s.container,
+                pendingActivities.find(
+                  (activity) => activity === "add_location",
+                )
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+              ]}
+              onPress={() => togglePendingActivity("add_location")}
+            >
+              <MaterialCommunityIcons
+                name="star-face"
+                size={32}
+                color="#ffe500"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  pendingActivities.find(
+                    (activity) => activity === "add_location",
+                  )
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                Locations Added
+              </Text>
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
+                s.container,
+                specificMachinesSelected
+                  ? s.containerSelected
+                  : s.containerNotSelected,
+                pressed && s.containerSelected,
+              ]}
+              onPress={navigateToFindMachine}
+            >
+              <MaterialCommunityIcons
+                name="format-list-checks"
+                size={32}
+                color="#4db8c8"
+                style={s.iconStyle}
+              />
+              <Text
+                style={[
+                  s.titleStyle,
+                  specificMachinesSelected
+                    ? s.activeTitleStyle
+                    : s.inactiveTitleStyle,
+                ]}
+              >
+                {specificMachinesSelected
+                  ? `${pendingActivityMachines.length} Machine${pendingActivityMachines.length > 1 ? "s" : ""} Selected`
+                  : "Specific Machines"}
+              </Text>
+            </Pressable>
+            {loggedIn && (
               <Pressable
                 style={[
                   s.container,
                   pendingActivities.find(
-                    (activity) => activity === "add_location",
+                    (activity) => activity === "user_faved",
                   )
                     ? s.containerSelected
                     : s.containerNotSelected,
                 ]}
-                onPress={() => togglePendingActivity("add_location")}
+                onPress={() => togglePendingActivity("user_faved")}
               >
                 <MaterialCommunityIcons
-                  name="star-face"
+                  name="heart"
                   size={32}
-                  color="#ffe500"
+                  color="#fe46b0"
                   style={s.iconStyle}
                 />
                 <Text
                   style={[
                     s.titleStyle,
-                    pendingActivities.find(
-                      (activity) => activity === "add_location",
-                    )
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  Locations Added
-                </Text>
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  s.container,
-                  specificMachinesSelected
-                    ? s.containerSelected
-                    : s.containerNotSelected,
-                  pressed && s.containerSelected,
-                ]}
-                onPress={navigateToFindMachine}
-              >
-                <MaterialCommunityIcons
-                  name="format-list-checks"
-                  size={32}
-                  color="#4db8c8"
-                  style={s.iconStyle}
-                />
-                <Text
-                  style={[
-                    s.titleStyle,
-                    specificMachinesSelected
-                      ? s.activeTitleStyle
-                      : s.inactiveTitleStyle,
-                  ]}
-                >
-                  {specificMachinesSelected
-                    ? `${pendingActivityMachines.length} Machine${pendingActivityMachines.length > 1 ? "s" : ""} Selected`
-                    : "Specific Machines"}
-                </Text>
-              </Pressable>
-              {loggedIn && (
-                <Pressable
-                  style={[
-                    s.container,
                     pendingActivities.find(
                       (activity) => activity === "user_faved",
                     )
-                      ? s.containerSelected
-                      : s.containerNotSelected,
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
                   ]}
-                  onPress={() => togglePendingActivity("user_faved")}
                 >
-                  <MaterialCommunityIcons
-                    name="heart"
-                    size={32}
-                    color="#fe46b0"
-                    style={s.iconStyle}
-                  />
-                  <Text
-                    style={[
-                      s.titleStyle,
-                      pendingActivities.find(
-                        (activity) => activity === "user_faved",
-                      )
-                        ? s.activeTitleStyle
-                        : s.inactiveTitleStyle,
-                    ]}
-                  >
-                    Saved Locations
-                  </Text>
-                </Pressable>
-              )}
-              {loggedIn && (
-                <Pressable
+                  Saved Locations
+                </Text>
+              </Pressable>
+            )}
+            {loggedIn && (
+              <Pressable
+                style={[
+                  s.container,
+                  pendingActivities.find(
+                    (activity) => activity === "your_activity",
+                  )
+                    ? s.containerSelected
+                    : s.containerNotSelected,
+                ]}
+                onPress={() => togglePendingActivity("your_activity")}
+              >
+                <FontAwesome6
+                  name="face-grin-beam"
+                  size={32}
+                  color="#7b97e3"
+                  style={s.iconStyle}
+                />
+                <Text
                   style={[
-                    s.container,
+                    s.titleStyle,
                     pendingActivities.find(
                       (activity) => activity === "your_activity",
                     )
-                      ? s.containerSelected
-                      : s.containerNotSelected,
+                      ? s.activeTitleStyle
+                      : s.inactiveTitleStyle,
                   ]}
-                  onPress={() => togglePendingActivity("your_activity")}
                 >
-                  <FontAwesome6
-                    name="face-grin-beam"
-                    size={32}
-                    color="#7b97e3"
-                    style={s.iconStyle}
-                  />
-                  <Text
-                    style={[
-                      s.titleStyle,
-                      pendingActivities.find(
-                        (activity) => activity === "your_activity",
-                      )
-                        ? s.activeTitleStyle
-                        : s.inactiveTitleStyle,
-                    ]}
-                  >
-                    Your Activity
-                  </Text>
-                </Pressable>
-              )}
-              <PbmButton title="Apply Filters" onPress={applyFilters} />
-            </View>
-          </Pressable>
+                  Your Activity
+                </Text>
+              </Pressable>
+            )}
+            <PbmButton title="Apply Filters" onPress={applyFilters} />
+          </View>
         </ConfirmationModal>
       )}
       <Pressable

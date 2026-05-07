@@ -298,98 +298,94 @@ const LocationActivity = ({
         noPad
       >
         <>
-          <Pressable>
-            <View style={s.header}>
-              <Text style={s.title}>Location Activity</Text>
-              <FilterLocationActivity />
-              <MaterialCommunityIcons
-                name="close-circle"
-                size={35}
-                onPress={() => setLocationActivityModalOpen(false)}
-                style={s.xButton}
-              />
-            </View>
-          </Pressable>
+          <View style={s.header}>
+            <Text style={s.title}>Location Activity</Text>
+            <FilterLocationActivity />
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={35}
+              onPress={() => setLocationActivityModalOpen(false)}
+              style={s.xButton}
+            />
+          </View>
           <ScrollView ref={scrollViewRef} style={{ height: "80%" }}>
-            <Pressable>
-              {selectedLocationActivities.length ? (
-                <View style={s.filterView}>
-                  <Text style={s.filter}>Clear filters</Text>
+            {selectedLocationActivities.length ? (
+              <View style={s.filterView}>
+                <Text style={s.filter}>Clear filters</Text>
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  size={24}
+                  onPress={() => clearLocationActivityFilter()}
+                  style={s.xButton2}
+                />
+              </View>
+            ) : null}
+            {locationActivityLoading ? (
+              <ActivityIndicator />
+            ) : recentActivity.length === 0 ? (
+              <Text style={s.problem}>No location activity found</Text>
+            ) : (
+              recentActivity
+                .filter((activity) => {
+                  const icon = getActivityIcon(activity.submission_type);
+                  if (icon) {
+                    activity.icon = icon;
+                    return true;
+                  }
+                  return false;
+                })
+                .map((activity) => (
+                  <View key={activity.id} style={[s.list, s.flexi]}>
+                    <View style={{ width: "15%" }}>{activity.icon}</View>
+                    {getText(activity)}
+                  </View>
+                ))
+            )}
+            {pagy && pagy.pages > 1 && !locationActivityLoading && (
+              <View style={s.paginationContainer}>
+                <Pressable
+                  onPress={() => goToPage(page - 1)}
+                  disabled={page === 1}
+                  style={[s.pageButton, page === 1 && s.pageButtonInactive]}
+                >
                   <MaterialCommunityIcons
-                    name="close-circle"
-                    size={24}
-                    onPress={() => clearLocationActivityFilter()}
-                    style={s.xButton2}
+                    name="chevron-left"
+                    size={22}
+                    color={page === 1 ? theme.text3 : theme.text2}
                   />
-                </View>
-              ) : null}
-              {locationActivityLoading ? (
-                <ActivityIndicator />
-              ) : recentActivity.length === 0 ? (
-                <Text style={s.problem}>No location activity found</Text>
-              ) : (
-                recentActivity
-                  .filter((activity) => {
-                    const icon = getActivityIcon(activity.submission_type);
-                    if (icon) {
-                      activity.icon = icon;
-                      return true;
-                    }
-                    return false;
-                  })
-                  .map((activity) => (
-                    <View key={activity.id} style={[s.list, s.flexi]}>
-                      <View style={{ width: "15%" }}>{activity.icon}</View>
-                      {getText(activity)}
-                    </View>
-                  ))
-              )}
-              {pagy && pagy.pages > 1 && !locationActivityLoading && (
-                <View style={s.paginationContainer}>
-                  <Pressable
-                    onPress={() => goToPage(page - 1)}
-                    disabled={page === 1}
-                    style={[s.pageButton, page === 1 && s.pageButtonInactive]}
+                  <Text
+                    style={[
+                      s.pageButtonText,
+                      page === 1 && s.pageButtonTextInactive,
+                    ]}
                   >
-                    <MaterialCommunityIcons
-                      name="chevron-left"
-                      size={22}
-                      color={page === 1 ? theme.text3 : theme.text2}
-                    />
-                    <Text
-                      style={[
-                        s.pageButtonText,
-                        page === 1 && s.pageButtonTextInactive,
-                      ]}
-                    >
-                      Prev
-                    </Text>
-                  </Pressable>
-                  <Text style={s.pageIndicator}>
-                    {page} / {pagy.pages}
+                    Prev
                   </Text>
-                  <Pressable
-                    onPress={() => goToPage(page + 1)}
-                    disabled={!pagy.next}
-                    style={[s.pageButton, !pagy.next && s.pageButtonInactive]}
+                </Pressable>
+                <Text style={s.pageIndicator}>
+                  {page} / {pagy.pages}
+                </Text>
+                <Pressable
+                  onPress={() => goToPage(page + 1)}
+                  disabled={!pagy.next}
+                  style={[s.pageButton, !pagy.next && s.pageButtonInactive]}
+                >
+                  <Text
+                    style={[
+                      s.pageButtonText,
+                      !pagy.next && s.pageButtonTextInactive,
+                    ]}
                   >
-                    <Text
-                      style={[
-                        s.pageButtonText,
-                        !pagy.next && s.pageButtonTextInactive,
-                      ]}
-                    >
-                      Next
-                    </Text>
-                    <MaterialCommunityIcons
-                      name="chevron-right"
-                      size={22}
-                      color={!pagy.next ? theme.text3 : theme.text2}
-                    />
-                  </Pressable>
-                </View>
-              )}
-            </Pressable>
+                    Next
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    size={22}
+                    color={!pagy.next ? theme.text3 : theme.text2}
+                  />
+                </Pressable>
+              </View>
+            )}
           </ScrollView>
         </>
       </ConfirmationModal>

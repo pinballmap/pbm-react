@@ -77,25 +77,23 @@ const LocationList = ({
         visible={showNoLocationTrackingModal}
         closeModal={() => setShowNoLocationTrackingModal(false)}
       >
-        <Pressable>
-          <View>
-            <Text style={s.confirmText}>
-              Location tracking must be enabled to use this feature!
-            </Text>
-            <Text
-              style={[s.confirmText, s.link, s.margin10]}
-              onPress={() => Linking.openSettings()}
-            >
-              Go to phone settings to enable.
-            </Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={35}
-              onPress={() => setShowNoLocationTrackingModal(false)}
-              style={s.xButton}
-            />
-          </View>
-        </Pressable>
+        <View>
+          <Text style={s.confirmText}>
+            Location tracking must be enabled to use this feature!
+          </Text>
+          <Text
+            style={[s.confirmText, s.link, s.margin10]}
+            onPress={() => Linking.openSettings()}
+          >
+            Go to phone settings to enable.
+          </Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={35}
+            onPress={() => setShowNoLocationTrackingModal(false)}
+            style={s.xButton}
+          />
+        </View>
       </ConfirmationModal>
       <ButtonGroup
         onPress={updateIndex}

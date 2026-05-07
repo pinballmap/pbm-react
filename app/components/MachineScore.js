@@ -4,7 +4,6 @@ import {
   Modal,
   PixelRatio,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -82,14 +81,12 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
               visible={deleteModalVisible}
               closeModal={() => setDeleteModalVisible(false)}
             >
-              <Pressable>
-                <Text style={s.modalTitle}>Delete your score?</Text>
-                <PbmButton title={"Delete Score"} onPress={onDeletePress} />
-                <WarningButton
-                  title={"Cancel"}
-                  onPress={() => setDeleteModalVisible(false)}
-                />
-              </Pressable>
+              <Text style={s.modalTitle}>Delete your score?</Text>
+              <PbmButton title={"Delete Score"} onPress={onDeletePress} />
+              <WarningButton
+                title={"Cancel"}
+                onPress={() => setDeleteModalVisible(false)}
+              />
             </ConfirmationModal>
             <Modal
               animationType="slide"

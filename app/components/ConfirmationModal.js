@@ -24,7 +24,8 @@ const ConfirmationModal = ({
       onRequestClose={() => {}}
       visible={visible}
     >
-      <Pressable style={s.overlay} onPress={closeModal}>
+      <View style={s.overlay}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={closeModal} />
         <View
           style={[
             s.modalView,
@@ -34,7 +35,7 @@ const ConfirmationModal = ({
         >
           {loading ? <ActivityIndicator /> : children}
         </View>
-      </Pressable>
+      </View>
     </Modal>
   );
 };
