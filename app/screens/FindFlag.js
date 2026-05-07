@@ -74,6 +74,24 @@ const FindFlag = ({ navigation, route, user }) => {
     }
   };
 
+  const renderNoneRow = () => (
+    <Pressable onPress={() => selectFlag({ name: "None", code: null })}>
+      {({ pressed }) => (
+        <View
+          style={[
+            s.row,
+            pressed
+              ? { backgroundColor: theme.base4, opacity: 0.8 }
+              : { backgroundColor: theme.base1 },
+          ]}
+        >
+          <View style={[s.rowFlag, s.rowFlagPlaceholder]} />
+          <Text style={s.rowName}>None</Text>
+        </View>
+      )}
+    </Pressable>
+  );
+
   const renderRow = ({ item, index }) => (
     <Pressable onPress={() => selectFlag(item)}>
       {({ pressed }) => (
@@ -118,15 +136,22 @@ const FindFlag = ({ navigation, route, user }) => {
       >
         {pendingFlag && (
           <>
-            <Image
-              source={flagImages[pendingFlag.code]}
-              style={[
-                s.confirmFlag,
-                { width: getFlagWidth(pendingFlag.code, 40) },
-              ]}
+            {pendingFlag.code && (
+              <Image
+                source={flagImages[pendingFlag.code]}
+                style={[
+                  s.confirmFlag,
+                  { width: getFlagWidth(pendingFlag.code, 40) },
+                ]}
+              />
+            )}
+            <Text style={s.confirmName}>
+              {pendingFlag.code ? pendingFlag.name : "No flag at this time"}
+            </Text>
+            <PbmButton
+              title={pendingFlag.code ? "Select this flag" : "No flag"}
+              onPress={confirmFlag}
             />
-            <Text style={s.confirmName}>{pendingFlag.name}</Text>
-            <PbmButton title="Select this flag" onPress={confirmFlag} />
             <WarningButton
               title="Cancel"
               onPress={() => setPendingFlag(null)}
@@ -168,6 +193,7 @@ const FindFlag = ({ navigation, route, user }) => {
         renderItem={renderRow}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={(item) => item.code}
+        ListHeaderComponent={query.length === 0 ? renderNoneRow : null}
         contentContainerStyle={{
           backgroundColor: theme.base1,
           paddingBottom: insets.bottom,
@@ -230,6 +256,9 @@ const getStyles = (theme) =>
       height: 22,
       marginRight: 12,
       borderRadius: 3,
+    },
+    rowFlagPlaceholder: {
+      backgroundColor: theme.base3,
     },
     rowName: {
       fontSize: 18,
