@@ -14,7 +14,7 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
-### 5.4.2
+### 5.4.3
 
 May 6, 2026
 
@@ -23,6 +23,13 @@ May 6, 2026
 - Let users select a "flag" icon (via profile screen). Show that flag icon next to user names
 - Added email and phone buttons that copy operator contact information so you can directly contact operators that opt in to this feature
 - Updated FAQ, including adding a table of content to jump to sections and better new operator instructions
+- Added an Account Settings screen in the User Profile for changing email and password or deleting account
+
+### 5.4.2
+
+May 6, 2026
+
+- Same as 5.4.3, except without the Account Settings screen. 5.4.2 was only approved by Google. Release almost immediately superseded.
 
 ### 5.4.1
 
