@@ -200,7 +200,7 @@ const LocationDetails = (props) => {
     dispatch(clearFilters(false));
     dispatch(updateMap(location.lat, location.lon));
     dispatch(setSelectedMapLocation(location.id));
-    navigation.navigate("MapTab", { pop: true });
+    navigation.navigate("MapTab");
   };
 
   const openPhotoModal = (index, pics = pictures) => {

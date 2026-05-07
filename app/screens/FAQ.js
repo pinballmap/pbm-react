@@ -219,9 +219,7 @@ const FAQ = ({ navigation, user }) => {
               {loggedIn ? (
                 <Text
                   style={s.textLink}
-                  onPress={() =>
-                    navigation.navigate("MapStack", { screen: "UserProfile" })
-                  }
+                  onPress={() => navigation.navigate("UserProfile")}
                 >
                   {"your profile"}
                 </Text>
@@ -550,18 +548,18 @@ const FAQ = ({ navigation, user }) => {
               style={s.bold}
             >{`How do I update my password, or email, or delete my account?`}</Text>
             <Text style={s.text}>
-              {`These can be done on your`}{" "}
-              <Text
-                style={s.textLink}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    "https://pinballmap.com/inspire_profile",
-                  )
-                }
-              >
-                Profile page on the website
-              </Text>
-              .
+              {`These can be done on `}
+              {loggedIn ? (
+                <Text
+                  style={s.textLink}
+                  onPress={() => navigation.navigate("UserProfile")}
+                >
+                  {"your profile"}
+                </Text>
+              ) : (
+                "your profile"
+              )}
+              {` via the Account Settings link.`}
             </Text>
             <Text
               style={s.bold}
