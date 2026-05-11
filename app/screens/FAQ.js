@@ -481,7 +481,7 @@ const FAQ = ({ navigation, user }) => {
               style={s.bold}
             >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
             <Text style={s.text}>
-              {`The short answer is that we can't disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and some do not. Some operators wish that folks would only leave very specific types of comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.`}
+              {`The short answer is that we can't disable comments at an individual venue or for an individual user. We understand that users and operators tend to want conflicting things. Some operators find reports of technical issues to be very useful; and a few get upset about them. Some operators wish that folks would only leave very specific types of comments (we can't control this). On the other hand, most regular users find machine comments to be a very valuable feature. It is difficult to perfectly cater to everyone, and we cannot control the comments that people make.`}
             </Text>
             <Text style={s.text}>
               {`In some circumstances, comments may be removed and/or accounts can be disabled (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.`}
@@ -499,7 +499,7 @@ const FAQ = ({ navigation, user }) => {
               {`A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. Pinball Map does not make you do this.`}
             </Text>
             <Text style={s.text}>
-              {`According to nearly everyone, it is really valuable to see a history of comments (thing is broken, thing is fixed, etc.). Everyone understands that machines break all the time. Seeing a dialog demonstrates that upkeep is occurring. The "latest comment" noting a problem is not particularly important to users and will not drive them away. Some operators choose to delete machines and re-add them in order to clear out comments rather than simply responding to a comment. This is bad practice - both for your business and for the map - and can result in your account being disabled. It makes it seem like the operator is whitewashing comments rather than fixing issues. Users definitely notice this, and we strongly discourage it.`}
+              {`According to nearly everyone, it is really valuable to see a history of comments (thing is broken, thing is fixed, etc.). Everyone understands that machines break. Seeing a dialog demonstrates that upkeep is occurring. The "latest comment" noting a problem is not particularly important to users and will not drive them away. Some operators choose to delete machines and re-add them in order to clear out comments rather than simply responding to a comment. This is bad practice - both for your business and for the map - and can result in your account being disabled. It makes it seem like the operator is whitewashing comments rather than fixing issues. Users definitely notice this, and we strongly discourage it.`}
             </Text>
             <Text
               style={s.bold}
@@ -512,7 +512,10 @@ const FAQ = ({ navigation, user }) => {
             >{`After a machine issue has been resolved, can you remove the machine comment that mentioned the issue?`}</Text>
             <Text
               style={s.text}
-            >{`No. It may seem "bad" for there to be a public record of problems with your machines, but it's actually good. All machines have problems, and everyone understands that. What we're showing here is a record of you fixing the machines. Users see that and appreciate it, and we think operators should appreciate it, too.`}</Text>
+            >{`No, and you shouldn't want this. Everyone knows that 100% of machines break at some point. Right? But the missing piece of information is whether a place fixes their machines. A comment about a broken blob is an opportunity for you, the operator, to demonstrate that your location maintains their machines.`}</Text>
+            <Text
+              style={s.text}
+            >{`It may seem "bad" for there to be a public record of problems with your machines, but we hope the above helps convince you that it's actually good. Users love seeing a record of you fixing machines.`}</Text>
             <View
               ref={(r) => {
                 sectionRefs.current["users"] = r;
