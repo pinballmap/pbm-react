@@ -244,9 +244,6 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      backgroundColor: theme.base1,
-    },
     listContainerStyle: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,

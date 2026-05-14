@@ -850,13 +850,6 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    marginB10: {
-      marginBottom: 10,
-    },
-    margin40: {
-      marginHorizontal: 40,
-      marginVertical: 15,
-    },
     noneYet: {
       textAlign: "center",
       paddingHorizontal: 15,
@@ -965,20 +958,6 @@ const getStyles = (theme) =>
       textAlign: "center",
       color: theme.text2,
       fontFamily: "Nunito-SemiBold",
-    },
-    titleStyle: {
-      fontSize: 16,
-      fontFamily: "Nunito-Bold",
-      textTransform: "capitalize",
-    },
-    nullICTitle: {
-      color: "#665b50",
-    },
-    yesICTitle: {
-      color: "#440152",
-    },
-    noICTitle: {
-      color: "#533a3a",
     },
     buttonIC: {
       height: 65,

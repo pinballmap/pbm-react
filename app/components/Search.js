@@ -518,9 +518,6 @@ class Search extends Component {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      backgroundColor: theme.base1,
-    },
     modalContainer: {
       flex: 1,
       marginTop: Platform.OS === "ios" ? 0 : 10,

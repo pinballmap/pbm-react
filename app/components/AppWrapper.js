@@ -225,10 +225,10 @@ const AppWrapper = ({
   return (
     <>
       <Animated.View
-        style={[styles.disabledBanner, { opacity: flashOpacity }]}
+        style={[s.disabledBanner, { opacity: flashOpacity }]}
         pointerEvents="none"
       >
-        <Text style={styles.disabledBannerText}>
+        <Text style={s.disabledBannerText}>
           Your account has been disabled. Please contact us if you think this is
           a mistake.
         </Text>
@@ -238,7 +238,7 @@ const AppWrapper = ({
   );
 };
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   disabledBanner: {
     position: "absolute",
     top: 0,

@@ -151,10 +151,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      flex: 1,
-      backgroundColor: theme.base1,
-    },
     text: {
       fontSize: 15,
       marginVertical: 5,
@@ -175,9 +171,6 @@ const getStyles = (theme) =>
     },
     boldFont: {
       fontFamily: "Nunito-Bold",
-    },
-    blackText: {
-      color: theme.text,
     },
     pinkText: {
       color: theme.pink1,

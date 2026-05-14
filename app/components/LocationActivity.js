@@ -464,9 +464,6 @@ const getStyles = (theme) =>
       overflow: "visible",
       marginLeft: 8,
     },
-    activityButton: {
-      right: 60,
-    },
     quickButton: {
       borderWidth: 1,
       borderColor: theme.pink2,

@@ -252,21 +252,10 @@ const getStyles = (theme) =>
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
     },
-    buttonTitle: {
-      color: theme.text3,
-      fontSize: 16,
-      fontFamily: "Nunito-Bold",
-    },
     justify: {
       flexDirection: "column",
       justifyContent: "center",
       height: deviceHeight,
-    },
-    disabledStyle: {
-      backgroundColor: theme.white,
-    },
-    disabledTitleStyle: {
-      color: theme.pink3,
     },
     iconStyle: {
       fontSize: 24,

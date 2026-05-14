@@ -395,7 +395,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
             name="close-circle"
             size={24}
             onPress={() => clearActivityFilter()}
-            style={s.xButton2}
+            style={s.xButton}
           />
         </View>
       ) : null}
@@ -577,20 +577,6 @@ const getStyles = (theme) =>
       marginTop: 20,
     },
     xButton: {
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-      marginLeft: 8,
-    },
-    xButton2: {
       color: theme.red2,
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",

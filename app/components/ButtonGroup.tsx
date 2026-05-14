@@ -16,7 +16,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
   return (
     <View
       style={StyleSheet.flatten([
-        styles.container,
+        s.container,
         containerStyle && containerStyle,
       ])}
     >
@@ -26,7 +26,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
           <View
             key={i}
             style={StyleSheet.flatten([
-              styles.button,
+              s.button,
               i !== buttons.length - 1 &&
                 {
                     borderRightColor:
@@ -38,11 +38,11 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
               onPress={() => {
                   onPress(i);
               }}
-              style={styles.button}
+              style={s.button}
             >
               <View
                 style={StyleSheet.flatten([
-                  styles.textContainer,
+                  s.textContainer,
                   isSelected && selectedButtonStyle && selectedButtonStyle,
                 ])}
               >
@@ -71,7 +71,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
   );
 };
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   button: {
     flex: 1,
   },

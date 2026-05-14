@@ -816,11 +816,6 @@ class UserProfile extends Component {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      backgroundColor: theme.base1,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-    },
     list: {
       borderRadius: 25,
       paddingVertical: 2,
@@ -1107,21 +1102,11 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
-    pbmText: {
-      color: theme.text2,
-      fontSize: 16,
-      fontFamily: "Nunito-Regular",
-    },
     marginB10: {
       marginBottom: 10,
     },
     marginT10: {
       marginTop: 10,
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      color: theme.text3,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
   });
 

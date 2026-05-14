@@ -487,13 +487,6 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
-    confirmText: {
-      textAlign: "center",
-      fontSize: 15,
-      marginLeft: 10,
-      marginRight: 10,
-      fontFamily: "Nunito-Regular",
-    },
     buttonIcon: {
       fontSize: 22,
       color: theme.text2,

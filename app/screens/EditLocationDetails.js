@@ -265,16 +265,6 @@ function EditLocationDetails({ navigation, ...props }) {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      flex: 1,
-      backgroundColor: theme.base1,
-    },
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22,
-    },
     previewContainer: {
       flexDirection: "row",
       width: "100%",
@@ -329,13 +319,6 @@ const getStyles = (theme) =>
     radius10: {
       borderRadius: 10,
     },
-    hr: {
-      marginLeft: 25,
-      marginRight: 25,
-      height: 2,
-      marginTop: 10,
-      backgroundColor: theme.indigo4,
-    },
     subText: {
       marginHorizontal: 30,
       fontSize: 14,
@@ -343,9 +326,6 @@ const getStyles = (theme) =>
     },
     pink: {
       color: theme.pink1,
-    },
-    purple: {
-      color: theme.purple,
     },
     margin8: {
       marginTop: 8,

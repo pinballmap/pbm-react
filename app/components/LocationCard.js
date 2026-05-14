@@ -243,12 +243,6 @@ const getStyles = (theme) =>
       fontSize: 15,
       flex: 1,
     },
-    text: {
-      color: theme.text,
-    },
-    text3: {
-      color: theme.text3,
-    },
     manufacturer: {
       color: theme.theme == "dark" ? theme.pink1 : theme.text3,
       fontFamily: "Nunito-Medium",

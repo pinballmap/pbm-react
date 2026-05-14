@@ -16,7 +16,6 @@ const CheckBoxSetting = ({ title, description, onPress, checked }) => {
       <Checkbox
         value={checked}
         onValueChange={() => {
-          // Sends the new checked value
           return onPress(!checked);
         }}
         style={s.checkBoxContainer}
@@ -50,10 +49,6 @@ const getStyles = (theme) =>
     checkBoxContainer: {
       backgroundColor: theme.base1,
       marginVertical: -8,
-    },
-    checkBoxTextStyle: {
-      fontSize: 16,
-      color: theme.text,
     },
   });
 

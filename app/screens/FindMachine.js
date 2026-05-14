@@ -567,9 +567,6 @@ const FindMachine = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      backgroundColor: theme.base1,
-    },
     inputContainer: {
       borderWidth: 1,
       backgroundColor: theme.white,
@@ -648,20 +645,6 @@ const getStyles = (theme) =>
     selTextStyle: {
       color: theme.text2,
       fontFamily: "Nunito-Bold",
-    },
-    machineName: {
-      fontFamily: "Nunito-Bold",
-      color: theme.text,
-    },
-    manYear: {
-      color: theme.text3,
-    },
-    pressed: {
-      backgroundColor: theme.base3,
-      opacity: 0.8,
-    },
-    notPressed: {
-      backgroundColor: "transparent",
     },
     modalTitle: {
       textAlign: "center",

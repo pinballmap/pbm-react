@@ -641,10 +641,6 @@ function SuggestLocation({ navigation, route, location, ...props }) {
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    background: {
-      flex: 1,
-      backgroundColor: theme.base1,
-    },
     text: {
       fontSize: 16,
       lineHeight: 22,
@@ -661,11 +657,6 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Bold",
       color: theme.text2,
-    },
-    titleStyle: {
-      fontSize: 16,
-      color: theme.text3,
-      fontFamily: "Nunito-Regular",
     },
     previewContainer: {
       flexDirection: "row",
@@ -714,13 +705,6 @@ const getStyles = (theme) =>
     },
     radius10: {
       borderRadius: 10,
-    },
-    hr: {
-      marginLeft: 25,
-      marginRight: 25,
-      height: 2,
-      marginTop: 10,
-      backgroundColor: theme.indigo4,
     },
     successContainer: {
       flex: 1,
@@ -796,10 +780,6 @@ const getStyles = (theme) =>
       shadowRadius: 3.84,
       elevation: 5,
       overflow: "visible",
-    },
-    containerStyle: {
-      marginTop: 0,
-      marginHorizontal: 20,
     },
     buttonMargin: {
       marginVertical: 15,

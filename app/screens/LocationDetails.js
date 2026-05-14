@@ -1349,16 +1349,6 @@ const getStyles = (theme) =>
       width: 34,
       marginRight: 10,
     },
-    markerDot: {
-      width: 52,
-      height: 30,
-      borderRadius: 15,
-      borderWidth: 0,
-      backgroundColor: "#ae57cf",
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
     quickButtonPressed: {
       backgroundColor: theme.indigo4,
     },
@@ -1507,11 +1497,6 @@ const getStyles = (theme) =>
       paddingVertical: 8,
       paddingHorizontal: 16,
       borderRadius: 20,
-    },
-    deleteButtonText: {
-      color: "white",
-      fontFamily: "Nunito-SemiBold",
-      fontSize: 14,
     },
     deleteConfirmContainer: {
       alignItems: "center",
