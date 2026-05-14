@@ -23,7 +23,11 @@ import {
   WarningButton,
 } from "../components";
 import { getData, postData, deleteData } from "../config/request";
-import { logout } from "../actions";
+import {
+  logout,
+  removeMachineFromLifeList,
+  clearSelectedState,
+} from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 const moment = require("moment");
@@ -46,6 +50,8 @@ class UserProfile extends Component {
     showDeleteConfirm: false,
     deletingAccount: false,
     deleteError: null,
+    machineToRemove: null,
+    lifeListQuery: "",
     fetchingUserInfo: this.props.route?.params?.userId
       ? true
       : this.props.user.loggedIn
@@ -140,18 +146,44 @@ class UserProfile extends Component {
       });
   };
 
+  handleRemoveMachine = () => {
+    const { machineToRemove } = this.state;
+    this.props
+      .removeMachineFromLifeList(machineToRemove.machine_id)
+      .then(() => {
+        this.setState((prevState) => ({
+          machineToRemove: null,
+          profile_info: {
+            ...prevState.profile_info,
+            profile_life_list_stats:
+              prevState.profile_info.profile_life_list_stats.filter(
+                (e) => e.machine_id !== machineToRemove.machine_id,
+              ),
+            num_life_list_machines:
+              (prevState.profile_info.num_life_list_machines || 1) - 1,
+          },
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ machineToRemove: null });
+      });
+  };
+
   componentDidMount() {
     this.focusListener = this.props.navigation.addListener("focus", () => {
       const id = this.props.route?.params?.userId ?? this.props.user.id;
       if (id) {
-        getData(`/users/${id}/profile_info.json?new_score_list_only=`).then(
-          (data) => {
+        getData(`/users/${id}/profile_info.json?life_list=`)
+          .then((data) => {
             this.setState({
               fetchingUserInfo: false,
               profile_info: data.profile_info,
             });
-          },
-        );
+          })
+          .catch(() => this.setState({ fetchingUserInfo: false }));
+      } else {
+        this.setState({ fetchingUserInfo: false });
       }
     });
   }
@@ -174,19 +206,28 @@ class UserProfile extends Component {
     const profileInfo = this.state.profile_info ?? {};
     const {
       profile_list_of_edited_locations = [],
-      profile_machine_scores_stats = [],
+      profile_life_list_stats = [],
       created_at,
       num_machines_added,
       num_machines_removed,
       num_lmx_comments_left,
+      num_msx_scores_added,
       num_locations_suggested,
       num_locations_edited,
       num_total_submissions,
+      num_life_list_machines,
       admin_title,
       contributor_rank,
       operator_name,
       flag,
     } = profileInfo;
+
+    const lifeListQuery = this.state.lifeListQuery.toLowerCase().trim();
+    const filteredLifeList = lifeListQuery
+      ? profile_life_list_stats.filter((e) =>
+          e.machine_name.toLowerCase().includes(lifeListQuery),
+        )
+      : profile_life_list_stats;
 
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
@@ -227,6 +268,35 @@ class UserProfile extends Component {
                         <WarningButton
                           title={"Stay Logged In"}
                           onPress={() => this.setModalVisible(false)}
+                        />
+                      </ConfirmationModal>
+                      <ConfirmationModal
+                        visible={!!this.state.machineToRemove}
+                        closeModal={() =>
+                          this.setState({ machineToRemove: null })
+                        }
+                      >
+                        <Text
+                          style={[
+                            s.bold,
+                            {
+                              textAlign: "center",
+                              marginBottom: 10,
+                              marginHorizontal: 20,
+                            },
+                          ]}
+                        >
+                          {`Remove ${this.state.machineToRemove?.machine_name} from your life list?`}
+                        </Text>
+                        <PbmButton
+                          title={"Yes, Remove"}
+                          onPress={this.handleRemoveMachine}
+                        />
+                        <WarningButton
+                          title={"Cancel"}
+                          onPress={() =>
+                            this.setState({ machineToRemove: null })
+                          }
                         />
                       </ConfirmationModal>
                       <ConfirmationModal
@@ -503,6 +573,18 @@ class UserProfile extends Component {
                       </Text>
                     </View>
                     <View style={s.statItem}>
+                      <Text style={s.stat}>High scores added:</Text>
+                      <Text style={s.statNum}>
+                        {this.getStatNum(num_msx_scores_added)}
+                      </Text>
+                    </View>
+                    <View style={s.statItem}>
+                      <Text style={s.stat}>Machines in Life List:</Text>
+                      <Text style={s.statNum}>
+                        {this.getStatNum(num_life_list_machines)}
+                      </Text>
+                    </View>
+                    <View style={s.statItem}>
                       <Text style={s.stat}>Locations submitted:</Text>
                       <Text style={s.statNum}>
                         {this.getStatNum(num_locations_suggested)}
@@ -556,61 +638,167 @@ class UserProfile extends Component {
                     )}
                   </View>
                   <Text style={s.section}>
-                    {isOwnProfile ? "Your highest scores" : "Highest scores"}
+                    {isOwnProfile
+                      ? "Your Machine List and High Scores"
+                      : "Machine List and High Scores"}
                   </Text>
-                  <View style={{ paddingVertical: 8 }}>
-                    {profile_machine_scores_stats.length === 0 ? (
-                      <Text style={s.none}>No high scores yet</Text>
+                  {isOwnProfile && (
+                    <View
+                      style={{
+                        paddingHorizontal: 20,
+                        paddingTop: 10,
+                        paddingBottom: 6,
+                      }}
+                    >
+                      <Text style={s.lifeListDescription}>
+                        {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location.`}
+                      </Text>
+                      <PbmButton
+                        title={"Add Machines to Your List"}
+                        onPress={() => {
+                          this.props.clearSelectedState();
+                          this.props.navigation.navigate("FindMachine", {
+                            multiSelect: true,
+                            lifeListUserId: user.id,
+                          });
+                        }}
+                        leftIcon={
+                          <MaterialCommunityIcons
+                            name="clipboard-list-outline"
+                            size={20}
+                            color={
+                              theme.theme === "dark" ? "#ffffff" : theme.text
+                            }
+                            style={{ marginRight: 8 }}
+                          />
+                        }
+                      />
+                    </View>
+                  )}
+                  {profile_life_list_stats.length > 0 && (
+                    <View style={s.lifeListSearchContainer}>
+                      <MaterialCommunityIcons
+                        name="magnify"
+                        size={22}
+                        color={theme.indigo4}
+                        style={{ marginLeft: 10, marginRight: 4 }}
+                      />
+                      <TextInput
+                        placeholder="Filter your list..."
+                        placeholderTextColor={theme.indigo4}
+                        value={this.state.lifeListQuery}
+                        onChangeText={(q) =>
+                          this.setState({ lifeListQuery: q })
+                        }
+                        style={s.lifeListSearchInput}
+                        autoCorrect={false}
+                      />
+                      {this.state.lifeListQuery.length > 0 && (
+                        <MaterialCommunityIcons
+                          name="close-circle"
+                          size={20}
+                          color={theme.purple}
+                          style={{ marginRight: 10 }}
+                          onPress={() => this.setState({ lifeListQuery: "" })}
+                        />
+                      )}
+                    </View>
+                  )}
+                  <View style={{ paddingtop: 8 }}>
+                    {profile_life_list_stats.length === 0 ? (
+                      <Text style={s.none}>
+                        No machines or scores to list yet
+                      </Text>
+                    ) : filteredLifeList.length === 0 ? (
+                      <Text style={s.none}>No matches</Text>
                     ) : (
-                      profile_machine_scores_stats.map((score, idx) => {
+                      filteredLifeList.map((entry, idx) => {
+                        const hasScores = !!entry.list;
                         return (
                           <View
-                            key={`${score.score}-${idx}`}
-                            style={{ marginHorizontal: 25, marginBottom: 10 }}
+                            key={entry.umx_id ?? idx}
+                            style={{
+                              marginHorizontal: 25,
+                              marginBottom: 10,
+                              borderBottomWidth:
+                                idx < filteredLifeList.length - 1
+                                  ? StyleSheet.hairlineWidth
+                                  : 0,
+                              borderBottomColor: theme.indigo4,
+                              paddingBottom: 10,
+                            }}
                           >
-                            <Text style={s.scoreMachine}>
-                              {score.machine_name}
-                            </Text>
-                            <Text style={[s.score, s.marginB12]}>
-                              {score.list.length > 1 ? (
-                                <Text style={s.bold}>Highest: </Text>
-                              ) : null}
-                              {formatNumWithCommas(score.list[0])}
-                            </Text>
-                            {score.list.length > 1 ? (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <Text style={[s.lifeListMachine, { flex: 1 }]}>
+                                {entry.machine_name}
+                                <Text style={s.machineYearMan}>
+                                  {` ${entry.machine_year_man}`}
+                                </Text>
+                              </Text>
+                              {!hasScores && isOwnProfile && (
+                                <Pressable
+                                  onPress={() =>
+                                    this.setState({ machineToRemove: entry })
+                                  }
+                                  style={{ paddingLeft: 10 }}
+                                >
+                                  <MaterialCommunityIcons
+                                    name="trash-can-outline"
+                                    size={24}
+                                    color={theme.red2}
+                                  />
+                                </Pressable>
+                              )}
+                            </View>
+                            {hasScores && (
                               <>
-                                <Text
-                                  style={[
-                                    { paddingLeft: 10, marginBottom: 6 },
-                                    s.bold,
-                                  ]}
-                                >
-                                  All scores:
+                                <Text style={[s.score, { marginTop: 8 }]}>
+                                  <Text style={s.bold}>Highest score: </Text>
+                                  {formatNumWithCommas(entry.list[0])}
                                 </Text>
-                                {score.list.map((ll, idx) => (
-                                  <Text
-                                    key={idx}
-                                    style={[s.score, { paddingLeft: 16 }]}
-                                  >
-                                    {formatNumWithCommas(ll)}
-                                  </Text>
-                                ))}
-                                <Text
-                                  style={[
-                                    { marginTop: 12 },
-                                    s.score,
-                                    s.marginB12,
-                                  ]}
-                                >
-                                  <Text style={s.bold}>Average: </Text>
-                                  {formatNumWithCommas(score.average)}
-                                </Text>
-                                <Text style={[s.score, s.marginB12]}>
-                                  <Text style={s.bold}>Count: </Text>
-                                  {score.count}
-                                </Text>
+                                {entry.list.length > 1 ? (
+                                  <>
+                                    <Text
+                                      style={[
+                                        { paddingLeft: 10, marginBottom: 6 },
+                                        s.bold,
+                                        s.marginT10,
+                                      ]}
+                                    >
+                                      All scores:
+                                    </Text>
+                                    {entry.list.map((ll, i) => (
+                                      <Text
+                                        key={i}
+                                        style={[s.score, { paddingLeft: 16 }]}
+                                      >
+                                        {formatNumWithCommas(ll)}
+                                      </Text>
+                                    ))}
+                                    <Text
+                                      style={[
+                                        s.score,
+                                        s.marginB10,
+                                        s.marginT10,
+                                      ]}
+                                    >
+                                      <Text style={s.bold}>Average: </Text>
+                                      {formatNumWithCommas(entry.average)}
+                                    </Text>
+                                    <Text style={[s.score]}>
+                                      <Text style={s.bold}>Count: </Text>
+                                      {entry.count}
+                                    </Text>
+                                  </>
+                                ) : null}
                               </>
-                            ) : null}
+                            )}
                           </View>
                         );
                       })
@@ -870,11 +1058,43 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       marginBottom: 10,
     },
-    scoreMachine: {
+    lifeListMachine: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.purple,
       fontSize: 20,
       fontFamily: "Nunito-ExtraBold",
-      marginBottom: 10,
+    },
+    machineYearMan: {
+      color: theme.text3,
+      fontSize: 20,
+      fontFamily: "Nunito-Medium",
+    },
+    lifeListSearchContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      borderWidth: 1,
+      borderRadius: 25,
+      borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
+      backgroundColor: theme.white,
+      marginHorizontal: 20,
+      marginTop: 8,
+      marginBottom: 12,
+      height: 40,
+    },
+    lifeListSearchInput: {
+      flex: 1,
+      paddingLeft: 4,
+      paddingRight: 12,
+      height: 40,
+      color: theme.text,
+      fontSize: 16,
+      fontFamily: "Nunito-Regular",
+    },
+    lifeListDescription: {
+      color: theme.text3,
+      fontSize: 15,
+      fontFamily: "Nunito-Regular",
+      textAlign: "center",
+      lineHeight: 22,
     },
     bold: {
       color: theme.text,
@@ -892,8 +1112,11 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
-    marginB12: {
-      marginBottom: 12,
+    marginB10: {
+      marginBottom: 10,
+    },
+    marginT10: {
+      marginTop: 10,
     },
     italic: {
       fontFamily: "Nunito-Italic",
@@ -905,12 +1128,17 @@ const getStyles = (theme) =>
 UserProfile.propTypes = {
   user: PropTypes.object,
   logout: PropTypes.func,
+  removeMachineFromLifeList: PropTypes.func,
+  clearSelectedState: PropTypes.func,
   navigation: PropTypes.object,
 };
 
 const mapStateToProps = ({ user }) => ({ user });
 const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logout()),
+  removeMachineFromLifeList: (machineId) =>
+    dispatch(removeMachineFromLifeList(machineId)),
+  clearSelectedState: () => dispatch(clearSelectedState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

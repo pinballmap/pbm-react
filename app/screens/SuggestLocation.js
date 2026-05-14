@@ -117,6 +117,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const { name: operatorName = "Select operator" } = operatorObj;
 
   useEffect(() => {
+    dispatch(clearSelectedState());
     return () => dispatch(clearSelectedState());
   }, []);
 
@@ -592,7 +593,12 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 <Text style={s.title}>Machines</Text>
                 <DropDownButton
                   title={"Select machines"}
-                  onPress={() => navigate("FindMachine", { multiSelect: true })}
+                  onPress={() =>
+                    navigate("FindMachine", {
+                      multiSelect: true,
+                      showDone: machineList.length > 0,
+                    })
+                  }
                   rightIcon={
                     <MaterialCommunityIcons name="plus" style={s.plusButton} />
                   }

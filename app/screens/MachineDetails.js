@@ -28,6 +28,11 @@ import {
   updateIcEnabled,
 } from "../actions/location_actions";
 import {
+  addMachineToLifeList,
+  fetchMachineLifeListStatus,
+  removeMachineFromLifeList,
+} from "../actions";
+import {
   formatInputNumWithCommas,
   formatNumWithCommas,
   removeCommasFromNum,
@@ -73,7 +78,11 @@ const MachineDetails = ({
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const [userAllTimeHighScore, setUserAllTimeHighScore] = useState(null);
   const [highScoreFetched, setHighScoreFetched] = useState(false);
+  const [lifeListStatus, setLifeListStatus] = useState(null);
+  const [lifeListError, setLifeListError] = useState(null);
   const [ictoggleModalVisible, setIctoggleModalVisible] = useState(false);
+  const [showRemoveFromLifeListModal, setShowRemoveFromLifeListModal] =
+    useState(false);
   const [copiedNotice, setCopiedNotice] = useState(false);
   const copiedTimeoutRef = useRef(null);
   const insets = useSafeAreaInsets();
@@ -120,8 +129,17 @@ const MachineDetails = ({
     }
   };
 
+  const refreshLifeListStatus = () => {
+    if (loggedIn && curLmx?.machine_id) {
+      dispatch(fetchMachineLifeListStatus(curLmx.machine_id, userId))
+        .then((info) => setLifeListStatus(info))
+        .catch(() => {});
+    }
+  };
+
   useEffect(() => {
     refreshHighScore();
+    refreshLifeListStatus();
   }, []);
 
   useEffect(() => {
@@ -184,6 +202,30 @@ const MachineDetails = ({
     setIctoggleModalVisible(false);
   };
 
+  const handleAddToLifeList = async () => {
+    setLifeListError(null);
+    try {
+      await dispatch(addMachineToLifeList(curLmx.machine_id));
+      setLifeListStatus((prev) => ({ ...prev, in_list: true }));
+    } catch (err) {
+      setLifeListError(
+        typeof err === "string" ? err : "Unable to add to life list",
+      );
+    }
+  };
+
+  const handleRemoveFromLifeList = async () => {
+    setLifeListError(null);
+    try {
+      await dispatch(removeMachineFromLifeList(curLmx.machine_id));
+      setLifeListStatus((prev) => ({ ...prev, in_list: false }));
+    } catch (err) {
+      setLifeListError(
+        typeof err === "string" ? err : "Unable to remove from life list",
+      );
+    }
+  };
+
   if (!curLmx || isFetchingLmx) {
     return <ActivityIndicator />;
   }
@@ -221,6 +263,26 @@ const MachineDetails = ({
           <WarningButton
             title={"Cancel"}
             onPress={() => setIctoggleModalVisible(false)}
+          />
+        </ConfirmationModal>
+        <ConfirmationModal
+          visible={showRemoveFromLifeListModal}
+          closeModal={() => setShowRemoveFromLifeListModal(false)}
+        >
+          <Text style={s.modalTitle}>
+            Remove <Text style={s.modalMachineName}>{machineName}</Text> from
+            your life list?
+          </Text>
+          <PbmButton
+            title={"Remove"}
+            onPress={() => {
+              setShowRemoveFromLifeListModal(false);
+              handleRemoveFromLifeList();
+            }}
+          />
+          <WarningButton
+            title={"Cancel"}
+            onPress={() => setShowRemoveFromLifeListModal(false)}
           />
         </ConfirmationModal>
         <Modal
@@ -534,6 +596,103 @@ const MachineDetails = ({
               </View>
             </View>
           )}
+          {!!matchplayUrl && (
+            <View style={s.externalLinkContainer}>
+              <Text style={s.externalLink}>
+                Find machine tips, rules, & videos on
+              </Text>
+              {!!matchplayUrl && (
+                <Pressable
+                  style={{
+                    height: 40,
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => WebBrowser.openBrowserAsync(matchplayUrl)}
+                >
+                  <Image
+                    source={
+                      theme.theme === "dark"
+                        ? matchplayImage.dark
+                        : matchplayImage.light
+                    }
+                    contentFit="contain"
+                    style={{
+                      height: 20,
+                      width: 160,
+                    }}
+                  />
+                </Pressable>
+              )}
+            </View>
+          )}
+          <View style={s.lifeListContainer}>
+            {loggedIn ? (
+              lifeListStatus === null ? (
+                <ActivityIndicator />
+              ) : lifeListStatus.in_list ? (
+                <>
+                  <Text style={s.lifeListText}>
+                    {`You've played `}
+                    <Text style={s.bold}>{machineName}</Text>
+                    {`.`}
+                    <Text
+                      style={s.lifeListLink}
+                      onPress={() => navigation.navigate("UserProfile")}
+                    >
+                      See your list.
+                    </Text>
+                  </Text>
+                  {lifeListStatus.has_scores === false && (
+                    <Text
+                      style={s.lifeListRemoveLink}
+                      onPress={() => setShowRemoveFromLifeListModal(true)}
+                    >
+                      Remove from list?
+                    </Text>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Text style={[s.lifeListText, { marginBottom: 10 }]}>
+                    {`Have you played `}
+                    <Text style={s.bold}>{machineName}</Text>
+                    {`? You can track every machine you've played `}
+                    <Text
+                      style={s.lifeListLink}
+                      onPress={() => navigation.navigate("UserProfile")}
+                    >
+                      in your profile
+                    </Text>
+                    {`.`}
+                  </Text>
+                  <PbmButton
+                    title={"Add Machine to Your List"}
+                    onPress={handleAddToLifeList}
+                    margin={{ marginHorizontal: 20, marginBottom: 15 }}
+                    leftIcon={
+                      <MaterialCommunityIcons
+                        name="clipboard-list-outline"
+                        size={20}
+                        color={theme.theme === "dark" ? "#ffffff" : theme.text}
+                        style={{ marginRight: 8 }}
+                      />
+                    }
+                  />
+                </>
+              )
+            ) : (
+              <Text style={s.lifeListText}>
+                {`Have you played `}
+                <Text style={s.bold}>{machineName}</Text>
+                {`? If you were logged in you could track every machine you've played.`}
+              </Text>
+            )}
+            {!!lifeListError && (
+              <Text style={s.lifeListError}>{lifeListError}</Text>
+            )}
+          </View>
           <View style={s.containerStyle}>
             <View style={s.locationNameContainer}>
               <Text style={s.sectionTitle}>Machine Comments</Text>
@@ -622,37 +781,6 @@ const MachineDetails = ({
               }
             />
           </View>
-          {!!matchplayUrl && (
-            <View style={s.externalLinkContainer}>
-              <Text style={s.externalLink}>
-                Find machine tips, rules, & videos on
-              </Text>
-              {!!matchplayUrl && (
-                <Pressable
-                  style={{
-                    height: 40,
-                    flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                  onPress={() => WebBrowser.openBrowserAsync(matchplayUrl)}
-                >
-                  <Image
-                    source={
-                      theme.theme === "dark"
-                        ? matchplayImage.dark
-                        : matchplayImage.light
-                    }
-                    contentFit="contain"
-                    style={{
-                      height: 20,
-                      width: 160,
-                    }}
-                  />
-                </Pressable>
-              )}
-            </View>
-          )}
           <WarningButton
             title={"Remove Machine"}
             margin={s.removeButtonMargins}
@@ -710,7 +838,7 @@ const getStyles = (theme) =>
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
     externalLink: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: "Nunito-Regular",
       color: theme.text3,
       textAlign: "center",
@@ -919,6 +1047,40 @@ const getStyles = (theme) =>
       color: "white",
       fontSize: 13,
       fontFamily: "Nunito-SemiBold",
+    },
+    lifeListContainer: {
+      marginHorizontal: 15,
+      marginTop: 15,
+      marginBottom: 20,
+    },
+    lifeListText: {
+      textAlign: "center",
+      fontSize: 15,
+      fontFamily: "Nunito-Regular",
+      color: theme.text2,
+      marginBottom: 10,
+      marginHorizontal: 10,
+    },
+    lifeListLink: {
+      color: theme.purpleLight,
+      fontFamily: "Nunito-SemiBold",
+      textDecorationLine: "underline",
+    },
+    lifeListRemoveLink: {
+      textAlign: "center",
+      fontSize: 15,
+      fontFamily: "Nunito-SemiBold",
+      color: theme.text2,
+      textDecorationLine: "underline",
+      marginBottom: 10,
+    },
+    lifeListError: {
+      textAlign: "center",
+      fontSize: 14,
+      fontFamily: "Nunito-SemiBold",
+      color: "#c0392b",
+      marginHorizontal: 15,
+      marginTop: 6,
     },
   });
 

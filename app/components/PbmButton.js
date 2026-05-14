@@ -2,7 +2,14 @@ import React, { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const PbmButton = ({ title, margin, onPress, rightIcon, disabled }) => {
+const PbmButton = ({
+  title,
+  margin,
+  onPress,
+  leftIcon,
+  rightIcon,
+  disabled,
+}) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -17,6 +24,7 @@ const PbmButton = ({ title, margin, onPress, rightIcon, disabled }) => {
         disabled ? { opacity: 0.5 } : { opacity: 1.0 },
       ]}
     >
+      {leftIcon}
       <Text style={s.titleStyle}>{title}</Text>
       {rightIcon}
     </Pressable>

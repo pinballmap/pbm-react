@@ -571,6 +571,12 @@ const FAQ = ({ navigation, user }) => {
               {`Yes. Click the machine and below your comment you'll see "edit" and "delete" buttons.`}
             </Text>
             <Text style={s.text}>{`You can do the same for scores, too.`}</Text>
+            <Text
+              style={s.bold}
+            >{`Only some machines in the "life list" in my profile have a trash can icon. Why?`}</Text>
+            <Text style={s.text}>
+              {`If you have added a score to a machine, you're proving to us that you've played the machine, hence no can. We add trash can icons to machines that don't have a score, just in case you made a mistake and need to remove it. Sure, there's a chance you added a score to the wrong machine. You can remove the score (see above). But if the machine has been removed from the location, and you really need to remove the machine from your list, get in touch.`}
+            </Text>
             <Text style={s.bold}>{`Why was my comment removed?`}</Text>
             <Text style={s.text}>
               {`The machine comment field is for machine comments. These comments are useful for operators to be informed of machine issues, and for other users to understand the general condition of machines. When comments stray, the site becomes less useful to both operators and users. Pinball Map administrators may remove your comment as a means of maintaining the site's goals and value.`}

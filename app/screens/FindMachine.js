@@ -27,6 +27,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   addMachineToLocation,
   addMachineToList,
+  addMachineToLifeList,
   removeMachineFromList,
   setMachineFilter,
   getMapAreaMachineIds,
@@ -153,7 +154,11 @@ const FindMachine = ({
   const [machinesInView, setMachinesInView] = useState(false);
   const [isFetchingMapArea, setIsFetchingMapArea] = useState(false);
   const [icEnabled, setIcEnabled] = useState(undefined);
+  const [showLifeListConfirmModal, setShowLifeListConfirmModal] =
+    useState(false);
+  const [addingToLifeList, setAddingToLifeList] = useState(false);
 
+  const pendingNavActionRef = useRef(null);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -165,10 +170,19 @@ const FindMachine = ({
   }, []);
 
   useEffect(() => {
+    const lifeListUserId = route.params?.lifeListUserId;
     navigation.setOptions({
       headerRight: () =>
         route.params?.showDone ? (
-          <Pressable onPress={() => navigation.goBack(null)}>
+          <Pressable
+            onPress={() => {
+              if (lifeListUserId) {
+                setShowLifeListConfirmModal(true);
+              } else {
+                navigation.goBack(null);
+              }
+            }}
+          >
             {({ pressed }) => (
               <View style={{ marginRight: 10 }}>
                 <MaterialIcons
@@ -183,14 +197,25 @@ const FindMachine = ({
     });
   }, [route.params?.showDone]);
 
-  // Replaces UNSAFE_componentWillReceiveProps: sync showDone with machineList changes
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    navigation.setParams({ showDone: machineList.length > 0 });
+    if (navigation.isFocused()) {
+      navigation.setParams({ showDone: machineList.length > 0 });
+    }
   }, [machineList.length]);
+
+  useEffect(() => {
+    if (!route.params?.lifeListUserId) return;
+    return navigation.addListener("beforeRemove", (e) => {
+      if (machineList.length === 0) return;
+      e.preventDefault();
+      pendingNavActionRef.current = e.data.action;
+      setShowLifeListConfirmModal(true);
+    });
+  }, [navigation, machineList.length, route.params?.lifeListUserId]);
 
   const handleSearch = (searchQuery, inView = machinesInView) => {
     const formattedQuery = searchQuery
@@ -258,6 +283,27 @@ const FindMachine = ({
     setShowModal(false);
     setMachine({});
     setCondition("");
+  };
+
+  const handleLifeListConfirm = async () => {
+    setAddingToLifeList(true);
+    try {
+      await Promise.all(
+        machineList.map((m) => dispatch(addMachineToLifeList(m.id))),
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    machineList.forEach(removeMachineFromList);
+    setAddingToLifeList(false);
+    setShowLifeListConfirmModal(false);
+    const action = pendingNavActionRef.current;
+    pendingNavActionRef.current = null;
+    if (action) {
+      navigation.dispatch(action);
+    } else {
+      navigation.goBack();
+    }
   };
 
   const onIcEnabledPressed = (value) => {
@@ -401,6 +447,33 @@ const FindMachine = ({
               <WarningButton title={"Go Back"} onPress={cancelAddMachine} />
             </View>
           </KeyboardAwareScrollView>
+        </View>
+      </Modal>
+      <Modal
+        visible={showLifeListConfirmModal}
+        onRequestClose={() => setShowLifeListConfirmModal(false)}
+        transparent={false}
+        statusBarTranslucent={true}
+        navigationBarTranslucent={true}
+      >
+        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+          <View style={s.verticalAlign}>
+            <Text style={s.modalTitle}>
+              {"Add "}
+              <Text style={s.modalMachineName}>{machineList.length}</Text>
+              {` machine${machineList.length > 1 ? "s" : ""} to your life list?`}
+            </Text>
+            <PbmButton
+              title={"Add to Life List"}
+              onPress={handleLifeListConfirm}
+              disabled={addingToLifeList}
+            />
+            <WarningButton
+              title={"Cancel"}
+              onPress={() => setShowLifeListConfirmModal(false)}
+              disabled={addingToLifeList}
+            />
+          </View>
         </View>
       </Modal>
       <View

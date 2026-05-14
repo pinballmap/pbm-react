@@ -204,7 +204,8 @@ export const submitMessage =
     };
 
     if (authentication_token) {
-      (body.user_token = authentication_token), (body.user_email = user_email);
+      ((body.user_token = authentication_token),
+        (body.user_email = user_email));
     }
 
     if (locationTrackingServicesEnabled) {
@@ -248,3 +249,30 @@ export const setDisplayInsiderConnectedBadge = (
     displayInsiderConnectedBadge,
   };
 };
+
+export const fetchMachineLifeListStatus = (machineId, userId) => () => {
+  return getData(
+    `/users/life_list_info.json?by_machine_id=${machineId}&by_user_id=${userId}`,
+  ).then((data) => data.life_list_info);
+};
+
+export const addMachineToLifeList = (machineId) => (dispatch, getState) => {
+  const { email, authentication_token, id } = getState().user;
+  const body = {
+    user_email: email,
+    user_token: authentication_token,
+    machine_id: machineId,
+  };
+  return postData(`/users/${id}/add_life_list_machine.json`, body);
+};
+
+export const removeMachineFromLifeList =
+  (machineId) => (dispatch, getState) => {
+    const { email, authentication_token, id } = getState().user;
+    const body = {
+      user_email: email,
+      user_token: authentication_token,
+      machine_id: machineId,
+    };
+    return postData(`/users/${id}/remove_life_list_machine.json`, body);
+  };
