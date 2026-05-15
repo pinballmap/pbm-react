@@ -639,7 +639,9 @@ const MachineDetails = ({
                     {`. `}
                     <Text
                       style={s.lifeListLink}
-                      onPress={() => navigation.navigate("UserProfile")}
+                      onPress={() =>
+                        navigation.navigate("UserProfilePublic", { userId })
+                      }
                     >
                       See your list.
                     </Text>
@@ -661,7 +663,9 @@ const MachineDetails = ({
                     {`? You can track every machine you've played `}
                     <Text
                       style={s.lifeListLink}
-                      onPress={() => navigation.navigate("UserProfile")}
+                      onPress={() =>
+                        navigation.navigate("UserProfilePublic", { userId })
+                      }
                     >
                       in your profile
                     </Text>
