@@ -13,12 +13,12 @@ import {
 import { Image } from "expo-image";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ThemeContext } from "../theme-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
   ActivityIndicator,
   ConfirmationModal,
   NotLoggedIn,
   PbmButton,
-  Screen,
   Text,
   WarningButton,
 } from "../components";
@@ -179,6 +179,7 @@ class UserProfile extends Component {
             this.setState({
               fetchingUserInfo: false,
               profile_info: data.profile_info,
+              lifeListQuery: "",
             });
           })
           .catch(() => this.setState({ fetchingUserInfo: false }));
@@ -199,7 +200,9 @@ class UserProfile extends Component {
   render() {
     if (this.state.fetchingUserInfo) return <ActivityIndicator />;
     const { user } = this.props;
-    const isOwnProfile = !this.props.route?.params?.userId;
+    const isOwnProfile =
+      !this.props.route?.params?.userId ||
+      this.props.route.params.userId === user.id;
     const displayUsername = isOwnProfile
       ? user.username
       : this.props.route.params.username;
@@ -243,7 +246,11 @@ class UserProfile extends Component {
         {({ theme }) => {
           const s = getStyles(theme);
           return (
-            <Screen>
+            <KeyboardAwareScrollView
+              scrollIndicatorInsets={{ right: 1 }}
+              style={{ flex: 1, backgroundColor: theme.base1 }}
+              keyboardShouldPersistTaps="handled"
+            >
               {isOwnProfile && !user.loggedIn ? (
                 <NotLoggedIn
                   text={`You're not logged in, so you don't have a profile!`}
@@ -276,17 +283,12 @@ class UserProfile extends Component {
                           this.setState({ machineToRemove: null })
                         }
                       >
-                        <Text
-                          style={[
-                            s.bold,
-                            {
-                              textAlign: "center",
-                              marginBottom: 10,
-                              marginHorizontal: 20,
-                            },
-                          ]}
-                        >
-                          {`Remove ${this.state.machineToRemove?.machine_name} from your life list?`}
+                        <Text style={s.modalConfirmText}>
+                          {`Remove `}
+                          <Text style={[s.bold, s.modalMachineName]}>
+                            {this.state.machineToRemove?.machine_name}
+                          </Text>
+                          {` from your life list?`}
                         </Text>
                         <PbmButton
                           title={"Yes, Remove"}
@@ -529,7 +531,7 @@ class UserProfile extends Component {
                       {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
                     </Text>
                     {isOwnProfile && (
-                      <>
+                      <View style={s.accountSettingsContainer}>
                         <Text
                           style={s.accountSettingsLink}
                           onPress={() =>
@@ -544,7 +546,7 @@ class UserProfile extends Component {
                         >
                           Logout
                         </Text>
-                      </>
+                      </View>
                     )}
                   </View>
                   <View style={s.statContainer}>
@@ -704,7 +706,12 @@ class UserProfile extends Component {
                       )}
                     </View>
                   )}
-                  <View style={{ paddingtop: 8 }}>
+                  <View
+                    style={[
+                      { paddingTop: 8 },
+                      !isOwnProfile && { marginBottom: 30 },
+                    ]}
+                  >
                     {profile_life_list_stats.length === 0 ? (
                       <Text style={s.none}>
                         No machines or scores to list yet
@@ -806,7 +813,7 @@ class UserProfile extends Component {
                   </View>
                 </View>
               )}
-            </Screen>
+            </KeyboardAwareScrollView>
           );
         }}
       </ThemeContext.Consumer>
@@ -836,7 +843,7 @@ const getStyles = (theme) =>
       marginVertical: 6,
     },
     section: {
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-Bold",
       fontSize: 14,
       textAlign: "center",
       paddingHorizontal: 10,
@@ -852,6 +859,15 @@ const getStyles = (theme) =>
       textAlign: "center",
       textDecorationLine: "underline",
       marginTop: 8,
+    },
+    accountSettingsContainer: {
+      backgroundColor: theme.pink2,
+      marginBottom: -10,
+      marginTop: 10,
+      paddingBottom: 10,
+      paddingTop: 5,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
     },
     logoutLink: {
       fontSize: 16,
@@ -1054,13 +1070,13 @@ const getStyles = (theme) =>
       marginBottom: 10,
     },
     lifeListMachine: {
-      color: theme.theme == "dark" ? theme.purpleLight : theme.purple,
-      fontSize: 20,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
     },
     machineYearMan: {
       color: theme.text3,
-      fontSize: 20,
+      fontSize: 18,
       fontFamily: "Nunito-Medium",
     },
     lifeListSearchContainer: {
@@ -1091,8 +1107,20 @@ const getStyles = (theme) =>
       textAlign: "center",
       lineHeight: 22,
     },
-    bold: {
+    modalConfirmText: {
+      textAlign: "center",
+      fontSize: 18,
+      marginHorizontal: 15,
       color: theme.text,
+      fontFamily: "Nunito-Regular",
+    },
+    modalMachineName: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      fontSize: 18,
+      fontFamily: "Nunito-Bold",
+    },
+    bold: {
+      color: theme.text3,
       fontSize: 16,
       fontFamily: "Nunito-Bold",
     },

@@ -636,7 +636,7 @@ const MachineDetails = ({
                   <Text style={s.lifeListText}>
                     {`You've played `}
                     <Text style={s.bold}>{machineName}</Text>
-                    {`.`}
+                    {`. `}
                     <Text
                       style={s.lifeListLink}
                       onPress={() => navigation.navigate("UserProfile")}
@@ -974,7 +974,7 @@ const getStyles = (theme) =>
         width: 2,
         height: 2,
       },
-      shadowOpacity: theme.theme == "dark" ? 0.8 : 0.6,
+      shadowOpacity: theme.theme == "dark" ? 0.4 : 0.6,
       shadowRadius: 3.84,
       elevation: 5,
     },

@@ -159,6 +159,7 @@ const FindMachine = ({
   const [addingToLifeList, setAddingToLifeList] = useState(false);
 
   const pendingNavActionRef = useRef(null);
+  const isConfirmingLifeListRef = useRef(false);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -210,7 +211,7 @@ const FindMachine = ({
   useEffect(() => {
     if (!route.params?.lifeListUserId) return;
     return navigation.addListener("beforeRemove", (e) => {
-      if (machineList.length === 0) return;
+      if (machineList.length === 0 || isConfirmingLifeListRef.current) return;
       e.preventDefault();
       pendingNavActionRef.current = e.data.action;
       setShowLifeListConfirmModal(true);
@@ -294,14 +295,15 @@ const FindMachine = ({
     } catch (err) {
       console.log(err);
     }
-    machineList.forEach(removeMachineFromList);
-    setAddingToLifeList(false);
     setShowLifeListConfirmModal(false);
+    setAddingToLifeList(false);
+    machineList.forEach(removeMachineFromList);
     const action = pendingNavActionRef.current;
     pendingNavActionRef.current = null;
     if (action) {
       navigation.dispatch(action);
     } else {
+      isConfirmingLifeListRef.current = true;
       navigation.goBack();
     }
   };
