@@ -67,7 +67,7 @@ const FindFlag = ({ navigation, route, user }) => {
         user_token: user.authentication_token,
         flag: pendingFlag.code,
       });
-      navigation.navigate("UserProfileStack");
+      navigation.goBack();
     } catch {
       setSaving(false);
       setPendingFlag(null);
