@@ -101,7 +101,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
                 { textTransform: "uppercase" },
               ]}
             >{`all the machines are gone`}</Text>
-            {`!`}
+            {`.`}
           </Text>
           <Text style={[s.text]}>
             {`Just `}
@@ -135,13 +135,16 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           ) : null}
           <TextInput
             multiline={true}
-            placeholder={"This is a general contact form - include details!"}
+            placeholder={"Your super detailed message..."}
             placeholderTextColor={theme.indigo4}
             style={[{ padding: 5, height: 200 }, s.textInput]}
             onChangeText={(message) => setMessage(message)}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
           />
+          <Text style={[s.text]}>
+            This is a general contact form - include details.
+          </Text>
           <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
         </KeyboardAwareScrollView>
       )}
@@ -161,7 +164,8 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
-      marginTop: 20,
+      marginTop: 10,
+      marginBottom: 5,
       borderRadius: 10,
       paddingHorizontal: 10,
       paddingVertical: 5,

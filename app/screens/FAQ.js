@@ -523,6 +523,29 @@ const FAQ = ({ navigation, user }) => {
             >
               <Text style={s.category}>Users</Text>
             </View>
+            <Text
+              style={s.bold}
+            >{`I do not have an account, and when I press some buttons I get sent to a login screen. Why do I need to login?`}</Text>
+            <Text style={s.text}>
+              {`Some actions on the map require authentication. If you want to edit the map, such as adding/removing machines, editing location details, commenting on machines, etc. we require that you be signed in. This is needed, in part, so that we can ban users who make malicious edits (which is very rare).`}
+            </Text>
+            <Text style={s.text}>
+              {`We also added some fun user perks, like score tracking, counts of all the different types of edits you do, and a feature for tracking every machine you've played. These things can be found in `}
+              {loggedIn ? (
+                <Text
+                  style={s.textLink}
+                  onPress={() => navigation.navigate("UserProfile")}
+                >
+                  {"your user profile"}
+                </Text>
+              ) : (
+                "your user profile"
+              )}
+              {`.`}
+            </Text>
+            <Text style={s.text}>
+              {`See notes about our privacy policy at the very bottom of this page.`}
+            </Text>
             <Text style={s.bold}>{`Can I change my username?`}</Text>
             <Text style={s.text}>
               {`Only administrators can change your username. `}

@@ -181,6 +181,13 @@ function EditLocationDetails({ navigation, ...props }) {
               ) : (
                 <ScrollView>
                   <Text style={[s.subText, s.margin8]}>
+                    Is this location{" "}
+                    <Text style={[s.pink, { fontFamily: "Nunito-Bold" }]}>
+                      closed or are all the machines gone
+                    </Text>
+                    ? Simply remove the machines.
+                  </Text>
+                  <Text style={[s.subText, s.margin8]}>
                     {`Does the location have a new name or address?`}
                     <Text
                       onPress={() =>
@@ -190,7 +197,7 @@ function EditLocationDetails({ navigation, ...props }) {
                     >
                       {"Contact us"}
                     </Text>
-                    {` with the details!`}
+                    {` with the details.`}
                   </Text>
                   <Text style={s.title}>Phone</Text>
                   <TextInput
@@ -229,14 +236,6 @@ function EditLocationDetails({ navigation, ...props }) {
                     placeholderTextColor={theme.indigo4}
                     textAlignVertical="top"
                   />
-                  <Text style={[s.subText, s.margin8, s.pink]}>
-                    Is this location{" "}
-                    <Text style={[s.pink, { fontFamily: "Nunito-Bold" }]}>
-                      closed or are all the machines gone
-                    </Text>
-                    ? Simply remove the machines!
-                  </Text>
-
                   <Text style={s.title}>Location Type</Text>
                   <DropDownButton
                     title={locationTypeName}
