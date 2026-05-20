@@ -86,6 +86,14 @@ const About = ({ navigation, appAlert }) => {
             </Text>{" "}
             machines.
           </Text>
+          <Text style={[s.text, s.boldText]}>
+            {"Here's a page filled with current "}
+            <Text
+              onPress={() => navigation.navigate("Stats")}
+              style={[s.pink, s.boldText]}
+            >{`Pinball Map stats`}</Text>
+            .
+          </Text>
           <Text style={s.text}>
             The site is not monetized and{" "}
             <Text
@@ -124,14 +132,6 @@ const About = ({ navigation, appAlert }) => {
               onPress={() => navigation.navigate("FAQ")}
               style={s.textLink}
             >{`in the FAQ`}</Text>
-            .
-          </Text>
-          <Text style={s.text}>
-            {"Here's a page filled with "}
-            <Text
-              onPress={() => navigation.navigate("Stats")}
-              style={[s.pink, s.boldText]}
-            >{`Pinball Map stats`}</Text>
             .
           </Text>
 
@@ -250,10 +250,10 @@ const About = ({ navigation, appAlert }) => {
             }
           >
             <Image
-              source={require("../assets/images/beanie-three-500.jpg")}
+              source={require("../assets/images/danny-pouch.jpg")}
               style={{
                 width: deviceWidth - 30,
-                height: (deviceWidth - 30) / 1.121,
+                height: (deviceWidth - 30) * 1.379,
                 marginBottom: 10,
                 borderRadius: 15,
               }}
