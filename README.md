@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.5
+
+May 20, 2026
+
+- Bug fix: screen was sometimes spinning after changing your user flag icon.
+
 ### 5.4.4
 
 May 15, 2026
