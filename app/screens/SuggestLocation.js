@@ -274,7 +274,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                           <Text style={s.successBanner}>
                             {`Thanks for submitting that location!\n\n`}
                           </Text>
-                          {`Please allow us 0-7 days to review and add it. No need to re-submit it or remind us (unless it's opening day!).\n\nNote: you usually won't get a message from us confirming that it's been added.`}
+                          {`Review can take 0-7 days. Do not re-submit or remind us (unless it's opening day).`}
                         </Text>
                       </View>
                     </View>
@@ -419,15 +419,32 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     </View>
                   )}
                 </Modal>
-                <Text
-                  style={[{ marginTop: 10 }, s.text]}
-                >{`Only submit NEW locations (check first! please).`}</Text>
-                <Text
-                  style={[{ marginTop: 10 }, s.text]}
-                >{`Do not submit your home (even if it's a short-term rental).`}</Text>
-                <Text
-                  style={[{ marginTop: 10 }, s.text]}
-                >{`We review all location submissions (0 - 7 days).`}</Text>
+                <Text style={[{ marginTop: 10 }, s.text]}>
+                  {`Only submit `}
+                  <Text
+                    style={[s.text, s.boldFont, s.pinkText]}
+                  >{`NEW locations`}</Text>
+                  {`.`}
+                </Text>
+                <Text style={[{ marginTop: 10 }, s.text]}>
+                  <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+                  {` submit your home (even short-term rentals).`}
+                </Text>
+                <Text style={[{ marginTop: 10 }, s.text]}>
+                  <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+                  {` submit same location `}
+                  <Text
+                    style={[s.text, s.boldFont, s.pinkText]}
+                  >{`multiple times`}</Text>
+                  {`. Review takes 0 - 7 days.`}
+                </Text>
+                <Text style={[{ marginTop: 10 }, s.text]}>
+                  {`New business that isn't open yet? We don't add until it's open - `}
+                  <Text
+                    style={[s.text, s.boldFont, { textTransform: "uppercase" }]}
+                  >{`tell us the opening date`}</Text>
+                  {`.`}
+                </Text>
                 <Text style={s.title}>Location Name</Text>
                 <GooglePlacesAutocomplete
                   ref={autoCompleteRef}
@@ -575,7 +592,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   onChangeText={(description) => setDescription(description)}
                   underlineColorAndroid="transparent"
                   placeholder={
-                    "Opening date; hours; what type of payment system(s) they use (door fee, cash, cards); accessibility issues"
+                    "OPENING DATE; hours; what type of payment system(s) they use (door fee, cash, cards); accessibility issues"
                   }
                   placeholderTextColor={theme.indigo4}
                   textAlignVertical="top"
@@ -642,13 +659,17 @@ function SuggestLocation({ navigation, route, location, ...props }) {
 const getStyles = (theme) =>
   StyleSheet.create({
     text: {
-      fontSize: 16,
-      lineHeight: 22,
-      marginBottom: 5,
+      fontSize: 15,
+      marginVertical: 5,
+      marginHorizontal: 5,
       marginLeft: 15,
       marginRight: 15,
+    },
+    boldFont: {
+      fontFamily: "Nunito-Bold",
+    },
+    pinkText: {
       color: theme.pink1,
-      textAlign: "center",
     },
     title: {
       textAlign: "center",
