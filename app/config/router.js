@@ -316,7 +316,7 @@ function MapStack() {
         component={SignupLogin}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Contact" component={Contact} />
+      <Stack.Screen name="Contact Pinball Map" component={Contact} />
       <Stack.Screen
         name="LocationList"
         component={LocationList}

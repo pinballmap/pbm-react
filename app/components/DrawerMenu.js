@@ -194,7 +194,9 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
+        onPress={() =>
+          navigation.navigate("Map", { screen: "Contact Pinball Map" })
+        }
       />
       <DrawerItem
         label="About"

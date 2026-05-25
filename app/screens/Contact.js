@@ -78,12 +78,10 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           keyboardShouldPersistTaps="handled"
           overScrollMode="always"
         >
-          <Text
-            onPress={() => navigation.navigate("FAQ")}
-            style={s.textLink}
-          >{`Check the FAQ first for common questions.`}</Text>
-          <Text style={[s.text, s.boldFont]}>
-            {`No need to tell us that a `}
+          <Text style={[s.text]}>
+            {`This is a general contact form - `}
+            <Text style={[s.text, s.boldFont]}>{`include details`}</Text>
+            {` such as the `}
             <Text
               style={[
                 s.text,
@@ -91,25 +89,27 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
                 s.pinkText,
                 { textTransform: "uppercase" },
               ]}
-            >{`location closed`}</Text>
-            {` or `}
-            <Text
-              style={[
-                s.text,
-                s.boldFont,
-                s.pinkText,
-                { textTransform: "uppercase" },
-              ]}
-            >{`all the machines are gone`}</Text>
+            >{`location name`}</Text>
             {`.`}
           </Text>
           <Text style={[s.text]}>
-            {`Just `}
+            <Text style={[s.text, s.boldFont]}>{`No need`}</Text>
+            {` to tell us that a `}
             <Text
-              style={[s.boldFont]}
-            >{`remove the machines from the location`}</Text>
-            {`. We'll auto-delete it within a week.`}
+              style={[s.text, s.boldFont, s.pinkText]}
+            >{`location closed`}</Text>
+            {` or `}
+            <Text
+              style={[s.text, s.boldFont, s.pinkText]}
+            >{`all the machines are gone`}</Text>
+            {`. Just `}
+            <Text style={[s.boldFont]}>{`remove the machines`}</Text>
+            {` and we'll auto-delete it within a week.`}
           </Text>
+          <Text
+            onPress={() => navigation.navigate("FAQ")}
+            style={s.textLink}
+          >{`Check the FAQ for common questions`}</Text>
           {!loggedIn ? (
             <View>
               <TextInput
@@ -135,16 +135,15 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           ) : null}
           <TextInput
             multiline={true}
-            placeholder={"Your super detailed message..."}
+            placeholder={
+              "Your super detailed message that includes the LOCATION NAME..."
+            }
             placeholderTextColor={theme.indigo4}
             style={[{ padding: 5, height: 200 }, s.textInput]}
             onChangeText={(message) => setMessage(message)}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
           />
-          <Text style={[s.text]}>
-            This is a general contact form - include details.
-          </Text>
           <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
         </KeyboardAwareScrollView>
       )}
@@ -183,8 +182,7 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       fontSize: 16,
       lineHeight: 22,
-      marginTop: 15,
-      marginBottom: 10,
+      marginVertical: 10,
       textAlign: "center",
       fontFamily: "Nunito-Regular",
     },
