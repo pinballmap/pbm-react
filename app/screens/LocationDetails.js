@@ -60,6 +60,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
@@ -69,6 +74,8 @@ const moment = require("moment");
 
 const LocationDetails = (props) => {
   const scale = useSharedValue(1);
+  const pinchScale = useSharedValue(1);
+  const savedScale = useSharedValue(1);
   const { route } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -154,6 +161,23 @@ const LocationDetails = (props) => {
     };
   });
 
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((e) => {
+      pinchScale.value = Math.max(1, savedScale.value * e.scale);
+    })
+    .onEnd(() => {
+      savedScale.value = pinchScale.value;
+    });
+
+  const pinchAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pinchScale.value }],
+  }));
+
+  const resetZoom = () => {
+    pinchScale.value = withTiming(1, { duration: 200 });
+    savedScale.value = 1;
+  };
+
   useEffect(() => {
     if (locationId !== route.params["id"]) {
       setLocationId(route.params["id"]);
@@ -209,6 +233,7 @@ const LocationDetails = (props) => {
     setDeleteConfirmVisible(false);
     setPhotoModalVisible(true);
     setFullResLoading(true);
+    resetZoom();
     dispatch(fetchLocationPictureFullRes(pics[index].id))
       .then((data) => setFullResUrl(data.url))
       .catch(() => {})
@@ -220,6 +245,7 @@ const LocationDetails = (props) => {
     setPhotoIndex(newIndex);
     setFullResUrl(null);
     setDeleteConfirmVisible(false);
+    resetZoom();
     setFullResLoading(true);
     dispatch(fetchLocationPictureFullRes(pictures[newIndex].id))
       .then((data) => setFullResUrl(data.url))
@@ -232,6 +258,7 @@ const LocationDetails = (props) => {
     setPhotoIndex(newIndex);
     setFullResUrl(null);
     setDeleteConfirmVisible(false);
+    resetZoom();
     setFullResLoading(true);
     dispatch(fetchLocationPictureFullRes(pictures[newIndex].id))
       .then((data) => setFullResUrl(data.url))
@@ -376,105 +403,113 @@ const LocationDetails = (props) => {
           navigationBarTranslucent={true}
           onRequestClose={() => setPhotoModalVisible(false)}
         >
-          <View style={s.photoModalOverlay}>
-            <Pressable
-              style={s.photoModalClose}
-              onPress={() => setPhotoModalVisible(false)}
-            >
-              <MaterialCommunityIcons
-                name="close-circle"
-                size={36}
-                color="white"
-              />
-            </Pressable>
-
-            <View style={s.photoModalImageContainer}>
-              {fullResLoading ? (
-                <ActivityIndicator />
-              ) : fullResUrl ? (
-                <Image
-                  source={{ uri: fullResUrl }}
-                  style={s.photoModalImage}
-                  contentFit="contain"
-                />
-              ) : null}
-            </View>
-
-            <View style={s.photoModalNav}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <View style={s.photoModalOverlay}>
               <Pressable
-                onPress={goToPrevPhoto}
-                disabled={photoIndex === 0}
-                style={[
-                  s.photoNavButton,
-                  photoIndex === 0 && s.photoNavDisabled,
-                ]}
+                style={s.photoModalClose}
+                onPress={() => setPhotoModalVisible(false)}
               >
                 <MaterialCommunityIcons
-                  name="chevron-left"
+                  name="close-circle"
                   size={36}
-                  color={photoIndex === 0 ? "rgba(255,255,255,0.3)" : "white"}
+                  color="white"
                 />
               </Pressable>
-              <Text style={s.photoCounter}>
-                {photoIndex + 1} / {pictures?.length}
-              </Text>
-              <Pressable
-                onPress={goToNextPhoto}
-                disabled={photoIndex === pictures?.length - 1}
-                style={[
-                  s.photoNavButton,
-                  photoIndex === pictures?.length - 1 && s.photoNavDisabled,
-                ]}
-              >
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  size={36}
-                  color={
-                    photoIndex === pictures?.length - 1
-                      ? "rgba(255,255,255,0.3)"
-                      : "white"
-                  }
-                />
-              </Pressable>
-            </View>
 
-            {loggedIn && (
-              <View style={s.photoModalDeleteContainer}>
-                {deleteConfirmVisible ? (
-                  <View style={s.deleteConfirmContainer}>
-                    <Text style={s.deleteConfirmText}>Delete this photo?</Text>
-                    <View style={s.deleteConfirmRow}>
-                      <PbmButton
-                        title={deletingPicture ? "Deleting…" : "Yes, delete"}
-                        onPress={handleDeletePicture}
-                        disabled={deletingPicture}
-                        margin={{ marginHorizontal: 6, marginVertical: 0 }}
+              <GestureDetector gesture={pinchGesture}>
+                <View style={s.photoModalImageContainer}>
+                  {fullResLoading ? (
+                    <ActivityIndicator />
+                  ) : fullResUrl ? (
+                    <Animated.View style={[{ flex: 1 }, pinchAnimatedStyle]}>
+                      <Image
+                        source={{ uri: fullResUrl }}
+                        style={s.photoModalImage}
+                        contentFit="contain"
                       />
-                      <WarningButton
-                        title="Cancel"
-                        onPress={() => setDeleteConfirmVisible(false)}
-                        margin={{ marginHorizontal: 6, marginVertical: 0 }}
-                      />
-                    </View>
-                  </View>
-                ) : (
-                  <WarningButton
-                    title={"Delete"}
-                    margin={s.deleteButton}
-                    onPress={() => setDeleteConfirmVisible(true)}
-                    leftIcon={
-                      <FontAwesome6
-                        size={18}
-                        color="#ffffff"
-                        name="trash-can"
-                        style={{ marginRight: 10 }}
-                      />
+                    </Animated.View>
+                  ) : null}
+                </View>
+              </GestureDetector>
+
+              <View style={s.photoModalNav}>
+                <Pressable
+                  onPress={goToPrevPhoto}
+                  disabled={photoIndex === 0}
+                  style={[
+                    s.photoNavButton,
+                    photoIndex === 0 && s.photoNavDisabled,
+                  ]}
+                >
+                  <MaterialCommunityIcons
+                    name="chevron-left"
+                    size={36}
+                    color={photoIndex === 0 ? "rgba(255,255,255,0.3)" : "white"}
+                  />
+                </Pressable>
+                <Text style={s.photoCounter}>
+                  {photoIndex + 1} / {pictures?.length}
+                </Text>
+                <Pressable
+                  onPress={goToNextPhoto}
+                  disabled={photoIndex === pictures?.length - 1}
+                  style={[
+                    s.photoNavButton,
+                    photoIndex === pictures?.length - 1 && s.photoNavDisabled,
+                  ]}
+                >
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    size={36}
+                    color={
+                      photoIndex === pictures?.length - 1
+                        ? "rgba(255,255,255,0.3)"
+                        : "white"
                     }
                   />
-                )}
+                </Pressable>
               </View>
-            )}
-          </View>
+
+              {loggedIn && (
+                <View style={s.photoModalDeleteContainer}>
+                  {deleteConfirmVisible ? (
+                    <View style={s.deleteConfirmContainer}>
+                      <Text style={s.deleteConfirmText}>
+                        Delete this photo?
+                      </Text>
+                      <View style={s.deleteConfirmRow}>
+                        <PbmButton
+                          title={deletingPicture ? "Deleting…" : "Yes, delete"}
+                          onPress={handleDeletePicture}
+                          disabled={deletingPicture}
+                          margin={{ marginHorizontal: 6, marginVertical: 0 }}
+                        />
+                        <WarningButton
+                          title="Cancel"
+                          onPress={() => setDeleteConfirmVisible(false)}
+                          margin={{ marginHorizontal: 6, marginVertical: 0 }}
+                        />
+                      </View>
+                    </View>
+                  ) : (
+                    <WarningButton
+                      title={"Delete"}
+                      margin={s.deleteButton}
+                      onPress={() => setDeleteConfirmVisible(true)}
+                      leftIcon={
+                        <FontAwesome6
+                          size={18}
+                          color="#ffffff"
+                          name="trash-can"
+                          style={{ marginRight: 10 }}
+                        />
+                      }
+                    />
+                  )}
+                </View>
+              )}
+            </View>
+          </GestureHandlerRootView>
         </Modal>
 
         <ConfirmationModal
