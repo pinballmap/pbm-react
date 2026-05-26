@@ -123,7 +123,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
           lastFetchedCenterRef.current = { lat: fetchLat, lon: fetchLon };
         }
         const url = global
-          ? `/user_submissions.json?${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
+          ? `/user_submissions.json?${restrictTo}limit=50&page=1&include_locationless=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
           : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${
               distance || maxDistance
             }&${restrictTo}limit=50&page=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`;
@@ -164,7 +164,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
     const { lat: fetchLat, lon: fetchLon } = lastFetchedCenterRef.current;
     const url =
       btnIdx === 3
-        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
+        ? `/user_submissions.json?${restrictTo}limit=50&page=${newPage}&include_locationless=1${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`
         : `/user_submissions/list_within_range.json?lat=${fetchLat}&lon=${fetchLon}&max_distance=${maxDistance}&${restrictTo}limit=50&page=${newPage}${submissionTypeParam}${machineIdParam}${userFavedParam}${loggedIn ? `&user_id=${userId}` : ""}`;
     getData(url)
       .then((data) => {
@@ -339,12 +339,16 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
         return (
           <View style={s.textContainer}>
             <Text style={[s.pbmText, s.marginB8]}>
-              High score: {formatNumWithCommas(high_score)}
+              High score:{" "}
+              <Text style={[s.score]}>{formatNumWithCommas(high_score)}</Text>
             </Text>
             <Text style={[s.machineName, s.marginB8]}>{machine_name}</Text>
-            <Text style={s.pbmText}>
-              <Text style={s.locationName}>{location_name}</Text> in {city_name}
-            </Text>
+            {!!location_name && (
+              <Text style={s.pbmText}>
+                <Text style={s.locationName}>{location_name}</Text> in{" "}
+                {city_name}
+              </Text>
+            )}
             {timeAndUser}
           </View>
         );
@@ -423,6 +427,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
             .map((activity) => (
               <Pressable
                 key={activity.id}
+                disabled={!activity.location_id}
                 onPress={() => {
                   setShouldRefresh(false);
                   navigation.navigate("LocationDetails", {
@@ -529,6 +534,12 @@ const getStyles = (theme) =>
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontFamily: "Nunito-Bold",
+      fontSize: 15,
+    },
+    score: {
+      color: theme.text,
+      fontFamily: "Nunito-SemiBold",
+      fontSize: 15,
     },
     filterView: {
       backgroundColor: theme.base3,
