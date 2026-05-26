@@ -263,7 +263,10 @@ const FindMachine = ({
 
   const setSelected = useCallback(
     (selectedMachine) => {
-      if (route.params?.machineFilter) {
+      if (route.params?.onSelect) {
+        route.params.onSelect(selectedMachine);
+        navigation.goBack();
+      } else if (route.params?.machineFilter) {
         setMachineFilter(selectedMachine);
         navigation.goBack();
       } else {
@@ -271,7 +274,7 @@ const FindMachine = ({
         setShowModal(true);
       }
     },
-    [route.params?.machineFilter],
+    [route.params?.machineFilter, route.params?.onSelect],
   );
 
   const addMachine = () => {

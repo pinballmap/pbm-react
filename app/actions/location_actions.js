@@ -142,6 +142,19 @@ export const addMachineScore = (score, lmx) => (dispatch, getState) => {
     .catch((err) => console.log(err));
 };
 
+export const addStandaloneScore =
+  (machineId, score) => (dispatch, getState) => {
+    const { email, authentication_token, id: userId } = getState().user;
+    const body = {
+      user_email: email,
+      user_token: authentication_token,
+      score,
+      machine_id: machineId,
+      user_id: userId,
+    };
+    return postData(`/machine_score_xrefs.json`, body);
+  };
+
 export const updateIcEnabled = (id, ic_enabled) => (dispatch, getState) => {
   const { email, authentication_token, id: userId } = getState().user;
   const body = {

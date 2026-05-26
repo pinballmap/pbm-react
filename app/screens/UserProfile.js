@@ -253,7 +253,7 @@ class UserProfile extends Component {
             >
               {isOwnProfile && !user.loggedIn ? (
                 <NotLoggedIn
-                  text={`You're not logged in, so you don't have a profile!`}
+                  text={`You're not logged in, so you don't have a profile.`}
                   onPress={() => this.props.navigation.navigate("Login")}
                 />
               ) : (
@@ -653,7 +653,16 @@ class UserProfile extends Component {
                       }}
                     >
                       <Text style={s.lifeListDescription}>
-                        {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location.`}
+                        {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location. `}
+                        <Text
+                          style={s.addScoreLink}
+                          onPress={() =>
+                            this.props.navigation.navigate("AddHighScore")
+                          }
+                        >
+                          Click here to add new high scores
+                        </Text>
+                        {`.`}
                       </Text>
                       <PbmButton
                         title={"Add Machines to Your List"}
@@ -1106,6 +1115,11 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
       textAlign: "center",
       lineHeight: 22,
+    },
+    addScoreLink: {
+      color: theme.purpleLight,
+      fontFamily: "Nunito-SemiBold",
+      textDecorationLine: "underline",
     },
     modalConfirmText: {
       textAlign: "center",

@@ -37,6 +37,7 @@ import Resources from "../screens/Resources";
 import FindCountry from "../screens/FindCountry";
 import FindFlag from "../screens/FindFlag";
 import Stats from "../screens/Stats";
+import AddHighScore from "../screens/AddHighScore";
 
 import { DrawerMenu } from "../components";
 
@@ -316,7 +317,13 @@ function MapStack() {
         component={SignupLogin}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Contact Pinball Map" component={Contact} />
+      <Stack.Screen
+        name="Contact"
+        component={Contact}
+        options={{
+          title: "Contact Pinball Map",
+        }}
+      />
       <Stack.Screen
         name="LocationList"
         component={LocationList}
@@ -424,6 +431,11 @@ function MapStack() {
         name="FindFlag"
         component={FindFlag}
         options={{ title: "Select Flag" }}
+      />
+      <Stack.Screen
+        name="AddHighScore"
+        component={AddHighScore}
+        options={{ title: "Add High Score" }}
       />
       <Stack.Screen
         name="UserProfilePublic"

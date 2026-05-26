@@ -169,6 +169,20 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         }
       />
       <DrawerItem
+        label="Add High Score"
+        allowFontScaling={false}
+        labelStyle={s.labelStyle}
+        icon={() => (
+          <MaterialCommunityIcons
+            name="numeric"
+            size={iconSize}
+            color={iconColor}
+            style={s.iconStyle}
+          />
+        )}
+        onPress={() => navigation.navigate("Map", { screen: "AddHighScore" })}
+      />
+      <DrawerItem
         label="Nearby Events"
         labelStyle={s.labelStyle}
         allowFontScaling={false}
@@ -194,9 +208,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() =>
-          navigation.navigate("Map", { screen: "Contact Pinball Map" })
-        }
+        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"

@@ -661,7 +661,6 @@ const getStyles = (theme) =>
     text: {
       fontSize: 15,
       marginVertical: 5,
-      marginHorizontal: 5,
       marginLeft: 15,
       marginRight: 15,
     },
