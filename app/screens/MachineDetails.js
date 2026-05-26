@@ -195,6 +195,7 @@ const MachineDetails = ({
     setShowAddScoreModal(false);
     setScore("");
     refreshHighScore();
+    if (!lifeListStatus?.in_list) refreshLifeListStatus();
   };
 
   const onIctogglePress = () => {
@@ -771,7 +772,10 @@ const MachineDetails = ({
                   <MachineScore
                     scoreObj={scoreObj}
                     key={scoreObj.id}
-                    onScoreMutated={refreshHighScore}
+                    onScoreMutated={() => {
+                      refreshHighScore();
+                      refreshLifeListStatus();
+                    }}
                   />
                 ))}
               </>
