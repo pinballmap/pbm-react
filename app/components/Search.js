@@ -1,7 +1,13 @@
-import React, { Component } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-//https://www.peterbe.com/plog/how-to-throttle-and-debounce-an-autocomplete-input-in-react
 import { debounce } from "throttle-debounce";
 import {
   Alert,
@@ -27,9 +33,8 @@ import {
   setSearchBarText,
   clearSearchBarText,
 } from "../actions";
-import withThemeHOC from "./withThemeHOC";
-import { retrieveItem } from "../config/utils";
 import { ThemeContext } from "../theme-context";
+import { retrieveItem } from "../config/utils";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
@@ -37,45 +42,45 @@ import PbmButton from "./PbmButton";
 
 let deviceWidth = Dimensions.get("window").width;
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      q: "",
-      foundLocations: [],
-      foundCities: [],
-      foundRegions: [],
-      searchModalVisible: false,
-      showSubmitButton: false,
-      searching: false,
-      recentSearchHistory: [],
-    };
+const Search = ({
+  navigate,
+  regions: regionsProp,
+  query,
+  getLocationsByRegion,
+  triggerUpdateBounds,
+  setSearchBarText,
+  clearSearchBarText,
+  onOpenSearch,
+  onPressFilter,
+}) => {
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
 
-    this.autocompleteSearchDebounced = debounce(500, this.autocompleteSearch);
-    this.waitingFor = "";
-  }
+  const [q, setQ] = useState("");
+  const [foundLocations, setFoundLocations] = useState([]);
+  const [foundCities, setFoundCities] = useState([]);
+  const [foundRegions, setFoundRegions] = useState([]);
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
+  const [showSubmitButton, setShowSubmitButton] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [recentSearchHistory, setRecentSearchHistory] = useState([]);
 
-  changeQuery = (q) => {
-    this.setState({ q, showSubmitButton: false }, () => {
-      this.autocompleteSearchDebounced(this.state.q);
-    });
-  };
+  const waitingForRef = useRef("");
+  const textInputRef = useRef(null);
+  const regionsPropRef = useRef(regionsProp);
+  useEffect(() => {
+    regionsPropRef.current = regionsProp;
+  }, [regionsProp]);
 
-  autocompleteSearch = (q) => {
-    this._fetch(q);
-  };
-
-  _fetch = async (query) => {
-    this.waitingFor = query;
-    this.setState({ searching: true });
-    const { regions = [] } = this.props.regions ?? {};
+  const _fetch = useCallback(async (query) => {
+    waitingForRef.current = query;
+    setSearching(true);
+    const { regions = [] } = regionsPropRef.current ?? {};
     if (query === "") {
-      await this.setState({
-        foundLocations: [],
-        foundCities: [],
-        foundRegions: [],
-        searching: false,
-      });
+      setFoundLocations([]);
+      setFoundCities([]);
+      setFoundRegions([]);
+      setSearching(false);
     } else {
       const foundRegions =
         query.toLowerCase() === "region"
@@ -86,45 +91,89 @@ class Search extends Component {
       const foundLocations = await getData(
         `/locations/autocomplete?name=${encodeURIComponent(query.trim())}`,
       );
-      let foundCities = await getData(
-        `/locations/autocomplete_city.json?name=${encodeURIComponent(query.trim())}`,
+      const foundCities = await getData(
+        `/locations/autocomplete_city.json?name=${encodeURIComponent(
+          query.trim(),
+        )}`,
       );
-      if (query === this.waitingFor) {
-        this.setState({
-          foundLocations,
-          foundCities,
-          foundRegions,
-          showSubmitButton: true,
-          searching: false,
-        });
+      if (query === waitingForRef.current) {
+        setFoundLocations(foundLocations);
+        setFoundCities(foundCities);
+        setFoundRegions(foundRegions);
+        setShowSubmitButton(true);
+        setSearching(false);
       }
     }
+  }, []);
+
+  const autocompleteSearchDebounced = useMemo(
+    () => debounce(500, _fetch),
+    [_fetch],
+  );
+
+  const changeQuery = (newQ) => {
+    setQ(newQ);
+    setShowSubmitButton(false);
+    if (newQ === "") {
+      setFoundLocations([]);
+      setFoundCities([]);
+      setFoundRegions([]);
+      setSearching(false);
+    }
+    autocompleteSearchDebounced(newQ);
   };
 
-  geocodeSearch = (query) => {
-    this.props.setSearchBarText(query);
-    this.setState({ searching: true });
+  const geocodeSearch = (searchQuery) => {
+    setSearchBarText(searchQuery);
+    setSearching(true);
     getData(
-      `/locations/geocode_lat_lon.json?address=${query};geocode_key=${process.env.EXPO_PUBLIC_GEOCODE_KEY}`,
+      `/locations/geocode_lat_lon.json?address=${searchQuery};geocode_key=${process.env.EXPO_PUBLIC_GEOCODE_KEY}`,
     )
       .then(
         (response) => {
           const lat = response.geocode_lat_lon[0],
             lon = response.geocode_lat_lon[1];
           const bounds = coordsToBounds({ lat, lon });
-          this.props.triggerUpdateBounds(bounds);
+          triggerUpdateBounds(bounds);
         },
         () => {
           Alert.alert("An error occurred geocoding.");
         },
       )
       .then(() => {
-        this.changeQuery("");
-        this.setState({ searchModalVisible: false });
+        changeQuery("");
+        setSearchModalVisible(false);
       });
   };
 
-  getLocationsByCity = async (location, idx) => {
+  const isDuplicate = (search) =>
+    recentSearchHistory.findIndex((entry) => {
+      if (entry.full_name) return search.full_name === entry.full_name;
+      if (entry.label) return search.label === entry.label;
+      if (entry.value) return search.value === entry.value;
+      return false;
+    });
+
+  const clearSearchState = (search) => {
+    changeQuery("");
+    setSearchBarText(search.value ? search.value : search.full_name);
+    setSearchModalVisible(false);
+    if (search) {
+      const duplicateIndex = isDuplicate(search);
+      const dedupedHistory =
+        duplicateIndex > -1
+          ? recentSearchHistory.filter((_, i) => i !== duplicateIndex)
+          : recentSearchHistory;
+      const updatedSearchHistory = [search, ...dedupedHistory].slice(0, 10);
+      setRecentSearchHistory(updatedSearchHistory);
+      AsyncStorage.setItem(
+        "searchHistory",
+        JSON.stringify(updatedSearchHistory),
+      );
+    }
+  };
+
+  const getLocationsByCity = async (location, idx) => {
     const { value } = location;
     try {
       const [city, state] = value.split(", ");
@@ -138,103 +187,73 @@ class Search extends Component {
         throw new Error();
       }
 
-      // In order to show all locations for a given city, we must determine the min/max lat/lon
-      // such that we can come up with an appropriate bounds to place the map.
       const bounds = locations.reduce((prev, cur) => {
         let { swLat, swLon, neLat, neLon } = prev;
-        if (!neLat || cur.lat > neLat) {
-          neLat = parseFloat(cur.lat);
-        }
-        if (!swLat || cur.lat < swLat) {
-          swLat = parseFloat(cur.lat);
-        }
-        if (!neLon || cur.lon > neLon) {
-          neLon = parseFloat(cur.lon);
-        }
-        if (!swLon || cur.lon < swLon) {
-          swLon = parseFloat(cur.lon);
-        }
-        return {
-          swLat,
-          swLon,
-          neLon,
-          neLat,
-        };
+        if (!neLat || cur.lat > neLat) neLat = parseFloat(cur.lat);
+        if (!swLat || cur.lat < swLat) swLat = parseFloat(cur.lat);
+        if (!neLon || cur.lon > neLon) neLon = parseFloat(cur.lon);
+        if (!swLon || cur.lon < swLon) swLon = parseFloat(cur.lon);
+        return { swLat, swLon, neLon, neLat };
       }, {});
 
-      this.props.triggerUpdateBounds(bounds);
-      this.clearSearchState(location);
+      triggerUpdateBounds(bounds);
+      clearSearchState(location);
     } catch (e) {
       Alert.alert("City no longer has machines.");
-      this.clearSearchState("");
-      this.removeItemFromSearchHistory(idx);
+      clearSearchState("");
+      removeItemFromSearchHistory(idx);
     }
   };
 
-  goToLocation = async (location, idx) => {
-    try {
-      this.props.navigate("LocationDetails", {
-        id: location.id,
-        refreshMap: true,
-      });
-      this.clearSearchState(location);
-    } catch (e) {
-      Alert.alert("Location is gone, friend.");
-      this.removeItemFromSearchHistory(idx);
+  const goToLocation = async (location, idx) => {
+    if (idx !== undefined) {
+      try {
+        const data = await getData(
+          `/locations/${location.id}.json?no_details=1`,
+        );
+        if (data.errors) throw new Error();
+      } catch (e) {
+        Alert.alert("That location is gone.");
+        removeItemFromSearchHistory(idx);
+        return;
+      }
     }
+    navigate("LocationDetails", { id: location.id, refreshMap: true });
+    clearSearchState(location);
   };
 
-  getLocationsByRegion = (region) => {
-    this.props.getLocationsByRegion(region);
-    this.clearSearchState(region);
+  const handleRegionSelect = (region) => {
+    getLocationsByRegion(region);
+    clearSearchState(region);
   };
 
-  clearSearchState = (search) => {
-    this.changeQuery("");
-    this.props.setSearchBarText(search.value ? search.value : search.full_name);
-    this.setState({ searchModalVisible: false });
-    if (search) {
-      const duplicateIndex = this.isDuplicate(search);
-      let currentSearchHistory = this.state.recentSearchHistory;
-      if (duplicateIndex > -1) {
-        currentSearchHistory.splice(duplicateIndex, 1);
-      }
-      const updatedSearchHistory = [search, ...currentSearchHistory].slice(
-        0,
-        10,
-      );
-      AsyncStorage.setItem(
-        "searchHistory",
-        JSON.stringify(updatedSearchHistory),
-      );
-    }
+  const openSearch = () => {
+    setSearchModalVisible(true);
+    onOpenSearch();
+    retrieveItem("searchHistory")
+      .then((history) => setRecentSearchHistory(history ?? []))
+      .catch(() => setRecentSearchHistory([]));
   };
 
-  isDuplicate = (search) => {
-    const isDuplicate = this.state.recentSearchHistory.findIndex((entry) => {
-      if (entry.full_name) {
-        return search.full_name === entry.full_name;
-      }
-
-      if (entry.label) {
-        return search.label === entry.label;
-      }
-
-      if (entry.value) {
-        return search.value === entry.value;
-      }
-
-      return false;
-    });
-
-    return isDuplicate;
+  const clearSearchHistory = async () => {
+    await AsyncStorage.removeItem("searchHistory");
+    setRecentSearchHistory([]);
   };
 
-  renderRegionRow = (region, s) => (
+  const removeItemFromSearchHistory = (idx) => {
+    const updated =
+      idx >= 0
+        ? recentSearchHistory.filter((_, i) => i !== idx)
+        : recentSearchHistory;
+    setRecentSearchHistory(updated);
+    AsyncStorage.setItem("searchHistory", JSON.stringify(updated));
+  };
+
+  const renderRegionRow = (region) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={region.id}
-      onPress={() => this.getLocationsByRegion(region)}
+      onPress={() => handleRegionSelect(region)}
     >
       <View style={s.listContainerStyle}>
         <Text style={s.listItemTitle}>{region.full_name}</Text>
@@ -243,11 +262,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderCityRow = (location, s, idx) => (
+  const renderCityRow = (location, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.value}
-      onPress={() => this.getLocationsByCity(location, idx)}
+      onPress={() => getLocationsByCity(location, idx)}
     >
       <View style={s.listContainerStyle}>
         <Text style={s.listItemTitle}>{location.label ?? location.value}</Text>
@@ -256,11 +275,11 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderLocationRow = (location, s, idx) => (
+  const renderLocationRow = (location, idx) => (
     <Pressable
       style={({ pressed }) => [{}, pressed ? s.pressed : s.notPressed]}
       key={location.id}
-      onPress={() => this.goToLocation(location, idx)}
+      onPress={() => goToLocation(location, idx)}
     >
       <View style={s.listContainerStyle}>
         <Text style={s.listItemTitle}>{location.label}</Text>
@@ -268,35 +287,26 @@ class Search extends Component {
     </Pressable>
   );
 
-  renderRecentSearchHistory = (s) => (
+  const renderRecentSearchHistory = () => (
     <View>
       <View style={s.recentSearchHistory}>
         <Text style={s.searchHistoryTitle}>{"Recent Search History"}</Text>
-        <Text onPress={this.clearSearchHistory} style={s.clearButton}>
+        <Text onPress={clearSearchHistory} style={s.clearButton}>
           Clear All
         </Text>
       </View>
-      {this.state.recentSearchHistory.map((search, idx) => {
-        // Determine which rows to render based on search payload
-        if (search.motd) {
-          return this.renderRegionRow(search, s);
-        }
-
-        if (search.id) {
-          return this.renderLocationRow(search, s, idx);
-        }
-
-        if (search.value) {
-          return this.renderCityRow(search, s, idx);
-        }
+      {recentSearchHistory.map((search, idx) => {
+        if (search.motd) return renderRegionRow(search);
+        if (search.id) return renderLocationRow(search, idx);
+        if (search.value) return renderCityRow(search, idx);
       })}
     </View>
   );
 
-  renderGoToFilter = (s) => {
+  const renderGoToFilter = () => {
     const onPress = () => {
-      this.setState({ searchModalVisible: false });
-      this.props.navigate("FilterMap");
+      setSearchModalVisible(false);
+      navigate("FilterMap");
     };
     return (
       <Text style={s.goToFilterText}>
@@ -314,208 +324,147 @@ class Search extends Component {
     );
   };
 
-  openSearch = () => {
-    this.setState({ searchModalVisible: true });
-    this.props.onOpenSearch();
+  const { searchBarText } = query;
+  const submitButton =
+    foundLocations.length === 0 &&
+    foundCities.length === 0 &&
+    q !== "" &&
+    showSubmitButton;
+  const keyboardDismissProp =
+    Platform.OS === "ios"
+      ? { keyboardDismissMode: "on-drag" }
+      : { onScrollBeginDrag: Keyboard.dismiss };
+  const showRecentSearches = q === "" && recentSearchHistory.length > 0;
 
-    retrieveItem("searchHistory")
-      .then((recentSearchHistory) =>
-        recentSearchHistory
-          ? this.setState({ recentSearchHistory })
-          : this.setState({ recentSearchHistory: [] }),
-      )
-      .catch(() => this.setState({ recentSearchHistory: [] }));
-  };
-
-  clearSearchHistory = async () => {
-    await AsyncStorage.removeItem("searchHistory");
-    this.setState({ recentSearchHistory: [] });
-  };
-
-  removeItemFromSearchHistory = (idx) => {
-    let currentSearchHistory = this.state.recentSearchHistory;
-    if (idx >= 0) {
-      currentSearchHistory.splice(idx, 1);
-    }
-    this.setState({ recentSearchHistory: currentSearchHistory });
-    AsyncStorage.setItem("searchHistory", JSON.stringify(currentSearchHistory));
-  };
-
-  render() {
-    const {
-      q,
-      foundLocations = [],
-      foundCities = [],
-      foundRegions = [],
-      recentSearchHistory = [],
-      searchModalVisible,
-      showSubmitButton,
-      searching,
-    } = this.state;
-    const { query, clearSearchBarText, onPressFilter } = this.props;
-    const { searchBarText } = query;
-    const submitButton =
-      foundLocations.length === 0 &&
-      foundCities.length === 0 &&
-      q !== "" &&
-      showSubmitButton;
-    const keyboardDismissProp =
-      Platform.OS === "ios"
-        ? { keyboardDismissMode: "on-drag" }
-        : { onScrollBeginDrag: Keyboard.dismiss };
-    const showRecentSearches = q === "" && recentSearchHistory.length > 0;
-
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
-            <View>
-              <Modal
-                statusBarTranslucent={true}
-                navigationBarTranslucent={true}
-                transparent={false}
-                visible={searchModalVisible}
-                onShow={() => {
-                  this.textInput.focus();
-                }}
-                onRequestClose={() => {}}
-              >
-                <SafeAreaProvider>
-                  <SafeAreaView
-                    style={{ flex: 1, backgroundColor: theme.base1 }}
-                  >
-                    <View style={s.modalContainer}>
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          height: 45,
-                          marginBottom: 10,
-                        }}
-                      >
-                        <MaterialIcons
-                          onPress={() => {
-                            this.setState({ searchModalVisible: false });
-                            q === "" && clearSearchBarText();
-                            this.changeQuery("");
-                          }}
-                          name="clear"
-                          size={30}
-                          style={s.clear}
-                        />
-                        <View style={s.inputContainer}>
-                          <MaterialIcons
-                            name="search"
-                            size={25}
-                            color={theme.indigo4}
-                            style={{ marginLeft: 10, marginRight: 0 }}
-                          />
-                          <TextInput
-                            placeholder="City, Region, Venue..."
-                            placeholderTextColor={theme.indigo4}
-                            onChangeText={(query) => this.changeQuery(query)}
-                            value={q}
-                            key={"search"}
-                            returnKeyType={"search"}
-                            onSubmitEditing={
-                              submitButton
-                                ? ({ nativeEvent }) =>
-                                    this.geocodeSearch(nativeEvent.text)
-                                : () => {}
-                            }
-                            style={s.inputStyle}
-                            ref={(input) => {
-                              this.textInput = input;
-                            }}
-                            autoCorrect={false}
-                          />
-                        </View>
-                        {q ? (
-                          <MaterialCommunityIcons
-                            name="close-circle"
-                            size={20}
-                            color={theme.purple}
-                            style={{ position: "absolute", right: 30 }}
-                            onPress={() => this.changeQuery("")}
-                          />
-                        ) : null}
-                      </View>
-                      {!!submitButton && (
-                        <View style={{ marginHorizontal: 50 }}>
-                          <PbmButton
-                            title={"Search"}
-                            onPress={() => {
-                              this.geocodeSearch(q);
-                            }}
-                          />
-                        </View>
-                      )}
-                      <ScrollView
-                        style={{ paddingTop: 3 }}
-                        keyboardShouldPersistTaps="handled"
-                        {...keyboardDismissProp}
-                      >
-                        {searching && <ActivityIndicator />}
-                        {q === "" && this.renderGoToFilter(s)}
-                        {showRecentSearches &&
-                          this.renderRecentSearchHistory(s)}
-                        {!!foundRegions &&
-                          foundRegions.map((region) =>
-                            this.renderRegionRow(region, s),
-                          )}
-                        {!!foundCities &&
-                          foundCities.map((location) =>
-                            this.renderCityRow(location, s),
-                          )}
-                        {!!foundLocations &&
-                          foundLocations.map((location) =>
-                            this.renderLocationRow(location, s),
-                          )}
-                      </ScrollView>
-                    </View>
-                  </SafeAreaView>
-                </SafeAreaProvider>
-              </Modal>
-              <View style={s.searchMapContainer}>
-                <Pressable
-                  style={({ pressed }) => [
-                    {},
-                    s.searchMap,
-                    s.searchMapChild,
-                    pressed ? s.pressed : s.notPressed,
-                  ]}
-                  onPress={this.openSearch}
-                >
-                  <MaterialIcons name="search" size={25} style={s.searchIcon} />
-                  <Text
-                    numberOfLines={1}
-                    style={s.inputPlaceholder}
-                    allowFontScaling={false}
-                  >
-                    {searchBarText ? searchBarText : "City, Region, Venue..."}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  style={({ pressed }) => [
-                    {},
-                    s.buttonContainerStyle,
-                    s.searchMapChild,
-                    pressed ? s.filterPressed : s.filterNotPressed,
-                  ]}
-                  onPress={onPressFilter}
-                >
-                  <Entypo name="sound-mix" size={24} style={s.filterIcon} />
-                </Pressable>
-              </View>
-            </View>
-          );
+  return (
+    <View>
+      <Modal
+        statusBarTranslucent={true}
+        navigationBarTranslucent={true}
+        transparent={false}
+        visible={searchModalVisible}
+        onShow={() => {
+          textInputRef.current?.focus();
         }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+        onRequestClose={() => {}}
+      >
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1, backgroundColor: theme.base1 }}>
+            <View style={s.modalContainer}>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  height: 45,
+                  marginBottom: 10,
+                }}
+              >
+                <MaterialIcons
+                  onPress={() => {
+                    setSearchModalVisible(false);
+                    q === "" && clearSearchBarText();
+                    changeQuery("");
+                  }}
+                  name="clear"
+                  size={30}
+                  style={s.clear}
+                />
+                <View style={s.inputContainer}>
+                  <MaterialIcons
+                    name="search"
+                    size={25}
+                    color={theme.indigo4}
+                    style={{ marginLeft: 10, marginRight: 0 }}
+                  />
+                  <TextInput
+                    placeholder="City, Region, Venue..."
+                    placeholderTextColor={theme.indigo4}
+                    onChangeText={changeQuery}
+                    value={q}
+                    key={"search"}
+                    returnKeyType={"search"}
+                    onSubmitEditing={
+                      submitButton
+                        ? ({ nativeEvent }) => geocodeSearch(nativeEvent.text)
+                        : () => {}
+                    }
+                    style={s.inputStyle}
+                    ref={textInputRef}
+                    autoCorrect={false}
+                  />
+                </View>
+                {q ? (
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={20}
+                    color={theme.purple}
+                    style={{ position: "absolute", right: 30 }}
+                    onPress={() => changeQuery("")}
+                  />
+                ) : null}
+              </View>
+              {!!submitButton && (
+                <View style={{ marginHorizontal: 50 }}>
+                  <PbmButton
+                    title={"Search"}
+                    onPress={() => geocodeSearch(q)}
+                  />
+                </View>
+              )}
+              <ScrollView
+                style={{ paddingTop: 3 }}
+                keyboardShouldPersistTaps="handled"
+                {...keyboardDismissProp}
+              >
+                {searching && <ActivityIndicator />}
+                {q === "" && renderGoToFilter()}
+                {showRecentSearches && renderRecentSearchHistory()}
+                {!!foundRegions &&
+                  foundRegions.map((region) => renderRegionRow(region))}
+                {!!foundCities &&
+                  foundCities.map((location) => renderCityRow(location))}
+                {!!foundLocations &&
+                  foundLocations.map((location) => renderLocationRow(location))}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </Modal>
+      <View style={s.searchMapContainer}>
+        <Pressable
+          style={({ pressed }) => [
+            {},
+            s.searchMap,
+            s.searchMapChild,
+            pressed ? s.pressed : s.notPressed,
+          ]}
+          onPress={openSearch}
+        >
+          <MaterialIcons name="search" size={25} style={s.searchIcon} />
+          <Text
+            numberOfLines={1}
+            style={s.inputPlaceholder}
+            allowFontScaling={false}
+          >
+            {searchBarText ? searchBarText : "City, Region, Venue..."}
+          </Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            {},
+            s.buttonContainerStyle,
+            s.searchMapChild,
+            pressed ? s.filterPressed : s.filterNotPressed,
+          ]}
+          onPress={onPressFilter}
+        >
+          <Entypo name="sound-mix" size={24} style={s.filterIcon} />
+        </Pressable>
+      </View>
+    </View>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -682,6 +631,8 @@ Search.propTypes = {
   getLocationsByRegion: PropTypes.func,
   setSearchBarText: PropTypes.func,
   clearSearchBarText: PropTypes.func,
+  onOpenSearch: PropTypes.func,
+  onPressFilter: PropTypes.func,
 };
 
 const mapStateToProps = ({ regions, query, user }) => ({
@@ -695,9 +646,5 @@ const mapDispatchToProps = (dispatch) => ({
   setSearchBarText: (searchBarText) =>
     dispatch(setSearchBarText(searchBarText)),
   clearSearchBarText: () => dispatch(clearSearchBarText()),
-  dispatch,
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withThemeHOC(Search));
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

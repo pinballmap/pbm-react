@@ -1,6 +1,7 @@
 import {
   FETCHING_LOCATION,
   FETCHING_LOCATION_SUCCESS,
+  FETCHING_LOCATION_FAILURE,
   LOCATION_METADATA_SUCCESS,
   FETCHING_LMX_SUCCESS,
   LOCATION_DETAILS_CONFIRMED,
@@ -38,9 +39,9 @@ import { triggerUpdateBounds } from "./locations_actions";
 export const fetchLocation = (id) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION });
 
-  return getData(`/locations/${id}.json?no_details=1`).then((data) =>
-    dispatch(getLocationSuccess(data)),
-  );
+  return getData(`/locations/${id}.json?no_details=1`)
+    .then((data) => dispatch(getLocationSuccess(data)))
+    .catch(() => dispatch({ type: FETCHING_LOCATION_FAILURE }));
 };
 
 export const fetchUserHighScore = (userId) => (dispatch, getState) => {

@@ -69,7 +69,7 @@ export default (state = initialState, action) => {
     case FETCHING_LOCATION_FAILURE:
       return {
         ...state,
-        isFetchingLocations: false,
+        isFetchingLocation: false,
         location: {},
       };
     case LOCATION_DETAILS_CONFIRMED:
