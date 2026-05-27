@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
 import { Image } from "expo-image";

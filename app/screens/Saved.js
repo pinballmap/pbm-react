@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import FontAwesome5 from "@react-native-vector-icons/fontawesome5/static";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, LocationCard, NotLoggedIn, Text } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
@@ -168,7 +168,7 @@ export class Saved extends Component {
                       <Text
                         style={s.noSaved}
                       >{`You have no saved locations.`}</Text>
-                      <FontAwesome name="heart-o" style={s.savedIcon} />
+                      <FontAwesome5 name="heart" style={s.savedIcon} />
                       <Text
                         style={{ fontSize: 18, textAlign: "center" }}
                       >{`To save your favorite locations, lookup a location then click the heart icon.`}</Text>
@@ -208,7 +208,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: deviceWidth < 321 ? 12 : 14,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     innerBorderStyle: {
       width: 0,

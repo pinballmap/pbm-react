@@ -72,101 +72,93 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
   };
 
   return (
-    <ThemeContext.Consumer>
-      {({ theme }) => {
-        return (
-          <>
-            <ConfirmationModal
-              loading={loading}
-              visible={deleteModalVisible}
-              closeModal={() => setDeleteModalVisible(false)}
-            >
-              <Text style={s.modalTitle}>Delete your score?</Text>
-              <PbmButton title={"Delete Score"} onPress={onDeletePress} />
-              <WarningButton
-                title={"Cancel"}
-                onPress={() => setDeleteModalVisible(false)}
-              />
-            </ConfirmationModal>
-            <Modal
-              animationType="slide"
-              transparent={false}
-              statusBarTranslucent={true}
-              navigationBarTranslucent={true}
-              loading={loading}
-              visible={editModalVisible}
-              onRequestClose={() => {}}
-            >
-              <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                <KeyboardAwareScrollView
-                  contentContainerStyle={{
-                    backgroundColor: theme.base1,
-                    paddingBottom: 30,
-                    paddingTop: machineNameMargin + 50,
-                  }}
-                >
-                  <Text style={s.modalTitle}>Edit your score</Text>
-                  <TextInput
-                    style={[
-                      { height: 40, textAlign: "center" },
-                      s.textInput,
-                      s.radius10,
-                    ]}
-                    keyboardType="numeric"
-                    underlineColorAndroid="transparent"
-                    onChangeText={handleScoreEdit}
-                    value={score}
-                    defaultValue={formatNumWithCommas(initialScore)}
-                    returnKeyType="done"
-                    placeholder={"123..."}
-                    placeholderTextColor={theme.indigo4}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  <PbmButton title={"Save"} onPress={onEditPress} />
-                  <WarningButton title={"Cancel"} onPress={cancelEditScore} />
-                </KeyboardAwareScrollView>
-              </View>
-            </Modal>
-            <View style={s.listContainerStyle}>
-              <Text style={s.scoreText}>
-                {formatNumWithCommas(initialScore)}
-              </Text>
-              <View
-                style={[
-                  s.subtitleStyle,
-                  s.subtitleMargin,
-                  { flexDirection: "row", alignItems: "center" },
-                ]}
+    <>
+      <ConfirmationModal
+        loading={loading}
+        visible={deleteModalVisible}
+        closeModal={() => setDeleteModalVisible(false)}
+      >
+        <Text style={s.modalTitle}>Delete your score?</Text>
+        <PbmButton title={"Delete Score"} onPress={onDeletePress} />
+        <WarningButton
+          title={"Cancel"}
+          onPress={() => setDeleteModalVisible(false)}
+        />
+      </ConfirmationModal>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        statusBarTranslucent={true}
+        navigationBarTranslucent={true}
+        loading={loading}
+        visible={editModalVisible}
+        onRequestClose={() => {}}
+      >
+        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={{
+              backgroundColor: theme.base1,
+              paddingBottom: 30,
+              paddingTop: machineNameMargin + 50,
+            }}
+          >
+            <Text style={s.modalTitle}>Edit your score</Text>
+            <TextInput
+              style={[
+                { height: 40, textAlign: "center" },
+                s.textInput,
+                s.radius10,
+              ]}
+              keyboardType="numeric"
+              underlineColorAndroid="transparent"
+              onChangeText={handleScoreEdit}
+              value={score}
+              defaultValue={formatNumWithCommas(initialScore)}
+              returnKeyType="done"
+              placeholder={"123..."}
+              placeholderTextColor={theme.indigo4}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <PbmButton title={"Save"} onPress={onEditPress} />
+            <WarningButton title={"Cancel"} onPress={cancelEditScore} />
+          </KeyboardAwareScrollView>
+        </View>
+      </Modal>
+      <View style={s.listContainerStyle}>
+        <Text style={s.scoreText}>{formatNumWithCommas(initialScore)}</Text>
+        <View
+          style={[
+            s.subtitleStyle,
+            s.subtitleMargin,
+            { flexDirection: "row", alignItems: "center" },
+          ]}
+        >
+          <Text style={[s.italic, s.date]}>
+            {moment(updated_at).format("MMM DD, YYYY")}
+          </Text>
+          {created_at !== updated_at && (
+            <Text style={{ color: theme.text3 }}>{`*`}</Text>
+          )}
+          {!!user?.id && (
+            <>
+              <Text
+                style={[s.editDelete, { marginHorizontal: 8 }]}
+                onPress={() => setEditModalVisible(true)}
               >
-                <Text style={[s.italic, s.date]}>
-                  {moment(updated_at).format("MMM DD, YYYY")}
-                </Text>
-                {created_at !== updated_at && (
-                  <Text style={{ color: theme.text3 }}>{`*`}</Text>
-                )}
-                {!!user?.id && (
-                  <>
-                    <Text
-                      style={[s.editDelete, { marginHorizontal: 8 }]}
-                      onPress={() => setEditModalVisible(true)}
-                    >
-                      edit
-                    </Text>
-                    <Text
-                      style={s.editDelete}
-                      onPress={() => setDeleteModalVisible(true)}
-                    >
-                      delete
-                    </Text>
-                  </>
-                )}
-              </View>
-            </View>
-          </>
-        );
-      }}
-    </ThemeContext.Consumer>
+                edit
+              </Text>
+              <Text
+                style={s.editDelete}
+                onPress={() => setDeleteModalVisible(true)}
+              >
+                delete
+              </Text>
+            </>
+          )}
+        </View>
+      </View>
+    </>
   );
 };
 

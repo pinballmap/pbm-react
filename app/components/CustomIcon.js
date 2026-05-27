@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  FontAwesome,
-  FontAwesome6,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import Ionicons from "@react-native-vector-icons/ionicons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 
 const CustomIcon = ({ name, size, color, type, style }) => {
   switch (type) {
-    case "font-awesome":
-      return (
-        <FontAwesome name={name} size={size} color={color} style={style} />
-      );
     case "font-awesome-6":
       return (
         <FontAwesome6 name={name} size={size} color={color} style={style} />

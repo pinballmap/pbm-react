@@ -6,7 +6,7 @@ import { ThemeContext } from "../theme-context";
 import { hideNoLocationTrackingModal } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import Text from "./PbmText";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const NoLocationTrackingModal = ({
   showNoLocationTrackingModal,

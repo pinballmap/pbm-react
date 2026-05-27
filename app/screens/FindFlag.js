@@ -13,8 +13,8 @@ import {
 import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   ConfirmationModal,
   PbmButton,

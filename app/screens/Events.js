@@ -21,7 +21,7 @@ import * as WebBrowser from "expo-web-browser";
 import { boundsToCoords } from "../utils/utilityFunctions";
 import { useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const moment = require("moment");
 
@@ -365,7 +365,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     innerBorderStyle: {
       width: 0,

@@ -1,5 +1,5 @@
 import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 export default function (type) {
   switch (type) {

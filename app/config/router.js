@@ -4,11 +4,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
-import {
-  FontAwesome6,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import FilterMap from "../screens/FilterMap";
 import LocationList from "../screens/LocationList";
 import LocationDetails from "../screens/LocationDetails";

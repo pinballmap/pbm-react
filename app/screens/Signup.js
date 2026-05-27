@@ -17,12 +17,9 @@ import {
 import { ThemeContext } from "../theme-context";
 import { loginLater } from "../actions/user_actions";
 import { postData } from "../config/request";
-import {
-  EvilIcons,
-  FontAwesome6,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { ConfirmationModal, PbmButton } from "../components";
 import * as WebBrowser from "expo-web-browser";
 
@@ -247,7 +244,7 @@ const Signup = ({ loginLater, navigation }) => {
             >
               <Text style={s.externalLink}> View our privacy policy</Text>
             </Pressable>
-            <EvilIcons name="external-link" style={s.externalIcon} />
+            <MaterialCommunityIcons name="open-in-new" style={s.externalIcon} />
           </View>
           <Pressable
             onPress={() => navigation.navigate("Login")}

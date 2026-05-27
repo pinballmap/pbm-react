@@ -14,7 +14,7 @@ import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteCondition, editCondition } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
@@ -89,156 +89,146 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
   }
 
   return (
-    <ThemeContext.Consumer>
-      {({ theme }) => {
-        return (
-          <>
-            <ConfirmationModal
-              loading={loading}
-              visible={deleteModalVisible}
-              closeModal={() => setDeleteModalVisible(false)}
-            >
-              <Text style={s.modalTitle}>Delete your comment?</Text>
-              <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
-              <WarningButton
-                title={"Cancel"}
-                onPress={() => setDeleteModalVisible(false)}
-              />
-            </ConfirmationModal>
-            <Modal
-              animationType="slide"
-              transparent={false}
-              statusBarTranslucent={true}
-              navigationBarTranslucent={true}
-              loading={loading}
-              visible={editModalVisible}
-              onRequestClose={() => {}}
-            >
-              <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                <KeyboardAwareScrollView
-                  contentContainerStyle={{
-                    backgroundColor: theme.base1,
-                    paddingBottom: 30,
-                    paddingTop: machineNameMargin + 50,
-                  }}
-                >
-                  <Text style={s.modalTitle}>Edit your comment</Text>
-                  <TextInput
-                    defaultValue={initialComment}
-                    multiline={true}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(conditionText) => setComment(conditionText)}
-                    style={[
-                      { padding: 5, height: 100 },
-                      s.textInput,
-                      s.radius10,
-                    ]}
-                    textAlignVertical="top"
-                  />
-                  <PbmButton title={"Save"} onPress={onEditPress} />
-                  <WarningButton title={"Cancel"} onPress={cancelEditComment} />
-                </KeyboardAwareScrollView>
-              </View>
-            </Modal>
-            <View style={s.listContainerStyle}>
-              <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
-              <View
-                style={[
-                  s.subtitleStyle,
-                  s.subtitleMargin,
-                  {
-                    flexDirection: "row",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                  },
-                ]}
+    <>
+      <ConfirmationModal
+        loading={loading}
+        visible={deleteModalVisible}
+        closeModal={() => setDeleteModalVisible(false)}
+      >
+        <Text style={s.modalTitle}>Delete your comment?</Text>
+        <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
+        <WarningButton
+          title={"Cancel"}
+          onPress={() => setDeleteModalVisible(false)}
+        />
+      </ConfirmationModal>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        statusBarTranslucent={true}
+        navigationBarTranslucent={true}
+        loading={loading}
+        visible={editModalVisible}
+        onRequestClose={() => {}}
+      >
+        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={{
+              backgroundColor: theme.base1,
+              paddingBottom: 30,
+              paddingTop: machineNameMargin + 50,
+            }}
+          >
+            <Text style={s.modalTitle}>Edit your comment</Text>
+            <TextInput
+              defaultValue={initialComment}
+              multiline={true}
+              underlineColorAndroid="transparent"
+              onChangeText={(conditionText) => setComment(conditionText)}
+              style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+              textAlignVertical="top"
+            />
+            <PbmButton title={"Save"} onPress={onEditPress} />
+            <WarningButton title={"Cancel"} onPress={cancelEditComment} />
+          </KeyboardAwareScrollView>
+        </View>
+      </Modal>
+      <View style={s.listContainerStyle}>
+        <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
+        <View
+          style={[
+            s.subtitleStyle,
+            s.subtitleMargin,
+            {
+              flexDirection: "row",
+              alignItems: "center",
+              flexWrap: "wrap",
+            },
+          ]}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {!!username && (
+              <Text
+                style={[s.username]}
+                onPress={() =>
+                  commentUserId &&
+                  navigation.navigate("UserProfilePublic", {
+                    userId: commentUserId,
+                    username,
+                  })
+                }
               >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  {!!username && (
-                    <Text
-                      style={[s.username]}
-                      onPress={() =>
-                        commentUserId &&
-                        navigation.navigate("UserProfilePublic", {
-                          userId: commentUserId,
-                          username,
-                        })
-                      }
-                    >
-                      {username}
-                    </Text>
-                  )}
-                  {!!admin_title && (
-                    <MaterialCommunityIcons
-                      name="shield-account"
-                      size={15}
-                      color={theme.shield}
-                      style={[s.rankIcon, { marginRight: 3 }]}
-                    />
-                  )}
-                  {!!contributor_rank && (
-                    <Image
-                      contentFit="fill"
-                      source={contributor_icon}
-                      style={s.rankIcon}
-                    />
-                  )}
-                  {!!flag && flagImages[flag] && (
-                    <Image
-                      source={flagImages[flag]}
-                      style={[s.flagIcon, { width: getFlagWidth(flag, 15) }]}
-                    />
-                  )}
-                </View>
-                <Text style={[s.italic, s.date]}>
-                  {moment(updated_at).format("MMM DD, YYYY")}
-                </Text>
-                {created_at !== updated_at && (
-                  <Text style={{ color: theme.text3 }}>{`*`}</Text>
-                )}
-                {user?.id && user.id === commentUserId && (
-                  <>
-                    <Text
-                      style={[s.editDelete, { marginHorizontal: 8 }]}
-                      onPress={() => setEditModalVisible(true)}
-                    >
-                      edit
-                    </Text>
-                    <Text
-                      style={s.editDelete}
-                      onPress={() => setDeleteModalVisible(true)}
-                    >
-                      delete
-                    </Text>
-                  </>
-                )}
-              </View>
-              {!!username &&
-                !!commentOperatorId &&
-                commentOperatorId === location.operator_id && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginLeft: 8,
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      name="wrench"
-                      size={15}
-                      color={theme.wrench}
-                      style={{ marginRight: 5, marginTop: 5 }}
-                    />
-                    <Text style={[s.subtitleStyle, s.italic]}>
-                      Operator: {operator.name}
-                    </Text>
-                  </View>
-                )}
+                {username}
+              </Text>
+            )}
+            {!!admin_title && (
+              <MaterialCommunityIcons
+                name="shield-account"
+                size={15}
+                color={theme.shield}
+                style={[s.rankIcon, { marginRight: 3 }]}
+              />
+            )}
+            {!!contributor_rank && (
+              <Image
+                contentFit="fill"
+                source={contributor_icon}
+                style={s.rankIcon}
+              />
+            )}
+            {!!flag && flagImages[flag] && (
+              <Image
+                source={flagImages[flag]}
+                style={[s.flagIcon, { width: getFlagWidth(flag, 15) }]}
+              />
+            )}
+          </View>
+          <Text style={[s.italic, s.date]}>
+            {moment(updated_at).format("MMM DD, YYYY")}
+          </Text>
+          {created_at !== updated_at && (
+            <Text style={{ color: theme.text3 }}>{`*`}</Text>
+          )}
+          {user?.id && user.id === commentUserId && (
+            <>
+              <Text
+                style={[s.editDelete, { marginHorizontal: 8 }]}
+                onPress={() => setEditModalVisible(true)}
+              >
+                edit
+              </Text>
+              <Text
+                style={s.editDelete}
+                onPress={() => setDeleteModalVisible(true)}
+              >
+                delete
+              </Text>
+            </>
+          )}
+        </View>
+        {!!username &&
+          !!commentOperatorId &&
+          commentOperatorId === location.operator_id && (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginLeft: 8,
+              }}
+            >
+              <MaterialCommunityIcons
+                name="wrench"
+                size={15}
+                color={theme.wrench}
+                style={{ marginRight: 5, marginTop: 5 }}
+              />
+              <Text style={[s.subtitleStyle, s.italic]}>
+                Operator: {operator.name}
+              </Text>
             </View>
-          </>
-        );
-      }}
-    </ThemeContext.Consumer>
+          )}
+      </View>
+    </>
   );
 };
 

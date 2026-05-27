@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { Image } from "expo-image";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { ThemeContext } from "../theme-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {

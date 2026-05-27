@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { View } from "react-native";
-import { FontAwesome6 } from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import RemoveMachineModal from "./RemoveMachineModal";
 import { useNavigation } from "@react-navigation/native";
 

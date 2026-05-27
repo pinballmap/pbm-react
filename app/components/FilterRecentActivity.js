@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
-import {
-  MaterialCommunityIcons,
-  Entypo,
-  FontAwesome6,
-} from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
+import Entypo from "@react-native-vector-icons/entypo/static";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import { useNavigation } from "@react-navigation/native";
 import { useStore } from "react-redux";
 import ConfirmationModal from "./ConfirmationModal";

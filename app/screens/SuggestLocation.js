@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -17,7 +17,7 @@ import {
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
 import { ThemeContext } from "../theme-context";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   ActivityIndicator,
   DropDownButton,
@@ -58,6 +58,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const [countryName, setCountryName] = useState("United States");
   const [countryCode, setCountryCode] = useState("US");
   const [locationAlreadyExists, setLocationAlreadyExists] = useState(false);
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
   const insets = useSafeAreaInsets();
   const machineNameMargin =
     Platform.OS === "android"
@@ -225,434 +227,393 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   };
 
   return (
-    <ThemeContext.Consumer>
-      {({ theme }) => {
-        const s = getStyles(theme);
-        return (
-          <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-            {!loggedIn ? (
-              <NotLoggedIn
-                text={"You must be logged in to submit a location. Thank you!"}
-                onPress={() => navigation.navigate("Login")}
-              />
+    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+      {!loggedIn ? (
+        <NotLoggedIn
+          text={"You must be logged in to submit a location. Thank you!"}
+          onPress={() => navigation.navigate("Login")}
+        />
+      ) : (
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            backgroundColor: theme.base1,
+            paddingBottom: insets.bottom,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Modal
+            animationType="slide"
+            transparent={true}
+            statusBarTranslucent={true}
+            navigationBarTranslucent={true}
+            visible={showSuggestLocationModal}
+            onRequestClose={() => {}}
+          >
+            {isSuggestingLocation ? (
+              <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.7)" }}>
+                <ActivityIndicator />
+              </View>
+            ) : locationSuggested ? (
+              <View style={s.successContainer}>
+                <View style={s.successInner}>
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={35}
+                    onPress={() => {
+                      setShowSuggestLocationModal(false);
+                      dispatch(resetSuggestLocation());
+                      navigation.navigate("MapTab");
+                    }}
+                    style={s.xButton}
+                  />
+                  <Text style={s.success}>
+                    <Text style={s.successBanner}>
+                      {`Thanks for submitting that location!\n\n`}
+                    </Text>
+                    {`Review can take 0-7 days. Do not re-submit or remind us (unless it's opening day).`}
+                  </Text>
+                </View>
+              </View>
             ) : (
-              <KeyboardAwareScrollView
-                contentContainerStyle={{
-                  backgroundColor: theme.base1,
-                  paddingBottom: insets.bottom,
-                }}
-                keyboardShouldPersistTaps="handled"
-              >
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  statusBarTranslucent={true}
-                  navigationBarTranslucent={true}
-                  visible={showSuggestLocationModal}
-                  onRequestClose={() => {}}
+              <View style={{ flex: 1, backgroundColor: theme.base1 }}>
+                <ScrollView
+                  contentContainerStyle={{
+                    backgroundColor: theme.base1,
+                    paddingBottom: 30,
+                    paddingTop: machineNameMargin,
+                  }}
                 >
-                  {isSuggestingLocation ? (
-                    <View
-                      style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.7)" }}
-                    >
-                      <ActivityIndicator />
-                    </View>
-                  ) : locationSuggested ? (
-                    <View style={s.successContainer}>
-                      <View style={s.successInner}>
-                        <MaterialCommunityIcons
-                          name="close-circle"
-                          size={35}
-                          onPress={() => {
-                            setShowSuggestLocationModal(false);
-                            dispatch(resetSuggestLocation());
-                            navigation.navigate("MapTab");
-                          }}
-                          style={s.xButton}
-                        />
-                        <Text style={s.success}>
-                          <Text style={s.successBanner}>
-                            {`Thanks for submitting that location!\n\n`}
-                          </Text>
-                          {`Review can take 0-7 days. Do not re-submit or remind us (unless it's opening day).`}
-                        </Text>
-                      </View>
-                    </View>
-                  ) : (
-                    <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-                      <ScrollView
-                        contentContainerStyle={{
-                          backgroundColor: theme.base1,
-                          paddingBottom: 30,
-                          paddingTop: machineNameMargin,
-                        }}
+                  <View style={s.pageTitle}>
+                    {machineList.length === 0 || locationName?.length === 0 ? (
+                      <Text
+                        style={[{ color: theme.purpleLight }, s.pageTitleText]}
                       >
-                        <View style={s.pageTitle}>
-                          {machineList.length === 0 ||
-                          locationName?.length === 0 ? (
-                            <Text
-                              style={[
-                                { color: theme.purpleLight },
-                                s.pageTitleText,
-                              ]}
-                            >
-                              Please fill in required fields
-                            </Text>
-                          ) : (
-                            <Text style={s.pageTitleText}>
-                              Please review your submission
-                            </Text>
-                          )}
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Location Name</Text>
-                          {locationName?.length === 0 ? (
-                            <Text style={[s.error, s.preview]}>
-                              Include a location name
-                            </Text>
-                          ) : (
-                            <Text style={s.preview}>{locationName}</Text>
-                          )}
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Street</Text>
-                          <Text style={s.preview}>{street}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>City</Text>
-                          <Text style={s.preview}>{city}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>State</Text>
-                          <Text style={s.preview}>{state}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Zip</Text>
-                          <Text style={s.preview}>{zip}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Country</Text>
-                          <Text style={s.preview}>{countryName}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Phone</Text>
-                          <Text style={s.preview}>{phone}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Website</Text>
-                          <Text style={s.preview}>{website}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Location Notes</Text>
-                          <Text style={s.preview}>{description}</Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Location Type</Text>
-                          <Text style={s.preview}>
-                            {typeof locationType === "number" &&
-                            locationType > -1
-                              ? locationTypes
-                                  .filter((type) => type.id === locationType)
-                                  .map((type) => type.name)
-                              : "None Selected"}
+                        Please fill in required fields
+                      </Text>
+                    ) : (
+                      <Text style={s.pageTitleText}>
+                        Please review your submission
+                      </Text>
+                    )}
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Location Name</Text>
+                    {locationName?.length === 0 ? (
+                      <Text style={[s.error, s.preview]}>
+                        Include a location name
+                      </Text>
+                    ) : (
+                      <Text style={s.preview}>{locationName}</Text>
+                    )}
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Street</Text>
+                    <Text style={s.preview}>{street}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>City</Text>
+                    <Text style={s.preview}>{city}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>State</Text>
+                    <Text style={s.preview}>{state}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Zip</Text>
+                    <Text style={s.preview}>{zip}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Country</Text>
+                    <Text style={s.preview}>{countryName}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Phone</Text>
+                    <Text style={s.preview}>{phone}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Website</Text>
+                    <Text style={s.preview}>{website}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Location Notes</Text>
+                    <Text style={s.preview}>{description}</Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Location Type</Text>
+                    <Text style={s.preview}>
+                      {typeof locationType === "number" && locationType > -1
+                        ? locationTypes
+                            .filter((type) => type.id === locationType)
+                            .map((type) => type.name)
+                        : "None Selected"}
+                    </Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Operator</Text>
+                    <Text style={s.preview}>
+                      {typeof operator === "number" && operator > -1
+                        ? operators
+                            .filter((op) => op.id === operator)
+                            .map((op) => op.name)
+                        : "None Selected"}
+                    </Text>
+                  </View>
+                  <View style={s.previewContainer}>
+                    <Text style={s.previewTitle}>Machine List</Text>
+                    {machineList.length === 0 ? (
+                      <Text style={[s.error, s.preview]}>
+                        Include at least one machine
+                      </Text>
+                    ) : (
+                      <View style={s.preview}>
+                        {machineList.map((m) => (
+                          <Text style={s.previewMachine} key={m.name}>
+                            {m.name} ({m.manufacturer}, {m.year})
                           </Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Operator</Text>
-                          <Text style={s.preview}>
-                            {typeof operator === "number" && operator > -1
-                              ? operators
-                                  .filter((op) => op.id === operator)
-                                  .map((op) => op.name)
-                              : "None Selected"}
-                          </Text>
-                        </View>
-                        <View style={s.previewContainer}>
-                          <Text style={s.previewTitle}>Machine List</Text>
-                          {machineList.length === 0 ? (
-                            <Text style={[s.error, s.preview]}>
-                              Include at least one machine
-                            </Text>
-                          ) : (
-                            <View style={s.preview}>
-                              {machineList.map((m) => (
-                                <Text style={s.previewMachine} key={m.name}>
-                                  {m.name} ({m.manufacturer}, {m.year})
-                                </Text>
-                              ))}
-                            </View>
-                          )}
-                        </View>
-                        <View style={s.machineVersionContainer}>
-                          <Text
-                            style={{
-                              paddingHorizontal: 15,
-                              paddingVertical: 10,
-                              color: theme.purpleLight,
-                            }}
-                          >
-                            {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
-                          </Text>
-                        </View>
-                        {locationAlreadyExists && (
-                          <View style={s.alreadyExistsContainer}>
-                            <Text style={s.alreadyExistsText}>
-                              {`This location seems to already be on the map. Did you search first? Are you sure you want to submit it?`}
-                            </Text>
-                          </View>
-                        )}
-                        <PbmButton
-                          title={"Submit Location"}
-                          onPress={() => confirmSuggestLocationDetails()}
-                          disabled={
-                            machineList.length === 0 ||
-                            locationName.length === 0
-                          }
-                          margin={s.buttonMargin}
-                        />
-                        <WarningButton
-                          title={"Go Back"}
-                          onPress={() => setShowSuggestLocationModal(false)}
-                          margin={s.buttonMargin}
-                        />
-                      </ScrollView>
+                        ))}
+                      </View>
+                    )}
+                  </View>
+                  <View style={s.machineVersionContainer}>
+                    <Text
+                      style={{
+                        paddingHorizontal: 15,
+                        paddingVertical: 10,
+                        color: theme.purpleLight,
+                      }}
+                    >
+                      {`Unsure what "model" the machine is (e.g., Pro, Premium, LE, etc.)? The safest assumption is Pro (the baseline model).`}
+                    </Text>
+                  </View>
+                  {locationAlreadyExists && (
+                    <View style={s.alreadyExistsContainer}>
+                      <Text style={s.alreadyExistsText}>
+                        {`This location seems to already be on the map. Did you search first? Are you sure you want to submit it?`}
+                      </Text>
                     </View>
                   )}
-                </Modal>
-                <Text style={[{ marginTop: 10 }, s.text]}>
-                  {`Only submit `}
-                  <Text
-                    style={[s.text, s.boldFont, s.pinkText]}
-                  >{`NEW locations`}</Text>
-                  {`.`}
-                </Text>
-                <Text style={[{ marginTop: 10 }, s.text]}>
-                  <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
-                  {` submit your home (even short-term rentals).`}
-                </Text>
-                <Text style={[{ marginTop: 10 }, s.text]}>
-                  <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
-                  {` submit same location `}
-                  <Text
-                    style={[s.text, s.boldFont, s.pinkText]}
-                  >{`multiple times`}</Text>
-                  {`. Review takes 0 - 7 days.`}
-                </Text>
-                <Text style={[{ marginTop: 10 }, s.text]}>
-                  {`New business that isn't open yet? We don't add until it's open - `}
-                  <Text
-                    style={[s.text, s.boldFont, { textTransform: "uppercase" }]}
-                  >{`tell us the opening date`}</Text>
-                  {`.`}
-                </Text>
-                <Text style={s.title}>Location Name</Text>
-                <GooglePlacesAutocomplete
-                  ref={autoCompleteRef}
-                  predefinedPlaces={[]}
-                  keyboardShouldPersistTaps="always"
-                  timeout={20000}
-                  keepResultsAfterBlur={true}
-                  minLength={2}
-                  placeholder="ex. Giovanni's Pizza"
-                  textInputProps={{
-                    placeholderTextColor: theme.indigo4,
-                    style: [
-                      {
-                        fontFamily: "Nunito-Regular",
-                        height: 40,
-                        width: deviceWidth - 40,
-                      },
-                      s.textInput,
-                      s.radius10,
-                    ],
-                  }}
-                  onPress={(data, details = null) => {
-                    setLocation(details);
-                  }}
-                  fetchDetails
-                  query={{
-                    key: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
-                    language: "en",
-                  }}
-                  styles={{
-                    row: {
-                      width: deviceWidth,
-                      overflow: "hidden",
-                    },
-                    description: {
-                      fontFamily: "Nunito-Regular",
-                    },
-                  }}
-                  disableScroll
-                />
-                <Text style={s.title}>Street</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(street) => setStreet(street)}
-                  returnKeyType="done"
-                  placeholder={"ex. 1187 Coast Village Road"}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="streetAddressLine1"
-                  autoCapitalize="words"
-                  value={street}
-                />
-                <Text style={s.title}>City</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(city) => setCity(city)}
-                  returnKeyType="done"
-                  placeholder={"ex. Montecito"}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="addressCity"
-                  autoCapitalize="words"
-                  value={city}
-                />
-                <Text style={s.title}>State</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(state) => setState(state)}
-                  returnKeyType="done"
-                  placeholder={"ex. CA"}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="addressState"
-                  autoCapitalize="characters"
-                  value={state}
-                />
-                <Text style={s.title}>Zip Code</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(zip) => setZip(zip)}
-                  returnKeyType="done"
-                  placeholder={"ex. 93108"}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="postalCode"
-                  value={zip}
-                />
-                <Text style={s.title}>Country</Text>
-                <DropDownButton
-                  title={countryName}
-                  onPress={() => goToFindCountry()}
-                />
-                <Text style={s.title}>Phone</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(phone) => setPhone(phone)}
-                  returnKeyType="done"
-                  placeholder={"(805) xxx-xxxx"}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="telephoneNumber"
-                  autoCapitalize="none"
-                  value={phone}
-                />
-                <Text style={s.title}>Website</Text>
-                <TextInput
-                  style={[
-                    { height: 40, textAlign: "left" },
-                    s.textInput,
-                    s.radius10,
-                  ]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(website) => setWebsite(website)}
-                  returnKeyType="done"
-                  placeholder={"https://..."}
-                  placeholderTextColor={theme.indigo4}
-                  textContentType="URL"
-                  autoCapitalize="none"
-                  value={website}
-                />
-                <Text style={s.title}>Location Notes</Text>
-                <TextInput
-                  multiline={true}
-                  style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
-                  onChangeText={(description) => setDescription(description)}
-                  underlineColorAndroid="transparent"
-                  placeholder={
-                    "OPENING DATE; hours; what type of payment system(s) they use (door fee, cash, cards); accessibility issues"
-                  }
-                  placeholderTextColor={theme.indigo4}
-                  textAlignVertical="top"
-                />
-                <Text style={s.title}>Location Type</Text>
-                <DropDownButton
-                  title={locationTypeName}
-                  onPress={() => goToFindLocationType()}
-                />
-                <Text style={s.title}>Operator</Text>
-                <DropDownButton
-                  title={operatorName}
-                  onPress={() => goToFindOperator()}
-                />
-                <Text style={s.title}>Machines</Text>
-                <DropDownButton
-                  title={"Select machines"}
-                  onPress={() =>
-                    navigate("FindMachine", {
-                      multiSelect: true,
-                      showDone: machineList.length > 0,
-                    })
-                  }
-                  rightIcon={
-                    <MaterialCommunityIcons name="plus" style={s.plusButton} />
-                  }
-                />
-                {machineList.length > 0 ? (
-                  <View style={s.machineContainer}>
-                    {machineList.map((machine) => (
-                      <View key={machine.id} style={s.listContainerStyle}>
-                        <Pressable
-                          style={{ paddingRight: 10 }}
-                          onPress={() =>
-                            dispatch(removeMachineFromList(machine))
-                          }
-                        >
-                          <MaterialCommunityIcons
-                            name="close-circle"
-                            color={theme.indigo4}
-                            size={15}
-                          />
-                        </Pressable>
-                        <Text>{getDisplayText(machine)}</Text>
-                      </View>
-                    ))}
-                  </View>
-                ) : null}
-                <PbmButton
-                  title={"Review Submission"}
-                  onPress={reviewSubmission}
-                  margin={{ marginVertical: 30, marginHorizontal: 40 }}
-                />
-              </KeyboardAwareScrollView>
+                  <PbmButton
+                    title={"Submit Location"}
+                    onPress={() => confirmSuggestLocationDetails()}
+                    disabled={
+                      machineList.length === 0 || locationName.length === 0
+                    }
+                    margin={s.buttonMargin}
+                  />
+                  <WarningButton
+                    title={"Go Back"}
+                    onPress={() => setShowSuggestLocationModal(false)}
+                    margin={s.buttonMargin}
+                  />
+                </ScrollView>
+              </View>
             )}
-            <KeyboardToolbar />
-          </View>
-        );
-      }}
-    </ThemeContext.Consumer>
+          </Modal>
+          <Text style={[{ marginTop: 10 }, s.text]}>
+            {`Only submit `}
+            <Text
+              style={[s.text, s.boldFont, s.pinkText]}
+            >{`NEW locations`}</Text>
+            {`.`}
+          </Text>
+          <Text style={[{ marginTop: 10 }, s.text]}>
+            <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+            {` submit your home (even short-term rentals).`}
+          </Text>
+          <Text style={[{ marginTop: 10 }, s.text]}>
+            <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+            {` submit same location `}
+            <Text
+              style={[s.text, s.boldFont, s.pinkText]}
+            >{`multiple times`}</Text>
+            {`. Review takes 0 - 7 days.`}
+          </Text>
+          <Text style={[{ marginTop: 10 }, s.text]}>
+            {`New business that isn't open yet? We don't add until it's open - `}
+            <Text
+              style={[s.text, s.boldFont, { textTransform: "uppercase" }]}
+            >{`tell us the opening date`}</Text>
+            {`.`}
+          </Text>
+          <Text style={s.title}>Location Name</Text>
+          <GooglePlacesAutocomplete
+            ref={autoCompleteRef}
+            predefinedPlaces={[]}
+            keyboardShouldPersistTaps="always"
+            timeout={20000}
+            keepResultsAfterBlur={true}
+            minLength={2}
+            placeholder="ex. Giovanni's Pizza"
+            textInputProps={{
+              placeholderTextColor: theme.indigo4,
+              style: [
+                {
+                  fontFamily: "Nunito-Regular",
+                  height: 40,
+                  width: deviceWidth - 40,
+                },
+                s.textInput,
+                s.radius10,
+              ],
+            }}
+            onPress={(data, details = null) => {
+              setLocation(details);
+            }}
+            fetchDetails
+            query={{
+              key: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
+              language: "en",
+            }}
+            styles={{
+              row: {
+                width: deviceWidth,
+                overflow: "hidden",
+              },
+              description: {
+                fontFamily: "Nunito-Regular",
+              },
+            }}
+            disableScroll
+          />
+          <Text style={s.title}>Street</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(street) => setStreet(street)}
+            returnKeyType="done"
+            placeholder={"ex. 1187 Coast Village Road"}
+            placeholderTextColor={theme.indigo4}
+            textContentType="streetAddressLine1"
+            autoCapitalize="words"
+            value={street}
+          />
+          <Text style={s.title}>City</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(city) => setCity(city)}
+            returnKeyType="done"
+            placeholder={"ex. Montecito"}
+            placeholderTextColor={theme.indigo4}
+            textContentType="addressCity"
+            autoCapitalize="words"
+            value={city}
+          />
+          <Text style={s.title}>State</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(state) => setState(state)}
+            returnKeyType="done"
+            placeholder={"ex. CA"}
+            placeholderTextColor={theme.indigo4}
+            textContentType="addressState"
+            autoCapitalize="characters"
+            value={state}
+          />
+          <Text style={s.title}>Zip Code</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(zip) => setZip(zip)}
+            returnKeyType="done"
+            placeholder={"ex. 93108"}
+            placeholderTextColor={theme.indigo4}
+            textContentType="postalCode"
+            value={zip}
+          />
+          <Text style={s.title}>Country</Text>
+          <DropDownButton
+            title={countryName}
+            onPress={() => goToFindCountry()}
+          />
+          <Text style={s.title}>Phone</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(phone) => setPhone(phone)}
+            returnKeyType="done"
+            placeholder={"(805) xxx-xxxx"}
+            placeholderTextColor={theme.indigo4}
+            textContentType="telephoneNumber"
+            autoCapitalize="none"
+            value={phone}
+          />
+          <Text style={s.title}>Website</Text>
+          <TextInput
+            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            underlineColorAndroid="transparent"
+            onChangeText={(website) => setWebsite(website)}
+            returnKeyType="done"
+            placeholder={"https://..."}
+            placeholderTextColor={theme.indigo4}
+            textContentType="URL"
+            autoCapitalize="none"
+            value={website}
+          />
+          <Text style={s.title}>Location Notes</Text>
+          <TextInput
+            multiline={true}
+            style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+            onChangeText={(description) => setDescription(description)}
+            underlineColorAndroid="transparent"
+            placeholder={
+              "OPENING DATE; hours; what type of payment system(s) they use (door fee, cash, cards); accessibility issues"
+            }
+            placeholderTextColor={theme.indigo4}
+            textAlignVertical="top"
+          />
+          <Text style={s.title}>Location Type</Text>
+          <DropDownButton
+            title={locationTypeName}
+            onPress={() => goToFindLocationType()}
+          />
+          <Text style={s.title}>Operator</Text>
+          <DropDownButton
+            title={operatorName}
+            onPress={() => goToFindOperator()}
+          />
+          <Text style={s.title}>Machines</Text>
+          <DropDownButton
+            title={"Select machines"}
+            onPress={() =>
+              navigate("FindMachine", {
+                multiSelect: true,
+                showDone: machineList.length > 0,
+              })
+            }
+            rightIcon={
+              <MaterialCommunityIcons name="plus" style={s.plusButton} />
+            }
+          />
+          {machineList.length > 0 ? (
+            <View style={s.machineContainer}>
+              {machineList.map((machine) => (
+                <View key={machine.id} style={s.listContainerStyle}>
+                  <Pressable
+                    style={{ paddingRight: 10 }}
+                    onPress={() => dispatch(removeMachineFromList(machine))}
+                  >
+                    <MaterialCommunityIcons
+                      name="close-circle"
+                      color={theme.indigo4}
+                      size={15}
+                    />
+                  </Pressable>
+                  <Text>{getDisplayText(machine)}</Text>
+                </View>
+              ))}
+            </View>
+          ) : null}
+          <PbmButton
+            title={"Review Submission"}
+            onPress={reviewSubmission}
+            margin={{ marginVertical: 30, marginHorizontal: 40 }}
+          />
+        </KeyboardAwareScrollView>
+      )}
+      <KeyboardToolbar />
+    </View>
   );
 }
 

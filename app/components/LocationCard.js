@@ -9,8 +9,8 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import FavoriteLocation from "./FavoriteLocation";
 import { CustomIcon } from "../components";
 

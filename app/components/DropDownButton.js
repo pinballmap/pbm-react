@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import { ThemeContext } from "../theme-context";
 
 const DropDownButton = ({ title, margin, onPress, rightIcon }) => {
@@ -32,7 +32,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     titleStyle: {
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito-SemiBold",
       color: theme.text3,
     },
     buttonStyle: {

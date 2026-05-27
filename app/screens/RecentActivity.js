@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { getData } from "../config/request";
 import {
   ActivityIndicator,
@@ -631,7 +631,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     innerBorderStyle: {
       width: 0,

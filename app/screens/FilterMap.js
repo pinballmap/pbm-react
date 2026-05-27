@@ -3,7 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { FlatList, Modal, Pressable, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, DropDownButton, Screen, Text } from "../components";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   updateNumMachinesSelected,
   updateViewFavoriteLocations,
@@ -402,7 +402,7 @@ const FilterMap = ({
             </Pressable>
           </Modal>
           <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Has &gt; 0 Stern Insider Connected Machine
+            Has &gt; 0 Stern Insider Connected machine
           </Text>
           <ButtonGroup
             onPress={(idx) => dispatch(setLocationIcFilter(idx === 1))}
@@ -516,7 +516,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     innerBorderStyle: {
       width: 0,

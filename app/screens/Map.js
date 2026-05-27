@@ -4,9 +4,11 @@ import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import { retrieveItem } from "../config/utils";
 import { sleep } from "../utils";
 import { getData } from "../config/request";
-import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import Ionicons from "@react-native-vector-icons/ionicons/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import Mapbox from "@rnmapbox/maps";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   ActivityIndicator,
   AppAlert,
@@ -377,8 +379,9 @@ const Map = ({
         onPress={updateCurrentLocation}
       >
         {Platform.OS === "ios" && locationTrackingServicesEnabled && (
-          <FontAwesome
+          <FontAwesome6
             name={"location-arrow"}
+            iconStyle="solid"
             color={theme.theme == "dark" ? theme.purple2 : theme.purple}
             size={26}
             style={{ justifyContent: "center", alignSelf: "center" }}

@@ -15,7 +15,7 @@ import {
   selectLocationListFilterBy,
   getListLocations,
 } from "../actions/locations_actions";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -217,7 +217,7 @@ const getStyles = (theme) =>
     buttonGroupInactive: {
       color: theme.text2,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     innerBorderStyle: {
       width: 0,

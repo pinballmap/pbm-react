@@ -11,7 +11,7 @@ import {
   Text,
 } from "../components";
 import { submitMessage, clearMessage } from "../actions";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   const { theme } = useContext(ThemeContext);

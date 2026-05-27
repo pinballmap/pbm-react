@@ -4,7 +4,7 @@ import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const ResendConfirmation = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);

@@ -16,7 +16,8 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";

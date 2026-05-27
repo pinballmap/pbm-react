@@ -14,11 +14,9 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Image } from "expo-image";
-import {
-  FontAwesome6,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import FontAwesome5 from "@react-native-vector-icons/fontawesome5/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   addMachineCondition,
   addMachineScore,
@@ -563,6 +561,7 @@ const MachineDetails = ({
                     ) : ic_enabled ? (
                       <FontAwesome6
                         name="check"
+                        iconStyle="solid"
                         size={28}
                         color="green"
                         style={{ width: 28 }}
@@ -644,8 +643,9 @@ const MachineDetails = ({
                         navigation.navigate("UserProfilePublic", { userId })
                       }
                     >
-                      See your list.
+                      See your list
                     </Text>
+                    {`.`}
                   </Text>
                   {lifeListStatus.has_scores === false && (
                     <Text

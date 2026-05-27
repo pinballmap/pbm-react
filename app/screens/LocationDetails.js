@@ -15,8 +15,9 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
-import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import {
   ActivityIndicator,
   ConfirmationModal,
@@ -535,7 +536,8 @@ const LocationDetails = (props) => {
           closeModal={() => setConfirmModalVisible(false)}
         >
           <Text style={s.confirmText}>
-            Confirm the lineup at {location.name}?
+            Confirm the lineup at{" "}
+            <Text style={s.confirmTextMachineName}>{location.name}</Text>?
           </Text>
           <PbmButton
             title={"Confirm Lineup"}
@@ -597,6 +599,7 @@ const LocationDetails = (props) => {
             >
               <FontAwesome6
                 name={"map-location"}
+                iconStyle="solid"
                 color={theme.purpleLight}
                 size={24}
                 style={{
@@ -1173,7 +1176,12 @@ const LocationDetails = (props) => {
       </ScrollView>
       {showScrollToTop && (
         <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
-          <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
+          <FontAwesome6
+            name="arrow-up"
+            iconStyle="solid"
+            size={32}
+            color={theme.white}
+          />
         </Pressable>
       )}
       {copiedNotice && (
@@ -1398,9 +1406,12 @@ const getStyles = (theme) =>
     },
     confirmText: {
       textAlign: "center",
-      marginLeft: 15,
-      marginRight: 15,
+      marginHorizontal: 15,
       fontSize: 18,
+      color: theme.text,
+      fontFamily: "Nunito-Regular",
+    },
+    confirmTextMachineName: {
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
     },
@@ -1426,13 +1437,13 @@ const getStyles = (theme) =>
       width: 15,
       height: 15,
       marginHorizontal: 2,
-      marginBottom: -3,
+      marginBottom: -2,
     },
     flagIcon: {
       height: 15,
       marginHorizontal: 2,
       borderRadius: 3,
-      marginBottom: -2,
+      marginBottom: -1,
     },
     operatorIcon: {
       marginHorizontal: 2,
@@ -1441,7 +1452,6 @@ const getStyles = (theme) =>
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      transform: [{ translateY: 1 }],
     },
     operatorContactIcon: {
       marginLeft: 6,

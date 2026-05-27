@@ -1,9 +1,9 @@
-import React, { useContext, forwardRef } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { ScrollView } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const Screen = forwardRef((props, ref) => {
+const Screen = ({ ref, ...props }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -16,7 +16,7 @@ const Screen = forwardRef((props, ref) => {
       {props.children}
     </ScrollView>
   );
-});
+};
 
 Screen.propTypes = {
   children: PropTypes.node,

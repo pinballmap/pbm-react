@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { FilterLocationActivity } from "../components";
 import { ThemeContext } from "../theme-context";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import ActivityIndicator from "./ActivityIndicator";
 import Text from "./PbmText";
 import ConfirmationModal from "./ConfirmationModal";

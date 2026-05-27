@@ -7,7 +7,7 @@ export default {
       enabled: false,
     },
     runtimeVersion: "1.0.0",
-    version: "5.4.5",
+    version: "5.4.6",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -16,7 +16,6 @@ export default {
       "Find public places to play pinball! Pinball Map is kept up to date by users and lists over 50,000 pinball machines.",
     githubUrl: "https://github.com/pinballmap/pbm-react/",
     primaryColor: "#ebecff",
-    newArchEnabled: true,
     extra: {
       eas: {
         projectId: "7488ea00-6c89-11e9-8ab8-0157f5861c1f",
@@ -46,7 +45,7 @@ export default {
       [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.15.2",
+          RNMapboxMapsVersion: "11.20.3",
           RNMAPBOX_MAPS_DOWNLOAD_TOKEN: process.env.EXPO_PUBLIC_MAPBOX_DOWNLOAD,
         },
       ],
@@ -73,6 +72,14 @@ export default {
       ],
       ["expo-web-browser"],
       ["expo-asset"],
+      ["expo-image"],
+      ["expo-status-bar"],
+      ["@react-native-vector-icons/material-icons"],
+      ["@react-native-vector-icons/material-design-icons"],
+      ["@react-native-vector-icons/fontawesome6"],
+      ["@react-native-vector-icons/ionicons"],
+      ["@react-native-vector-icons/entypo"],
+      ["@react-native-vector-icons/fontawesome5"],
       [
         "expo-location",
         {
@@ -97,7 +104,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "275",
+      buildNumber: "276",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -139,7 +146,6 @@ export default {
     android: {
       package: IS_DEV ? "com.pbm.dev" : "com.pbm",
       userInterfaceStyle: "automatic",
-      edgeToEdgeEnabled: true,
       config: {
         googleMaps: {
           apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,

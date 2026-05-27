@@ -17,8 +17,9 @@ import {
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
+import Entypo from "@react-native-vector-icons/entypo/static";
 import { getData } from "../config/request";
 import {
   getLocationsByRegion,

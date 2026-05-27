@@ -15,7 +15,8 @@ import {
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
 import { ThemeContext } from "../theme-context";
-import { FontAwesome6, MaterialIcons } from "@expo/vector-icons";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import {
   getFavoriteLocations,
   login,

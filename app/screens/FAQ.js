@@ -8,11 +8,9 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import {
-  Entypo,
-  FontAwesome6,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import Entypo from "@react-native-vector-icons/entypo/static";
+import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
 
@@ -682,7 +680,12 @@ const FAQ = ({ navigation, user }) => {
       </Screen>
       {showScrollToTop && (
         <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
-          <FontAwesome6 name="arrow-up" size={32} color={theme.white} />
+          <FontAwesome6
+            name="arrow-up"
+            iconStyle="solid"
+            size={32}
+            color={theme.white}
+          />
         </Pressable>
       )}
     </SafeAreaView>

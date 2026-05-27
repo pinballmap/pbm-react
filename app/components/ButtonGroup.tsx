@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Platform,
   StyleSheet,
   Pressable,
   Text,
@@ -50,14 +49,9 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
                   style={StyleSheet.flatten([
                     {
                       fontSize: 13,
-                      ...Platform.select({
-                        android: {},
-                        default: {
-                          fontWeight: '500',
-                        },
-                      }),
                     },
                     textStyle && textStyle,
+                    isSelected && selectedTextStyle && selectedTextStyle,
                   ])}
                 >
                   {button}

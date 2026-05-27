@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { ThemeContext } from "../theme-context";
 import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import { getDistanceWithUnit } from "../utils/utilityFunctions";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { CustomIcon } from "../components";
 
 const NUM_MACHINES_TO_SHOW = 5;
