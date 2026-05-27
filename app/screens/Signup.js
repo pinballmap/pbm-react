@@ -41,37 +41,33 @@ const Signup = ({ loginLater, navigation }) => {
   const [apiErrorMsg, setApiErrorMsg] = useState(null);
 
   const validateFields = () => {
-    if (!username) {
-      setUsernameError("EMPTY USERNAME");
-      setErrors(true);
-    } else if (username.length > 15) {
-      setUsernameError("Username is too long (maximum is 15 characters");
-      setErrors(true);
+    let hasErrors = false;
+
+    if (username.length > 15) {
+      setUsernameError("Username is too long (maximum is 15 characters)");
+      hasErrors = true;
     } else if (!/^[a-zA-Z0-9_.]*$/.test(username)) {
-      setErrors(true);
       setUsernameError("Username must be alphanumeric");
+      hasErrors = true;
     }
 
-    if (!email) {
-      setEmailError("EMPTY EMAIL");
-      setErrors(true);
-    } else if (!email.includes("@")) {
+    if (!email.includes("@")) {
       setEmailError("Email is invalid");
-      setErrors(true);
+      hasErrors = true;
     }
 
-    if (!password) {
-      setPasswordError("EMPTY PASSWORD");
-      setErrors(true);
-    } else if (password.length < 6) {
+    if (password.length < 6) {
       setPasswordError("Password is too short (minimum is 6 characters)");
-      setErrors(true);
+      hasErrors = true;
     }
 
     if (password !== confirm_password) {
-      setConfirmPasswordError("DOESN'T MATCH PASSWORD");
-      setErrors(true);
+      setConfirmPasswordError("Password confirmation doesn't match");
+      hasErrors = true;
     }
+
+    if (hasErrors) setErrors(true);
+    return hasErrors;
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -85,9 +81,7 @@ const Signup = ({ loginLater, navigation }) => {
     setApiErrorMsg(null);
     setErrors(false);
 
-    validateFields();
-
-    if (!errors) {
+    if (!validateFields()) {
       const body = {
         username,
         email,
@@ -163,9 +157,12 @@ const Signup = ({ loginLater, navigation }) => {
         <View style={s.justify}>
           {errors && (
             <Text style={s.errorText}>
-              {apiErrorMsg
-                ? apiErrorMsg
-                : "There were errors trying to process your submission"}
+              {apiErrorMsg ||
+                usernameError ||
+                emailError ||
+                passwordError ||
+                confirm_passwordError ||
+                "There were errors trying to process your submission"}
             </Text>
           )}
           <Text style={s.bold}>Sign Up</Text>
@@ -333,6 +330,10 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontFamily: "Nunito-Bold",
       color: theme.text2,
+      textDecorationLine: "underline",
+      textShadowColor: theme.white,
+      textShadowOffset: { width: -1, height: 1 },
+      textShadowRadius: 2,
     },
     iconStyle: {
       fontSize: 24,
@@ -375,15 +376,18 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
+      textDecorationLine: "underline",
     },
     externalLinkContainer: {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
+      marginTop: 10,
       marginHorizontal: 20,
     },
     externalIcon: {
-      fontSize: 24,
+      fontSize: 20,
+      marginLeft: 5,
       color: theme.text2,
     },
     marginB25: {

@@ -232,6 +232,7 @@ const getStyles = (theme) =>
       textShadowColor: theme.white,
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
+      textDecorationLine: "underline",
     },
     justify: {
       flexDirection: "column",
