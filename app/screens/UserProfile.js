@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -33,802 +33,693 @@ import flagImages, { getFlagWidth } from "../utils/flagImages";
 const moment = require("moment");
 const screenHeight = Dimensions.get("window").height;
 
-class UserProfile extends Component {
-  state = {
-    modalVisible: false,
-    accountModalVisible: false,
-    newEmail: "",
-    emailError: null,
-    emailSuccess: false,
-    updatingEmail: false,
-    currentPassword: "",
-    newPassword: "",
-    newPasswordConfirmation: "",
-    passwordError: null,
-    passwordSuccess: false,
-    updatingPassword: false,
-    showDeleteConfirm: false,
-    deletingAccount: false,
-    deleteError: null,
-    machineToRemove: null,
-    lifeListQuery: "",
-    fetchingUserInfo: this.props.route?.params?.userId
-      ? true
-      : this.props.user.loggedIn
-        ? true
-        : false,
-    profile_info: {},
+const getStatNum = (stat) => (stat ? ` ${formatNumWithCommas(stat)} ` : " 0 ");
+
+const UserProfile = ({
+  user,
+  logout,
+  removeMachineFromLifeList,
+  clearSelectedState,
+  navigation,
+  route,
+}) => {
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [accountModalVisible, setAccountModalVisible] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailError, setEmailError] = useState(null);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [updatingEmail, setUpdatingEmail] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState("");
+  const [passwordError, setPasswordError] = useState(null);
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [updatingPassword, setUpdatingPassword] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deletingAccount, setDeletingAccount] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
+  const [machineToRemove, setMachineToRemove] = useState(null);
+  const [lifeListQuery, setLifeListQuery] = useState("");
+  const [fetchingUserInfo, setFetchingUserInfo] = useState(
+    !!(route?.params?.userId || user.loggedIn),
+  );
+  const [profileInfo, setProfileInfo] = useState({});
+
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      const id = route?.params?.userId ?? user.id;
+      if (id) {
+        getData(`/users/${id}/profile_info.json?life_list=`)
+          .then((data) => {
+            setFetchingUserInfo(false);
+            setProfileInfo(data.profile_info);
+            setLifeListQuery("");
+          })
+          .catch(() => setFetchingUserInfo(false));
+      } else {
+        setFetchingUserInfo(false);
+      }
+    });
+  }, [navigation]);
+
+  const closeAccountModal = () => {
+    setAccountModalVisible(false);
+    setNewEmail("");
+    setEmailError(null);
+    setEmailSuccess(false);
+    setCurrentPassword("");
+    setNewPassword("");
+    setNewPasswordConfirmation("");
+    setPasswordError(null);
+    setPasswordSuccess(false);
+    setShowDeleteConfirm(false);
+    setDeleteError(null);
   };
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
-  closeAccountModal = () => {
-    this.setState({
-      accountModalVisible: false,
-      newEmail: "",
-      emailError: null,
-      emailSuccess: false,
-      currentPassword: "",
-      newPassword: "",
-      newPasswordConfirmation: "",
-      passwordError: null,
-      passwordSuccess: false,
-      showDeleteConfirm: false,
-      deleteError: null,
-    });
-  };
-
-  handleUpdateEmail = () => {
-    const { user } = this.props;
-    this.setState({
-      updatingEmail: true,
-      emailError: null,
-      emailSuccess: false,
-    });
+  const handleUpdateEmail = () => {
+    setUpdatingEmail(true);
+    setEmailError(null);
+    setEmailSuccess(false);
     postData(`/users/${user.id}/update_email.json`, {
       user_token: user.authentication_token,
-      email: this.state.newEmail,
+      email: newEmail,
     })
       .then(() => {
-        this.setState({
-          updatingEmail: false,
-          emailSuccess: true,
-          newEmail: "",
-        });
+        setUpdatingEmail(false);
+        setEmailSuccess(true);
+        setNewEmail("");
       })
       .catch((err) => {
-        this.setState({ updatingEmail: false, emailError: err });
+        setUpdatingEmail(false);
+        setEmailError(err);
       });
   };
 
-  handleUpdatePassword = () => {
-    const { user } = this.props;
-    this.setState({
-      updatingPassword: true,
-      passwordError: null,
-      passwordSuccess: false,
-    });
+  const handleUpdatePassword = () => {
+    setUpdatingPassword(true);
+    setPasswordError(null);
+    setPasswordSuccess(false);
     postData(`/users/${user.id}/update_password.json`, {
       user_token: user.authentication_token,
-      current_password: this.state.currentPassword,
-      password: this.state.newPassword,
-      password_confirmation: this.state.newPasswordConfirmation,
+      current_password: currentPassword,
+      password: newPassword,
+      password_confirmation: newPasswordConfirmation,
     })
       .then(() => {
-        this.setState({
-          updatingPassword: false,
-          passwordSuccess: true,
-          currentPassword: "",
-          newPassword: "",
-          newPasswordConfirmation: "",
-        });
+        setUpdatingPassword(false);
+        setPasswordSuccess(true);
+        setCurrentPassword("");
+        setNewPassword("");
+        setNewPasswordConfirmation("");
       })
       .catch((err) => {
-        this.setState({ updatingPassword: false, passwordError: err });
+        setUpdatingPassword(false);
+        setPasswordError(err);
       });
   };
 
-  handleDeleteAccount = () => {
-    const { user } = this.props;
-    this.setState({ deletingAccount: true, deleteError: null });
+  const handleDeleteAccount = () => {
+    setDeletingAccount(true);
+    setDeleteError(null);
     deleteData(`/users/${user.id}.json`, {
       user_token: user.authentication_token,
       user_email: user.email,
     })
       .then(() => {
-        this.props.logout();
-        this.props.navigation.navigate("Login");
+        logout();
+        navigation.navigate("Login");
       })
       .catch((err) => {
-        this.setState({ deletingAccount: false, deleteError: err });
+        setDeletingAccount(false);
+        setDeleteError(err);
       });
   };
 
-  handleRemoveMachine = () => {
-    const { machineToRemove } = this.state;
-    this.props
-      .removeMachineFromLifeList(machineToRemove.machine_id)
+  const handleRemoveMachine = () => {
+    const removing = machineToRemove;
+    removeMachineFromLifeList(removing.machine_id)
       .then(() => {
-        this.setState((prevState) => ({
-          machineToRemove: null,
-          profile_info: {
-            ...prevState.profile_info,
-            profile_life_list_stats:
-              prevState.profile_info.profile_life_list_stats.filter(
-                (e) => e.machine_id !== machineToRemove.machine_id,
-              ),
-            num_life_list_machines:
-              (prevState.profile_info.num_life_list_machines || 1) - 1,
-          },
+        setMachineToRemove(null);
+        setProfileInfo((prev) => ({
+          ...prev,
+          profile_life_list_stats: prev.profile_life_list_stats.filter(
+            (e) => e.machine_id !== removing.machine_id,
+          ),
+          num_life_list_machines: (prev.num_life_list_machines || 1) - 1,
         }));
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ machineToRemove: null });
+        setMachineToRemove(null);
       });
   };
 
-  componentDidMount() {
-    this.focusListener = this.props.navigation.addListener("focus", () => {
-      const id = this.props.route?.params?.userId ?? this.props.user.id;
-      if (id) {
-        getData(`/users/${id}/profile_info.json?life_list=`)
-          .then((data) => {
-            this.setState({
-              fetchingUserInfo: false,
-              profile_info: data.profile_info,
-              lifeListQuery: "",
-            });
-          })
-          .catch(() => this.setState({ fetchingUserInfo: false }));
-      } else {
-        this.setState({ fetchingUserInfo: false });
-      }
-    });
+  if (fetchingUserInfo) return <ActivityIndicator />;
+
+  const isOwnProfile =
+    !route?.params?.userId || route.params.userId === user.id;
+  const displayUsername = isOwnProfile ? user.username : route.params.username;
+  const {
+    profile_list_of_edited_locations = [],
+    profile_life_list_stats = [],
+    created_at,
+    num_machines_added,
+    num_machines_removed,
+    num_lmx_comments_left,
+    num_msx_scores_added,
+    num_locations_suggested,
+    num_locations_edited,
+    num_total_submissions,
+    num_life_list_machines,
+    admin_title,
+    contributor_rank,
+    operator_name,
+    flag,
+  } = profileInfo ?? {};
+
+  const lifeListQueryTrimmed = lifeListQuery.toLowerCase().trim();
+  const filteredLifeList = lifeListQueryTrimmed
+    ? profile_life_list_stats.filter((e) =>
+        e.machine_name.toLowerCase().includes(lifeListQueryTrimmed),
+      )
+    : profile_life_list_stats;
+
+  let contributor_icon;
+  if (contributor_rank == "Super Mapper") {
+    contributor_icon = require("../assets/images/SuperMapper.png");
+  } else if (contributor_rank == "Legendary Mapper") {
+    contributor_icon = require("../assets/images/LegendaryMapper.png");
+  } else if (contributor_rank == "Grand Champ Mapper") {
+    contributor_icon = require("../assets/images/GrandChampMapper.png");
   }
 
-  componentWillUnmount() {
-    this.focusListener();
-  }
-
-  getStatNum(stat) {
-    return stat ? ` ${formatNumWithCommas(stat)} ` : " 0 ";
-  }
-
-  render() {
-    if (this.state.fetchingUserInfo) return <ActivityIndicator />;
-    const { user } = this.props;
-    const isOwnProfile =
-      !this.props.route?.params?.userId ||
-      this.props.route.params.userId === user.id;
-    const displayUsername = isOwnProfile
-      ? user.username
-      : this.props.route.params.username;
-    const profileInfo = this.state.profile_info ?? {};
-    const {
-      profile_list_of_edited_locations = [],
-      profile_life_list_stats = [],
-      created_at,
-      num_machines_added,
-      num_machines_removed,
-      num_lmx_comments_left,
-      num_msx_scores_added,
-      num_locations_suggested,
-      num_locations_edited,
-      num_total_submissions,
-      num_life_list_machines,
-      admin_title,
-      contributor_rank,
-      operator_name,
-      flag,
-    } = profileInfo;
-
-    const lifeListQuery = this.state.lifeListQuery.toLowerCase().trim();
-    const filteredLifeList = lifeListQuery
-      ? profile_life_list_stats.filter((e) =>
-          e.machine_name.toLowerCase().includes(lifeListQuery),
-        )
-      : profile_life_list_stats;
-
-    let contributor_icon;
-    if (contributor_rank == "Super Mapper") {
-      contributor_icon = require("../assets/images/SuperMapper.png");
-    } else if (contributor_rank == "Legendary Mapper") {
-      contributor_icon = require("../assets/images/LegendaryMapper.png");
-    } else if (contributor_rank == "Grand Champ Mapper") {
-      contributor_icon = require("../assets/images/GrandChampMapper.png");
-    }
-
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
-            <KeyboardAwareScrollView
-              scrollIndicatorInsets={{ right: 1 }}
-              style={{ flex: 1, backgroundColor: theme.base1 }}
-              keyboardShouldPersistTaps="handled"
-            >
-              {isOwnProfile && !user.loggedIn ? (
-                <NotLoggedIn
-                  text={`You're not logged in, so you don't have a profile.`}
-                  onPress={() => this.props.navigation.navigate("Login")}
+  return (
+    <KeyboardAwareScrollView
+      scrollIndicatorInsets={{ right: 1 }}
+      style={{ flex: 1, backgroundColor: theme.base1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      {isOwnProfile && !user.loggedIn ? (
+        <NotLoggedIn
+          text={`You're not logged in, so you don't have a profile.`}
+          onPress={() => navigation.navigate("Login")}
+        />
+      ) : (
+        <View>
+          {isOwnProfile && (
+            <>
+              <ConfirmationModal
+                visible={modalVisible}
+                closeModal={() => setModalVisible(false)}
+              >
+                <PbmButton
+                  title={"Log Me Out"}
+                  onPress={() => {
+                    setModalVisible(false);
+                    logout();
+                    navigation.navigate("Login");
+                  }}
                 />
-              ) : (
-                <View>
-                  {isOwnProfile && (
-                    <>
-                      <ConfirmationModal
-                        visible={this.state.modalVisible}
-                        closeModal={() => this.setModalVisible(false)}
-                      >
-                        <PbmButton
-                          title={"Log Me Out"}
-                          onPress={() => {
-                            this.setModalVisible(false);
-                            this.props.logout();
-                            this.props.navigation.navigate("Login");
-                          }}
-                        />
-                        <WarningButton
-                          title={"Stay Logged In"}
-                          onPress={() => this.setModalVisible(false)}
-                        />
-                      </ConfirmationModal>
-                      <ConfirmationModal
-                        visible={!!this.state.machineToRemove}
-                        closeModal={() =>
-                          this.setState({ machineToRemove: null })
-                        }
-                      >
-                        <Text style={s.modalConfirmText}>
-                          {`Remove `}
-                          <Text style={[s.bold, s.modalMachineName]}>
-                            {this.state.machineToRemove?.machine_name}
-                          </Text>
-                          {` from your life list?`}
+                <WarningButton
+                  title={"Stay Logged In"}
+                  onPress={() => setModalVisible(false)}
+                />
+              </ConfirmationModal>
+              <ConfirmationModal
+                visible={!!machineToRemove}
+                closeModal={() => setMachineToRemove(null)}
+              >
+                <Text style={s.modalConfirmText}>
+                  {`Remove `}
+                  <Text style={[s.bold, s.modalMachineName]}>
+                    {machineToRemove?.machine_name}
+                  </Text>
+                  {` from your life list?`}
+                </Text>
+                <PbmButton
+                  title={"Yes, Remove"}
+                  onPress={handleRemoveMachine}
+                />
+                <WarningButton
+                  title={"Cancel"}
+                  onPress={() => setMachineToRemove(null)}
+                />
+              </ConfirmationModal>
+              <ConfirmationModal
+                visible={accountModalVisible}
+                closeModal={closeAccountModal}
+                wide
+                loading={deletingAccount}
+              >
+                <View style={s.header}>
+                  <Text style={s.modalTitle}>Account Settings</Text>
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={35}
+                    onPress={closeAccountModal}
+                    style={s.xButton}
+                  />
+                </View>
+                <ScrollView
+                  keyboardShouldPersistTaps="handled"
+                  showsVerticalScrollIndicator={false}
+                  style={{ maxHeight: screenHeight * 0.75 }}
+                >
+                  <View style={s.modalSection}>
+                    <Text style={[s.sectionLabel, { marginTop: 10 }]}>
+                      Update Email
+                    </Text>
+                    <TextInput
+                      style={s.textInput}
+                      placeholder="New email address"
+                      placeholderTextColor={s.placeholderColor}
+                      value={newEmail}
+                      onChangeText={(value) => {
+                        setNewEmail(value);
+                        setEmailError(null);
+                        setEmailSuccess(false);
+                      }}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType="email-address"
+                    />
+                    {!!emailError && (
+                      <Text style={s.formError}>{emailError}</Text>
+                    )}
+                    {emailSuccess && (
+                      <Text style={s.formSuccess}>Email updated!</Text>
+                    )}
+                    <PbmButton
+                      title={"Update Email"}
+                      onPress={handleUpdateEmail}
+                      disabled={updatingEmail || !newEmail}
+                    />
+                  </View>
+                  <View style={s.divider} />
+                  <View style={s.modalSection}>
+                    <Text style={s.sectionLabel}>Update Password</Text>
+                    <TextInput
+                      style={s.textInput}
+                      placeholder="Current password"
+                      placeholderTextColor={s.placeholderColor}
+                      value={currentPassword}
+                      onChangeText={(value) => {
+                        setCurrentPassword(value);
+                        setPasswordError(null);
+                        setPasswordSuccess(false);
+                      }}
+                      secureTextEntry
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <TextInput
+                      style={s.textInput}
+                      placeholder="New password"
+                      placeholderTextColor={s.placeholderColor}
+                      value={newPassword}
+                      onChangeText={(value) => {
+                        setNewPassword(value);
+                        setPasswordError(null);
+                        setPasswordSuccess(false);
+                      }}
+                      secureTextEntry
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    <TextInput
+                      style={s.textInput}
+                      placeholder="Confirm new password"
+                      placeholderTextColor={s.placeholderColor}
+                      value={newPasswordConfirmation}
+                      onChangeText={(value) => {
+                        setNewPasswordConfirmation(value);
+                        setPasswordError(null);
+                        setPasswordSuccess(false);
+                      }}
+                      secureTextEntry
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                    {!!passwordError && (
+                      <Text style={s.formError}>{passwordError}</Text>
+                    )}
+                    {passwordSuccess && (
+                      <Text style={s.formSuccess}>Password updated!</Text>
+                    )}
+                    <PbmButton
+                      title={"Update Password"}
+                      onPress={handleUpdatePassword}
+                      disabled={
+                        updatingPassword ||
+                        !currentPassword ||
+                        !newPassword ||
+                        !newPasswordConfirmation
+                      }
+                    />
+                  </View>
+                  <View style={s.divider} />
+                  <View style={s.modalSection}>
+                    {!showDeleteConfirm ? (
+                      <WarningButton
+                        title={"Delete Account"}
+                        onPress={() => setShowDeleteConfirm(true)}
+                      />
+                    ) : (
+                      <>
+                        <Text style={s.deleteWarning}>
+                          This will permanently delete your account. This cannot
+                          be undone.
                         </Text>
+                        {!!deleteError && (
+                          <Text style={s.formError}>{deleteError}</Text>
+                        )}
                         <PbmButton
-                          title={"Yes, Remove"}
-                          onPress={this.handleRemoveMachine}
+                          title={"Yes, Delete My Account"}
+                          onPress={handleDeleteAccount}
                         />
                         <WarningButton
                           title={"Cancel"}
-                          onPress={() =>
-                            this.setState({ machineToRemove: null })
-                          }
+                          onPress={() => {
+                            setShowDeleteConfirm(false);
+                            setDeleteError(null);
+                          }}
                         />
-                      </ConfirmationModal>
-                      <ConfirmationModal
-                        visible={this.state.accountModalVisible}
-                        closeModal={this.closeAccountModal}
-                        wide
-                        loading={this.state.deletingAccount}
+                      </>
+                    )}
+                  </View>
+                </ScrollView>
+              </ConfirmationModal>
+            </>
+          )}
+          <View style={s.usernameContainer}>
+            <Text style={s.username}>{displayUsername}</Text>
+            {!!flag && flagImages[flag] && (
+              <View style={s.flagContainer}>
+                <Image
+                  source={flagImages[flag]}
+                  style={[s.profileFlag, { width: getFlagWidth(flag, 40) }]}
+                />
+              </View>
+            )}
+            {isOwnProfile && (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("FindFlag", { userId: user.id })
+                }
+              >
+                <Text style={s.flagButton}>
+                  {flag ? "Change flag" : "Set flag"}
+                </Text>
+              </Pressable>
+            )}
+            {!!admin_title && (
+              <View style={s.rankView}>
+                <Text style={s.rankText}>{admin_title}</Text>
+                <MaterialCommunityIcons
+                  name="shield-account"
+                  size={20}
+                  style={s.rankIcon}
+                  color={theme.shield}
+                />
+              </View>
+            )}
+            {!!contributor_rank && (
+              <View style={s.rankView}>
+                <Text style={s.rankText}>{contributor_rank}</Text>
+                <Image
+                  contentFit="fill"
+                  source={contributor_icon}
+                  style={s.rankIcon}
+                />
+              </View>
+            )}
+            {!!operator_name && (
+              <View style={s.rankView}>
+                <Text style={s.rankText}>{operator_name}</Text>
+                <MaterialCommunityIcons
+                  name="wrench"
+                  style={s.rankIcon}
+                  size={20}
+                  color={theme.wrench}
+                />
+              </View>
+            )}
+            <Text style={s.joined}>
+              {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
+            </Text>
+            {isOwnProfile && (
+              <View style={s.accountSettingsContainer}>
+                <Text
+                  style={s.accountSettingsLink}
+                  onPress={() => setAccountModalVisible(true)}
+                >
+                  Account Settings
+                </Text>
+                <Text
+                  style={s.logoutLink}
+                  onPress={() => setModalVisible(true)}
+                >
+                  Logout
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={s.statContainer}>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Total contributions:</Text>
+              <Text style={s.statNum}>{getStatNum(num_total_submissions)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines added:</Text>
+              <Text style={s.statNum}>{getStatNum(num_machines_added)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines removed:</Text>
+              <Text style={s.statNum}>{getStatNum(num_machines_removed)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machine comments:</Text>
+              <Text style={s.statNum}>{getStatNum(num_lmx_comments_left)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>High scores added:</Text>
+              <Text style={s.statNum}>{getStatNum(num_msx_scores_added)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines in Life List:</Text>
+              <Text style={s.statNum}>
+                {getStatNum(num_life_list_machines)}
+              </Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Locations submitted:</Text>
+              <Text style={s.statNum}>
+                {getStatNum(num_locations_suggested)}
+              </Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Locations edited:</Text>
+              <Text style={s.statNum}>{getStatNum(num_locations_edited)}</Text>
+            </View>
+          </View>
+          <Text style={s.section}>Some recently edited locations</Text>
+          <View style={{ paddingTop: 8, paddingBottom: 15 }}>
+            {profile_list_of_edited_locations.length === 0 ? (
+              <Text style={s.none}>No edits yet</Text>
+            ) : (
+              profile_list_of_edited_locations.slice(0, 50).map((location) => (
+                <Pressable
+                  key={location[0]}
+                  onPress={() =>
+                    navigation.navigate("LocationDetails", { id: location[0] })
+                  }
+                >
+                  {({ pressed }) => (
+                    <View style={[s.list, pressed ? s.pressed : s.notPressed]}>
+                      <Text
+                        style={[
+                          s.locationName,
+                          pressed ? s.textPressed : s.textNotPressed,
+                        ]}
                       >
-                        <View style={s.header}>
-                          <Text style={s.modalTitle}>Account Settings</Text>
-                          <MaterialCommunityIcons
-                            name="close-circle"
-                            size={35}
-                            onPress={this.closeAccountModal}
-                            style={s.xButton}
-                          />
-                        </View>
-                        <ScrollView
-                          keyboardShouldPersistTaps="handled"
-                          showsVerticalScrollIndicator={false}
-                          style={{ maxHeight: screenHeight * 0.75 }}
-                        >
-                          <View style={s.modalSection}>
-                            <Text style={[s.sectionLabel, { marginTop: 10 }]}>
-                              Update Email
-                            </Text>
-                            <TextInput
-                              style={s.textInput}
-                              placeholder="New email address"
-                              placeholderTextColor={s.placeholderColor}
-                              value={this.state.newEmail}
-                              onChangeText={(newEmail) =>
-                                this.setState({
-                                  newEmail,
-                                  emailError: null,
-                                  emailSuccess: false,
-                                })
-                              }
-                              autoCapitalize="none"
-                              autoCorrect={false}
-                              keyboardType="email-address"
-                            />
-                            {!!this.state.emailError && (
-                              <Text style={s.formError}>
-                                {this.state.emailError}
-                              </Text>
-                            )}
-                            {this.state.emailSuccess && (
-                              <Text style={s.formSuccess}>Email updated!</Text>
-                            )}
-                            <PbmButton
-                              title={"Update Email"}
-                              onPress={this.handleUpdateEmail}
-                              disabled={
-                                this.state.updatingEmail || !this.state.newEmail
-                              }
-                            />
-                          </View>
-                          <View style={s.divider} />
-                          <View style={s.modalSection}>
-                            <Text style={s.sectionLabel}>Update Password</Text>
-                            <TextInput
-                              style={s.textInput}
-                              placeholder="Current password"
-                              placeholderTextColor={s.placeholderColor}
-                              value={this.state.currentPassword}
-                              onChangeText={(currentPassword) =>
-                                this.setState({
-                                  currentPassword,
-                                  passwordError: null,
-                                  passwordSuccess: false,
-                                })
-                              }
-                              secureTextEntry
-                              autoCapitalize="none"
-                              autoCorrect={false}
-                            />
-                            <TextInput
-                              style={s.textInput}
-                              placeholder="New password"
-                              placeholderTextColor={s.placeholderColor}
-                              value={this.state.newPassword}
-                              onChangeText={(newPassword) =>
-                                this.setState({
-                                  newPassword,
-                                  passwordError: null,
-                                  passwordSuccess: false,
-                                })
-                              }
-                              secureTextEntry
-                              autoCapitalize="none"
-                              autoCorrect={false}
-                            />
-                            <TextInput
-                              style={s.textInput}
-                              placeholder="Confirm new password"
-                              placeholderTextColor={s.placeholderColor}
-                              value={this.state.newPasswordConfirmation}
-                              onChangeText={(newPasswordConfirmation) =>
-                                this.setState({
-                                  newPasswordConfirmation,
-                                  passwordError: null,
-                                  passwordSuccess: false,
-                                })
-                              }
-                              secureTextEntry
-                              autoCapitalize="none"
-                              autoCorrect={false}
-                            />
-                            {!!this.state.passwordError && (
-                              <Text style={s.formError}>
-                                {this.state.passwordError}
-                              </Text>
-                            )}
-                            {this.state.passwordSuccess && (
-                              <Text style={s.formSuccess}>
-                                Password updated!
-                              </Text>
-                            )}
-                            <PbmButton
-                              title={"Update Password"}
-                              onPress={this.handleUpdatePassword}
-                              disabled={
-                                this.state.updatingPassword ||
-                                !this.state.currentPassword ||
-                                !this.state.newPassword ||
-                                !this.state.newPasswordConfirmation
-                              }
-                            />
-                          </View>
-                          <View style={s.divider} />
-                          <View style={s.modalSection}>
-                            {!this.state.showDeleteConfirm ? (
-                              <WarningButton
-                                title={"Delete Account"}
-                                onPress={() =>
-                                  this.setState({ showDeleteConfirm: true })
-                                }
-                              />
-                            ) : (
-                              <>
-                                <Text style={s.deleteWarning}>
-                                  This will permanently delete your account.
-                                  This cannot be undone.
-                                </Text>
-                                {!!this.state.deleteError && (
-                                  <Text style={s.formError}>
-                                    {this.state.deleteError}
-                                  </Text>
-                                )}
-                                <PbmButton
-                                  title={"Yes, Delete My Account"}
-                                  onPress={this.handleDeleteAccount}
-                                />
-                                <WarningButton
-                                  title={"Cancel"}
-                                  onPress={() =>
-                                    this.setState({
-                                      showDeleteConfirm: false,
-                                      deleteError: null,
-                                    })
-                                  }
-                                />
-                              </>
-                            )}
-                          </View>
-                        </ScrollView>
-                      </ConfirmationModal>
-                    </>
+                        {location[1]}
+                      </Text>
+                    </View>
                   )}
-                  <View style={s.usernameContainer}>
-                    <Text style={s.username}>{displayUsername}</Text>
-                    {!!flag && flagImages[flag] && (
-                      <View style={s.flagContainer}>
-                        <Image
-                          source={flagImages[flag]}
-                          style={[
-                            s.profileFlag,
-                            { width: getFlagWidth(flag, 40) },
-                          ]}
-                        />
-                      </View>
-                    )}
-                    {isOwnProfile && (
-                      <Pressable
-                        onPress={() =>
-                          this.props.navigation.navigate("FindFlag", {
-                            userId: user.id,
-                          })
-                        }
-                      >
-                        <Text style={s.flagButton}>
-                          {flag ? "Change flag" : "Set flag"}
-                        </Text>
-                      </Pressable>
-                    )}
-                    {!!admin_title && (
-                      <View style={s.rankView}>
-                        <Text style={s.rankText}>{admin_title}</Text>
-                        <MaterialCommunityIcons
-                          name="shield-account"
-                          size={20}
-                          style={s.rankIcon}
-                          color={theme.shield}
-                        />
-                      </View>
-                    )}
-                    {!!contributor_rank && (
-                      <View style={s.rankView}>
-                        <Text style={s.rankText}>{contributor_rank}</Text>
-                        <Image
-                          contentFit="fill"
-                          source={contributor_icon}
-                          style={s.rankIcon}
-                        />
-                      </View>
-                    )}
-                    {!!operator_name && (
-                      <View style={s.rankView}>
-                        <Text style={s.rankText}>{operator_name}</Text>
-                        <MaterialCommunityIcons
-                          name="wrench"
-                          style={s.rankIcon}
-                          size={20}
-                          color={theme.wrench}
-                        />
-                      </View>
-                    )}
-                    <Text style={s.joined}>
-                      {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
-                    </Text>
-                    {isOwnProfile && (
-                      <View style={s.accountSettingsContainer}>
-                        <Text
-                          style={s.accountSettingsLink}
-                          onPress={() =>
-                            this.setState({ accountModalVisible: true })
-                          }
-                        >
-                          Account Settings
-                        </Text>
-                        <Text
-                          style={s.logoutLink}
-                          onPress={() => this.setModalVisible(true)}
-                        >
-                          Logout
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={s.statContainer}>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Total contributions:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_total_submissions)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Machines added:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_machines_added)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Machines removed:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_machines_removed)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Machine comments:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_lmx_comments_left)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>High scores added:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_msx_scores_added)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Machines in Life List:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_life_list_machines)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Locations submitted:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_locations_suggested)}
-                      </Text>
-                    </View>
-                    <View style={s.statItem}>
-                      <Text style={s.stat}>Locations edited:</Text>
-                      <Text style={s.statNum}>
-                        {this.getStatNum(num_locations_edited)}
-                      </Text>
-                    </View>
-                  </View>
-                  <Text style={s.section}>Some recently edited locations</Text>
-                  <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-                    {profile_list_of_edited_locations.length === 0 ? (
-                      <Text style={s.none}>No edits yet</Text>
-                    ) : (
-                      profile_list_of_edited_locations
-                        .slice(0, 50)
-                        .map((location) => (
-                          <Pressable
-                            key={location[0]}
-                            onPress={() =>
-                              this.props.navigation.navigate(
-                                "LocationDetails",
-                                {
-                                  id: location[0],
-                                },
-                              )
-                            }
-                          >
-                            {({ pressed }) => (
-                              <View
-                                style={[
-                                  s.list,
-                                  pressed ? s.pressed : s.notPressed,
-                                ]}
-                              >
-                                <Text
-                                  style={[
-                                    s.locationName,
-                                    pressed ? s.textPressed : s.textNotPressed,
-                                  ]}
-                                >
-                                  {location[1]}
-                                </Text>
-                              </View>
-                            )}
-                          </Pressable>
-                        ))
-                    )}
-                  </View>
-                  <Text style={s.section}>
-                    {isOwnProfile
-                      ? "Your Machine List and High Scores"
-                      : "Machine List and High Scores"}
-                  </Text>
-                  {isOwnProfile && (
+                </Pressable>
+              ))
+            )}
+          </View>
+          <Text style={s.section}>
+            {isOwnProfile
+              ? "Your Machine List and High Scores"
+              : "Machine List and High Scores"}
+          </Text>
+          {isOwnProfile && (
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: 10,
+                paddingBottom: 6,
+              }}
+            >
+              <Text style={s.lifeListDescription}>
+                {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location. `}
+                <Text
+                  style={s.addScoreLink}
+                  onPress={() => navigation.navigate("AddHighScore")}
+                >
+                  Click here to add new high scores
+                </Text>
+                {`.`}
+              </Text>
+              <PbmButton
+                title={"Add Machines to Your List"}
+                onPress={() => {
+                  clearSelectedState();
+                  navigation.navigate("FindMachine", {
+                    multiSelect: true,
+                    lifeListUserId: user.id,
+                  });
+                }}
+                leftIcon={
+                  <MaterialCommunityIcons
+                    name="clipboard-list-outline"
+                    size={20}
+                    color={theme.theme === "dark" ? "#ffffff" : theme.text}
+                    style={{ marginRight: 8 }}
+                  />
+                }
+              />
+            </View>
+          )}
+          {profile_life_list_stats.length > 0 && (
+            <View style={s.lifeListSearchContainer}>
+              <MaterialCommunityIcons
+                name="magnify"
+                size={22}
+                color={theme.indigo4}
+                style={{ marginLeft: 10, marginRight: 4 }}
+              />
+              <TextInput
+                placeholder="Filter your list..."
+                placeholderTextColor={theme.indigo4}
+                value={lifeListQuery}
+                onChangeText={setLifeListQuery}
+                style={s.lifeListSearchInput}
+                autoCorrect={false}
+              />
+              {lifeListQuery.length > 0 && (
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  size={20}
+                  color={theme.purple}
+                  style={{ marginRight: 10 }}
+                  onPress={() => setLifeListQuery("")}
+                />
+              )}
+            </View>
+          )}
+          <View
+            style={[{ paddingTop: 8 }, !isOwnProfile && { marginBottom: 30 }]}
+          >
+            {profile_life_list_stats.length === 0 ? (
+              <Text style={s.none}>No machines or scores to list yet</Text>
+            ) : filteredLifeList.length === 0 ? (
+              <Text style={s.none}>No matches</Text>
+            ) : (
+              filteredLifeList.map((entry, idx) => {
+                const hasScores = !!entry.list;
+                return (
+                  <View
+                    key={entry.umx_id ?? idx}
+                    style={{
+                      marginHorizontal: 25,
+                      marginBottom: 10,
+                      borderBottomWidth:
+                        idx < filteredLifeList.length - 1
+                          ? StyleSheet.hairlineWidth
+                          : 0,
+                      borderBottomColor: theme.indigo4,
+                      paddingBottom: 10,
+                    }}
+                  >
                     <View
                       style={{
-                        paddingHorizontal: 20,
-                        paddingTop: 10,
-                        paddingBottom: 6,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Text style={s.lifeListDescription}>
-                        {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location. `}
-                        <Text
-                          style={s.addScoreLink}
-                          onPress={() =>
-                            this.props.navigation.navigate("AddHighScore")
-                          }
-                        >
-                          Click here to add new high scores
+                      <Text style={[s.lifeListMachine, { flex: 1 }]}>
+                        {entry.machine_name}
+                        <Text style={s.machineYearMan}>
+                          {` ${entry.machine_year_man}`}
                         </Text>
-                        {`.`}
                       </Text>
-                      <PbmButton
-                        title={"Add Machines to Your List"}
-                        onPress={() => {
-                          this.props.clearSelectedState();
-                          this.props.navigation.navigate("FindMachine", {
-                            multiSelect: true,
-                            lifeListUserId: user.id,
-                          });
-                        }}
-                        leftIcon={
+                      {!hasScores && isOwnProfile && (
+                        <Pressable
+                          onPress={() => setMachineToRemove(entry)}
+                          style={{ paddingLeft: 10 }}
+                        >
                           <MaterialCommunityIcons
-                            name="clipboard-list-outline"
-                            size={20}
-                            color={
-                              theme.theme === "dark" ? "#ffffff" : theme.text
-                            }
-                            style={{ marginRight: 8 }}
+                            name="trash-can-outline"
+                            size={24}
+                            color={theme.red2}
                           />
-                        }
-                      />
-                    </View>
-                  )}
-                  {profile_life_list_stats.length > 0 && (
-                    <View style={s.lifeListSearchContainer}>
-                      <MaterialCommunityIcons
-                        name="magnify"
-                        size={22}
-                        color={theme.indigo4}
-                        style={{ marginLeft: 10, marginRight: 4 }}
-                      />
-                      <TextInput
-                        placeholder="Filter your list..."
-                        placeholderTextColor={theme.indigo4}
-                        value={this.state.lifeListQuery}
-                        onChangeText={(q) =>
-                          this.setState({ lifeListQuery: q })
-                        }
-                        style={s.lifeListSearchInput}
-                        autoCorrect={false}
-                      />
-                      {this.state.lifeListQuery.length > 0 && (
-                        <MaterialCommunityIcons
-                          name="close-circle"
-                          size={20}
-                          color={theme.purple}
-                          style={{ marginRight: 10 }}
-                          onPress={() => this.setState({ lifeListQuery: "" })}
-                        />
+                        </Pressable>
                       )}
                     </View>
-                  )}
-                  <View
-                    style={[
-                      { paddingTop: 8 },
-                      !isOwnProfile && { marginBottom: 30 },
-                    ]}
-                  >
-                    {profile_life_list_stats.length === 0 ? (
-                      <Text style={s.none}>
-                        No machines or scores to list yet
-                      </Text>
-                    ) : filteredLifeList.length === 0 ? (
-                      <Text style={s.none}>No matches</Text>
-                    ) : (
-                      filteredLifeList.map((entry, idx) => {
-                        const hasScores = !!entry.list;
-                        return (
-                          <View
-                            key={entry.umx_id ?? idx}
-                            style={{
-                              marginHorizontal: 25,
-                              marginBottom: 10,
-                              borderBottomWidth:
-                                idx < filteredLifeList.length - 1
-                                  ? StyleSheet.hairlineWidth
-                                  : 0,
-                              borderBottomColor: theme.indigo4,
-                              paddingBottom: 10,
-                            }}
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                              }}
+                    {hasScores && (
+                      <>
+                        <Text style={[s.score, { marginTop: 8 }]}>
+                          <Text style={s.bold}>Highest score: </Text>
+                          {formatNumWithCommas(entry.list[0])}
+                        </Text>
+                        {entry.list.length > 1 ? (
+                          <>
+                            <Text
+                              style={[
+                                { paddingLeft: 10, marginBottom: 6 },
+                                s.bold,
+                                s.marginT10,
+                              ]}
                             >
-                              <Text style={[s.lifeListMachine, { flex: 1 }]}>
-                                {entry.machine_name}
-                                <Text style={s.machineYearMan}>
-                                  {` ${entry.machine_year_man}`}
-                                </Text>
+                              All scores:
+                            </Text>
+                            {entry.list.map((ll, i) => (
+                              <Text
+                                key={i}
+                                style={[s.score, { paddingLeft: 16 }]}
+                              >
+                                {formatNumWithCommas(ll)}
                               </Text>
-                              {!hasScores && isOwnProfile && (
-                                <Pressable
-                                  onPress={() =>
-                                    this.setState({ machineToRemove: entry })
-                                  }
-                                  style={{ paddingLeft: 10 }}
-                                >
-                                  <MaterialCommunityIcons
-                                    name="trash-can-outline"
-                                    size={24}
-                                    color={theme.red2}
-                                  />
-                                </Pressable>
-                              )}
-                            </View>
-                            {hasScores && (
-                              <>
-                                <Text style={[s.score, { marginTop: 8 }]}>
-                                  <Text style={s.bold}>Highest score: </Text>
-                                  {formatNumWithCommas(entry.list[0])}
-                                </Text>
-                                {entry.list.length > 1 ? (
-                                  <>
-                                    <Text
-                                      style={[
-                                        { paddingLeft: 10, marginBottom: 6 },
-                                        s.bold,
-                                        s.marginT10,
-                                      ]}
-                                    >
-                                      All scores:
-                                    </Text>
-                                    {entry.list.map((ll, i) => (
-                                      <Text
-                                        key={i}
-                                        style={[s.score, { paddingLeft: 16 }]}
-                                      >
-                                        {formatNumWithCommas(ll)}
-                                      </Text>
-                                    ))}
-                                    <Text
-                                      style={[
-                                        s.score,
-                                        s.marginB10,
-                                        s.marginT10,
-                                      ]}
-                                    >
-                                      <Text style={s.bold}>Average: </Text>
-                                      {formatNumWithCommas(entry.average)}
-                                    </Text>
-                                    <Text style={[s.score]}>
-                                      <Text style={s.bold}>Count: </Text>
-                                      {entry.count}
-                                    </Text>
-                                  </>
-                                ) : null}
-                              </>
-                            )}
-                          </View>
-                        );
-                      })
+                            ))}
+                            <Text style={[s.score, s.marginB10, s.marginT10]}>
+                              <Text style={s.bold}>Average: </Text>
+                              {formatNumWithCommas(entry.average)}
+                            </Text>
+                            <Text style={[s.score]}>
+                              <Text style={s.bold}>Count: </Text>
+                              {entry.count}
+                            </Text>
+                          </>
+                        ) : null}
+                      </>
                     )}
                   </View>
-                </View>
-              )}
-            </KeyboardAwareScrollView>
-          );
-        }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+                );
+              })
+            )}
+          </View>
+        </View>
+      )}
+    </KeyboardAwareScrollView>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
@@ -1158,6 +1049,7 @@ UserProfile.propTypes = {
   removeMachineFromLifeList: PropTypes.func,
   clearSelectedState: PropTypes.func,
   navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 const mapStateToProps = ({ user }) => ({ user });
