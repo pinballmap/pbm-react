@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -27,169 +27,149 @@ import { PbmButton } from "../components";
 
 let deviceHeight = Dimensions.get("window").height;
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: false,
-      login: null,
-      loginError: null,
-      password: null,
-      passwordError: null,
-      apiErrorMsg: null,
-    };
-  }
+const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
 
-  submit = () => {
-    this.setState({
-      errors: false,
-      loginError: null,
-      passwordError: null,
-    });
+  const [errors, setErrors] = useState(false);
+  const [loginInput, setLoginInput] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [apiErrorMsg, setApiErrorMsg] = useState(null);
+
+  const submit = () => {
+    setErrors(false);
+    setLoginError(null);
+    setPasswordError(null);
     getData(
-      `/users/auth_details.json?login=${encodeURIComponent(
-        this.state.login,
-      )}&password=${encodeURIComponent(this.state.password)}`,
+      `/users/auth_details.json?login=${encodeURIComponent(loginInput)}&password=${encodeURIComponent(password)}`,
     )
       .then((data) => {
         if (data.errors) {
-          this.setState({ errors: true });
-
-          if (data.errors === "Unknown user")
-            this.setState({ loginError: "Unknown user" });
-
+          setErrors(true);
+          if (data.errors === "Unknown user") setLoginError("Unknown user");
           if (data.errors === "Incorrect password")
-            this.setState({ passwordError: "Incorrect password" });
-
+            setPasswordError("Incorrect password");
           if (
             data.errors ===
             "User is not yet confirmed. Please follow emailed confirmation instructions."
           )
-            this.setState({
-              apiErrorMsg:
-                "User is not yet confirmed. Please follow emailed confirmation instructions.",
-            });
+            setApiErrorMsg(
+              "User is not yet confirmed. Please follow emailed confirmation instructions.",
+            );
         }
         if (data.user) {
-          this.props.login(data.user);
-          this.props.getFavoriteLocations(data.user.id);
-          this.props.navigation.navigate("MapTab");
+          login(data.user);
+          getFavoriteLocations(data.user.id);
+          navigation.navigate("MapTab");
         }
       })
-      .catch((err) => this.setState({ errors: true, apiErrorMsg: err }));
+      .catch((err) => {
+        setErrors(true);
+        setApiErrorMsg(err);
+      });
   };
 
-  render() {
-    return (
-      <ThemeContext.Consumer>
-        {({ theme }) => {
-          const s = getStyles(theme);
-          return (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                backgroundColor: "transparent",
-              }}
-            >
-              <KeyboardAwareScrollView
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  justifyContent: "center",
-                }}
-                keyboardShouldPersistTaps="handled"
-              >
-                <View style={s.justify}>
-                  {this.state.errors && (
-                    <Text style={s.errorText}>
-                      {this.state.apiErrorMsg
-                        ? this.state.apiErrorMsg
-                        : "There were errors trying to process your submission"}
-                    </Text>
-                  )}
-                  <Text style={s.bold}>Log In</Text>
-                  <View style={s.inputContainer}>
-                    <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
-                    <TextInput
-                      placeholder="Username or Email"
-                      placeholderTextColor={"#9b9ebb"}
-                      onChangeText={(login) => this.setState({ login })}
-                      value={this.state.login}
-                      errorStyle={{ color: "red" }}
-                      errorMessage={this.state.loginError}
-                      style={s.inputText}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                  </View>
-                  <View style={s.inputContainer}>
-                    <MaterialIcons name="lock-outline" style={s.iconStyle} />
-                    <TextInput
-                      placeholder="Password"
-                      placeholderTextColor={"#9b9ebb"}
-                      onChangeText={(password) => this.setState({ password })}
-                      value={this.state.password}
-                      errorStyle={{ color: "red" }}
-                      errorMessage={this.state.passwordError}
-                      style={s.inputText}
-                      secureTextEntry={true}
-                      underlineColorAndroid="transparent"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                  </View>
-                  <PbmButton
-                    onPress={() => this.submit()}
-                    title="Log In"
-                    disabled={!this.state.login || !this.state.password}
-                    margin={{ marginHorizontal: 25, marginVertical: 15 }}
-                  />
-                  <Pressable
-                    onPress={() => this.props.navigation.navigate("Signup")}
-                    style={[{ marginTop: 15 }, s.buttonMask, s.marginBottom]}
-                  >
-                    <Text style={s.textLink}>Not a user? SIGN UP!</Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() =>
-                      this.props.navigation.navigate("PasswordReset")
-                    }
-                    style={[s.buttonMask, s.marginBottom]}
-                  >
-                    <Text style={s.textLink}>I forgot my password</Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() =>
-                      this.props.navigation.navigate("ResendConfirmation")
-                    }
-                    style={[s.buttonMask, s.marginBottom]}
-                  >
-                    <Text style={s.textLink}>Resend my confirmation email</Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      this.props.loginLater();
-                      this.props.navigation.navigate("MapTab");
-                    }}
-                    style={s.buttonMask}
-                  >
-                    <Text style={s.textLink}>Skip logging in for now</Text>
-                  </Pressable>
-                </View>
-              </KeyboardAwareScrollView>
-              <KeyboardToolbar />
-              <ImageBackground
-                source={require("../assets/images/pbm-fade-tall.png")}
-                style={s.backgroundImage}
-                imageStyle={{ opacity: 0.2 }}
-              />
-            </View>
-          );
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "transparent",
+      }}
+    >
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
         }}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={s.justify}>
+          {errors && (
+            <Text style={s.errorText}>
+              {apiErrorMsg ||
+                loginError ||
+                passwordError ||
+                "There were errors trying to process your submission"}
+            </Text>
+          )}
+          <Text style={s.bold}>Log In</Text>
+          <View style={s.inputContainer}>
+            <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
+            <TextInput
+              placeholder="Username or Email"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={setLoginInput}
+              value={loginInput}
+              errorStyle={{ color: "red" }}
+              errorMessage={loginError}
+              style={s.inputText}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+          <View style={s.inputContainer}>
+            <MaterialIcons name="lock-outline" style={s.iconStyle} />
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor={"#9b9ebb"}
+              onChangeText={setPassword}
+              value={password}
+              errorStyle={{ color: "red" }}
+              errorMessage={passwordError}
+              style={s.inputText}
+              secureTextEntry={true}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+          <PbmButton
+            onPress={submit}
+            title="Log In"
+            disabled={!loginInput || !password}
+            margin={{ marginHorizontal: 25, marginVertical: 15 }}
+          />
+          <Pressable
+            onPress={() => navigation.navigate("Signup")}
+            style={[{ marginTop: 15 }, s.buttonMask, s.marginBottom]}
+          >
+            <Text style={s.textLink}>Not a user? SIGN UP!</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("PasswordReset")}
+            style={[s.buttonMask, s.marginBottom]}
+          >
+            <Text style={s.textLink}>I forgot my password</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("ResendConfirmation")}
+            style={[s.buttonMask, s.marginBottom]}
+          >
+            <Text style={s.textLink}>Resend my confirmation email</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              loginLater();
+              navigation.navigate("MapTab");
+            }}
+            style={s.buttonMask}
+          >
+            <Text style={s.textLink}>Skip logging in for now</Text>
+          </Pressable>
+        </View>
+      </KeyboardAwareScrollView>
+      <KeyboardToolbar />
+      <ImageBackground
+        source={require("../assets/images/pbm-fade-tall.png")}
+        style={s.backgroundImage}
+        imageStyle={{ opacity: 0.2 }}
+      />
+    </View>
+  );
+};
 
 const getStyles = (theme) =>
   StyleSheet.create({
