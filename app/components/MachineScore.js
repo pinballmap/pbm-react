@@ -20,7 +20,7 @@ import { ConfirmationModal, WarningButton, PbmButton } from ".";
 import { deleteScore, editScore } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const moment = require("moment");
+import { formatDate } from "../utils/dateUtils";
 
 const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
   const dispatch = useDispatch();
@@ -134,9 +134,7 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
             { flexDirection: "row", alignItems: "center" },
           ]}
         >
-          <Text style={[s.italic, s.date]}>
-            {moment(updated_at).format("MMM DD, YYYY")}
-          </Text>
+          <Text style={[s.italic, s.date]}>{formatDate(updated_at)}</Text>
           {created_at !== updated_at && (
             <Text style={{ color: theme.text3 }}>{`*`}</Text>
           )}

@@ -2,7 +2,7 @@ import * as Location from "expo-location";
 import * as Application from "expo-application";
 import store from "../store";
 import { ACCOUNT_DISABLED } from "../actions/types";
-const moment = require("moment");
+import { todayStr, oneYearFromNowStr } from "../utils/dateUtils";
 
 const ACCOUNT_DISABLED_MSG =
   "Your account has been disabled. Please contact us if you think this is a mistake.";
@@ -91,8 +91,8 @@ export const getData = (uri) => {
 };
 
 export const getIfpaData = (radius, distanceUnit, lat, lon) => {
-  const date_today = moment().format("YYYY-MM-DD");
-  const date_1year = moment().add(1, "year").format("YYYY-MM-DD");
+  const date_today = todayStr();
+  const date_1year = oneYearFromNowStr();
 
   return fetch(
     `https://api.ifpapinball.com/tournament/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&latitude=${lat}&longitude=${lon}&distance_unit=${distanceUnit}&radius=${radius}&total=50&start_date=${date_today}&end_date=${date_1year}`,

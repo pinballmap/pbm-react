@@ -19,7 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 
-const moment = require("moment");
+import { formatDate } from "../utils/dateUtils";
 
 const MachineComment = ({ commentObj, user, location: loc, operators }) => {
   const dispatch = useDispatch();
@@ -183,9 +183,7 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
               />
             )}
           </View>
-          <Text style={[s.italic, s.date]}>
-            {moment(updated_at).format("MMM DD, YYYY")}
-          </Text>
+          <Text style={[s.italic, s.date]}>{formatDate(updated_at)}</Text>
           {created_at !== updated_at && (
             <Text style={{ color: theme.text3 }}>{`*`}</Text>
           )}

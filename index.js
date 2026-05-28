@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import { registerRootComponent } from "expo";
 import React, { useState, useEffect } from "react";
-import { Appearance, Platform } from "react-native";
+import { Appearance } from "react-native";
 import { retrieveItem } from "./app/config/utils";
 import { ThemeContext } from "./app/theme-context";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -37,12 +37,6 @@ SplashScreen.setOptions({
   duration: 1000,
   fade: true,
 });
-
-// https://github.com/facebook/react-native/issues/19410
-if (Platform.OS === "android") {
-  require("intl");
-  require("intl/locale-data/jsonp/en-US");
-}
 
 const App = () => {
   const calculateTheme = (themePreference) => {

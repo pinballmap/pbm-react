@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
 import { Image } from "expo-image";
 
-const moment = require("moment");
+import { formatDate } from "../utils/dateUtils";
 
 const insiderConnectedImage = {
   dark: require("../assets/images/Insider_Connected_Dark.png"),
@@ -53,8 +53,8 @@ const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
           />
           <Text style={s.updated}>
             {machine.created_at !== machine.updated_at
-              ? `Updated: ${moment(machine.updated_at).format("MMM DD, YYYY")}`
-              : `Added: ${moment(machine.created_at).format("MMM DD, YYYY")}`}
+              ? `Updated: ${formatDate(machine.updated_at)}`
+              : `Added: ${formatDate(machine.created_at)}`}
           </Text>
         </View>
       </View>

@@ -22,7 +22,7 @@ import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 
-const moment = require("moment");
+import { formatLongDate } from "../utils/dateUtils";
 
 const LocationActivity = ({
   user,
@@ -143,7 +143,7 @@ const LocationActivity = ({
       contributor_rank,
       flag,
     } = activity;
-    const time = moment(created_at).format("LL");
+    const time = formatLongDate(created_at);
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");

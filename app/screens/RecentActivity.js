@@ -30,7 +30,7 @@ import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 
-const moment = require("moment");
+import { formatLongDate } from "../utils/dateUtils";
 
 const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   const { theme } = useContext(ThemeContext);
@@ -230,7 +230,7 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
       contributor_rank,
       flag,
     } = activity;
-    const time = moment(created_at).format("LL");
+    const time = formatLongDate(created_at);
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");

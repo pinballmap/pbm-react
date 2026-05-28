@@ -71,7 +71,7 @@ Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
 let deviceWidth = Dimensions.get("window").width;
 
-const moment = require("moment");
+import { formatDateStr, yearsSince } from "../utils/dateUtils";
 
 const LocationDetails = (props) => {
   const scale = useSharedValue(1);
@@ -349,7 +349,7 @@ const LocationDetails = (props) => {
     ? `${location.city}, ${location.state}`
     : location.city;
 
-  const dateDiff = moment().diff(moment(location.date_last_updated), "years");
+  const dateDiff = yearsSince(location.date_last_updated);
 
   const iconStyles = {
     iconImage: ["get", "icon"],
@@ -1004,10 +1004,7 @@ const LocationDetails = (props) => {
                         </View>
                         {` on `}
                         <Text style={s.italic}>
-                          {moment(
-                            location.date_last_updated,
-                            "YYYY-MM-DD",
-                          ).format("MMM DD, YYYY")}
+                          {formatDateStr(location.date_last_updated)}
                         </Text>
                       </Text>
                     </Text>

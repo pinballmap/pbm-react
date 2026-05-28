@@ -30,7 +30,7 @@ import {
 } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
-const moment = require("moment");
+import { formatDate } from "../utils/dateUtils";
 const screenHeight = Dimensions.get("window").height;
 
 const getStatNum = (stat) => (stat ? ` ${formatNumWithCommas(stat)} ` : " 0 ");
@@ -467,9 +467,7 @@ const UserProfile = ({
                 />
               </View>
             )}
-            <Text style={s.joined}>
-              {`Joined: ${moment(created_at).format("MMM DD, YYYY")}`}
-            </Text>
+            <Text style={s.joined}>{`Joined: ${formatDate(created_at)}`}</Text>
             {isOwnProfile && (
               <View style={s.accountSettingsContainer}>
                 <Text

@@ -24,7 +24,7 @@ import {
   IC_ENABLED_UPDATED,
 } from "../actions/types";
 
-const moment = require("moment");
+import { todayStr } from "../utils/dateUtils";
 
 export const initialState = {
   isFetchingLocation: false,
@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
         location: {
           ...state.location,
           last_updated_by_username: action.username,
-          date_last_updated: moment().format("YYYY-MM-DD"),
+          date_last_updated: todayStr(),
         },
       };
     case SET_SELECTED_LMX:
@@ -121,7 +121,7 @@ export default (state = initialState, action) => {
         location: {
           ...state.location,
           last_updated_by_username: action.username,
-          date_last_updated: moment().format("YYYY-MM-DD"),
+          date_last_updated: todayStr(),
           location_machine_xrefs,
         },
       };
@@ -173,7 +173,7 @@ export default (state = initialState, action) => {
         location: {
           ...state.location,
           last_updated_by_username: action.username,
-          date_last_updated: moment().format("YYYY-MM-DD"),
+          date_last_updated: todayStr(),
           phone,
           website,
           description,

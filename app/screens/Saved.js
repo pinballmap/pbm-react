@@ -10,8 +10,6 @@ import { selectFavoriteLocationFilterBy } from "../actions/user_actions";
 
 let deviceWidth = Dimensions.get("window").width;
 
-const moment = require("moment");
-
 const sortLocations = (locations, idx, lat, lon) => {
   const locs = [...locations];
   switch (idx) {
@@ -29,9 +27,7 @@ const sortLocations = (locations, idx, lat, lon) => {
       });
     case 2:
       return locs.sort(
-        (a, b) =>
-          moment(b.updated_at, "YYYY-MM-DDTh:mm:ss").unix() -
-          moment(a.updated_at, "YYYY-MM-DDTh:mm:ss").unix(),
+        (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
       );
     default:
       return locs;

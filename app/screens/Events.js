@@ -23,7 +23,7 @@ import { useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
-const moment = require("moment");
+import { formatDateStr } from "../utils/dateUtils";
 
 export const Events = ({ query, user }) => {
   const [gettingEvents, setGettingEvents] = useState(true);
@@ -174,28 +174,16 @@ export const Events = ({ query, user }) => {
                     {tournament.raw_address}
                   </Text>
                   <Text style={[s.margin, s.cardTextStyle]}>
-                    {moment(tournament.event_start_date, "YYYY-MM-DD").format(
-                      "MMM DD, YYYY",
-                    ) ===
-                    moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                      "MMM DD, YYYY",
-                    ) ? (
+                    {formatDateStr(tournament.event_start_date) ===
+                    formatDateStr(tournament.event_end_date) ? (
                       <Text style={s.bold}>
-                        {moment(
-                          tournament.event_start_date,
-                          "YYYY-MM-DD",
-                        ).format("MMM DD, YYYY")}
+                        {formatDateStr(tournament.event_start_date)}
                       </Text>
                     ) : (
                       <Text style={s.bold}>
-                        {moment(
-                          tournament.event_start_date,
-                          "YYYY-MM-DD",
-                        ).format("MMM DD, YYYY")}{" "}
-                        -{" "}
-                        {moment(tournament.event_end_date, "YYYY-MM-DD").format(
-                          "MMM DD, YYYY",
-                        )}
+                        {formatDateStr(tournament.event_start_date)}
+                        {" - "}
+                        {formatDateStr(tournament.event_end_date)}
                       </Text>
                     )}
                   </Text>
@@ -294,13 +282,8 @@ export const Events = ({ query, user }) => {
             }
             renderItem={({ item }) => {
               const tournament_id = item.tournament_id;
-              const start_date = moment(
-                item.event_start_date,
-                "YYYY-MM-DD",
-              ).format("MMM DD, YYYY");
-              const end_date = moment(item.event_end_date, "YYYY-MM-DD").format(
-                "MMM DD, YYYY",
-              );
+              const start_date = formatDateStr(item.event_start_date);
+              const end_date = formatDateStr(item.event_end_date);
               return (
                 <Pressable
                   style={({ pressed }) => [

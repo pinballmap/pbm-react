@@ -53,7 +53,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const moment = require("moment");
+import { formatDate } from "../utils/dateUtils";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -449,13 +449,13 @@ const MachineDetails = ({
             <Text style={s.locationName}>{location.name}</Text>
           </View>
           <View style={s.addedContainer}>
-            <Text style={s.addedText}>{`Added: ${moment(
-              curLmx.created_at,
-            ).format("MMM DD, YYYY")}`}</Text>
+            <Text
+              style={s.addedText}
+            >{`Added: ${formatDate(curLmx.created_at)}`}</Text>
             {curLmx.created_at != curLmx.updated_at ? (
-              <Text style={s.addedText}>{`Last updated: ${moment(
-                curLmx.updated_at,
-              ).format("MMM DD, YYYY")}`}</Text>
+              <Text
+                style={s.addedText}
+              >{`Last updated: ${formatDate(curLmx.updated_at)}`}</Text>
             ) : (
               ""
             )}
