@@ -281,7 +281,10 @@ const LocationDetails = (props) => {
       .then(() =>
         dispatch(fetchLocationPictures(location.id)).then(setPictures),
       )
-      .catch(() => Alert.alert("Upload failed. Please try again."))
+      .catch((e) => {
+        console.error("Upload failed:", e);
+        Alert.alert("Upload failed. Please try again.");
+      })
       .finally(() => setUploadingPicture(false));
   };
 
@@ -962,7 +965,7 @@ const LocationDetails = (props) => {
                             <MaterialCommunityIcons
                               name="shield-account"
                               size={15}
-                              style={s.rankIcon}
+                              style={s.adminIcon}
                               color={theme.shield}
                             />
                           )}
@@ -1434,10 +1437,17 @@ const getStyles = (theme) =>
       padding: 10,
       borderRadius: 15,
     },
+    adminIcon: {
+      width: 15,
+      height: 15,
+      marginLeft: 2,
+      marginBottom: -2,
+    },
     rankIcon: {
       width: 15,
       height: 15,
-      marginHorizontal: 2,
+      marginLeft: 3,
+      marginRight: 2,
       marginBottom: -2,
     },
     flagIcon: {

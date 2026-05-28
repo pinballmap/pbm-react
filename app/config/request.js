@@ -118,33 +118,35 @@ export const getIfpaTournament = (tournament_id) => {
 };
 
 export const postFormData = (uri, formData) => {
-  return fetch(global.API_URL + uri, {
-    method: "post",
-    headers: {
-      Accept: "application/json",
-      AppVersion: Application.nativeApplicationVersion,
-    },
-    body: formData,
-  })
-    .then(async (response) => {
-      if (response.status === 401) handleAccountDisabled();
-
-      const data = await response.json();
-
-      if (data.errors) {
-        throw data.errors;
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", global.API_URL + uri);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("AppVersion", Application.nativeApplicationVersion);
+    xhr.onload = () => {
+      try {
+        if (xhr.status === 401) handleAccountDisabled();
+        const data = JSON.parse(xhr.responseText);
+        if (data.errors) {
+          reject(
+            typeof data.errors === "object"
+              ? data.errors.toString()
+              : data.errors,
+          );
+        } else if (data.error) {
+          reject(
+            typeof data.error === "object" ? data.error.toString() : data.error,
+          );
+        } else {
+          resolve(data);
+        }
+      } catch (e) {
+        reject(e.toString());
       }
-
-      if (data.error) {
-        throw data.error;
-      }
-
-      if (response.ok) return data;
-    })
-    .catch((err) => {
-      const errorText = typeof err === "object" ? err.toString() : err;
-      return Promise.reject(errorText);
-    });
+    };
+    xhr.onerror = () => reject("Network request failed");
+    xhr.send(formData);
+  });
 };
 
 export const deleteData = (uri, body) => {
