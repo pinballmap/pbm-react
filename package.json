@@ -18,7 +18,6 @@
     "@redux-devtools/extension": "^3.3.0",
     "@rnmapbox/maps": "10.3.1",
     "@sentry/react-native": "~7.11.0",
-    "enzyme-to-json": "^3.3.4",
     "eslint-plugin-react-native": "^4.0.0",
     "expo": "^56.0.5",
     "expo-application": "~56.0.3",
@@ -71,16 +70,9 @@
   },
   "scripts": {
     "start": "expo start -c",
-    "test": "jest",
     "lint": "eslint \"**/*.js\"",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'",
     "prepare": "husky install"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "setupFiles": [
-      "./setupJest.js"
-    ]
   },
   "lint-staged": {
     "*.js": "eslint --fix",
