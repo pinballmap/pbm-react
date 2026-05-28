@@ -281,10 +281,7 @@ const LocationDetails = (props) => {
       .then(() =>
         dispatch(fetchLocationPictures(location.id)).then(setPictures),
       )
-      .catch((e) => {
-        console.error("Upload failed:", e);
-        Alert.alert("Upload failed. Please try again.");
-      })
+      .catch(() => Alert.alert("Upload failed. Please try again."))
       .finally(() => setUploadingPicture(false));
   };
 
