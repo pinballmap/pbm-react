@@ -31,6 +31,7 @@ const DropDownButton = ({ title, margin, onPress, rightIcon }) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     titleStyle: {
+      flexShrink: 1,
       fontSize: 16,
       fontFamily: "Nunito-SemiBold",
       color: theme.text3,
