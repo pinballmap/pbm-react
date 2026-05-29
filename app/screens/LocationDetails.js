@@ -183,7 +183,33 @@ const LocationDetails = (props) => {
   useEffect(() => {
     if (locationId !== route.params["id"]) {
       setLocationId(route.params["id"]);
-      dispatch(fetchLocation(route.params["id"]));
+      setPictures(null);
+      setShowScrollToTop(false);
+      setConfirmModalVisible(false);
+      setPhotoModalVisible(false);
+      setPhotoIndex(0);
+      setFullResUrl(null);
+      setFullResLoading(false);
+      setUploadingPicture(false);
+      setDeletingPicture(false);
+      setPhotoTipsModalVisible(false);
+      setDeleteConfirmVisible(false);
+      clearTimeout(copiedTimeoutRef.current);
+      setCopiedNotice(false);
+      mapPressedRef.current = false;
+      scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+      dispatch(setSelectedMapLocation(null));
+      dispatch(fetchLocation(route.params["id"])).then(
+        ({ location: l } = {}) => {
+          if (l?.lpx_count > 0) {
+            dispatch(fetchLocationPictures(route.params["id"]))
+              .then(setPictures)
+              .catch(() => setPictures([]));
+          } else {
+            setPictures([]);
+          }
+        },
+      );
     }
   }, [route.params["id"]]);
 
