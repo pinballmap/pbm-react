@@ -134,7 +134,7 @@ const LocationDetails = (props) => {
           setPictures([]);
         }
       } catch (e) {
-        Alert.alert("Location is gone, friend.", "", [
+        Alert.alert("That location is gone, friend.", "", [
           { text: "OK", onPress: () => navigation.goBack() },
         ]);
       }

@@ -213,7 +213,7 @@ const Search = ({
         );
         if (data.errors) throw new Error();
       } catch (e) {
-        Alert.alert("That location is gone.");
+        Alert.alert("That location is gone, friend.");
         removeItemFromSearchHistory(idx);
         return;
       }
