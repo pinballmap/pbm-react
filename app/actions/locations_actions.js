@@ -55,7 +55,7 @@ const buildFilterQueryString = (query, userId) => {
   } = query;
   const machineQueryString =
     machineIds.length > 1
-      ? machineIds.map((id) => `by_machine_id[]=${id}`).join("&") + "&"
+      ? machineIds.map((id) => `by_machine_single_id[]=${id}`).join("&") + "&"
       : machineGroupId
         ? `by_machine_group_id=${machineGroupId}&`
         : machineIds.length === 1
