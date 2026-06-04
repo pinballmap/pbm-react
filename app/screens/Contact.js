@@ -78,20 +78,37 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           keyboardShouldPersistTaps="handled"
           overScrollMode="always"
         >
-          <Text style={[s.text]}>
-            {`This is a general contact form - `}
-            <Text style={[s.text, s.boldFont]}>{`include details`}</Text>
-            {` such as the `}
-            <Text
-              style={[
-                s.text,
-                s.boldFont,
-                s.pinkText,
-                { textTransform: "uppercase" },
-              ]}
-            >{`location name`}</Text>
-            {`.`}
-          </Text>
+          {route.params?.locationName ? (
+            <Text style={[s.text]}>
+              {`You're contacting us about `}
+              <Text
+                style={[
+                  s.text,
+                  s.boldFont,
+                  s.pinkText,
+                  { textTransform: "uppercase" },
+                ]}
+              >
+                {route.params.locationName}
+              </Text>
+              {`.`}
+            </Text>
+          ) : (
+            <Text style={[s.text]}>
+              {`This is a general contact form - `}
+              <Text style={[s.text, s.boldFont]}>{`include details`}</Text>
+              {` such as the `}
+              <Text
+                style={[
+                  s.text,
+                  s.boldFont,
+                  s.pinkText,
+                  { textTransform: "uppercase" },
+                ]}
+              >{`location name`}</Text>
+              {`.`}
+            </Text>
+          )}
           <Text style={[s.text]}>
             <Text style={[s.text, s.boldFont]}>{`No need`}</Text>
             {` to tell us that a `}
@@ -136,7 +153,9 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           <TextInput
             multiline={true}
             placeholder={
-              "Your super detailed message that includes the LOCATION NAME..."
+              route.params?.locationName
+                ? "Your super detailed message..."
+                : "Your super detailed message that includes the LOCATION NAME..."
             }
             placeholderTextColor={theme.indigo4}
             style={[{ padding: 5, height: 200 }, s.textInput]}
