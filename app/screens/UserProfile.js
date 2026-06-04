@@ -223,10 +223,85 @@ const UserProfile = ({
       keyboardShouldPersistTaps="handled"
     >
       {isOwnProfile && !user.loggedIn ? (
-        <NotLoggedIn
-          text={`You're not logged in, so you don't have a profile.`}
-          onPress={() => navigation.navigate("Login")}
-        />
+        <>
+          <NotLoggedIn
+            text={`You're not logged in, so you don't have a profile.`}
+            onPress={() => navigation.navigate("Login")}
+          />
+          <View style={s.usernameContainer}>
+            <Text style={s.username}>Your Great Username</Text>
+            <View style={s.flagContainer}>
+              <Image
+                source={flagImages["pirate"]}
+                style={[s.profileFlag, { width: getFlagWidth("pirate", 40) }]}
+              />
+            </View>
+            <View style={s.rankView}>
+              <Text style={s.rankText}>Super Mapper</Text>
+              <Image
+                contentFit="fill"
+                source={require("../assets/images/SuperMapper.png")}
+                style={s.rankIcon}
+              />
+            </View>
+            <Text
+              style={s.joined}
+            >{`Joined: ${formatDate(new Date().toISOString())}`}</Text>
+          </View>
+          <View style={s.statContainer}>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Total contributions:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines added:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines removed:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machine comments:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>High scores added:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Machines in Life List:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Locations submitted:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+            <View style={s.statItem}>
+              <Text style={s.stat}>Locations edited:</Text>
+              <Text style={s.statNum}>{getStatNum(0)}</Text>
+            </View>
+          </View>
+          <Text style={s.section}>Some recently edited locations</Text>
+          <View style={{ paddingTop: 8, paddingBottom: 15 }}>
+            <Text style={s.none}>No edits yet</Text>
+          </View>
+          <Text style={s.section}>Your Machine List and High Scores</Text>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingTop: 10,
+              paddingBottom: 6,
+            }}
+          >
+            <Text style={s.sectionDescription}>
+              {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines here or when viewing a machine at a location.`}
+            </Text>
+          </View>
+          <View style={{ paddingTop: 8, marginBottom: 30 }}>
+            <Text style={s.none}>No machines or scores to list yet</Text>
+          </View>
+        </>
       ) : (
         <View>
           {isOwnProfile && (
