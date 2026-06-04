@@ -524,6 +524,31 @@ const UserProfile = ({
             </View>
           </View>
           <Text style={s.section}>Some recently edited locations</Text>
+          {isOwnProfile && (
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: 10,
+                paddingBottom: 6,
+              }}
+            >
+              <Text style={s.sectionDescription}>
+                {`You can see all of your edits in the `}
+                <Text
+                  style={s.textLink}
+                  onPress={() =>
+                    navigation.navigate("RecentActivity", {
+                      screen: "RecentActivityStack",
+                      params: { initialGlobal: true, yourActivity: true },
+                    })
+                  }
+                >
+                  filtered Activity Feed
+                </Text>
+                {`.`}
+              </Text>
+            </View>
+          )}
           <View style={{ paddingTop: 8, paddingBottom: 15 }}>
             {profile_list_of_edited_locations.length === 0 ? (
               <Text style={s.none}>No edits yet</Text>
@@ -564,10 +589,10 @@ const UserProfile = ({
                 paddingBottom: 6,
               }}
             >
-              <Text style={s.lifeListDescription}>
+              <Text style={s.sectionDescription}>
                 {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location. `}
                 <Text
-                  style={s.addScoreLink}
+                  style={s.textLink}
                   onPress={() => navigation.navigate("AddHighScore")}
                 >
                   Click here to add new high scores
@@ -998,14 +1023,14 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Regular",
     },
-    lifeListDescription: {
+    sectionDescription: {
       color: theme.text3,
       fontSize: 15,
       fontFamily: "Nunito-Regular",
       textAlign: "center",
       lineHeight: 22,
     },
-    addScoreLink: {
+    textLink: {
       color: theme.purpleLight,
       fontFamily: "Nunito-SemiBold",
       textDecorationLine: "underline",

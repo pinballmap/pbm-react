@@ -25,25 +25,34 @@ import {
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
 import { getMapBounds } from "../utils/mapCenterBridge";
-import { clearActivityFilter } from "../actions";
+import { clearActivityFilter, setSelectedActivitiesFilter } from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 
 import { formatLongDate } from "../utils/dateUtils";
 
-const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
+const RecentActivity = ({
+  query,
+  clearActivityFilter,
+  setSelectedActivitiesFilter,
+  navigation,
+  route,
+  user,
+}) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true);
   const [recentActivity, setRecentActivity] = useState([]);
   const [maxDistance, setMaxDistance] = useState(10);
-  const [btnIdx, setBtnIdx] = useState(0);
+  const [btnIdx, setBtnIdx] = useState(route?.params?.initialGlobal ? 3 : 0);
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const [page, setPage] = useState(1);
   const [pagy, setPagy] = useState(null);
   const scrollViewRef = useRef(null);
   const filtersChangedRef = useRef(false);
+  const routeRef = useRef(route);
+  routeRef.current = route;
   const lastFetchedCenterRef = useRef({ lat, lon });
   const {
     selectedActivities = [],
@@ -179,7 +188,26 @@ const RecentActivity = ({ query, clearActivityFilter, navigation, user }) => {
   };
 
   useEffect(
-    () => navigation.addListener("focus", fetchData),
+    () =>
+      navigation.addListener("focus", () => {
+        const { initialGlobal, yourActivity } = routeRef.current?.params ?? {};
+        if (initialGlobal || yourActivity) {
+          if (initialGlobal) setBtnIdx(3);
+          navigation.setParams({
+            initialGlobal: undefined,
+            yourActivity: undefined,
+          });
+          if (yourActivity && !selectedActivities.includes("your_activity")) {
+            // Dispatch the filter; filtersChangedRef effect will call fetchData
+            // with the correct yourActivitySelected value once state commits.
+            setSelectedActivitiesFilter(["your_activity"]);
+          } else {
+            fetchData(null, null, true);
+          }
+        } else {
+          fetchData();
+        }
+      }),
     [
       navigation,
       lat,
@@ -712,11 +740,15 @@ RecentActivity.propTypes = {
   query: PropTypes.object,
   user: PropTypes.object,
   navigation: PropTypes.object,
+  route: PropTypes.object,
   clearActivityFilter: PropTypes.func,
+  setSelectedActivitiesFilter: PropTypes.func,
 };
 
 const mapStateToProps = ({ query, user }) => ({ query, user });
 const mapDispatchToProps = (dispatch) => ({
   clearActivityFilter: () => dispatch(clearActivityFilter()),
+  setSelectedActivitiesFilter: (activities) =>
+    dispatch(setSelectedActivitiesFilter(activities)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RecentActivity);
