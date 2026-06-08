@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.7
+
+June 7, 2026
+
+- Bug fix when filtering for multiple machines. Filter only for exact models selected.
+- Link to users own activity feed of edits in profile.
+- Retain place in Location List when navigating back to it.
+- Include dummy profile for logged out users.
+
 ### 5.4.6
 
 June 1, 2026
