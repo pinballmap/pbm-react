@@ -36,20 +36,39 @@ const LocationList = ({
   const [showNoLocationTrackingModal, setShowNoLocationTrackingModal] =
     useState(false);
   const flatListRef = useRef(null);
+  const needsRefetchRef = useRef(true);
+  const listNeedsRefetchRef = useRef(false);
 
-  const { listLocations, listPagy, isFetchingList, locationTypes } = locations;
+  const {
+    listLocations,
+    listPagy,
+    isFetchingList,
+    locationTypes,
+    listNeedsRefetch,
+  } = locations;
   const { lat, lon, locationTrackingServicesEnabled, unitPreference } = user;
   const { swLat, swLon, neLat, neLon } = query;
   const filterIdx = locations.selectedLocationListFilter;
   const bounds = { swLat, swLon, neLat, neLon };
 
-  // Fetch on mount and when navigation focus fires
   useEffect(() => {
+    listNeedsRefetchRef.current = listNeedsRefetch;
+  }, [listNeedsRefetch]);
+
+  // Fetch on mount and when bounds change. Skip the fetch when merely returning
+  // from a child screen (e.g. LocationDetails) so the user's page and scroll
+  // position are preserved, unless machines were added/removed (listNeedsRefetch).
+  // filterIdx is intentionally excluded: filter changes always call getListLocations
+  // directly via updateIndex.
+  useEffect(() => {
+    needsRefetchRef.current = true;
     return navigation.addListener("focus", () => {
+      if (!needsRefetchRef.current && !listNeedsRefetchRef.current) return;
+      needsRefetchRef.current = false;
       setPage(1);
       getListLocations(bounds, 1, filterIdx);
     });
-  }, [navigation, swLat, swLon, neLat, neLon, filterIdx]);
+  }, [navigation, swLat, swLon, neLat, neLon]); // eslint-disable-line
 
   const updateIndex = (buttonIndex) => {
     if (buttonIndex === NEAR_FILTER_IDX && !locationTrackingServicesEnabled) {

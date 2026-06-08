@@ -23,6 +23,7 @@ export const initialState = {
   isFetchingList: false,
   listLocations: [],
   listPagy: null,
+  listNeedsRefetch: false,
   selectedLocationListFilter: 0,
   selectedMapLocation: null,
   selectedMapLocationDetails: null,
@@ -75,6 +76,7 @@ export default (state = initialState, action) => {
         isFetchingList: false,
         listLocations: action.locations,
         listPagy: action.pagy,
+        listNeedsRefetch: false,
       };
     case FETCHING_LIST_LOCATIONS_FAILURE:
       return {
@@ -107,7 +109,7 @@ export default (state = initialState, action) => {
         }
         return feature;
       });
-      return { ...state, mapMarkers };
+      return { ...state, mapMarkers, listNeedsRefetch: true };
     }
     case MACHINE_ADDED_TO_LOCATION: {
       const { location_id } = action;
@@ -123,7 +125,7 @@ export default (state = initialState, action) => {
         }
         return feature;
       });
-      return { ...state, mapMarkers };
+      return { ...state, mapMarkers, listNeedsRefetch: true };
     }
     case SET_SELECTED_MAP_LOCATION: {
       return {
