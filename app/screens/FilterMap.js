@@ -177,287 +177,291 @@ const FilterMap = ({
     <SafeAreaView edges={[]} style={{ flex: 1 }}>
       <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
-          <Text style={[s.sectionTitle, s.paddingFirst]}>
-            Locations with this machine
-          </Text>
-          <DropDownButton
-            title={
-              machines.length > 1
-                ? "Multiple machines"
-                : machines.length === 1
-                  ? machines[0].name
-                  : "All"
-            }
-            onPress={() => {
-              dispatch(clearSelectedState());
-              machines.forEach((m) => dispatch(addMachineToList(m)));
-              navigatingToFindMachine.current = true;
-              navigate("FindMachine", {
-                machineFilter: true,
-                multiSelect: true,
-                showDone: machines.length > 0,
-                manufacturerFilter,
-                machineTypeFilter,
-                machineYearGte,
-                machineYearLte,
-              });
-            }}
-            margin={s.dropdownMargin}
-          />
-          {machines.length === 1 && machines[0].machine_group_id && (
-            <>
-              <MaterialCommunityIcons
-                name="arrow-down"
-                size={18}
-                style={[{ textAlign: "center" }, s.pink]}
-              />
-              <Text style={[s.sectionTitle, s.paddingRL10, s.pink]}>
-                ...This machine version, or all?
-              </Text>
-              <ButtonGroup
-                onPress={(idx) =>
-                  setFilterByMachineVersion(idx, machines[0].machine_group_id)
-                }
-                selectedIndex={machineGroupId ? 0 : 1}
-                buttons={["All Versions", "Selected Version"]}
-                containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-                textStyle={s.buttonGroupInactive}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-              />
-            </>
-          )}
-          {machines.length === 1 && machines[0].ic_eligible && (
-            <>
-              <MaterialCommunityIcons
-                name="arrow-down"
-                size={18}
-                style={[{ textAlign: "center" }, s.pink]}
-              />
-              <Text style={[s.sectionTitle, s.paddingRL10, s.pink]}>
-                ...Has Stern Insider Connected?
-              </Text>
-              <ButtonGroup
-                onPress={(idx) => dispatch(setIcFilter(idx === 1))}
-                selectedIndex={icFilter ? 1 : 0}
-                buttons={["Doesn't matter", "Has IC"]}
-                containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-                textStyle={s.buttonGroupInactive}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
-              />
-            </>
-          )}
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Manufacturer
-          </Text>
-          <DropDownButton
-            title={
-              manufacturerFilter.length > 1
-                ? "Multiple manufacturers"
-                : manufacturerFilter.length === 1
-                  ? manufacturerFilter[0]
-                  : "All"
-            }
-            onPress={() =>
-              navigation.navigate("FindManufacturer", {
-                selectedManufacturers: manufacturerFilter,
-                onGoBackId: registerCallback((manufacturers) => {
-                  dispatch(selectedManufacturerFilter(manufacturers));
-                }),
-              })
-            }
-            margin={s.dropdownMargin}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Machine type
-          </Text>
-          <ButtonGroup
-            onPress={(idx) =>
-              dispatch(setMachineTypeFilter(idx === 1 ? "em" : ""))
-            }
-            selectedIndex={machineTypeFilter === "em" ? 1 : 0}
-            buttons={["All", "EM"]}
-            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-            textStyle={s.buttonGroupInactive}
-            selectedButtonStyle={s.selButtonStyle}
-            selectedTextStyle={s.selTextStyle}
-            innerBorderStyle={s.innerBorderStyle}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Machine year
-          </Text>
-          <View style={s.yearRangeContainer}>
-            {[
-              { label: "From", value: machineYearGte, target: "gte" },
-              { label: "To", value: machineYearLte, target: "lte" },
-            ].map(({ label, value, target }) => {
-              const isGte = target === "gte";
-              const update = isGte ? updateYearGte : updateYearLte;
-              const minVal = isGte
-                ? minMachineYear
-                : (machineYearGte ?? minMachineYear);
-              const maxVal = isGte
-                ? (machineYearLte ?? maxMachineYear)
-                : maxMachineYear;
-              return (
-                <View key={target} style={s.yearStepper}>
-                  <Text style={s.yearLabel}>{label}</Text>
-                  <View style={s.yearControls}>
-                    <Pressable
-                      onPress={() => {
-                        if (value === null) return;
-                        const next = value - 1;
-                        update(next < minVal ? null : next);
-                      }}
-                      style={({ pressed }) => [
-                        s.yearButton,
-                        pressed && s.yearButtonPressed,
-                      ]}
-                    >
-                      <Text style={s.yearButtonText}>−</Text>
-                    </Pressable>
-                    <Pressable onPress={() => setYearModalTarget(target)}>
-                      <Text style={s.yearValue}>{value ?? "--"}</Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        if (value === null) {
-                          update(isGte ? minVal : maxVal);
-                        } else {
-                          const next = value + 1;
-                          update(next > maxVal ? null : next);
-                        }
-                      }}
-                      style={({ pressed }) => [
-                        s.yearButton,
-                        pressed && s.yearButtonPressed,
-                      ]}
-                    >
-                      <Text style={s.yearButtonText}>+</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              );
-            })}
-          </View>
-          <Modal
-            visible={yearModalTarget !== null}
-            transparent
-            animationType="fade"
-            onRequestClose={() => setYearModalTarget(null)}
-          >
-            <Pressable
-              style={s.yearModalOverlay}
-              onPress={() => setYearModalTarget(null)}
-            >
-              <View style={[s.yearModalContent, s.boxShadow]}>
-                <FlatList
-                  data={
-                    yearModalTarget === "lte"
-                      ? [...allYears].reverse()
-                      : allYears
+          <View style={s.filterSection}>
+            <Text style={s.filterSectionTitle}>Machine Filters</Text>
+            <Text style={[s.filterTitle, s.paddingFirst]}>Machine</Text>
+            <DropDownButton
+              title={
+                machines.length > 1
+                  ? "Multiple machines"
+                  : machines.length === 1
+                    ? machines[0].name
+                    : "All"
+              }
+              onPress={() => {
+                dispatch(clearSelectedState());
+                machines.forEach((m) => dispatch(addMachineToList(m)));
+                navigatingToFindMachine.current = true;
+                navigate("FindMachine", {
+                  machineFilter: true,
+                  multiSelect: true,
+                  showDone: machines.length > 0,
+                  manufacturerFilter,
+                  machineTypeFilter,
+                  machineYearGte,
+                  machineYearLte,
+                });
+              }}
+              margin={s.dropdownMargin}
+            />
+            {machines.length === 1 && machines[0].machine_group_id && (
+              <>
+                <MaterialCommunityIcons
+                  name="arrow-down"
+                  size={18}
+                  style={[{ textAlign: "center" }, s.pink]}
+                />
+                <Text style={[s.filterTitle, s.paddingRL10, s.pink]}>
+                  ...This machine version, or all?
+                </Text>
+                <ButtonGroup
+                  onPress={(idx) =>
+                    setFilterByMachineVersion(idx, machines[0].machine_group_id)
                   }
-                  keyExtractor={(item) => String(item)}
-                  initialScrollIndex={0}
-                  getItemLayout={(_, index) => ({
-                    length: 44,
-                    offset: 44 * index,
-                    index,
-                  })}
-                  renderItem={({ item }) => {
-                    const currentVal =
-                      yearModalTarget === "gte"
-                        ? machineYearGte
-                        : machineYearLte;
-                    const isSelected = item === currentVal;
-                    return (
+                  selectedIndex={machineGroupId ? 0 : 1}
+                  buttons={["All Versions", "Selected Version"]}
+                  containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+                  textStyle={s.buttonGroupInactive}
+                  selectedButtonStyle={s.selButtonStyle}
+                  selectedTextStyle={s.selTextStyle}
+                  innerBorderStyle={s.innerBorderStyle}
+                />
+              </>
+            )}
+            {machines.length === 1 && machines[0].ic_eligible && (
+              <>
+                <MaterialCommunityIcons
+                  name="arrow-down"
+                  size={18}
+                  style={[{ textAlign: "center" }, s.pink]}
+                />
+                <Text style={[s.filterTitle, s.paddingRL10, s.pink]}>
+                  ...Has Stern Insider Connected?
+                </Text>
+                <ButtonGroup
+                  onPress={(idx) => dispatch(setIcFilter(idx === 1))}
+                  selectedIndex={icFilter ? 1 : 0}
+                  buttons={["Doesn't matter", "Has IC"]}
+                  containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+                  textStyle={s.buttonGroupInactive}
+                  selectedButtonStyle={s.selButtonStyle}
+                  selectedTextStyle={s.selTextStyle}
+                  innerBorderStyle={s.innerBorderStyle}
+                />
+              </>
+            )}
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Manufacturer
+            </Text>
+            <DropDownButton
+              title={
+                manufacturerFilter.length > 1
+                  ? "Multiple manufacturers"
+                  : manufacturerFilter.length === 1
+                    ? manufacturerFilter[0]
+                    : "All"
+              }
+              onPress={() =>
+                navigation.navigate("FindManufacturer", {
+                  selectedManufacturers: manufacturerFilter,
+                  onGoBackId: registerCallback((manufacturers) => {
+                    dispatch(selectedManufacturerFilter(manufacturers));
+                  }),
+                })
+              }
+              margin={s.dropdownMargin}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Machine type
+            </Text>
+            <ButtonGroup
+              onPress={(idx) =>
+                dispatch(setMachineTypeFilter(idx === 1 ? "em" : ""))
+              }
+              selectedIndex={machineTypeFilter === "em" ? 1 : 0}
+              buttons={["All", "EM"]}
+              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+              textStyle={s.buttonGroupInactive}
+              selectedButtonStyle={s.selButtonStyle}
+              selectedTextStyle={s.selTextStyle}
+              innerBorderStyle={s.innerBorderStyle}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Machine year
+            </Text>
+            <View style={s.yearRangeContainer}>
+              {[
+                { label: "From", value: machineYearGte, target: "gte" },
+                { label: "To", value: machineYearLte, target: "lte" },
+              ].map(({ label, value, target }) => {
+                const isGte = target === "gte";
+                const update = isGte ? updateYearGte : updateYearLte;
+                const minVal = isGte
+                  ? minMachineYear
+                  : (machineYearGte ?? minMachineYear);
+                const maxVal = isGte
+                  ? (machineYearLte ?? maxMachineYear)
+                  : maxMachineYear;
+                return (
+                  <View key={target} style={s.yearStepper}>
+                    <Text style={s.yearLabel}>{label}</Text>
+                    <View style={s.yearControls}>
                       <Pressable
                         onPress={() => {
-                          if (yearModalTarget === "gte") updateYearGte(item);
-                          else updateYearLte(item);
-                          setYearModalTarget(null);
+                          if (value === null) return;
+                          const next = value - 1;
+                          update(next < minVal ? null : next);
                         }}
                         style={({ pressed }) => [
-                          s.yearModalItem,
-                          isSelected && s.yearModalItemSelected,
+                          s.yearButton,
                           pressed && s.yearButtonPressed,
                         ]}
                       >
-                        <Text
-                          style={[
-                            s.yearModalItemText,
-                            isSelected && s.yearModalItemTextSelected,
+                        <Text style={s.yearButtonText}>−</Text>
+                      </Pressable>
+                      <Pressable onPress={() => setYearModalTarget(target)}>
+                        <Text style={s.yearValue}>{value ?? "--"}</Text>
+                      </Pressable>
+                      <Pressable
+                        onPress={() => {
+                          if (value === null) {
+                            update(isGte ? minVal : maxVal);
+                          } else {
+                            const next = value + 1;
+                            update(next > maxVal ? null : next);
+                          }
+                        }}
+                        style={({ pressed }) => [
+                          s.yearButton,
+                          pressed && s.yearButtonPressed,
+                        ]}
+                      >
+                        <Text style={s.yearButtonText}>+</Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+            <Modal
+              visible={yearModalTarget !== null}
+              transparent
+              animationType="fade"
+              onRequestClose={() => setYearModalTarget(null)}
+            >
+              <Pressable
+                style={s.yearModalOverlay}
+                onPress={() => setYearModalTarget(null)}
+              >
+                <View style={[s.yearModalContent, s.boxShadow]}>
+                  <FlatList
+                    data={
+                      yearModalTarget === "lte"
+                        ? [...allYears].reverse()
+                        : allYears
+                    }
+                    keyExtractor={(item) => String(item)}
+                    initialScrollIndex={0}
+                    getItemLayout={(_, index) => ({
+                      length: 44,
+                      offset: 44 * index,
+                      index,
+                    })}
+                    renderItem={({ item }) => {
+                      const currentVal =
+                        yearModalTarget === "gte"
+                          ? machineYearGte
+                          : machineYearLte;
+                      const isSelected = item === currentVal;
+                      return (
+                        <Pressable
+                          onPress={() => {
+                            if (yearModalTarget === "gte") updateYearGte(item);
+                            else updateYearLte(item);
+                            setYearModalTarget(null);
+                          }}
+                          style={({ pressed }) => [
+                            s.yearModalItem,
+                            isSelected && s.yearModalItemSelected,
+                            pressed && s.yearButtonPressed,
                           ]}
                         >
-                          {item}
-                        </Text>
-                      </Pressable>
-                    );
-                  }}
-                />
-              </View>
-            </Pressable>
-          </Modal>
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Has &gt; 0 Stern Insider Connected machine
-          </Text>
-          <ButtonGroup
-            onPress={(idx) => dispatch(setLocationIcFilter(idx === 1))}
-            selectedIndex={locationIcFilter ? 1 : 0}
-            buttons={["All", "With IC"]}
-            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-            textStyle={s.buttonGroupInactive}
-            selectedButtonStyle={s.selButtonStyle}
-            selectedTextStyle={s.selTextStyle}
-            innerBorderStyle={s.innerBorderStyle}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Limit by number of machines
-          </Text>
-          <ButtonGroup
-            onPress={setNumMachinesSelected}
-            selectedIndex={getIdx(numMachines)}
-            buttons={["All", "2+", "5+", "10+", "20+"]}
-            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-            textStyle={s.buttonGroupInactive}
-            selectedButtonStyle={s.selButtonStyle}
-            selectedTextStyle={s.selTextStyle}
-            innerBorderStyle={s.innerBorderStyle}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Location type
-          </Text>
-          <DropDownButton
-            title={
-              locationTypeIds.length > 1 ? "Multiple types" : locationTypeName
-            }
-            onPress={() => goToFindLocationType()}
-            margin={s.dropdownMargin}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Operator
-          </Text>
-          <DropDownButton
-            title={operatorName}
-            onPress={() => goToFindOperator()}
-            margin={s.dropdownMargin}
-          />
-          <Text style={[s.sectionTitle, s.marginTop20, s.paddingRL10]}>
-            Saved locations or all
-          </Text>
-          <ButtonGroup
-            onPress={updateViewFavorites}
-            selectedIndex={viewByFavoriteLocations ? 1 : 0}
-            buttons={["All", "My Saved"]}
-            containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-            textStyle={s.buttonGroupInactive}
-            selectedButtonStyle={s.selButtonStyle}
-            selectedTextStyle={s.selTextStyle}
-            innerBorderStyle={s.innerBorderStyle}
-          />
+                          <Text
+                            style={[
+                              s.yearModalItemText,
+                              isSelected && s.yearModalItemTextSelected,
+                            ]}
+                          >
+                            {item}
+                          </Text>
+                        </Pressable>
+                      );
+                    }}
+                  />
+                </View>
+              </Pressable>
+            </Modal>
+          </View>
+          <View style={s.filterSection}>
+            <Text style={s.filterSectionTitle}>Location Filters</Text>
+            <Text style={[s.filterTitle, s.paddingFirst, s.paddingRL10]}>
+              Limit by number of machines
+            </Text>
+            <ButtonGroup
+              onPress={setNumMachinesSelected}
+              selectedIndex={getIdx(numMachines)}
+              buttons={["All", "2+", "5+", "10+", "20+"]}
+              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+              textStyle={s.buttonGroupInactive}
+              selectedButtonStyle={s.selButtonStyle}
+              selectedTextStyle={s.selTextStyle}
+              innerBorderStyle={s.innerBorderStyle}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Location type
+            </Text>
+            <DropDownButton
+              title={
+                locationTypeIds.length > 1 ? "Multiple types" : locationTypeName
+              }
+              onPress={() => goToFindLocationType()}
+              margin={s.dropdownMargin}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Location has at least 1 Stern Insider Connected machine?
+            </Text>
+            <ButtonGroup
+              onPress={(idx) => dispatch(setLocationIcFilter(idx === 1))}
+              selectedIndex={locationIcFilter ? 1 : 0}
+              buttons={["All", "Has IC"]}
+              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+              textStyle={s.buttonGroupInactive}
+              selectedButtonStyle={s.selButtonStyle}
+              selectedTextStyle={s.selTextStyle}
+              innerBorderStyle={s.innerBorderStyle}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Operator
+            </Text>
+            <DropDownButton
+              title={operatorName}
+              onPress={() => goToFindOperator()}
+              margin={s.dropdownMargin}
+            />
+            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+              Saved locations or all
+            </Text>
+            <ButtonGroup
+              onPress={updateViewFavorites}
+              selectedIndex={viewByFavoriteLocations ? 1 : 0}
+              buttons={["All", "My Saved"]}
+              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
+              textStyle={s.buttonGroupInactive}
+              selectedButtonStyle={s.selButtonStyle}
+              selectedTextStyle={s.selTextStyle}
+              innerBorderStyle={s.innerBorderStyle}
+            />
+          </View>
         </View>
       </Screen>
       {hasFilterSelected ? (
@@ -483,12 +487,28 @@ const FilterMap = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    sectionTitle: {
+    filterTitle: {
       textAlign: "center",
       fontSize: 16,
       fontFamily: "Nunito-Bold",
       color: theme.text2,
       marginBottom: 5,
+    },
+    filterSection: {
+      marginTop: 15,
+      marginHorizontal: 5,
+      paddingVertical: 12,
+      paddingHorizontal: 6,
+      borderRadius: 15,
+      backgroundColor: theme.base2,
+      borderWidth: 4,
+      borderColor: theme.theme == "dark" ? theme.base4 : "#ebebf2",
+    },
+    filterSectionTitle: {
+      fontFamily: "Nunito-ExtraBold",
+      fontSize: 20,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      textAlign: "center",
     },
     pink: {
       color: theme.pink1,
