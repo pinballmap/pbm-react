@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.8
+
+June 11, 2026
+
+- Design change on filter screen: categorize filter types.
+
 ### 5.4.7
 
 June 7, 2026
