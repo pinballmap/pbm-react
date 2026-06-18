@@ -151,6 +151,7 @@ const Map = ({
 
         await sleep(50);
         const bounds = await getBounds();
+        if (!bounds) return;
         dispatch(updateBounds(bounds));
         dispatch(getMapMarkers(bounds));
       }
@@ -230,6 +231,7 @@ const Map = ({
   };
 
   const getBounds = async () => {
+    if (!_map.current) return null;
     const currentBounds = await _map.current.getVisibleBounds();
     return {
       swLat: currentBounds[1][1],
@@ -251,6 +253,11 @@ const Map = ({
     mapInitializedRef.current = true;
     await sleep(50);
     const bounds = await getBounds();
+    if (!bounds) {
+      mapInitializedRef.current = false;
+      setShowUpdateSearch(true);
+      return;
+    }
     dispatch(updateBounds(bounds));
     dispatch(getMapMarkers(bounds));
     setIsFirstLoad(false);
@@ -259,6 +266,7 @@ const Map = ({
   const setToCurrentBounds = async () => {
     setShowUpdateSearch(false);
     const bounds = await getBounds();
+    if (!bounds) return null;
     dispatch(updateBounds(bounds));
     return bounds;
   };
@@ -276,7 +284,7 @@ const Map = ({
   const refreshResults = async () => {
     dispatch(clearSearchBarText());
     const bounds = await setToCurrentBounds();
-    dispatch(getMapMarkers(bounds));
+    if (bounds) dispatch(getMapMarkers(bounds));
   };
 
   const updateCurrentLocation = () => {
