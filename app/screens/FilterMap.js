@@ -163,6 +163,7 @@ const FilterMap = ({
 
   const goToFindOperator = () => {
     navigation.navigate("FindOperator", {
+      selectedOperatorId: query.selectedOperator,
       onGoBackId: registerCallback((id) => {
         dispatch(selectedOperatorFilter(id));
       }),

@@ -29,7 +29,7 @@ const FindLocationType = ({
   const multiSelect = route.params?.multiSelect || false;
 
   const allLocationTypes = [
-    { name: route.params?.optionNA ? "N/A (or unknown)" : "All", id: -1 },
+    ...(!multiSelect ? [{ name: "N/A (or unknown)", id: -1 }] : []),
     ...locationTypes,
   ];
   const [selectedLocationTypes, setLocationTypes] = useState(allLocationTypes);
@@ -97,11 +97,6 @@ const FindLocationType = ({
   };
 
   const _toggleLocationType = (id) => {
-    if (id === -1) {
-      updateSelectedIds([]);
-      navigation.goBack();
-      return;
-    }
     if (selectedIds.includes(id)) {
       updateSelectedIds(selectedIds.filter((i) => i !== id));
     } else {
@@ -193,22 +188,44 @@ const FindLocationType = ({
         )}
       </View>
       {multiSelect ? (
-        <View style={s.multiSelect}>
-          {selectedIds.length === 0 ? (
-            <Text style={{ color: theme.purple2 }}>0 types selected</Text>
-          ) : (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={[
+            s.multiSelect,
+            { flexDirection: "row", alignItems: "center" },
+          ]}
+        >
+          <View style={{ flex: 1 }} />
+          <View style={{ alignItems: "center" }}>
+            {selectedIds.length === 0 ? (
+              <Text style={{ color: theme.purple2 }}>0 types selected</Text>
+            ) : (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text
+                  style={{ color: theme.purple2 }}
+                >{`${selectedIds.length} type${selectedIds.length > 1 ? "s" : ""} selected`}</Text>
+                <Pressable
+                  onPress={() => updateSelectedIds([])}
+                  style={{ marginLeft: 8 }}
+                >
+                  <MaterialIcons name="cancel" size={18} color="#fd0091" />
+                </Pressable>
+              </View>
+            )}
+          </View>
+          <View style={{ flex: 1, alignItems: "flex-end", paddingRight: 15 }}>
+            <Pressable
+              onPress={() => updateSelectedIds(locationTypes.map((t) => t.id))}
+            >
               <Text
-                style={{ color: theme.purple2 }}
-              >{`${selectedIds.length} type${selectedIds.length > 1 ? "s" : ""} selected`}</Text>
-              <Pressable
-                onPress={() => updateSelectedIds([])}
-                style={{ marginLeft: 8 }}
+                style={{
+                  color: theme.purple2,
+                  textDecorationLine: "underline",
+                }}
               >
-                <MaterialIcons name="cancel" size={18} color="#fd0091" />
-              </Pressable>
-            </View>
-          )}
+                Select all
+              </Text>
+            </Pressable>
+          </View>
         </View>
       ) : null}
       <FlatList
