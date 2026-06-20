@@ -182,6 +182,7 @@ export default (state = initialState, action) => {
     }
     case CLEAR_ACTIVITY_FILTER: {
       AsyncStorage.setItem("selectedActivities", JSON.stringify([]));
+      AsyncStorage.setItem("selectedActivityMachines", JSON.stringify([]));
 
       return {
         ...state,
@@ -189,11 +190,16 @@ export default (state = initialState, action) => {
         selectedActivityMachines: [],
       };
     }
-    case SET_ACTIVITY_MACHINE_FILTER:
+    case SET_ACTIVITY_MACHINE_FILTER: {
+      AsyncStorage.setItem(
+        "selectedActivityMachines",
+        JSON.stringify(action.machines),
+      );
       return {
         ...state,
         selectedActivityMachines: action.machines,
       };
+    }
     case SET_SELECTED_LOCATION_ACTIVITY_FILTER: {
       AsyncStorage.setItem(
         "selectedLocationActivities",

@@ -15,6 +15,7 @@ import {
   setDisplayInsiderConnectedBadge,
   setSelectedActivitiesFilter,
   setSelectedLocationActivitiesFilter,
+  setActivityMachinesFilter,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
@@ -109,6 +110,7 @@ const AppWrapper = ({
   setDisplayInsiderConnectedBadge,
   setSelectedActivitiesFilter,
   setSelectedLocationActivitiesFilter,
+  setActivityMachinesFilter,
   loadRegionsFromCache,
   loadMachinesFromCache,
   loadLocationTypesFromCache,
@@ -179,6 +181,12 @@ const AppWrapper = ({
       const savedActivities = (await retrieveItem("selectedActivities")) || [];
       if (savedActivities.length > 0) {
         setSelectedActivitiesFilter(savedActivities);
+      }
+
+      const savedActivityMachines =
+        (await retrieveItem("selectedActivityMachines")) || [];
+      if (savedActivityMachines.length > 0) {
+        setActivityMachinesFilter(savedActivityMachines);
       }
 
       const savedLocationActivities =
@@ -281,6 +289,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setDisplayInsiderConnectedBadge(pref)),
   setSelectedActivitiesFilter: (activities) =>
     dispatch(setSelectedActivitiesFilter(activities)),
+  setActivityMachinesFilter: (machines) =>
+    dispatch(setActivityMachinesFilter(machines)),
   setSelectedLocationActivitiesFilter: (activities) =>
     dispatch(setSelectedLocationActivitiesFilter(activities)),
   loadRegionsFromCache: (regions) => dispatch(getRegionsSuccess({ regions })),
