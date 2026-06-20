@@ -25,7 +25,11 @@ import {
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
 import { getMapBounds } from "../utils/mapCenterBridge";
-import { clearActivityFilter, setSelectedActivitiesFilter } from "../actions";
+import {
+  clearActivityFilter,
+  setSelectedActivitiesFilter,
+  setActivityBtnIdx,
+} from "../actions";
 import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
@@ -36,6 +40,7 @@ const RecentActivity = ({
   query,
   clearActivityFilter,
   setSelectedActivitiesFilter,
+  setActivityBtnIdx,
   navigation,
   route,
   user,
@@ -44,8 +49,12 @@ const RecentActivity = ({
   const s = getStyles(theme);
   const [fetchingRecentActivity, setFetchingRecentActivity] = useState(true);
   const [recentActivity, setRecentActivity] = useState([]);
-  const [maxDistance, setMaxDistance] = useState(10);
-  const [btnIdx, setBtnIdx] = useState(route?.params?.initialGlobal ? 3 : 0);
+  const { activityBtnIdx: btnIdx } = query;
+  const setBtnIdx = setActivityBtnIdx;
+  const distanceMap = [10, 50, 150];
+  const [maxDistance, setMaxDistance] = useState(
+    btnIdx < 3 ? distanceMap[btnIdx] : 10,
+  );
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const [page, setPage] = useState(1);
   const [pagy, setPagy] = useState(null);
@@ -231,7 +240,6 @@ const RecentActivity = ({
   }, [selectedActivities, selectedActivityMachines]);
 
   const updateIdx = (selectedIdx) => {
-    const distanceMap = [10, 50, 150];
     setBtnIdx(selectedIdx);
     if (selectedIdx === 3) {
       fetchData(null, null, true);
@@ -743,6 +751,7 @@ RecentActivity.propTypes = {
   route: PropTypes.object,
   clearActivityFilter: PropTypes.func,
   setSelectedActivitiesFilter: PropTypes.func,
+  setActivityBtnIdx: PropTypes.func,
 };
 
 const mapStateToProps = ({ query, user }) => ({ query, user });
@@ -750,5 +759,6 @@ const mapDispatchToProps = (dispatch) => ({
   clearActivityFilter: () => dispatch(clearActivityFilter()),
   setSelectedActivitiesFilter: (activities) =>
     dispatch(setSelectedActivitiesFilter(activities)),
+  setActivityBtnIdx: (btnIdx) => dispatch(setActivityBtnIdx(btnIdx)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RecentActivity);

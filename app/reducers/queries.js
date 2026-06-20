@@ -20,6 +20,7 @@ import {
   CLEAR_SEARCH_BAR_TEXT,
   SET_SEARCH_BAR_TEXT,
   SET_ACTIVITY_MACHINE_FILTER,
+  SET_ACTIVITY_BTN_IDX,
 } from "../actions/types";
 import { boundsToCoords } from "../utils/utilityFunctions";
 
@@ -38,6 +39,7 @@ export const initialState = {
   selectedOperator: "",
   selectedActivities: [],
   selectedActivityMachines: [],
+  activityBtnIdx: 0,
   selectedLocationActivities: [],
   machine: {},
   viewByFavoriteLocations: false,
@@ -198,6 +200,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedActivityMachines: action.machines,
+      };
+    }
+    case SET_ACTIVITY_BTN_IDX: {
+      AsyncStorage.setItem("activityBtnIdx", String(action.btnIdx));
+      return {
+        ...state,
+        activityBtnIdx: action.btnIdx,
       };
     }
     case SET_SELECTED_LOCATION_ACTIVITY_FILTER: {
