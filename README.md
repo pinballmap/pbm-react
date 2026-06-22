@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.9
+
+June xx, 2026
+
+- Add "select all" option to location type filter so that you can more easily deselect the few you want to exclude.
+- Better error handling in a couple places.
+- Remember which Recent Activity distance you used last, and fix a bug with remembering which filters you used last.
+
 ### 5.4.8
 
 June 11, 2026
