@@ -16,7 +16,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.4.9
 
-June xx, 2026
+June 21, 2026
 
 - Add "select all" option to location type filter so that you can more easily deselect the few you want to exclude.
 - Better error handling in a couple places.
