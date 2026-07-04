@@ -163,7 +163,7 @@ const MachineDetails = ({
     if (!locationProp.curLmx) {
       navigation.goBack();
     }
-  }, [locationProp]);
+  }, [locationProp.curLmx]);
 
   const copyToClipboard = async (value) => {
     await Clipboard.setStringAsync(value);

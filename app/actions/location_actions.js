@@ -182,10 +182,12 @@ export const removeMachineFromLocation =
     };
     return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
       .then(
-        () =>
+        () => {
           dispatch(
             locationMachineRemoved(lmx, machine_id, location_id, username),
-          ),
+          );
+          dispatch(fetchLocationMetadata(location_id));
+        },
         (err) => {
           throw err;
         },
