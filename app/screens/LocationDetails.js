@@ -78,6 +78,15 @@ const LocationDetails = (props) => {
   const scale = useSharedValue(1);
   const pinchScale = useSharedValue(1);
   const savedScale = useSharedValue(1);
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+  const savedTranslateX = useSharedValue(0);
+  const savedTranslateY = useSharedValue(0);
+  const containerWidth = useSharedValue(0);
+  const containerHeight = useSharedValue(0);
+  const fittedWidth = useSharedValue(0);
+  const fittedHeight = useSharedValue(0);
+  const naturalImageSize = useRef({ width: 0, height: 0 });
   const randomMachineNameScale = useSharedValue(0);
   const { route } = props;
   const navigation = useNavigation();
@@ -191,21 +200,105 @@ const LocationDetails = (props) => {
     };
   });
 
+  const updateFittedSize = () => {
+    const { width: imgW, height: imgH } = naturalImageSize.current;
+    if (!imgW || !imgH || !containerWidth.value || !containerHeight.value) {
+      return;
+    }
+    const containerRatio = containerWidth.value / containerHeight.value;
+    const imageRatio = imgW / imgH;
+    if (imageRatio > containerRatio) {
+      fittedWidth.value = containerWidth.value;
+      fittedHeight.value = containerWidth.value / imageRatio;
+    } else {
+      fittedHeight.value = containerHeight.value;
+      fittedWidth.value = containerHeight.value * imageRatio;
+    }
+  };
+
+  const handlePhotoContainerLayout = (e) => {
+    const { width, height } = e.nativeEvent.layout;
+    containerWidth.value = width;
+    containerHeight.value = height;
+    updateFittedSize();
+  };
+
+  const handleFullResImageLoad = (e) => {
+    const { width, height } = e.source;
+    naturalImageSize.current = { width, height };
+    updateFittedSize();
+  };
+
+  const clampTranslation = () => {
+    "worklet";
+    const maxTranslateX = Math.max(
+      0,
+      (fittedWidth.value * pinchScale.value - containerWidth.value) / 2,
+    );
+    const maxTranslateY = Math.max(
+      0,
+      (fittedHeight.value * pinchScale.value - containerHeight.value) / 2,
+    );
+    translateX.value = Math.min(
+      Math.max(translateX.value, -maxTranslateX),
+      maxTranslateX,
+    );
+    translateY.value = Math.min(
+      Math.max(translateY.value, -maxTranslateY),
+      maxTranslateY,
+    );
+  };
+
   const pinchGesture = Gesture.Pinch()
     .onUpdate((e) => {
       pinchScale.value = Math.max(1, savedScale.value * e.scale);
+      clampTranslation();
     })
     .onEnd(() => {
       savedScale.value = pinchScale.value;
+      if (pinchScale.value <= 1) {
+        translateX.value = withTiming(0, { duration: 150 });
+        translateY.value = withTiming(0, { duration: 150 });
+        savedTranslateX.value = 0;
+        savedTranslateY.value = 0;
+      } else {
+        clampTranslation();
+        savedTranslateX.value = translateX.value;
+        savedTranslateY.value = translateY.value;
+      }
     });
 
+  const panGesture = Gesture.Pan()
+    .onUpdate((e) => {
+      if (pinchScale.value <= 1) {
+        return;
+      }
+      translateX.value = savedTranslateX.value + e.translationX;
+      translateY.value = savedTranslateY.value + e.translationY;
+      clampTranslation();
+    })
+    .onEnd(() => {
+      savedTranslateX.value = translateX.value;
+      savedTranslateY.value = translateY.value;
+    });
+
+  const photoGesture = Gesture.Simultaneous(pinchGesture, panGesture);
+
   const pinchAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: pinchScale.value }],
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: pinchScale.value },
+    ],
   }));
 
   const resetZoom = () => {
     pinchScale.value = withTiming(1, { duration: 200 });
     savedScale.value = 1;
+    translateX.value = withTiming(0, { duration: 200 });
+    translateY.value = withTiming(0, { duration: 200 });
+    savedTranslateX.value = 0;
+    savedTranslateY.value = 0;
   };
 
   useEffect(() => {
@@ -473,8 +566,11 @@ const LocationDetails = (props) => {
                 />
               </Pressable>
 
-              <GestureDetector gesture={pinchGesture}>
-                <View style={s.photoModalImageContainer}>
+              <GestureDetector gesture={photoGesture}>
+                <View
+                  style={s.photoModalImageContainer}
+                  onLayout={handlePhotoContainerLayout}
+                >
                   {fullResLoading ? (
                     <ActivityIndicator />
                   ) : fullResUrl ? (
@@ -483,6 +579,7 @@ const LocationDetails = (props) => {
                         source={{ uri: fullResUrl }}
                         style={s.photoModalImage}
                         contentFit="contain"
+                        onLoad={handleFullResImageLoad}
                       />
                     </Animated.View>
                   ) : null}
