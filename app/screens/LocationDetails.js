@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createRef } from "react";
+import React, { useEffect, useMemo, useState, useRef, createRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
   Alert,
@@ -15,6 +15,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import Mapbox from "@rnmapbox/maps";
 import openMap from "react-native-open-maps";
+import { throttle } from "throttle-debounce";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
@@ -77,6 +78,7 @@ const LocationDetails = (props) => {
   const scale = useSharedValue(1);
   const pinchScale = useSharedValue(1);
   const savedScale = useSharedValue(1);
+  const randomMachineNameScale = useSharedValue(0);
   const { route } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -96,8 +98,34 @@ const LocationDetails = (props) => {
   const [deletingPicture, setDeletingPicture] = useState(false);
   const [photoTipsModalVisible, setPhotoTipsModalVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [randomMachineModalVisible, setRandomMachineModalVisible] =
+    useState(false);
+  const [randomMachineName, setRandomMachineName] = useState(null);
   const copiedTimeoutRef = useRef(null);
   const mapPressedRef = useRef(false);
+  const sortedMachinesRef = useRef([]);
+  const pickRandomMachine = useMemo(
+    () =>
+      throttle(
+        400,
+        () => {
+          const list = sortedMachinesRef.current;
+          if (list.length === 0) return;
+          const pick = list[Math.floor(Math.random() * list.length)];
+          setRandomMachineName(pick.nameManYear);
+          randomMachineNameScale.value = 0;
+          randomMachineNameScale.value = withTiming(1, {
+            duration: 300,
+            easing: Easing.out(Easing.ease),
+          });
+        },
+        { noTrailing: true },
+      ),
+    [],
+  );
+  const randomMachineNameAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: randomMachineNameScale.value }],
+  }));
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -364,6 +392,7 @@ const LocationDetails = (props) => {
       return { ...machineDetails, ...machine };
     }),
   );
+  sortedMachinesRef.current = sortedMachines;
   const {
     icon: locationIcon,
     library: iconLibrary,
@@ -573,6 +602,35 @@ const LocationDetails = (props) => {
           <WarningButton
             title={"Cancel"}
             onPress={() => setConfirmModalVisible(false)}
+          />
+        </ConfirmationModal>
+        <ConfirmationModal
+          visible={randomMachineModalVisible}
+          closeModal={() => setRandomMachineModalVisible(false)}
+        >
+          <Text style={s.confirmText}>
+            Can&apos;t decide which machine to play? Let us help.
+          </Text>
+          {randomMachineName && (
+            <Animated.View style={randomMachineNameAnimatedStyle}>
+              <Text
+                style={[
+                  s.confirmText,
+                  s.confirmTextMachineName,
+                  s.randomMachineNameText,
+                ]}
+              >
+                {randomMachineName}
+              </Text>
+            </Animated.View>
+          )}
+          <PbmButton
+            title={"Pick a random machine"}
+            onPress={pickRandomMachine}
+          />
+          <WarningButton
+            title={"Close"}
+            onPress={() => setRandomMachineModalVisible(false)}
           />
         </ConfirmationModal>
         <View
@@ -1171,6 +1229,32 @@ const LocationDetails = (props) => {
                   </View>
                 </View>
               </View>
+              <View style={s.lmxCountRow}>
+                <Text style={s.lmxCountText}>
+                  {sortedMachines.length}{" "}
+                  {sortedMachines.length === 1 ? "machine" : "machines"}
+                </Text>
+                {sortedMachines.length > 1 && (
+                  <Pressable
+                    style={({ pressed }) => [
+                      s.randomMachineIcon,
+                      pressed && { opacity: 0.5 },
+                    ]}
+                    onPress={() => {
+                      setRandomMachineName(null);
+                      setRandomMachineModalVisible(true);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name="dice-multiple-outline"
+                      color={
+                        theme.theme == "dark" ? theme.purpleLight : theme.purple
+                      }
+                      size={22}
+                    />
+                  </Pressable>
+                )}
+              </View>
             </View>
             <View style={s.backgroundColor}>
               {sortedMachines.map((machine) => (
@@ -1416,6 +1500,25 @@ const getStyles = (theme) =>
       width: 34,
       marginRight: 10,
     },
+    lmxCountRow: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 12,
+      marginBottom: 6,
+    },
+    lmxCountText: {
+      fontSize: 16,
+      fontFamily: "Nunito-Bold",
+      color: theme.text,
+    },
+    randomMachineIcon: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginLeft: 8,
+      height: 28,
+      width: 28,
+    },
     quickButtonPressed: {
       backgroundColor: theme.indigo4,
     },
@@ -1438,6 +1541,10 @@ const getStyles = (theme) =>
     confirmTextMachineName: {
       color: theme.purpleLight,
       fontFamily: "Nunito-Bold",
+    },
+    randomMachineNameText: {
+      marginTop: 20,
+      marginBottom: 10,
     },
     photoTipsText: {
       textAlign: "center",
