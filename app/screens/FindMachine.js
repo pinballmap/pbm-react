@@ -46,25 +46,44 @@ import { alphaSortNameObj } from "../utils/utilityFunctions";
 
 let deviceWidth = Dimensions.get("window").width;
 
-const getDisplayText = (machine, theme) => (
+const getDisplayText = (machine, theme, alreadyOnList = false) => (
   <Text style={{ fontSize: 18 }}>
-    <Text style={{ fontFamily: "Nunito-Bold", color: theme.text }}>
+    <Text
+      style={{
+        fontFamily: "Nunito-Bold",
+        color: alreadyOnList ? theme.indigo4 : theme.text,
+      }}
+    >
       {machine.name}
     </Text>
     <Text
-      style={{ color: theme.text3, fontFamily: "Nunito-Medium" }}
+      style={{
+        color: alreadyOnList ? theme.indigo4 : theme.text3,
+        fontFamily: "Nunito-Medium",
+      }}
     >{` (${machine.manufacturer}, ${machine.year})`}</Text>
+    {alreadyOnList && (
+      <Text
+        style={{
+          fontFamily: "Nunito-Italic",
+          fontStyle: Platform.OS === "android" ? undefined : "italic",
+          color: theme.indigo4,
+          fontSize: 13,
+        }}
+      >{`  (already on your list)`}</Text>
+    )}
   </Text>
 );
 
 const MultiSelectRow = React.memo(
-  ({ index, machine, onPressItem, selected }) => {
+  ({ index, machine, onPressItem, selected, alreadyOnList }) => {
     const { theme } = useContext(ThemeContext);
     const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2;
 
     return (
       <Pressable
-        onPress={() => onPressItem(machine)}
+        onPress={alreadyOnList ? undefined : () => onPressItem(machine)}
+        disabled={alreadyOnList}
         style={({ pressed }) => [
           {
             display: "flex",
@@ -73,14 +92,24 @@ const MultiSelectRow = React.memo(
             padding: 8,
             justifyContent: "space-between",
           },
-          pressed
+          pressed && !alreadyOnList
             ? { backgroundColor: theme.base4, opacity: 0.8 }
             : { backgroundColor, opacity: 1 },
         ]}
       >
-        <Text style={{ fontSize: 18, flex: 1 }}>
-          {getDisplayText(machine, theme)}
-        </Text>
+        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+          {alreadyOnList && (
+            <MaterialCommunityIcons
+              name="check"
+              size={16}
+              color={theme.text3}
+              style={{ marginRight: 6 }}
+            />
+          )}
+          <View style={{ flex: 1 }}>
+            {getDisplayText(machine, theme, alreadyOnList)}
+          </View>
+        </View>
         {selected ? (
           <MaterialIcons name="cancel" size={18} color="#fd0091" />
         ) : null}
@@ -95,6 +124,7 @@ MultiSelectRow.propTypes = {
   onPressItem: PropTypes.func,
   machine: PropTypes.object,
   selected: PropTypes.bool,
+  alreadyOnList: PropTypes.bool,
   index: PropTypes.number,
 };
 
@@ -140,6 +170,10 @@ const FindMachine = ({
   }, []);
 
   const { machineList = [] } = location;
+  const existingLifeListMachineIds = useMemo(
+    () => new Set(route.params?.existingLifeListMachineIds || []),
+    [route.params?.existingLifeListMachineIds],
+  );
   const { mapAreaMachineIds } = machinesProp;
   const mapAreaMachineIdsRef = useRef(mapAreaMachineIds);
   useEffect(() => {
@@ -362,10 +396,11 @@ const FindMachine = ({
         machine={item}
         onPressItem={onPressMultiSelect}
         selected={!!machineList.find((m) => m.id === item.id)}
+        alreadyOnList={existingLifeListMachineIds.has(item.id)}
         index={index}
       />
     ),
-    [machineList, onPressMultiSelect],
+    [machineList, onPressMultiSelect, existingLifeListMachineIds],
   );
 
   const keyExtractor = (m) => `${m.id}`;
