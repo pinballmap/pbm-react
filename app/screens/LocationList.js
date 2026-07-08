@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FlatList, Linking, Pressable, StyleSheet, View } from "react-native";
@@ -15,6 +15,7 @@ import {
   selectLocationListFilterBy,
   getListLocations,
 } from "../actions/locations_actions";
+import { fetchLifeListMachineIds } from "../actions/user_actions";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -27,6 +28,7 @@ const LocationList = ({
   query,
   selectLocationListFilterBy,
   getListLocations,
+  fetchLifeListMachineIds,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -46,14 +48,35 @@ const LocationList = ({
     locationTypes,
     listNeedsRefetch,
   } = locations;
-  const { lat, lon, locationTrackingServicesEnabled, unitPreference } = user;
+  const {
+    id: userId,
+    loggedIn,
+    lat,
+    lon,
+    locationTrackingServicesEnabled,
+    unitPreference,
+    lifeListMachineIds,
+  } = user;
   const { swLat, swLon, neLat, neLon } = query;
   const filterIdx = locations.selectedLocationListFilter;
   const bounds = { swLat, swLon, neLat, neLon };
+  const lifeListMachineIdSet = useMemo(
+    () => new Set(lifeListMachineIds),
+    [lifeListMachineIds],
+  );
 
   useEffect(() => {
     listNeedsRefetchRef.current = listNeedsRefetch;
   }, [listNeedsRefetch]);
+
+  // Keep the "not in list" counts fresh every time this screen is viewed,
+  // since machines can be added/removed from the life list elsewhere (e.g.
+  // MachineDetails) without this screen knowing.
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      if (loggedIn) fetchLifeListMachineIds();
+    });
+  }, [navigation, loggedIn]); // eslint-disable-line
 
   // Fetch on mount and when bounds change. Skip the fetch when merely returning
   // from a child screen (e.g. LocationDetails) so the user's page and scroll
@@ -160,6 +183,14 @@ const LocationList = ({
               navigation={navigation}
               id={item.id}
               numMachines={item.machine_count}
+              notInListCount={
+                loggedIn && lifeListMachineIds.length > 0 && item.machine_ids
+                  ? item.machine_ids.filter(
+                      (machineId) => !lifeListMachineIdSet.has(machineId),
+                    ).length
+                  : undefined
+              }
+              userId={userId}
             />
           )}
           keyExtractor={(item) => `list-item-${item.id}`}
@@ -337,6 +368,7 @@ LocationList.propTypes = {
   query: PropTypes.object,
   selectLocationListFilterBy: PropTypes.func,
   getListLocations: PropTypes.func,
+  fetchLifeListMachineIds: PropTypes.func,
 };
 
 const mapStateToProps = ({ locations, user, query }) => ({
@@ -349,5 +381,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(selectLocationListFilterBy(idx)),
   getListLocations: (bounds, page, filterIdx) =>
     dispatch(getListLocations(bounds, page, filterIdx)),
+  fetchLifeListMachineIds: () => dispatch(fetchLifeListMachineIds()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LocationList);

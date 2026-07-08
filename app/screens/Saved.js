@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
@@ -6,7 +6,10 @@ import FontAwesome5 from "@react-native-vector-icons/fontawesome5/static";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, LocationCard, NotLoggedIn, Text } from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
-import { selectFavoriteLocationFilterBy } from "../actions/user_actions";
+import {
+  selectFavoriteLocationFilterBy,
+  fetchLifeListMachineIds,
+} from "../actions/user_actions";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -39,16 +42,19 @@ export const Saved = ({
   user,
   navigation,
   selectFavoriteLocationFilterBy,
+  fetchLifeListMachineIds,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const {
+    id: userId,
     loggedIn,
     unitPreference,
     faveLocations,
     selectedFavoriteLocationFilter,
     lat,
     lon,
+    lifeListMachineIds,
   } = user;
 
   const sortedLocations = useMemo(
@@ -56,6 +62,19 @@ export const Saved = ({
       sortLocations(faveLocations, selectedFavoriteLocationFilter, lat, lon),
     [faveLocations, selectedFavoriteLocationFilter],
   );
+  const lifeListMachineIdSet = useMemo(
+    () => new Set(lifeListMachineIds),
+    [lifeListMachineIds],
+  );
+
+  // Keep the "not in list" counts fresh every time this screen is viewed,
+  // since machines can be added/removed from the life list elsewhere (e.g.
+  // MachineDetails) without this screen knowing.
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      if (loggedIn) fetchLifeListMachineIds();
+    });
+  }, [navigation, loggedIn]); // eslint-disable-line
 
   return (
     <View style={s.background}>
@@ -117,6 +136,15 @@ export const Saved = ({
                       navigation={navigation}
                       id={item.location.id}
                       saved
+                      notInListCount={
+                        loggedIn && lifeListMachineIds.length > 0
+                          ? item.location.machines.filter(
+                              (machine) =>
+                                !lifeListMachineIdSet.has(machine.id),
+                            ).length
+                          : undefined
+                      }
+                      userId={userId}
                     />
                   )}
                 />
@@ -195,11 +223,13 @@ Saved.propTypes = {
   user: PropTypes.object,
   navigation: PropTypes.object,
   selectFavoriteLocationFilterBy: PropTypes.func,
+  fetchLifeListMachineIds: PropTypes.func,
 };
 
 const mapStateToProps = ({ locations, user }) => ({ locations, user });
 const mapDispatchToProps = (dispatch) => ({
   selectFavoriteLocationFilterBy: (idx) =>
     dispatch(selectFavoriteLocationFilterBy(idx)),
+  fetchLifeListMachineIds: () => dispatch(fetchLifeListMachineIds()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Saved);

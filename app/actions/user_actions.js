@@ -18,6 +18,7 @@ import {
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
@@ -249,6 +250,25 @@ export const setDisplayInsiderConnectedBadge = (
     displayInsiderConnectedBadge,
   };
 };
+
+export const fetchLifeListMachineIds = () => (dispatch, getState) => {
+  const { id } = getState().user;
+  if (!id) return Promise.resolve();
+
+  return getData(`/users/${id}/profile_info.json?life_list=`)
+    .then((data) => {
+      const lifeListMachineIds = (
+        data.profile_info?.profile_life_list_stats || []
+      ).map((stat) => stat.machine_id);
+      dispatch(fetchLifeListMachineIdsSuccess(lifeListMachineIds));
+    })
+    .catch((err) => console.log(err));
+};
+
+export const fetchLifeListMachineIdsSuccess = (lifeListMachineIds) => ({
+  type: FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
+  lifeListMachineIds,
+});
 
 export const fetchMachineLifeListStatus = (machineId, userId) => () => {
   return getData(

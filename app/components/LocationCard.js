@@ -29,6 +29,8 @@ const LocationCard = ({
   locationType,
   zip,
   saved = false,
+  notInListCount,
+  userId,
 }) => {
   const { theme } = useContext(ThemeContext);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -115,7 +117,7 @@ const LocationCard = ({
                 ) : null}
               </View>
             </View>
-            {type || distance ? (
+            {type || distance || notInListCount ? (
               <View style={s.locationTypeContainer}>
                 {distance ? (
                   <View style={s.vertAlign}>
@@ -143,12 +145,41 @@ const LocationCard = ({
                     />
                     <Text
                       style={{
+                        marginRight: 15,
                         color: theme.text2,
                         fontFamily: "Nunito-Bold",
                       }}
                     >
                       {" "}
                       {type}
+                    </Text>
+                  </View>
+                ) : null}
+                {notInListCount ? (
+                  <View style={s.vertAlign}>
+                    <MaterialCommunityIcons
+                      name="clipboard-list-outline"
+                      style={s.icon}
+                    />
+                    <Text
+                      style={{
+                        color: theme.text2,
+                        fontFamily: "Nunito-Bold",
+                      }}
+                    >
+                      {" "}
+                      {notInListCount} not in{" "}
+                    </Text>
+                    <Text
+                      style={s.lifeListLink}
+                      onPress={() =>
+                        navigation.navigate("UserProfilePublic", {
+                          userId,
+                          scrollToMachineList: true,
+                        })
+                      }
+                    >
+                      list
                     </Text>
                   </View>
                 ) : null}
@@ -213,6 +244,8 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "space-around",
       flexDirection: "row",
+      flexWrap: "wrap",
+      rowGap: 6,
       marginBottom: -2,
       marginHorizontal: -2,
       paddingVertical: 10,
@@ -275,6 +308,11 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
       marginRight: 1,
     },
+    lifeListLink: {
+      textDecorationLine: "underline",
+      color: theme.blue4,
+      fontFamily: "Nunito-Bold",
+    },
   });
 
 LocationCard.propTypes = {
@@ -291,6 +329,8 @@ LocationCard.propTypes = {
   navigation: PropTypes.object,
   saved: PropTypes.bool,
   removeFavoriteLocation: PropTypes.func,
+  notInListCount: PropTypes.number,
+  userId: PropTypes.number,
 };
 
 export default LocationCard;

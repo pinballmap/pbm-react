@@ -20,6 +20,7 @@ import {
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   ACCOUNT_DISABLED,
+  FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
 } from "../actions/types";
 
 export const initialState = {
@@ -35,6 +36,7 @@ export const initialState = {
   username: "",
   faveLocations: [],
   selectedFavoriteLocationFilter: 0,
+  lifeListMachineIds: [],
   submittingMessage: false,
   confirmationMessage: "",
   confirmationMessage1: "",
@@ -114,6 +116,7 @@ export default (state = initialState, action) => {
         username: "",
         faveLocations: [],
         accountDisabled: false,
+        lifeListMachineIds: [],
       };
     }
     case LOGIN_LATER: {
@@ -188,6 +191,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         accountDisabled: true,
+      };
+    case FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS:
+      return {
+        ...state,
+        lifeListMachineIds: action.lifeListMachineIds,
       };
     default:
       return state;
