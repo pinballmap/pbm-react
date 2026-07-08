@@ -194,6 +194,7 @@ const LocationDetails = (props) => {
   const fittedHeight = useSharedValue(0);
   const naturalImageSize = useRef({ width: 0, height: 0 });
   const randomMachineNameScale = useSharedValue(0);
+  const diceRotation = useSharedValue(0);
   const { route } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -242,6 +243,9 @@ const LocationDetails = (props) => {
   );
   const randomMachineNameAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: randomMachineNameScale.value }],
+  }));
+  const diceRotationAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${diceRotation.value}deg` }],
   }));
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
@@ -1463,17 +1467,25 @@ const LocationDetails = (props) => {
                       pressed && { opacity: 0.5 },
                     ]}
                     onPress={() => {
+                      diceRotation.value = withTiming(
+                        diceRotation.value + 360,
+                        { duration: 500, easing: Easing.out(Easing.quad) },
+                      );
                       setRandomMachineName(null);
                       setRandomMachineModalVisible(true);
                     }}
                   >
-                    <MaterialCommunityIcons
-                      name="dice-multiple-outline"
-                      color={
-                        theme.theme == "dark" ? theme.purpleLight : theme.purple
-                      }
-                      size={22}
-                    />
+                    <Animated.View style={diceRotationAnimatedStyle}>
+                      <MaterialCommunityIcons
+                        name="dice-multiple-outline"
+                        color={
+                          theme.theme == "dark"
+                            ? theme.purpleLight
+                            : theme.purple
+                        }
+                        size={22}
+                      />
+                    </Animated.View>
                   </Pressable>
                 )}
               </View>
