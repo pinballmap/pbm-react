@@ -640,7 +640,10 @@ const MachineDetails = ({
                     <Text
                       style={s.lifeListLink}
                       onPress={() =>
-                        navigation.navigate("UserProfilePublic", { userId })
+                        navigation.navigate("UserProfilePublic", {
+                          userId,
+                          scrollToMachineList: true,
+                        })
                       }
                     >
                       See your list
@@ -665,7 +668,10 @@ const MachineDetails = ({
                     <Text
                       style={s.lifeListLink}
                       onPress={() =>
-                        navigation.navigate("UserProfilePublic", { userId })
+                        navigation.navigate("UserProfilePublic", {
+                          userId,
+                          scrollToMachineList: true,
+                        })
                       }
                     >
                       in your profile

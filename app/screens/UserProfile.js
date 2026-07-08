@@ -1,8 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Dimensions,
+  InteractionManager,
   Platform,
   Pressable,
   ScrollView,
@@ -67,6 +68,8 @@ const UserProfile = ({
     !!(route?.params?.userId || user.loggedIn),
   );
   const [profileInfo, setProfileInfo] = useState({});
+  const scrollViewRef = useRef(null);
+  const hasScrolledToMachineListRef = useRef(false);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -218,6 +221,7 @@ const UserProfile = ({
 
   return (
     <KeyboardAwareScrollView
+      ref={scrollViewRef}
       scrollIndicatorInsets={{ right: 1 }}
       style={{ flex: 1, backgroundColor: theme.base1 }}
       keyboardShouldPersistTaps="handled"
@@ -651,7 +655,21 @@ const UserProfile = ({
               ))
             )}
           </View>
-          <Text style={s.section}>
+          <Text
+            style={s.section}
+            onLayout={(e) => {
+              if (
+                route?.params?.scrollToMachineList &&
+                !hasScrolledToMachineListRef.current
+              ) {
+                hasScrolledToMachineListRef.current = true;
+                const y = e.nativeEvent.layout.y;
+                InteractionManager.runAfterInteractions(() => {
+                  scrollViewRef.current?.scrollTo({ y, animated: true });
+                });
+              }
+            }}
+          >
             {isOwnProfile
               ? "Your Machine List and High Scores"
               : "Machine List and High Scores"}

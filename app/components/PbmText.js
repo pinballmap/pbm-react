@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import { StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const PbmText = ({ style, onPress, children, maxFontSizeMultiplier }) => {
+const PbmText = ({
+  style,
+  onPress,
+  onLayout,
+  children,
+  maxFontSizeMultiplier,
+}) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
@@ -12,6 +18,7 @@ const PbmText = ({ style, onPress, children, maxFontSizeMultiplier }) => {
       selectable={true}
       style={[s.text, style]}
       onPress={onPress}
+      onLayout={onLayout}
       maxFontSizeMultiplier={maxFontSizeMultiplier}
     >
       {children}
@@ -22,6 +29,7 @@ const PbmText = ({ style, onPress, children, maxFontSizeMultiplier }) => {
 PbmText.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onPress: PropTypes.func,
+  onLayout: PropTypes.func,
   children: PropTypes.node,
   maxFontSizeMultiplier: PropTypes.number,
 };
