@@ -1,5 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  interpolateColor,
+} from "react-native-reanimated";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
@@ -28,12 +32,24 @@ const Title = ({ machine }) => {
   );
 };
 
-const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
+const MachineCard = ({
+  highlightProgress,
+  machine,
+  displayInsiderConnectedBadge,
+}) => {
   const theme = useTheme();
   const s = getStyles(theme);
 
+  const animatedHighlightStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      highlightProgress.value,
+      [0, 1],
+      [theme.white, theme.pink2],
+    ),
+  }));
+
   return (
-    <View style={[s.machineListContainer, pressed ? s.pressed : s.notPressed]}>
+    <Animated.View style={[s.machineListContainer, animatedHighlightStyle]}>
       <View style={{ flex: 1 }}>
         <Title machine={machine} />
         <View
@@ -81,24 +97,12 @@ const MachineCard = ({ pressed, machine, displayInsiderConnectedBadge }) => {
           />
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    pressed: {
-      borderColor: theme.pink2,
-      borderWidth: 2,
-      shadowOpacity: 0,
-      elevation: 0,
-      opacity: 0.8,
-    },
-    notPressed: {
-      borderColor: "transparent",
-      borderWidth: 2,
-      opacity: 1.0,
-    },
     machineName: {
       color: theme.theme == "dark" ? theme.text : theme.purple,
       fontFamily: "Nunito-ExtraBold",
@@ -122,19 +126,7 @@ const getStyles = (theme) =>
     machineListContainer: {
       flexDirection: "row",
       borderRadius: 25,
-      marginBottom: 20,
-      marginHorizontal: 20,
       backgroundColor: theme.white,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
       paddingVertical: 10,
       paddingHorizontal: 15,
     },

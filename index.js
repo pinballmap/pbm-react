@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { registerRootComponent } from "expo";
 import React, { useState, useEffect } from "react";
 import { Appearance } from "react-native";
@@ -109,29 +110,31 @@ const App = () => {
   };
 
   return (
-    <ThemeContext.Provider
-      value={{
-        setThemePreference,
-        theme: selectedTheme === "dark" ? dark : standard,
-      }}
-    >
-      <KeyboardProvider>
-        <Provider store={store}>
-          <AppWrapper>
-            <NavigationContainer
-              navigationInChildEnabled
-              theme={selectedTheme === "dark" ? dark : standard}
-            >
-              <MapNavigator />
-            </NavigationContainer>
-          </AppWrapper>
-        </Provider>
-        <StatusBar
-          style={selectedTheme === "dark" ? "light" : "dark"}
-          translucent={true}
-        />
-      </KeyboardProvider>
-    </ThemeContext.Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeContext.Provider
+        value={{
+          setThemePreference,
+          theme: selectedTheme === "dark" ? dark : standard,
+        }}
+      >
+        <KeyboardProvider>
+          <Provider store={store}>
+            <AppWrapper>
+              <NavigationContainer
+                navigationInChildEnabled
+                theme={selectedTheme === "dark" ? dark : standard}
+              >
+                <MapNavigator />
+              </NavigationContainer>
+            </AppWrapper>
+          </Provider>
+          <StatusBar
+            style={selectedTheme === "dark" ? "light" : "dark"}
+            translucent={true}
+          />
+        </KeyboardProvider>
+      </ThemeContext.Provider>
+    </GestureHandlerRootView>
   );
 };
 

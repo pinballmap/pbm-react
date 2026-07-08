@@ -1,4 +1,11 @@
-import React, { useEffect, useMemo, useState, useRef, createRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  createRef,
+} from "react";
 import { connect, useDispatch } from "react-redux";
 import {
   Alert,
@@ -27,6 +34,7 @@ import {
   LocationActivity,
   PbmButton,
   ReadMore,
+  RemoveMachineModal,
   Text,
   WarningButton,
 } from "../components";
@@ -59,6 +67,8 @@ import Animated, {
   withTiming,
   withRepeat,
   Easing,
+  runOnJS,
+  interpolateColor,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
@@ -66,6 +76,7 @@ import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
+  Swipeable,
 } from "react-native-gesture-handler";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
@@ -73,6 +84,101 @@ Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 let deviceWidth = Dimensions.get("window").width;
 
 import { formatDateStr, yearsSince } from "../utils/dateUtils";
+
+const MachineListItem = ({
+  machine,
+  s,
+  theme,
+  navigation,
+  dispatch,
+  displayInsiderConnectedBadge,
+  onSwipeDeletePress,
+  swipeableRef,
+}) => {
+  const highlightProgress = useSharedValue(0);
+
+  const openMachineDetails = useCallback(() => {
+    navigation.navigate("MachineDetails", { machineName: machine.name });
+    dispatch(setCurrentMachine(machine.id));
+  }, [navigation, dispatch, machine.id, machine.name]);
+
+  const highlightOn = () => {
+    highlightProgress.value = withTiming(1, { duration: 100 });
+  };
+  const highlightOff = () => {
+    highlightProgress.value = withTiming(0, { duration: 150 });
+  };
+
+  const tapGesture = useMemo(
+    () =>
+      Gesture.Tap()
+        .maxDistance(10)
+        .onTouchesDown(() => {
+          highlightProgress.value = withTiming(1, { duration: 100 });
+        })
+        .onEnd((_event, success) => {
+          if (success) {
+            runOnJS(openMachineDetails)();
+          }
+        })
+        .onFinalize((_event, success) => {
+          // On a successful tap we're navigating away — fade out slowly so
+          // the highlight doesn't visibly revert before the screen transition
+          // starts, which reads as the app pausing before responding.
+          highlightProgress.value = withTiming(0, {
+            duration: success ? 400 : 150,
+          });
+        }),
+    [openMachineDetails, highlightProgress],
+  );
+
+  const animatedWrapperStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      highlightProgress.value,
+      [0, 1],
+      [theme.white, theme.pink2],
+    ),
+  }));
+
+  return (
+    <Animated.View style={[s.machineRowWrapper, animatedWrapperStyle]}>
+      <View style={s.machineRowClip}>
+        <Swipeable
+          ref={swipeableRef}
+          overshootRight={false}
+          rightThreshold={40}
+          requireExternalGestureToFail={tapGesture}
+          onSwipeableOpenStartDrag={highlightOn}
+          onSwipeableCloseStartDrag={highlightOn}
+          onSwipeableWillClose={highlightOff}
+          renderRightActions={() => (
+            <Pressable
+              style={s.swipeDeleteAction}
+              onPress={() => onSwipeDeletePress(machine)}
+            >
+              <FontAwesome6
+                name="trash-can"
+                iconStyle="solid"
+                size={22}
+                color="#ffffff"
+              />
+            </Pressable>
+          )}
+        >
+          <GestureDetector gesture={tapGesture}>
+            <View>
+              <MachineCard
+                highlightProgress={highlightProgress}
+                machine={machine}
+                displayInsiderConnectedBadge={displayInsiderConnectedBadge}
+              />
+            </View>
+          </GestureDetector>
+        </Swipeable>
+      </View>
+    </Animated.View>
+  );
+};
 
 const LocationDetails = (props) => {
   const scale = useSharedValue(1);
@@ -110,9 +216,11 @@ const LocationDetails = (props) => {
   const [randomMachineModalVisible, setRandomMachineModalVisible] =
     useState(false);
   const [randomMachineName, setRandomMachineName] = useState(null);
+  const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const copiedTimeoutRef = useRef(null);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
+  const swipeableRefs = useRef({});
   const pickRandomMachine = useMemo(
     () =>
       throttle(
@@ -315,9 +423,11 @@ const LocationDetails = (props) => {
       setDeletingPicture(false);
       setPhotoTipsModalVisible(false);
       setDeleteConfirmVisible(false);
+      setShowRemoveMachineModal(false);
       clearTimeout(copiedTimeoutRef.current);
       setCopiedNotice(false);
       mapPressedRef.current = false;
+      swipeableRefs.current = {};
       scrollViewRef.current?.scrollTo({ y: 0, animated: false });
       dispatch(setSelectedMapLocation(null));
       dispatch(fetchLocation(route.params["id"])).then(
@@ -364,6 +474,16 @@ const LocationDetails = (props) => {
       setConfirmModalVisible(false);
     } else {
       setConfirmModalVisible(false);
+      navigation.navigate("Login");
+    }
+  };
+
+  const handleSwipeDeletePress = (machine) => {
+    swipeableRefs.current[machine.id]?.close();
+    if (loggedIn) {
+      dispatch(setCurrentMachine(machine.id));
+      setShowRemoveMachineModal(true);
+    } else {
       navigation.navigate("Login");
     }
   };
@@ -701,6 +821,11 @@ const LocationDetails = (props) => {
             onPress={() => setConfirmModalVisible(false)}
           />
         </ConfirmationModal>
+        {showRemoveMachineModal && (
+          <RemoveMachineModal
+            closeModal={() => setShowRemoveMachineModal(false)}
+          />
+        )}
         <ConfirmationModal
           visible={randomMachineModalVisible}
           closeModal={() => setRandomMachineModalVisible(false)}
@@ -1355,25 +1480,21 @@ const LocationDetails = (props) => {
             </View>
             <View style={s.backgroundColor}>
               {sortedMachines.map((machine) => (
-                <Pressable
+                <MachineListItem
                   key={machine.id}
-                  onPress={() => {
-                    navigation.navigate("MachineDetails", {
-                      machineName: machine.name,
-                    });
-                    dispatch(setCurrentMachine(machine.id));
+                  machine={machine}
+                  s={s}
+                  theme={theme}
+                  navigation={navigation}
+                  dispatch={dispatch}
+                  displayInsiderConnectedBadge={
+                    displayInsiderConnectedBadgePreference
+                  }
+                  onSwipeDeletePress={handleSwipeDeletePress}
+                  swipeableRef={(ref) => {
+                    swipeableRefs.current[machine.id] = ref;
                   }}
-                >
-                  {({ pressed }) => (
-                    <MachineCard
-                      pressed={pressed}
-                      machine={machine}
-                      displayInsiderConnectedBadge={
-                        displayInsiderConnectedBadgePreference
-                      }
-                    />
-                  )}
-                </Pressable>
+                />
               ))}
             </View>
           </View>
@@ -1608,6 +1729,31 @@ const getStyles = (theme) =>
       fontSize: 16,
       fontFamily: "Nunito-Bold",
       color: theme.text,
+    },
+    machineRowWrapper: {
+      marginHorizontal: 20,
+      marginBottom: 20,
+      borderRadius: 25,
+      backgroundColor: theme.white,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    machineRowClip: {
+      borderRadius: 25,
+      overflow: "hidden",
+    },
+    swipeDeleteAction: {
+      width: 80,
+      backgroundColor: theme.red2,
+      justifyContent: "center",
+      alignItems: "center",
     },
     randomMachineIcon: {
       justifyContent: "center",
