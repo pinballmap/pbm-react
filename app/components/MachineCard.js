@@ -4,6 +4,7 @@ import Animated, {
   useAnimatedStyle,
   interpolateColor,
 } from "react-native-reanimated";
+import { GestureDetector } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
@@ -36,6 +37,7 @@ const MachineCard = ({
   highlightProgress,
   machine,
   displayInsiderConnectedBadge,
+  lifeListIconTapGesture,
 }) => {
   const theme = useTheme();
   const s = getStyles(theme);
@@ -74,7 +76,8 @@ const MachineCard = ({
           </Text>
         </View>
       </View>
-      {displayInsiderConnectedBadge && machine.ic_enabled && (
+      {(machine.in_life_list ||
+        (displayInsiderConnectedBadge && machine.ic_enabled)) && (
         <View
           style={{
             flexDirection: "row",
@@ -82,19 +85,32 @@ const MachineCard = ({
             alignItems: "center",
           }}
         >
-          <Image
-            source={
-              theme.theme === "dark"
-                ? insiderConnectedImage.dark
-                : insiderConnectedImage.light
-            }
-            style={{
-              width: 55,
-              height: 55,
-              transform: [{ translateX: 10 }],
-            }}
-            contentFit="contain"
-          />
+          {machine.in_life_list && (
+            <GestureDetector gesture={lifeListIconTapGesture}>
+              <View style={s.lifeListIconWrap}>
+                <MaterialCommunityIcons
+                  name="clipboard-list-outline"
+                  style={s.lifeListIcon}
+                />
+              </View>
+            </GestureDetector>
+          )}
+          {displayInsiderConnectedBadge && machine.ic_enabled && (
+            <Image
+              source={
+                theme.theme === "dark"
+                  ? insiderConnectedImage.dark
+                  : insiderConnectedImage.light
+              }
+              style={{
+                width: 55,
+                height: 55,
+                marginLeft: -8,
+                transform: [{ translateX: 10 }],
+              }}
+              contentFit="contain"
+            />
+          )}
         </View>
       )}
     </Animated.View>
@@ -136,6 +152,13 @@ const getStyles = (theme) =>
       color: theme.indigo4,
       marginRight: 5,
       opacity: 0.6,
+    },
+    lifeListIconWrap: {
+      padding: 4,
+    },
+    lifeListIcon: {
+      fontSize: 22,
+      color: theme.theme === "dark" ? theme.pink1 : theme.pink3,
     },
   });
 

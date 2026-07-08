@@ -36,10 +36,11 @@ import {
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { triggerUpdateBounds } from "./locations_actions";
 
-export const fetchLocation = (id) => (dispatch) => {
+export const fetchLocation = (id, userId) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION });
 
-  return getData(`/locations/${id}.json?no_details=1`)
+  const userIdParam = userId ? `&user_id=${userId}` : "";
+  return getData(`/locations/${id}.json?no_details=1${userIdParam}`)
     .then((data) => dispatch(getLocationSuccess(data)))
     .catch(() => dispatch({ type: FETCHING_LOCATION_FAILURE }));
 };

@@ -93,6 +93,7 @@ const MachineListItem = ({
   dispatch,
   displayInsiderConnectedBadge,
   onSwipeDeletePress,
+  onLifeListIconPress,
   swipeableRef,
 }) => {
   const highlightProgress = useSharedValue(0);
@@ -109,10 +110,23 @@ const MachineListItem = ({
     highlightProgress.value = withTiming(0, { duration: 150 });
   };
 
+  const lifeListIconTapGesture = useMemo(
+    () =>
+      Gesture.Tap()
+        .hitSlop(10)
+        .onEnd((_event, success) => {
+          if (success) {
+            runOnJS(onLifeListIconPress)();
+          }
+        }),
+    [onLifeListIconPress],
+  );
+
   const tapGesture = useMemo(
     () =>
       Gesture.Tap()
         .maxDistance(10)
+        .requireExternalGestureToFail(lifeListIconTapGesture)
         .onTouchesDown(() => {
           highlightProgress.value = withTiming(1, { duration: 100 });
         })
@@ -129,7 +143,7 @@ const MachineListItem = ({
             duration: success ? 400 : 150,
           });
         }),
-    [openMachineDetails, highlightProgress],
+    [openMachineDetails, highlightProgress, lifeListIconTapGesture],
   );
 
   const animatedWrapperStyle = useAnimatedStyle(() => ({
@@ -171,6 +185,7 @@ const MachineListItem = ({
                 highlightProgress={highlightProgress}
                 machine={machine}
                 displayInsiderConnectedBadge={displayInsiderConnectedBadge}
+                lifeListIconTapGesture={lifeListIconTapGesture}
               />
             </View>
           </GestureDetector>
@@ -204,7 +219,7 @@ const LocationDetails = (props) => {
   const [locationId, setLocationId] = useState(props.route.params["id"]);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-  const [copiedNotice, setCopiedNotice] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
   const [pictures, setPictures] = useState(null);
   const [photoModalVisible, setPhotoModalVisible] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -218,7 +233,7 @@ const LocationDetails = (props) => {
     useState(false);
   const [randomMachineName, setRandomMachineName] = useState(null);
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
-  const copiedTimeoutRef = useRef(null);
+  const toastTimeoutRef = useRef(null);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
   const swipeableRefs = useRef({});
@@ -253,6 +268,7 @@ const LocationDetails = (props) => {
   const location = props.location.location;
   const { operators } = props.operators;
   const {
+    id: userId,
     loggedIn,
     lat: userLat,
     lon: userLon,
@@ -271,7 +287,9 @@ const LocationDetails = (props) => {
   useEffect(() => {
     const onMount = async () => {
       try {
-        const { location: l } = await dispatch(fetchLocation(locationId));
+        const { location: l } = await dispatch(
+          fetchLocation(locationId, loggedIn ? userId : undefined),
+        );
         if (l.errors) throw new Error("Unable to find location");
         dispatch(setSelectedMapLocation(null));
         Mapbox.setTelemetryEnabled(false);
@@ -428,32 +446,38 @@ const LocationDetails = (props) => {
       setPhotoTipsModalVisible(false);
       setDeleteConfirmVisible(false);
       setShowRemoveMachineModal(false);
-      clearTimeout(copiedTimeoutRef.current);
-      setCopiedNotice(false);
+      clearTimeout(toastTimeoutRef.current);
+      setToastMessage(null);
       mapPressedRef.current = false;
       swipeableRefs.current = {};
       scrollViewRef.current?.scrollTo({ y: 0, animated: false });
       dispatch(setSelectedMapLocation(null));
-      dispatch(fetchLocation(route.params["id"])).then(
-        ({ location: l } = {}) => {
-          if (l?.lpx_count > 0) {
-            dispatch(fetchLocationPictures(route.params["id"]))
-              .then(setPictures)
-              .catch(() => setPictures([]));
-          } else {
-            setPictures([]);
-          }
-        },
-      );
+      dispatch(
+        fetchLocation(route.params["id"], loggedIn ? userId : undefined),
+      ).then(({ location: l } = {}) => {
+        if (l?.lpx_count > 0) {
+          dispatch(fetchLocationPictures(route.params["id"]))
+            .then(setPictures)
+            .catch(() => setPictures([]));
+        } else {
+          setPictures([]);
+        }
+      });
     }
   }, [route.params["id"]]);
 
+  const showToast = (message) => {
+    clearTimeout(toastTimeoutRef.current);
+    setToastMessage(message);
+    toastTimeoutRef.current = setTimeout(() => setToastMessage(null), 2000);
+  };
+
   const copyToClipboard = async (value) => {
     await Clipboard.setStringAsync(value);
-    clearTimeout(copiedTimeoutRef.current);
-    setCopiedNotice(true);
-    copiedTimeoutRef.current = setTimeout(() => setCopiedNotice(false), 2000);
+    showToast("Copied!");
   };
+
+  const handleLifeListIconPress = () => showToast("Machine in your Life List");
 
   const scrollToTop = () => {
     scrollViewRef.current?.scrollTo({
@@ -1503,6 +1527,7 @@ const LocationDetails = (props) => {
                     displayInsiderConnectedBadgePreference
                   }
                   onSwipeDeletePress={handleSwipeDeletePress}
+                  onLifeListIconPress={handleLifeListIconPress}
                   swipeableRef={(ref) => {
                     swipeableRefs.current[machine.id] = ref;
                   }}
@@ -1522,10 +1547,10 @@ const LocationDetails = (props) => {
           />
         </Pressable>
       )}
-      {copiedNotice && (
+      {toastMessage && (
         <View style={s.copiedNoticeWrapper}>
           <View style={s.copiedNoticeContainer}>
-            <Text style={s.copiedNotice}>Copied!</Text>
+            <Text style={s.copiedNotice}>{toastMessage}</Text>
           </View>
         </View>
       )}
