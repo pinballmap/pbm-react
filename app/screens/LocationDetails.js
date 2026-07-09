@@ -1319,7 +1319,7 @@ const LocationDetails = (props) => {
                       color={
                         theme.theme == "dark" ? theme.purpleLight : theme.purple
                       }
-                      size={22}
+                      size={24}
                     />
                   </Animated.View>
                 </Pressable>
@@ -1340,7 +1340,7 @@ const LocationDetails = (props) => {
                     color={
                       theme.theme == "dark" ? theme.purpleLight : theme.purple
                     }
-                    size={22}
+                    size={24}
                   />
                 </Pressable>
               )}
@@ -1830,14 +1830,13 @@ const getStyles = (theme) =>
       justifyContent: "center",
       height: 34,
       width: 34,
-      marginRight: 10,
+      marginLeft: 5,
     },
     lmxCountRow: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginTop: 12,
-      marginBottom: 6,
+      marginTop: 10,
     },
     lmxCountSpacer: {
       flex: 1,

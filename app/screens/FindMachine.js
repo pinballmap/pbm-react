@@ -51,14 +51,14 @@ const getDisplayText = (machine, theme, alreadyOnList = false) => (
     <Text
       style={{
         fontFamily: "Nunito-Bold",
-        color: alreadyOnList ? theme.indigo4 : theme.text,
+        color: alreadyOnList ? "#9396ad" : theme.text,
       }}
     >
       {machine.name}
     </Text>
     <Text
       style={{
-        color: alreadyOnList ? theme.indigo4 : theme.text3,
+        color: alreadyOnList ? "#9396ad" : theme.text3,
         fontFamily: "Nunito-Medium",
       }}
     >{` (${machine.manufacturer}, ${machine.year})`}</Text>
@@ -67,7 +67,7 @@ const getDisplayText = (machine, theme, alreadyOnList = false) => (
         style={{
           fontFamily: "Nunito-Italic",
           fontStyle: Platform.OS === "android" ? undefined : "italic",
-          color: theme.indigo4,
+          color: "#9396ad",
           fontSize: 13,
         }}
       >{`  (already on your list)`}</Text>

@@ -126,7 +126,7 @@ const LocationCard = ({
                       style={{
                         marginRight: 15,
                         color: theme.text2,
-                        fontFamily: "Nunito-Bold",
+                        fontFamily: "Nunito-SemiBold",
                       }}
                     >
                       {" "}
@@ -147,7 +147,7 @@ const LocationCard = ({
                       style={{
                         marginRight: 15,
                         color: theme.text2,
-                        fontFamily: "Nunito-Bold",
+                        fontFamily: "Nunito-SemiBold",
                       }}
                     >
                       {" "}
@@ -310,8 +310,8 @@ const getStyles = (theme) =>
     },
     lifeListLink: {
       textDecorationLine: "underline",
-      color: theme.blue4,
-      fontFamily: "Nunito-Bold",
+      color: theme.text2,
+      fontFamily: "Nunito-SemiBold",
     },
   });
 
