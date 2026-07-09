@@ -117,6 +117,15 @@ export const sortMachinesByManufacturer = (array) => {
   });
 };
 
+export const sortMachinesByLmxCount = (array, direction = "asc") => {
+  return array.sort((a, b) => {
+    if (a.lmx_count === b.lmx_count) return compareMachineNames(a, b);
+    return direction === "asc"
+      ? a.lmx_count - b.lmx_count
+      : b.lmx_count - a.lmx_count;
+  });
+};
+
 export const getDistanceWithUnit = (lat1, lon1, lat2, lon2, unitPreference) => {
   const defaultKm = Boolean(unitPreference);
   let distance = getDistance(lat1, lon1, lat2, lon2);

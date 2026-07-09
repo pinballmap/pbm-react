@@ -46,7 +46,7 @@ const RESOURCE_CONFIGS = [
   },
   {
     statusType: "machines",
-    url: "/machines.json?no_details=1",
+    url: "/machines.json?no_details=1&lmx_count=1",
     cacheKey: CACHE_KEY_MACHINES,
     timestampKey: CACHE_KEY_MACHINES_TIMESTAMP,
     extract: (apiData) => apiData.machines,
@@ -164,7 +164,7 @@ const AppWrapper = ({
       await Promise.allSettled([
         getRegions("/regions.json"),
         getLocationTypes("/location_types.json"),
-        getMachines("/machines.json?no_details=1"),
+        getMachines("/machines.json?no_details=1&lmx_count=1"),
         getOperators("/operators.json?no_details=1"),
       ]);
     }

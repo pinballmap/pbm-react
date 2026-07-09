@@ -44,6 +44,7 @@ import Checkbox from "expo-checkbox";
 
 import {
   alphaSortNameObj,
+  sortMachinesByLmxCount,
   sortMachinesByManufacturer,
   sortMachinesByYear,
 } from "../utils/utilityFunctions";
@@ -54,6 +55,8 @@ const SORT_OPTIONS = [
   { key: "alpha", label: "Alphabetical" },
   { key: "year_desc", label: "Year (Newest First)" },
   { key: "year_asc", label: "Year (Oldest First)" },
+  { key: "lmx_count_asc", label: "Rarest First" },
+  { key: "lmx_count_desc", label: "Most Common First" },
   { key: "manufacturer", label: "Manufacturer" },
 ];
 
@@ -61,6 +64,10 @@ const applySort = (array, sortOrder) => {
   if (sortOrder === "year_desc") return sortMachinesByYear(array, "desc");
   if (sortOrder === "year_asc") return sortMachinesByYear(array, "asc");
   if (sortOrder === "manufacturer") return sortMachinesByManufacturer(array);
+  if (sortOrder === "lmx_count_asc")
+    return sortMachinesByLmxCount(array, "asc");
+  if (sortOrder === "lmx_count_desc")
+    return sortMachinesByLmxCount(array, "desc");
   return alphaSortNameObj(array);
 };
 

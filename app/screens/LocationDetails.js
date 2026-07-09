@@ -53,6 +53,7 @@ import {
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
+  sortMachinesByLmxCount,
   sortMachinesByManufacturer,
   sortMachinesByYear,
 } from "../utils/utilityFunctions";
@@ -92,6 +93,8 @@ const SORT_OPTIONS = [
   { key: "alpha", label: "Alphabetical" },
   { key: "year_desc", label: "Year (Newest First)" },
   { key: "year_asc", label: "Year (Oldest First)" },
+  { key: "lmx_count_asc", label: "Rarest First" },
+  { key: "lmx_count_desc", label: "Most Common First" },
   { key: "manufacturer", label: "Manufacturer" },
 ];
 
@@ -320,6 +323,10 @@ const LocationDetails = (props) => {
     if (sortOrder === "year_asc") return sortMachinesByYear(machines, "asc");
     if (sortOrder === "manufacturer")
       return sortMachinesByManufacturer(machines);
+    if (sortOrder === "lmx_count_asc")
+      return sortMachinesByLmxCount(machines, "asc");
+    if (sortOrder === "lmx_count_desc")
+      return sortMachinesByLmxCount(machines, "desc");
     return alphaSortNameObj(machines);
   }, [machinesAtLocation, sortOrder]);
 
@@ -1377,6 +1384,7 @@ const LocationDetails = (props) => {
         ListHeaderComponent={header}
         onScroll={handleScroll}
         scrollIndicatorInsets={{ right: 1 }}
+        maintainVisibleContentPosition={{ disabled: true }}
         contentContainerStyle={{
           paddingBottom: insets.bottom,
           backgroundColor: theme.base1,
