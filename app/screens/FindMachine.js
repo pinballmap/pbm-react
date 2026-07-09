@@ -42,9 +42,27 @@ import {
 } from "../components";
 import Checkbox from "expo-checkbox";
 
-import { alphaSortNameObj } from "../utils/utilityFunctions";
+import {
+  alphaSortNameObj,
+  sortMachinesByManufacturer,
+  sortMachinesByYear,
+} from "../utils/utilityFunctions";
 
 let deviceWidth = Dimensions.get("window").width;
+
+const SORT_OPTIONS = [
+  { key: "alpha", label: "Alphabetical" },
+  { key: "year_desc", label: "Year (Newest First)" },
+  { key: "year_asc", label: "Year (Oldest First)" },
+  { key: "manufacturer", label: "Manufacturer" },
+];
+
+const applySort = (array, sortOrder) => {
+  if (sortOrder === "year_desc") return sortMachinesByYear(array, "desc");
+  if (sortOrder === "year_asc") return sortMachinesByYear(array, "asc");
+  if (sortOrder === "manufacturer") return sortMachinesByManufacturer(array);
+  return alphaSortNameObj(array);
+};
 
 const getDisplayText = (machine, theme, alreadyOnList = false) => (
   <Text style={{ fontSize: 18 }}>
@@ -143,8 +161,11 @@ const FindMachine = ({
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
 
+  const [sortOrder, setSortOrder] = useState("alpha");
+  const [sortModalVisible, setSortModalVisible] = useState(false);
+
   const allMachines = useMemo(() => {
-    const sorted = alphaSortNameObj(machinesProp.machines);
+    const sorted = applySort([...machinesProp.machines], sortOrder);
     const manufacturerFilter = route.params?.manufacturerFilter || [];
     const machineTypeFilter = route.params?.machineTypeFilter || "";
     const machineYearGte = route.params?.machineYearGte ?? null;
@@ -167,7 +188,7 @@ const FindMachine = ({
       filtered = filtered.filter((m) => m.year <= machineYearLte);
     }
     return filtered;
-  }, []);
+  }, [sortOrder]); // eslint-disable-line
 
   const { machineList = [] } = location;
   const existingLifeListMachineIds = useMemo(
@@ -199,7 +220,7 @@ const FindMachine = ({
   useEffect(() => {
     navigation.setOptions({
       title: route.params?.machineFilter
-        ? "Select Machine to Filter"
+        ? "Select Machines for Filter"
         : `Select Machine${route.params?.multiSelect ? "s" : ""}`,
     });
   }, []);
@@ -279,6 +300,10 @@ const FindMachine = ({
     );
     setQuery(searchQuery);
   };
+
+  useEffect(() => {
+    handleSearch(query, machinesInView);
+  }, [sortOrder]); // eslint-disable-line
 
   const toggleViewMachinesInMapArea = (idx) => {
     const inView = idx === 1;
@@ -407,6 +432,8 @@ const FindMachine = ({
 
   const multiSelect = route.params?.multiSelect || false;
   const isFiltering = route.params?.machineFilter;
+  const showSort =
+    multiSelect && (isFiltering || route.params?.activityMachineFilter);
   const selectedIdx = machinesInView ? 1 : 0;
   const keyboardDismissProp =
     Platform.OS === "ios"
@@ -516,6 +543,56 @@ const FindMachine = ({
           </View>
         </View>
       </Modal>
+      <Modal
+        visible={sortModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSortModalVisible(false)}
+      >
+        <Pressable
+          style={s.sortModalOverlay}
+          onPress={() => setSortModalVisible(false)}
+        >
+          <View style={[s.sortModalWrapper, s.boxShadow]}>
+            <View style={s.sortModalContent}>
+              {SORT_OPTIONS.map((option) => {
+                const isSelected = option.key === sortOrder;
+                return (
+                  <Pressable
+                    key={option.key}
+                    onPress={() => {
+                      setSortOrder(option.key);
+                      setSortModalVisible(false);
+                    }}
+                    style={({ pressed }) => [
+                      s.sortModalItem,
+                      isSelected && s.sortModalItemSelected,
+                      pressed && s.sortModalItemPressed,
+                    ]}
+                  >
+                    <Text
+                      maxFontSizeMultiplier={1.3}
+                      style={[
+                        s.sortModalItemText,
+                        isSelected && s.sortModalItemTextSelected,
+                      ]}
+                    >
+                      {option.label}
+                    </Text>
+                    {isSelected && (
+                      <MaterialCommunityIcons
+                        name="check"
+                        size={18}
+                        color={theme.text2}
+                      />
+                    )}
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        </Pressable>
+      </Modal>
       <View
         style={{
           display: "flex",
@@ -567,22 +644,45 @@ const FindMachine = ({
         </View>
       ) : null}
       {multiSelect ? (
-        <View style={s.multiSelect}>
-          {machineList.length === 0 ? (
-            <Text style={{ color: theme.purple2 }}>0 machines selected</Text>
-          ) : (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ color: theme.purple2 }}>{`${
-                machineList.length
-              } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>
+        <View style={s.multiSelectRow}>
+          <View style={s.multiSelectSpacer} />
+          <View style={s.multiSelectCenterGroup}>
+            {machineList.length === 0 ? (
+              <Text style={{ color: theme.purple2 }}>0 machines selected</Text>
+            ) : (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ color: theme.purple2 }}>{`${
+                  machineList.length
+                } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>
+                <Pressable
+                  onPress={() => machineList.forEach(removeMachineFromList)}
+                  style={{ marginLeft: 8 }}
+                >
+                  <MaterialIcons name="cancel" size={18} color="#fd0091" />
+                </Pressable>
+              </View>
+            )}
+          </View>
+          <View style={s.multiSelectRightGroup}>
+            {showSort && (
               <Pressable
-                onPress={() => machineList.forEach(removeMachineFromList)}
-                style={{ marginLeft: 8 }}
+                hitSlop={10}
+                style={({ pressed }) => [
+                  s.sortIcon,
+                  pressed && { opacity: 0.5 },
+                ]}
+                onPress={() => setSortModalVisible(true)}
               >
-                <MaterialIcons name="cancel" size={18} color="#fd0091" />
+                <MaterialCommunityIcons
+                  name="sort-variant"
+                  color={
+                    theme.theme == "dark" ? theme.purpleLight : theme.purple
+                  }
+                  size={24}
+                />
               </Pressable>
-            </View>
-          )}
+            )}
+          </View>
         </View>
       ) : null}
       {isFetchingMapArea ? (
@@ -647,10 +747,77 @@ const getStyles = (theme) =>
       marginTop: 80,
       marginBottom: 40,
     },
-    multiSelect: {
+    multiSelectRow: {
+      flexDirection: "row",
       alignItems: "center",
       paddingBottom: 5,
+      paddingHorizontal: 20,
       backgroundColor: theme.base1,
+    },
+    multiSelectSpacer: {
+      flex: 1,
+    },
+    multiSelectCenterGroup: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    multiSelectRightGroup: {
+      flex: 1,
+      alignItems: "flex-end",
+    },
+    sortIcon: {
+      padding: 4,
+    },
+    boxShadow: {
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
+    },
+    sortModalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0,0,0,0.4)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    sortModalWrapper: {
+      width: "75%",
+      maxWidth: 320,
+      borderRadius: 12,
+      backgroundColor: theme.white,
+    },
+    sortModalContent: {
+      borderRadius: 12,
+      overflow: "hidden",
+    },
+    sortModalItem: {
+      height: 48,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 16,
+    },
+    sortModalItemPressed: {
+      opacity: 0.6,
+    },
+    sortModalItemSelected: {
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+    },
+    sortModalItemText: {
+      fontSize: 16,
+      fontFamily: "Nunito-Medium",
+      color: theme.text,
+    },
+    sortModalItemTextSelected: {
+      fontFamily: "Nunito-Bold",
+      color: theme.text2,
     },
     buttonGroupContainer: {
       marginBottom: 10,

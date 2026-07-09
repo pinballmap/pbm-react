@@ -77,6 +77,7 @@ const FilterRecentActivity = ({
     setShowModal(false);
     navigation.navigate("FindMachine", {
       multiSelect: true,
+      activityMachineFilter: true,
       showDone: pendingActivityMachines.length > 0,
     });
   };
