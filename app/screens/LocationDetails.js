@@ -279,6 +279,25 @@ const LocationDetails = (props) => {
   const { name: opName, id: opId } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
 
+  const machineCatalogById = useMemo(() => {
+    const map = new Map();
+    props.machines.machines.forEach((m) => map.set(m.id, m));
+    return map;
+  }, [props.machines.machines]);
+
+  const machinesAtLocation = useMemo(() => {
+    if (!location.location_machine_xrefs) return [];
+    return location.location_machine_xrefs.map((machine) => {
+      const machineDetails = machineCatalogById.get(machine.machine_id);
+      return { ...machineDetails, ...machine };
+    });
+  }, [location.location_machine_xrefs, machineCatalogById]);
+
+  const sortedMachines = useMemo(
+    () => alphaSortNameObj([...machinesAtLocation]),
+    [machinesAtLocation],
+  );
+
   const locationRef = useRef(props.location.location);
   useEffect(() => {
     locationRef.current = props.location.location;
@@ -625,14 +644,6 @@ const LocationDetails = (props) => {
     return <ActivityIndicator />;
   }
 
-  const sortedMachines = alphaSortNameObj(
-    location.location_machine_xrefs.map((machine) => {
-      const machineDetails = props.machines.machines.find(
-        (m) => m.id === machine.machine_id,
-      );
-      return { ...machineDetails, ...machine };
-    }),
-  );
   sortedMachinesRef.current = sortedMachines;
   const {
     icon: locationIcon,
