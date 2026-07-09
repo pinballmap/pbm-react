@@ -29,7 +29,7 @@ const ConfirmationModal = ({
         <View
           style={[
             s.modalView,
-            wide && { width: "90%" },
+            wide && { width: "90%", maxWidth: 600 },
             noPad && { paddingBottom: 0 },
           ]}
         >
@@ -52,7 +52,7 @@ const getStyles = (theme) =>
     modalView: {
       width: "85%",
       paddingVertical: 15,
-      backgroundColor: theme.base1,
+      backgroundColor: theme.white,
       borderRadius: 15,
       shadowColor: "#000",
       shadowOffset: {

@@ -1858,10 +1858,11 @@ const getStyles = (theme) =>
       flex: 1,
       backgroundColor: "rgba(0,0,0,0.4)",
       justifyContent: "center",
-      alignItems: "stretch",
+      alignItems: "center",
     },
     sortModalWrapper: {
-      marginHorizontal: 50,
+      width: "75%",
+      maxWidth: 320,
       borderRadius: 12,
       backgroundColor: theme.white,
     },
