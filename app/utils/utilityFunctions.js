@@ -69,16 +69,18 @@ export const removeCommasFromNum = (num) => {
   return num.toString().replace(/,/g, "");
 };
 
+const compareMachineNames = (a, b) => {
+  const nameA = a.name.startsWith("The ")
+    ? a.name.slice(4).toUpperCase()
+    : a.name.toUpperCase();
+  const nameB = b.name.startsWith("The ")
+    ? b.name.slice(4).toUpperCase()
+    : b.name.toUpperCase();
+  return nameA < nameB ? -1 : nameA === nameB ? 0 : 1;
+};
+
 export const alphaSortNameObj = (array) => {
-  return array.sort((a, b) => {
-    const locA = a.name.startsWith("The ")
-      ? a.name.slice(4).toUpperCase()
-      : a.name.toUpperCase();
-    const locB = b.name.startsWith("The ")
-      ? b.name.slice(4).toUpperCase()
-      : b.name.toUpperCase();
-    return locA < locB ? -1 : locA === locB ? 0 : 1;
-  });
+  return array.sort(compareMachineNames);
 };
 
 export const alphaSort = (array) => {
@@ -90,6 +92,28 @@ export const alphaSort = (array) => {
       ? b.slice(4).toUpperCase()
       : b.toUpperCase();
     return locA < locB ? -1 : locA === locB ? 0 : 1;
+  });
+};
+
+export const sortMachinesByYear = (array, direction = "desc") => {
+  return array.sort((a, b) => {
+    if (!a.year && !b.year) return compareMachineNames(a, b);
+    if (!a.year) return 1;
+    if (!b.year) return -1;
+    if (a.year === b.year) return compareMachineNames(a, b);
+    return direction === "desc" ? b.year - a.year : a.year - b.year;
+  });
+};
+
+export const sortMachinesByManufacturer = (array) => {
+  return array.sort((a, b) => {
+    if (!a.manufacturer && !b.manufacturer) return compareMachineNames(a, b);
+    if (!a.manufacturer) return 1;
+    if (!b.manufacturer) return -1;
+    const manA = a.manufacturer.toUpperCase();
+    const manB = b.manufacturer.toUpperCase();
+    if (manA === manB) return compareMachineNames(a, b);
+    return manA < manB ? -1 : 1;
   });
 };
 

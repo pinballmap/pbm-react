@@ -53,6 +53,8 @@ import {
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
+  sortMachinesByManufacturer,
+  sortMachinesByYear,
 } from "../utils/utilityFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
@@ -84,6 +86,13 @@ Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 let deviceWidth = Dimensions.get("window").width;
 
 import { formatDateStr, yearsSince } from "../utils/dateUtils";
+
+const SORT_OPTIONS = [
+  { key: "alpha", label: "Alphabetical" },
+  { key: "year_desc", label: "Year (Newest First)" },
+  { key: "year_asc", label: "Year (Oldest First)" },
+  { key: "manufacturer", label: "Manufacturer" },
+];
 
 const MachineListItem = ({
   machine,
@@ -233,6 +242,8 @@ const LocationDetails = (props) => {
     useState(false);
   const [randomMachineName, setRandomMachineName] = useState(null);
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
+  const [sortOrder, setSortOrder] = useState("alpha");
+  const [sortModalVisible, setSortModalVisible] = useState(false);
   const toastTimeoutRef = useRef(null);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
@@ -293,10 +304,14 @@ const LocationDetails = (props) => {
     });
   }, [location.location_machine_xrefs, machineCatalogById]);
 
-  const sortedMachines = useMemo(
-    () => alphaSortNameObj([...machinesAtLocation]),
-    [machinesAtLocation],
-  );
+  const sortedMachines = useMemo(() => {
+    const machines = [...machinesAtLocation];
+    if (sortOrder === "year_desc") return sortMachinesByYear(machines, "desc");
+    if (sortOrder === "year_asc") return sortMachinesByYear(machines, "asc");
+    if (sortOrder === "manufacturer")
+      return sortMachinesByManufacturer(machines);
+    return alphaSortNameObj(machines);
+  }, [machinesAtLocation, sortOrder]);
 
   const locationRef = useRef(props.location.location);
   useEffect(() => {
@@ -465,6 +480,8 @@ const LocationDetails = (props) => {
       setPhotoTipsModalVisible(false);
       setDeleteConfirmVisible(false);
       setShowRemoveMachineModal(false);
+      setSortOrder("alpha");
+      setSortModalVisible(false);
       clearTimeout(toastTimeoutRef.current);
       setToastMessage(null);
       mapPressedRef.current = false;
@@ -894,6 +911,55 @@ const LocationDetails = (props) => {
             onPress={() => setRandomMachineModalVisible(false)}
           />
         </ConfirmationModal>
+        <Modal
+          visible={sortModalVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setSortModalVisible(false)}
+        >
+          <Pressable
+            style={s.sortModalOverlay}
+            onPress={() => setSortModalVisible(false)}
+          >
+            <View style={[s.sortModalWrapper, s.boxShadow]}>
+              <View style={s.sortModalContent}>
+                {SORT_OPTIONS.map((option) => {
+                  const isSelected = option.key === sortOrder;
+                  return (
+                    <Pressable
+                      key={option.key}
+                      onPress={() => {
+                        setSortOrder(option.key);
+                        setSortModalVisible(false);
+                      }}
+                      style={({ pressed }) => [
+                        s.sortModalItem,
+                        isSelected && s.sortModalItemSelected,
+                        pressed && s.yearButtonPressed,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          s.sortModalItemText,
+                          isSelected && s.sortModalItemTextSelected,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                      {isSelected && (
+                        <MaterialCommunityIcons
+                          name="check"
+                          size={18}
+                          color={theme.text2}
+                        />
+                      )}
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          </Pressable>
+        </Modal>
         <View
           style={{
             flex: 1,
@@ -1491,28 +1557,53 @@ const LocationDetails = (props) => {
                 </View>
               </View>
               <View style={s.lmxCountRow}>
-                <Text style={s.lmxCountText}>
-                  {sortedMachines.length}{" "}
-                  {sortedMachines.length === 1 ? "machine" : "machines"}
-                </Text>
-                {sortedMachines.length > 1 && (
-                  <Pressable
-                    style={({ pressed }) => [
-                      s.randomMachineIcon,
-                      pressed && { opacity: 0.5 },
-                    ]}
-                    onPress={() => {
-                      diceRotation.value = withTiming(
-                        diceRotation.value + 360,
-                        { duration: 500, easing: Easing.out(Easing.quad) },
-                      );
-                      setRandomMachineName(null);
-                      setRandomMachineModalVisible(true);
-                    }}
-                  >
-                    <Animated.View style={diceRotationAnimatedStyle}>
+                <View style={s.lmxCountSpacer} />
+                <View style={s.lmxCountCenterGroup}>
+                  <Text style={s.lmxCountText}>
+                    {sortedMachines.length}{" "}
+                    {sortedMachines.length === 1 ? "machine" : "machines"}
+                  </Text>
+                  {sortedMachines.length > 1 && (
+                    <Pressable
+                      style={({ pressed }) => [
+                        s.randomMachineIcon,
+                        pressed && { opacity: 0.5 },
+                      ]}
+                      onPress={() => {
+                        diceRotation.value = withTiming(
+                          diceRotation.value + 360,
+                          { duration: 500, easing: Easing.out(Easing.quad) },
+                        );
+                        setRandomMachineName(null);
+                        setRandomMachineModalVisible(true);
+                      }}
+                    >
+                      <Animated.View style={diceRotationAnimatedStyle}>
+                        <MaterialCommunityIcons
+                          name="dice-multiple-outline"
+                          color={
+                            theme.theme == "dark"
+                              ? theme.purpleLight
+                              : theme.purple
+                          }
+                          size={22}
+                        />
+                      </Animated.View>
+                    </Pressable>
+                  )}
+                </View>
+                <View style={s.lmxCountRightGroup}>
+                  {sortedMachines.length > 1 && (
+                    <Pressable
+                      hitSlop={10}
+                      style={({ pressed }) => [
+                        s.sortIcon,
+                        pressed && { opacity: 0.5 },
+                      ]}
+                      onPress={() => setSortModalVisible(true)}
+                    >
                       <MaterialCommunityIcons
-                        name="dice-multiple-outline"
+                        name="sort-variant"
                         color={
                           theme.theme == "dark"
                             ? theme.purpleLight
@@ -1520,9 +1611,9 @@ const LocationDetails = (props) => {
                         }
                         size={22}
                       />
-                    </Animated.View>
-                  </Pressable>
-                )}
+                    </Pressable>
+                  )}
+                </View>
               </View>
             </View>
             <View style={s.backgroundColor}>
@@ -1768,10 +1859,62 @@ const getStyles = (theme) =>
     },
     lmxCountRow: {
       flexDirection: "row",
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: "center",
       marginTop: 12,
       marginBottom: 6,
+    },
+    lmxCountSpacer: {
+      flex: 1,
+    },
+    lmxCountCenterGroup: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    lmxCountRightGroup: {
+      flex: 1,
+      alignItems: "flex-end",
+    },
+    sortIcon: {
+      padding: 4,
+    },
+    sortModalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0,0,0,0.4)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    sortModalWrapper: {
+      borderRadius: 12,
+      backgroundColor: theme.white,
+    },
+    sortModalContent: {
+      borderRadius: 12,
+      width: 220,
+      overflow: "hidden",
+    },
+    sortModalItem: {
+      height: 48,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 16,
+    },
+    sortModalItemSelected: {
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+    },
+    sortModalItemText: {
+      fontSize: 16,
+      fontFamily: "Nunito-Medium",
+      color: theme.text,
+    },
+    sortModalItemTextSelected: {
+      fontFamily: "Nunito-Bold",
+      color: theme.text2,
+    },
+    yearButtonPressed: {
+      opacity: 0.6,
     },
     lmxCountText: {
       fontSize: 16,
