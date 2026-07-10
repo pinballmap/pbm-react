@@ -580,6 +580,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
               navigate("FindMachine", {
                 multiSelect: true,
                 showDone: machineList.length > 0,
+                simpleSort: true,
               })
             }
             rightIcon={

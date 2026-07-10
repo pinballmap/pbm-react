@@ -699,9 +699,6 @@ const UserProfile = ({
                   navigation.navigate("FindMachine", {
                     multiSelect: true,
                     lifeListUserId: user.id,
-                    existingLifeListMachineIds: profile_life_list_stats.map(
-                      (e) => e.machine_id,
-                    ),
                   });
                 }}
                 leftIcon={

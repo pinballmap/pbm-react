@@ -36,6 +36,8 @@ import {
   ReadMore,
   RemoveMachineModal,
   Text,
+  Toast,
+  useToast,
   WarningButton,
 } from "../components";
 import {
@@ -247,7 +249,7 @@ const LocationDetails = (props) => {
   const [locationId, setLocationId] = useState(props.route.params["id"]);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  const { toastMessage, showToast } = useToast();
   const [pictures, setPictures] = useState(null);
   const [photoModalVisible, setPhotoModalVisible] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -263,7 +265,6 @@ const LocationDetails = (props) => {
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const [sortOrder, setSortOrder] = useState("alpha");
   const [sortModalVisible, setSortModalVisible] = useState(false);
-  const toastTimeoutRef = useRef(null);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
   const swipeableRefs = useRef({});
@@ -521,8 +522,6 @@ const LocationDetails = (props) => {
       setShowRemoveMachineModal(false);
       setSortOrder("alpha");
       setSortModalVisible(false);
-      clearTimeout(toastTimeoutRef.current);
-      setToastMessage(null);
       mapPressedRef.current = false;
       swipeableRefs.current = {};
       listRef.current?.scrollToTop({ animated: false });
@@ -540,12 +539,6 @@ const LocationDetails = (props) => {
       });
     }
   }, [route.params["id"]]);
-
-  const showToast = (message) => {
-    clearTimeout(toastTimeoutRef.current);
-    setToastMessage(message);
-    toastTimeoutRef.current = setTimeout(() => setToastMessage(null), 2000);
-  };
 
   const copyToClipboard = async (value) => {
     await Clipboard.setStringAsync(value);
@@ -1065,7 +1058,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name="email-outline"
                         size={18}
-                        color={theme.purple}
+                        color={
+                          theme.theme == "dark" ? theme.pink1 : theme.purple
+                        }
                       />
                     </Pressable>
                   )}
@@ -1079,7 +1074,9 @@ const LocationDetails = (props) => {
                       <MaterialCommunityIcons
                         name="phone"
                         size={18}
-                        color={theme.purple}
+                        color={
+                          theme.theme == "dark" ? theme.pink1 : theme.purple
+                        }
                       />
                     </Pressable>
                   )}
@@ -1244,7 +1241,7 @@ const LocationDetails = (props) => {
                   ]}
                   onPress={() =>
                     loggedIn
-                      ? navigation.navigate("FindMachine")
+                      ? navigation.navigate("FindMachine", { simpleSort: true })
                       : navigation.navigate("Login")
                   }
                 >
@@ -1657,13 +1654,7 @@ const LocationDetails = (props) => {
           />
         </Pressable>
       )}
-      {toastMessage && (
-        <View style={s.copiedNoticeWrapper}>
-          <View style={s.copiedNoticeContainer}>
-            <Text style={s.copiedNotice}>{toastMessage}</Text>
-          </View>
-        </View>
-      )}
+      <Toast message={toastMessage} />
     </View>
   );
 };
@@ -2132,28 +2123,6 @@ const getStyles = (theme) =>
       color: "white",
       fontFamily: "Nunito-Regular",
       fontSize: 14,
-    },
-    copiedNoticeWrapper: {
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      alignItems: "center",
-      justifyContent: "center",
-      pointerEvents: "none",
-      zIndex: 100,
-    },
-    copiedNoticeContainer: {
-      backgroundColor: "rgba(0, 0, 0, 0.65)",
-      borderRadius: 10,
-      paddingHorizontal: 14,
-      paddingVertical: 6,
-    },
-    copiedNotice: {
-      color: "white",
-      fontSize: 13,
-      fontFamily: "Nunito-SemiBold",
     },
   });
 

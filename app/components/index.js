@@ -30,6 +30,7 @@ import MachineComment from "./MachineComment";
 import MachineScore from "./MachineScore";
 import ReadMore from "./ReadMore";
 import CustomIcon from "./CustomIcon";
+import Toast, { useToast } from "./Toast";
 
 export {
   LocationCard,
@@ -64,4 +65,6 @@ export {
   MachineScore,
   ReadMore,
   CustomIcon,
+  Toast,
+  useToast,
 };

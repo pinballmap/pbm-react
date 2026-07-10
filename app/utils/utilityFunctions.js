@@ -133,6 +133,15 @@ export const sortMachinesByLifeListStatus = (array) => {
   });
 };
 
+export const sortMachinesByLifeListMembership = (array, lifeListIdsSet) => {
+  return array.sort((a, b) => {
+    const aIn = lifeListIdsSet.has(a.id);
+    const bIn = lifeListIdsSet.has(b.id);
+    if (aIn === bIn) return compareMachineNames(a, b);
+    return aIn ? 1 : -1;
+  });
+};
+
 export const getDistanceWithUnit = (lat1, lon1, lat2, lon2, unitPreference) => {
   const defaultKm = Boolean(unitPreference);
   let distance = getDistance(lat1, lon1, lat2, lon2);

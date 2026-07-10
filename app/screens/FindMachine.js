@@ -32,18 +32,22 @@ import {
   setMachineFilter,
   getMapAreaMachineIds,
 } from "../actions";
+import { fetchLifeListMachineIds } from "../actions/user_actions";
 import {
   ActivityIndicator,
   BackglassImage,
   ButtonGroup,
   PbmButton,
   Text,
+  Toast,
+  useToast,
   WarningButton,
 } from "../components";
 import Checkbox from "expo-checkbox";
 
 import {
   alphaSortNameObj,
+  sortMachinesByLifeListMembership,
   sortMachinesByLmxCount,
   sortMachinesByManufacturer,
   sortMachinesByYear,
@@ -51,7 +55,7 @@ import {
 
 let deviceWidth = Dimensions.get("window").width;
 
-const SORT_OPTIONS = [
+const FULL_SORT_OPTIONS = [
   { key: "alpha", label: "Alphabetical" },
   { key: "year_desc", label: "Year (Newest First)" },
   { key: "year_asc", label: "Year (Oldest First)" },
@@ -60,7 +64,19 @@ const SORT_OPTIONS = [
   { key: "manufacturer", label: "Manufacturer" },
 ];
 
-const applySort = (array, sortOrder) => {
+const SIMPLE_SORT_OPTIONS = [
+  { key: "alpha", label: "Alphabetical" },
+  { key: "year_desc", label: "Year (Newest First)" },
+  { key: "year_asc", label: "Year (Oldest First)" },
+  { key: "manufacturer", label: "Manufacturer" },
+];
+
+const LIFE_LIST_SORT_OPTION = {
+  key: "not_in_life_list",
+  label: "Not in Life List",
+};
+
+const applySort = (array, sortOrder, lifeListIdsSet) => {
   if (sortOrder === "year_desc") return sortMachinesByYear(array, "desc");
   if (sortOrder === "year_asc") return sortMachinesByYear(array, "asc");
   if (sortOrder === "manufacturer") return sortMachinesByManufacturer(array);
@@ -68,47 +84,47 @@ const applySort = (array, sortOrder) => {
     return sortMachinesByLmxCount(array, "asc");
   if (sortOrder === "lmx_count_desc")
     return sortMachinesByLmxCount(array, "desc");
+  if (sortOrder === "not_in_life_list")
+    return sortMachinesByLifeListMembership(array, lifeListIdsSet);
   return alphaSortNameObj(array);
 };
 
-const getDisplayText = (machine, theme, alreadyOnList = false) => (
+const getDisplayText = (machine, theme, dimmed = false) => (
   <Text style={{ fontSize: 18 }}>
     <Text
       style={{
         fontFamily: "Nunito-Bold",
-        color: alreadyOnList ? "#9396ad" : theme.text,
+        color: dimmed ? "#9396ad" : theme.text,
       }}
     >
       {machine.name}
     </Text>
     <Text
       style={{
-        color: alreadyOnList ? "#9396ad" : theme.text3,
+        color: dimmed ? "#9396ad" : theme.text3,
         fontFamily: "Nunito-Medium",
       }}
     >{` (${machine.manufacturer}, ${machine.year})`}</Text>
-    {alreadyOnList && (
-      <Text
-        style={{
-          fontFamily: "Nunito-Italic",
-          fontStyle: Platform.OS === "android" ? undefined : "italic",
-          color: "#9396ad",
-          fontSize: 13,
-        }}
-      >{`  (already on your list)`}</Text>
-    )}
   </Text>
 );
 
 const MultiSelectRow = React.memo(
-  ({ index, machine, onPressItem, selected, alreadyOnList }) => {
+  ({
+    index,
+    machine,
+    onPressItem,
+    selected,
+    disableSelection,
+    inLifeList,
+    onLifeListIconPress,
+  }) => {
     const { theme } = useContext(ThemeContext);
     const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2;
 
     return (
       <Pressable
-        onPress={alreadyOnList ? undefined : () => onPressItem(machine)}
-        disabled={alreadyOnList}
+        onPress={disableSelection ? undefined : () => onPressItem(machine)}
+        disabled={disableSelection}
         style={({ pressed }) => [
           {
             display: "flex",
@@ -117,27 +133,39 @@ const MultiSelectRow = React.memo(
             padding: 8,
             justifyContent: "space-between",
           },
-          pressed && !alreadyOnList
+          pressed && !disableSelection
             ? { backgroundColor: theme.base4, opacity: 0.8 }
             : { backgroundColor, opacity: 1 },
         ]}
       >
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          {alreadyOnList && (
-            <MaterialCommunityIcons
-              name="check"
-              size={16}
-              color={theme.text3}
-              style={{ marginRight: 6 }}
-            />
-          )}
           <View style={{ flex: 1 }}>
-            {getDisplayText(machine, theme, alreadyOnList)}
+            {getDisplayText(machine, theme, disableSelection)}
           </View>
         </View>
-        {selected ? (
-          <MaterialIcons name="cancel" size={18} color="#fd0091" />
-        ) : null}
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {inLifeList && (
+            <Pressable
+              hitSlop={10}
+              onPress={onLifeListIconPress}
+              style={{ padding: 4 }}
+            >
+              <MaterialCommunityIcons
+                name="clipboard-list-outline"
+                size={22}
+                color={theme.theme === "dark" ? theme.pink1 : theme.pink3}
+              />
+            </Pressable>
+          )}
+          {selected ? (
+            <MaterialIcons
+              name="cancel"
+              size={18}
+              color="#fd0091"
+              style={{ marginLeft: 6 }}
+            />
+          ) : null}
+        </View>
       </Pressable>
     );
   },
@@ -149,7 +177,9 @@ MultiSelectRow.propTypes = {
   onPressItem: PropTypes.func,
   machine: PropTypes.object,
   selected: PropTypes.bool,
-  alreadyOnList: PropTypes.bool,
+  disableSelection: PropTypes.bool,
+  inLifeList: PropTypes.bool,
+  onLifeListIconPress: PropTypes.func,
   index: PropTypes.number,
 };
 
@@ -158,6 +188,7 @@ const FindMachine = ({
   route,
   machines: machinesProp,
   location,
+  user,
   addMachineToLocation,
   addMachineToList,
   removeMachineFromList,
@@ -167,12 +198,49 @@ const FindMachine = ({
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+  const { toastMessage, showToast } = useToast();
+  const { loggedIn, lifeListMachineIds } = user;
+
+  const multiSelect = route.params?.multiSelect || false;
+  const isFiltering = route.params?.machineFilter;
+  const showFullSort =
+    multiSelect &&
+    (isFiltering ||
+      route.params?.activityMachineFilter ||
+      route.params?.lifeListUserId);
+  const showSimpleSort = !!route.params?.simpleSort;
+  const showSort = showFullSort || showSimpleSort;
+  const showLifeListBadge = loggedIn && showFullSort;
+
+  const sortOptions = useMemo(() => {
+    if (showFullSort) {
+      return loggedIn
+        ? [...FULL_SORT_OPTIONS, LIFE_LIST_SORT_OPTION]
+        : FULL_SORT_OPTIONS;
+    }
+    return SIMPLE_SORT_OPTIONS;
+  }, [showFullSort, loggedIn]);
 
   const [sortOrder, setSortOrder] = useState("alpha");
   const [sortModalVisible, setSortModalVisible] = useState(false);
 
+  const lifeListIdsSet = useMemo(
+    () => new Set(lifeListMachineIds),
+    [lifeListMachineIds],
+  );
+
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      if (loggedIn) dispatch(fetchLifeListMachineIds());
+    });
+  }, [navigation, loggedIn]); // eslint-disable-line
+
   const allMachines = useMemo(() => {
-    const sorted = applySort([...machinesProp.machines], sortOrder);
+    const sorted = applySort(
+      [...machinesProp.machines],
+      sortOrder,
+      lifeListIdsSet,
+    );
     const manufacturerFilter = route.params?.manufacturerFilter || [];
     const machineTypeFilter = route.params?.machineTypeFilter || "";
     const machineYearGte = route.params?.machineYearGte ?? null;
@@ -195,13 +263,9 @@ const FindMachine = ({
       filtered = filtered.filter((m) => m.year <= machineYearLte);
     }
     return filtered;
-  }, [sortOrder]); // eslint-disable-line
+  }, [sortOrder, lifeListIdsSet]); // eslint-disable-line
 
   const { machineList = [] } = location;
-  const existingLifeListMachineIds = useMemo(
-    () => new Set(route.params?.existingLifeListMachineIds || []),
-    [route.params?.existingLifeListMachineIds],
-  );
   const { mapAreaMachineIds } = machinesProp;
   const mapAreaMachineIdsRef = useRef(mapAreaMachineIds);
   useEffect(() => {
@@ -310,7 +374,7 @@ const FindMachine = ({
 
   useEffect(() => {
     handleSearch(query, machinesInView);
-  }, [sortOrder]); // eslint-disable-line
+  }, [sortOrder, lifeListIdsSet]); // eslint-disable-line
 
   const toggleViewMachinesInMapArea = (idx) => {
     const inView = idx === 1;
@@ -361,6 +425,7 @@ const FindMachine = ({
       await Promise.all(
         machineList.map((m) => dispatch(addMachineToLifeList(m.id))),
       );
+      dispatch(fetchLifeListMachineIds());
     } catch (err) {
       console.log(err);
     }
@@ -422,25 +487,38 @@ const FindMachine = ({
     [theme, setSelected],
   );
 
+  const handleLifeListIconPress = useCallback(
+    () => showToast("Machine in your Life List"),
+    [showToast],
+  );
+
   const renderMultiSelectRow = useCallback(
-    ({ item, index }) => (
-      <MultiSelectRow
-        machine={item}
-        onPressItem={onPressMultiSelect}
-        selected={!!machineList.find((m) => m.id === item.id)}
-        alreadyOnList={existingLifeListMachineIds.has(item.id)}
-        index={index}
-      />
-    ),
-    [machineList, onPressMultiSelect, existingLifeListMachineIds],
+    ({ item, index }) => {
+      const inLifeList = lifeListIdsSet.has(item.id);
+      return (
+        <MultiSelectRow
+          machine={item}
+          onPressItem={onPressMultiSelect}
+          selected={!!machineList.find((m) => m.id === item.id)}
+          disableSelection={!!route.params?.lifeListUserId && inLifeList}
+          inLifeList={showLifeListBadge && inLifeList}
+          onLifeListIconPress={handleLifeListIconPress}
+          index={index}
+        />
+      );
+    },
+    [
+      machineList,
+      onPressMultiSelect,
+      lifeListIdsSet,
+      showLifeListBadge,
+      route.params?.lifeListUserId,
+      handleLifeListIconPress,
+    ],
   );
 
   const keyExtractor = (m) => `${m.id}`;
 
-  const multiSelect = route.params?.multiSelect || false;
-  const isFiltering = route.params?.machineFilter;
-  const showSort =
-    multiSelect && (isFiltering || route.params?.activityMachineFilter);
   const selectedIdx = machinesInView ? 1 : 0;
   const keyboardDismissProp =
     Platform.OS === "ios"
@@ -562,7 +640,7 @@ const FindMachine = ({
         >
           <View style={[s.sortModalWrapper, s.boxShadow]}>
             <View style={s.sortModalContent}>
-              {SORT_OPTIONS.map((option) => {
+              {sortOptions.map((option) => {
                 const isSelected = option.key === sortOrder;
                 return (
                   <Pressable
@@ -650,25 +728,28 @@ const FindMachine = ({
           />
         </View>
       ) : null}
-      {multiSelect ? (
+      {multiSelect || showSort ? (
         <View style={s.multiSelectRow}>
           <View style={s.multiSelectSpacer} />
           <View style={s.multiSelectCenterGroup}>
-            {machineList.length === 0 ? (
-              <Text style={{ color: theme.purple2 }}>0 machines selected</Text>
-            ) : (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ color: theme.purple2 }}>{`${
-                  machineList.length
-                } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>
-                <Pressable
-                  onPress={() => machineList.forEach(removeMachineFromList)}
-                  style={{ marginLeft: 8 }}
-                >
-                  <MaterialIcons name="cancel" size={18} color="#fd0091" />
-                </Pressable>
-              </View>
-            )}
+            {multiSelect &&
+              (machineList.length === 0 ? (
+                <Text style={{ color: theme.purple2 }}>
+                  0 machines selected
+                </Text>
+              ) : (
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Text style={{ color: theme.purple2 }}>{`${
+                    machineList.length
+                  } machine${machineList.length > 1 ? "s" : ""} selected`}</Text>
+                  <Pressable
+                    onPress={() => machineList.forEach(removeMachineFromList)}
+                    style={{ marginLeft: 8 }}
+                  >
+                    <MaterialIcons name="cancel" size={18} color="#fd0091" />
+                  </Pressable>
+                </View>
+              ))}
           </View>
           <View style={s.multiSelectRightGroup}>
             {showSort && (
@@ -699,7 +780,7 @@ const FindMachine = ({
           {...keyboardDismissProp}
           keyboardShouldPersistTaps="always"
           data={machines}
-          extraData={multiSelect ? machineList : undefined}
+          extraData={multiSelect ? [machineList, lifeListIdsSet] : undefined}
           renderItem={multiSelect ? renderMultiSelectRow : renderRow}
           keyExtractor={keyExtractor}
           contentContainerStyle={{
@@ -708,6 +789,7 @@ const FindMachine = ({
           }}
         />
       )}
+      <Toast message={toastMessage} />
     </>
   );
 };
@@ -895,13 +977,15 @@ FindMachine.propTypes = {
   removeMachineFromList: PropTypes.func,
   navigation: PropTypes.object,
   location: PropTypes.object,
+  user: PropTypes.object,
   setMachineFilter: PropTypes.func,
   route: PropTypes.object,
 };
 
-const mapStateToProps = ({ location, machines }) => ({
+const mapStateToProps = ({ location, machines, user }) => ({
   location,
   machines,
+  user,
 });
 const mapDispatchToProps = (dispatch) => ({
   addMachineToLocation: (machine, condition, ic_enabled) =>
