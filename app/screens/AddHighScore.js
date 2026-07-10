@@ -116,6 +116,7 @@ const AddHighScore = ({ user }) => {
                 onPress={() =>
                   navigation.navigate("FindMachine", {
                     onSelect: setSelectedMachine,
+                    standaloneScore: true,
                   })
                 }
               />

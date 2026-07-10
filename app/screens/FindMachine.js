@@ -204,10 +204,11 @@ const FindMachine = ({
   const multiSelect = route.params?.multiSelect || false;
   const isFiltering = route.params?.machineFilter;
   const showFullSort =
-    multiSelect &&
-    (isFiltering ||
-      route.params?.activityMachineFilter ||
-      route.params?.lifeListUserId);
+    (multiSelect &&
+      (isFiltering ||
+        route.params?.activityMachineFilter ||
+        route.params?.lifeListUserId)) ||
+    !!route.params?.standaloneScore;
   const showSimpleSort = !!route.params?.simpleSort;
   const showSort = showFullSort || showSimpleSort;
   const showLifeListBadge = loggedIn && showFullSort;
@@ -498,8 +499,8 @@ const FindMachine = ({
       return (
         <MultiSelectRow
           machine={item}
-          onPressItem={onPressMultiSelect}
-          selected={!!machineList.find((m) => m.id === item.id)}
+          onPressItem={multiSelect ? onPressMultiSelect : setSelected}
+          selected={multiSelect && !!machineList.find((m) => m.id === item.id)}
           disableSelection={!!route.params?.lifeListUserId && inLifeList}
           inLifeList={showLifeListBadge && inLifeList}
           onLifeListIconPress={handleLifeListIconPress}
@@ -508,8 +509,10 @@ const FindMachine = ({
       );
     },
     [
+      multiSelect,
       machineList,
       onPressMultiSelect,
+      setSelected,
       lifeListIdsSet,
       showLifeListBadge,
       route.params?.lifeListUserId,
@@ -780,8 +783,14 @@ const FindMachine = ({
           {...keyboardDismissProp}
           keyboardShouldPersistTaps="always"
           data={machines}
-          extraData={multiSelect ? [machineList, lifeListIdsSet] : undefined}
-          renderItem={multiSelect ? renderMultiSelectRow : renderRow}
+          extraData={
+            multiSelect || showLifeListBadge
+              ? [machineList, lifeListIdsSet]
+              : undefined
+          }
+          renderItem={
+            multiSelect || showLifeListBadge ? renderMultiSelectRow : renderRow
+          }
           keyExtractor={keyExtractor}
           contentContainerStyle={{
             backgroundColor: theme.base1,
