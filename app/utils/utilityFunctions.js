@@ -126,6 +126,13 @@ export const sortMachinesByLmxCount = (array, direction = "asc") => {
   });
 };
 
+export const sortMachinesByLifeListStatus = (array) => {
+  return array.sort((a, b) => {
+    if (!a.in_life_list === !b.in_life_list) return compareMachineNames(a, b);
+    return a.in_life_list ? 1 : -1;
+  });
+};
+
 export const getDistanceWithUnit = (lat1, lon1, lat2, lon2, unitPreference) => {
   const defaultKm = Boolean(unitPreference);
   let distance = getDistance(lat1, lon1, lat2, lon2);

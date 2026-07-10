@@ -53,6 +53,7 @@ import {
 import {
   alphaSortNameObj,
   getDistanceWithUnit,
+  sortMachinesByLifeListStatus,
   sortMachinesByLmxCount,
   sortMachinesByManufacturer,
   sortMachinesByYear,
@@ -89,7 +90,7 @@ let deviceWidth = Dimensions.get("window").width;
 
 import { formatDateStr, yearsSince } from "../utils/dateUtils";
 
-const SORT_OPTIONS = [
+const BASE_SORT_OPTIONS = [
   { key: "alpha", label: "Alphabetical" },
   { key: "year_desc", label: "Year (Newest First)" },
   { key: "year_asc", label: "Year (Oldest First)" },
@@ -97,6 +98,11 @@ const SORT_OPTIONS = [
   { key: "lmx_count_desc", label: "Most Common First" },
   { key: "manufacturer", label: "Manufacturer" },
 ];
+
+const LIFE_LIST_SORT_OPTION = {
+  key: "not_in_life_list",
+  label: "Not in Life List",
+};
 
 const MachineListItem = ({
   machine,
@@ -317,6 +323,14 @@ const LocationDetails = (props) => {
     });
   }, [location.location_machine_xrefs, machineCatalogById]);
 
+  const sortOptions = useMemo(
+    () =>
+      loggedIn
+        ? [...BASE_SORT_OPTIONS, LIFE_LIST_SORT_OPTION]
+        : BASE_SORT_OPTIONS,
+    [loggedIn],
+  );
+
   const sortedMachines = useMemo(() => {
     const machines = [...machinesAtLocation];
     if (sortOrder === "year_desc") return sortMachinesByYear(machines, "desc");
@@ -327,8 +341,16 @@ const LocationDetails = (props) => {
       return sortMachinesByLmxCount(machines, "asc");
     if (sortOrder === "lmx_count_desc")
       return sortMachinesByLmxCount(machines, "desc");
+    if (sortOrder === "not_in_life_list")
+      return sortMachinesByLifeListStatus(machines);
     return alphaSortNameObj(machines);
   }, [machinesAtLocation, sortOrder]);
+
+  useEffect(() => {
+    if (!loggedIn && sortOrder === "not_in_life_list") {
+      setSortOrder("alpha");
+    }
+  }, [loggedIn, sortOrder]);
 
   const locationRef = useRef(props.location.location);
   useEffect(() => {
@@ -1587,7 +1609,7 @@ const LocationDetails = (props) => {
         >
           <View style={[s.sortModalWrapper, s.boxShadow]}>
             <View style={s.sortModalContent}>
-              {SORT_OPTIONS.map((option) => {
+              {sortOptions.map((option) => {
                 const isSelected = option.key === sortOrder;
                 return (
                   <Pressable
