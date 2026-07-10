@@ -164,7 +164,7 @@ const LocationCard = ({
                     <Text
                       style={{
                         color: theme.text2,
-                        fontFamily: "Nunito-Bold",
+                        fontFamily: "Nunito-SemiBold",
                       }}
                     >
                       {" "}

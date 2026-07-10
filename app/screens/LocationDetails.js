@@ -103,7 +103,7 @@ const BASE_SORT_OPTIONS = [
 
 const LIFE_LIST_SORT_OPTION = {
   key: "not_in_life_list",
-  label: "Not in Life List",
+  label: "Not in Life List First",
 };
 
 const MachineListItem = ({

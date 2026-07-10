@@ -503,17 +503,6 @@ const UserProfile = ({
                 />
               </View>
             )}
-            {isOwnProfile && (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("FindFlag", { userId: user.id })
-                }
-              >
-                <Text style={s.flagButton}>
-                  {flag ? "Change flag" : "Set flag"}
-                </Text>
-              </Pressable>
-            )}
             {!!admin_title && (
               <View style={s.rankView}>
                 <Text style={s.rankText}>{admin_title}</Text>
@@ -549,6 +538,15 @@ const UserProfile = ({
             <Text style={s.joined}>{`Joined: ${formatDate(created_at)}`}</Text>
             {isOwnProfile && (
               <View style={s.accountSettingsContainer}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("FindFlag", { userId: user.id })
+                  }
+                >
+                  <Text style={s.accountSettingsLink}>
+                    {flag ? "Change user flag" : "Set user flag"}
+                  </Text>
+                </Pressable>
                 <Text
                   style={s.accountSettingsLink}
                   onPress={() => setAccountModalVisible(true)}
@@ -683,14 +681,14 @@ const UserProfile = ({
               }}
             >
               <Text style={s.sectionDescription}>
-                {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines below or when viewing a machine at a location. `}
+                {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
                 <Text
                   style={s.textLink}
                   onPress={() => navigation.navigate("AddHighScore")}
                 >
-                  Click here to add new high scores
+                  add a high score
                 </Text>
-                {`.`}
+                {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
               </Text>
               <PbmButton
                 title={"Add Machines to Your List"}
@@ -921,15 +919,7 @@ const getStyles = (theme) =>
     profileFlag: {
       height: 40,
       borderRadius: 5,
-    },
-    flagButton: {
-      color: theme.purple2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-      textAlign: "center",
-      textDecorationLine: "underline",
-      marginTop: 6,
-      marginBottom: 2,
+      marginBottom: 4,
     },
     statContainer: {
       alignItems: "center",
@@ -960,6 +950,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       marginTop: 5,
       marginLeft: 10,
+      borderRadius: 5,
     },
     joined: {
       textAlign: "center",
@@ -1089,9 +1080,10 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
+      textDecorationLine: "underline",
     },
     machineYearMan: {
-      color: theme.text3,
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-Medium",
     },
@@ -1120,7 +1112,6 @@ const getStyles = (theme) =>
       color: theme.text3,
       fontSize: 15,
       fontFamily: "Nunito-Regular",
-      textAlign: "center",
       lineHeight: 22,
     },
     textLink: {
