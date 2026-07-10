@@ -19,6 +19,7 @@ import {
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
+  MACHINE_LIFE_LIST_STATUS_UPDATED,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
@@ -283,7 +284,16 @@ export const addMachineToLifeList = (machineId) => (dispatch, getState) => {
     user_token: authentication_token,
     machine_id: machineId,
   };
-  return postData(`/users/${id}/add_life_list_machine.json`, body);
+  return postData(`/users/${id}/add_life_list_machine.json`, body).then(
+    (data) => {
+      dispatch({
+        type: MACHINE_LIFE_LIST_STATUS_UPDATED,
+        machineId,
+        inList: true,
+      });
+      return data;
+    },
+  );
 };
 
 export const removeMachineFromLifeList =
@@ -294,5 +304,14 @@ export const removeMachineFromLifeList =
       user_token: authentication_token,
       machine_id: machineId,
     };
-    return postData(`/users/${id}/remove_life_list_machine.json`, body);
+    return postData(`/users/${id}/remove_life_list_machine.json`, body).then(
+      (data) => {
+        dispatch({
+          type: MACHINE_LIFE_LIST_STATUS_UPDATED,
+          machineId,
+          inList: false,
+        });
+        return data;
+      },
+    );
   };

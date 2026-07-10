@@ -13,6 +13,7 @@ import {
   MACHINE_ADDED_TO_LOCATION_FAILURE,
   UPDATING_LOCATION_DETAILS,
   LOCATION_DETAILS_UPDATED,
+  MACHINE_LIFE_LIST_STATUS_UPDATED,
   ADD_MACHINE_TO_LIST,
   REMOVE_MACHINE_FROM_LIST,
   CLEAR_SELECTED_STATE,
@@ -134,6 +135,22 @@ export default (state = initialState, action) => {
           }
           return m;
         },
+      );
+
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          location_machine_xrefs,
+        },
+      };
+    }
+    case MACHINE_LIFE_LIST_STATUS_UPDATED: {
+      const location_machine_xrefs = state.location.location_machine_xrefs?.map(
+        (m) =>
+          m.machine_id === action.machineId
+            ? { ...m, in_life_list: action.inList }
+            : m,
       );
 
       return {
