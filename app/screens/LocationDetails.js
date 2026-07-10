@@ -276,17 +276,25 @@ const LocationDetails = (props) => {
           const list = sortedMachinesRef.current;
           if (list.length === 0) return;
           const pick = list[Math.floor(Math.random() * list.length)];
-          setRandomMachineName(pick.nameManYear);
           randomMachineNameScale.value = 0;
-          randomMachineNameScale.value = withTiming(1, {
-            duration: 300,
-            easing: Easing.out(Easing.ease),
-          });
+          setRandomMachineName(pick.nameManYear);
         },
         { noTrailing: true },
       ),
     [],
   );
+  useEffect(() => {
+    // Deferred to after the name's Animated.View has mounted — starting the
+    // animation in the same tick as setRandomMachineName races the native
+    // view's creation, especially on slower devices, and can let the value
+    // reach 1 before the view exists to animate (it just appears at full size).
+    if (randomMachineName) {
+      randomMachineNameScale.value = withTiming(1, {
+        duration: 300,
+        easing: Easing.out(Easing.ease),
+      });
+    }
+  }, [randomMachineName, randomMachineNameScale]);
   const randomMachineNameAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: randomMachineNameScale.value }],
   }));
@@ -1382,6 +1390,7 @@ const LocationDetails = (props) => {
       <FlashList
         ref={listRef}
         data={sortedMachines}
+        extraData={sortOrder}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <MachineListItem
