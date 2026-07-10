@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Dimensions, StyleSheet, TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import { useNavigation, useRoute, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   formatInputNumWithCommas,
@@ -24,6 +24,7 @@ const deviceWidth = Dimensions.get("window").width;
 const AddHighScore = ({ user }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
   const theme = useTheme();
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
@@ -37,6 +38,13 @@ const AddHighScore = ({ user }) => {
   const { loggedIn } = user;
 
   useEffect(() => () => clearTimeout(savedTimeoutRef.current), []);
+
+  useEffect(() => {
+    if (route.params?.selectedMachine) {
+      setSelectedMachine(route.params.selectedMachine);
+      navigation.setParams({ selectedMachine: undefined });
+    }
+  }, [route.params?.selectedMachine, navigation]);
 
   const handleSave = async () => {
     await dispatch(
@@ -115,7 +123,6 @@ const AddHighScore = ({ user }) => {
                 }
                 onPress={() =>
                   navigation.navigate("FindMachine", {
-                    onSelect: setSelectedMachine,
                     standaloneScore: true,
                   })
                 }

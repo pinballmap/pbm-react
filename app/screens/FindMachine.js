@@ -394,9 +394,8 @@ const FindMachine = ({
 
   const setSelected = useCallback(
     (selectedMachine) => {
-      if (route.params?.onSelect) {
-        route.params.onSelect(selectedMachine);
-        navigation.goBack();
+      if (route.params?.standaloneScore) {
+        navigation.navigate("AddHighScore", { selectedMachine });
       } else if (route.params?.machineFilter) {
         setMachineFilter(selectedMachine);
         navigation.goBack();
@@ -405,7 +404,7 @@ const FindMachine = ({
         setShowModal(true);
       }
     },
-    [route.params?.machineFilter, route.params?.onSelect],
+    [route.params?.machineFilter, route.params?.standaloneScore, navigation],
   );
 
   const addMachine = () => {
