@@ -14,6 +14,18 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.10
+
+July 11, 2026
+
+- Add random machine button to location details screen, to help you choose what to play.
+- Remove a machine via swipe gesture on location details, rather than having to click into it first.
+- Add notes in places about whether machines are or are not in your machine life list.
+- Add sort options for the machine filter and the location's machine list. Sort by year, rarest machine, manufacturer, not in life list.
+- Speed up location details screen load.
+- Allow panning gesture on photos when zoomed in.
+- Bug fixes.
+
 ### 5.4.9
 
 June 21, 2026
