@@ -1390,7 +1390,6 @@ const LocationDetails = (props) => {
       <FlashList
         ref={listRef}
         data={sortedMachines}
-        extraData={sortOrder}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <MachineListItem

@@ -1,15 +1,23 @@
 /**
- * Keys used to cache startup API responses
+ * Keys used to cache startup API responses.
+ *
+ * These caches are only invalidated when the server's per-resource
+ * updated_at (from /statuses.json) changes — that reflects edits to the
+ * underlying data, not changes to which fields the app requests. Adding or
+ * changing a field in one of these payloads (e.g. lmx_count on machines,
+ * 2026-07-09) doesn't bump updated_at, so devices with a pre-existing cache
+ * would never refetch and pick it up. Bump CACHE_SCHEMA_VERSION whenever a
+ * payload shape changes to force exactly one fresh fetch on every device.
  */
-export const CACHE_KEY_REGIONS = "cache_regions";
-export const CACHE_KEY_REGIONS_TIMESTAMP = "cache_regions_timestamp";
-export const CACHE_KEY_MACHINES = "cache_machines";
-export const CACHE_KEY_MACHINES_TIMESTAMP = "cache_machines_timestamp";
-export const CACHE_KEY_LOCATION_TYPES = "cache_location_types";
-export const CACHE_KEY_LOCATION_TYPES_TIMESTAMP =
-  "cache_location_types_timestamp";
-export const CACHE_KEY_OPERATORS = "cache_operators";
-export const CACHE_KEY_OPERATORS_TIMESTAMP = "cache_operators_timestamp";
+export const CACHE_SCHEMA_VERSION = 1;
+export const CACHE_KEY_REGIONS = `cache_regions_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_REGIONS_TIMESTAMP = `cache_regions_timestamp_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_MACHINES = `cache_machines_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_MACHINES_TIMESTAMP = `cache_machines_timestamp_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_LOCATION_TYPES = `cache_location_types_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_LOCATION_TYPES_TIMESTAMP = `cache_location_types_timestamp_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_OPERATORS = `cache_operators_v${CACHE_SCHEMA_VERSION}`;
+export const CACHE_KEY_OPERATORS_TIMESTAMP = `cache_operators_timestamp_v${CACHE_SCHEMA_VERSION}`;
 
 /**
  * Keys used to persist setting values
