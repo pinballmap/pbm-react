@@ -197,7 +197,10 @@ const MachineListItem = ({
           onSwipeableWillClose={highlightOff}
           renderRightActions={() => (
             <Pressable
-              style={s.swipeDeleteAction}
+              style={({ pressed }) => [
+                s.swipeDeleteAction,
+                pressed && s.swipeDeleteActionPressed,
+              ]}
               onPress={() => onSwipeDeletePress(machine)}
             >
               <FontAwesome6
@@ -1949,6 +1952,9 @@ const getStyles = (theme) =>
       backgroundColor: theme.red2,
       justifyContent: "center",
       alignItems: "center",
+    },
+    swipeDeleteActionPressed: {
+      backgroundColor: "#a8434a",
     },
     randomMachineIcon: {
       justifyContent: "center",
