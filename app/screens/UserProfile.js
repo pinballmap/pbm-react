@@ -1080,12 +1080,11 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
-      textDecorationLine: "underline",
     },
     machineYearMan: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Medium",
+      fontFamily: "Nunito-SemiBold",
     },
     lifeListSearchContainer: {
       flexDirection: "row",
