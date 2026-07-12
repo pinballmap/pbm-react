@@ -400,7 +400,10 @@ const Search = ({
                     size={20}
                     color={theme.purple}
                     style={{ position: "absolute", right: 30 }}
-                    onPress={() => changeQuery("")}
+                    onPress={() => {
+                      changeQuery("");
+                      textInputRef.current?.focus();
+                    }}
                   />
                 ) : null}
               </View>
