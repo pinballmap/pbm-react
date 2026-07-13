@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.11
+
+July 12, 2026
+
+- When you x clear the search text, cursor stays in the input (keyboard stays up).
+- Minor design tweaks.
+
 ### 5.4.10
 
 July 11, 2026
