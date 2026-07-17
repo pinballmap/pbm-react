@@ -12,8 +12,13 @@ const handleAccountDisabled = () => {
   throw ACCOUNT_DISABLED_MSG;
 };
 
+const withApiToken = (uri) => {
+  const separator = uri.includes("?") ? "&" : "?";
+  return `${uri}${separator}api_token=${process.env.EXPO_PUBLIC_PBM_API_TOKEN}`;
+};
+
 export const postData = (uri, body) => {
-  return fetch(global.API_URL + uri, {
+  return fetch(global.API_URL + withApiToken(uri), {
     method: "post",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -44,7 +49,7 @@ export const postData = (uri, body) => {
 };
 
 export const putData = (uri, body) => {
-  return fetch(global.API_URL + uri, {
+  return fetch(global.API_URL + withApiToken(uri), {
     method: "put",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -75,7 +80,7 @@ export const putData = (uri, body) => {
 };
 
 export const getData = (uri) => {
-  return fetch(global.API_URL + uri, {
+  return fetch(global.API_URL + withApiToken(uri), {
     headers: {
       AppVersion: Application.nativeApplicationVersion,
     },
@@ -120,7 +125,7 @@ export const getIfpaTournament = (tournament_id) => {
 export const postFormData = (uri, formData) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", global.API_URL + uri);
+    xhr.open("POST", global.API_URL + withApiToken(uri));
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("AppVersion", Application.nativeApplicationVersion);
     xhr.onload = () => {
@@ -150,7 +155,7 @@ export const postFormData = (uri, formData) => {
 };
 
 export const deleteData = (uri, body) => {
-  return fetch(global.API_URL + uri, {
+  return fetch(global.API_URL + withApiToken(uri), {
     method: "delete",
     headers: {
       Accept: "application/json, text/plain, */*",
