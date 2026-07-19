@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.12
+
+July 19, 2026
+
+- Fix a bug related to confirming a location.
+- New user setting (off by default) to retain your last machine sort order in the location machine list.
+
 ### 5.4.11
 
 July 12, 2026
