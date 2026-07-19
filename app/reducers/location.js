@@ -58,6 +58,7 @@ export default (state = initialState, action) => {
         location: action.location,
       };
     case LOCATION_METADATA_SUCCESS:
+      if (action.location.id !== state.location.id) return state;
       return {
         ...state,
         lmxMutated: false,
@@ -74,6 +75,7 @@ export default (state = initialState, action) => {
         location: {},
       };
     case LOCATION_DETAILS_CONFIRMED:
+      if (action.id !== state.location.id) return state;
       return {
         ...state,
         location: {
@@ -111,6 +113,7 @@ export default (state = initialState, action) => {
       };
     }
     case LOCATION_MACHINE_REMOVED: {
+      if (action.location_id !== state.location.id) return state;
       const location_machine_xrefs =
         state.location.location_machine_xrefs.filter(
           (m) => m.id !== action.lmx,
