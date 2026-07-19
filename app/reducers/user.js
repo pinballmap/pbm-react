@@ -19,6 +19,8 @@ import {
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  SET_REMEMBER_MACHINE_SORT_PREFERENCE,
+  SET_LAST_MACHINE_SORT_ORDER,
   ACCOUNT_DISABLED,
   FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
 } from "../actions/types";
@@ -42,7 +44,9 @@ export const initialState = {
   confirmationMessage1: "",
   confirmationMessage2: "",
   unitPreference: 0,
-  displayInsiderConnectedBadge: false,
+  displayInsiderConnectedBadgePreference: false,
+  rememberMachineSortPreference: false,
+  lastMachineSortOrder: "alpha",
   showNoLocationTrackingModal: false,
   isLocationServicesEnabled: true,
   accountDisabled: false,
@@ -186,6 +190,16 @@ export default (state = initialState, action) => {
         ...state,
         displayInsiderConnectedBadgePreference:
           action.displayInsiderConnectedBadge,
+      };
+    case SET_REMEMBER_MACHINE_SORT_PREFERENCE:
+      return {
+        ...state,
+        rememberMachineSortPreference: action.rememberMachineSortPreference,
+      };
+    case SET_LAST_MACHINE_SORT_ORDER:
+      return {
+        ...state,
+        lastMachineSortOrder: action.lastMachineSortOrder,
       };
     case ACCOUNT_DISABLED:
       return {

@@ -25,6 +25,9 @@ export const CACHE_KEY_OPERATORS_TIMESTAMP = `cache_operators_timestamp_v${CACHE
 export const KEY_THEME = "themeOverride"; // Which visual theme to use for te app
 export const KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE =
   "displayInsiderConnectedBadgePreference"; // Display the Insider Connected badge
+export const KEY_REMEMBER_MACHINE_SORT_PREFERENCE =
+  "rememberMachineSortPreference"; // Retain the most recent machine sort order across locations
+export const KEY_LAST_MACHINE_SORT_ORDER = "lastMachineSortOrder"; // Most recently selected machine sort order
 
 /**
  * Setting Values

@@ -5,7 +5,11 @@ import { connect, useDispatch } from "react-redux";
 import { ThemeContext } from "../theme-context";
 import { Screen, ButtonGroupSetting, SwitchSetting } from "../components";
 import { retrieveItem } from "../config/utils";
-import { setDisplayInsiderConnectedBadge, setUnitPreference } from "../actions";
+import {
+  setDisplayInsiderConnectedBadge,
+  setRememberMachineSortPreference,
+  setUnitPreference,
+} from "../actions";
 import { KEY_THEME, THEME_DEFAULT_VALUE } from "../utils/constants";
 
 const Settings = ({ user }) => {
@@ -37,6 +41,10 @@ const Settings = ({ user }) => {
     dispatch(setDisplayInsiderConnectedBadge(newSelectedValue));
   };
 
+  const updateRememberMachineSortChange = (newSelectedValue) => {
+    dispatch(setRememberMachineSortPreference(newSelectedValue));
+  };
+
   return (
     <Screen>
       <View style={s.background}>
@@ -61,6 +69,12 @@ const Settings = ({ user }) => {
           }
           onValueChange={updateInsiderConnectedBadgeChange}
           value={user.displayInsiderConnectedBadgePreference}
+        />
+        <SwitchSetting
+          title="Remember Sort Order"
+          description="Keep the same machine sort order when you move between locations."
+          onValueChange={updateRememberMachineSortChange}
+          value={user.rememberMachineSortPreference}
         />
       </View>
     </Screen>

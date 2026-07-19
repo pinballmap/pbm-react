@@ -18,6 +18,8 @@ import {
   INITIAL_FETCHING_LOCATION_TRACKING_FAILURE,
   SET_LOCATION_SERVICES_ENABLED,
   SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  SET_REMEMBER_MACHINE_SORT_PREFERENCE,
+  SET_LAST_MACHINE_SORT_ORDER,
   FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
   MACHINE_LIFE_LIST_STATUS_UPDATED,
 } from "./types";
@@ -27,7 +29,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import * as Location from "expo-location";
-import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
+import {
+  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  KEY_REMEMBER_MACHINE_SORT_PREFERENCE,
+  KEY_LAST_MACHINE_SORT_ORDER,
+} from "../utils/constants";
 
 export const fetchCurrentLocation = (isInitialLoad) => (dispatch) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
@@ -249,6 +255,30 @@ export const setDisplayInsiderConnectedBadge = (
   return {
     type: SET_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
     displayInsiderConnectedBadge,
+  };
+};
+
+export const setRememberMachineSortPreference = (
+  rememberMachineSortPreference,
+) => {
+  AsyncStorage.setItem(
+    KEY_REMEMBER_MACHINE_SORT_PREFERENCE,
+    JSON.stringify(!!rememberMachineSortPreference),
+  );
+  return {
+    type: SET_REMEMBER_MACHINE_SORT_PREFERENCE,
+    rememberMachineSortPreference,
+  };
+};
+
+export const setLastMachineSortOrder = (lastMachineSortOrder) => {
+  AsyncStorage.setItem(
+    KEY_LAST_MACHINE_SORT_ORDER,
+    JSON.stringify(lastMachineSortOrder),
+  );
+  return {
+    type: SET_LAST_MACHINE_SORT_ORDER,
+    lastMachineSortOrder,
   };
 };
 

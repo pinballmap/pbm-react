@@ -13,6 +13,8 @@ import {
   getOperatorsSuccess,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
+  setRememberMachineSortPreference,
+  setLastMachineSortOrder,
   setSelectedActivitiesFilter,
   setSelectedLocationActivitiesFilter,
   setActivityMachinesFilter,
@@ -22,7 +24,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
 import { getData } from "../config/request";
 import { retrieveItem, storeItem } from "../config/utils";
-import { KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE } from "../utils/constants";
+import {
+  KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
+  KEY_REMEMBER_MACHINE_SORT_PREFERENCE,
+  KEY_LAST_MACHINE_SORT_ORDER,
+} from "../utils/constants";
 import {
   CACHE_KEY_REGIONS,
   CACHE_KEY_REGIONS_TIMESTAMP,
@@ -109,6 +115,8 @@ const AppWrapper = ({
   getOperators,
   setUnitPreference,
   setDisplayInsiderConnectedBadge,
+  setRememberMachineSortPreference,
+  setLastMachineSortOrder,
   setSelectedActivitiesFilter,
   setSelectedLocationActivitiesFilter,
   setActivityMachinesFilter,
@@ -178,6 +186,14 @@ const AppWrapper = ({
       retrieveItem(KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE).then(
         (displayInsiderConnectedPreference) =>
           setDisplayInsiderConnectedBadge(!!displayInsiderConnectedPreference),
+      );
+      retrieveItem(KEY_REMEMBER_MACHINE_SORT_PREFERENCE).then(
+        (rememberMachineSortPreference) =>
+          setRememberMachineSortPreference(!!rememberMachineSortPreference),
+      );
+      retrieveItem(KEY_LAST_MACHINE_SORT_ORDER).then(
+        (lastMachineSortOrder) =>
+          lastMachineSortOrder && setLastMachineSortOrder(lastMachineSortOrder),
       );
 
       const savedActivities = (await retrieveItem("selectedActivities")) || [];
@@ -294,6 +310,10 @@ const mapDispatchToProps = (dispatch) => ({
   setUnitPreference: (pref) => dispatch(setUnitPreference(pref)),
   setDisplayInsiderConnectedBadge: (pref) =>
     dispatch(setDisplayInsiderConnectedBadge(pref)),
+  setRememberMachineSortPreference: (pref) =>
+    dispatch(setRememberMachineSortPreference(pref)),
+  setLastMachineSortOrder: (sortOrder) =>
+    dispatch(setLastMachineSortOrder(sortOrder)),
   setSelectedActivitiesFilter: (activities) =>
     dispatch(setSelectedActivitiesFilter(activities)),
   setActivityMachinesFilter: (machines) =>

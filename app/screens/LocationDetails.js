@@ -48,6 +48,7 @@ import {
   fetchLocationPictures,
   fetchLocationPictureFullRes,
   setCurrentMachine,
+  setLastMachineSortOrder,
   setSelectedMapLocation,
   updateMap,
   uploadLocationPicture,
@@ -266,7 +267,11 @@ const LocationDetails = (props) => {
     useState(false);
   const [randomMachineName, setRandomMachineName] = useState(null);
   const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
-  const [sortOrder, setSortOrder] = useState("alpha");
+  const getInitialSortOrder = () =>
+    props.user.rememberMachineSortPreference && props.user.lastMachineSortOrder
+      ? props.user.lastMachineSortOrder
+      : "alpha";
+  const [sortOrder, setSortOrder] = useState(getInitialSortOrder);
   const [sortModalVisible, setSortModalVisible] = useState(false);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
@@ -317,6 +322,7 @@ const LocationDetails = (props) => {
     locationTrackingServicesEnabled,
     unitPreference,
     displayInsiderConnectedBadgePreference,
+    rememberMachineSortPreference,
   } = props.user;
   const { name: opName, id: opId } =
     operators.find((operator) => operator.id === location.operator_id) ?? {};
@@ -363,6 +369,12 @@ const LocationDetails = (props) => {
       setSortOrder("alpha");
     }
   }, [loggedIn, sortOrder]);
+
+  useEffect(() => {
+    if (!rememberMachineSortPreference) {
+      setSortOrder("alpha");
+    }
+  }, [rememberMachineSortPreference]);
 
   const locationRef = useRef(props.location.location);
   useEffect(() => {
@@ -531,7 +543,7 @@ const LocationDetails = (props) => {
       setPhotoTipsModalVisible(false);
       setDeleteConfirmVisible(false);
       setShowRemoveMachineModal(false);
-      setSortOrder("alpha");
+      setSortOrder(getInitialSortOrder());
       setSortModalVisible(false);
       mapPressedRef.current = false;
       swipeableRefs.current = {};
@@ -1625,6 +1637,9 @@ const LocationDetails = (props) => {
                     onPress={() => {
                       setSortOrder(option.key);
                       setSortModalVisible(false);
+                      if (rememberMachineSortPreference) {
+                        dispatch(setLastMachineSortOrder(option.key));
+                      }
                     }}
                     style={({ pressed }) => [
                       s.sortModalItem,
