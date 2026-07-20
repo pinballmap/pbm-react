@@ -219,6 +219,10 @@ const Map = ({
       navigation.navigate("Events");
     } else if (url.indexOf("suggest") > 0) {
       navigation.navigate("SuggestLocation");
+    } else if (url.indexOf("contact") > 0) {
+      navigation.navigate("Contact");
+    } else if (url.indexOf("addscore") > 0) {
+      navigation.navigate("AddHighScore");
     } else if (url.indexOf("saved") > 0) {
       navigation.navigate("Saved");
     } else {

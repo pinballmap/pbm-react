@@ -104,7 +104,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "288",
+      buildNumber: "289",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -159,7 +159,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 254,
+      versionCode: 255,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
@@ -172,6 +172,16 @@ export default {
             {
               host: "pinballmap.com",
               pathPrefix: "/suggest",
+              scheme: "https",
+            },
+            {
+              host: "pinballmap.com",
+              pathPrefix: "/contact",
+              scheme: "https",
+            },
+            {
+              host: "pinballmap.com",
+              pathPrefix: "/addscore",
               scheme: "https",
             },
             {
