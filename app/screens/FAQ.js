@@ -359,7 +359,34 @@ const FAQ = ({ navigation, user }) => {
               >
                 public API
               </Text>
-              {` to fetch data and use it for your app. When using Pinball Map data, according to our data license you must include attribution and a link back to this site. If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies. Please do not just scrape large amounts of this site for your own arcade/pinball mapping site, with no attribution. Thousands of people have been contributing their time and effort to this site since 2008.`}
+              {` to fetch data and use it for your app. An `}
+              <Text
+                style={s.textLink}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://pinballmap.com/api_token",
+                  )
+                }
+              >
+                API key
+              </Text>
+              {` is required. When using Pinball Map data, `}
+              <Text
+                style={{ fontFamily: "Nunito-Bold" }}
+              >{`according to our data license you must include attribution and a link back to this site.`}</Text>
+              {` The primary purpose of us providing easy access to the data is to extend its value for your particular use. Examples include a localized "Springfield League" page showing nearby locations, or a business website listing machines, or an operator showing their locations, or an app that populates a tournament line-up, or a cool analytics visualization.`}
+            </Text>
+            <Text style={s.text}>
+              {`But if your functionality is a large-scale "where to find pinball" feature, then you're essentially cloning our core functionality. `}
+              <Text
+                style={{ fontFamily: "Nunito-Bold" }}
+              >{`This is not acceptable use, except in specific circumstances (get in touch about it).`}</Text>
+            </Text>
+            <Text style={s.text}>
+              {`Thousands of people have been contributing their time and effort to this site since 2008, and this is the data's home.`}
+            </Text>
+            <Text style={s.text}>
+              {`If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies.`}
             </Text>
             <View
               ref={(r) => {
