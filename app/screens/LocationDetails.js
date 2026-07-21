@@ -1878,6 +1878,7 @@ const getStyles = (theme) =>
       height: 34,
       width: 34,
       marginLeft: 5,
+      marginTop: -4,
     },
     lmxCountRow: {
       flexDirection: "row",
@@ -2063,6 +2064,7 @@ const getStyles = (theme) =>
       borderWidth: 1,
       borderColor: theme.pink2,
       marginRight: 4,
+      marginTop: -4,
     },
     photoStrip: {
       marginVertical: 8,

@@ -229,9 +229,11 @@ const getStyles = (theme) =>
     },
     heartItem: {
       justifyContent: "center",
+      alignSelf: "flex-start",
       height: 34,
       width: 34,
       marginRight: 10,
+      marginTop: 4,
     },
     locationName: {
       fontFamily: "Nunito-ExtraBold",
