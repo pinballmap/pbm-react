@@ -7,6 +7,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { Image, ImageBackground } from "expo-image";
+import * as Application from "expo-application";
 import {
   Dimensions,
   Platform,
@@ -280,6 +281,9 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           <MaterialCommunityIcons name="login" style={s.icon} />
         </Pressable>
       )}
+      <Text allowFontScaling={false} style={s.versionText}>
+        v{Application.nativeApplicationVersion}
+      </Text>
     </DrawerContentScrollView>
   );
 };
@@ -320,6 +324,15 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Bold",
       fontWeight: Platform.OS === "android" ? undefined : 700,
       fontSize: 20,
+    },
+    versionText: {
+      color: theme.text3,
+      fontFamily: "Nunito-Medium",
+      fontSize: 13,
+      textAlign: "left",
+      marginTop: 15,
+      marginLeft: 20,
+      marginBottom: 20,
     },
   });
 
