@@ -49,7 +49,11 @@ import {
 } from "../components";
 import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useTheme,
+} from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -67,6 +71,7 @@ const MachineDetails = ({
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const theme = useTheme();
   const s = getStyles(theme);
   const [showAddConditionModal, setShowAddConditionModal] = useState(false);
@@ -160,10 +165,13 @@ const MachineDetails = ({
   }, []);
 
   useEffect(() => {
-    if (!locationProp.curLmx) {
+    // curLmx is a global redux field, not scoped to this screen instance — a
+    // MachineDetails left mounted (but unfocused) underneath another screen
+    // must not react to it clearing out from an unrelated removal elsewhere.
+    if (isFocused && !locationProp.curLmx) {
       navigation.goBack();
     }
-  }, [locationProp.curLmx]);
+  }, [locationProp.curLmx, isFocused, navigation]);
 
   const copyToClipboard = async (value) => {
     await Clipboard.setStringAsync(value);
