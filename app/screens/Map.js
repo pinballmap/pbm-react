@@ -442,8 +442,10 @@ const Map = ({
       {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
         <View style={s.statsContainer}>
           <Text style={s.statsText}>
-            {numLocations.toLocaleString()} locations ·{" "}
-            {totalMachines.toLocaleString()} machines
+            {numLocations.toLocaleString()}{" "}
+            {numLocations === 1 ? "location" : "locations"} ·{" "}
+            {totalMachines.toLocaleString()}{" "}
+            {totalMachines === 1 ? "machine" : "machines"}
           </Text>
         </View>
       )}
