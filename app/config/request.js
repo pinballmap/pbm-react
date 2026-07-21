@@ -32,7 +32,7 @@ const apiFetch = (method, uri, body) => {
 };
 
 const handleJsonResponse = async (response) => {
-  if (response.status === 401) handleAccountDisabled();
+  if (response.status === 403) handleAccountDisabled();
 
   const data = await response.json();
 
@@ -70,7 +70,7 @@ export const getData = (uri) => {
     .then(async (response) => {
       if (response.status === 200) return response.json();
 
-      if (response.status === 401) handleAccountDisabled();
+      if (response.status === 403) handleAccountDisabled();
 
       throw new Error("API response was not ok");
     })
@@ -112,7 +112,7 @@ export const postFormData = (uri, formData) => {
     xhr.setRequestHeader("AppVersion", Application.nativeApplicationVersion);
     xhr.onload = () => {
       try {
-        if (xhr.status === 401) handleAccountDisabled();
+        if (xhr.status === 403) handleAccountDisabled();
         const data = JSON.parse(xhr.responseText);
         if (data.errors) {
           reject(
@@ -139,7 +139,7 @@ export const postFormData = (uri, formData) => {
 export const deleteData = (uri, body) => {
   return apiFetch("delete", uri, body)
     .then(async (response) => {
-      if (response.status === 401) handleAccountDisabled();
+      if (response.status === 403) handleAccountDisabled();
 
       try {
         const data = await response.json();
