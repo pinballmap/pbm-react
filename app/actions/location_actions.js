@@ -181,7 +181,7 @@ export const removeMachineFromLocation =
       user_email: email,
       user_token: authentication_token,
     };
-    return deleteData(`/location_machine_xrefs/${lmx}.json `, body)
+    return deleteData(`/location_machine_xrefs/${lmx}.json`, body)
       .then(
         () => {
           dispatch(

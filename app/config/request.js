@@ -17,31 +17,39 @@ const withApiToken = (uri) => {
   return `${uri}${separator}api_token=${process.env.EXPO_PUBLIC_PBM_API_TOKEN}`;
 };
 
-export const postData = (uri, body) => {
+const apiFetch = (method, uri, body) => {
+  const headers = {
+    Accept: "application/json, text/plain, */*",
+    AppVersion: Application.nativeApplicationVersion,
+  };
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+
   return fetch(global.API_URL + withApiToken(uri), {
-    method: "post",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-      AppVersion: Application.nativeApplicationVersion,
-    },
-    body: JSON.stringify(body),
-  })
-    .then(async (response) => {
-      if (response.status === 401) handleAccountDisabled();
+    method,
+    headers,
+    ...(body !== undefined && { body: JSON.stringify(body) }),
+  });
+};
 
-      const data = await response.json();
+const handleJsonResponse = async (response) => {
+  if (response.status === 401) handleAccountDisabled();
 
-      if (data.errors) {
-        throw data.errors;
-      }
+  const data = await response.json();
 
-      if (data.error) {
-        throw data.error;
-      }
+  if (data.errors) {
+    throw data.errors;
+  }
 
-      if (response.ok) return data;
-    })
+  if (data.error) {
+    throw data.error;
+  }
+
+  if (response.ok) return data;
+};
+
+export const postData = (uri, body) => {
+  return apiFetch("post", uri, body)
+    .then(handleJsonResponse)
     .catch((err) => {
       const errorText = typeof err === "object" ? err.toString() : err;
       return Promise.reject(errorText);
@@ -49,30 +57,8 @@ export const postData = (uri, body) => {
 };
 
 export const putData = (uri, body) => {
-  return fetch(global.API_URL + withApiToken(uri), {
-    method: "put",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-      AppVersion: Application.nativeApplicationVersion,
-    },
-    body: JSON.stringify(body),
-  })
-    .then(async (response) => {
-      if (response.status === 401) handleAccountDisabled();
-
-      const data = await response.json();
-
-      if (data.errors) {
-        throw data.errors;
-      }
-
-      if (data.error) {
-        throw data.error;
-      }
-
-      if (response.ok) return data;
-    })
+  return apiFetch("put", uri, body)
+    .then(handleJsonResponse)
     .catch((err) => {
       const errorText = typeof err === "object" ? err.toString() : err;
       return Promise.reject(errorText);
@@ -80,11 +66,7 @@ export const putData = (uri, body) => {
 };
 
 export const getData = (uri) => {
-  return fetch(global.API_URL + withApiToken(uri), {
-    headers: {
-      AppVersion: Application.nativeApplicationVersion,
-    },
-  })
+  return apiFetch("get", uri)
     .then(async (response) => {
       if (response.status === 200) return response.json();
 
@@ -155,14 +137,7 @@ export const postFormData = (uri, formData) => {
 };
 
 export const deleteData = (uri, body) => {
-  return fetch(global.API_URL + withApiToken(uri), {
-    method: "delete",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  })
+  return apiFetch("delete", uri, body)
     .then(async (response) => {
       if (response.status === 401) handleAccountDisabled();
 
