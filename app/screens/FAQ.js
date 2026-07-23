@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -14,7 +14,7 @@ import MaterialCommunityIcons from "@react-native-vector-icons/material-design-i
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
 
-const FAQ = ({ navigation, user }) => {
+const FAQ = ({ navigation, user, route }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
@@ -40,6 +40,16 @@ const FAQ = ({ navigation, user }) => {
       () => {},
     );
   };
+
+  useEffect(() => {
+    if (route.params?.section) {
+      const timeout = setTimeout(
+        () => scrollToSection(route.params.section),
+        0,
+      );
+      return () => clearTimeout(timeout);
+    }
+  }, [route.params?.section]);
 
   const SECTIONS = [
     { key: "mobile", label: "Mobile App-Specific" },
@@ -828,6 +838,7 @@ const getStyles = (theme) =>
 FAQ.propTypes = {
   navigation: PropTypes.object,
   user: PropTypes.object,
+  route: PropTypes.object,
 };
 
 const mapStateToProps = ({ user }) => ({ user });

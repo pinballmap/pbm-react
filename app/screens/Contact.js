@@ -123,10 +123,19 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             <Text style={[s.boldFont]}>{`remove the machines`}</Text>
             {` and we'll auto-delete it within a week.`}
           </Text>
-          <Text
-            onPress={() => navigation.navigate("FAQ")}
-            style={s.textLink}
-          >{`Check the FAQ for common questions`}</Text>
+          <Text style={s.text}>
+            {`If you want to be `}
+            <Text style={[s.text, s.boldFont]}>{`added as an operator`}</Text>
+            {`, please see this `}
+            <Text
+              onPress={() =>
+                navigation.navigate("FAQ", { section: "operators" })
+              }
+              style={s.textLink}
+            >{`FAQ section`}</Text>
+            {` and then answer the 5 questions.`}
+          </Text>
+
           {!loggedIn ? (
             <View>
               <TextInput
