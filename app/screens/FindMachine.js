@@ -597,6 +597,9 @@ const FindMachine = ({
                   </View>
                 </View>
               )}
+              <Text style={{ textAlign: "center" }}>
+                Tip: only add machines that are on the floor.
+              </Text>
               <PbmButton title={"Add"} onPress={addMachine} />
               <WarningButton title={"Go Back"} onPress={cancelAddMachine} />
             </View>
