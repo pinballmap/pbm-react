@@ -345,23 +345,38 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>All Ages</Text>
-                    <Text style={s.preview}>{allAges || "None Selected"}</Text>
+                    {allAges ? (
+                      <Text style={s.preview}>{allAges}</Text>
+                    ) : (
+                      <Text style={[s.error, s.preview]}>
+                        None Selected. Please add if known.
+                      </Text>
+                    )}
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>Free Play</Text>
-                    <Text style={s.preview}>
-                      {paymentType || "None Selected"}
-                    </Text>
+                    {paymentType ? (
+                      <Text style={s.preview}>{paymentType}</Text>
+                    ) : (
+                      <Text style={[s.error, s.preview]}>
+                        None Selected. Please add if known.
+                      </Text>
+                    )}
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>Location Type</Text>
-                    <Text style={s.preview}>
-                      {typeof locationType === "number" && locationType > -1
-                        ? locationTypes
-                            .filter((type) => type.id === locationType)
-                            .map((type) => type.name)
-                        : "None Selected"}
-                    </Text>
+                    {typeof locationType === "number" && locationType > -1 ? (
+                      <Text style={s.preview}>
+                        {
+                          locationTypes.find((type) => type.id === locationType)
+                            ?.name
+                        }
+                      </Text>
+                    ) : (
+                      <Text style={[s.error, s.preview]}>
+                        None Selected. Please add if known.
+                      </Text>
+                    )}
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>Operator</Text>

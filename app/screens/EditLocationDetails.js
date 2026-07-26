@@ -312,7 +312,7 @@ const getStyles = (theme) =>
     preview: {
       fontSize: 15,
       marginRight: 25,
-      textAlign: "center",
+      textAlign: "left",
       width: deviceWidth - 130,
       fontFamily: "Nunito-Regular",
     },
