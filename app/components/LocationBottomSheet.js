@@ -10,6 +10,7 @@ import { getDistanceWithUnit } from "../utils/utilityFunctions";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import { CustomIcon } from "../components";
+import { PAYMENT_TYPE_FREE_PLAY } from "../utils/constants";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -94,29 +95,33 @@ const LocationBottomSheet = React.memo(
                   >{`${street}, ${cityState} ${zip}`}</Text>
                 </View>
                 <View style={s.margin}>
-                  <Text>
-                    {machine_names_first_no_year.map((name, index) => (
-                      <Text key={name}>
-                        <Text style={s.machineName}>
-                          {`${name}${
-                            index !== machine_names_first_no_year.length - 1
-                              ? " \u2022 "
-                              : ""
-                          }`}
+                  {machine_names_first_no_year.length === 0 ? (
+                    <Text style={[s.plus, s.italic]}>No machines</Text>
+                  ) : (
+                    <Text>
+                      {machine_names_first_no_year.map((name, index) => (
+                        <Text key={name}>
+                          <Text style={s.machineName}>
+                            {`${name}${
+                              index !== machine_names_first_no_year.length - 1
+                                ? " \u2022 "
+                                : ""
+                            }`}
+                          </Text>
                         </Text>
-                      </Text>
-                    ))}
-                    {machine_count > NUM_MACHINES_TO_SHOW ? (
-                      <Text style={[s.plus, s.italic]}>{`  ...plus ${
-                        machine_count - NUM_MACHINES_TO_SHOW
-                      } more!`}</Text>
-                    ) : null}
-                  </Text>
+                      ))}
+                      {machine_count > NUM_MACHINES_TO_SHOW ? (
+                        <Text style={[s.plus, s.italic]}>{`  ...plus ${
+                          machine_count - NUM_MACHINES_TO_SHOW
+                        } more!`}</Text>
+                      ) : null}
+                    </Text>
+                  )}
                 </View>
               </View>
               {locationType ||
               user.locationTrackingServicesEnabled ||
-              payment_type ? (
+              payment_type === PAYMENT_TYPE_FREE_PLAY ? (
                 <View style={s.locationTypeContainer}>
                   {user.locationTrackingServicesEnabled ? (
                     <View style={s.vertAlign}>
@@ -160,7 +165,7 @@ const LocationBottomSheet = React.memo(
                       </Text>
                     </View>
                   ) : null}
-                  {payment_type ? (
+                  {payment_type === PAYMENT_TYPE_FREE_PLAY ? (
                     <View style={s.vertAlign}>
                       <FontAwesome6
                         name="coins"
