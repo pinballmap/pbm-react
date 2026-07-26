@@ -1444,6 +1444,11 @@ const LocationDetails = (props) => {
               )}
             </View>
           </View>
+          {sortedMachines.length === 0 && (
+            <Text style={s.noMachinesWarningText}>
+              This location will be automatically removed from the map soon.
+            </Text>
+          )}
         </View>
       </View>
     </View>
@@ -1946,6 +1951,13 @@ const getStyles = (theme) =>
     lmxCountRightGroup: {
       flex: 1,
       alignItems: "flex-end",
+    },
+    noMachinesWarningText: {
+      color: theme.red2,
+      fontFamily: "Nunito-SemiBold",
+      textAlign: "center",
+      marginTop: 8,
+      marginHorizontal: 5,
     },
     sortIcon: {
       padding: 4,
