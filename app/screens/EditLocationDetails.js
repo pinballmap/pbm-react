@@ -31,6 +31,12 @@ import {
 } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { registerCallback } from "../utils/navigationCallbacks";
+import {
+  ALL_AGES_NO,
+  ALL_AGES_OPTIONS,
+  PAYMENT_TYPE_NO,
+  PAYMENT_TYPE_OPTIONS,
+} from "../utils/constants";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -156,11 +162,30 @@ function EditLocationDetails({ navigation, ...props }) {
               </View>
               <View style={s.previewContainer}>
                 <Text style={s.previewTitle}>All Ages</Text>
-                <Text style={s.preview}>{allAges || "None Selected"}</Text>
+                <Text style={s.preview}>
+                  {ALL_AGES_OPTIONS.find((option) => option.value === allAges)
+                    ?.label || "None Selected"}
+                </Text>
+                {allAges === ALL_AGES_NO && (
+                  <Text style={[s.preview, s.noValueNote]}>
+                    Note: this selection is used for data management, but will
+                    not be displayed in the location details
+                  </Text>
+                )}
               </View>
               <View style={s.previewContainer}>
                 <Text style={s.previewTitle}>Free Play</Text>
-                <Text style={s.preview}>{paymentType || "None Selected"}</Text>
+                <Text style={s.preview}>
+                  {PAYMENT_TYPE_OPTIONS.find(
+                    (option) => option.value === paymentType,
+                  )?.label || "None Selected"}
+                </Text>
+                {paymentType === PAYMENT_TYPE_NO && (
+                  <Text style={[s.preview, s.noValueNote]}>
+                    Note: this selection is used for data management, but will
+                    not be displayed in the location details
+                  </Text>
+                )}
               </View>
               <View style={s.previewContainer}>
                 <Text style={s.previewTitle}>Location Type</Text>
@@ -257,7 +282,7 @@ function EditLocationDetails({ navigation, ...props }) {
             <OptionPickerButton
               title="All Ages?"
               description="Leave blank ('None Selected') if you're not sure."
-              options={["Yes", "At Times"]}
+              options={ALL_AGES_OPTIONS}
               selectedValue={allAges}
               onSelect={setAllAges}
             />
@@ -265,7 +290,7 @@ function EditLocationDetails({ navigation, ...props }) {
             <OptionPickerButton
               title="Free Play?"
               description="Free Play means a place with or without an entrance fee and then the games are free to play. Leave blank ('None Selected') if you're not sure. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
-              options={["Free Play"]}
+              options={PAYMENT_TYPE_OPTIONS}
               selectedValue={paymentType}
               onSelect={setPaymentType}
             />
@@ -315,6 +340,13 @@ const getStyles = (theme) =>
       textAlign: "left",
       width: deviceWidth - 130,
       fontFamily: "Nunito-Regular",
+    },
+    noValueNote: {
+      marginLeft: 105,
+      fontSize: 13,
+      fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      color: theme.text3,
     },
     pageTitle: {
       paddingVertical: 10,

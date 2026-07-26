@@ -43,3 +43,27 @@ export const THEME_DEFAULT_VALUE = THEME_SYSTEM_SETTING_VALUE;
 
 export const THEME_DARK = "dark";
 export const THEME_LIGHT = ""; // Yes, it's empty
+
+/**
+ * all_ages / payment_type option values.
+ *
+ * "No" is a valid stored value for data-management purposes (explicitly
+ * marking a location as not all-ages / not free play), but it is never
+ * surfaced in read-only views - only "Yes"/"At Times" and "Free Play" are
+ * shown there. Check against these exact values rather than truthiness.
+ */
+export const ALL_AGES_YES = "Yes";
+export const ALL_AGES_AT_TIMES = "At Times";
+export const ALL_AGES_NO = "No";
+export const ALL_AGES_OPTIONS = [
+  { value: ALL_AGES_YES, label: "Yes" },
+  { value: ALL_AGES_AT_TIMES, label: "At Times" },
+  { value: ALL_AGES_NO, label: "Not All Ages" },
+];
+
+export const PAYMENT_TYPE_FREE_PLAY = "Free Play";
+export const PAYMENT_TYPE_NO = "No";
+export const PAYMENT_TYPE_OPTIONS = [
+  { value: PAYMENT_TYPE_FREE_PLAY, label: "Free Play" },
+  { value: PAYMENT_TYPE_NO, label: "Not Free Play" },
+];

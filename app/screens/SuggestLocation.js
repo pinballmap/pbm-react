@@ -39,6 +39,12 @@ import { getData } from "../config/request";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { registerCallback } from "../utils/navigationCallbacks";
+import {
+  ALL_AGES_NO,
+  ALL_AGES_OPTIONS,
+  PAYMENT_TYPE_NO,
+  PAYMENT_TYPE_OPTIONS,
+} from "../utils/constants";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -346,20 +352,44 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>All Ages</Text>
                     {allAges ? (
-                      <Text style={s.preview}>{allAges}</Text>
+                      <Text style={s.preview}>
+                        {
+                          ALL_AGES_OPTIONS.find(
+                            (option) => option.value === allAges,
+                          )?.label
+                        }
+                      </Text>
                     ) : (
                       <Text style={[s.error, s.preview]}>
                         None Selected. Please add if known.
+                      </Text>
+                    )}
+                    {allAges === ALL_AGES_NO && (
+                      <Text style={[s.preview, s.noValueNote]}>
+                        Note: this selection is used for data management, but
+                        will not be displayed in the location details
                       </Text>
                     )}
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>Free Play</Text>
                     {paymentType ? (
-                      <Text style={s.preview}>{paymentType}</Text>
+                      <Text style={s.preview}>
+                        {
+                          PAYMENT_TYPE_OPTIONS.find(
+                            (option) => option.value === paymentType,
+                          )?.label
+                        }
+                      </Text>
                     ) : (
                       <Text style={[s.error, s.preview]}>
                         None Selected. Please add if known.
+                      </Text>
+                    )}
+                    {paymentType === PAYMENT_TYPE_NO && (
+                      <Text style={[s.preview, s.noValueNote]}>
+                        Note: this selection is used for data management, but
+                        will not be displayed in the location details
                       </Text>
                     )}
                   </View>
@@ -597,7 +627,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <OptionPickerButton
             title="All Ages?"
             description="Leave blank ('None Selected') if you're not sure."
-            options={["Yes", "At Times"]}
+            options={ALL_AGES_OPTIONS}
             selectedValue={allAges}
             onSelect={setAllAges}
           />
@@ -605,7 +635,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <OptionPickerButton
             title="Free Play?"
             description="Free Play means a place with or without an entrance fee and then the games are free to play. Leave blank ('None Selected') if you're not sure. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
-            options={["Free Play"]}
+            options={PAYMENT_TYPE_OPTIONS}
             selectedValue={paymentType}
             onSelect={setPaymentType}
           />
@@ -704,6 +734,13 @@ const getStyles = (theme) =>
       marginRight: 25,
       textAlign: "left",
       width: deviceWidth - 130,
+    },
+    noValueNote: {
+      marginLeft: 105,
+      fontSize: 13,
+      fontFamily: "Nunito-Italic",
+      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      color: theme.text3,
     },
     previewMachine: {
       alignSelf: "stretch",

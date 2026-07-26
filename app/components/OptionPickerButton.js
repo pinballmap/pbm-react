@@ -22,13 +22,18 @@ const OptionPickerButton = ({
 
   const items = [
     { value: null, label: blankLabel },
-    ...options.map((option) => ({ value: option, label: option })),
+    ...options.map((option) =>
+      typeof option === "string" ? { value: option, label: option } : option,
+    ),
   ];
+
+  const selectedLabel =
+    items.find((item) => item.value === selectedValue)?.label ?? blankLabel;
 
   return (
     <>
       <DropDownButton
-        title={selectedValue ?? blankLabel}
+        title={selectedLabel}
         onPress={() => setVisible(true)}
         margin={margin}
       />
@@ -150,7 +155,15 @@ const getStyles = (theme) =>
 OptionPickerButton.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+      }),
+    ]),
+  ).isRequired,
   selectedValue: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   blankLabel: PropTypes.string,

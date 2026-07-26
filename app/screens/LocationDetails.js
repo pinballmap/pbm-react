@@ -67,6 +67,11 @@ import * as WebBrowser from "expo-web-browser";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MachineCard from "../components/MachineCard";
+import {
+  ALL_AGES_AT_TIMES,
+  ALL_AGES_YES,
+  PAYMENT_TYPE_FREE_PLAY,
+} from "../utils/constants";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import Animated, {
   useSharedValue,
@@ -930,8 +935,9 @@ const LocationDetails = (props) => {
 
             {location.location_type_id ||
             locationTrackingServicesEnabled ||
-            location.all_ages ||
-            location.payment_type ? (
+            location.all_ages === ALL_AGES_YES ||
+            location.all_ages === ALL_AGES_AT_TIMES ||
+            location.payment_type === PAYMENT_TYPE_FREE_PLAY ? (
               <View
                 style={[
                   {
@@ -995,7 +1001,8 @@ const LocationDetails = (props) => {
                   </View>
                 )}
 
-                {location.all_ages && (
+                {(location.all_ages === ALL_AGES_YES ||
+                  location.all_ages === ALL_AGES_AT_TIMES) && (
                   <View style={[s.row]}>
                     <MaterialCommunityIcons
                       name="human-male-child"
@@ -1011,14 +1018,14 @@ const LocationDetails = (props) => {
                         s.bold,
                       ]}
                     >
-                      {location.all_ages === "Yes"
+                      {location.all_ages === ALL_AGES_YES
                         ? "All Ages"
                         : "All Ages At Times"}
                     </Text>
                   </View>
                 )}
 
-                {location.payment_type && (
+                {location.payment_type === PAYMENT_TYPE_FREE_PLAY && (
                   <View style={[s.row]}>
                     <FontAwesome6
                       name="coins"

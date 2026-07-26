@@ -14,6 +14,7 @@ import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import FavoriteLocation from "./FavoriteLocation";
 import { CustomIcon } from "../components";
+import { PAYMENT_TYPE_FREE_PLAY } from "../utils/constants";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -130,7 +131,7 @@ const LocationCard = ({
             distance ||
             notInListCount ||
             allAgesLabel ||
-            paymentType ? (
+            paymentType === PAYMENT_TYPE_FREE_PLAY ? (
               <View style={s.locationTypeContainer}>
                 {distance ? (
                   <View style={s.vertAlign}>
@@ -186,7 +187,7 @@ const LocationCard = ({
                     </Text>
                   </View>
                 ) : null}
-                {paymentType ? (
+                {paymentType === PAYMENT_TYPE_FREE_PLAY ? (
                   <View style={s.vertAlign}>
                     <FontAwesome6
                       name="coins"
