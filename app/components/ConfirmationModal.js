@@ -52,7 +52,7 @@ const getStyles = (theme) =>
     modalView: {
       width: "85%",
       paddingVertical: 15,
-      backgroundColor: theme.white,
+      backgroundColor: theme.base1,
       borderRadius: 15,
       shadowColor: "#000",
       shadowOffset: {

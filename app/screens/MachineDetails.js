@@ -384,7 +384,7 @@ const MachineDetails = ({
               </Text>
               <Text style={[s.modalSubText, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
-                {`if you've fixed an issue, please leave a comment saying so, so that everyone knows how great you are`}
+                {`if you've fixed an issue, please leave a comment saying so, so that everyone knows how great you are.`}
               </Text>
               <PbmButton
                 title={"Add Comment"}

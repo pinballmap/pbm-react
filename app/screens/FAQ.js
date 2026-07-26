@@ -347,6 +347,15 @@ const FAQ = ({ navigation, user, route }) => {
               </Text>
               {`, and make sure to tell us the name of the location that has moved. It's preferable for us to simply change the address because that retains the location history.`}
             </Text>
+            <Text
+              style={s.bold}
+            >{`What does the Free Play tag mean at a location?`}</Text>
+            <Text style={s.text}>
+              {`Free Play generally means a place where you pay an entrance fee and then the games within are free to play for a duration of time. If a place has a combination of a door fee and coin drop on some machines, then Free Play is likely still an appropriate tag.`}
+            </Text>
+            <Text style={s.text}>
+              {`There is not a demand to track different types of payment aside from Free Play.`}
+            </Text>
             <View
               ref={(r) => {
                 sectionRefs.current["dataUsage"] = r;
@@ -358,7 +367,7 @@ const FAQ = ({ navigation, user, route }) => {
               style={s.bold}
             >{`Can I use Pinball Map data on my own site?`}</Text>
             <Text style={s.text}>
-              {`You can use our `}
+              {`You can use `}
               <Text
                 style={s.textLink}
                 onPress={() =>
@@ -367,7 +376,7 @@ const FAQ = ({ navigation, user, route }) => {
                   )
                 }
               >
-                public API
+                our API
               </Text>
               {` to fetch data and use it for your app. An `}
               <Text
@@ -384,7 +393,7 @@ const FAQ = ({ navigation, user, route }) => {
               <Text
                 style={{ fontFamily: "Nunito-Bold" }}
               >{`according to our data license you must include attribution and a link back to this site.`}</Text>
-              {` The primary purpose of us providing easy access to the data is to extend its value for your particular use. Examples include a localized "Springfield League" page showing nearby locations, or a business website listing machines, or an operator showing their locations, or an app that populates a tournament line-up, or a cool analytics visualization.`}
+              {` The primary purpose of us providing easy access to the data is to extend its value for your particular use. Examples include a localized "Springfield League" page showing nearby locations, or a location's website listing their machines, or an operator showing their locations, or an app that populates a tournament line-up, or a cool analytics visualization.`}
             </Text>
             <Text style={s.text}>
               {`But if your functionality is a large-scale "where to find pinball" feature, then you're essentially cloning our core functionality. `}
@@ -393,10 +402,7 @@ const FAQ = ({ navigation, user, route }) => {
               >{`This is not acceptable use, except in specific circumstances (get in touch about it).`}</Text>
             </Text>
             <Text style={s.text}>
-              {`Thousands of people have been contributing their time and effort to this site since 2008, and this is the data's home.`}
-            </Text>
-            <Text style={s.text}>
-              {`If you need bulk data for a project, please get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies.`}
+              {`Thousands of people have been contributing their time and effort to this site since 2008, and this is the data's home. If you have questions, get in touch. We have collaborated with many folks on their projects, from student projects to services by major pinball companies.`}
             </Text>
             <View
               ref={(r) => {

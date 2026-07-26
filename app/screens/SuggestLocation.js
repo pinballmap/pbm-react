@@ -581,7 +581,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <Text style={s.title}>All Ages?</Text>
           <OptionPickerButton
             title="All Ages?"
-            description="Leave blank ('None Selected') if you're not sure, or if this location isn't all ages."
+            description="Leave blank ('None Selected') if you're not sure."
             options={["Yes", "At Times"]}
             selectedValue={allAges}
             onSelect={setAllAges}
@@ -589,7 +589,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <Text style={s.title}>Free Play?</Text>
           <OptionPickerButton
             title="Free Play?"
-            description="Leave blank ('None Selected') if you're not sure, or if this isn't a free play location. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
+            description="Free Play means a place with or without an entrance fee and then the games are free to play. Leave blank ('None Selected') if you're not sure. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
             options={["Free Play"]}
             selectedValue={paymentType}
             onSelect={setPaymentType}

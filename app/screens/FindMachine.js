@@ -575,7 +575,11 @@ const FindMachine = ({
               />
               {machine.ic_eligible && (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 10,
+                  }}
                 >
                   <Text>
                     Does machine have Stern Insider Connected enabled?
