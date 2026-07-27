@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.14
+
+July xx, 2026
+
+- Support for All Ages and Free Play location-level fields.
+- When filtering locations, include a (i) button that summarizes the applied filters.
+- Greatly expanded universal/deep link support, so that urls with params will be respected.
+- Various design/UI/UX tweaks and fixes.
+
 ### 5.4.13
 
 July 21, 2026
