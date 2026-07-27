@@ -286,11 +286,9 @@ export const fetchLifeListMachineIds = () => (dispatch, getState) => {
   const { id } = getState().user;
   if (!id) return Promise.resolve();
 
-  return getData(`/users/${id}/profile_info.json?life_list=`)
+  return getData(`/users/${id}/profile_info.json?life_list_ids_only=1`)
     .then((data) => {
-      const lifeListMachineIds = (
-        data.profile_info?.profile_life_list_stats || []
-      ).map((stat) => stat.machine_id);
+      const lifeListMachineIds = data.profile_info?.life_list_machine_ids || [];
       dispatch(fetchLifeListMachineIdsSuccess(lifeListMachineIds));
     })
     .catch((err) => console.log(err));
