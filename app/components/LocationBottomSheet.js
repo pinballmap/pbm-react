@@ -10,7 +10,11 @@ import { getDistanceWithUnit } from "../utils/utilityFunctions";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import { CustomIcon } from "../components";
-import { PAYMENT_TYPE_FREE_PLAY } from "../utils/constants";
+import {
+  ALL_AGES_AT_TIMES,
+  ALL_AGES_YES,
+  PAYMENT_TYPE_FREE_PLAY,
+} from "../utils/constants";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -121,6 +125,8 @@ const LocationBottomSheet = React.memo(
               </View>
               {locationType ||
               user.locationTrackingServicesEnabled ||
+              location.all_ages === ALL_AGES_YES ||
+              location.all_ages === ALL_AGES_AT_TIMES ||
               payment_type === PAYMENT_TYPE_FREE_PLAY ? (
                 <View style={s.locationTypeContainer}>
                   {user.locationTrackingServicesEnabled ? (
@@ -132,7 +138,6 @@ const LocationBottomSheet = React.memo(
                           fontFamily: "Nunito-Bold",
                         }}
                       >
-                        {" "}
                         {getDistanceWithUnit(
                           user.lat,
                           user.lon,
@@ -160,8 +165,26 @@ const LocationBottomSheet = React.memo(
                           fontFamily: "Nunito-Bold",
                         }}
                       >
-                        {" "}
                         {locationType.name}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {location.all_ages === ALL_AGES_YES ||
+                  location.all_ages === ALL_AGES_AT_TIMES ? (
+                    <View style={s.vertAlign}>
+                      <MaterialCommunityIcons
+                        name="human-male-child"
+                        style={s.icon}
+                      />
+                      <Text
+                        style={{
+                          color: theme.text2,
+                          fontFamily: "Nunito-Bold",
+                        }}
+                      >
+                        {location.all_ages === ALL_AGES_YES
+                          ? "All Ages"
+                          : "All Ages At Times"}
                       </Text>
                     </View>
                   ) : null}
@@ -178,7 +201,6 @@ const LocationBottomSheet = React.memo(
                           fontFamily: "Nunito-Bold",
                         }}
                       >
-                        {" "}
                         {payment_type}
                       </Text>
                     </View>
@@ -250,8 +272,10 @@ const getStyles = (theme) =>
       justifyContent: "space-around",
       flexDirection: "row",
       flexWrap: "wrap",
-      rowGap: 8,
-      padding: 6,
+      rowGap: 6,
+      columnGap: 12,
+      paddingVertical: 6,
+      paddingHorizontal: 8,
       backgroundColor: theme.base3,
     },
     metaIcon: {
@@ -302,8 +326,8 @@ const getStyles = (theme) =>
       overflow: "visible",
     },
     icon: {
-      fontSize: 28,
-      marginRight: 3,
+      fontSize: 24,
+      marginRight: 6,
       color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
     },
   });
