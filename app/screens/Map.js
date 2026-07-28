@@ -540,16 +540,19 @@ const Map = ({
         visible={filterInfoVisible}
         closeModal={() => setFilterInfoVisible(false)}
       >
-        <View>
-          <Text style={s.filterSummaryText}>
-            Showing locations with {filterSummary}.
-          </Text>
+        <View style={s.filterSummaryModalHeader}>
+          <Text style={s.filterSummaryModalTitle}>Map Filter Summary</Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
             onPress={() => setFilterInfoVisible(false)}
             style={s.xButton}
           />
+        </View>
+        <View style={s.filterSummaryModalContent}>
+          <Text style={s.filterSummaryText}>
+            Showing locations with {filterSummary}.
+          </Text>
         </View>
       </ConfirmationModal>
       {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
@@ -746,16 +749,32 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Regular",
       color: theme.text,
     },
+    filterSummaryModalHeader: {
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      marginTop: -25,
+      paddingVertical: 8,
+      justifyContent: "center",
+    },
+    filterSummaryModalTitle: {
+      color: theme.purple2,
+      textAlign: "center",
+      fontSize: 18,
+      fontFamily: "Nunito-ExtraBold",
+    },
+    filterSummaryModalContent: {
+      marginTop: 10,
+    },
     filterSummaryText: {
       textAlign: "center",
       fontSize: 16,
       fontFamily: "Nunito-Regular",
-      paddingHorizontal: 35,
+      paddingHorizontal: 16,
     },
     xButton: {
       position: "absolute",
       right: 3,
-      top: -10,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",

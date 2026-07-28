@@ -944,7 +944,7 @@ const LocationDetails = (props) => {
                     justifyContent: "space-around",
                     flexWrap: "wrap",
                     rowGap: 8,
-                    columnGap: 12,
+                    columnGap: 14,
                     marginTop: 10,
                     marginBottom: 10,
                   },

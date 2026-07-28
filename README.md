@@ -16,7 +16,7 @@ Release dates are approximate, given that review times vary between the App Stor
 
 ### 5.4.14
 
-July xx, 2026
+July 28, 2026
 
 - Support for All Ages and Free Play location-level fields.
 - When filtering locations, include a (i) button that summarizes the applied filters.
