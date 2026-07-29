@@ -55,6 +55,7 @@ import {
 } from "../actions";
 import {
   alphaSortNameObj,
+  formatAddress,
   getDistanceWithUnit,
   sortMachinesByLifeListStatus,
   sortMachinesByLmxCount,
@@ -792,7 +793,7 @@ const LocationDetails = (props) => {
             openMap({
               end: `${location.name} ${location.city} ${
                 location.state || ""
-              } ${location.zip}`,
+              } ${location.zip || ""}`,
             });
           }}
         >
@@ -930,7 +931,7 @@ const LocationDetails = (props) => {
           </View>
           <View style={s.locationMetaContainer}>
             <Text style={[s.text2, s.fontSize15, s.marginRight]}>
-              {location.street}, {cityState} {location.zip}
+              {formatAddress(location.street, cityState, location.zip)}
             </Text>
 
             {location.location_type_id ||

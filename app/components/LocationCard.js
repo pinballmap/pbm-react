@@ -15,6 +15,7 @@ import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import FavoriteLocation from "./FavoriteLocation";
 import { CustomIcon } from "../components";
 import { PAYMENT_TYPE_FREE_PLAY } from "../utils/constants";
+import { formatAddress } from "../utils/utilityFunctions";
 
 const NUM_MACHINES_TO_SHOW = 5;
 
@@ -92,7 +93,9 @@ const LocationCard = ({
                   style={[s.address]}
                   numberOfLines={1}
                   ellipsizeMode={"tail"}
-                >{`${street}, ${cityState} ${zip}`}</Text>
+                >
+                  {formatAddress(street, cityState, zip)}
+                </Text>
               </View>
               <View style={s.margin}>
                 {machines.slice(0, NUM_MACHINES_TO_SHOW).map((m) => {

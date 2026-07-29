@@ -6,7 +6,7 @@ import { ThemeContext } from "../theme-context";
 import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
-import { getDistanceWithUnit } from "../utils/utilityFunctions";
+import { formatAddress, getDistanceWithUnit } from "../utils/utilityFunctions";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import { CustomIcon } from "../components";
@@ -96,7 +96,9 @@ const LocationBottomSheet = React.memo(
                     style={[s.address]}
                     numberOfLines={1}
                     ellipsizeMode={"tail"}
-                  >{`${street}, ${cityState} ${zip}`}</Text>
+                  >
+                    {formatAddress(street, cityState, zip)}
+                  </Text>
                 </View>
                 <View style={s.margin}>
                   {machine_names_first_no_year.length === 0 ? (

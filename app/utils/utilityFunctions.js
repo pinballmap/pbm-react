@@ -56,6 +56,12 @@ export const atLeastMinZoom = (bounds) => {
   };
 };
 
+export const formatAddress = (street, cityState, zip) => {
+  return [street, [cityState, zip].filter(Boolean).join(" ")]
+    .filter(Boolean)
+    .join(", ");
+};
+
 export const formatNumWithCommas = (num) => {
   if (!num) return "";
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
