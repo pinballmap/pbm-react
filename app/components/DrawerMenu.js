@@ -23,7 +23,6 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
-import { useNavigation } from "@react-navigation/native";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -33,7 +32,12 @@ const DrawerMenu = ({ logout, user, ...props }) => {
   const iconSize = 28;
   const iconColor = "#bec2e6";
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
+  const { navigation } = props;
+
+  const navigateAndCloseDrawer = (...args) => {
+    navigation.navigate(...args);
+    navigation.closeDrawer();
+  };
 
   return (
     <DrawerContentScrollView {...props}>
@@ -46,7 +50,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           onPress={() => {
             setModalVisible(false);
             logout();
-            navigation.navigate("Map", { screen: "Login" });
+            navigateAndCloseDrawer("Map", { screen: "Login" });
           }}
         />
         <WarningButton
@@ -92,16 +96,14 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             allowFontScaling={false}
             style={s.nameText}
             onPress={() =>
-              props.navigation.navigate("Map", { screen: "UserProfile" })
+              navigateAndCloseDrawer("Map", { screen: "UserProfile" })
             }
           >
             {user.username}
           </Text>
         ) : (
           <Pressable
-            onPress={() =>
-              props.navigation.navigate("Map", { screen: "Signup" })
-            }
+            onPress={() => navigateAndCloseDrawer("Map", { screen: "Signup" })}
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
           >
             <Text allowFontScaling={false} style={s.nameText}>
@@ -148,7 +150,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() =>
-          navigation.navigate("Map", {
+          navigateAndCloseDrawer("Map", {
             screen: "MapStack",
             params: { screen: "MapTab" },
           })
@@ -167,7 +169,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           />
         )}
         onPress={() =>
-          navigation.navigate("Map", { screen: "SuggestLocation" })
+          navigateAndCloseDrawer("Map", { screen: "SuggestLocation" })
         }
       />
       <DrawerItem
@@ -182,7 +184,9 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "AddHighScore" })}
+        onPress={() =>
+          navigateAndCloseDrawer("Map", { screen: "AddHighScore" })
+        }
       />
       <DrawerItem
         label="Nearby Events"
@@ -196,7 +200,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Events" })}
+        onPress={() => navigateAndCloseDrawer("Map", { screen: "Events" })}
       />
       <DrawerItem
         label="Contact"
@@ -210,7 +214,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Contact" })}
+        onPress={() => navigateAndCloseDrawer("Map", { screen: "Contact" })}
       />
       <DrawerItem
         label="About"
@@ -224,7 +228,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "About" })}
+        onPress={() => navigateAndCloseDrawer("Map", { screen: "About" })}
       />
       <DrawerItem
         label="FAQ"
@@ -238,7 +242,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "FAQ" })}
+        onPress={() => navigateAndCloseDrawer("Map", { screen: "FAQ" })}
       />
       <DrawerItem
         label="Settings"
@@ -252,7 +256,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() => navigation.navigate("Map", { screen: "Settings" })}
+        onPress={() => navigateAndCloseDrawer("Map", { screen: "Settings" })}
       />
       {user.loggedIn ? (
         <Pressable
@@ -269,7 +273,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         </Pressable>
       ) : (
         <Pressable
-          onPress={() => navigation.navigate("Map", { screen: "Login" })}
+          onPress={() => navigateAndCloseDrawer("Map", { screen: "Login" })}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,
