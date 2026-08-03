@@ -304,7 +304,7 @@ const MachineDetails = ({
             {copiedNotice && (
               <View style={s.copiedNoticeWrapper}>
                 <View style={s.copiedNoticeContainer}>
-                  <Text style={s.copiedNotice}>Copied!</Text>
+                  <Text style={s.copiedNotice}>Copied</Text>
                 </View>
               </View>
             )}
@@ -334,40 +334,54 @@ const MachineDetails = ({
               />
               {(!!location.operator_email_opt_in ||
                 !!location.operator_phone_opt_in) && (
-                <View style={[s.margin4, s.operatorContactRow]}>
+                <View style={[s.margin4, s.operatorContactContainer]}>
                   <Text
                     style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}
                   >
                     Contact operator directly:{" "}
                   </Text>
-                  {!!location.operator_email_opt_in && (
-                    <Pressable
-                      style={s.operatorContactIcon}
-                      onPress={() =>
-                        copyToClipboard(location.operator_email_opt_in)
-                      }
-                    >
-                      <MaterialCommunityIcons
-                        name="email-outline"
-                        size={18}
-                        color={theme.purple}
-                      />
-                    </Pressable>
-                  )}
-                  {!!location.operator_phone_opt_in && (
-                    <Pressable
-                      style={s.operatorContactIcon}
-                      onPress={() =>
-                        copyToClipboard(location.operator_phone_opt_in)
-                      }
-                    >
-                      <MaterialCommunityIcons
-                        name="phone"
-                        size={18}
-                        color={theme.purple}
-                      />
-                    </Pressable>
-                  )}
+                  <View style={s.operatorContactRow}>
+                    {!!location.operator_email_opt_in && (
+                      <Pressable
+                        style={s.operatorContactIcon}
+                        onPress={() =>
+                          copyToClipboard(location.operator_email_opt_in)
+                        }
+                      >
+                        <MaterialCommunityIcons
+                          name="email-outline"
+                          size={18}
+                          style={{ marginRight: 5 }}
+                          color={
+                            theme.theme == "dark" ? theme.pink1 : theme.purple
+                          }
+                        />
+                        <Text style={s.operatorContactText} numberOfLines={1}>
+                          Email
+                        </Text>
+                      </Pressable>
+                    )}
+                    {!!location.operator_phone_opt_in && (
+                      <Pressable
+                        style={s.operatorContactIcon}
+                        onPress={() =>
+                          copyToClipboard(location.operator_phone_opt_in)
+                        }
+                      >
+                        <MaterialCommunityIcons
+                          name="phone"
+                          size={18}
+                          style={{ marginRight: 5 }}
+                          color={
+                            theme.theme == "dark" ? theme.pink1 : theme.purple
+                          }
+                        />
+                        <Text style={s.operatorContactText} numberOfLines={1}>
+                          Call/Text
+                        </Text>
+                      </Pressable>
+                    )}
+                  </View>
                 </View>
               )}
               {!!location.operator_id && operatorHasEmail && (
@@ -1017,15 +1031,33 @@ const getStyles = (theme) =>
       marginTop: 15,
       marginBottom: 40,
     },
+    operatorContactContainer: {
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
     operatorContactRow: {
+      display: "flex",
+      flexDirection: "row",
+      columnGap: 8,
+      marginTop: 8,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    operatorContactIcon: {
+      display: "flex",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      marginHorizontal: 40,
+      borderRadius: 10,
+      backgroundColor: theme.theme === "dark" ? theme.base3 : theme.base3,
+      paddingVertical: 5,
+      paddingHorizontal: 8,
     },
-    operatorContactIcon: {
-      marginRight: 8,
-      padding: 3,
+    operatorContactText: {
+      color: theme.theme == "dark" ? "#ededfc" : theme.text3,
+      fontFamily: "Nunito-SemiBold",
+      fontSize: 14,
     },
     copiedNoticeWrapper: {
       position: "absolute",
