@@ -113,6 +113,15 @@ const LIFE_LIST_SORT_OPTION = {
   label: "Not in Life List First",
 };
 
+// Label text is capped at this multiplier (maxFontSizeMultiplier) so
+// SQUARE_BUTTON_WIDTH stays wide enough at any system font scale, which lets
+// the strip's total width be computed synchronously (no post-mount
+// measurement, so centering never flashes left-then-center).
+const SQUARE_BUTTON_MAX_FONT_SCALE = 1.2;
+const SQUARE_BUTTON_WIDTH = 80;
+const SQUARE_BUTTON_GAP = 10;
+const SQUARE_BUTTON_STRIP_PADDING = 20;
+
 const MachineListItem = ({
   machine,
   s,
@@ -571,7 +580,7 @@ const LocationDetails = (props) => {
 
   const copyToClipboard = async (value) => {
     await Clipboard.setStringAsync(value);
-    showToast("Copied!");
+    showToast("Copied");
   };
 
   const handleLifeListIconPress = () => showToast("Machine in your Life List");
@@ -733,6 +742,17 @@ const LocationDetails = (props) => {
 
   const dateDiff = yearsSince(location.date_last_updated);
 
+  const squareButtonCount =
+    (location.phone ? 1 : 0) +
+    (location.website ? 1 : 0) +
+    (location.place_id ? 1 : 0) +
+    1; // Route is always shown
+  const squareButtonStripContentWidth =
+    squareButtonCount * SQUARE_BUTTON_WIDTH +
+    (squareButtonCount - 1) * SQUARE_BUTTON_GAP +
+    SQUARE_BUTTON_STRIP_PADDING * 2;
+  const squareButtonStripFits = squareButtonStripContentWidth <= deviceWidth;
+
   const iconStyles = {
     iconImage: ["get", "icon"],
     iconSize: 0.65,
@@ -782,37 +802,6 @@ const LocationDetails = (props) => {
         <Pressable
           style={({ pressed }) => [
             [
-              { top: topMargin },
-              s.directionsButton,
-              s.mapViewButton,
-              s.boxShadow,
-              pressed ? s.quickButtonPressed : s.mapViewButtonNotPressed,
-            ],
-          ]}
-          onPress={() => {
-            openMap({
-              end: `${location.name} ${location.city} ${
-                location.state || ""
-              } ${location.zip || ""}`,
-            });
-          }}
-        >
-          <MaterialCommunityIcons
-            name={"directions"}
-            color={theme.purpleLight}
-            size={30}
-            style={{
-              height: 30,
-              width: 30,
-              justifyContent: "center",
-              alignSelf: "center",
-            }}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [
-            [
-              { top: topMargin },
               s.mapButton,
               s.mapViewButton,
               s.boxShadow,
@@ -834,11 +823,9 @@ const LocationDetails = (props) => {
             }}
           />
         </Pressable>
-
         <Pressable
           style={({ pressed }) => [
             [
-              { top: topMargin },
               s.shareButton,
               s.mapViewButton,
               s.boxShadow,
@@ -903,24 +890,6 @@ const LocationDetails = (props) => {
             <View style={s.nameItem}>
               <Text style={s.locationName}>{location.name}</Text>
             </View>
-            <Pressable
-              style={({ pressed }) => [
-                s.editDetailsIcon,
-                s.boxShadow,
-                pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
-              ]}
-              onPress={() =>
-                loggedIn
-                  ? navigation.navigate("EditLocationDetails")
-                  : navigation.navigate("Login")
-              }
-            >
-              <MaterialCommunityIcons
-                name="pencil"
-                color={theme.theme == "dark" ? theme.purpleLight : theme.purple}
-                size={18}
-              />
-            </Pressable>
             <View style={s.heartItem}>
               <FavoriteLocation
                 locationId={location.id}
@@ -929,11 +898,13 @@ const LocationDetails = (props) => {
               />
             </View>
           </View>
-          <View style={s.locationMetaContainer}>
-            <Text style={[s.text2, s.fontSize15, s.marginRight]}>
-              {formatAddress(location.street, cityState, location.zip)}
-            </Text>
 
+          <Text
+            style={[s.text2, s.fontSize16, { marginLeft: 5, marginBottom: 5 }]}
+          >
+            {formatAddress(location.street, cityState, location.zip)}
+          </Text>
+          <View style={s.locationMetaContainer}>
             {location.location_type_id ||
             locationTrackingServicesEnabled ||
             location.all_ages === ALL_AGES_YES ||
@@ -944,9 +915,9 @@ const LocationDetails = (props) => {
                   {
                     justifyContent: "space-around",
                     flexWrap: "wrap",
-                    rowGap: 8,
+                    rowGap: 6,
                     columnGap: 14,
-                    marginTop: 10,
+                    marginTop: 5,
                     marginBottom: 10,
                   },
                   s.row,
@@ -1050,72 +1021,154 @@ const LocationDetails = (props) => {
               </View>
             ) : null}
 
-            {location.phone ? (
-              <View style={[s.row, s.marginB]}>
-                <MaterialCommunityIcons name="phone" style={s.metaIcon} />
-                <Text
-                  style={[s.fontSize14, s.link]}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={s.squareButtonStrip}
+              contentContainerStyle={[
+                s.squareButtonStripContent,
+                squareButtonStripFits && s.squareButtonStripContentCentered,
+              ]}
+            >
+              {location.phone ? (
+                <Pressable
+                  style={({ pressed }) => [
+                    s.column,
+                    s.marginB,
+                    s.squareButton,
+                    pressed ? s.opacity04 : s.opacity1,
+                  ]}
                   onPress={() => Linking.openURL(`tel://${location.phone}`)}
                 >
-                  {location.phone}
-                </Text>
-              </View>
-            ) : null}
-
-            {location.website ? (
-              <View style={[s.row, s.marginB]}>
-                <MaterialCommunityIcons name="web" style={s.metaIcon} />
-                <Text
-                  style={[s.fontSize14, s.link]}
+                  <MaterialCommunityIcons
+                    name="phone"
+                    style={s.squareButtonIcon}
+                  />
+                  <Text
+                    style={[s.fontSize14, s.squareButtonText]}
+                    numberOfLines={1}
+                    maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
+                  >
+                    Call
+                  </Text>
+                </Pressable>
+              ) : null}
+              {location.website ? (
+                <Pressable
+                  style={({ pressed }) => [
+                    s.column,
+                    s.marginB,
+                    s.squareButton,
+                    pressed ? s.opacity04 : s.opacity1,
+                  ]}
                   onPress={() => WebBrowser.openBrowserAsync(location.website)}
                 >
-                  Website
-                </Text>
-              </View>
-            ) : null}
-
-            {location.place_id ? (
-              <View style={[s.row, s.marginB]}>
-                <MaterialCommunityIcons
-                  name="clock-time-four-outline"
-                  style={s.metaIcon}
-                />
-                <Text
-                  style={[s.fontSize14, s.link]}
+                  <MaterialCommunityIcons
+                    name="web"
+                    style={s.squareButtonIcon}
+                  />
+                  <Text
+                    style={[s.fontSize14, s.squareButtonText]}
+                    numberOfLines={1}
+                    maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
+                  >
+                    Website
+                  </Text>
+                </Pressable>
+              ) : null}
+              {location.place_id ? (
+                <Pressable
+                  style={({ pressed }) => [
+                    s.column,
+                    s.marginB,
+                    s.squareButton,
+                    pressed ? s.opacity04 : s.opacity1,
+                  ]}
                   onPress={() =>
                     Linking.openURL(
                       `https://www.google.com/maps/search/?api=1&query=${location.name}&query_place_id=${location.place_id}`,
                     )
                   }
                 >
-                  Hours
+                  <MaterialCommunityIcons
+                    name="clock-time-four-outline"
+                    style={s.squareButtonIcon}
+                  />
                   <Text
-                    style={[
-                      s.text3,
-                      s.fontSize14,
-                      s.opacity,
-                      s.italic,
-                      s.noUnderline,
-                    ]}
+                    style={[s.fontSize14, s.squareButtonText]}
+                    numberOfLines={1}
+                    maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                   >
-                    {" "}
-                    (Google Maps)
+                    Hours
                   </Text>
+                </Pressable>
+              ) : null}
+              <Pressable
+                style={({ pressed }) => [
+                  s.column,
+                  s.marginB,
+                  s.squareButton,
+                  pressed ? s.opacity04 : s.opacity1,
+                ]}
+                onPress={() => {
+                  openMap({
+                    end: `${location.name} ${location.city} ${
+                      location.state || ""
+                    } ${location.zip || ""}`,
+                  });
+                }}
+              >
+                <MaterialCommunityIcons
+                  name={"directions"}
+                  color={theme.purpleLight}
+                  size={30}
+                  style={s.squareButtonIcon}
+                />
+                <Text
+                  style={[s.fontSize14, s.squareButtonText]}
+                  numberOfLines={1}
+                  maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
+                >
+                  Route
                 </Text>
+              </Pressable>
+            </ScrollView>
+
+            {!!location.description && (
+              <View
+                style={[
+                  s.marginB,
+                  s.operatorContainer,
+                  {
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                  },
+                ]}
+              >
+                <MaterialCommunityIcons
+                  name="notebook-outline"
+                  style={s.metaIcon}
+                  color={theme.purple2}
+                />
+                <ReadMore
+                  text={location.description}
+                  style={[s.text, s.italic, s.fontSize15]}
+                />
               </View>
-            ) : null}
+            )}
 
             {!!opName && (
-              <View style={s.marginB}>
+              <View style={[s.marginB, s.operatorContainer]}>
                 <View style={s.row}>
-                  <MaterialCommunityIcons name="wrench" style={s.metaIcon} />
-                  <Text style={[s.text, s.fontSize14]}>
-                    <Text style={s.opacity}>Operator: </Text>
+                  <MaterialCommunityIcons
+                    name="wrench"
+                    style={s.metaIcon}
+                    color={theme.wrench}
+                  />
+                  <Text style={[s.text, s.fontSize15]}>
+                    Operated by{` `}
                     <Text
-                      style={[
-                        s.opacity1,
-                        location.operator_website ? s.link : s.text3,
-                      ]}
+                      style={[location.operator_website ? s.link : s.text2]}
                       onPress={
                         location.operator_website
                           ? () =>
@@ -1128,84 +1181,130 @@ const LocationDetails = (props) => {
                       {opName}
                     </Text>
                   </Text>
-                  {!!location.operator_email_opt_in && (
-                    <Pressable
-                      style={s.operatorContactIcon}
-                      onPress={() =>
-                        copyToClipboard(location.operator_email_opt_in)
-                      }
-                    >
-                      <MaterialCommunityIcons
-                        name="email-outline"
-                        size={18}
-                        color={
-                          theme.theme == "dark" ? theme.pink1 : theme.purple
-                        }
-                      />
-                    </Pressable>
-                  )}
-                  {!!location.operator_phone_opt_in && (
-                    <Pressable
-                      style={s.operatorContactIcon}
-                      onPress={() =>
-                        copyToClipboard(location.operator_phone_opt_in)
-                      }
-                    >
-                      <MaterialCommunityIcons
-                        name="phone"
-                        size={18}
-                        color={
-                          theme.theme == "dark" ? theme.pink1 : theme.purple
-                        }
-                      />
-                    </Pressable>
-                  )}
                 </View>
+                {(!!location.operator_email_opt_in ||
+                  !!location.operator_phone_opt_in) && (
+                  <View style={s.operatorContactContainer}>
+                    {!!location.operator_email_opt_in && (
+                      <Pressable
+                        style={({ pressed }) => [
+                          s.operatorContactIcon,
+                          pressed ? s.opacity04 : s.opacity1,
+                        ]}
+                        onPress={() =>
+                          copyToClipboard(location.operator_email_opt_in)
+                        }
+                      >
+                        <MaterialCommunityIcons
+                          name="email-outline"
+                          size={18}
+                          style={{ marginRight: 5 }}
+                          color={
+                            theme.theme == "dark" ? theme.pink1 : theme.purple
+                          }
+                        />
+                        <Text
+                          style={[s.fontSize14, s.squareButtonText]}
+                          numberOfLines={1}
+                          maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
+                        >
+                          Email
+                        </Text>
+                      </Pressable>
+                    )}
+                    {!!location.operator_phone_opt_in && (
+                      <Pressable
+                        style={({ pressed }) => [
+                          s.operatorContactIcon,
+                          pressed ? s.opacity04 : s.opacity1,
+                        ]}
+                        onPress={() =>
+                          copyToClipboard(location.operator_phone_opt_in)
+                        }
+                      >
+                        <MaterialCommunityIcons
+                          name="phone"
+                          size={18}
+                          style={{ marginRight: 5 }}
+                          color={
+                            theme.theme == "dark" ? theme.pink1 : theme.purple
+                          }
+                        />
+                        <Text
+                          style={[s.fontSize14, s.squareButtonText]}
+                          numberOfLines={1}
+                          maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
+                        >
+                          Call/Text
+                        </Text>
+                      </Pressable>
+                    )}
+                  </View>
+                )}
               </View>
             )}
 
-            {!!location.description && (
-              <View
-                style={[
-                  s.marginB,
-                  s.marginRight,
-                  {
-                    flexDirection: "row",
-                    alignItems: "top",
-                    paddingRight: 5,
-                  },
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 10,
+              }}
+            >
+              <Pressable
+                style={({ pressed }) => [
+                  s.editDetailsIcon,
+                  pressed ? s.opacity04 : s.opacity1,
                 ]}
+                onPress={() =>
+                  loggedIn
+                    ? navigation.navigate("EditLocationDetails")
+                    : navigation.navigate("Login")
+                }
               >
                 <MaterialCommunityIcons
-                  name="notebook-outline"
-                  style={s.metaIcon}
+                  name="pencil-outline"
+                  color={theme.theme == "dark" ? theme.purple2 : theme.purple}
+                  size={18}
                 />
-                <ReadMore
-                  text={location.description}
-                  style={[s.text2, s.italic, s.fontSize14, s.opacity]}
-                />
-              </View>
-            )}
+                <Text
+                  style={{
+                    marginLeft: 5,
+                    color:
+                      theme.theme === "dark" ? theme.purple2 : theme.purple,
+                  }}
+                >
+                  Edit location details
+                </Text>
+              </Pressable>
+            </View>
 
             {!!location.date_last_updated && (
               <View
                 style={[
                   s.marginB,
-                  s.marginRight,
+                  s.operatorContainer,
                   {
                     flexDirection: "row",
                     alignItems: "flex-start",
-                    paddingRight: 5,
+                    backgroundColor:
+                      theme.theme == "dark" ? theme.base2 : "#efe9f0",
                   },
                 ]}
               >
                 <MaterialCommunityIcons
                   name="lightning-bolt"
                   style={s.metaIcon}
+                  color={theme.purple}
                 />
-                <Text style={[s.text3, s.fontSize14]}>
-                  {`Location edited ${formatNumWithCommas(location.user_submissions_count)} times by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}. Last updated`}
-                  <Text style={s.text3}>
+                <View style={{ flexShrink: 1 }}>
+                  <Text style={[s.text2, s.fontSize15]}>
+                    {`${formatNumWithCommas(location.user_submissions_count)} edits by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}.`}
+                  </Text>
+                  <Text style={[s.text2, s.fontSize15]}>
+                    {`Last updated`}
                     {!!location.last_updated_by_username && ` by `}
                     {!!location.last_updated_by_username && (
                       <Text
@@ -1273,7 +1372,7 @@ const LocationDetails = (props) => {
                       {formatDateStr(location.date_last_updated)}
                     </Text>
                   </Text>
-                </Text>
+                </View>
               </View>
             )}
             {dateDiff >= 2 && (
@@ -1310,7 +1409,6 @@ const LocationDetails = (props) => {
                 ))}
               </ScrollView>
             ) : null}
-
             <View style={s.quickButtonContainer}>
               <View style={s.quickButtonSubContainer}>
                 <Pressable
@@ -1791,7 +1889,7 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-ExtraBold",
       fontSize: deviceWidth < 325 ? 22 : 24,
       lineHeight: deviceWidth < 325 ? 28 : 30,
-      color: theme.pink1,
+      color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
     },
     locationMetaContainer: {
       paddingTop: 0,
@@ -1816,6 +1914,9 @@ const getStyles = (theme) =>
     fontSize15: {
       fontSize: 15,
     },
+    fontSize16: {
+      fontSize: 16,
+    },
     bold: {
       fontFamily: "Nunito-Bold",
     },
@@ -1829,6 +1930,11 @@ const getStyles = (theme) =>
     row: {
       flexDirection: "row",
       alignItems: "center",
+    },
+    column: {
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
     },
     noUnderline: {
       textDecorationLine: "none",
@@ -1854,12 +1960,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Italic",
       fontStyle: Platform.OS === "android" ? undefined : "italic",
     },
-    opacity: {
-      opacity: 0.8,
-    },
-    opacity1: {
-      opacity: 1,
-    },
     staleView: {
       marginVertical: 5,
       borderRadius: 10,
@@ -1882,17 +1982,17 @@ const getStyles = (theme) =>
       padding: 10,
       marginHorizontal: 4,
       zIndex: 10,
-      borderRadius: 22,
-      height: 44,
-      width: 44,
+      borderRadius: 25,
+      height: 50,
+      width: 50,
       alignSelf: "center",
       justifyContent: "center",
       backgroundColor: theme.white,
     },
     quickButtonText: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.text,
-      fontSize: 12,
-      lineHeight: 14,
+      fontSize: 13,
+      lineHeight: 15,
       marginTop: 8,
       textAlign: "center",
     },
@@ -1908,24 +2008,25 @@ const getStyles = (theme) =>
       borderWidth: 1,
       borderColor: theme.theme == "dark" ? theme.border : theme.white,
     },
-    directionsButton: {
-      position: "absolute",
-      right: 10,
-    },
     mapButton: {
       position: "absolute",
-      right: 60,
+      right: 12,
+      bottom: 60,
     },
     shareButton: {
       position: "absolute",
-      right: 110,
+      right: 12,
+      bottom: 10,
+    },
+    operatorContainer: {
+      backgroundColor: theme.theme == "dark" ? theme.white : "#ededfc",
+      borderRadius: 15,
+      padding: 10,
     },
     metaIcon: {
       paddingTop: 0,
       fontSize: 18,
-      color: theme.indigo4,
       marginRight: 5,
-      opacity: 0.6,
     },
     distanceIcon: {
       fontSize: 22,
@@ -2136,23 +2237,56 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
     },
+    operatorContactContainer: {
+      display: "flex",
+      flexDirection: "row",
+      columnGap: 8,
+      marginTop: 8,
+      marginLeft: 23,
+      alignItems: "center",
+      justifyContent: "flex-start",
+    },
     operatorContactIcon: {
-      marginLeft: 6,
-      padding: 3,
+      display: "flex",
+      flexDirection: "row",
+      borderRadius: 10,
+      backgroundColor: theme.theme === "dark" ? theme.base3 : theme.base1,
+      paddingVertical: 5,
+      paddingHorizontal: 8,
     },
     editDetailsIcon: {
-      justifyContent: "center",
+      display: "flex",
+      flexDirection: "row",
       alignItems: "center",
-      height: 34,
-      width: 34,
-      borderRadius: 17,
-      borderWidth: 1,
-      borderColor: theme.pink2,
-      marginRight: 4,
-      marginTop: -4,
+    },
+    squareButtonStrip: {
+      marginHorizontal: -SQUARE_BUTTON_STRIP_PADDING,
+    },
+    squareButtonStripContent: {
+      paddingHorizontal: SQUARE_BUTTON_STRIP_PADDING,
+      columnGap: SQUARE_BUTTON_GAP,
+    },
+    squareButtonStripContentCentered: {
+      flexGrow: 1,
+      justifyContent: "center",
+    },
+    squareButton: {
+      padding: 8,
+      width: SQUARE_BUTTON_WIDTH,
+      borderRadius: 12,
+      backgroundColor: theme.pink2,
+    },
+    squareButtonIcon: {
+      fontSize: 24,
+      color: theme.theme == "dark" ? "#b8b8d1" : theme.purple,
+    },
+    squareButtonText: {
+      color: theme.theme == "dark" ? "#ededfc" : theme.text3,
+      fontFamily: "Nunito-SemiBold",
     },
     photoStrip: {
       marginVertical: 8,
+      marginHorizontal: -20,
     },
     photoStripLoading: {
       marginVertical: 16,
@@ -2160,7 +2294,7 @@ const getStyles = (theme) =>
       marginLeft: 14,
     },
     photoStripContent: {
-      paddingHorizontal: 5,
+      paddingHorizontal: 20,
       gap: 8,
     },
     photoThumb: {
@@ -2239,6 +2373,12 @@ const getStyles = (theme) =>
       color: "white",
       fontFamily: "Nunito-Regular",
       fontSize: 14,
+    },
+    opacity04: {
+      opacity: 0.4,
+    },
+    opacity1: {
+      opacity: 1,
     },
   });
 

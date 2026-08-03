@@ -470,9 +470,9 @@ const getStyles = (theme) =>
       padding: 10,
       marginHorizontal: 4,
       zIndex: 10,
-      borderRadius: 22,
-      height: 44,
-      width: 44,
+      borderRadius: 25,
+      height: 50,
+      width: 50,
       alignSelf: "center",
       justifyContent: "center",
       shadowColor:
@@ -489,8 +489,8 @@ const getStyles = (theme) =>
     },
     quickButtonText: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.text,
-      fontSize: 12,
-      lineHeight: 14,
+      fontSize: 13,
+      lineHeight: 15,
       marginTop: 8,
       textAlign: "center",
     },

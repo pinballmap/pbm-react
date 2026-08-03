@@ -9,6 +9,7 @@ const PbmText = ({
   onLayout,
   children,
   maxFontSizeMultiplier,
+  numberOfLines,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -20,6 +21,7 @@ const PbmText = ({
       onPress={onPress}
       onLayout={onLayout}
       maxFontSizeMultiplier={maxFontSizeMultiplier}
+      numberOfLines={numberOfLines}
     >
       {children}
     </Text>
@@ -32,6 +34,7 @@ PbmText.propTypes = {
   onLayout: PropTypes.func,
   children: PropTypes.node,
   maxFontSizeMultiplier: PropTypes.number,
+  numberOfLines: PropTypes.number,
 };
 
 const getStyles = (theme) =>

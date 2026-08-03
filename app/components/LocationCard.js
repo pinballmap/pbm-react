@@ -294,7 +294,7 @@ const getStyles = (theme) =>
       fontSize: 22,
       lineHeight: 26,
       textAlign: "left",
-      color: theme.pink1,
+      color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
     },
     locationTypeContainer: {
       alignItems: "center",
@@ -333,7 +333,7 @@ const getStyles = (theme) =>
       flex: 1,
     },
     manufacturer: {
-      color: theme.theme == "dark" ? theme.pink1 : theme.text3,
+      color: theme.theme == "dark" ? theme.purpleLight : theme.text3,
       fontFamily: "Nunito-Medium",
       fontSize: 17,
     },
@@ -361,7 +361,7 @@ const getStyles = (theme) =>
     },
     icon: {
       fontSize: 28,
-      color: theme.theme == "dark" ? theme.purpleLight : theme.pink3,
+      color: theme.theme == "dark" ? theme.pink1 : theme.pink3,
       marginRight: 1,
     },
     lifeListLink: {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 
 const ReadMore = ({ text, style }) => {
@@ -9,7 +9,7 @@ const ReadMore = ({ text, style }) => {
   const s = getStyles(theme);
 
   return (
-    <View>
+    <View style={s.container}>
       {text.length > 100 ? (
         showMore ? (
           <Pressable
@@ -17,7 +17,7 @@ const ReadMore = ({ text, style }) => {
             onPress={() => setShowMore(!showMore)}
           >
             <Text style={[style]}>{text}</Text>
-            <Text style={s.link}>Show less</Text>
+            <Text style={s.link}>Read less</Text>
           </Pressable>
         ) : (
           <Pressable
@@ -26,7 +26,7 @@ const ReadMore = ({ text, style }) => {
           >
             <Text>
               <Text style={[style]}>{`${text.slice(0, 100)}... `}</Text>
-              <Text style={s.link}>Show more</Text>
+              <Text style={s.link}>Read more</Text>
             </Text>
           </Pressable>
         )
@@ -39,11 +39,14 @@ const ReadMore = ({ text, style }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    container: {
+      flexShrink: 1,
+    },
     link: {
       textDecorationLine: "underline",
+      textTransform: "uppercase",
       color: theme.blue4,
-      fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontFamily: "Nunito-SemiBold",
     },
     pressed: {
       opacity: 0.5,
