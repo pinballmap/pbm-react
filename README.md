@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.17
+
+August 4, 2026
+
+- Redesign Location Details screen to better separate components, reduce text, and use more buttons.
+- The bottom sheet on the Map screen now supports basic drag up/down functionality.
+- Other minor design tweaks.
+
 ### 5.4.16
 
 July 31, 2026
