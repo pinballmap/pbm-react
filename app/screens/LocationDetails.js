@@ -813,7 +813,7 @@ const LocationDetails = (props) => {
           <FontAwesome6
             name={"map-location"}
             iconStyle="solid"
-            color={theme.purpleLight}
+            color={theme.theme === "dark" ? theme.pink3 : theme.purpleLight}
             size={24}
             style={{
               height: 24,
@@ -840,7 +840,7 @@ const LocationDetails = (props) => {
         >
           <MaterialIcons
             name={"ios-share"}
-            color={theme.purpleLight}
+            color={theme.theme === "dark" ? theme.pink3 : theme.purpleLight}
             size={26}
             style={{
               height: 26,
@@ -2006,7 +2006,7 @@ const getStyles = (theme) =>
       justifyContent: "center",
       backgroundColor: "transparent",
       borderWidth: 1,
-      borderColor: theme.theme == "dark" ? theme.border : theme.white,
+      borderColor: theme.theme == "dark" ? theme.base2 : theme.white,
     },
     mapButton: {
       position: "absolute",
@@ -2174,7 +2174,7 @@ const getStyles = (theme) =>
     mapViewButtonNotPressed: {
       backgroundColor:
         theme.theme == "dark"
-          ? "rgba(29, 28, 28, 0.8)"
+          ? "rgba(65, 50, 58, 0.9)"
           : "rgba(255,255,255, 0.9)",
     },
     confirmText: {

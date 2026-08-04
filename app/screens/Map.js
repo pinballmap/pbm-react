@@ -622,7 +622,7 @@ const getStyles = (theme) =>
     },
     buttonIcon: {
       fontSize: 22,
-      color: theme.text2,
+      color: theme.theme === "dark" ? theme.purpleLight : theme.text2,
       paddingRight: 5,
     },
     buttonStyle: {
@@ -631,12 +631,12 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       height: 40,
-      backgroundColor: theme.pink2,
+      backgroundColor: theme.theme === "dark" ? theme.base2 : theme.pink2,
       paddingVertical: 5,
       paddingHorizontal: 15,
     },
     buttonTitle: {
-      color: theme.text2,
+      color: theme.theme === "dark" ? theme.purpleLight : theme.text2,
       fontSize: 18,
       lineHeight: 24,
       fontFamily: "Nunito-SemiBold",
@@ -694,7 +694,7 @@ const getStyles = (theme) =>
       borderRadius: 27,
       height: 54,
       width: 54,
-      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base1,
+      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base1,
     },
     filterRow: {
       position: "absolute",

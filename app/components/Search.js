@@ -519,7 +519,7 @@ const getStyles = (theme) =>
       color: theme.text2,
     },
     inputPlaceholder: {
-      color: theme.indigo4,
+      color: theme.purpleLight,
       paddingLeft: 5,
       fontSize: deviceWidth < 321 ? 14 : 18,
       flex: 1,
@@ -600,13 +600,13 @@ const getStyles = (theme) =>
       backgroundColor: theme.base3,
     },
     notPressed: {
-      backgroundColor: theme.theme == "dark" ? theme.pink2 : theme.base2,
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base2,
     },
     filterPressed: {
       backgroundColor: theme.white,
     },
     filterNotPressed: {
-      backgroundColor: theme.pink2,
+      backgroundColor: theme.theme == "dark" ? theme.base2 : theme.pink2,
       borderWidth: theme.theme == "dark" ? 1 : 0,
       borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
       borderLeftWidth: 0,
