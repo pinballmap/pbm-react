@@ -361,7 +361,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.error, s.preview]}>
-                        None Selected. Please add if known.
+                        None selected. Please add if known, and to speed up
+                        approval.
                       </Text>
                     )}
                     {allAges === ALL_AGES_NO && (
@@ -383,7 +384,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.error, s.preview]}>
-                        None Selected. Please add if known.
+                        None selected. Please add if known, and to speed up
+                        approval.
                       </Text>
                     )}
                     {paymentType === PAYMENT_TYPE_NO && (
@@ -404,7 +406,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.error, s.preview]}>
-                        None Selected. Please add if known.
+                        None selected. Please add if known, and to speed up
+                        approval.
                       </Text>
                     )}
                   </View>
@@ -415,7 +418,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                         ? operators
                             .filter((op) => op.id === operator)
                             .map((op) => op.name)
-                        : "None Selected"}
+                        : "None selected"}
                     </Text>
                   </View>
                   <View style={s.previewContainer}>
