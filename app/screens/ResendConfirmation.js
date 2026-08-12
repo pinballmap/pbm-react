@@ -4,7 +4,6 @@ import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const ResendConfirmation = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -37,21 +36,15 @@ const ResendConfirmation = ({ navigation }) => {
       >
         <ConfirmationModal
           visible={modalVisible}
-          closeModal={() => setModalVisible(false)}
+          closeModal={() => {
+            setModalVisible(false);
+            navigation.navigate("Login");
+          }}
         >
           <Text style={[s.confirmText, s.bold]}>Confirmation info resent</Text>
           <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
             Check your email (and SPAM folder)
           </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={() => {
-              setModalVisible(false);
-              navigation.navigate("Login");
-            }}
-            style={s.xButton}
-          />
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
           <View style={s.inputContainer}>

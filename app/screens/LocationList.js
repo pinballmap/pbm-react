@@ -121,20 +121,14 @@ const LocationList = ({
       >
         <View>
           <Text style={s.confirmText}>
-            Location tracking must be enabled to use this feature!
+            Location tracking must be enabled to use this feature.
           </Text>
           <Text
             style={[s.confirmText, s.link, s.margin10]}
             onPress={() => Linking.openSettings()}
           >
-            Go to phone settings to enable.
+            Go to phone settings to enable
           </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={() => setShowNoLocationTrackingModal(false)}
-            style={s.xButton}
-          />
         </View>
       </ConfirmationModal>
       <ButtonGroup
@@ -287,10 +281,8 @@ const getStyles = (theme) =>
     confirmText: {
       textAlign: "center",
       fontSize: 16,
-      marginLeft: 10,
-      marginRight: 10,
+      marginHorizontal: 10,
       fontFamily: "Nunito-Regular",
-      color: theme.purple,
       paddingHorizontal: 30,
     },
     xButton: {

@@ -6,7 +6,6 @@ import { ThemeContext } from "../theme-context";
 import { hideNoLocationTrackingModal } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import Text from "./PbmText";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const NoLocationTrackingModal = ({
   showNoLocationTrackingModal,
@@ -22,20 +21,14 @@ const NoLocationTrackingModal = ({
     >
       <View>
         <Text style={s.confirmText}>
-          Location tracking must be enabled to use this feature!
+          Location tracking must be enabled to use this feature.
         </Text>
         <Text
           style={[s.confirmText, s.link, s.margin10]}
           onPress={() => Linking.openSettings()}
         >
-          Go to phone settings to enable.
+          Go to phone settings to enable
         </Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={35}
-          onPress={hideNoLocationTrackingModal}
-          style={s.xButton}
-        />
       </View>
     </ConfirmationModal>
   );
@@ -46,10 +39,9 @@ const getStyles = (theme) =>
     confirmText: {
       textAlign: "center",
       fontSize: 16,
-      marginLeft: 10,
-      marginRight: 10,
+      marginHorizontal: 10,
       fontFamily: "Nunito-Regular",
-      paddingHorizontal: 35,
+      paddingHorizontal: 30,
     },
     xButton: {
       position: "absolute",

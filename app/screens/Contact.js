@@ -11,7 +11,6 @@ import {
   Text,
 } from "../components";
 import { submitMessage, clearMessage } from "../actions";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
   const { theme } = useContext(ThemeContext);
@@ -62,12 +61,6 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
         <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
           {confirmationMessage2}
         </Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={35}
-          onPress={acknowledgeConfirmation}
-          style={s.xButton}
-        />
       </ConfirmationModal>
       {submittingMessage ? (
         <ActivityIndicator />

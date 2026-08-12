@@ -167,7 +167,7 @@ export default (state = initialState, action) => {
         submittingMessage: false,
         confirmationMessage1: "Thanks for the message!",
         confirmationMessage2:
-          "We'll try to respond soon. Check your spam folder or whitelist admin@pinballmap.com!",
+          "We'll try to respond soon. Check your spam folder or whitelist admin@pinballmap.com",
       };
     case MESSAGE_SUBMISSION_FAILED:
       return {
