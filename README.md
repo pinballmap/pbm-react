@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.18
+
+August 13, 2026
+
+- Better visual management of map activity from deleted users.
+- Show manufacturer and year in machine details screen, and other small design changes there.
+- Other minor design tweaks.
+
 ### 5.4.17
 
 August 4, 2026
