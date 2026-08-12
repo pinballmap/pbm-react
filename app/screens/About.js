@@ -59,35 +59,33 @@ const About = ({ navigation, appAlert }) => {
           tintColor={theme.theme == "dark" ? "#adc7fd" : "#1d1c1d"}
           style={s.logo}
         />
-        <View style={s.child}>
-          <View style={s.appAlert}>
-            <Text
-              style={[
-                { textAlign: "center", color: theme.pink1 },
-                s.boldHeader,
-              ]}
-            >
-              Message of the Day
-            </Text>
-            <Text style={[{ color: theme.text3 }, s.text, s.boldText]}>
-              {appAlert}
-            </Text>
-          </View>
-          <Text style={s.category}>What About It</Text>
+        <View style={s.appAlert}>
+          <Text
+            style={[{ textAlign: "center", color: theme.pink1 }, s.boldHeader]}
+          >
+            Message of the Day
+          </Text>
+          <Text style={[{ color: theme.text3 }, s.text, s.boldText]}>
+            {appAlert}
+          </Text>
+        </View>
+        <View style={s.category}>
+          <Text style={s.categoryText}>What About It</Text>
+        </View>
+        <View style={s.body}>
           <Text style={s.text}>
-            Founded in 2008, Pinball Map is an open source, crowdsourced
-            worldwide map of public pinball machines. We currently list{" "}
+            {`Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines. We currently list `}
             <Text style={s.boldText}>
               {formatNumWithCommas(stats.num_locations)}
             </Text>{" "}
-            locations and{" "}
+            {`locations and `}
             <Text style={s.boldText}>
               {formatNumWithCommas(stats.num_lmxes)}
             </Text>{" "}
-            machines.
+            {`machines.`}
           </Text>
           <Text style={[s.text, s.boldText]}>
-            {"Here's a page filled with current "}
+            {`Here's a page filled with current `}
             <Text
               onPress={() => navigation.navigate("Stats")}
               style={[s.pink, s.boldText]}
@@ -95,7 +93,7 @@ const About = ({ navigation, appAlert }) => {
             .
           </Text>
           <Text style={s.text}>
-            The site is not monetized and{" "}
+            {`The site is not monetized and `}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -103,12 +101,11 @@ const About = ({ navigation, appAlert }) => {
                   "https://github.com/pinballmap/pbm-react",
                 )
               }
-            >{`the code`}</Text>{" "}
-            is open source. The data is maintained by over 100 administrators
-            and thousands of active users.
+            >{`the code`}</Text>
+            {` is open source. The data is maintained by over 100 administrators and thousands of active users.`}
           </Text>
           <Text style={s.text}>
-            To help maintain it (on the app or the website,{" "}
+            {`To help maintain it (on the app or the website, `}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -117,9 +114,7 @@ const About = ({ navigation, appAlert }) => {
             >
               pinballmap.com
             </Text>
-            ), create an account and add and remove machines and submit new
-            locations. You can also add machine comments, edit location info,
-            and add high scores.
+            {`), create an account and add and remove machines and submit new locations. You can also add machine comments, edit location info, and add high scores.`}
           </Text>
           <Text style={s.text}>
             {`You can `}
@@ -134,14 +129,17 @@ const About = ({ navigation, appAlert }) => {
             >{`in the FAQ`}</Text>
             .
           </Text>
-
           <Image
             source={require("../assets/images/purple-machine.png")}
             tintColor={theme.theme == "dark" ? "#f6d3fc" : "#66017b"}
             style={s.purpleMachine}
           />
+        </View>
 
-          <Text style={s.category}>Keep Up</Text>
+        <View style={s.category}>
+          <Text style={s.categoryText}>Keep Up</Text>
+        </View>
+        <View style={s.body}>
           <Text style={s.text}>
             {`Check the `}
             <Text
@@ -232,7 +230,7 @@ const About = ({ navigation, appAlert }) => {
           </Pressable>
 
           <Text style={s.text}>
-            We sometimes have a few things for sale{" "}
+            {`We sometimes have a few things for sale `}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -241,7 +239,7 @@ const About = ({ navigation, appAlert }) => {
             >
               on our store
             </Text>
-            .
+            {`.`}
           </Text>
 
           <Pressable
@@ -285,13 +283,16 @@ const About = ({ navigation, appAlert }) => {
             >
               additional pinball resources
             </Text>
-            !
+            {`.`}
           </Text>
+        </View>
 
-          <Text style={s.category}>API</Text>
+        <View style={s.category}>
+          <Text style={s.categoryText}>API</Text>
+        </View>
+        <View style={s.body}>
           <Text style={s.text}>
-            Not only is the Pinball Map website and app open source, but there
-            is also{" "}
+            {`Not only is the Pinball Map website and app open source, but there is also `}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -302,7 +303,14 @@ const About = ({ navigation, appAlert }) => {
             >
               an API
             </Text>
-            . With it, you can pull down map data and use it on your cool app.
+            {`. With it, you can pull down map data and use it on your cool app. See `}
+            <Text
+              onPress={() =>
+                navigation.navigate("FAQ", { section: "dataUsage" })
+              }
+              style={s.textLink}
+            >{`this FAQ item about data usage`}</Text>
+            {` for more information.`}
           </Text>
           <Text style={s.text}>
             <Text
@@ -312,8 +320,17 @@ const About = ({ navigation, appAlert }) => {
                   "https://sternpinball.com/pinball-locator/",
                 )
               }
-            >{`Stern Pinball`}</Text>{" "}
-            uses our data for their machine locator. Our API is also used by{" "}
+            >{`Stern Pinball`}</Text>
+            {` uses our data for their machine locator, as does `}
+            <Text
+              style={s.textLink}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://jerseyjackpinball.com/pages/pinball-map",
+                )
+              }
+            >{`Jersey Jack Pinball`}</Text>
+            {` for theirs. Our API is also used by `}
             <Text
               style={s.textLink}
               onPress={() =>
@@ -341,8 +358,12 @@ const About = ({ navigation, appAlert }) => {
             >{`Kineticist`}</Text>
             , and more!
           </Text>
+        </View>
 
-          <Text style={s.category}>App Credits</Text>
+        <View style={s.category}>
+          <Text style={s.categoryText}>App Credits</Text>
+        </View>
+        <View style={s.body}>
           <Text
             style={s.textLink}
             onPress={() =>
@@ -367,13 +388,17 @@ const About = ({ navigation, appAlert }) => {
           >
             Scott Wainstock
           </Text>
-          <Text>Elijah St Clair</Text>
-          <Text style={{ marginBottom: 10 }}>
+          <Text style={s.text}>Elijah St Clair</Text>
+          <Text style={[s.text, { marginBottom: 10 }]}>
             And other great folks (noted on Github)!
           </Text>
-          <Text style={s.category}>Support Us</Text>
+        </View>
+        <View style={s.category}>
+          <Text style={s.categoryText}>Support Us</Text>
+        </View>
+        <View style={s.body}>
           <Text style={s.text}>
-            If you like the app,&nbsp;
+            {`If you like the app, `}
             {Platform.OS === "ios" ? (
               <Text
                 style={s.textLink}
@@ -395,12 +420,11 @@ const About = ({ navigation, appAlert }) => {
                 please rate and review it
               </Text>
             )}
-            ! And tell your friends about it.
+            {`! And tell your friends about it.`}
           </Text>
           <Text style={s.text}>Thanks to our beta testers!</Text>
-          <Text>
-            And thanks to all our <Text>Ko-fi</Text> and <Text>Patreon</Text>{" "}
-            supporters!
+          <Text style={s.text}>
+            And thanks to all our Ko-fi and Patreon supporters!
           </Text>
           {Platform.OS === "android" ? (
             <Pressable
@@ -439,19 +463,13 @@ const getStyles = (theme) =>
       width: deviceWidth - 30,
     },
     purpleMachine: {
-      flex: 1,
       alignSelf: "center",
       marginVertical: 5,
       height: 65,
       width: 50,
     },
-    child: {
-      margin: "auto",
-      padding: 15,
-    },
     text: {
-      fontSize: 15,
-      lineHeight: 22,
+      fontSize: 16,
       marginBottom: 10,
     },
     boldText: {
@@ -471,7 +489,7 @@ const getStyles = (theme) =>
     appAlert: {
       borderWidth: 0,
       borderRadius: 15,
-      marginBottom: 10,
+      margin: 10,
       paddingTop: 5,
       paddingLeft: 10,
       paddingRight: 10,
@@ -485,15 +503,17 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-Medium",
     },
     category: {
+      padding: 10,
+      marginBottom: 10,
+      backgroundColor: "#adc7fd",
+    },
+    body: {
+      marginHorizontal: 15,
+    },
+    categoryText: {
       fontFamily: "Nunito-Bold",
       fontSize: 17,
       textAlign: "center",
-      paddingHorizontal: 10,
-      paddingVertical: 10,
-      marginHorizontal: -15,
-      marginBottom: 10,
-      marginTop: 5,
-      backgroundColor: "#adc7fd",
       color: "#503d49",
       textTransform: "uppercase",
     },
