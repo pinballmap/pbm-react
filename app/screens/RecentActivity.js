@@ -258,6 +258,7 @@ const RecentActivity = ({
       machine_name,
       user_name,
       user_id,
+      user_deleted,
       comment,
       created_at,
       user_operator_id,
@@ -267,6 +268,7 @@ const RecentActivity = ({
       flag,
     } = activity;
     const time = formatLongDate(created_at);
+    const isUserLinkable = !!user_id && !user_deleted;
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");
@@ -287,9 +289,9 @@ const RecentActivity = ({
           }}
         >
           <Text
-            style={[s.date, s.username]}
+            style={[s.date, isUserLinkable ? s.username : s.usernamePlain]}
             onPress={() => {
-              if (user_id) {
+              if (isUserLinkable) {
                 setShouldRefresh(false);
                 navigation.navigate("UserProfilePublic", {
                   userId: user_id,
@@ -562,6 +564,10 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
       fontFamily: "Nunito-Medium",
       textDecorationLine: "underline",
+    },
+    usernamePlain: {
+      color: theme.text2,
+      fontFamily: "Nunito-Medium",
     },
     locationName: {
       color: theme.text,

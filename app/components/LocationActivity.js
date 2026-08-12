@@ -135,6 +135,7 @@ const LocationActivity = ({
       machine_name,
       user_name,
       user_id,
+      user_deleted,
       comment,
       created_at,
       user_operator_id,
@@ -144,6 +145,7 @@ const LocationActivity = ({
       flag,
     } = activity;
     const time = formatLongDate(created_at);
+    const isUserLinkable = !!user_id && !user_deleted;
     let contributor_icon;
     if (contributor_rank == "Super Mapper") {
       contributor_icon = require("../assets/images/SuperMapper.png");
@@ -169,9 +171,13 @@ const LocationActivity = ({
           }}
         >
           <Text
-            style={[s.date, s.username, { paddingTop: 0 }]}
+            style={[
+              s.date,
+              isUserLinkable ? s.username : s.usernamePlain,
+              { paddingTop: 0 },
+            ]}
             onPress={() => {
-              if (user_id) {
+              if (isUserLinkable) {
                 setLocationActivityModalOpen(false);
                 navigation.navigate("UserProfilePublic", {
                   userId: user_id,
@@ -523,6 +529,10 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
       fontFamily: "Nunito-Medium",
       textDecorationLine: "underline",
+    },
+    usernamePlain: {
+      color: theme.text2,
+      fontFamily: "Nunito-Medium",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,

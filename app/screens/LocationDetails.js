@@ -1308,13 +1308,22 @@ const LocationDetails = (props) => {
                     {!!location.last_updated_by_username && ` by `}
                     {!!location.last_updated_by_username && (
                       <Text
-                        style={{
-                          fontFamily: "Nunito-SemiBold",
-                          color: theme.pink1,
-                          textDecorationLine: "underline",
-                        }}
+                        style={
+                          location.last_updated_by_user_id &&
+                          !location.last_updated_by_user_deleted
+                            ? {
+                                fontFamily: "Nunito-SemiBold",
+                                color: theme.pink1,
+                                textDecorationLine: "underline",
+                              }
+                            : {
+                                fontFamily: "Nunito-SemiBold",
+                                color: theme.text2,
+                              }
+                        }
                         onPress={() =>
                           location.last_updated_by_user_id &&
+                          !location.last_updated_by_user_deleted &&
                           navigation.navigate("UserProfilePublic", {
                             userId: location.last_updated_by_user_id,
                             username: location.last_updated_by_username,

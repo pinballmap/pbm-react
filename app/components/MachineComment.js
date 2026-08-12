@@ -35,11 +35,14 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
     username,
     operator_id: commentOperatorId,
     user_id: commentUserId,
+    user_deleted,
     id: commentId,
     admin_title,
     contributor_rank,
     flag,
   } = commentObj;
+  const isUserLinkable = !!commentUserId && !user_deleted;
+  const displayUsername = username || (user_deleted ? "DELETED USER" : null);
   const { location } = loc;
   const operator =
     location.operator_id &&
@@ -147,18 +150,18 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
           ]}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {!!username && (
+            {!!displayUsername && (
               <Text
-                style={[s.username]}
+                style={isUserLinkable ? [s.username] : [s.usernamePlain]}
                 onPress={() =>
-                  commentUserId &&
+                  isUserLinkable &&
                   navigation.navigate("UserProfilePublic", {
                     userId: commentUserId,
                     username,
                   })
                 }
               >
-                {username}
+                {displayUsername}
               </Text>
             )}
             {!!admin_title && (
@@ -262,6 +265,11 @@ const getStyles = (theme) =>
       marginLeft: 8,
       fontSize: 14,
       textDecorationLine: "underline",
+    },
+    usernamePlain: {
+      color: theme.text2,
+      marginLeft: 8,
+      fontSize: 14,
     },
     italic: {
       fontFamily: "Nunito-Italic",
