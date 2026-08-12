@@ -13,6 +13,8 @@ const RemoveMachineModal = ({
   closeModal,
   location: loc,
   machineName,
+  manufacturer,
+  year,
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -28,8 +30,11 @@ const RemoveMachineModal = ({
     <ConfirmationModal closeModal={() => closeModal()}>
       {machineName && (
         <Text style={s.confirmText}>
-          Remove <Text style={s.machineName}>{machineName}</Text> from{" "}
-          <Text style={s.locationName}>{location.name}</Text>?
+          Remove <Text style={s.machineName}>{machineName}</Text>{" "}
+          {year && manufacturer && (
+            <Text style={s.machineManYear}>{`(${manufacturer}, ${year})`}</Text>
+          )}{" "}
+          from <Text style={s.locationName}>{location.name}</Text>?
         </Text>
       )}
       <PbmButton
@@ -64,6 +69,11 @@ const getStyles = (theme) =>
       fontSize: 18,
       fontFamily: "Nunito-Bold",
     },
+    machineManYear: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      fontSize: 18,
+      fontFamily: "Nunito-Medium",
+    },
     modalSubText: {
       marginHorizontal: 18,
       fontSize: 14,
@@ -77,13 +87,20 @@ RemoveMachineModal.propTypes = {
   closeModal: PropTypes.func,
   location: PropTypes.object,
   machineName: PropTypes.string,
+  manufacturer: PropTypes.string,
+  year: PropTypes.number,
 };
 
 const mapStateToProps = ({ location, machines }) => {
-  const machineName = location.curLmx
-    ? machines.machines.find((m) => m.id === location.curLmx.machine_id).name
-    : "";
-  return { location, machineName };
+  const curMachine = location.curLmx
+    ? machines.machines.find((m) => m.id === location.curLmx.machine_id)
+    : null;
+  return {
+    location,
+    machineName: curMachine?.name ?? "",
+    manufacturer: curMachine?.manufacturer,
+    year: curMachine?.year,
+  };
 };
 const mapDispatchToProps = (dispatch) => ({
   removeMachineFromLocation: (curLmx, location_id) =>

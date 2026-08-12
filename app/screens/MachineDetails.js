@@ -102,6 +102,8 @@ const MachineDetails = ({
     opdb_img_height,
     opdb_img_width,
     name: machineName,
+    manufacturer,
+    year,
     ic_eligible,
   } = machineDetails;
   const matchplayUrl =
@@ -277,8 +279,11 @@ const MachineDetails = ({
           closeModal={() => setShowRemoveFromLifeListModal(false)}
         >
           <Text style={s.modalTitle}>
-            Remove <Text style={s.modalMachineName}>{machineName}</Text> from
-            your life list?
+            Remove <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+            <Text
+              style={s.modalMachineManYear}
+            >{`(${manufacturer}, ${year})`}</Text>{" "}
+            from your life list?
           </Text>
           <PbmButton
             title={"Remove"}
@@ -317,6 +322,9 @@ const MachineDetails = ({
             >
               <Text style={s.modalTitle}>
                 Comment on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+                <Text
+                  style={s.modalMachineManYear}
+                >{`(${manufacturer}, ${year})`}</Text>{" "}
                 at <Text style={s.modalLocationName}>{location.name}</Text>
               </Text>
               <TextInput
@@ -428,8 +436,11 @@ const MachineDetails = ({
             >
               <Text style={s.modalTitle}>
                 Add your high score to{" "}
-                <Text style={s.modalMachineName}>{machineName}</Text> at{" "}
-                <Text style={s.modalLocationName}>{location.name}</Text>
+                <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+                <Text
+                  style={s.modalMachineManYear}
+                >{`(${manufacturer}, ${year})`}</Text>{" "}
+                at <Text style={s.modalLocationName}>{location.name}</Text>
               </Text>
               <TextInput
                 style={[
@@ -468,6 +479,11 @@ const MachineDetails = ({
             <Text maxFontSizeMultiplier={1.3} style={s.machineName}>
               {machineName}
             </Text>
+            {year && manufacturer ? (
+              <Text
+                style={[s.machineManYear]}
+              >{`(${manufacturer}, ${year})`}</Text>
+            ) : null}
             <Text style={s.locationName}>{location.name}</Text>
           </View>
           <View style={s.addedContainer}>
@@ -495,7 +511,7 @@ const MachineDetails = ({
                 s.containerStyle,
                 {
                   padding: 10,
-                  marginBottom: 20,
+                  marginBottom: 15,
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-around",
@@ -626,10 +642,14 @@ const MachineDetails = ({
               {!!matchplayUrl && (
                 <Pressable
                   style={{
+                    marginTop: 5,
                     height: 40,
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    backgroundColor: theme.indigo4,
+                    borderRadius: 20,
+                    paddingHorizontal: 15,
                   }}
                   onPress={() => WebBrowser.openBrowserAsync(matchplayUrl)}
                 >
@@ -649,7 +669,24 @@ const MachineDetails = ({
               )}
             </View>
           )}
-          <View style={s.lifeListContainer}>
+          <View style={[s.containerStyle, { marginTop: 20 }]}>
+            <View
+              style={[
+                s.locationNameContainer,
+                {
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="clipboard-list-outline"
+                style={[s.lifeListIcon]}
+              />
+              <Text style={s.sectionTitle}>Your Machine List</Text>
+            </View>
             {loggedIn ? (
               lifeListStatus === null ? (
                 <ActivityIndicator />
@@ -657,8 +694,14 @@ const MachineDetails = ({
                 <>
                   <Text style={s.lifeListText}>
                     {`You've played `}
-                    <Text style={s.bold}>{machineName}</Text>
+                    <Text style={s.bold}>{`${machineName}`}</Text>
+                    <Text style={s.medium}>
+                      {" "}
+                      {`(${manufacturer}, ${year})`}
+                    </Text>
                     {`. `}
+                  </Text>
+                  <Text style={s.lifeListText}>
                     <Text
                       style={s.lifeListLink}
                       onPress={() =>
@@ -683,10 +726,17 @@ const MachineDetails = ({
                 </>
               ) : (
                 <>
-                  <Text style={[s.lifeListText, { marginBottom: 10 }]}>
+                  <Text style={s.lifeListText}>
                     {`Have you played `}
-                    <Text style={s.bold}>{machineName}</Text>
-                    {`? You can track every machine you've played `}
+                    <Text style={s.bold}>{`${machineName}`}</Text>
+                    <Text style={s.medium}>
+                      {" "}
+                      {`(${manufacturer}, ${year})`}
+                    </Text>
+                    {`?`}
+                  </Text>
+                  <Text style={[s.lifeListText, { marginBottom: 15 }]}>
+                    {`You can track every machine you've played and view the list `}
                     <Text
                       style={s.lifeListLink}
                       onPress={() =>
@@ -718,7 +768,8 @@ const MachineDetails = ({
             ) : (
               <Text style={s.lifeListText}>
                 {`Have you played `}
-                <Text style={s.bold}>{machineName}</Text>
+                <Text style={s.bold}>{`${machineName}`}</Text>
+                <Text style={s.medium}> {`(${manufacturer}, ${year})`}</Text>
                 {`? If you were logged in you could track every machine you've played.`}
               </Text>
             )}
@@ -766,9 +817,11 @@ const MachineDetails = ({
             </View>
             {(!loggedIn || highScoreFetched) && (
               <View>
-                <Text
-                  style={s.userScoreTitle}
-                >{`Your highest score on ${machineName}`}</Text>
+                <Text style={s.userScoreTitle}>
+                  {`Your highest score on `}
+                  <Text style={s.bold}>{`${machineName}`}</Text>
+                  <Text style={s.medium}> {`(${manufacturer}, ${year})`}</Text>
+                </Text>
                 {userAllTimeHighScore ? (
                   <Text style={s.userHighScore}>
                     {formatNumWithCommas(userAllTimeHighScore)}
@@ -787,7 +840,7 @@ const MachineDetails = ({
                         },
                       ]}
                     >
-                      track your scores and see them all on your profile!
+                      track your scores and see them all in your profile!
                     </Text>
                   </>
                 )}
@@ -847,6 +900,12 @@ const getStyles = (theme) =>
       fontFamily: "Nunito-ExtraBold",
       fontSize: 24,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+    },
+    machineManYear: {
+      textAlign: "center",
+      fontSize: 20,
+      fontFamily: "Nunito-Medium",
+      color: theme.theme === "dark" ? theme.pink1 : theme.purple,
     },
     locationName: {
       marginTop: 10,
@@ -912,7 +971,6 @@ const getStyles = (theme) =>
       marginVertical: 5,
       marginHorizontal: 10,
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
       fontSize: 13,
       textTransform: "uppercase",
     },
@@ -947,6 +1005,11 @@ const getStyles = (theme) =>
       fontSize: 18,
       fontFamily: "Nunito-Bold",
     },
+    modalMachineManYear: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      fontSize: 18,
+      fontFamily: "Nunito-Medium",
+    },
     modalSubText: {
       marginHorizontal: 40,
       fontSize: 14,
@@ -954,6 +1017,9 @@ const getStyles = (theme) =>
     },
     bold: {
       fontFamily: "Nunito-Bold",
+    },
+    medium: {
+      fontFamily: "Nunito-Medium",
     },
     purple: {
       color: theme.purple,
@@ -1103,7 +1169,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 15,
       fontFamily: "Nunito-SemiBold",
-      color: theme.text2,
+      color: theme.red2,
       textDecorationLine: "underline",
       marginBottom: 10,
     },
@@ -1114,6 +1180,11 @@ const getStyles = (theme) =>
       color: "#c0392b",
       marginHorizontal: 15,
       marginTop: 6,
+    },
+    lifeListIcon: {
+      fontSize: 24,
+      marginRight: 8,
+      color: theme.theme === "dark" ? theme.pink1 : theme.pink3,
     },
   });
 
