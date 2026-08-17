@@ -208,7 +208,6 @@ const MachineDetails = ({
 
   const onIctogglePress = () => {
     updateIcEnabled(curLmx.id);
-    setIctoggleModalVisible(false);
   };
 
   const handleAddToLifeList = async () => {
@@ -262,15 +261,22 @@ const MachineDetails = ({
           closeModal={() => setIctoggleModalVisible(false)}
         >
           <Text style={s.modalTitle}>
-            Toggle Stern Insider Connected
-            <Text style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}>
-              {ic_enabled === true ? ` OFF ` : ` ON `}
+            Is Stern Insider Connected
+            <Text style={{ fontFamily: "Nunito-Bold" }}>
+              {ic_enabled === true ? ` not enabled ` : ` enabled `}
             </Text>
-            on this machine?
+            on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+            <Text
+              style={s.modalMachineManYear}
+            >{`(${manufacturer}, ${year})`}</Text>
+            {"? If so, toggle below."}
           </Text>
-          <PbmButton title={"Toggle NOW"} onPress={onIctogglePress} />
+          <PbmButton
+            title={ic_enabled === true ? "Toggle Off" : "Toggle On"}
+            onPress={onIctogglePress}
+          />
           <WarningButton
-            title={"Cancel"}
+            title={"Close"}
             onPress={() => setIctoggleModalVisible(false)}
           />
         </ConfirmationModal>
