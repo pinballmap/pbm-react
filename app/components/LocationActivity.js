@@ -306,13 +306,15 @@ const LocationActivity = ({
         <>
           <View style={s.header}>
             <Text style={s.title}>Location Activity</Text>
-            <FilterLocationActivity />
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={35}
-              onPress={() => setLocationActivityModalOpen(false)}
-              style={s.xButton}
-            />
+            <View style={s.headerButtons}>
+              <FilterLocationActivity />
+              <MaterialCommunityIcons
+                name="close-circle"
+                size={35}
+                onPress={() => setLocationActivityModalOpen(false)}
+                style={s.xButton}
+              />
+            </View>
           </View>
           <ScrollView ref={scrollViewRef} style={{ height: "80%" }}>
             {selectedLocationActivities.length ? (
@@ -430,20 +432,27 @@ const getStyles = (theme) =>
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
-      marginTop: -25,
       paddingVertical: 8,
       justifyContent: "center",
+      display: "flex",
+      alignItems: "center",
+      position: "relative",
+    },
+    headerButtons: {
+      position: "absolute",
+      right: 5,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
     },
     title: {
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
-      paddingHorizontal: 70,
     },
     xButton: {
-      position: "absolute",
-      right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",

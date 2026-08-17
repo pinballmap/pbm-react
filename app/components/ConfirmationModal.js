@@ -30,7 +30,7 @@ const ConfirmationModal = ({
           style={[
             s.modalView,
             wide && { width: "90%", maxWidth: 600 },
-            noPad && { paddingBottom: 0 },
+            noPad && { paddingVertical: 0 },
           ]}
         >
           {loading ? <ActivityIndicator /> : children}

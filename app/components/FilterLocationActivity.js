@@ -48,10 +48,7 @@ const FilterLocationActivity = ({
   return (
     <View>
       <Pressable
-        style={({ pressed }) => [
-          s.filterIconPressable,
-          pressed && s.filterIconPressed,
-        ]}
+        style={({ pressed }) => [pressed && s.filterIconPressed]}
         onPress={openModal}
         hitSlop={{ top: 20, bottom: 20, left: 50, right: 10 }}
       >
@@ -336,12 +333,6 @@ const getStyles = (theme) =>
     },
     activeTitleStyle: {
       color: theme.purple,
-    },
-    filterIconPressable: {
-      position: "absolute",
-      right: 40,
-      bottom: -5,
-      padding: 5,
     },
     filterIconPressed: {
       backgroundColor: theme.indigo4,
