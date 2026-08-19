@@ -237,7 +237,17 @@ const FAQ = ({ navigation, user, route }) => {
                 <Text style={s.iconText}>Grand Champ Mapper</Text>
               </View>
               <Text style={s.text}>
-                {`As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a "Super Mapper". After 250 contributions, you are a "Legendary Mapper". And after 500 amazing map contributions, you are a "Grand Champ Mapper"!`}
+                {`As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a `}
+                <Text style={{ fontFamily: "Nunito-Bold" }}>Super Mapper</Text>
+                {`. After 250 contributions, you are deemed a `}
+                <Text style={{ fontFamily: "Nunito-Bold" }}>
+                  Legendary Mapper
+                </Text>
+                {`. And after 500 amazing map contributions, we hereby dub you a `}
+                <Text style={{ fontFamily: "Nunito-Bold" }}>
+                  Grand Champ Mapper
+                </Text>
+                {`!`}
               </Text>
               <Text style={s.text}>
                 {`Users can also select a "flag" icon. It can be added/changed on `}
@@ -271,7 +281,7 @@ const FAQ = ({ navigation, user, route }) => {
             </View>
             <View style={s.answer}>
               <Text style={s.text}>
-                {`You probably haven't confirmed your account. You should have received an email (check your spam!). `}
+                {`You probably haven't confirmed your account. You should have received an email (check your spam). `}
                 <Text
                   style={s.textLink}
                   onPress={() => navigation.navigate("ResendConfirmation")}
@@ -288,20 +298,18 @@ const FAQ = ({ navigation, user, route }) => {
             </View>
             <View style={s.answer}>
               <Text style={s.text}>
-                The photos we display come from the Open Pinball Database
-                (OPDB), and so you should upload your high quality photo using{" "}
+                {`The photos we display come from the Open Pinball Database (OPDB), which can be found on the `}
                 <Text
                   style={s.textLink}
                   onPress={() =>
                     WebBrowser.openBrowserAsync(
-                      "https://opdb.org/images/create",
+                      "https://app.matchplay.events/opdb",
                     )
                   }
                 >
-                  this form
-                </Text>{" "}
-                (you must first create an OPDB account). The photos you upload
-                will not immediately appear in this app.
+                  Matchplay Events website
+                </Text>
+                {`. You can upload your high quality photos by logging into Matchplay, looking up the machine, then clicking the "Upload image" button. The photos you upload will not immediately appear in this app.`}
               </Text>
               <Text style={s.text}>
                 <Text style={{ fontFamily: "Nunito-Bold" }}>
@@ -961,7 +969,7 @@ const getStyles = (theme) =>
       marginBottom: 6,
     },
     iconText: {
-      fontSize: 15,
+      fontSize: 16,
       color: theme.text2,
       lineHeight: 22,
       marginRight: 15,
