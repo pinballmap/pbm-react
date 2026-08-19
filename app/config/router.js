@@ -1,7 +1,7 @@
 import React from "react";
 import { DrawerActions, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Platform, StyleSheet, Text } from "react-native";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
@@ -39,16 +39,11 @@ import AddHighScore from "../screens/AddHighScore";
 
 import { DrawerMenu } from "../components";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const TabsOptionsStyle = {
-  headerStyle: {
-    borderBottomWidth: 0,
-    shadowOpacity: 0,
-    elevation: 0,
-  },
+  headerShadowVisible: false,
   headerTitleStyle: {
-    textAlign: "center",
     fontFamily: "Nunito-Bold",
     fontWeight: Platform.OS === "android" ? undefined : 700,
     fontSize: 18,
@@ -286,22 +281,12 @@ function MapStack() {
         headerTitleAlign: "center",
         gestureDirection: "horizontal",
         gestureEnabled: true,
-        headerStyle: {
-          borderBottomWidth: 0,
-          shadowOpacity: 0,
-          elevation: 0,
-        },
         headerTitleStyle: {
-          textAlign: "center",
           fontFamily: "Nunito-Bold",
           fontWeight: Platform.OS === "android" ? undefined : 700,
           fontSize: 18,
           color: colors.text,
         },
-        headerBackTitleStyle: {
-          fontFamily: "Nunito-Bold",
-        },
-        headerTitleAllowFontScaling: false,
         headerBackButtonDisplayMode: "minimal",
       })}
     >
@@ -336,6 +321,7 @@ function MapStack() {
         options={{
           headerTransparent: true,
           title: null,
+          scrollEdgeEffects: { top: "hidden" },
         }}
       />
       <Stack.Screen
@@ -360,7 +346,10 @@ function MapStack() {
       <Stack.Screen
         name="MachineDetails"
         component={MachineDetails}
-        options={{ headerTransparent: true, title: null }}
+        options={{
+          headerTransparent: true,
+          title: null,
+        }}
       />
       <Stack.Screen
         name="SuggestLocation"
@@ -388,7 +377,15 @@ function MapStack() {
         component={Stats}
         options={{ title: "Pinball Map Stats" }}
       />
-      <Stack.Screen name="FindMachine" component={FindMachine} />
+      <Stack.Screen
+        name="FindMachine"
+        component={FindMachine}
+        options={({ route }) => ({
+          title: route.params?.machineFilter
+            ? "Select Machines for Filter"
+            : `Select Machine${route.params?.multiSelect ? "s" : ""}`,
+        })}
+      />
       <Stack.Screen
         name="EditLocationDetails"
         component={EditLocationDetails}

@@ -91,16 +91,14 @@ const FilterMap = ({
   }, [query]);
 
   useEffect(() => {
-    const unsubscribeBlur = navigation.addListener("blur", () => {
-      // Only update filter locations when going back to the map- FindMachine, FindOperator, etc also cause blur to
-      // trigger, but we do not want to fire off the new request until the user leaves the filter screen for the map.
-      if (
-        navigation.getState().routes.length === 1 &&
-        queryRef.current !== initialQueryRef.current
-      ) {
-        dispatch(reloadMapMarkers());
-      }
-    });
+    const unsubscribeBeforeRemove = navigation.addListener(
+      "beforeRemove",
+      () => {
+        if (queryRef.current !== initialQueryRef.current) {
+          dispatch(reloadMapMarkers());
+        }
+      },
+    );
     const unsubscribeFocus = navigation.addListener("focus", () => {
       if (navigatingToFindMachine.current) {
         navigatingToFindMachine.current = false;
@@ -108,7 +106,7 @@ const FilterMap = ({
       }
     });
     return () => {
-      unsubscribeBlur();
+      unsubscribeBeforeRemove();
       unsubscribeFocus();
     };
   }, [navigation]);
@@ -175,6 +173,9 @@ const FilterMap = ({
   };
 
   const goToMap = () => {
+    if (queryRef.current !== initialQueryRef.current) {
+      dispatch(reloadMapMarkers());
+    }
     navigation.navigate("MapTab");
   };
 

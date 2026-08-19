@@ -113,10 +113,6 @@ const LIFE_LIST_SORT_OPTION = {
   label: "Not in Life List First",
 };
 
-// Label text is capped at this multiplier (maxFontSizeMultiplier) so
-// SQUARE_BUTTON_WIDTH stays wide enough at any system font scale, which lets
-// the strip's total width be computed synchronously (no post-mount
-// measurement, so centering never flashes left-then-center).
 const SQUARE_BUTTON_MAX_FONT_SCALE = 1.2;
 const SQUARE_BUTTON_WIDTH = 80;
 const SQUARE_BUTTON_GAP = 10;
@@ -325,7 +321,6 @@ const LocationDetails = (props) => {
     transform: [{ rotate: `${diceRotation.value}deg` }],
   }));
   const insets = useSafeAreaInsets();
-  const topMargin = insets.top;
 
   const location = props.location.location;
   const { operators } = props.operators;
@@ -795,10 +790,10 @@ const LocationDetails = (props) => {
     <View
       style={{
         flex: 1,
-        marginTop: topMargin,
+        backgroundColor: theme.base1,
       }}
     >
-      <View style={[{ marginTop: -topMargin }, s.mapViewContainer]}>
+      <View style={s.mapViewContainer}>
         <Pressable
           style={({ pressed }) => [
             [

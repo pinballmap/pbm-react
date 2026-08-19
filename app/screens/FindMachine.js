@@ -291,14 +291,6 @@ const FindMachine = ({
   const isFirstRender = useRef(true);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: route.params?.machineFilter
-        ? "Select Machines for Filter"
-        : `Select Machine${route.params?.multiSelect ? "s" : ""}`,
-    });
-  }, []);
-
-  useEffect(() => {
     const lifeListUserId = route.params?.lifeListUserId;
     navigation.setOptions({
       headerRight: () =>
@@ -312,15 +304,13 @@ const FindMachine = ({
               }
             }}
           >
-            {({ pressed }) => (
-              <View style={{ marginRight: 10 }}>
-                <MaterialIcons
-                  name="check-box"
-                  size={32}
-                  color={pressed ? "#95867c" : "#68b0f3"}
-                />
-              </View>
-            )}
+            <View>
+              <MaterialCommunityIcons
+                name="check-bold"
+                size={32}
+                color={"#68b0f3"}
+              />
+            </View>
           </Pressable>
         ) : null,
     });

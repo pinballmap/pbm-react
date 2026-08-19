@@ -451,6 +451,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 18,
       fontFamily: "Nunito-ExtraBold",
+      paddingHorizontal: 80,
     },
     xButton: {
       color: theme.theme == "dark" ? theme.base4 : theme.base1,

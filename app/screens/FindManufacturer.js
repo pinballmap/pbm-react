@@ -55,15 +55,13 @@ const FindManufacturer = ({
       headerRight: () =>
         selectedManufacturers.length > 0 ? (
           <Pressable onPress={() => navigation.goBack()}>
-            {({ pressed }) => (
-              <View style={{ marginRight: 10 }}>
-                <MaterialIcons
-                  name="check-box"
-                  size={32}
-                  color={pressed ? "#95867c" : "#68b0f3"}
-                />
-              </View>
-            )}
+            <View>
+              <MaterialCommunityIcons
+                name="check-bold"
+                size={32}
+                color={"#68b0f3"}
+              />
+            </View>
           </Pressable>
         ) : null,
     });

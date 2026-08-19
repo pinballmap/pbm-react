@@ -54,6 +54,7 @@ import {
   useNavigation,
   useTheme,
 } from "@react-navigation/native";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -89,6 +90,7 @@ const MachineDetails = ({
   const [copiedNotice, setCopiedNotice] = useState(false);
   const copiedTimeoutRef = useRef(null);
   const insets = useSafeAreaInsets();
+  const headerHeight = useHeaderHeight();
 
   const { curLmx, location, isFetchingLmx, lmxMutated } = locationProp;
   const lmxMutatedRef = useRef(lmxMutated);
@@ -114,10 +116,11 @@ const MachineDetails = ({
   const opdbImgHeight =
     opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
   const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
-  const machineNameMargin =
-    Platform.OS === "android"
-      ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
-      : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
+  const machineNameMargin = headerHeight;
+  const modalTopPadding =
+    insets.top -
+    (PixelRatio.getFontScale() - 1) * 10 +
+    (Platform.OS === "android" ? 6 : 1);
   const matchplayImage = {
     dark: require("../assets/images/Resource_Matchplay_Dark.png"),
     light: require("../assets/images/Resource_Matchplay_Light.png"),
@@ -323,7 +326,7 @@ const MachineDetails = ({
               contentContainerStyle={{
                 backgroundColor: theme.base1,
                 paddingBottom: 30,
-                paddingTop: machineNameMargin + 50,
+                paddingTop: modalTopPadding + 50,
               }}
             >
               <Text style={s.modalTitle}>
@@ -437,7 +440,7 @@ const MachineDetails = ({
               contentContainerStyle={{
                 backgroundColor: theme.base1,
                 paddingBottom: 30,
-                paddingTop: machineNameMargin + 50,
+                paddingTop: modalTopPadding + 50,
               }}
             >
               <Text style={s.modalTitle}>

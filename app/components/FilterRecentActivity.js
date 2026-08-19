@@ -374,10 +374,6 @@ const FilterRecentActivity = ({
         </ConfirmationModal>
       )}
       <Pressable
-        style={({ pressed }) => [
-          s.filterIconPressable,
-          pressed && s.filterIconPressed,
-        ]}
         onPress={openModal}
         hitSlop={{ top: 20, bottom: 20, left: 60, right: 10 }}
       >
@@ -445,13 +441,6 @@ const getStyles = (theme) =>
     },
     iconStyle: {
       marginRight: 10,
-    },
-    filterIconPressable: {
-      marginRight: 5,
-      padding: 5,
-    },
-    filterIconPressed: {
-      backgroundColor: theme.indigo4,
     },
   });
 

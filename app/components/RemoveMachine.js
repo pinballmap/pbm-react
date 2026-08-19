@@ -19,7 +19,6 @@ const RemoveMachine = ({ user }) => {
         name="trash-can"
         size={30}
         color={"#e4606a"}
-        style={{ marginRight: 10 }}
         onPress={
           user.loggedIn
             ? () => setShowModal(true)

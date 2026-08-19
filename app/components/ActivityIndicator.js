@@ -1,13 +1,13 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, ScrollView } from "react-native";
 
 const styledActivityIndicator = () => {
   const s = getStyles();
 
   return (
-    <View style={s.container}>
+    <ScrollView contenContainerStyle={s.container}>
       <ActivityIndicator color="#fe46b0" />
-    </View>
+    </ScrollView>
   );
 };
 
