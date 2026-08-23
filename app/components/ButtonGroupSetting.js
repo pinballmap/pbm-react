@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ButtonGroup, Text } from "../components";
 import { ThemeContext } from "../theme-context";
 
@@ -23,10 +23,7 @@ const ButtonGroupSetting = ({
         selectedIndex={selectedIndex}
         buttons={buttons}
         containerStyle={s.buttonGroupContainer}
-        textStyle={s.buttonGroupInactive}
-        selectedButtonStyle={s.selButtonStyle}
-        selectedTextStyle={s.selTextStyle}
-        innerBorderStyle={s.innerBorderStyle}
+        maxFontSizeMultiplier={1.3}
       />
       <Text style={s.descriptionText}>{description}</Text>
     </View>
@@ -37,7 +34,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     container: {
       marginVertical: 15,
-      marginHorizontal: 15,
+      marginHorizontal: 10,
     },
     titleText: {
       textAlign: "center",
@@ -46,45 +43,13 @@ const getStyles = (theme) =>
       color: theme.text,
     },
     buttonGroupContainer: {
-      height: 40,
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme === "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
       marginHorizontal: 0,
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme === "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
-    },
-    innerBorderStyle: {
-      width: 0,
     },
     descriptionText: {
       fontSize: 14,
       color: theme.text2,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 5,
       marginRight: 15,

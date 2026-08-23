@@ -226,11 +226,6 @@ const FilterMap = ({
                   }
                   selectedIndex={machineGroupId ? 0 : 1}
                   buttons={["All Versions", "Selected Version"]}
-                  containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-                  textStyle={s.buttonGroupInactive}
-                  selectedButtonStyle={s.selButtonStyle}
-                  selectedTextStyle={s.selTextStyle}
-                  innerBorderStyle={s.innerBorderStyle}
                 />
               </>
             )}
@@ -248,11 +243,6 @@ const FilterMap = ({
                   onPress={(idx) => dispatch(setIcFilter(idx === 1))}
                   selectedIndex={icFilter ? 1 : 0}
                   buttons={["Doesn't matter", "Has IC"]}
-                  containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-                  textStyle={s.buttonGroupInactive}
-                  selectedButtonStyle={s.selButtonStyle}
-                  selectedTextStyle={s.selTextStyle}
-                  innerBorderStyle={s.innerBorderStyle}
                 />
               </>
             )}
@@ -286,11 +276,6 @@ const FilterMap = ({
               }
               selectedIndex={machineTypeFilter === "em" ? 1 : 0}
               buttons={["All", "EM"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
               Machine year
@@ -417,11 +402,6 @@ const FilterMap = ({
               onPress={setNumMachinesSelected}
               selectedIndex={getIdx(numMachines)}
               buttons={["All", "2+", "5+", "10+", "20+"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
               All Ages?
@@ -430,11 +410,6 @@ const FilterMap = ({
               onPress={(idx) => dispatch(setAllAgesFilter(idx === 1))}
               selectedIndex={allAgesFilter ? 1 : 0}
               buttons={["All", "All Ages"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
               Free Play?
@@ -443,11 +418,6 @@ const FilterMap = ({
               onPress={(idx) => dispatch(setPaymentTypeFilter(idx === 1))}
               selectedIndex={paymentTypeFilter ? 1 : 0}
               buttons={["Any", "Free Play"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
               Location type
@@ -466,11 +436,6 @@ const FilterMap = ({
               onPress={(idx) => dispatch(setLocationIcFilter(idx === 1))}
               selectedIndex={locationIcFilter ? 1 : 0}
               buttons={["All", "Has IC"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
             <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
               Operator
@@ -487,11 +452,6 @@ const FilterMap = ({
               onPress={updateViewFavorites}
               selectedIndex={viewByFavoriteLocations ? 1 : 0}
               buttons={["All", "My Saved"]}
-              containerStyle={[s.buttonGroupContainer, s.boxShadow]}
-              textStyle={s.buttonGroupInactive}
-              selectedButtonStyle={s.selButtonStyle}
-              selectedTextStyle={s.selTextStyle}
-              innerBorderStyle={s.innerBorderStyle}
             />
           </View>
         </View>
@@ -559,30 +519,6 @@ const getStyles = (theme) =>
       marginHorizontal: 10,
       marginTop: 0,
       marginBottom: 5,
-    },
-    buttonGroupContainer: {
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-      fontFamily: "Nunito-Medium",
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
     },
     bottomTab: {
       position: "fixed",

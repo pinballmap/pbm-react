@@ -87,8 +87,7 @@ const FindCountry = ({ navigation, route }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          height: 40,
-          marginBottom: 10,
+          marginVertical: 10,
         }}
       >
         <View style={s.inputContainer}>
@@ -140,7 +139,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderRadius: 25,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      height: 40,
       display: "flex",
       flex: 1,
       flexDirection: "row",
@@ -151,11 +149,13 @@ const getStyles = (theme) =>
     inputStyle: {
       flex: 1,
       paddingLeft: 5,
-      paddingRight: 65,
-      height: 40,
+      paddingRight: 40,
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      paddingVertical: 10,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
   });
 

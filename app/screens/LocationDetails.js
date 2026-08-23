@@ -17,6 +17,7 @@ import {
   ScrollView,
   Share,
   StyleSheet,
+  useWindowDimensions,
   View,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
@@ -117,6 +118,9 @@ const SQUARE_BUTTON_MAX_FONT_SCALE = 1.2;
 const SQUARE_BUTTON_WIDTH = 80;
 const SQUARE_BUTTON_GAP = 10;
 const SQUARE_BUTTON_STRIP_PADDING = 20;
+const BASE_ICON_SIZE = 18;
+const MAX_FONT_SCALE = 1.6;
+const SCALE_OFFSET = 2;
 
 const MachineListItem = ({
   machine,
@@ -287,6 +291,12 @@ const LocationDetails = (props) => {
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
   const swipeableRefs = useRef({});
+  const { fontScale } = useWindowDimensions();
+  const clampedScale = Math.min(fontScale, MAX_FONT_SCALE);
+  const iconSize =
+    clampedScale > 1
+      ? BASE_ICON_SIZE * clampedScale - SCALE_OFFSET * clampedScale
+      : BASE_ICON_SIZE;
   const pickRandomMachine = useMemo(
     () =>
       throttle(
@@ -1142,7 +1152,8 @@ const LocationDetails = (props) => {
               >
                 <MaterialCommunityIcons
                   name="notebook-outline"
-                  style={s.metaIcon}
+                  size={iconSize}
+                  style={{ marginRight: 5 }}
                   color={theme.purple2}
                 />
                 <ReadMore
@@ -1154,14 +1165,17 @@ const LocationDetails = (props) => {
 
             {!!opName && (
               <View style={[s.marginB, s.operatorContainer]}>
-                <View style={s.row}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "flex-start" }}
+                >
                   <MaterialCommunityIcons
                     name="wrench"
-                    style={s.metaIcon}
+                    size={iconSize}
+                    style={{ marginRight: 5 }}
                     color={theme.wrench}
                   />
                   <Text style={[s.text, s.fontSize15]}>
-                    Operated by{` `}
+                    {`Operated by `}
                     <Text
                       style={[location.operator_website ? s.link : s.text2]}
                       onPress={
@@ -1291,91 +1305,117 @@ const LocationDetails = (props) => {
               >
                 <MaterialCommunityIcons
                   name="lightning-bolt"
-                  style={s.metaIcon}
+                  size={iconSize}
+                  style={{ marginRight: 5 }}
                   color={theme.purple}
                 />
-                <View style={{ flexShrink: 1 }}>
-                  <Text style={[s.text2, s.fontSize15]}>
-                    {`${formatNumWithCommas(location.user_submissions_count)} edits by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}.`}
-                  </Text>
-                  <Text style={[s.text2, s.fontSize15]}>
-                    {`Last updated`}
-                    {!!location.last_updated_by_username && ` by `}
-                    {!!location.last_updated_by_username && (
-                      <Text
-                        style={
-                          location.last_updated_by_user_id &&
-                          !location.last_updated_by_user_deleted
-                            ? {
-                                fontFamily: "Nunito-SemiBold",
-                                color: theme.pink1,
-                                textDecorationLine: "underline",
-                              }
-                            : {
-                                fontFamily: "Nunito-SemiBold",
-                                color: theme.text2,
-                              }
-                        }
-                        onPress={() =>
-                          location.last_updated_by_user_id &&
-                          !location.last_updated_by_user_deleted &&
-                          navigation.navigate("UserProfilePublic", {
-                            userId: location.last_updated_by_user_id,
-                            username: location.last_updated_by_username,
-                          })
-                        }
-                      >
-                        {`${location.last_updated_by_username}`}
-                      </Text>
+                <View style={{ flex: 1 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Text style={[s.text2, s.fontSize15]}>
+                      {`${formatNumWithCommas(location.user_submissions_count)} edits by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}.`}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Text style={[s.text2, s.fontSize15]}>
+                      {`Last updated`}
+                      {!!location.last_updated_by_username && ` by `}
+                      {!!location.last_updated_by_username && (
+                        <Text
+                          style={
+                            location.last_updated_by_user_id &&
+                            !location.last_updated_by_user_deleted
+                              ? {
+                                  fontFamily: "Nunito-SemiBold",
+                                  color: theme.pink1,
+                                  textDecorationLine: "underline",
+                                }
+                              : {
+                                  fontFamily: "Nunito-SemiBold",
+                                  color: theme.text2,
+                                }
+                          }
+                          onPress={() =>
+                            location.last_updated_by_user_id &&
+                            !location.last_updated_by_user_deleted &&
+                            navigation.navigate("UserProfilePublic", {
+                              userId: location.last_updated_by_user_id,
+                              username: location.last_updated_by_username,
+                            })
+                          }
+                        >
+                          {`${location.last_updated_by_username}`}
+                        </Text>
+                      )}
+                    </Text>
+                    {!!location.last_updated_by_admin_title && (
+                      <MaterialCommunityIcons
+                        name="shield-account"
+                        size={iconSize}
+                        style={[
+                          s.adminIcon,
+                          { width: iconSize, height: iconSize },
+                        ]}
+                        color={theme.shield}
+                      />
                     )}
-                    <View style={s.iconView}>
-                      {!!location.last_updated_by_admin_title && (
+                    {!!location.last_updated_by_contributor_rank && (
+                      <Image
+                        contentFit="contain"
+                        source={contributor_icon}
+                        style={[
+                          s.rankIcon,
+                          { width: iconSize, height: iconSize },
+                        ]}
+                        contentPosition="bottom"
+                      />
+                    )}
+                    {!!location.last_updated_by_user_id &&
+                      !!opId &&
+                      opId === location.last_updated_by_operator_id && (
                         <MaterialCommunityIcons
-                          name="shield-account"
-                          size={15}
-                          style={s.adminIcon}
-                          color={theme.shield}
+                          name="wrench"
+                          style={[
+                            s.rankIcon,
+                            s.operatorIcon,
+                            { width: iconSize, height: iconSize },
+                          ]}
+                          size={iconSize}
+                          color={theme.wrench}
                         />
                       )}
-                      {!!location.last_updated_by_contributor_rank && (
+                    {!!location.last_updated_by_flag &&
+                      flagImages[location.last_updated_by_flag] && (
                         <Image
-                          contentFit="contain"
-                          source={contributor_icon}
-                          style={s.rankIcon}
-                          contentPosition="bottom"
+                          source={flagImages[location.last_updated_by_flag]}
+                          style={[
+                            s.flagIcon,
+                            {
+                              height: iconSize,
+                              width: getFlagWidth(
+                                location.last_updated_by_flag,
+                                15,
+                              ),
+                            },
+                          ]}
                         />
                       )}
-                      {!!location.last_updated_by_user_id &&
-                        !!opId &&
-                        opId === location.last_updated_by_operator_id && (
-                          <MaterialCommunityIcons
-                            name="wrench"
-                            style={[s.rankIcon, s.operatorIcon]}
-                            size={15}
-                            color={theme.wrench}
-                          />
-                        )}
-                      {!!location.last_updated_by_flag &&
-                        flagImages[location.last_updated_by_flag] && (
-                          <Image
-                            source={flagImages[location.last_updated_by_flag]}
-                            style={[
-                              s.flagIcon,
-                              {
-                                width: getFlagWidth(
-                                  location.last_updated_by_flag,
-                                  15,
-                                ),
-                              },
-                            ]}
-                          />
-                        )}
-                    </View>
-                    {` on `}
-                    <Text style={s.italic}>
+                    <Text style={[s.text2, s.fontSize15]}>{` on `}</Text>
+                    <Text style={[s.text2, s.italic]}>
                       {formatDateStr(location.date_last_updated)}
                     </Text>
-                  </Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -1962,7 +2002,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     staleView: {
       marginVertical: 5,
@@ -2215,20 +2255,15 @@ const getStyles = (theme) =>
       borderRadius: 15,
     },
     adminIcon: {
-      width: 15,
-      height: 15,
       marginLeft: 2,
       marginBottom: -2,
     },
     rankIcon: {
-      width: 15,
-      height: 15,
       marginLeft: 3,
       marginRight: 2,
       marginBottom: -2,
     },
     flagIcon: {
-      height: 15,
       marginHorizontal: 2,
       borderRadius: 3,
       marginBottom: -1,
@@ -2252,6 +2287,7 @@ const getStyles = (theme) =>
     },
     operatorContactIcon: {
       display: "flex",
+      alignItems: "center",
       flexDirection: "row",
       borderRadius: 10,
       backgroundColor: theme.theme === "dark" ? theme.base3 : theme.base1,
@@ -2275,7 +2311,8 @@ const getStyles = (theme) =>
       justifyContent: "center",
     },
     squareButton: {
-      padding: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 4,
       width: SQUARE_BUTTON_WIDTH,
       borderRadius: 12,
       backgroundColor: theme.pink2,

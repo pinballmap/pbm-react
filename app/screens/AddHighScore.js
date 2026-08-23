@@ -168,7 +168,7 @@ const AddHighScore = ({ user }) => {
 const getStyles = (theme) =>
   StyleSheet.create({
     description: {
-      fontSize: 15,
+      fontSize: 16,
       fontFamily: "Nunito-Regular",
       color: theme.text2,
       marginHorizontal: 15,
@@ -190,11 +190,13 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
       color: theme.text,
       borderWidth: 1,
-      height: 40,
       textAlign: "center",
       marginHorizontal: 20,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      padding: 10,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     radius10: {
       borderRadius: 10,

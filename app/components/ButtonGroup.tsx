@@ -1,21 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
+  Dimensions,
   View,
   StyleSheet,
   Pressable,
   Text,
 } from "react-native";
+import { ThemeContext } from "../theme-context";
+
+let deviceWidth = Dimensions.get("window").width;
 
 type ButtonComponent = React.ReactElement;
 type ButtonObject = {
   element: React.ElementType<any & { isSelected?: boolean }>;
 };
 
-const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBorderStyle, textStyle, selectedTextStyle, selectedButtonStyle }) => {
+const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBorderStyle, textStyle, selectedTextStyle, selectedButtonStyle, maxFontSizeMultiplier }) => {
+  const { theme } = useContext(ThemeContext);
+  const s = getStyles(theme);
+
   return (
     <View
       style={StyleSheet.flatten([
-        s.container,
+        s.buttonGroupContainer,
         containerStyle && containerStyle,
       ])}
     >
@@ -25,12 +32,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
           <View
             key={i}
             style={StyleSheet.flatten([
-              s.button,
-              i !== buttons.length - 1 &&
-                {
-                    borderRightColor:
-                    (innerBorderStyle && innerBorderStyle.color),
-                },
+              s.button
             ])}
           >
             <Pressable
@@ -41,17 +43,18 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
             >
               <View
                 style={StyleSheet.flatten([
-                  s.textContainer,
-                  isSelected && selectedButtonStyle && selectedButtonStyle,
+                  s.buttonGroupTextContainer,
+                  isSelected && s.buttonGroupViewSelected,
+                  isSelected && selectedButtonStyle,
                 ])}
               >
                 <Text
+                  maxFontSizeMultiplier={maxFontSizeMultiplier}
                   style={StyleSheet.flatten([
-                    {
-                      fontSize: 13,
-                    },
+                    s.buttonGroupTextInactive,
                     textStyle && textStyle,
-                    isSelected && selectedTextStyle && selectedTextStyle,
+                    isSelected && s.buttonGroupTextSelected,
+                    isSelected && selectedTextStyle,
                   ])}
                 >
                   {button}
@@ -65,26 +68,52 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
   );
 };
 
-const s = StyleSheet.create({
-  button: {
-    flex: 1,
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderColor: '#e3e3e3',
-    borderWidth: 1,
-    flexDirection: 'row',
-    borderRadius: 3,
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-    height: 40,
-  },
-});
+const getStyles = (theme) =>
+  StyleSheet.create({
+    button: {
+      flex: 1,
+    },
+    buttonGroupTextContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonGroupContainer: {
+      marginHorizontal: 10,
+      marginVertical: 5,
+      flexDirection: 'row',
+      overflow: 'hidden',
+      borderWidth: 0,
+      borderRadius: 25,
+      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
+    },
+    buttonGroupTextInactive: {
+      color: theme.text2,
+      fontSize: deviceWidth < 321 ? 12 : 14,
+      fontFamily: "Nunito-SemiBold",
+    },
+    buttonGroupViewSelected: {
+      borderWidth: 2,
+      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
+      backgroundColor: theme.white,
+      borderRadius: 25,
+            paddingVertical: 10
+
+    },
+    buttonGroupTextSelected: {
+      color: theme.text2,
+      fontFamily: "Nunito-Bold",
+    },
+  });
 
 export default ButtonGroup;

@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Platform, Share, StyleSheet, View, Pressable } from "react-native";
+import { Share, StyleSheet, View, Pressable, Text } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Animated, {
@@ -11,7 +11,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { ThemeContext } from "../theme-context";
-import Text from "./PbmText";
 import FavoriteLocation from "./FavoriteLocation";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import { formatAddress, getDistanceWithUnit } from "../utils/utilityFunctions";
@@ -26,26 +25,12 @@ import {
 } from "../utils/constants";
 
 const NUM_MACHINES_TO_SHOW = 5;
-
-// Drag-up past this (or a fast upward flick) opens LocationDetails;
-// drag-down past this (or a fast downward flick) dismisses the sheet.
 const DRAG_UP_TO_OPEN = -60;
 const DRAG_DOWN_TO_DISMISS = 60;
 const FLING_VELOCITY = 800;
-// How far the sheet is allowed to rubber-band upward. The backdrop below
-// is sized to this so it always fully covers the gap left behind.
 const MAX_DRAG_UP = -90;
-// The backdrop's fixed height (see styles.backdrop). Content height varies
-// (machine list length, whether the type/age/payment row renders), so the
-// downward drag is capped relative to the sheet's *measured* height rather
-// than a fixed pixel value — otherwise a cap tuned for tall content lets a
-// short sheet drag its top edge below the backdrop's, and a cap tuned for
-// short content barely lets a tall sheet move at all.
 const BACKDROP_HEIGHT = 100;
-// How far off-screen the sheet slides on dismiss.
 const EXIT_DISTANCE = 600;
-// Fade-out duration for dismiss. Fixed, rather than tied to the slide
-// spring's velocity-dependent settle time, so unmount timing is predictable.
 const EXIT_FADE_DURATION = 200;
 
 const LocationBottomSheet = React.memo(
@@ -55,9 +40,6 @@ const LocationBottomSheet = React.memo(
 
     const translateY = useSharedValue(0);
     const exitOpacity = useSharedValue(1);
-    // Measured on layout since content height varies; starts at the
-    // stylesheet's minHeight so the first drag (before layout fires) has a
-    // sane, if conservative, cap.
     const sheetHeight = useSharedValue(130);
     const onSheetLayout = (e) => {
       sheetHeight.value = e.nativeEvent.layout.height;
@@ -94,20 +76,12 @@ const LocationBottomSheet = React.memo(
     const panGesture = useMemo(
       () =>
         Gesture.Pan()
-          // require some deliberate vertical movement before the sheet
-          // starts tracking the finger, so it doesn't fight the tap below
           .activeOffsetY([-10, 10])
           .failOffsetX([-20, 20])
           .onUpdate((e) => {
             if (e.translationY < 0) {
-              // resist dragging up (it's a nudge, not real travel — the
-              // sheet's height doesn't change) and cap it so the backdrop
-              // above always covers the gap
               translateY.value = Math.max(MAX_DRAG_UP, e.translationY * 0.4);
             } else {
-              // track 1:1, but stop before the sheet's top edge passes
-              // below the backdrop's — past that point there's nothing
-              // behind it but the map
               const maxDown = Math.max(0, sheetHeight.value - BACKDROP_HEIGHT);
               translateY.value = Math.min(e.translationY, maxDown);
             }
@@ -123,10 +97,6 @@ const LocationBottomSheet = React.memo(
               translateY.value = withTiming(-30, { duration: 150 });
               runOnJS(onPress)();
             } else if (draggedDown) {
-              // carry the release velocity into the exit so a fast flick
-              // keeps moving fast and a slow drag-past-threshold eases out
-              // gently, instead of both snapping through the same fixed
-              // timing curve
               translateY.value = withSpring(EXIT_DISTANCE, {
                 velocity: e.velocityY,
                 damping: 20,
@@ -162,8 +132,6 @@ const LocationBottomSheet = React.memo(
 
     return (
       <>
-        {/* Color-matched fill behind the sheet so dragging it up doesn't
-            reveal the map through the gap left below it. */}
         <Animated.View
           style={[s.backdrop, animatedBackdropStyle]}
           pointerEvents="none"
@@ -231,7 +199,7 @@ const LocationBottomSheet = React.memo(
                       {machine_names_first_no_year.length === 0 ? (
                         <Text style={[s.plus, s.italic]}>No machines</Text>
                       ) : (
-                        <Text>
+                        <Text maxFontSizeMultiplier={1.3}>
                           {machine_names_first_no_year.map((name, index) => (
                             <Text key={name}>
                               <Text style={s.machineName}>
@@ -365,8 +333,6 @@ const getStyles = (theme) =>
       height: "auto",
       zIndex: 11,
     },
-    // Sits behind `container`, covering the gap that opens up below the
-    // sheet when it's dragged upward (see MAX_DRAG_UP).
     backdrop: {
       position: "absolute",
       bottom: 0,
@@ -454,7 +420,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     pressed: {
       opacity: 0.8,

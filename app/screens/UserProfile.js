@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
   Dimensions,
   InteractionManager,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -691,7 +690,7 @@ const UserProfile = ({
                 {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
               </Text>
               <PbmButton
-                title={"Add Machines to Your List"}
+                title={"Add to Your List"}
                 onPress={() => {
                   clearSelectedState();
                   navigation.navigate("FindMachine", {
@@ -928,7 +927,7 @@ const getStyles = (theme) =>
       paddingTop: 10,
       paddingBottom: 14,
       borderRadius: 20,
-      paddingHorizontal: 30,
+      paddingHorizontal: 20,
     },
     statItem: {
       flexDirection: "row",
@@ -959,7 +958,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     none: {
       textAlign: "center",
@@ -967,7 +966,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     pressed: {
       shadowOpacity: 0,

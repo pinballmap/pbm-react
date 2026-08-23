@@ -290,8 +290,14 @@ const Search = ({
   const renderRecentSearchHistory = () => (
     <View>
       <View style={s.recentSearchHistory}>
-        <Text style={s.searchHistoryTitle}>{"Recent Search History"}</Text>
-        <Text onPress={clearSearchHistory} style={s.clearButton}>
+        <Text style={s.searchHistoryTitle} maxFontSizeMultiplier={1.2}>
+          {"Recent Search History"}
+        </Text>
+        <Text
+          onPress={clearSearchHistory}
+          style={s.clearButton}
+          maxFontSizeMultiplier={1.3}
+        >
           Clear All
         </Text>
       </View>
@@ -356,7 +362,6 @@ const Search = ({
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  height: 45,
                   marginBottom: 10,
                 }}
               >
@@ -527,11 +532,14 @@ const getStyles = (theme) =>
     },
     inputStyle: {
       paddingLeft: 5,
-      paddingRight: 65,
+      paddingRight: 40,
       flex: 1,
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      includeFontPadding: false,
+      textAlignVertical: "center",
+      paddingVertical: 8,
     },
     inputContainer: {
       borderWidth: 1,
@@ -539,7 +547,6 @@ const getStyles = (theme) =>
       borderRadius: 25,
       flex: 1,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      height: 45,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
@@ -572,7 +579,7 @@ const getStyles = (theme) =>
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center",
+      alignItems: "flex-end",
       marginHorizontal: 15,
       marginVertical: 15,
     },
@@ -593,7 +600,7 @@ const getStyles = (theme) =>
     cityRegionRow: {
       fontSize: 16,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       color: theme.pink1,
     },
     pressed: {
@@ -614,7 +621,7 @@ const getStyles = (theme) =>
     goToFilterText: {
       marginHorizontal: 30,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       color: theme.text3,
       textAlign: "center",
     },

@@ -683,8 +683,7 @@ const FindMachine = ({
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          height: 40,
-          marginBottom: 10,
+          marginVertical: 10,
         }}
       >
         <View style={s.inputContainer}>
@@ -714,20 +713,6 @@ const FindMachine = ({
           </Pressable>
         )}
       </View>
-      {isFiltering ? (
-        <View style={{ backgroundColor: theme.base1 }}>
-          <ButtonGroup
-            onPress={toggleViewMachinesInMapArea}
-            selectedIndex={selectedIdx}
-            buttons={["All Machines", "Machines in Map Area"]}
-            containerStyle={s.buttonGroupContainer}
-            textStyle={s.buttonGroupInactive}
-            selectedButtonStyle={s.selButtonStyle}
-            selectedTextStyle={s.selTextStyle}
-            innerBorderStyle={s.innerBorderStyle}
-          />
-        </View>
-      ) : null}
       {multiSelect || showSort ? (
         <View style={s.multiSelectRow}>
           <View style={s.multiSelectSpacer} />
@@ -780,6 +765,18 @@ const FindMachine = ({
           {...keyboardDismissProp}
           keyboardShouldPersistTaps="always"
           data={machines}
+          ListHeaderComponent={
+            isFiltering ? (
+              <View style={{ backgroundColor: theme.base1 }}>
+                <ButtonGroup
+                  maxFontSizeMultiplier={1.3}
+                  onPress={toggleViewMachinesInMapArea}
+                  selectedIndex={selectedIdx}
+                  buttons={["All Machines", "Only in Map Area"]}
+                />
+              </View>
+            ) : null
+          }
           extraData={
             multiSelect || showLifeListBadge
               ? [machineList, lifeListIdsSet]
@@ -807,7 +804,6 @@ const getStyles = (theme) =>
       backgroundColor: theme.white,
       borderRadius: 25,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      height: 40,
       display: "flex",
       flex: 1,
       flexDirection: "row",
@@ -818,11 +814,13 @@ const getStyles = (theme) =>
     inputStyle: {
       flex: 1,
       paddingLeft: 5,
-      paddingRight: 65,
-      height: 40,
+      paddingRight: 40,
       color: theme.text,
       fontSize: 18,
       fontFamily: "Nunito-Regular",
+      paddingVertical: 10,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     textInput: {
       backgroundColor: theme.white,
@@ -929,40 +927,6 @@ const getStyles = (theme) =>
     sortModalItemTextSelected: {
       fontFamily: "Nunito-Bold",
       color: theme.text2,
-    },
-    buttonGroupContainer: {
-      marginBottom: 10,
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
     },
     modalTitle: {
       textAlign: "center",

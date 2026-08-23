@@ -1,13 +1,6 @@
 import React, { useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import {
-  Animated,
-  Platform,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-} from "react-native";
+import { Animated, StyleSheet, Text, Pressable, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -342,7 +335,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     pressed: {
       opacity: 0.8,

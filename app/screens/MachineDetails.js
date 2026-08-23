@@ -452,11 +452,7 @@ const MachineDetails = ({
                 at <Text style={s.modalLocationName}>{location.name}</Text>
               </Text>
               <TextInput
-                style={[
-                  { height: 40, textAlign: "center" },
-                  s.textInput,
-                  s.radius10,
-                ]}
+                style={[{ textAlign: "center" }, s.textInput, s.radius10]}
                 keyboardType="numeric"
                 underlineColorAndroid="transparent"
                 onChangeText={(score) => setScore(score)}
@@ -760,7 +756,7 @@ const MachineDetails = ({
                     {`.`}
                   </Text>
                   <PbmButton
-                    title={"Add Machine to Your List"}
+                    title={"Add to Your List"}
                     onPress={handleAddToLifeList}
                     margin={{ marginHorizontal: 20, marginBottom: 15 }}
                     leftIcon={
@@ -843,8 +839,7 @@ const MachineDetails = ({
                         s.noneYet,
                         {
                           fontFamily: "Nunito-Italic",
-                          fontStyle:
-                            Platform.OS === "android" ? undefined : "italic",
+                          fontStyle: "italic",
                           fontSize: 13,
                         },
                       ]}
@@ -939,7 +934,7 @@ const getStyles = (theme) =>
       lineHeight: 20,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     externalLink: {
       fontSize: 15,
@@ -971,6 +966,9 @@ const getStyles = (theme) =>
       marginHorizontal: 30,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      includeFontPadding: false,
+      textAlignVertical: "center",
+      paddingVertical: 8,
     },
     radius10: {
       borderRadius: 10,
@@ -993,7 +991,7 @@ const getStyles = (theme) =>
     copyScores: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       flex: 1,
       textAlign: "center",
     },

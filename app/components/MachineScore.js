@@ -104,11 +104,7 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
           >
             <Text style={s.modalTitle}>Edit your score</Text>
             <TextInput
-              style={[
-                { height: 40, textAlign: "center" },
-                s.textInput,
-                s.radius10,
-              ]}
+              style={[{ textAlign: "center" }, s.textInput, s.radius10]}
               keyboardType="numeric"
               underlineColorAndroid="transparent"
               onChangeText={handleScoreEdit}
@@ -191,7 +187,7 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     date: {
       marginLeft: 8,
@@ -210,6 +206,9 @@ const getStyles = (theme) =>
       marginHorizontal: 30,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      includeFontPadding: false,
+      textAlignVertical: "center",
+      paddingVertical: 8,
     },
     radius10: {
       borderRadius: 10,

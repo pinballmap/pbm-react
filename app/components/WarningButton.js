@@ -31,12 +31,11 @@ const getStyles = (theme) =>
     },
     buttonStyle: {
       borderRadius: 25,
-      paddingHorizontal: 10,
+      padding: 10,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.red2,
-      height: 40,
       overflow: "visible",
       shadowColor:
         theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",

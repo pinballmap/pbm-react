@@ -132,7 +132,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           {!loggedIn ? (
             <View>
               <TextInput
-                style={[{ height: 40 }, s.textInput]}
+                style={s.textInput}
                 underlineColorAndroid="transparent"
                 onChangeText={(name) => setName(name)}
                 returnKeyType="done"
@@ -141,7 +141,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
                 autoCorrect={false}
               />
               <TextInput
-                style={[{ height: 40 }, s.textInput]}
+                style={s.textInput}
                 underlineColorAndroid="transparent"
                 onChangeText={(email) => setEmail(email)}
                 returnKeyType="done"
@@ -188,10 +188,12 @@ const getStyles = (theme) =>
       marginBottom: 5,
       borderRadius: 10,
       paddingHorizontal: 10,
-      paddingVertical: 5,
+      paddingVertical: 8,
       textAlign: "left",
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     boldFont: {
       fontFamily: "Nunito-Bold",

@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { FilterLocationActivity } from "../components";
@@ -21,8 +21,11 @@ import getActivityIcon from "../utils/getActivityIcon";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
-
 import { formatLongDate } from "../utils/dateUtils";
+
+const BASE_ICON_SIZE = 18;
+const MAX_FONT_SCALE = 1.6;
+const SCALE_OFFSET = 2;
 
 const LocationActivity = ({
   user,
@@ -43,6 +46,12 @@ const LocationActivity = ({
   const scrollViewRef = useRef(null);
   const filtersChangedRef = useRef(false);
   const { id: userId, loggedIn } = user;
+  const { fontScale } = useWindowDimensions();
+  const clampedScale = Math.min(fontScale, MAX_FONT_SCALE);
+  const iconSize =
+    clampedScale > 1
+      ? BASE_ICON_SIZE * clampedScale - SCALE_OFFSET * clampedScale
+      : BASE_ICON_SIZE;
 
   const yourActivitySelected =
     loggedIn && selectedLocationActivities.includes("your_activity");
@@ -191,8 +200,8 @@ const LocationActivity = ({
           {!!admin_title && (
             <MaterialCommunityIcons
               name="shield-account"
-              size={15}
-              style={s.rankIcon}
+              size={iconSize}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
               color={theme.shield}
             />
           )}
@@ -200,29 +209,32 @@ const LocationActivity = ({
             <Image
               contentFit="contain"
               source={contributor_icon}
-              style={s.rankIcon}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
               contentPosition="bottom"
             />
           )}
           {!!user_operator_id && user_operator_id === location_operator_id && (
             <MaterialCommunityIcons
               name="wrench"
-              style={[s.rankIcon, s.operatorIcon]}
-              size={15}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
+              size={iconSize}
               color={theme.wrench}
             />
           )}
           {!!flag && flagImages[flag] && (
             <Image
               source={flagImages[flag]}
-              style={[s.flagIcon, { width: getFlagWidth(flag, 15) }]}
+              style={[
+                s.flagIcon,
+                { height: iconSize, width: getFlagWidth(flag, 15) },
+              ]}
             />
           )}
         </View>
         <Text style={[s.date, s.italic, { paddingTop: 0 }]}>{time}</Text>
       </View>
     ) : (
-      <Text style={s.date}>{time}</Text>
+      <Text style={[s.date, s.italic]}>{time}</Text>
     );
     switch (submission_type) {
       case "new_lmx": {
@@ -533,7 +545,7 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
@@ -601,17 +613,11 @@ const getStyles = (theme) =>
       marginBottom: 8,
     },
     rankIcon: {
-      width: 15,
-      height: 15,
       marginLeft: 5,
     },
     flagIcon: {
-      height: 15,
       marginLeft: 5,
       borderRadius: 3,
-    },
-    operatorIcon: {
-      marginLeft: 5,
     },
     paginationContainer: {
       flexDirection: "row",

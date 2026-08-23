@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Switch, View } from "react-native";
+import { StyleSheet, Switch, View } from "react-native";
 import { Text } from "./index";
 import React, { useContext } from "react";
 import { ThemeContext } from "../theme-context";
@@ -42,7 +42,7 @@ const getStyles = (theme) =>
   StyleSheet.create({
     container: {
       marginVertical: 15,
-      marginHorizontal: 15,
+      marginHorizontal: 10,
     },
     titleText: {
       textAlign: "center",
@@ -55,7 +55,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text2,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 5,
       marginRight: 15,

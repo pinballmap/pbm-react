@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   interpolateColor,
@@ -69,7 +69,7 @@ const MachineCard = ({
             }
             style={s.metaIcon}
           />
-          <Text style={s.updated}>
+          <Text style={[s.updated]}>
             {machine.created_at !== machine.updated_at
               ? `Updated: ${formatDate(machine.updated_at)}`
               : `Added: ${formatDate(machine.created_at)}`}
@@ -137,7 +137,8 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text3,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
+      flex: 1,
     },
     machineListContainer: {
       flexDirection: "row",

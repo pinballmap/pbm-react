@@ -3,7 +3,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
   FlatList,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -219,62 +218,73 @@ export const Events = ({ query, user }) => {
           </>
         )}
       </ConfirmationModal>
-      <View>
-        <ButtonGroup
-          onPress={updateIdx}
-          selectedIndex={selectedIdx}
-          buttons={buttons}
-          containerStyle={s.buttonGroupContainer}
-          textStyle={s.buttonGroupInactive}
-          selectedButtonStyle={s.selButtonStyle}
-          selectedTextStyle={s.selTextStyle}
-          innerBorderStyle={s.innerBorderStyle}
-        />
-      </View>
       {gettingEvents ? (
-        <View style={s.background}>
-          <ActivityIndicator />
-        </View>
+        <ScrollView>
+          <ButtonGroup
+            onPress={updateIdx}
+            selectedIndex={selectedIdx}
+            buttons={buttons}
+          />
+          <View style={s.background}>
+            <ActivityIndicator />
+          </View>
+        </ScrollView>
       ) : error ? (
-        <Text
-          style={{
-            textAlign: "center",
-            fontFamily: "Nunito-Bold",
-            marginTop: 15,
-            color: theme.text2,
-          }}
-        >
-          {`Something went wrong. In the meantime, you can check the `}
+        <ScrollView>
+          <ButtonGroup
+            onPress={updateIdx}
+            selectedIndex={selectedIdx}
+            buttons={buttons}
+          />
           <Text
-            style={s.textLink}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                "https://www.ifpapinball.com/calendar/",
-              )
-            }
+            style={{
+              textAlign: "center",
+              fontFamily: "Nunito-Bold",
+              marginTop: 15,
+              color: theme.text2,
+            }}
           >
-            IFPA calendar
-          </Text>
-          {` on their site.`}
-        </Text>
-      ) : (
-        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-          <Text style={s.sourceText}>
-            These events are brought to you by the{" "}
+            {`Something went wrong. In the meantime, you can check the `}
             <Text
-              style={s.smallLink}
+              style={s.textLink}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://www.ifpapinball.com/calendar/",
                 )
               }
             >
-              International Flipper Pinball Association (IFPA)
+              IFPA calendar
             </Text>
+            {` on their site.`}
           </Text>
+        </ScrollView>
+      ) : (
+        <View style={{ flex: 1, backgroundColor: theme.base1 }}>
           <FlatList
             data={events}
             contentContainerStyle={{ paddingBottom: insets.bottom }}
+            ListHeaderComponent={
+              <>
+                <ButtonGroup
+                  onPress={updateIdx}
+                  selectedIndex={selectedIdx}
+                  buttons={buttons}
+                />
+                <Text style={s.sourceText}>
+                  These events are brought to you by the{" "}
+                  <Text
+                    style={s.smallLink}
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        "https://www.ifpapinball.com/calendar/",
+                      )
+                    }
+                  >
+                    International Flipper Pinball Association (IFPA)
+                  </Text>
+                </Text>
+              </>
+            }
             ListEmptyComponent={
               <Text
                 style={s.problem}
@@ -329,39 +339,6 @@ const getStyles = (theme) =>
     background: {
       padding: 30,
       backgroundColor: theme.base1,
-    },
-    buttonGroupContainer: {
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
     },
     locationName: {
       fontFamily: "Nunito-ExtraBold",
@@ -468,7 +445,7 @@ const getStyles = (theme) =>
     },
     italic: {
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
   });
 

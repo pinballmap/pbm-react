@@ -8,10 +8,10 @@ import React, {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
@@ -35,6 +35,10 @@ import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 
 import { formatLongDate } from "../utils/dateUtils";
+
+const BASE_ICON_SIZE = 18;
+const MAX_FONT_SCALE = 1.6;
+const SCALE_OFFSET = 2;
 
 const RecentActivity = ({
   query,
@@ -81,6 +85,12 @@ const RecentActivity = ({
     "Global",
   ];
   const { id: userId, loggedIn } = user;
+  const { fontScale } = useWindowDimensions();
+  const clampedScale = Math.min(fontScale, MAX_FONT_SCALE);
+  const iconSize =
+    clampedScale > 1
+      ? BASE_ICON_SIZE * clampedScale - SCALE_OFFSET * clampedScale
+      : BASE_ICON_SIZE;
 
   useEffect(() => {
     navigation.setOptions({
@@ -305,8 +315,8 @@ const RecentActivity = ({
           {!!admin_title && (
             <MaterialCommunityIcons
               name="shield-account"
-              size={15}
-              style={s.rankIcon}
+              size={iconSize}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
               color={theme.shield}
             />
           )}
@@ -314,22 +324,25 @@ const RecentActivity = ({
             <Image
               contentFit="contain"
               source={contributor_icon}
-              style={s.rankIcon}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
               contentPosition="bottom"
             />
           )}
           {!!user_operator_id && user_operator_id === location_operator_id && (
             <MaterialCommunityIcons
               name="wrench"
-              style={[s.rankIcon, s.operatorIcon]}
-              size={15}
+              style={[s.rankIcon, { width: iconSize, height: iconSize }]}
+              size={iconSize}
               color={theme.wrench}
             />
           )}
           {!!flag && flagImages[flag] && (
             <Image
               source={flagImages[flag]}
-              style={[s.flagIcon, { width: getFlagWidth(flag, 15) }]}
+              style={[
+                s.flagIcon,
+                { height: iconSize, width: getFlagWidth(flag, 15) },
+              ]}
             />
           )}
         </View>
@@ -420,16 +433,6 @@ const RecentActivity = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      <ButtonGroup
-        onPress={updateIdx}
-        selectedIndex={btnIdx}
-        buttons={buttons}
-        containerStyle={s.buttonGroupContainer}
-        textStyle={s.buttonGroupInactive}
-        selectedButtonStyle={s.selButtonStyle}
-        selectedTextStyle={s.selTextStyle}
-        innerBorderStyle={s.innerBorderStyle}
-      />
       {selectedActivities.length || selectedActivityMachines.length ? (
         <View style={s.filterView}>
           <Text style={s.filter}>Clear filters</Text>
@@ -442,6 +445,11 @@ const RecentActivity = ({
         </View>
       ) : null}
       <ScrollView ref={scrollViewRef} style={{ marginTop: 10 }}>
+        <ButtonGroup
+          onPress={updateIdx}
+          selectedIndex={btnIdx}
+          buttons={buttons}
+        />
         {fetchingRecentActivity ? (
           <ActivityIndicator />
         ) : !recentActivity || recentActivity.length === 0 ? (
@@ -558,7 +566,7 @@ const getStyles = (theme) =>
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
@@ -655,54 +663,15 @@ const getStyles = (theme) =>
       borderWidth: 2,
       opacity: 1.0,
     },
-    buttonGroupContainer: {
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
-    },
     textContainer: {
       width: "85%",
     },
     rankIcon: {
-      width: 15,
-      height: 15,
       marginLeft: 5,
     },
     flagIcon: {
-      height: 15,
       marginLeft: 5,
       borderRadius: 3,
-    },
-    operatorIcon: {
-      marginLeft: 5,
     },
     paginationContainer: {
       flexDirection: "row",

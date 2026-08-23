@@ -295,7 +295,6 @@ const getStyles = (theme) =>
     inputContainer: {
       flexDirection: "row",
       alignItems: "center",
-      height: 50,
       borderRadius: 25,
       borderWidth: 1,
       backgroundColor: theme.white,
@@ -303,6 +302,9 @@ const getStyles = (theme) =>
       marginVertical: 15,
       marginHorizontal: 25,
       paddingHorizontal: 10,
+      paddingVertical: 12,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     inputText: {
       paddingLeft: 5,

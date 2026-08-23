@@ -134,7 +134,7 @@ const Resources = () => {
               )
             }
           >{`Pinball People`}</Text>
-          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions!`}
+          {` is a friendly Discord group for chatting all day about pinball. No politics, no hate, no drama. You can find at least one of us from Pinball Map in there, in case you have quick map comments or questions.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -157,7 +157,7 @@ const Resources = () => {
             style={s.textLink}
             onPress={() => WebBrowser.openBrowserAsync("https://pinside.com/")}
           >{`Pinside`}</Text>
-          {` is a huge community resource. It's especially useful for solving issues with your machines. But it also has a whole lot more.`}
+          {` is a huge and active community resource. It's useful for solving issues with your machines, buying/selling, and discussing pinball.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -181,7 +181,7 @@ const Resources = () => {
               WebBrowser.openBrowserAsync("https://www.kineticist.com/")
             }
           >{`Kineticist`}</Text>
-          {` is a digital publication and community resource for the pinball and physical gaming communities. They also run This Week in Pinball! We have `}
+          {` is a digital publication and community resource for the pinball and physical gaming communities. They also run This Week in Pinball. We have `}
           <Text
             style={s.textLink}
             onPress={() =>
@@ -189,8 +189,8 @@ const Resources = () => {
                 "https://www.kineticist.com/blog-category/pinball-map-update",
               )
             }
-          >{`contributed articles to it`}</Text>
-          {`!`}
+          >{`contributed articles to it and TWIP`}</Text>
+          {`.`}
         </Text>
         <View style={s.hr}></View>
         <Pressable
@@ -266,15 +266,15 @@ const Resources = () => {
         <View style={s.hr}></View>
         <Pressable
           onPress={() =>
-            WebBrowser.openBrowserAsync("https://www.deadflip.com/")
+            WebBrowser.openBrowserAsync("https://pinballprimer.github.io/")
           }
           style={[s.logoWrapper]}
         >
           <Image
-            source={require("../assets/images/Resource_DeadFlip.png")}
+            source={require("../assets/images/Resource_PPrimerLogo.png")}
             style={{
               width: deviceWidth - 70,
-              height: deviceWidth - 70,
+              height: (deviceWidth - 70) / 2.126,
             }}
           />
         </Pressable>
@@ -282,10 +282,10 @@ const Resources = () => {
           <Text
             style={s.textLink}
             onPress={() =>
-              WebBrowser.openBrowserAsync("https://www.deadflip.com/")
+              WebBrowser.openBrowserAsync("https://pinballprimer.github.io/")
             }
-          >{`Dead Flip`}</Text>
-          {` is the preeminent pinball streamer (less active now, but still good content)! The host, Jack Danger, has been promoting pinball for years and is a funny person with a big fanbase.`}
+          >{`Pinball Primer`}</Text>
+          {` is a large and growing ruleset and strategy resource.`}
         </Text>
       </Screen>
     </SafeAreaView>

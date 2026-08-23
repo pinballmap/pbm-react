@@ -243,7 +243,7 @@ function EditLocationDetails({ navigation, ...props }) {
             </Text>
             <Text style={s.title}>Phone</Text>
             <TextInput
-              style={[{ height: 40 }, s.textInput, s.radius10]}
+              style={[s.textInput, s.radius10]}
               underlineColorAndroid="transparent"
               onChangeText={(phone) => setPhone(phone)}
               value={phone}
@@ -255,7 +255,7 @@ function EditLocationDetails({ navigation, ...props }) {
             />
             <Text style={s.title}>Website</Text>
             <TextInput
-              style={[{ height: 40 }, s.textInput, s.radius10]}
+              style={[s.textInput, s.radius10]}
               underlineColorAndroid="transparent"
               onChangeText={(website) => setWebsite(website)}
               value={website}
@@ -268,7 +268,7 @@ function EditLocationDetails({ navigation, ...props }) {
             <Text style={s.title}>Location Notes</Text>
             <TextInput
               multiline={true}
-              style={[{ height: 100 }, s.textInput, s.radius10]}
+              style={[{ minHeight: 120 }, s.textInput, s.radius10]}
               onChangeText={(description) => setDescription(description)}
               value={description}
               underlineColorAndroid="transparent"
@@ -345,7 +345,7 @@ const getStyles = (theme) =>
       marginLeft: 105,
       fontSize: 13,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       color: theme.text3,
     },
     pageTitle: {
@@ -355,7 +355,7 @@ const getStyles = (theme) =>
     pageTitleText: {
       textAlign: "center",
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       fontSize: 18,
       color: theme.purpleLight,
     },
@@ -373,9 +373,11 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginHorizontal: 20,
       paddingHorizontal: 10,
-      paddingVertical: 5,
+      paddingVertical: 8,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     radius10: {
       borderRadius: 10,

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -18,8 +19,11 @@ import MaterialCommunityIcons from "@react-native-vector-icons/material-design-i
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
-
 import { formatDate } from "../utils/dateUtils";
+
+const BASE_ICON_SIZE = 18;
+const MAX_FONT_SCALE = 1.6;
+const SCALE_OFFSET = 2;
 
 const MachineComment = ({ commentObj, user, location: loc, operators }) => {
   const dispatch = useDispatch();
@@ -52,6 +56,12 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [comment, setComment] = useState(initialComment);
+  const { fontScale } = useWindowDimensions();
+  const clampedScale = Math.min(fontScale, MAX_FONT_SCALE);
+  const iconSize =
+    clampedScale > 1
+      ? BASE_ICON_SIZE * clampedScale - SCALE_OFFSET * clampedScale
+      : BASE_ICON_SIZE;
   const onEditPress = async () => {
     try {
       setIsLoading(true);
@@ -167,7 +177,7 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
             {!!admin_title && (
               <MaterialCommunityIcons
                 name="shield-account"
-                size={15}
+                size={iconSize}
                 color={theme.shield}
                 style={[s.rankIcon, { marginRight: 3 }]}
               />
@@ -176,13 +186,16 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
               <Image
                 contentFit="fill"
                 source={contributor_icon}
-                style={s.rankIcon}
+                style={[s.rankIcon, { width: iconSize, height: iconSize }]}
               />
             )}
             {!!flag && flagImages[flag] && (
               <Image
                 source={flagImages[flag]}
-                style={[s.flagIcon, { width: getFlagWidth(flag, 15) }]}
+                style={[
+                  s.flagIcon,
+                  { height: iconSize, width: getFlagWidth(flag, 15) },
+                ]}
               />
             )}
           </View>
@@ -219,9 +232,14 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
             >
               <MaterialCommunityIcons
                 name="wrench"
-                size={15}
+                size={iconSize}
                 color={theme.wrench}
-                style={{ marginRight: 5, marginTop: 5 }}
+                style={{
+                  width: iconSize,
+                  height: iconSize,
+                  marginRight: 5,
+                  marginTop: 5,
+                }}
               />
               <Text style={[s.subtitleStyle, s.italic]}>
                 Operator: {operator.name}
@@ -258,24 +276,23 @@ const getStyles = (theme) =>
     },
     subtitleMargin: {
       marginTop: 4,
-      marginHorizontal: 0,
+      marginLeft: 8,
+      marginRight: 0,
     },
     username: {
       color: theme.pink1,
-      marginLeft: 8,
       fontSize: 14,
       textDecorationLine: "underline",
     },
     usernamePlain: {
       color: theme.text2,
-      marginLeft: 8,
       fontSize: 14,
     },
     italic: {
       fontFamily: "Nunito-Italic",
       color: theme.text3,
       fontSize: 14,
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     editDelete: {
       textDecorationLine: "underline",
@@ -307,12 +324,9 @@ const getStyles = (theme) =>
       color: theme.text,
     },
     rankIcon: {
-      width: 15,
-      height: 15,
       marginLeft: 3,
     },
     flagIcon: {
-      height: 15,
       marginLeft: 7,
       borderRadius: 3,
     },

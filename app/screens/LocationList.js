@@ -131,22 +131,19 @@ const LocationList = ({
           </Text>
         </View>
       </ConfirmationModal>
-      <ButtonGroup
-        onPress={updateIndex}
-        selectedIndex={filterIdx}
-        buttons={["Near", "A-Z", "# Pins", "Date"]}
-        containerStyle={s.buttonGroupContainer}
-        textStyle={s.buttonGroupInactive}
-        selectedButtonStyle={s.selButtonStyle}
-        selectedTextStyle={s.selTextStyle}
-        innerBorderStyle={s.innerBorderStyle}
-      />
       {isFetchingList ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           ref={flatListRef}
           data={displayLocations}
+          ListHeaderComponent={
+            <ButtonGroup
+              onPress={updateIndex}
+              selectedIndex={filterIdx}
+              buttons={["Near", "A-Z", "# Pins", "Date"]}
+            />
+          }
           contentContainerStyle={{ paddingBottom: insets.bottom }}
           renderItem={({ item }) => (
             <LocationCard
@@ -245,39 +242,6 @@ const LocationList = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
-    buttonGroupContainer: {
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
-    },
     confirmText: {
       textAlign: "center",
       fontSize: 16,

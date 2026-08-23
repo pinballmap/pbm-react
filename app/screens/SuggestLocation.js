@@ -512,7 +512,6 @@ function SuggestLocation({ navigation, route, location, ...props }) {
               style: [
                 {
                   fontFamily: "Nunito-Regular",
-                  height: 40,
                   width: deviceWidth - 40,
                 },
                 s.textInput,
@@ -540,7 +539,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>Street</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(street) => setStreet(street)}
             returnKeyType="done"
@@ -552,7 +551,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>City</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(city) => setCity(city)}
             returnKeyType="done"
@@ -564,7 +563,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>State</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(state) => setState(state)}
             returnKeyType="done"
@@ -576,7 +575,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>Zip Code</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(zip) => setZip(zip)}
             returnKeyType="done"
@@ -592,7 +591,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>Phone</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(phone) => setPhone(phone)}
             returnKeyType="done"
@@ -604,7 +603,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           />
           <Text style={s.title}>Website</Text>
           <TextInput
-            style={[{ height: 40, textAlign: "left" }, s.textInput, s.radius10]}
+            style={[s.textInput, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(website) => setWebsite(website)}
             returnKeyType="done"
@@ -617,7 +616,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <Text style={s.title}>Location Notes</Text>
           <TextInput
             multiline={true}
-            style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+            style={[{ padding: 5, minHeight: 120 }, s.textInput, s.radius10]}
             onChangeText={(description) => setDescription(description)}
             underlineColorAndroid="transparent"
             placeholder={
@@ -742,7 +741,7 @@ const getStyles = (theme) =>
       marginLeft: 105,
       fontSize: 13,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       color: theme.text3,
     },
     previewMachine: {
@@ -756,7 +755,7 @@ const getStyles = (theme) =>
     pageTitleText: {
       textAlign: "center",
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       fontSize: 18,
       color: theme.pink1,
     },
@@ -767,9 +766,11 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginHorizontal: 20,
       paddingHorizontal: 10,
-      paddingVertical: 5,
+      paddingVertical: 8,
       fontFamily: "Nunito-Regular",
       fontSize: 16,
+      includeFontPadding: false,
+      textAlignVertical: "center",
     },
     radius10: {
       borderRadius: 10,
@@ -802,7 +803,7 @@ const getStyles = (theme) =>
     error: {
       color: theme.red2,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
     },
     plusButton: {
       color: theme.red2,

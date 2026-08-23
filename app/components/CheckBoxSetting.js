@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Text } from "./index";
 import Checkbox from "expo-checkbox";
 import React, { useContext } from "react";
@@ -41,7 +41,7 @@ const getStyles = (theme) =>
       fontSize: 14,
       color: theme.text2,
       fontFamily: "Nunito-Italic",
-      fontStyle: Platform.OS === "android" ? undefined : "italic",
+      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,

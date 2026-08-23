@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import FontAwesome5 from "@react-native-vector-icons/fontawesome5/static";
 import { ThemeContext } from "../theme-context";
 import { ButtonGroup, LocationCard, NotLoggedIn, Text } from "../components";
@@ -10,8 +10,6 @@ import {
   selectFavoriteLocationFilterBy,
   fetchLifeListMachineIds,
 } from "../actions/user_actions";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const sortLocations = (locations, idx, lat, lon) => {
   const locs = [...locations];
@@ -87,70 +85,55 @@ export const Saved = ({
         <View style={{ flex: 1 }}>
           {sortedLocations.length > 0 ? (
             <View style={{ flex: 1 }}>
-              <ButtonGroup
-                onPress={selectFavoriteLocationFilterBy}
-                selectedIndex={selectedFavoriteLocationFilter}
-                buttons={["Near", "A-Z", "Added"]}
-                containerStyle={s.buttonGroupContainer}
-                textStyle={s.buttonGroupInactive}
-                selectedButtonStyle={s.selButtonStyle}
-                selectedTextStyle={s.selTextStyle}
-                innerBorderStyle={s.innerBorderStyle}
+              <FlatList
+                data={sortedLocations}
+                keyExtractor={(item) => `saved-${item.location.id}`}
+                ListHeaderComponent={
+                  <ButtonGroup
+                    onPress={selectFavoriteLocationFilterBy}
+                    selectedIndex={selectedFavoriteLocationFilter}
+                    buttons={["Near", "A-Z", "Added"]}
+                  />
+                }
+                renderItem={({ item }) => (
+                  <LocationCard
+                    locationType={
+                      item.location.location_type_id
+                        ? (locations.locationTypes.find(
+                            (l) => l.id === item.location.location_type_id,
+                          ) ?? {})
+                        : {}
+                    }
+                    name={item.location.name}
+                    distance={getDistanceWithUnit(
+                      lat,
+                      lon,
+                      item.location.lat,
+                      item.location.lon,
+                      unitPreference,
+                    )}
+                    numMachines={item.location.machines.length}
+                    street={item.location.street}
+                    city={item.location.city}
+                    state={item.location.state}
+                    zip={item.location.zip}
+                    machines={item.location.machines}
+                    navigation={navigation}
+                    id={item.location.id}
+                    saved
+                    notInListCount={
+                      loggedIn && lifeListMachineIds.length > 0
+                        ? item.location.machines.filter(
+                            (machine) => !lifeListMachineIdSet.has(machine.id),
+                          ).length
+                        : undefined
+                    }
+                    userId={userId}
+                    allAges={item.location.all_ages}
+                    paymentType={item.location.payment_type}
+                  />
+                )}
               />
-              <View
-                style={{
-                  flex: 1,
-                  position: "absolute",
-                  left: 0,
-                  top: 55,
-                  bottom: 0,
-                  right: 0,
-                }}
-              >
-                <FlatList
-                  data={sortedLocations}
-                  keyExtractor={(item) => `saved-${item.location.id}`}
-                  renderItem={({ item }) => (
-                    <LocationCard
-                      locationType={
-                        item.location.location_type_id
-                          ? (locations.locationTypes.find(
-                              (l) => l.id === item.location.location_type_id,
-                            ) ?? {})
-                          : {}
-                      }
-                      name={item.location.name}
-                      distance={getDistanceWithUnit(
-                        lat,
-                        lon,
-                        item.location.lat,
-                        item.location.lon,
-                        unitPreference,
-                      )}
-                      numMachines={item.location.machines.length}
-                      street={item.location.street}
-                      city={item.location.city}
-                      state={item.location.state}
-                      zip={item.location.zip}
-                      machines={item.location.machines}
-                      navigation={navigation}
-                      id={item.location.id}
-                      saved
-                      notInListCount={
-                        loggedIn && lifeListMachineIds.length > 0
-                          ? item.location.machines.filter(
-                              (machine) =>
-                                !lifeListMachineIdSet.has(machine.id),
-                            ).length
-                          : undefined
-                      }
-                      userId={userId}
-                      allAges={item.location.all_ages}
-                      paymentType={item.location.payment_type}
-                    />
-                  )}
-                />
-              </View>
             </View>
           ) : (
             <View style={{ margin: 15 }}>
@@ -172,39 +155,6 @@ const getStyles = (theme) =>
     background: {
       flex: 1,
       backgroundColor: theme.base1,
-    },
-    buttonGroupContainer: {
-      borderWidth: 0,
-      borderRadius: 25,
-      backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    buttonGroupInactive: {
-      color: theme.text2,
-      fontSize: deviceWidth < 321 ? 12 : 14,
-      fontFamily: "Nunito-SemiBold",
-    },
-    innerBorderStyle: {
-      width: 0,
-    },
-    selButtonStyle: {
-      borderWidth: 2,
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      backgroundColor: theme.white,
-      borderRadius: 25,
-    },
-    selTextStyle: {
-      color: theme.text2,
-      fontFamily: "Nunito-Bold",
     },
     savedIcon: {
       fontSize: 50,

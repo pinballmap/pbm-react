@@ -38,9 +38,8 @@ const getStyles = (theme) =>
     },
     buttonStyle: {
       borderRadius: 25,
-      paddingHorizontal: 20,
       backgroundColor: theme.theme == "dark" ? theme.base3 : theme.base4,
-      height: 40,
+      padding: 10,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
