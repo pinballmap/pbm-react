@@ -219,7 +219,7 @@ export const Events = ({ query, user }) => {
         )}
       </ConfirmationModal>
       {gettingEvents ? (
-        <ScrollView>
+        <ScrollView style={{ paddingTop: 10 }}>
           <ButtonGroup
             onPress={updateIdx}
             selectedIndex={selectedIdx}
@@ -230,7 +230,7 @@ export const Events = ({ query, user }) => {
           </View>
         </ScrollView>
       ) : error ? (
-        <ScrollView>
+        <ScrollView style={{ paddingTop: 10 }}>
           <ButtonGroup
             onPress={updateIdx}
             selectedIndex={selectedIdx}
@@ -262,7 +262,10 @@ export const Events = ({ query, user }) => {
         <View style={{ flex: 1, backgroundColor: theme.base1 }}>
           <FlatList
             data={events}
-            contentContainerStyle={{ paddingBottom: insets.bottom }}
+            contentContainerStyle={{
+              paddingTop: 10,
+              paddingBottom: insets.bottom,
+            }}
             ListHeaderComponent={
               <>
                 <ButtonGroup

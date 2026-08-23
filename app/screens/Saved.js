@@ -10,6 +10,7 @@ import {
   selectFavoriteLocationFilterBy,
   fetchLifeListMachineIds,
 } from "../actions/user_actions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const sortLocations = (locations, idx, lat, lon) => {
   const locs = [...locations];
@@ -44,6 +45,7 @@ export const Saved = ({
 }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
+  const insets = useSafeAreaInsets();
   const {
     id: userId,
     loggedIn,
@@ -95,6 +97,10 @@ export const Saved = ({
                     buttons={["Near", "A-Z", "Added"]}
                   />
                 }
+                contentContainerStyle={{
+                  paddingTop: 10,
+                  paddingBottom: insets.bottom,
+                }}
                 renderItem={({ item }) => (
                   <LocationCard
                     locationType={

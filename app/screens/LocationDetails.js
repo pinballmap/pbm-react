@@ -923,7 +923,7 @@ const LocationDetails = (props) => {
                     rowGap: 6,
                     columnGap: 14,
                     marginTop: 5,
-                    marginBottom: 10,
+                    marginBottom: 15,
                   },
                   s.row,
                 ]}
@@ -1039,7 +1039,6 @@ const LocationDetails = (props) => {
                 <Pressable
                   style={({ pressed }) => [
                     s.column,
-                    s.marginB,
                     s.squareButton,
                     pressed ? s.opacity04 : s.opacity1,
                   ]}
@@ -1062,7 +1061,6 @@ const LocationDetails = (props) => {
                 <Pressable
                   style={({ pressed }) => [
                     s.column,
-                    s.marginB,
                     s.squareButton,
                     pressed ? s.opacity04 : s.opacity1,
                   ]}
@@ -1085,7 +1083,6 @@ const LocationDetails = (props) => {
                 <Pressable
                   style={({ pressed }) => [
                     s.column,
-                    s.marginB,
                     s.squareButton,
                     pressed ? s.opacity04 : s.opacity1,
                   ]}
@@ -1111,7 +1108,6 @@ const LocationDetails = (props) => {
               <Pressable
                 style={({ pressed }) => [
                   s.column,
-                  s.marginB,
                   s.squareButton,
                   pressed ? s.opacity04 : s.opacity1,
                 ]}
@@ -2305,6 +2301,7 @@ const getStyles = (theme) =>
     squareButtonStripContent: {
       paddingHorizontal: SQUARE_BUTTON_STRIP_PADDING,
       columnGap: SQUARE_BUTTON_GAP,
+      marginBottom: 15,
     },
     squareButtonStripContentCentered: {
       flexGrow: 1,

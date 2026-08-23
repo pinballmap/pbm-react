@@ -144,7 +144,10 @@ const LocationList = ({
               buttons={["Near", "A-Z", "# Pins", "Date"]}
             />
           }
-          contentContainerStyle={{ paddingBottom: insets.bottom }}
+          contentContainerStyle={{
+            paddingTop: 10,
+            paddingBottom: insets.bottom,
+          }}
           renderItem={({ item }) => (
             <LocationCard
               locationType={
