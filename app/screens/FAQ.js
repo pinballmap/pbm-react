@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
-import { Screen, Text } from "../components";
+import { Screen, ScrollToTop, Text } from "../components";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import Entypo from "@react-native-vector-icons/entypo/static";
-import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import * as WebBrowser from "expo-web-browser";
 import { Image } from "expo-image";
@@ -24,7 +23,8 @@ const FAQ = ({ navigation, user, route }) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const handleScroll = (event) => {
-    setShowScrollToTop(event.nativeEvent.contentOffset.y > 150);
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
   };
 
   const scrollToTop = () => {
@@ -867,16 +867,7 @@ const FAQ = ({ navigation, user, route }) => {
           </Text>
         </View>
       </Screen>
-      {showScrollToTop && (
-        <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
-          <FontAwesome6
-            name="arrow-up"
-            iconStyle="solid"
-            size={32}
-            color={theme.white}
-          />
-        </Pressable>
-      )}
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
     </SafeAreaView>
   );
 };
@@ -956,24 +947,6 @@ const getStyles = (theme) =>
     tocLabel: {
       color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
       textDecorationLine: "underline",
-    },
-    upButton: {
-      justifyContent: "center",
-      position: "absolute",
-      right: 25,
-      bottom: 25,
-      backgroundColor: theme.purple,
-      padding: 10,
-      borderRadius: 15,
-    },
-    boxShadow: {
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
     },
   });
 

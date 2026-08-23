@@ -32,6 +32,7 @@ import MachineScore from "./MachineScore";
 import ReadMore from "./ReadMore";
 import CustomIcon from "./CustomIcon";
 import Toast, { useToast } from "./Toast";
+import ScrollToTop from "./ScrollToTop";
 
 export {
   LocationCard,
@@ -69,4 +70,5 @@ export {
   CustomIcon,
   Toast,
   useToast,
+  ScrollToTop,
 };

@@ -1,10 +1,16 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FlatList, StyleSheet, View } from "react-native";
 import FontAwesome5 from "@react-native-vector-icons/fontawesome5/static";
 import { ThemeContext } from "../theme-context";
-import { ButtonGroup, LocationCard, NotLoggedIn, Text } from "../components";
+import {
+  ButtonGroup,
+  LocationCard,
+  NotLoggedIn,
+  ScrollToTop,
+  Text,
+} from "../components";
 import { getDistance, getDistanceWithUnit } from "../utils/utilityFunctions";
 import {
   selectFavoriteLocationFilterBy,
@@ -46,6 +52,8 @@ export const Saved = ({
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const flatListRef = useRef(null);
   const {
     id: userId,
     loggedIn,
@@ -76,6 +84,15 @@ export const Saved = ({
     });
   }, [navigation, loggedIn]); // eslint-disable-line
 
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
+
   return (
     <View style={s.background}>
       {!loggedIn ? (
@@ -88,8 +105,11 @@ export const Saved = ({
           {sortedLocations.length > 0 ? (
             <View style={{ flex: 1 }}>
               <FlatList
+                ref={flatListRef}
                 data={sortedLocations}
                 keyExtractor={(item) => `saved-${item.location.id}`}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
                 ListHeaderComponent={
                   <ButtonGroup
                     onPress={selectFavoriteLocationFilterBy}
@@ -140,6 +160,7 @@ export const Saved = ({
                   />
                 )}
               />
+              <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
             </View>
           ) : (
             <View style={{ margin: 15 }}>

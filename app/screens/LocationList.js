@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   ConfirmationModal,
   LocationCard,
+  ScrollToTop,
   Text,
 } from "../components";
 import { getDistanceWithUnit } from "../utils/utilityFunctions";
@@ -37,6 +38,7 @@ const LocationList = ({
   const [page, setPage] = useState(1);
   const [showNoLocationTrackingModal, setShowNoLocationTrackingModal] =
     useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const flatListRef = useRef(null);
   const needsRefetchRef = useRef(true);
   const listNeedsRefetchRef = useRef(false);
@@ -103,6 +105,15 @@ const LocationList = ({
     getListLocations(bounds, 1, buttonIndex);
   };
 
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
+
   const goToPage = (newPage) => {
     setPage(newPage);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
@@ -137,6 +148,8 @@ const LocationList = ({
         <FlatList
           ref={flatListRef}
           data={displayLocations}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
           ListHeaderComponent={
             <ButtonGroup
               onPress={updateIndex}
@@ -239,6 +252,7 @@ const LocationList = ({
           }
         />
       )}
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
     </View>
   );
 };

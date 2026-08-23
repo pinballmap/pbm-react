@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
@@ -14,6 +14,7 @@ import {
   ButtonGroup,
   ConfirmationModal,
   HyperlinkText,
+  ScrollToTop,
 } from "../components";
 import { getIfpaData, getIfpaTournament } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
@@ -33,10 +34,21 @@ export const Events = ({ query, user }) => {
   const [modalError, setModalError] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [radius, setRadius] = useState(50);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const flatListRef = useRef(null);
 
   const theme = useTheme();
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
+
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
 
   const { neLat, neLon, swLat, swLon } = query;
   const distanceUnit = user.unitPreference ? "kilometers" : "miles";
@@ -261,7 +273,10 @@ export const Events = ({ query, user }) => {
       ) : (
         <View style={{ flex: 1, backgroundColor: theme.base1 }}>
           <FlatList
+            ref={flatListRef}
             data={events}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
             contentContainerStyle={{
               paddingTop: 10,
               paddingBottom: insets.bottom,
@@ -331,6 +346,7 @@ export const Events = ({ query, user }) => {
             }}
             keyExtractor={(event) => `${event.tournament_id}`}
           />
+          <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
         </View>
       )}
     </View>

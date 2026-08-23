@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -11,7 +11,7 @@ import {
 import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { getData } from "../config/request";
-import { Screen, Text } from "../components";
+import { Screen, ScrollToTop, Text } from "../components";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import {
   SafeAreaView,
@@ -30,6 +30,17 @@ const About = ({ navigation, appAlert }) => {
     num_locations: 0,
     num_lmxes: 0,
   });
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const scrollRef = useRef(null);
+
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -52,7 +63,12 @@ const About = ({ navigation, appAlert }) => {
 
   return (
     <SafeAreaView edges={["right", "left"]} style={s.background}>
-      <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
+      <Screen
+        ref={scrollRef}
+        contentContainerStyle={{ paddingBottom: insets.bottom }}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
         <Image
           source={require("../assets/images/pinballmapcom_nocom.png")}
           contentFit="contain"
@@ -445,6 +461,7 @@ const About = ({ navigation, appAlert }) => {
           ) : null}
         </View>
       </Screen>
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
     </SafeAreaView>
   );
 };

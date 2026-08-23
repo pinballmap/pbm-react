@@ -36,6 +36,7 @@ import {
   PbmButton,
   ReadMore,
   RemoveMachineModal,
+  ScrollToTop,
   Text,
   Toast,
   useToast,
@@ -1870,16 +1871,7 @@ const LocationDetails = (props) => {
           })}
         </View>
       </ConfirmationModal>
-      {showScrollToTop && (
-        <Pressable onPress={scrollToTop} style={[s.upButton, s.boxShadow]}>
-          <FontAwesome6
-            name="arrow-up"
-            iconStyle="solid"
-            size={32}
-            color={theme.white}
-          />
-        </Pressable>
-      )}
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
       <Toast message={toastMessage} />
     </View>
   );
@@ -2240,15 +2232,6 @@ const getStyles = (theme) =>
       fontSize: 15,
       color: theme.text,
       fontFamily: "Nunito-Regular",
-    },
-    upButton: {
-      justifyContent: "center",
-      position: "absolute",
-      right: 25,
-      bottom: 25,
-      backgroundColor: theme.purple,
-      padding: 10,
-      borderRadius: 15,
     },
     adminIcon: {
       marginLeft: 2,

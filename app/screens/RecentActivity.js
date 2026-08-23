@@ -21,6 +21,7 @@ import {
   ActivityIndicator,
   ButtonGroup,
   FilterRecentActivity,
+  ScrollToTop,
   Text,
 } from "../components";
 import { formatNumWithCommas, boundsToCoords } from "../utils/utilityFunctions";
@@ -62,6 +63,7 @@ const RecentActivity = ({
   const [shouldRefresh, setShouldRefresh] = useState(true);
   const [page, setPage] = useState(1);
   const [pagy, setPagy] = useState(null);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollViewRef = useRef(null);
   const filtersChangedRef = useRef(false);
   const routeRef = useRef(route);
@@ -180,6 +182,15 @@ const RecentActivity = ({
       btnIdx,
     ],
   );
+
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  };
 
   const goToPage = (newPage) => {
     setFetchingRecentActivity(true);
@@ -444,7 +455,12 @@ const RecentActivity = ({
           />
         </View>
       ) : null}
-      <ScrollView ref={scrollViewRef} style={{ marginTop: 10 }}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={{ marginTop: 10 }}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
         <ButtonGroup
           onPress={updateIdx}
           selectedIndex={btnIdx}
@@ -544,6 +560,7 @@ const RecentActivity = ({
           </View>
         )}
       </ScrollView>
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
     </View>
   );
 };

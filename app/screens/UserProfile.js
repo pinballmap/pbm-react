@@ -19,6 +19,7 @@ import {
   ConfirmationModal,
   NotLoggedIn,
   PbmButton,
+  ScrollToTop,
   Text,
   WarningButton,
 } from "../components";
@@ -67,8 +68,18 @@ const UserProfile = ({
     !!(route?.params?.userId || user.loggedIn),
   );
   const [profileInfo, setProfileInfo] = useState({});
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollViewRef = useRef(null);
   const hasScrolledToMachineListRef = useRef(false);
+
+  const handleScroll = (event) => {
+    const positionY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(positionY > 150);
+  };
+
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  };
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -219,459 +230,80 @@ const UserProfile = ({
   }
 
   return (
-    <KeyboardAwareScrollView
-      ref={scrollViewRef}
-      scrollIndicatorInsets={{ right: 1 }}
-      style={{ flex: 1, backgroundColor: theme.base1 }}
-      keyboardShouldPersistTaps="handled"
-    >
-      {isOwnProfile && !user.loggedIn ? (
-        <>
-          <NotLoggedIn
-            text={`You're not logged in, so you don't have a profile.`}
-            onPress={() => navigation.navigate("Login")}
-          />
-          <View style={s.usernameContainer}>
-            <Text style={s.username}>Your Great Username</Text>
-            <View style={s.flagContainer}>
-              <Image
-                source={flagImages["pirate"]}
-                style={[s.profileFlag, { width: getFlagWidth("pirate", 40) }]}
-              />
-            </View>
-            <View style={s.rankView}>
-              <Text style={s.rankText}>Super Mapper</Text>
-              <Image
-                contentFit="fill"
-                source={require("../assets/images/SuperMapper.png")}
-                style={s.rankIcon}
-              />
-            </View>
-            <Text
-              style={s.joined}
-            >{`Joined: ${formatDate(new Date().toISOString())}`}</Text>
-          </View>
-          <View style={s.statContainer}>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Total contributions:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines added:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines removed:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machine comments:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>High scores added:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines in Life List:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Locations submitted:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Locations edited:</Text>
-              <Text style={s.statNum}>{getStatNum(0)}</Text>
-            </View>
-          </View>
-          <Text style={s.section}>Some recently edited locations</Text>
-          <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-            <Text style={s.none}>No edits yet</Text>
-          </View>
-          <Text style={s.section}>Your Machine List and High Scores</Text>
-          <View
-            style={{
-              paddingHorizontal: 20,
-              paddingTop: 10,
-              paddingBottom: 6,
-            }}
-          >
-            <Text style={s.sectionDescription}>
-              {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines here or when viewing a machine at a location.`}
-            </Text>
-          </View>
-          <View style={{ paddingTop: 8, marginBottom: 30 }}>
-            <Text style={s.none}>No machines or scores to list yet</Text>
-          </View>
-        </>
-      ) : (
-        <View>
-          {isOwnProfile && (
-            <>
-              <ConfirmationModal
-                visible={modalVisible}
-                closeModal={() => setModalVisible(false)}
-              >
-                <PbmButton
-                  title={"Log Me Out"}
-                  onPress={() => {
-                    setModalVisible(false);
-                    logout();
-                    navigation.navigate("Login");
-                  }}
-                />
-                <WarningButton
-                  title={"Stay Logged In"}
-                  onPress={() => setModalVisible(false)}
-                />
-              </ConfirmationModal>
-              <ConfirmationModal
-                visible={!!machineToRemove}
-                closeModal={() => setMachineToRemove(null)}
-              >
-                <Text style={s.modalConfirmText}>
-                  {`Remove `}
-                  <Text style={[s.bold, s.modalMachineName]}>
-                    {machineToRemove?.machine_name}
-                  </Text>
-                  {` from your life list?`}
-                </Text>
-                <PbmButton
-                  title={"Yes, Remove"}
-                  onPress={handleRemoveMachine}
-                />
-                <WarningButton
-                  title={"Cancel"}
-                  onPress={() => setMachineToRemove(null)}
-                />
-              </ConfirmationModal>
-              <ConfirmationModal
-                visible={accountModalVisible}
-                closeModal={closeAccountModal}
-                wide
-                loading={deletingAccount}
-              >
-                <View style={s.header}>
-                  <Text style={s.modalTitle}>Account Settings</Text>
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={35}
-                    onPress={closeAccountModal}
-                    style={s.xButton}
-                  />
-                </View>
-                <ScrollView
-                  keyboardShouldPersistTaps="handled"
-                  showsVerticalScrollIndicator={false}
-                  style={{ maxHeight: screenHeight * 0.75 }}
-                >
-                  <View style={s.modalSection}>
-                    <Text style={[s.sectionLabel, { marginTop: 10 }]}>
-                      Update Email
-                    </Text>
-                    <TextInput
-                      style={s.textInput}
-                      placeholder="New email address"
-                      placeholderTextColor={s.placeholderColor}
-                      value={newEmail}
-                      onChangeText={(value) => {
-                        setNewEmail(value);
-                        setEmailError(null);
-                        setEmailSuccess(false);
-                      }}
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType="email-address"
-                    />
-                    {!!emailError && (
-                      <Text style={s.formError}>{emailError}</Text>
-                    )}
-                    {emailSuccess && (
-                      <Text style={s.formSuccess}>Email updated!</Text>
-                    )}
-                    <PbmButton
-                      title={"Update Email"}
-                      onPress={handleUpdateEmail}
-                      disabled={updatingEmail || !newEmail}
-                    />
-                  </View>
-                  <View style={s.divider} />
-                  <View style={s.modalSection}>
-                    <Text style={s.sectionLabel}>Update Password</Text>
-                    <TextInput
-                      style={s.textInput}
-                      placeholder="Current password"
-                      placeholderTextColor={s.placeholderColor}
-                      value={currentPassword}
-                      onChangeText={(value) => {
-                        setCurrentPassword(value);
-                        setPasswordError(null);
-                        setPasswordSuccess(false);
-                      }}
-                      secureTextEntry
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <TextInput
-                      style={s.textInput}
-                      placeholder="New password"
-                      placeholderTextColor={s.placeholderColor}
-                      value={newPassword}
-                      onChangeText={(value) => {
-                        setNewPassword(value);
-                        setPasswordError(null);
-                        setPasswordSuccess(false);
-                      }}
-                      secureTextEntry
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <TextInput
-                      style={s.textInput}
-                      placeholder="Confirm new password"
-                      placeholderTextColor={s.placeholderColor}
-                      value={newPasswordConfirmation}
-                      onChangeText={(value) => {
-                        setNewPasswordConfirmation(value);
-                        setPasswordError(null);
-                        setPasswordSuccess(false);
-                      }}
-                      secureTextEntry
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    {!!passwordError && (
-                      <Text style={s.formError}>{passwordError}</Text>
-                    )}
-                    {passwordSuccess && (
-                      <Text style={s.formSuccess}>Password updated!</Text>
-                    )}
-                    <PbmButton
-                      title={"Update Password"}
-                      onPress={handleUpdatePassword}
-                      disabled={
-                        updatingPassword ||
-                        !currentPassword ||
-                        !newPassword ||
-                        !newPasswordConfirmation
-                      }
-                    />
-                  </View>
-                  <View style={s.divider} />
-                  <View style={s.modalSection}>
-                    {!showDeleteConfirm ? (
-                      <WarningButton
-                        title={"Delete Account"}
-                        onPress={() => setShowDeleteConfirm(true)}
-                      />
-                    ) : (
-                      <>
-                        <Text style={s.deleteWarning}>
-                          This will permanently delete your account. This cannot
-                          be undone.
-                        </Text>
-                        {!!deleteError && (
-                          <Text style={s.formError}>{deleteError}</Text>
-                        )}
-                        <PbmButton
-                          title={"Yes, Delete My Account"}
-                          onPress={handleDeleteAccount}
-                        />
-                        <WarningButton
-                          title={"Cancel"}
-                          onPress={() => {
-                            setShowDeleteConfirm(false);
-                            setDeleteError(null);
-                          }}
-                        />
-                      </>
-                    )}
-                  </View>
-                </ScrollView>
-              </ConfirmationModal>
-            </>
-          )}
-          <View style={s.usernameContainer}>
-            <Text style={s.username}>{displayUsername}</Text>
-            {!!flag && flagImages[flag] && (
+    <View style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        ref={scrollViewRef}
+        scrollIndicatorInsets={{ right: 1 }}
+        style={{ flex: 1, backgroundColor: theme.base1 }}
+        keyboardShouldPersistTaps="handled"
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        {isOwnProfile && !user.loggedIn ? (
+          <>
+            <NotLoggedIn
+              text={`You're not logged in, so you don't have a profile.`}
+              onPress={() => navigation.navigate("Login")}
+            />
+            <View style={s.usernameContainer}>
+              <Text style={s.username}>Your Great Username</Text>
               <View style={s.flagContainer}>
                 <Image
-                  source={flagImages[flag]}
-                  style={[s.profileFlag, { width: getFlagWidth(flag, 40) }]}
+                  source={flagImages["pirate"]}
+                  style={[s.profileFlag, { width: getFlagWidth("pirate", 40) }]}
                 />
               </View>
-            )}
-            {!!admin_title && (
               <View style={s.rankView}>
-                <Text style={s.rankText}>{admin_title}</Text>
-                <MaterialCommunityIcons
-                  name="shield-account"
-                  size={20}
-                  style={s.rankIcon}
-                  color={theme.shield}
-                />
-              </View>
-            )}
-            {!!contributor_rank && (
-              <View style={s.rankView}>
-                <Text style={s.rankText}>{contributor_rank}</Text>
+                <Text style={s.rankText}>Super Mapper</Text>
                 <Image
                   contentFit="fill"
-                  source={contributor_icon}
+                  source={require("../assets/images/SuperMapper.png")}
                   style={s.rankIcon}
                 />
               </View>
-            )}
-            {!!operator_name && (
-              <View style={s.rankView}>
-                <Text style={s.rankText}>{operator_name}</Text>
-                <MaterialCommunityIcons
-                  name="wrench"
-                  style={s.rankIcon}
-                  size={20}
-                  color={theme.wrench}
-                />
+              <Text
+                style={s.joined}
+              >{`Joined: ${formatDate(new Date().toISOString())}`}</Text>
+            </View>
+            <View style={s.statContainer}>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Total contributions:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
               </View>
-            )}
-            <Text style={s.joined}>{`Joined: ${formatDate(created_at)}`}</Text>
-            {isOwnProfile && (
-              <View style={s.accountSettingsContainer}>
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate("FindFlag", { userId: user.id })
-                  }
-                >
-                  <Text style={s.accountSettingsLink}>
-                    {flag ? "Change user flag" : "Set user flag"}
-                  </Text>
-                </Pressable>
-                <Text
-                  style={s.accountSettingsLink}
-                  onPress={() => setAccountModalVisible(true)}
-                >
-                  Account Settings
-                </Text>
-                <Text
-                  style={s.logoutLink}
-                  onPress={() => setModalVisible(true)}
-                >
-                  Logout
-                </Text>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines added:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
               </View>
-            )}
-          </View>
-          <View style={s.statContainer}>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Total contributions:</Text>
-              <Text style={s.statNum}>{getStatNum(num_total_submissions)}</Text>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines removed:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machine comments:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>High scores added:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines in Life List:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Locations submitted:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Locations edited:</Text>
+                <Text style={s.statNum}>{getStatNum(0)}</Text>
+              </View>
             </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines added:</Text>
-              <Text style={s.statNum}>{getStatNum(num_machines_added)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines removed:</Text>
-              <Text style={s.statNum}>{getStatNum(num_machines_removed)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machine comments:</Text>
-              <Text style={s.statNum}>{getStatNum(num_lmx_comments_left)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>High scores added:</Text>
-              <Text style={s.statNum}>{getStatNum(num_msx_scores_added)}</Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Machines in Life List:</Text>
-              <Text style={s.statNum}>
-                {getStatNum(num_life_list_machines)}
-              </Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Locations submitted:</Text>
-              <Text style={s.statNum}>
-                {getStatNum(num_locations_suggested)}
-              </Text>
-            </View>
-            <View style={s.statItem}>
-              <Text style={s.stat}>Locations edited:</Text>
-              <Text style={s.statNum}>{getStatNum(num_locations_edited)}</Text>
-            </View>
-          </View>
-          <Text style={s.section}>Some recently edited locations</Text>
-          {isOwnProfile && (
-            <View
-              style={{
-                paddingHorizontal: 20,
-                paddingTop: 10,
-                paddingBottom: 6,
-              }}
-            >
-              <Text style={s.sectionDescription}>
-                {`You can see all of your edits in the `}
-                <Text
-                  style={s.textLink}
-                  onPress={() =>
-                    navigation.navigate("RecentActivity", {
-                      screen: "RecentActivityStack",
-                      params: { initialGlobal: true, yourActivity: true },
-                    })
-                  }
-                >
-                  filtered Activity Feed
-                </Text>
-                {`.`}
-              </Text>
-            </View>
-          )}
-          <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-            {profile_list_of_edited_locations.length === 0 ? (
+            <Text style={s.section}>Some recently edited locations</Text>
+            <View style={{ paddingTop: 8, paddingBottom: 15 }}>
               <Text style={s.none}>No edits yet</Text>
-            ) : (
-              profile_list_of_edited_locations.slice(0, 50).map((location) => (
-                <Pressable
-                  key={location[0]}
-                  onPress={() =>
-                    navigation.navigate("LocationDetails", { id: location[0] })
-                  }
-                >
-                  {({ pressed }) => (
-                    <View style={[s.list, pressed ? s.pressed : s.notPressed]}>
-                      <Text
-                        style={[
-                          s.locationName,
-                          pressed ? s.textPressed : s.textNotPressed,
-                        ]}
-                      >
-                        {location[1]}
-                      </Text>
-                    </View>
-                  )}
-                </Pressable>
-              ))
-            )}
-          </View>
-          <Text
-            style={s.section}
-            onLayout={(e) => {
-              if (
-                route?.params?.scrollToMachineList &&
-                !hasScrolledToMachineListRef.current
-              ) {
-                hasScrolledToMachineListRef.current = true;
-                const y = e.nativeEvent.layout.y;
-                InteractionManager.runAfterInteractions(() => {
-                  scrollViewRef.current?.scrollTo({ y, animated: true });
-                });
-              }
-            }}
-          >
-            {isOwnProfile
-              ? "Your Machine List and High Scores"
-              : "Machine List and High Scores"}
-          </Text>
-          {isOwnProfile && (
+            </View>
+            <Text style={s.section}>Your Machine List and High Scores</Text>
             <View
               style={{
                 paddingHorizontal: 20,
@@ -680,157 +312,559 @@ const UserProfile = ({
               }}
             >
               <Text style={s.sectionDescription}>
-                {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
-                <Text
-                  style={s.textLink}
-                  onPress={() => navigation.navigate("AddHighScore")}
-                >
-                  add a high score
-                </Text>
-                {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
+                {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines here or when viewing a machine at a location.`}
               </Text>
-              <PbmButton
-                title={"Add to Your List"}
-                onPress={() => {
-                  clearSelectedState();
-                  navigation.navigate("FindMachine", {
-                    multiSelect: true,
-                    lifeListUserId: user.id,
-                  });
-                }}
-                leftIcon={
-                  <MaterialCommunityIcons
-                    name="clipboard-list-outline"
-                    size={20}
-                    color={theme.theme === "dark" ? "#ffffff" : theme.text}
-                    style={{ marginRight: 8 }}
-                  />
-                }
-              />
             </View>
-          )}
-          {profile_life_list_stats.length > 0 && (
-            <View style={s.lifeListSearchContainer}>
-              <MaterialCommunityIcons
-                name="magnify"
-                size={22}
-                color={theme.indigo4}
-                style={{ marginLeft: 10, marginRight: 4 }}
-              />
-              <TextInput
-                placeholder="Filter your list..."
-                placeholderTextColor={theme.indigo4}
-                value={lifeListQuery}
-                onChangeText={setLifeListQuery}
-                style={s.lifeListSearchInput}
-                autoCorrect={false}
-              />
-              {lifeListQuery.length > 0 && (
-                <MaterialCommunityIcons
-                  name="close-circle"
-                  size={20}
-                  color={theme.purple}
-                  style={{ marginRight: 10 }}
-                  onPress={() => setLifeListQuery("")}
-                />
-              )}
-            </View>
-          )}
-          <View
-            style={[{ paddingTop: 8 }, !isOwnProfile && { marginBottom: 30 }]}
-          >
-            {profile_life_list_stats.length === 0 ? (
+            <View style={{ paddingTop: 8, marginBottom: 30 }}>
               <Text style={s.none}>No machines or scores to list yet</Text>
-            ) : filteredLifeList.length === 0 ? (
-              <Text style={s.none}>No matches</Text>
-            ) : (
-              filteredLifeList.map((entry, idx) => {
-                const hasScores = !!entry.list;
-                return (
-                  <View
-                    key={entry.umx_id ?? idx}
-                    style={{
-                      marginHorizontal: 25,
-                      marginBottom: 10,
-                      borderBottomWidth:
-                        idx < filteredLifeList.length - 1
-                          ? StyleSheet.hairlineWidth
-                          : 0,
-                      borderBottomColor: theme.indigo4,
-                      paddingBottom: 10,
+            </View>
+          </>
+        ) : (
+          <View>
+            {isOwnProfile && (
+              <>
+                <ConfirmationModal
+                  visible={modalVisible}
+                  closeModal={() => setModalVisible(false)}
+                >
+                  <PbmButton
+                    title={"Log Me Out"}
+                    onPress={() => {
+                      setModalVisible(false);
+                      logout();
+                      navigation.navigate("Login");
                     }}
+                  />
+                  <WarningButton
+                    title={"Stay Logged In"}
+                    onPress={() => setModalVisible(false)}
+                  />
+                </ConfirmationModal>
+                <ConfirmationModal
+                  visible={!!machineToRemove}
+                  closeModal={() => setMachineToRemove(null)}
+                >
+                  <Text style={s.modalConfirmText}>
+                    {`Remove `}
+                    <Text style={[s.bold, s.modalMachineName]}>
+                      {machineToRemove?.machine_name}
+                    </Text>
+                    {` from your life list?`}
+                  </Text>
+                  <PbmButton
+                    title={"Yes, Remove"}
+                    onPress={handleRemoveMachine}
+                  />
+                  <WarningButton
+                    title={"Cancel"}
+                    onPress={() => setMachineToRemove(null)}
+                  />
+                </ConfirmationModal>
+                <ConfirmationModal
+                  visible={accountModalVisible}
+                  closeModal={closeAccountModal}
+                  wide
+                  loading={deletingAccount}
+                >
+                  <View style={s.header}>
+                    <Text style={s.modalTitle}>Account Settings</Text>
+                    <MaterialCommunityIcons
+                      name="close-circle"
+                      size={35}
+                      onPress={closeAccountModal}
+                      style={s.xButton}
+                    />
+                  </View>
+                  <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                    style={{ maxHeight: screenHeight * 0.75 }}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text style={[s.lifeListMachine, { flex: 1 }]}>
-                        {entry.machine_name}
-                        <Text style={s.machineYearMan}>
-                          {` ${entry.machine_year_man}`}
-                        </Text>
+                    <View style={s.modalSection}>
+                      <Text style={[s.sectionLabel, { marginTop: 10 }]}>
+                        Update Email
                       </Text>
-                      {!hasScores && isOwnProfile && (
-                        <Pressable
-                          onPress={() => setMachineToRemove(entry)}
-                          style={{ paddingLeft: 10 }}
-                        >
-                          <MaterialCommunityIcons
-                            name="trash-can-outline"
-                            size={24}
-                            color={theme.red2}
+                      <TextInput
+                        style={s.textInput}
+                        placeholder="New email address"
+                        placeholderTextColor={s.placeholderColor}
+                        value={newEmail}
+                        onChangeText={(value) => {
+                          setNewEmail(value);
+                          setEmailError(null);
+                          setEmailSuccess(false);
+                        }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                      />
+                      {!!emailError && (
+                        <Text style={s.formError}>{emailError}</Text>
+                      )}
+                      {emailSuccess && (
+                        <Text style={s.formSuccess}>Email updated!</Text>
+                      )}
+                      <PbmButton
+                        title={"Update Email"}
+                        onPress={handleUpdateEmail}
+                        disabled={updatingEmail || !newEmail}
+                      />
+                    </View>
+                    <View style={s.divider} />
+                    <View style={s.modalSection}>
+                      <Text style={s.sectionLabel}>Update Password</Text>
+                      <TextInput
+                        style={s.textInput}
+                        placeholder="Current password"
+                        placeholderTextColor={s.placeholderColor}
+                        value={currentPassword}
+                        onChangeText={(value) => {
+                          setCurrentPassword(value);
+                          setPasswordError(null);
+                          setPasswordSuccess(false);
+                        }}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <TextInput
+                        style={s.textInput}
+                        placeholder="New password"
+                        placeholderTextColor={s.placeholderColor}
+                        value={newPassword}
+                        onChangeText={(value) => {
+                          setNewPassword(value);
+                          setPasswordError(null);
+                          setPasswordSuccess(false);
+                        }}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <TextInput
+                        style={s.textInput}
+                        placeholder="Confirm new password"
+                        placeholderTextColor={s.placeholderColor}
+                        value={newPasswordConfirmation}
+                        onChangeText={(value) => {
+                          setNewPasswordConfirmation(value);
+                          setPasswordError(null);
+                          setPasswordSuccess(false);
+                        }}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      {!!passwordError && (
+                        <Text style={s.formError}>{passwordError}</Text>
+                      )}
+                      {passwordSuccess && (
+                        <Text style={s.formSuccess}>Password updated!</Text>
+                      )}
+                      <PbmButton
+                        title={"Update Password"}
+                        onPress={handleUpdatePassword}
+                        disabled={
+                          updatingPassword ||
+                          !currentPassword ||
+                          !newPassword ||
+                          !newPasswordConfirmation
+                        }
+                      />
+                    </View>
+                    <View style={s.divider} />
+                    <View style={s.modalSection}>
+                      {!showDeleteConfirm ? (
+                        <WarningButton
+                          title={"Delete Account"}
+                          onPress={() => setShowDeleteConfirm(true)}
+                        />
+                      ) : (
+                        <>
+                          <Text style={s.deleteWarning}>
+                            This will permanently delete your account. This
+                            cannot be undone.
+                          </Text>
+                          {!!deleteError && (
+                            <Text style={s.formError}>{deleteError}</Text>
+                          )}
+                          <PbmButton
+                            title={"Yes, Delete My Account"}
+                            onPress={handleDeleteAccount}
                           />
-                        </Pressable>
+                          <WarningButton
+                            title={"Cancel"}
+                            onPress={() => {
+                              setShowDeleteConfirm(false);
+                              setDeleteError(null);
+                            }}
+                          />
+                        </>
                       )}
                     </View>
-                    {hasScores && (
-                      <>
-                        <Text style={[s.score, { marginTop: 8 }]}>
-                          <Text style={s.bold}>Highest score: </Text>
-                          {formatNumWithCommas(entry.list[0])}
-                        </Text>
-                        {entry.list.length > 1 ? (
-                          <>
-                            <Text
-                              style={[
-                                { paddingLeft: 10, marginBottom: 6 },
-                                s.bold,
-                                s.marginT10,
-                              ]}
-                            >
-                              All scores:
-                            </Text>
-                            {entry.list.map((ll, i) => (
-                              <Text
-                                key={i}
-                                style={[s.score, { paddingLeft: 16 }]}
-                              >
-                                {formatNumWithCommas(ll)}
-                              </Text>
-                            ))}
-                            <Text style={[s.score, s.marginB10, s.marginT10]}>
-                              <Text style={s.bold}>Average: </Text>
-                              {formatNumWithCommas(entry.average)}
-                            </Text>
-                            <Text style={[s.score]}>
-                              <Text style={s.bold}>Count: </Text>
-                              {entry.count}
-                            </Text>
-                          </>
-                        ) : null}
-                      </>
-                    )}
-                  </View>
-                );
-              })
+                  </ScrollView>
+                </ConfirmationModal>
+              </>
             )}
+            <View style={s.usernameContainer}>
+              <Text style={s.username}>{displayUsername}</Text>
+              {!!flag && flagImages[flag] && (
+                <View style={s.flagContainer}>
+                  <Image
+                    source={flagImages[flag]}
+                    style={[s.profileFlag, { width: getFlagWidth(flag, 40) }]}
+                  />
+                </View>
+              )}
+              {!!admin_title && (
+                <View style={s.rankView}>
+                  <Text style={s.rankText}>{admin_title}</Text>
+                  <MaterialCommunityIcons
+                    name="shield-account"
+                    size={20}
+                    style={s.rankIcon}
+                    color={theme.shield}
+                  />
+                </View>
+              )}
+              {!!contributor_rank && (
+                <View style={s.rankView}>
+                  <Text style={s.rankText}>{contributor_rank}</Text>
+                  <Image
+                    contentFit="fill"
+                    source={contributor_icon}
+                    style={s.rankIcon}
+                  />
+                </View>
+              )}
+              {!!operator_name && (
+                <View style={s.rankView}>
+                  <Text style={s.rankText}>{operator_name}</Text>
+                  <MaterialCommunityIcons
+                    name="wrench"
+                    style={s.rankIcon}
+                    size={20}
+                    color={theme.wrench}
+                  />
+                </View>
+              )}
+              <Text
+                style={s.joined}
+              >{`Joined: ${formatDate(created_at)}`}</Text>
+              {isOwnProfile && (
+                <View style={s.accountSettingsContainer}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate("FindFlag", { userId: user.id })
+                    }
+                  >
+                    <Text style={s.accountSettingsLink}>
+                      {flag ? "Change user flag" : "Set user flag"}
+                    </Text>
+                  </Pressable>
+                  <Text
+                    style={s.accountSettingsLink}
+                    onPress={() => setAccountModalVisible(true)}
+                  >
+                    Account Settings
+                  </Text>
+                  <Text
+                    style={s.logoutLink}
+                    onPress={() => setModalVisible(true)}
+                  >
+                    Logout
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View style={s.statContainer}>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Total contributions:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_total_submissions)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines added:</Text>
+                <Text style={s.statNum}>{getStatNum(num_machines_added)}</Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines removed:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_machines_removed)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machine comments:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_lmx_comments_left)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>High scores added:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_msx_scores_added)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Machines in Life List:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_life_list_machines)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Locations submitted:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_locations_suggested)}
+                </Text>
+              </View>
+              <View style={s.statItem}>
+                <Text style={s.stat}>Locations edited:</Text>
+                <Text style={s.statNum}>
+                  {getStatNum(num_locations_edited)}
+                </Text>
+              </View>
+            </View>
+            <Text style={s.section}>Some recently edited locations</Text>
+            {isOwnProfile && (
+              <View
+                style={{
+                  paddingHorizontal: 20,
+                  paddingTop: 10,
+                  paddingBottom: 6,
+                }}
+              >
+                <Text style={s.sectionDescription}>
+                  {`You can see all of your edits in the `}
+                  <Text
+                    style={s.textLink}
+                    onPress={() =>
+                      navigation.navigate("RecentActivity", {
+                        screen: "RecentActivityStack",
+                        params: { initialGlobal: true, yourActivity: true },
+                      })
+                    }
+                  >
+                    filtered Activity Feed
+                  </Text>
+                  {`.`}
+                </Text>
+              </View>
+            )}
+            <View style={{ paddingTop: 8, paddingBottom: 15 }}>
+              {profile_list_of_edited_locations.length === 0 ? (
+                <Text style={s.none}>No edits yet</Text>
+              ) : (
+                profile_list_of_edited_locations
+                  .slice(0, 50)
+                  .map((location) => (
+                    <Pressable
+                      key={location[0]}
+                      onPress={() =>
+                        navigation.navigate("LocationDetails", {
+                          id: location[0],
+                        })
+                      }
+                    >
+                      {({ pressed }) => (
+                        <View
+                          style={[s.list, pressed ? s.pressed : s.notPressed]}
+                        >
+                          <Text
+                            style={[
+                              s.locationName,
+                              pressed ? s.textPressed : s.textNotPressed,
+                            ]}
+                          >
+                            {location[1]}
+                          </Text>
+                        </View>
+                      )}
+                    </Pressable>
+                  ))
+              )}
+            </View>
+            <Text
+              style={s.section}
+              onLayout={(e) => {
+                if (
+                  route?.params?.scrollToMachineList &&
+                  !hasScrolledToMachineListRef.current
+                ) {
+                  hasScrolledToMachineListRef.current = true;
+                  const y = e.nativeEvent.layout.y;
+                  InteractionManager.runAfterInteractions(() => {
+                    scrollViewRef.current?.scrollTo({ y, animated: true });
+                  });
+                }
+              }}
+            >
+              {isOwnProfile
+                ? "Your Machine List and High Scores"
+                : "Machine List and High Scores"}
+            </Text>
+            {isOwnProfile && (
+              <View
+                style={{
+                  paddingHorizontal: 20,
+                  paddingTop: 10,
+                  paddingBottom: 6,
+                }}
+              >
+                <Text style={s.sectionDescription}>
+                  {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
+                  <Text
+                    style={s.textLink}
+                    onPress={() => navigation.navigate("AddHighScore")}
+                  >
+                    add a high score
+                  </Text>
+                  {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
+                </Text>
+                <PbmButton
+                  title={"Add to Your List"}
+                  onPress={() => {
+                    clearSelectedState();
+                    navigation.navigate("FindMachine", {
+                      multiSelect: true,
+                      lifeListUserId: user.id,
+                    });
+                  }}
+                  leftIcon={
+                    <MaterialCommunityIcons
+                      name="clipboard-list-outline"
+                      size={20}
+                      color={theme.theme === "dark" ? "#ffffff" : theme.text}
+                      style={{ marginRight: 8 }}
+                    />
+                  }
+                />
+              </View>
+            )}
+            {profile_life_list_stats.length > 0 && (
+              <View style={s.lifeListSearchContainer}>
+                <MaterialCommunityIcons
+                  name="magnify"
+                  size={22}
+                  color={theme.indigo4}
+                  style={{ marginLeft: 10, marginRight: 4 }}
+                />
+                <TextInput
+                  placeholder="Filter your list..."
+                  placeholderTextColor={theme.indigo4}
+                  value={lifeListQuery}
+                  onChangeText={setLifeListQuery}
+                  style={s.lifeListSearchInput}
+                  autoCorrect={false}
+                />
+                {lifeListQuery.length > 0 && (
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    size={20}
+                    color={theme.purple}
+                    style={{ marginRight: 10 }}
+                    onPress={() => setLifeListQuery("")}
+                  />
+                )}
+              </View>
+            )}
+            <View
+              style={[{ paddingTop: 8 }, !isOwnProfile && { marginBottom: 30 }]}
+            >
+              {profile_life_list_stats.length === 0 ? (
+                <Text style={s.none}>No machines or scores to list yet</Text>
+              ) : filteredLifeList.length === 0 ? (
+                <Text style={s.none}>No matches</Text>
+              ) : (
+                filteredLifeList.map((entry, idx) => {
+                  const hasScores = !!entry.list;
+                  return (
+                    <View
+                      key={entry.umx_id ?? idx}
+                      style={{
+                        marginHorizontal: 25,
+                        marginBottom: 10,
+                        borderBottomWidth:
+                          idx < filteredLifeList.length - 1
+                            ? StyleSheet.hairlineWidth
+                            : 0,
+                        borderBottomColor: theme.indigo4,
+                        paddingBottom: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text style={[s.lifeListMachine, { flex: 1 }]}>
+                          {entry.machine_name}
+                          <Text style={s.machineYearMan}>
+                            {` ${entry.machine_year_man}`}
+                          </Text>
+                        </Text>
+                        {!hasScores && isOwnProfile && (
+                          <Pressable
+                            onPress={() => setMachineToRemove(entry)}
+                            style={{ paddingLeft: 10 }}
+                          >
+                            <MaterialCommunityIcons
+                              name="trash-can-outline"
+                              size={24}
+                              color={theme.red2}
+                            />
+                          </Pressable>
+                        )}
+                      </View>
+                      {hasScores && (
+                        <>
+                          <Text style={[s.score, { marginTop: 8 }]}>
+                            <Text style={s.bold}>Highest score: </Text>
+                            {formatNumWithCommas(entry.list[0])}
+                          </Text>
+                          {entry.list.length > 1 ? (
+                            <>
+                              <Text
+                                style={[
+                                  { paddingLeft: 10, marginBottom: 6 },
+                                  s.bold,
+                                  s.marginT10,
+                                ]}
+                              >
+                                All scores:
+                              </Text>
+                              {entry.list.map((ll, i) => (
+                                <Text
+                                  key={i}
+                                  style={[s.score, { paddingLeft: 16 }]}
+                                >
+                                  {formatNumWithCommas(ll)}
+                                </Text>
+                              ))}
+                              <Text style={[s.score, s.marginB10, s.marginT10]}>
+                                <Text style={s.bold}>Average: </Text>
+                                {formatNumWithCommas(entry.average)}
+                              </Text>
+                              <Text style={[s.score]}>
+                                <Text style={s.bold}>Count: </Text>
+                                {entry.count}
+                              </Text>
+                            </>
+                          ) : null}
+                        </>
+                      )}
+                    </View>
+                  );
+                })
+              )}
+            </View>
           </View>
-        </View>
-      )}
-    </KeyboardAwareScrollView>
+        )}
+      </KeyboardAwareScrollView>
+      <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
+    </View>
   );
 };
 
