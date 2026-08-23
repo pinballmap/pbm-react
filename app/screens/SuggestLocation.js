@@ -295,7 +295,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   }}
                 >
                   <View style={s.pageTitle}>
-                    {machineList.length === 0 || locationName?.length === 0 ? (
+                    {machineList.length === 0 ||
+                    locationName?.length === 0 ||
+                    street.length === 0 ? (
                       <Text
                         style={[{ color: theme.purpleLight }, s.pageTitleText]}
                       >
@@ -319,7 +321,13 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>Street</Text>
-                    <Text style={s.preview}>{street}</Text>
+                    {street?.length === 0 ? (
+                      <Text style={[s.error, s.preview]}>
+                        {`We can't map a place without an address`}
+                      </Text>
+                    ) : (
+                      <Text style={s.preview}>{street}</Text>
+                    )}
                   </View>
                   <View style={s.previewContainer}>
                     <Text style={s.previewTitle}>City</Text>
@@ -459,7 +467,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     title={"Submit Location"}
                     onPress={() => confirmSuggestLocationDetails()}
                     disabled={
-                      machineList.length === 0 || locationName.length === 0
+                      machineList.length === 0 ||
+                      locationName.length === 0 ||
+                      street.length === 0
                     }
                     margin={s.buttonMargin}
                   />
