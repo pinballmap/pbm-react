@@ -460,13 +460,18 @@ const FilterMap = ({
         <View style={[s.bottomTab, s.boxShadow, s.bottomTabBoxShadow]}>
           <View style={s.bottomTabInner}>
             <Text
+              maxFontSizeMultiplier={1.5}
               style={s.bottomTabClear}
               onPress={() => dispatch(clearFilters())}
             >
               Clear Filters
             </Text>
             <View style={[s.bottomTabApplyButton, s.boxShadow]}>
-              <Text style={s.bottomTabApply} onPress={() => goToMap()}>
+              <Text
+                maxFontSizeMultiplier={1.5}
+                style={s.bottomTabApply}
+                onPress={() => goToMap()}
+              >
                 Apply Filters
               </Text>
             </View>

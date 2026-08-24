@@ -557,7 +557,7 @@ const Map = ({
       </ConfirmationModal>
       {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
         <View style={s.statsContainer}>
-          <Text style={s.statsText}>
+          <Text style={s.statsText} maxFontSizeMultiplier={1.5}>
             {numLocations.toLocaleString()}{" "}
             {numLocations === 1 ? "location" : "locations"} ·{" "}
             {totalMachines.toLocaleString()}{" "}
@@ -630,7 +630,6 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      height: 40,
       backgroundColor: theme.theme === "dark" ? theme.base2 : theme.pink2,
       paddingVertical: 5,
       paddingHorizontal: 15,

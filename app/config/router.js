@@ -3,7 +3,7 @@ import { DrawerActions, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Platform, StyleSheet, Text } from "react-native";
+import { Platform, Text } from "react-native";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
@@ -134,12 +134,12 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
+              maxFontSizeMultiplier={1.4}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
-                s.labelText,
               ]}
             >
               Map
@@ -161,12 +161,13 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
+              maxFontSizeMultiplier={1.4}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
+                  marginBottom: 0,
                 },
-                s.labelText,
               ]}
             >
               Saved
@@ -188,12 +189,12 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
+              maxFontSizeMultiplier={1.4}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
-                s.labelText,
               ]}
             >
               Activity
@@ -215,12 +216,12 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
+              maxFontSizeMultiplier={1.4}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
                 },
-                s.labelText,
               ]}
             >
               You
@@ -248,12 +249,12 @@ function BottomTabNavigator() {
         options={{
           tabBarLabel: () => (
             <Text
+              maxFontSizeMultiplier={1.4}
               style={[
                 {
                   color: colors.inactiveTab,
                   fontFamily: "Nunito-SemiBold",
                 },
-                s.labelText,
               ]}
             >
               More
@@ -478,10 +479,3 @@ function DrawerNavigator() {
 }
 
 export default DrawerNavigator;
-
-const s = StyleSheet.create({
-  labelText: {
-    fontSize: 12,
-    marginBottom: Platform.OS === "android" ? 0 : 0,
-  },
-});
