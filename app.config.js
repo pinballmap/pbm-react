@@ -7,7 +7,7 @@ export default {
       enabled: false,
     },
     runtimeVersion: "1.0.0",
-    version: "5.4.18",
+    version: "5.4.19",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -68,6 +68,38 @@ export default {
             "app/assets/fonts/Nunito-Bold.ttf",
             "app/assets/fonts/Nunito-ExtraBold.ttf",
           ],
+          android: {
+            fonts: [
+              {
+                fontFamily: "Nunito",
+                fontDefinitions: [
+                  { path: "app/assets/fonts/Nunito-Regular.ttf", weight: 400 },
+                  {
+                    path: "app/assets/fonts/Nunito-Italic.ttf",
+                    weight: 400,
+                    style: "italic",
+                  },
+                  { path: "app/assets/fonts/Nunito-Medium.ttf", weight: 500 },
+                  { path: "app/assets/fonts/Nunito-SemiBold.ttf", weight: 600 },
+                  { path: "app/assets/fonts/Nunito-Bold.ttf", weight: 700 },
+                  {
+                    path: "app/assets/fonts/Nunito-ExtraBold.ttf",
+                    weight: 800,
+                  },
+                ],
+              },
+            ],
+          },
+          ios: {
+            fonts: [
+              "app/assets/fonts/Nunito-Regular.ttf",
+              "app/assets/fonts/Nunito-Italic.ttf",
+              "app/assets/fonts/Nunito-Medium.ttf",
+              "app/assets/fonts/Nunito-SemiBold.ttf",
+              "app/assets/fonts/Nunito-Bold.ttf",
+              "app/assets/fonts/Nunito-ExtraBold.ttf",
+            ],
+          },
         },
       ],
       ["expo-web-browser"],
@@ -104,7 +136,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "298",
+      buildNumber: "300",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -159,7 +191,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 263,
+      versionCode: 265,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

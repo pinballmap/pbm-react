@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.19
+
+August 25, 2026
+
+- Fixed a lot of design issues related to devices with large scaled fonts.
+- Keep the IC Toggle modal open so you can toggle multiple times in order to get the right setting.
+- Add scroll to top buttons on more screens.
+- Many small design tweaks.
+
 ### 5.4.18
 
 August 13, 2026
