@@ -15,7 +15,7 @@ const HyperlinkText = ({ text }) => {
         return (
           <Text
             key={index}
-            style={s.linkText}
+            style={[s.linkText, s.regular]}
             onPress={() => WebBrowser.openBrowserAsync(part)}
           >
             {part}
@@ -23,7 +23,7 @@ const HyperlinkText = ({ text }) => {
         );
       }
       return (
-        <Text style={s.regularText} key={index}>
+        <Text style={[s.notLinkText, s.regular]} key={index}>
           {part}
         </Text>
       );
@@ -35,14 +35,16 @@ const HyperlinkText = ({ text }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
     linkText: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "Nunito-Regular",
     },
-    regularText: {
+    notLinkText: {
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
   });
 

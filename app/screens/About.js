@@ -77,41 +77,45 @@ const About = ({ navigation, appAlert }) => {
         />
         <View style={s.appAlert}>
           <Text
-            style={[{ textAlign: "center", color: theme.pink1 }, s.boldHeader]}
+            style={[
+              { textAlign: "center", color: theme.pink1 },
+              s.boldHeader,
+              s.bold,
+            ]}
           >
             Message of the Day
           </Text>
-          <Text style={[{ color: theme.text3 }, s.text, s.boldText]}>
+          <Text style={[{ color: theme.text3 }, s.text, s.bold]}>
             {appAlert}
           </Text>
         </View>
         <View style={s.category}>
-          <Text style={s.categoryText}>What About It</Text>
+          <Text style={[s.categoryText, s.bold]}>What About It</Text>
         </View>
         <View style={s.body}>
           <Text style={s.text}>
             {`Founded in 2008, Pinball Map is an open source, crowdsourced worldwide map of public pinball machines. We currently list `}
-            <Text style={s.boldText}>
+            <Text style={s.bold}>
               {formatNumWithCommas(stats.num_locations)}
             </Text>{" "}
             {`locations and `}
-            <Text style={s.boldText}>
+            <Text style={s.bold}>
               {formatNumWithCommas(stats.num_lmxes)}
             </Text>{" "}
             {`machines.`}
           </Text>
-          <Text style={[s.text, s.boldText]}>
+          <Text style={[s.text, s.bold]}>
             {`Here's a page filled with current `}
             <Text
               onPress={() => navigation.navigate("Stats")}
-              style={[s.pink, s.boldText]}
+              style={[s.pink, s.bold]}
             >{`Pinball Map stats`}</Text>
             .
           </Text>
           <Text style={s.text}>
             {`The site is not monetized and `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://github.com/pinballmap/pbm-react",
@@ -123,7 +127,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             {`To help maintain it (on the app or the website, `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com")
               }
@@ -136,12 +140,12 @@ const About = ({ navigation, appAlert }) => {
             {`You can `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >{`contact us`}</Text>
             {`, and you also might find wisdom `}
             <Text
               onPress={() => navigation.navigate("FAQ")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >{`in the FAQ`}</Text>
             .
           </Text>
@@ -153,7 +157,7 @@ const About = ({ navigation, appAlert }) => {
         </View>
 
         <View style={s.category}>
-          <Text style={s.categoryText}>Keep Up</Text>
+          <Text style={[s.categoryText, s.bold]}>Keep Up</Text>
         </View>
         <View style={s.body}>
           <Text style={s.text}>
@@ -162,7 +166,7 @@ const About = ({ navigation, appAlert }) => {
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://blog.pinballmap.com/")
               }
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >{`blog`}</Text>
             {` to keep up with map news.`}
           </Text>
@@ -185,7 +189,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             {`Follow us on `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://fosstodon.org/@pinballmap")
               }
@@ -194,7 +198,7 @@ const About = ({ navigation, appAlert }) => {
             </Text>
             {` or `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://bsky.app/profile/pinballmap.com",
@@ -208,7 +212,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             {`Join `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://discord.gg/zK6xjyYHJf")
               }
@@ -221,7 +225,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             Listen to our podcast,{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pod.pinballmap.com/")
               }
@@ -248,7 +252,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             {`We sometimes have a few things for sale `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com/store")
               }
@@ -294,7 +298,7 @@ const About = ({ navigation, appAlert }) => {
           <Text style={s.text}>
             {"And finally, we've compiled some "}
             <Text
-              style={s.pink}
+              style={[s.pink, s.medium]}
               onPress={() => navigation.navigate("Resources")}
             >
               additional pinball resources
@@ -304,13 +308,13 @@ const About = ({ navigation, appAlert }) => {
         </View>
 
         <View style={s.category}>
-          <Text style={s.categoryText}>API</Text>
+          <Text style={[s.categoryText, s.bold]}>API</Text>
         </View>
         <View style={s.body}>
           <Text style={s.text}>
             {`Not only is the Pinball Map website and app open source, but there is also `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://pinballmap.com/api/v1/docs",
@@ -324,13 +328,13 @@ const About = ({ navigation, appAlert }) => {
               onPress={() =>
                 navigation.navigate("FAQ", { section: "dataUsage" })
               }
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >{`this FAQ item about data usage`}</Text>
             {` for more information.`}
           </Text>
           <Text style={s.text}>
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://sternpinball.com/pinball-locator/",
@@ -339,7 +343,7 @@ const About = ({ navigation, appAlert }) => {
             >{`Stern Pinball`}</Text>
             {` uses our data for their machine locator, as does `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://jerseyjackpinball.com/pages/pinball-map",
@@ -348,26 +352,26 @@ const About = ({ navigation, appAlert }) => {
             >{`Jersey Jack Pinball`}</Text>
             {` for theirs. Our API is also used by `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://matchplay.events")
               }
             >{`MatchPlay Events`}</Text>{" "}
             and{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pindigo.app/")
               }
             >{`Pindigo`}</Text>{" "}
             and{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
             >{`Scorbit`}</Text>{" "}
             and{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://kineticist.com/")
               }
@@ -377,11 +381,11 @@ const About = ({ navigation, appAlert }) => {
         </View>
 
         <View style={s.category}>
-          <Text style={s.categoryText}>App Credits</Text>
+          <Text style={[s.categoryText, s.bold]}>App Credits</Text>
         </View>
         <View style={s.body}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://github.com/bpoore")
             }
@@ -389,7 +393,7 @@ const About = ({ navigation, appAlert }) => {
             Beth Poore
           </Text>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://github.com/ryantg")
             }
@@ -397,7 +401,7 @@ const About = ({ navigation, appAlert }) => {
             Ryan Gratzer
           </Text>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://github.com/scottwainstock")
             }
@@ -410,14 +414,14 @@ const About = ({ navigation, appAlert }) => {
           </Text>
         </View>
         <View style={s.category}>
-          <Text style={s.categoryText}>Support Us</Text>
+          <Text style={[s.categoryText, s.bold]}>Support Pinball Map</Text>
         </View>
         <View style={s.body}>
           <Text style={s.text}>
             {`If you like the app, `}
             {Platform.OS === "ios" ? (
               <Text
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
                 onPress={() =>
                   WebBrowser.openBrowserAsync(
                     "itms-apps://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
@@ -428,7 +432,7 @@ const About = ({ navigation, appAlert }) => {
               </Text>
             ) : (
               <Text
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
                 onPress={() =>
                   WebBrowser.openBrowserAsync("market://details?id=com.pbm")
                 }
@@ -468,6 +472,14 @@ const About = ({ navigation, appAlert }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     background: {
       flex: 1,
       backgroundColor: theme.base1,
@@ -489,11 +501,7 @@ const getStyles = (theme) =>
       fontSize: 16,
       marginBottom: 10,
     },
-    boldText: {
-      fontFamily: "Nunito-Bold",
-    },
     boldHeader: {
-      fontFamily: "Nunito-Bold",
       fontSize: 18,
       marginBottom: 10,
     },
@@ -501,7 +509,6 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: theme.purple2,
       fontSize: 15,
-      fontFamily: "Nunito-Medium",
     },
     appAlert: {
       borderWidth: 0,
@@ -517,7 +524,6 @@ const getStyles = (theme) =>
       color: theme.pink1,
       textDecorationLine: "underline",
       fontSize: 15,
-      fontFamily: "Nunito-Medium",
     },
     category: {
       padding: 10,
@@ -528,7 +534,6 @@ const getStyles = (theme) =>
       marginHorizontal: 15,
     },
     categoryText: {
-      fontFamily: "Nunito-Bold",
       fontSize: 17,
       textAlign: "center",
       color: "#503d49",

@@ -49,11 +49,13 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
                 ])}
               >
                 <Text
-                  maxFontSizeMultiplier={maxFontSizeMultiplier}
+                  maxFontSizeMultiplier={maxFontSizeMultiplier ? maxFontSizeMultiplier : 1.5}
                   style={StyleSheet.flatten([
                     s.buttonGroupTextInactive,
+                    s.semiBold,
                     textStyle && textStyle,
                     isSelected && s.buttonGroupTextSelected,
+                    isSelected && s.bold,
                     isSelected && selectedTextStyle,
                   ])}
                 >
@@ -70,6 +72,14 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     button: {
       flex: 1,
     },
@@ -80,7 +90,7 @@ const getStyles = (theme) =>
     },
     buttonGroupContainer: {
       marginHorizontal: 10,
-      marginVertical: 5,
+      marginBottom: 5,
       flexDirection: 'row',
       overflow: 'hidden',
       borderWidth: 0,
@@ -100,7 +110,6 @@ const getStyles = (theme) =>
     buttonGroupTextInactive: {
       color: theme.text2,
       fontSize: deviceWidth < 321 ? 12 : 14,
-      fontFamily: "Nunito-SemiBold",
     },
     buttonGroupViewSelected: {
       borderWidth: 2,
@@ -112,7 +121,6 @@ const getStyles = (theme) =>
     },
     buttonGroupTextSelected: {
       color: theme.text2,
-      fontFamily: "Nunito-Bold",
     },
   });
 

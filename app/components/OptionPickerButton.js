@@ -39,7 +39,7 @@ const OptionPickerButton = ({
       />
       <ConfirmationModal visible={visible} closeModal={() => setVisible(false)}>
         <View style={s.header}>
-          {!!title && <Text style={s.headerTitle}>{title}</Text>}
+          {!!title && <Text style={[s.headerTitle, s.extraBold]}>{title}</Text>}
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
@@ -47,7 +47,9 @@ const OptionPickerButton = ({
             style={s.xButton}
           />
         </View>
-        {!!description && <Text style={s.description}>{description}</Text>}
+        {!!description && (
+          <Text style={[s.description, s.regular]}>{description}</Text>
+        )}
         <View style={s.optionsList}>
           {items.map((item) => {
             const isSelected = item.value === selectedValue;
@@ -66,7 +68,12 @@ const OptionPickerButton = ({
               >
                 <Text
                   maxFontSizeMultiplier={1.3}
-                  style={[s.itemText, isSelected && s.itemTextSelected]}
+                  style={[
+                    s.itemText,
+                    s.medium,
+                    isSelected && s.itemTextSelected,
+                    isSelected && s.bold,
+                  ]}
                 >
                   {item.label}
                 </Text>
@@ -88,6 +95,22 @@ const OptionPickerButton = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
@@ -100,7 +123,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -123,7 +145,6 @@ const getStyles = (theme) =>
       marginTop: 10,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
     },
     optionsList: {
       marginTop: 10,
@@ -143,11 +164,9 @@ const getStyles = (theme) =>
     },
     itemText: {
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
       color: theme.text,
     },
     itemTextSelected: {
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
   });

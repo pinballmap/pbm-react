@@ -16,7 +16,7 @@ const ButtonGroupSetting = ({
   return (
     <View style={s.container}>
       <View>
-        <Text style={s.titleText}>{title}</Text>
+        <Text style={[s.titleText, s.bold]}>{title}</Text>
       </View>
       <ButtonGroup
         onPress={onPress}
@@ -25,13 +25,22 @@ const ButtonGroupSetting = ({
         containerStyle={s.buttonGroupContainer}
         maxFontSizeMultiplier={1.3}
       />
-      <Text style={s.descriptionText}>{description}</Text>
+      <Text style={[s.descriptionText, s.italic]}>{description}</Text>
     </View>
   );
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     container: {
       marginVertical: 15,
       marginHorizontal: 10,
@@ -39,8 +48,8 @@ const getStyles = (theme) =>
     titleText: {
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
+      marginBottom: 5,
     },
     buttonGroupContainer: {
       marginHorizontal: 0,
@@ -48,8 +57,6 @@ const getStyles = (theme) =>
     descriptionText: {
       fontSize: 14,
       color: theme.text2,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 5,
       marginRight: 15,

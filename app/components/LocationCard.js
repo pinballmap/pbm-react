@@ -69,7 +69,9 @@ const LocationCard = ({
           <View style={{ zIndex: 10, flex: 1 }}>
             <View style={s.locationNameContainer}>
               <View style={s.nameItem}>
-                <Text style={s.locationName}>{locationName}</Text>
+                <Text style={[s.locationName, s.extraBold]}>
+                  {locationName}
+                </Text>
               </View>
               <View style={s.heartItem}>
                 <FavoriteLocation
@@ -83,7 +85,7 @@ const LocationCard = ({
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <MaterialIcons name="location-on" style={s.metaIcon} />
                 <Text
-                  style={[s.address]}
+                  style={[s.address, s.medium]}
                   numberOfLines={1}
                   ellipsizeMode={"tail"}
                 >
@@ -105,13 +107,11 @@ const LocationCard = ({
                       : `${m.name}-${m.manufacturer}-${m.year}`;
                   return (
                     <Text key={key} style={s.machineName}>
-                      <Text
-                        style={{ fontFamily: "Nunito-ExtraBold", fontSize: 17 }}
-                      >
+                      <Text style={[s.extraBold, { fontSize: 17 }]}>
                         {title}
                       </Text>
                       <Text
-                        style={[s.manufacturer, s.mediumFont]}
+                        style={[s.manufacturer, s.medium]}
                       >{`${info}`}</Text>
                     </Text>
                   );
@@ -132,16 +132,7 @@ const LocationCard = ({
                 {distance ? (
                   <View style={s.vertAlign}>
                     <MaterialCommunityIcons name="compass" style={s.icon} />
-                    <Text
-                      style={{
-                        marginRight: 15,
-                        color: theme.text2,
-                        fontFamily: "Nunito-SemiBold",
-                      }}
-                    >
-                      {" "}
-                      {distance}
-                    </Text>
+                    <Text style={[s.semiBold, s.text2]}> {distance}</Text>
                   </View>
                 ) : null}
                 {type ? (
@@ -153,16 +144,7 @@ const LocationCard = ({
                       type={library}
                       style={s.icon}
                     />
-                    <Text
-                      style={{
-                        marginRight: 15,
-                        color: theme.text2,
-                        fontFamily: "Nunito-SemiBold",
-                      }}
-                    >
-                      {" "}
-                      {type}
-                    </Text>
+                    <Text style={[s.semiBold, s.text2]}> {type}</Text>
                   </View>
                 ) : null}
                 {allAgesLabel ? (
@@ -171,16 +153,7 @@ const LocationCard = ({
                       name="human-male-child"
                       style={s.icon}
                     />
-                    <Text
-                      style={{
-                        marginRight: 15,
-                        color: theme.text2,
-                        fontFamily: "Nunito-SemiBold",
-                      }}
-                    >
-                      {" "}
-                      {allAgesLabel}
-                    </Text>
+                    <Text style={[s.semiBold, s.text2]}> {allAgesLabel}</Text>
                   </View>
                 ) : null}
                 {paymentType === PAYMENT_TYPE_FREE_PLAY ? (
@@ -190,16 +163,7 @@ const LocationCard = ({
                       iconStyle="solid"
                       style={s.icon}
                     />
-                    <Text
-                      style={{
-                        marginRight: 15,
-                        color: theme.text2,
-                        fontFamily: "Nunito-SemiBold",
-                      }}
-                    >
-                      {" "}
-                      {paymentType}
-                    </Text>
+                    <Text style={[s.semiBold, s.text2]}> {paymentType}</Text>
                   </View>
                 ) : null}
                 {notInListCount ? (
@@ -208,17 +172,12 @@ const LocationCard = ({
                       name="clipboard-list-outline"
                       style={s.icon}
                     />
-                    <Text
-                      style={{
-                        color: theme.text2,
-                        fontFamily: "Nunito-SemiBold",
-                      }}
-                    >
+                    <Text style={[s.semiBold, s.text2]}>
                       {" "}
                       {notInListCount} not in{" "}
                     </Text>
                     <Text
-                      style={s.lifeListLink}
+                      style={[s.lifeListLink, s.semiBold]}
                       onPress={() =>
                         navigation.navigate("UserProfilePublic", {
                           userId,
@@ -241,6 +200,23 @@ const LocationCard = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     containerStyle: {
       borderRadius: 15,
       marginVertical: 12,
@@ -283,7 +259,6 @@ const getStyles = (theme) =>
       marginTop: 4,
     },
     locationName: {
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 22,
       lineHeight: 26,
       textAlign: "left",
@@ -295,6 +270,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       flexWrap: "wrap",
       rowGap: 6,
+      columnGap: 15,
       marginBottom: -2,
       marginHorizontal: -2,
       paddingVertical: 10,
@@ -319,23 +295,17 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
     },
+    text2: {
+      color: theme.text2,
+    },
     address: {
       color: theme.text3,
-      fontFamily: "Nunito-Medium",
       fontSize: 15,
       flex: 1,
     },
     manufacturer: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.text3,
-      fontFamily: "Nunito-Medium",
       fontSize: 17,
-    },
-    mediumFont: {
-      fontFamily: "Nunito-Medium",
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     pressed: {
       opacity: 0.8,
@@ -360,7 +330,6 @@ const getStyles = (theme) =>
     lifeListLink: {
       textDecorationLine: "underline",
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
     },
   });
 

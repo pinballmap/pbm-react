@@ -95,7 +95,9 @@ const FilterRecentActivity = ({
       {showModal && (
         <ConfirmationModal closeModal={() => setShowModal(false)}>
           <View style={s.header}>
-            <Text style={s.filterTitle}>Filter Recent Activity</Text>
+            <Text style={[s.filterTitle, s.extraBold]}>
+              Filter Recent Activity
+            </Text>
             <MaterialCommunityIcons
               name="close-circle"
               size={35}
@@ -122,6 +124,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find((activity) => activity === "new_lmx")
                     ? s.activeTitleStyle
                     : s.inactiveTitleStyle,
@@ -150,6 +153,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "remove_machine",
                   )
@@ -180,6 +184,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "new_condition",
                   )
@@ -208,6 +213,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find((activity) => activity === "new_msx")
                     ? s.activeTitleStyle
                     : s.inactiveTitleStyle,
@@ -236,6 +242,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "confirm_location",
                   )
@@ -266,6 +273,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "add_location",
                   )
@@ -295,6 +303,7 @@ const FilterRecentActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   specificMachinesSelected
                     ? s.activeTitleStyle
                     : s.inactiveTitleStyle,
@@ -326,6 +335,7 @@ const FilterRecentActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
+                    s.bold,
                     pendingActivities.find(
                       (activity) => activity === "user_faved",
                     )
@@ -358,6 +368,7 @@ const FilterRecentActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
+                    s.bold,
                     pendingActivities.find(
                       (activity) => activity === "your_activity",
                     )
@@ -385,6 +396,14 @@ const FilterRecentActivity = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     container: {
       flexDirection: "row",
       alignItems: "center",
@@ -409,7 +428,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -428,7 +446,6 @@ const getStyles = (theme) =>
     },
     titleStyle: {
       fontSize: 17,
-      fontFamily: "Nunito-Bold",
     },
     inactiveTitleStyle: {
       color: theme.text3,

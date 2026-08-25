@@ -74,7 +74,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`This page contains helpful app and website support information. If you have a question, comment, or suggestion, `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"contact us"}
             </Text>
@@ -86,7 +86,7 @@ const FAQ = ({ navigation, user, route }) => {
           {SECTIONS.map(({ key, label }) => (
             <Text
               key={key}
-              style={s.tocRow}
+              style={[s.tocRow, s.medium]}
               onPress={() => scrollToSection(key)}
             >
               <Text style={s.tocBullet}>{"• "}</Text>
@@ -99,11 +99,11 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["mobile"] = r;
           }}
         >
-          <Text style={s.category}>Mobile App-Specific</Text>
+          <Text style={[s.category, s.bold]}>Mobile App-Specific</Text>
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`How do I search for a particular machine?`}</Text>
         </View>
         <View style={s.answer}>
@@ -117,7 +117,7 @@ const FAQ = ({ navigation, user, route }) => {
             />
             {` `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() => navigation.navigate("FilterMap")}
             >
               {`filter`}
@@ -130,7 +130,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`The Location List isn't showing a location that I think it should.`}</Text>
         </View>
         <View style={s.answer}>
@@ -140,7 +140,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`What do the different map marker colors mean?`}</Text>
         </View>
         <View style={s.answer}>
@@ -183,7 +183,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`What are the different icons I sometimes see next to usernames?`}</Text>
         </View>
         <View style={s.answer}>
@@ -236,20 +236,18 @@ const FAQ = ({ navigation, user, route }) => {
           </View>
           <Text style={s.text}>
             {`As a small token of acknowledgement of your contributions to the map, if you make more than 50 contributions, we christen you a `}
-            <Text style={{ fontFamily: "Nunito-Bold" }}>Super Mapper</Text>
+            <Text style={s.bold}>Super Mapper</Text>
             {`. After 250 contributions, you are deemed a `}
-            <Text style={{ fontFamily: "Nunito-Bold" }}>Legendary Mapper</Text>
+            <Text style={s.bold}>Legendary Mapper</Text>
             {`. And after 500 amazing map contributions, we hereby dub you a `}
-            <Text style={{ fontFamily: "Nunito-Bold" }}>
-              Grand Champ Mapper
-            </Text>
+            <Text style={s.bold}>Grand Champ Mapper</Text>
             {`!`}
           </Text>
           <Text style={s.text}>
             {`Users can also select a "flag" icon. It can be added/changed on `}
             {loggedIn ? (
               <Text
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
                 onPress={() => navigation.navigate("UserProfile")}
               >
                 {"your profile"}
@@ -262,7 +260,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I am not seeing scores in the Activity feeds.`}</Text>
         </View>
         <View style={s.answer}>
@@ -272,14 +270,14 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I get an error every time I try to add a machine or comment or do anything.`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`You probably haven't confirmed your account. You should have received an email (check your spam). `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() => navigation.navigate("ResendConfirmation")}
             >
               {"Or go here to have it resent"}
@@ -289,14 +287,14 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`How can I submit a backglass photo to the “machine details” screen?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`The photos we display come from the Open Pinball Database (OPDB), which can be found on the `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://app.matchplay.events/opdb")
               }
@@ -306,7 +304,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`. You can upload your high quality photos by logging into Matchplay, looking up the machine, then clicking the "Upload image" button. The photos you upload will not immediately appear in this app.`}
           </Text>
           <Text style={s.text}>
-            <Text style={{ fontFamily: "Nunito-Bold" }}>
+            <Text style={s.bold}>
               General backglass/translite photo guidelines
             </Text>
             : Take photo straight on, not at an angle. Crop image to show only
@@ -318,10 +316,12 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["updating"] = r;
           }}
         >
-          <Text style={s.category}>Updating the Map</Text>
+          <Text style={[s.category, s.bold]}>Updating the Map</Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`How do I add a machine to a location?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`How do I add a machine to a location?`}</Text>
         </View>
         <View style={s.answer}>
           <Text
@@ -330,7 +330,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`How do I remove a machine from a location?`}</Text>
         </View>
         <View style={s.answer}>
@@ -339,14 +339,16 @@ const FAQ = ({ navigation, user, route }) => {
           >{`First, log in. Click on the machine name, and then look for the "remove" button or the trash can icon.`}</Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`How do I add a new location?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`How do I add a new location?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`Fill out `}
             <Text
               onPress={() => navigation.navigate("SuggestLocation")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"this form"}
             </Text>
@@ -355,7 +357,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`This location closed/no longer has machines. What do I do - do I need to tell you?`}</Text>
         </View>
         <View style={s.answer}>
@@ -365,7 +367,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`This location is temporarily closed. Should I remove the machines from it?`}</Text>
         </View>
         <View style={s.answer}>
@@ -375,7 +377,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`The name of this location has changed. Can I change it?`}</Text>
         </View>
         <View style={s.answer}>
@@ -383,7 +385,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`Only administrators can edit location names. Please `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"contact us"}
             </Text>
@@ -392,7 +394,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`This location has moved. Should I add a location description that no administrator will ever see? Or should I remove the machines from it and re-submit?`}</Text>
         </View>
         <View style={s.answer}>
@@ -400,7 +402,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`Neither. Administrators can change the address. Please `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"contact us"}
             </Text>
@@ -409,7 +411,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`What does the Free Play tag mean at a location?`}</Text>
         </View>
         <View style={s.answer}>
@@ -425,18 +427,18 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["dataUsage"] = r;
           }}
         >
-          <Text style={s.category}>Data Usage</Text>
+          <Text style={[s.category, s.bold]}>Data Usage</Text>
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`Can I use Pinball Map data on my own site?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`You can use `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://pinballmap.com/api/v1/docs",
@@ -447,7 +449,7 @@ const FAQ = ({ navigation, user, route }) => {
             </Text>
             {` to fetch data and use it for your app. An `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com/api_token")
               }
@@ -456,7 +458,7 @@ const FAQ = ({ navigation, user, route }) => {
             </Text>
             {` is required. When using Pinball Map data, `}
             <Text
-              style={{ fontFamily: "Nunito-Bold" }}
+              style={s.bold}
             >{`according to our data license you must include attribution and a link back to this site.`}</Text>
           </Text>
           <Text style={s.text}>
@@ -468,7 +470,7 @@ const FAQ = ({ navigation, user, route }) => {
           <Text style={s.text}>
             {`But if your functionality is a large-scale "where to find pinball" feature, then you're essentially cloning our core functionality.`}
             <Text
-              style={{ fontFamily: "Nunito-Bold" }}
+              style={s.bold}
             >{`This is not acceptable use, except in specific circumstances (get in touch about it).`}</Text>
           </Text>
           <Text style={s.text}>
@@ -483,18 +485,18 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["dataManagement"] = r;
           }}
         >
-          <Text style={s.category}>Data Management</Text>
+          <Text style={[s.category, s.bold]}>Data Management</Text>
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`Can you include "bat games", or other non-pinball but pinball-adjacent games??`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`No, no bat games. We fully understand that pitch and bat games resemble pinball machines and the collectors that collect them also usually collect pinball machines. We used to include bat games, but non-pinball machines like that were a slippery slope toward (people constantly requesting) including more and more non-pinball machines. We only want to map pinball machines. In general, if the machine is not listed on `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() => WebBrowser.openBrowserAsync("https://opdb.org")}
             >
               OPDB
@@ -507,7 +509,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`Can I add my private collection to the map?`}</Text>
         </View>
         <View style={s.answer}>
@@ -517,7 +519,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`When I search for a city, the city is listed twice (and maybe the second instance of it is misspelled). Or, I see the same location listed twice. Or, the place is in the wrong spot on the map. Etc.`}</Text>
         </View>
         <View style={s.answer}>
@@ -525,7 +527,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`These are data entry mistakes. Please `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"contact us"}
             </Text>
@@ -534,7 +536,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I submitted a new location but it never showed up on the map. What is wrong with you?`}</Text>
         </View>
         <View style={s.answer}>
@@ -556,7 +558,7 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["operators"] = r;
           }}
         >
-          <Text style={s.category}>Operators</Text>
+          <Text style={[s.category, s.bold]}>Operators</Text>
         </View>
         <View style={s.answer}>
           <Text style={[s.text, { paddingTop: 10 }]}>
@@ -565,7 +567,7 @@ const FAQ = ({ navigation, user, route }) => {
           <Text style={[s.text]}>
             {`Check this `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://blog.pinballmap.com/2015/10/22/operators-we-want-you/",
@@ -578,14 +580,16 @@ const FAQ = ({ navigation, user, route }) => {
           </Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`How do I get listed as an operator?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`How do I get listed as an operator?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {
               <Text
                 onPress={() => navigation.navigate("Contact")}
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
               >
                 {"Contact us"}
               </Text>
@@ -610,7 +614,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`How do I tag myself as the operator at a location?`}</Text>
         </View>
         <View style={s.answer}>
@@ -620,7 +624,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I'm an operator or business owner, and people are leaving comments on my machines that I don't like. Can you make them stop, or disable comments on my machines?`}</Text>
         </View>
         <View style={s.answer}>
@@ -631,15 +635,11 @@ const FAQ = ({ navigation, user, route }) => {
             {`In some circumstances, comments may be removed and/or accounts can be disabled (see the next FAQ items). We will always look into your concerns. But please try not to waste our time with your requests.`}
           </Text>
           <Text style={s.text}>
-            <Text style={{ fontFamily: "Nunito-Bold" }}>
-              To users leaving comments:
-            </Text>{" "}
+            <Text style={s.bold}>To users leaving comments:</Text>{" "}
             {`Most operators prefer you directly tell them about problems. For example, in person or with a note to staff at the venue. Many pinball issues are minor and temporary, and leaving a comment about them on the map puts it "on the record" and it may remain there long after the issue is resolved.`}
           </Text>
           <Text style={s.text}>
-            <Text style={{ fontFamily: "Nunito-Bold" }}>
-              Some suggestions to operators:
-            </Text>{" "}
+            <Text style={s.bold}>Some suggestions to operators:</Text>{" "}
             {`A comment about a machine issue is not going to hurt your business in the short term. Pinball Map often gets blamed for "making" operators rush across town to fix and issue and write a comment saying the issue is fixed. Pinball Map does not make you do this.`}
           </Text>
           <Text style={s.text}>
@@ -648,7 +648,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`Can you make it so only the operator can update a location's line-up of machines?`}</Text>
         </View>
         <View style={s.answer}>
@@ -658,7 +658,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`After a machine issue has been resolved, can you remove the machine comment that mentioned the issue?`}</Text>
         </View>
         <View style={s.answer}>
@@ -674,11 +674,11 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["users"] = r;
           }}
         >
-          <Text style={s.category}>Users</Text>
+          <Text style={[s.category, s.bold]}>Users</Text>
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I do not have an account, and when I press some buttons I get sent to a login screen. Why do I need to login?`}</Text>
         </View>
         <View style={s.answer}>
@@ -689,7 +689,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`We also added some fun user perks, like score tracking, counts of all the different types of edits you do, and a feature for tracking every machine you've played. These things can be found in `}
             {loggedIn ? (
               <Text
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
                 onPress={() => navigation.navigate("UserProfile")}
               >
                 {"your user profile"}
@@ -704,14 +704,14 @@ const FAQ = ({ navigation, user, route }) => {
           </Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`Can I change my username?`}</Text>
+          <Text style={[s.font18, s.bold]}>{`Can I change my username?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`Only administrators can change your username. `}
             <Text
               onPress={() => navigation.navigate("Contact")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"Contact us"}
             </Text>
@@ -720,7 +720,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I can't remember my password. How do I reset it?`}</Text>
         </View>
         <View style={s.answer}>
@@ -728,7 +728,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`You can reset it via `}
             <Text
               onPress={() => navigation.navigate("PasswordReset")}
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
             >
               {"this link"}
             </Text>
@@ -737,7 +737,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`How do I update my password, or email, or delete my account?`}</Text>
         </View>
         <View style={s.answer}>
@@ -745,7 +745,7 @@ const FAQ = ({ navigation, user, route }) => {
             {`These can be done on `}
             {loggedIn ? (
               <Text
-                style={s.textLink}
+                style={[s.textLink, s.medium]}
                 onPress={() => navigation.navigate("UserProfile")}
               >
                 {"your profile"}
@@ -758,7 +758,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`I left a machine comment, but I made a typo. Or, I just woke up and I regret a comment I made last night. Can I edit or delete my comment?`}</Text>
         </View>
         <View style={s.answer}>
@@ -769,7 +769,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.question}>
           <Text
-            style={s.bold}
+            style={[s.font18, s.bold]}
           >{`Only some machines in the "life list" in my profile have a trash can icon. Why?`}</Text>
         </View>
         <View style={s.answer}>
@@ -778,7 +778,9 @@ const FAQ = ({ navigation, user, route }) => {
           </Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`Why was my comment removed?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`Why was my comment removed?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
@@ -800,7 +802,9 @@ const FAQ = ({ navigation, user, route }) => {
           <Text style={s.text}>{`\u2022 It is offensive.`}</Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`Why was my account disabled?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`Why was my account disabled?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
@@ -818,16 +822,18 @@ const FAQ = ({ navigation, user, route }) => {
             sectionRefs.current["misc"] = r;
           }}
         >
-          <Text style={s.category}>Miscellaneous</Text>
+          <Text style={[s.category, s.bold]}>Miscellaneous</Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`Can you add a feature that I want?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`Can you add a feature that I want?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             {`Maybe! We can try. Pinball Map is an open source app. You can submit "issues" to`}{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://github.com/pinballmap/pbm-react",
@@ -838,13 +844,15 @@ const FAQ = ({ navigation, user, route }) => {
           </Text>
         </View>
         <View style={s.question}>
-          <Text style={s.bold}>{`What is your privacy policy?`}</Text>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`What is your privacy policy?`}</Text>
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
             Please see the{" "}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
               }
@@ -856,7 +864,7 @@ const FAQ = ({ navigation, user, route }) => {
           <Text style={s.text}>
             {`This app uses Mapbox for the map, and while we set telemetry (`}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.medium]}
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://www.mapbox.com/telemetry/")
               }
@@ -874,6 +882,14 @@ const FAQ = ({ navigation, user, route }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     background: {
       flex: 1,
       backgroundColor: theme.base1,
@@ -891,21 +907,18 @@ const getStyles = (theme) =>
       color: theme.text2,
       marginBottom: 12,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
+    font18: {
       fontSize: 18,
       color: "#fef3e8",
     },
     textLink: {
       textDecorationLine: "underline",
       color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
-      fontFamily: "Nunito-Medium",
     },
     filterIcon: {
       color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
     },
     category: {
-      fontFamily: "Nunito-Bold",
       fontSize: 17,
       textAlign: "center",
       paddingHorizontal: 10,
@@ -938,7 +951,6 @@ const getStyles = (theme) =>
     },
     tocRow: {
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
       lineHeight: 28,
     },
     tocBullet: {

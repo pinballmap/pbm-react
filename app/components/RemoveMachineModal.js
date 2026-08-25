@@ -29,12 +29,15 @@ const RemoveMachineModal = ({
   return (
     <ConfirmationModal closeModal={() => closeModal()}>
       {machineName && (
-        <Text style={s.confirmText}>
-          Remove <Text style={s.machineName}>{machineName}</Text>{" "}
+        <Text style={[s.confirmText, s.regular]}>
+          Remove <Text style={[s.machineName, s.bold]}>{machineName}</Text>{" "}
           {year && manufacturer && (
-            <Text style={s.machineManYear}>{`(${manufacturer}, ${year})`}</Text>
+            <Text
+              style={[s.machineManYear, s.medium]}
+            >{`(${manufacturer}, ${year})`}</Text>
           )}{" "}
-          from <Text style={s.locationName}>{location.name}</Text>?
+          from <Text style={[s.locationName, s.semiBold]}>{location.name}</Text>
+          ?
         </Text>
       )}
       <PbmButton
@@ -42,7 +45,7 @@ const RemoveMachineModal = ({
         onPress={() => removeLmx(curLmx, location.id)}
       />
       <WarningButton title={"Cancel"} onPress={() => closeModal()} />
-      <Text style={s.modalSubText}>
+      <Text style={[s.modalSubText, s.medium]}>
         Do not remove and re-add this machine because you want to clear out
         comments.
       </Text>
@@ -52,32 +55,43 @@ const RemoveMachineModal = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     confirmText: {
       textAlign: "center",
       marginHorizontal: 15,
       fontSize: 18,
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     locationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-SemiBold",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
     },
     machineManYear: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Medium",
     },
     modalSubText: {
       marginHorizontal: 18,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
       color: theme.pink1,
     },
   });

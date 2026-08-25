@@ -86,7 +86,7 @@ const FindFlag = ({ navigation, route, user }) => {
           ]}
         >
           <View style={[s.rowFlag, s.rowFlagPlaceholder]} />
-          <Text style={s.rowName}>None</Text>
+          <Text style={[s.rowName, s.regular]}>None</Text>
         </View>
       )}
     </Pressable>
@@ -110,7 +110,7 @@ const FindFlag = ({ navigation, route, user }) => {
             style={s.rowFlag}
             contentFit="cover"
           />
-          <Text style={s.rowName}>{item.name}</Text>
+          <Text style={[s.rowName, s.regular]}>{item.name}</Text>
         </View>
       )}
     </Pressable>
@@ -118,7 +118,7 @@ const FindFlag = ({ navigation, route, user }) => {
 
   const renderSectionHeader = ({ section }) => (
     <View style={s.sectionHeader}>
-      <Text style={s.sectionHeaderText}>{section.title}</Text>
+      <Text style={[s.sectionHeaderText, s.bold]}>{section.title}</Text>
     </View>
   );
 
@@ -145,7 +145,7 @@ const FindFlag = ({ navigation, route, user }) => {
                 ]}
               />
             )}
-            <Text style={s.confirmName}>
+            <Text style={[s.confirmName, s.bold]}>
               {pendingFlag.code ? pendingFlag.name : "No flag at this time"}
             </Text>
             <PbmButton
@@ -172,7 +172,7 @@ const FindFlag = ({ navigation, route, user }) => {
             placeholderTextColor={theme.indigo4}
             onChangeText={handleSearch}
             value={query}
-            style={s.inputStyle}
+            style={[s.inputStyle, s.regular]}
             autoCorrect={false}
           />
         </View>
@@ -205,6 +205,14 @@ const FindFlag = ({ navigation, route, user }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     searchRow: {
       display: "flex",
       flexDirection: "row",
@@ -229,7 +237,6 @@ const getStyles = (theme) =>
       paddingRight: 40,
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
       paddingVertical: 10,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -241,7 +248,6 @@ const getStyles = (theme) =>
     },
     sectionHeaderText: {
       fontSize: 12,
-      fontFamily: "Nunito-Bold",
       color: theme.text3,
       textTransform: "uppercase",
     },
@@ -262,7 +268,6 @@ const getStyles = (theme) =>
     },
     rowName: {
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
       color: theme.text,
       flex: 1,
     },
@@ -275,7 +280,6 @@ const getStyles = (theme) =>
     },
     confirmName: {
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
       textAlign: "center",
       marginBottom: 16,

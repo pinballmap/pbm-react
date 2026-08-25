@@ -184,8 +184,10 @@ const FilterMap = ({
       <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
           <View style={s.filterSection}>
-            <Text style={s.filterSectionTitle}>Machine Filters</Text>
-            <Text style={[s.filterTitle, s.paddingFirst]}>Machine</Text>
+            <Text style={[s.filterSectionTitle, s.extraBold]}>
+              Machine Filters
+            </Text>
+            <Text style={[s.filterTitle, s.bold, s.paddingFirst]}>Machine</Text>
             <DropDownButton
               title={
                 machines.length > 1
@@ -217,7 +219,7 @@ const FilterMap = ({
                   size={18}
                   style={[{ textAlign: "center" }, s.pink]}
                 />
-                <Text style={[s.filterTitle, s.paddingRL10, s.pink]}>
+                <Text style={[s.filterTitle, s.bold, s.paddingRL10, s.pink]}>
                   ...This machine version, or all?
                 </Text>
                 <ButtonGroup
@@ -236,7 +238,7 @@ const FilterMap = ({
                   size={18}
                   style={[{ textAlign: "center" }, s.pink]}
                 />
-                <Text style={[s.filterTitle, s.paddingRL10, s.pink]}>
+                <Text style={[s.filterTitle, s.bold, s.paddingRL10, s.pink]}>
                   ...Has Stern Insider Connected?
                 </Text>
                 <ButtonGroup
@@ -246,7 +248,7 @@ const FilterMap = ({
                 />
               </>
             )}
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Manufacturer
             </Text>
             <DropDownButton
@@ -267,7 +269,7 @@ const FilterMap = ({
               }
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Machine type
             </Text>
             <ButtonGroup
@@ -277,7 +279,7 @@ const FilterMap = ({
               selectedIndex={machineTypeFilter === "em" ? 1 : 0}
               buttons={["All", "EM"]}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Machine year
             </Text>
             <View style={s.yearRangeContainer}>
@@ -295,7 +297,7 @@ const FilterMap = ({
                   : maxMachineYear;
                 return (
                   <View key={target} style={s.yearStepper}>
-                    <Text style={s.yearLabel}>{label}</Text>
+                    <Text style={[s.yearLabel, s.bold]}>{label}</Text>
                     <View style={s.yearControls}>
                       <Pressable
                         onPress={() => {
@@ -308,10 +310,12 @@ const FilterMap = ({
                           pressed && s.yearButtonPressed,
                         ]}
                       >
-                        <Text style={s.yearButtonText}>−</Text>
+                        <Text style={[s.yearButtonText, s.bold]}>−</Text>
                       </Pressable>
                       <Pressable onPress={() => setYearModalTarget(target)}>
-                        <Text style={s.yearValue}>{value ?? "--"}</Text>
+                        <Text style={[s.yearValue, s.bold]}>
+                          {value ?? "--"}
+                        </Text>
                       </Pressable>
                       <Pressable
                         onPress={() => {
@@ -327,7 +331,7 @@ const FilterMap = ({
                           pressed && s.yearButtonPressed,
                         ]}
                       >
-                        <Text style={s.yearButtonText}>+</Text>
+                        <Text style={[s.yearButtonText, s.bold]}>+</Text>
                       </Pressable>
                     </View>
                   </View>
@@ -380,7 +384,9 @@ const FilterMap = ({
                           <Text
                             style={[
                               s.yearModalItemText,
+                              s.medium,
                               isSelected && s.yearModalItemTextSelected,
+                              isSelected && s.bold,
                             ]}
                           >
                             {item}
@@ -394,8 +400,12 @@ const FilterMap = ({
             </Modal>
           </View>
           <View style={s.filterSection}>
-            <Text style={s.filterSectionTitle}>Location Filters</Text>
-            <Text style={[s.filterTitle, s.paddingFirst, s.paddingRL10]}>
+            <Text style={[s.filterSectionTitle, s.extraBold]}>
+              Location Filters
+            </Text>
+            <Text
+              style={[s.filterTitle, s.bold, s.paddingFirst, s.paddingRL10]}
+            >
               Limit by number of machines
             </Text>
             <ButtonGroup
@@ -403,7 +413,7 @@ const FilterMap = ({
               selectedIndex={getIdx(numMachines)}
               buttons={["All", "2+", "5+", "10+", "20+"]}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               All Ages?
             </Text>
             <ButtonGroup
@@ -411,7 +421,7 @@ const FilterMap = ({
               selectedIndex={allAgesFilter ? 1 : 0}
               buttons={["All", "All Ages"]}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Free Play?
             </Text>
             <ButtonGroup
@@ -419,7 +429,7 @@ const FilterMap = ({
               selectedIndex={paymentTypeFilter ? 1 : 0}
               buttons={["Any", "Free Play"]}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Location type
             </Text>
             <DropDownButton
@@ -429,7 +439,7 @@ const FilterMap = ({
               onPress={() => goToFindLocationType()}
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Location has at least 1 Stern Insider Connected machine?
             </Text>
             <ButtonGroup
@@ -437,7 +447,7 @@ const FilterMap = ({
               selectedIndex={locationIcFilter ? 1 : 0}
               buttons={["All", "Has IC"]}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Operator
             </Text>
             <DropDownButton
@@ -445,7 +455,7 @@ const FilterMap = ({
               onPress={() => goToFindOperator()}
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
               Saved locations or all
             </Text>
             <ButtonGroup
@@ -461,7 +471,7 @@ const FilterMap = ({
           <View style={s.bottomTabInner}>
             <Text
               maxFontSizeMultiplier={1.5}
-              style={s.bottomTabClear}
+              style={[s.bottomTabClear, s.bold]}
               onPress={() => dispatch(clearFilters())}
             >
               Clear Filters
@@ -469,7 +479,7 @@ const FilterMap = ({
             <View style={[s.bottomTabApplyButton, s.boxShadow]}>
               <Text
                 maxFontSizeMultiplier={1.5}
-                style={s.bottomTabApply}
+                style={[s.bottomTabApply, s.bold]}
                 onPress={() => goToMap()}
               >
                 Apply Filters
@@ -484,10 +494,21 @@ const FilterMap = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     filterTitle: {
       textAlign: "center",
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
       marginBottom: 5,
     },
@@ -502,7 +523,6 @@ const getStyles = (theme) =>
       borderColor: theme.theme == "dark" ? theme.base4 : "#ebebf2",
     },
     filterSectionTitle: {
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       textAlign: "center",
@@ -541,7 +561,6 @@ const getStyles = (theme) =>
     },
     bottomTabClear: {
       textDecorationLine: "underline",
-      fontFamily: "Nunito-Bold",
       fontSize: 16,
       color: theme.text,
     },
@@ -552,7 +571,6 @@ const getStyles = (theme) =>
     bottomTabApply: {
       paddingVertical: 10,
       paddingHorizontal: 15,
-      fontFamily: "Nunito-Bold",
       fontSize: 15,
       color: theme.white,
     },
@@ -566,7 +584,6 @@ const getStyles = (theme) =>
       alignItems: "center",
     },
     yearLabel: {
-      fontFamily: "Nunito-Bold",
       fontSize: 13,
       color: theme.text2,
       marginBottom: 4,
@@ -589,14 +606,12 @@ const getStyles = (theme) =>
     yearButtonText: {
       fontSize: 20,
       color: theme.text2,
-      fontFamily: "Nunito-Bold",
       lineHeight: 24,
     },
     yearValue: {
       width: 52,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     yearModalOverlay: {
@@ -622,11 +637,9 @@ const getStyles = (theme) =>
     },
     yearModalItemText: {
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
       color: theme.text,
     },
     yearModalItemTextSelected: {
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     boxShadow: {

@@ -138,26 +138,28 @@ const Stats = ({ navigation }) => {
             map edits in the last week.
           </Text>
 
-          <Text style={s.category}>Top 25 Machines</Text>
+          <Text style={[s.category, s.bold]}>Top 25 Machines</Text>
           {topMachines.map((machine, index, arr) => (
             <View
               key={index}
               style={[s.row, index === arr.length - 1 && s.rowLast]}
             >
-              <Text style={s.rank}>{index + 1}.</Text>
+              <Text style={[s.rank, s.semiBold]}>{index + 1}.</Text>
               <View style={s.rowMain}>
-                <Text style={s.rowName}>{machine.machine_name}</Text>
+                <Text style={[s.rowName, s.semiBold]}>
+                  {machine.machine_name}
+                </Text>
                 <Text style={s.rowSub}>
                   {machine.manufacturer}, {machine.year}
                 </Text>
               </View>
-              <Text style={s.rowCount}>
+              <Text style={[s.rowCount, s.semiBold]}>
                 {formatNumWithCommas(machine.machine_count)}
               </Text>
             </View>
           ))}
 
-          <Text style={s.category}>25 Biggest Locations</Text>
+          <Text style={[s.category, s.bold]}>25 Biggest Locations</Text>
           {topLocations.map((location, index, arr) => (
             <Pressable
               key={index}
@@ -166,54 +168,56 @@ const Stats = ({ navigation }) => {
                 navigation.navigate("LocationDetails", { id: location.id })
               }
             >
-              <Text style={s.rank}>{index + 1}.</Text>
+              <Text style={[s.rank, s.semiBold]}>{index + 1}.</Text>
               <View style={s.rowMain}>
-                <Text style={[s.rowName, s.underline]}>{location.name}</Text>
+                <Text style={[s.rowName, s.semiBold, s.underline]}>
+                  {location.name}
+                </Text>
                 <Text style={s.rowSub}>
                   {cityDisplay(location.city, location.state)}
                 </Text>
               </View>
-              <Text style={s.rowCount}>
+              <Text style={[s.rowCount, s.semiBold]}>
                 {formatNumWithCommas(location.machine_count)}
               </Text>
             </Pressable>
           ))}
 
-          <Text style={s.category}>Top 10 Cities by Locations</Text>
+          <Text style={[s.category, s.bold]}>Top 10 Cities by Locations</Text>
           {topCities.map((city, index, arr) => (
             <Pressable
               key={index}
               style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
-              <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName, s.underline]}>
+              <Text style={[s.rank, s.semiBold]}>{index + 1}.</Text>
+              <Text style={[s.rowMain, s.rowName, s.semiBold, s.underline]}>
                 {cityDisplay(city.city, city.state)}
               </Text>
-              <Text style={s.rowCount}>
+              <Text style={[s.rowCount, s.semiBold]}>
                 {formatNumWithCommas(city.location_count)}
               </Text>
             </Pressable>
           ))}
 
-          <Text style={s.category}>Top 10 Cities by Machines</Text>
+          <Text style={[s.category, s.bold]}>Top 10 Cities by Machines</Text>
           {topCitiesByMachine.map((city, index, arr) => (
             <Pressable
               key={index}
               style={[s.row, index === arr.length - 1 && s.rowLast]}
               onPress={() => getLocationsByCity(city.city, city.state)}
             >
-              <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName, s.underline]}>
+              <Text style={[s.rank, s.semiBold]}>{index + 1}.</Text>
+              <Text style={[s.rowMain, s.rowName, s.semiBold, s.underline]}>
                 {cityDisplay(city.city, city.state)}
               </Text>
-              <Text style={s.rowCount}>
+              <Text style={[s.rowCount, s.semiBold]}>
                 {formatNumWithCommas(city.machines_count)}
               </Text>
             </Pressable>
           ))}
 
-          <Text style={s.category}>Top 25 Users</Text>
+          <Text style={[s.category, s.bold]}>Top 25 Users</Text>
           {topUsers.map((user, index, arr) => (
             <Pressable
               key={index}
@@ -225,11 +229,11 @@ const Stats = ({ navigation }) => {
                 })
               }
             >
-              <Text style={s.rank}>{index + 1}.</Text>
-              <Text style={[s.rowMain, s.rowName, s.underline]}>
+              <Text style={[s.rank, s.semiBold]}>{index + 1}.</Text>
+              <Text style={[s.rowMain, s.rowName, s.semiBold, s.underline]}>
                 {user.username}
               </Text>
-              <Text style={s.rowCount}>
+              <Text style={[s.rowCount, s.semiBold]}>
                 {formatNumWithCommas(user.user_submissions_count)}
               </Text>
             </Pressable>
@@ -242,6 +246,14 @@ const Stats = ({ navigation }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     background: {
       flex: 1,
       backgroundColor: theme.base1,
@@ -256,11 +268,7 @@ const getStyles = (theme) =>
       lineHeight: 22,
       marginBottom: 10,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
-    },
     category: {
-      fontFamily: "Nunito-Bold",
       fontSize: 17,
       textAlign: "center",
       paddingHorizontal: 10,
@@ -283,7 +291,6 @@ const getStyles = (theme) =>
       width: 30,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
     },
     rowMain: {
       flex: 1,
@@ -293,7 +300,6 @@ const getStyles = (theme) =>
     rowName: {
       fontSize: 15,
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
       lineHeight: 20,
     },
     rowSub: {
@@ -307,7 +313,6 @@ const getStyles = (theme) =>
     rowCount: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
       textAlign: "right",
     },
     underline: {

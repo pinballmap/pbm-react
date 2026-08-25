@@ -23,9 +23,9 @@ const Title = ({ machine }) => {
 
   return (
     <Text style={s.fontSize20}>
-      <Text style={s.machineName}>{machine.name}</Text>
+      <Text style={[s.machineName, s.extraBold]}>{machine.name}</Text>
       {machine.year ? (
-        <Text style={[s.fontSize20, s.pink1, s.mediumFont]}>{` (${
+        <Text style={[s.fontSize20, s.pink1, s.medium]}>{` (${
           machine.manufacturer && machine.manufacturer + ", "
         }${machine.year})`}</Text>
       ) : null}
@@ -69,7 +69,7 @@ const MachineCard = ({
             }
             style={s.metaIcon}
           />
-          <Text style={[s.updated]}>
+          <Text style={[s.updated, s.italic]}>
             {machine.created_at !== machine.updated_at
               ? `Updated: ${formatDate(machine.updated_at)}`
               : `Added: ${formatDate(machine.created_at)}`}
@@ -119,16 +119,25 @@ const MachineCard = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     machineName: {
       color: theme.theme == "dark" ? theme.text : theme.purple,
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
     },
     fontSize20: {
       fontSize: 20,
-    },
-    mediumFont: {
-      fontFamily: "Nunito-Medium",
     },
     pink1: {
       color: theme.theme === "dark" ? theme.pink1 : theme.text3,
@@ -136,8 +145,6 @@ const getStyles = (theme) =>
     updated: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       flex: 1,
     },
     machineListContainer: {

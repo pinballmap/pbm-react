@@ -23,7 +23,7 @@ const Resources = () => {
       style={{ flex: 1, backgroundColor: theme.base1 }}
     >
       <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
-        <Text style={[{ marginTop: 10 }, s.text]}>
+        <Text style={[{ marginTop: 10 }, s.text, s.regular]}>
           <Text style={s.bold}>Pinball is fun!</Text>
           {` Here are some great pinball resources. But this is just the start! There are also local pinball groups on facebook. If you're a business owner looking to add machines, you can search for a local operator who will place and maintain machines at your venue.`}
         </Text>
@@ -45,18 +45,18 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://matchplay.events/")
             }
           >{`Match Play Events`}</Text>
           {` is a tournament app which makes it easy to organize tournaments on any device. Your players can follow standings and results live on their own mobile devices. Matchplay also contains the OPDB database, and includes PinTips, tutorial and gameplay videos, and rulesheets.\n`}
         </Text>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() => WebBrowser.openBrowserAsync("https://opdb.org/")}
           >{`OPDB`}</Text>
           {` - or the Open Pinball Database - is a machine database with an API. Its API is used by us, and a number of other apps. So it's like we're all talking to each other.`}
@@ -76,9 +76,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://www.pinballnews.com/site/")
             }
@@ -100,10 +100,10 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           {`The `}
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://www.ifpapinball.com")
             }
@@ -125,9 +125,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync(
                 "https://discord.com/invite/XffPx6VKTv",
@@ -152,9 +152,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() => WebBrowser.openBrowserAsync("https://pinside.com/")}
           >{`Pinside`}</Text>
           {` is a huge and active community resource. It's useful for solving issues with your machines, buying/selling, and discussing pinball.`}
@@ -174,16 +174,16 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://www.kineticist.com/")
             }
           >{`Kineticist`}</Text>
           {` is a digital publication and community resource for the pinball and physical gaming communities. They also run This Week in Pinball. We have `}
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync(
                 "https://www.kineticist.com/blog-category/pinball-map-update",
@@ -205,9 +205,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() => WebBrowser.openBrowserAsync("https://scorbit.io/")}
           >{`Scorbit`}</Text>
           {` is a platform (hardware/app) for tracking scores - and much more - in real-time. Operators can use it to track earnings. It does a lot, and its compatible with many machines.`}
@@ -228,9 +228,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() => WebBrowser.openBrowserAsync("https://pindigo.app")}
           >{`Pindigo`}</Text>
           {` is an app for recording your scores. You can track all your high scores and compare them with friends.`}
@@ -252,9 +252,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={s.text}>
+        <Text style={[s.text, s.regular]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync(
                 "https://www.youtube.com/channel/UCp-cSoq5qVVyts7H8rQjV-w",
@@ -278,9 +278,9 @@ const Resources = () => {
             }}
           />
         </Pressable>
-        <Text style={[s.text, { marginBottom: 20 }]}>
+        <Text style={[s.text, s.regular, { marginBottom: 20 }]}>
           <Text
-            style={s.textLink}
+            style={[s.textLink, s.medium]}
             onPress={() =>
               WebBrowser.openBrowserAsync("https://pinballprimer.github.io/")
             }
@@ -294,6 +294,18 @@ const Resources = () => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     logoWrapper: {
       alignSelf: "center",
       paddingHorizontal: 10,
@@ -304,16 +316,11 @@ const getStyles = (theme) =>
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,
-      fontFamily: "Nunito-Regular",
-    },
-    bold: {
-      fontFamily: "Nunito-Bold",
     },
     textLink: {
       textDecorationLine: "underline",
       color: theme.purple,
       fontSize: 15,
-      fontFamily: "Nunito-Medium",
     },
     hr: {
       marginLeft: 25,

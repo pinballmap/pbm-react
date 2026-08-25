@@ -153,16 +153,18 @@ export const Events = ({ query, user }) => {
               >
                 <Pressable>
                   <Text
-                    style={{
-                      textAlign: "center",
-                      fontFamily: "Nunito-Bold",
-                      marginTop: 15,
-                      color: theme.text2,
-                    }}
+                    style={[
+                      s.bold,
+                      {
+                        textAlign: "center",
+                        marginTop: 15,
+                        color: theme.text2,
+                      },
+                    ]}
                   >
                     {`Something went wrong. In the meantime, you can check the `}
                     <Text
-                      style={s.textLink}
+                      style={[s.textLink, s.regular]}
                       onPress={() =>
                         WebBrowser.openBrowserAsync(
                           "https://www.ifpapinball.com/calendar/",
@@ -178,13 +180,13 @@ export const Events = ({ query, user }) => {
             ) : (
               <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
                 <Pressable>
-                  <Text style={[s.locationName, { width: "90%" }]}>
+                  <Text style={[s.locationName, s.extraBold, { width: "90%" }]}>
                     {tournament.tournament_name.trim()}
                   </Text>
-                  <Text style={[s.address, s.margin]}>
+                  <Text style={[s.address, s.margin, s.semiBold]}>
                     {tournament.raw_address}
                   </Text>
-                  <Text style={[s.margin, s.cardTextStyle]}>
+                  <Text style={[s.margin, s.cardTextStyle, s.regular]}>
                     {formatDateStr(tournament.event_start_date) ===
                     formatDateStr(tournament.event_end_date) ? (
                       <Text style={s.bold}>
@@ -199,7 +201,7 @@ export const Events = ({ query, user }) => {
                     )}
                   </Text>
                   <Text
-                    style={[s.margin, s.link]}
+                    style={[s.margin, s.link, s.regular]}
                     onPress={() =>
                       WebBrowser.openBrowserAsync(
                         `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
@@ -209,7 +211,7 @@ export const Events = ({ query, user }) => {
                     IFPA Calendar Website
                   </Text>
                   <Text
-                    style={[s.margin, s.link]}
+                    style={[s.margin, s.link, s.regular]}
                     onPress={() =>
                       WebBrowser.openBrowserAsync(`${tournament.website}`)
                     }
@@ -249,16 +251,18 @@ export const Events = ({ query, user }) => {
             buttons={buttons}
           />
           <Text
-            style={{
-              textAlign: "center",
-              fontFamily: "Nunito-Bold",
-              marginTop: 15,
-              color: theme.text2,
-            }}
+            style={[
+              s.bold,
+              {
+                textAlign: "center",
+                marginTop: 15,
+                color: theme.text2,
+              },
+            ]}
           >
             {`Something went wrong. In the meantime, you can check the `}
             <Text
-              style={s.textLink}
+              style={[s.textLink, s.regular]}
               onPress={() =>
                 WebBrowser.openBrowserAsync(
                   "https://www.ifpapinball.com/calendar/",
@@ -288,10 +292,10 @@ export const Events = ({ query, user }) => {
                   selectedIndex={selectedIdx}
                   buttons={buttons}
                 />
-                <Text style={s.sourceText}>
+                <Text style={[s.sourceText, s.regular]}>
                   These events are brought to you by the{" "}
                   <Text
-                    style={s.smallLink}
+                    style={[s.smallLink, s.regular]}
                     onPress={() =>
                       WebBrowser.openBrowserAsync(
                         "https://www.ifpapinball.com/calendar/",
@@ -305,7 +309,7 @@ export const Events = ({ query, user }) => {
             }
             ListEmptyComponent={
               <Text
-                style={s.problem}
+                style={[s.problem, s.bold]}
               >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
             }
             renderItem={({ item }) => {
@@ -327,7 +331,7 @@ export const Events = ({ query, user }) => {
                   <Text style={[s.padding, s.locationName]}>
                     {item.tournament_name.trim()}
                   </Text>
-                  <Text style={[s.center, s.cardTextStyle]}>
+                  <Text style={[s.center, s.cardTextStyle, s.regular]}>
                     {start_date === end_date ? (
                       <Text style={s.bold}>{start_date}</Text>
                     ) : (
@@ -355,12 +359,32 @@ export const Events = ({ query, user }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     background: {
       padding: 30,
       backgroundColor: theme.base1,
     },
     locationName: {
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 18,
       lineHeight: 22,
       textAlign: "left",
@@ -372,13 +396,9 @@ const getStyles = (theme) =>
     padding: {
       paddingBottom: 10,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
-    },
     problem: {
       textAlign: "center",
       color: theme.text,
-      fontFamily: "Nunito-Bold",
       marginTop: 20,
       paddingHorizontal: 10,
       fontSize: 14,
@@ -390,13 +410,11 @@ const getStyles = (theme) =>
       marginTop: 0,
       marginBottom: 5,
       paddingHorizontal: 20,
-      fontFamily: "Nunito-Regular",
     },
     smallLink: {
       textDecorationLine: "underline",
       color: theme.pink1,
       fontSize: 12,
-      fontFamily: "Nunito-Regular",
     },
     cardContainer: {
       borderRadius: 15,
@@ -413,12 +431,10 @@ const getStyles = (theme) =>
     cardTextStyle: {
       fontSize: 14,
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     address: {
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
     },
     pressed: {
       opacity: 0.8,
@@ -438,7 +454,6 @@ const getStyles = (theme) =>
     textLink: {
       textDecorationLine: "underline",
       color: "#7cc5ff",
-      fontFamily: "Nunito-Regular",
     },
     xButton: {
       zIndex: 20,
@@ -460,11 +475,6 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "Nunito-Regular",
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
   });
 

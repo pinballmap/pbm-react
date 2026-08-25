@@ -21,7 +21,7 @@ const Toast = ({ message }) => {
   return (
     <View style={s.wrapper}>
       <View style={s.container}>
-        <Text style={s.text}>{message}</Text>
+        <Text style={[s.text, s.semiBold]}>{message}</Text>
       </View>
     </View>
   );
@@ -32,6 +32,10 @@ Toast.propTypes = {
 };
 
 const s = StyleSheet.create({
+  semiBold: {
+    fontFamily: "Nunito",
+    fontWeight: "600",
+  },
   wrapper: {
     position: "absolute",
     top: 0,
@@ -52,7 +56,6 @@ const s = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 13,
-    fontFamily: "Nunito-SemiBold",
   },
 });
 

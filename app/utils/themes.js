@@ -37,7 +37,8 @@ export const dark = {
   fonts: {
     default: {
       medium: {
-        fontFamily: "Nunito-Medium",
+        fontFamily: "Nunito",
+        fontWeight: "500",
       },
     },
   },
@@ -82,7 +83,8 @@ export const standard = {
   fonts: {
     default: {
       medium: {
-        fontFamily: "Nunito-Medium",
+        fontFamily: "Nunito",
+        fontWeight: "500",
       },
     },
   },

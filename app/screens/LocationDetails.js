@@ -894,7 +894,9 @@ const LocationDetails = (props) => {
         <View style={s.locationContainer}>
           <View style={s.locationNameContainer}>
             <View style={s.nameItem}>
-              <Text style={s.locationName}>{location.name}</Text>
+              <Text selectable style={[s.locationName, s.extraBold]}>
+                {location.name}
+              </Text>
             </View>
             <View style={s.heartItem}>
               <FavoriteLocation
@@ -906,7 +908,13 @@ const LocationDetails = (props) => {
           </View>
 
           <Text
-            style={[s.text2, s.fontSize16, { marginLeft: 5, marginBottom: 5 }]}
+            selectable
+            style={[
+              s.text2,
+              s.regular,
+              s.fontSize16,
+              { marginLeft: 5, marginBottom: 5 },
+            ]}
           >
             {formatAddress(location.street, cityState, location.zip)}
           </Text>
@@ -1050,7 +1058,7 @@ const LocationDetails = (props) => {
                     style={s.squareButtonIcon}
                   />
                   <Text
-                    style={[s.fontSize14, s.squareButtonText]}
+                    style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                     numberOfLines={1}
                     maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                   >
@@ -1072,7 +1080,7 @@ const LocationDetails = (props) => {
                     style={s.squareButtonIcon}
                   />
                   <Text
-                    style={[s.fontSize14, s.squareButtonText]}
+                    style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                     numberOfLines={1}
                     maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                   >
@@ -1098,7 +1106,7 @@ const LocationDetails = (props) => {
                     style={s.squareButtonIcon}
                   />
                   <Text
-                    style={[s.fontSize14, s.squareButtonText]}
+                    style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                     numberOfLines={1}
                     maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                   >
@@ -1127,7 +1135,7 @@ const LocationDetails = (props) => {
                   style={s.squareButtonIcon}
                 />
                 <Text
-                  style={[s.fontSize14, s.squareButtonText]}
+                  style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                   numberOfLines={1}
                   maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                 >
@@ -1171,10 +1179,13 @@ const LocationDetails = (props) => {
                     style={{ marginRight: 5 }}
                     color={theme.wrench}
                   />
-                  <Text style={[s.text, s.fontSize15]}>
+                  <Text style={[s.text, s.regular, s.fontSize15]}>
                     {`Operated by `}
                     <Text
-                      style={[location.operator_website ? s.link : s.text2]}
+                      style={[
+                        s.text2,
+                        location.operator_website && [s.link, s.regular],
+                      ]}
                       onPress={
                         location.operator_website
                           ? () =>
@@ -1210,7 +1221,7 @@ const LocationDetails = (props) => {
                           }
                         />
                         <Text
-                          style={[s.fontSize14, s.squareButtonText]}
+                          style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                           numberOfLines={1}
                           maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                         >
@@ -1237,7 +1248,7 @@ const LocationDetails = (props) => {
                           }
                         />
                         <Text
-                          style={[s.fontSize14, s.squareButtonText]}
+                          style={[s.fontSize14, s.squareButtonText, s.semiBold]}
                           numberOfLines={1}
                           maxFontSizeMultiplier={SQUARE_BUTTON_MAX_FONT_SCALE}
                         >
@@ -1314,7 +1325,7 @@ const LocationDetails = (props) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <Text style={[s.text2, s.fontSize15]}>
+                    <Text style={[s.text2, s.regular, s.fontSize15]}>
                       {`${formatNumWithCommas(location.user_submissions_count)} edits by ${formatNumWithCommas(location.users_count)} user${location.users_count == 1 ? "" : "s"}.`}
                     </Text>
                   </View>
@@ -1325,23 +1336,22 @@ const LocationDetails = (props) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <Text style={[s.text2, s.fontSize15]}>
+                    <Text style={[s.text2, s.regular, s.fontSize15]}>
                       {`Last updated`}
                       {!!location.last_updated_by_username && ` by `}
                       {!!location.last_updated_by_username && (
                         <Text
                           style={
+                            (s.semiBold,
                             location.last_updated_by_user_id &&
                             !location.last_updated_by_user_deleted
                               ? {
-                                  fontFamily: "Nunito-SemiBold",
                                   color: theme.pink1,
                                   textDecorationLine: "underline",
                                 }
                               : {
-                                  fontFamily: "Nunito-SemiBold",
                                   color: theme.text2,
-                                }
+                                })
                           }
                           onPress={() =>
                             location.last_updated_by_user_id &&
@@ -1408,7 +1418,9 @@ const LocationDetails = (props) => {
                           ]}
                         />
                       )}
-                    <Text style={[s.text2, s.fontSize15]}>{` on `}</Text>
+                    <Text
+                      style={[s.text2, s.regular, s.fontSize15]}
+                    >{` on `}</Text>
                     <Text style={[s.text2, s.italic]}>
                       {formatDateStr(location.date_last_updated)}
                     </Text>
@@ -1418,9 +1430,9 @@ const LocationDetails = (props) => {
             )}
             {dateDiff >= 2 && (
               <Animated.View style={[s.staleView, animatedStyle]}>
-                <Text style={s.staleText}>
+                <Text style={[s.staleText, s.semiBold]}>
                   {`No updates in over `}
-                  <Text style={s.staleTextBold}>{`${dateDiff} years`}</Text>
+                  <Text style={s.extraBold}>{`${dateDiff} years`}</Text>
                   {`. Please help update the listing!`}
                 </Text>
               </Animated.View>
@@ -1539,7 +1551,7 @@ const LocationDetails = (props) => {
           <View style={s.lmxCountRow}>
             <View style={s.lmxCountSpacer} />
             <View style={s.lmxCountCenterGroup}>
-              <Text style={s.lmxCountText}>
+              <Text style={[s.lmxCountText, s.bold]}>
                 {sortedMachines.length}{" "}
                 {sortedMachines.length === 1 ? "machine" : "machines"}
               </Text>
@@ -1592,7 +1604,7 @@ const LocationDetails = (props) => {
             </View>
           </View>
           {sortedMachines.length === 0 && (
-            <Text style={s.noMachinesWarningText}>
+            <Text style={[s.noMachinesWarningText, s.semiBold]}>
               This location will be automatically removed from the map soon.
             </Text>
           )}
@@ -1689,7 +1701,7 @@ const LocationDetails = (props) => {
                   color={photoIndex === 0 ? "rgba(255,255,255,0.3)" : "white"}
                 />
               </Pressable>
-              <Text style={s.photoCounter}>
+              <Text style={[s.photoCounter, s.semiBold]}>
                 {photoIndex + 1} / {pictures?.length}
               </Text>
               <Pressable
@@ -1716,7 +1728,9 @@ const LocationDetails = (props) => {
               <View style={s.photoModalDeleteContainer}>
                 {deleteConfirmVisible ? (
                   <View style={s.deleteConfirmContainer}>
-                    <Text style={s.deleteConfirmText}>Delete this photo?</Text>
+                    <Text style={[s.deleteConfirmText, s.regular]}>
+                      Delete this photo?
+                    </Text>
                     <View style={s.deleteConfirmRow}>
                       <PbmButton
                         title={deletingPicture ? "Deleting…" : "Yes, delete"}
@@ -1756,8 +1770,8 @@ const LocationDetails = (props) => {
         visible={photoTipsModalVisible}
         closeModal={() => setPhotoTipsModalVisible(false)}
       >
-        <Text style={s.confirmText}>Photo Tips</Text>
-        <Text style={s.photoTipsText}>
+        <Text style={[s.confirmText, s.regular]}>Photo Tips</Text>
+        <Text style={[s.photoTipsText, s.regular]}>
           Choose a picture that gives a feel for the place. No need to include a
           picture of every single machine.
         </Text>
@@ -1771,9 +1785,12 @@ const LocationDetails = (props) => {
         visible={confirmModalVisible}
         closeModal={() => setConfirmModalVisible(false)}
       >
-        <Text style={s.confirmText}>
+        <Text style={[s.confirmText, s.regular]}>
           Confirm the lineup at{" "}
-          <Text style={s.confirmTextMachineName}>{location.name}</Text>?
+          <Text style={[s.confirmTextMachineName, s.bold]}>
+            {location.name}
+          </Text>
+          ?
         </Text>
         <PbmButton
           title={"Confirm Lineup"}
@@ -1793,7 +1810,7 @@ const LocationDetails = (props) => {
         visible={randomMachineModalVisible}
         closeModal={() => setRandomMachineModalVisible(false)}
       >
-        <Text style={s.confirmText}>
+        <Text style={[s.confirmText, s.regular]}>
           Can&apos;t decide which machine to play? Let us help.
         </Text>
         {randomMachineName && (
@@ -1801,6 +1818,7 @@ const LocationDetails = (props) => {
             <Text
               style={[
                 s.confirmText,
+                s.bold,
                 s.confirmTextMachineName,
                 s.randomMachineNameText,
               ]}
@@ -1823,7 +1841,9 @@ const LocationDetails = (props) => {
         closeModal={() => setSortModalVisible(false)}
       >
         <View style={s.sortModalHeader}>
-          <Text style={s.sortModalHeaderTitle}>Change Sort Order</Text>
+          <Text style={[s.sortModalHeaderTitle, s.extraBold]}>
+            Change Sort Order
+          </Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
@@ -1854,7 +1874,9 @@ const LocationDetails = (props) => {
                   maxFontSizeMultiplier={1.3}
                   style={[
                     s.sortModalItemText,
+                    s.medium,
                     isSelected && s.sortModalItemTextSelected,
+                    isSelected && s.bold,
                   ]}
                 >
                   {option.label}
@@ -1879,6 +1901,31 @@ const LocationDetails = (props) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     mapViewContainer: {
       height: 200,
       width: "100%",
@@ -1918,7 +1965,6 @@ const getStyles = (theme) =>
       alignItems: "flex-start",
     },
     locationName: {
-      fontFamily: "Nunito-ExtraBold",
       fontSize: deviceWidth < 325 ? 22 : 24,
       lineHeight: deviceWidth < 325 ? 28 : 30,
       color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
@@ -1949,9 +1995,6 @@ const getStyles = (theme) =>
     fontSize16: {
       fontSize: 16,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
-    },
     marginB: {
       marginTop: Platform.OS === "android" ? 2 : 0,
       marginBottom: 10,
@@ -1974,23 +2017,12 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "Nunito-Regular",
     },
     text: {
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     text2: {
       color: theme.text2,
-      fontFamily: "Nunito-Regular",
-    },
-    text3: {
-      color: theme.text3,
-      fontFamily: "Nunito-Regular",
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     staleView: {
       marginVertical: 5,
@@ -2001,12 +2033,7 @@ const getStyles = (theme) =>
     },
     staleText: {
       color: theme.red2,
-      fontFamily: "Nunito-SemiBold",
       textAlign: "center",
-    },
-    staleTextBold: {
-      color: theme.red2,
-      fontFamily: "Nunito-ExtraBold",
     },
     quickButton: {
       borderWidth: 1,
@@ -2095,7 +2122,6 @@ const getStyles = (theme) =>
     },
     noMachinesWarningText: {
       color: theme.red2,
-      fontFamily: "Nunito-SemiBold",
       textAlign: "center",
       marginTop: 8,
       marginHorizontal: 5,
@@ -2115,7 +2141,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     sortModalXButton: {
       position: "absolute",
@@ -2147,11 +2172,9 @@ const getStyles = (theme) =>
     },
     sortModalItemText: {
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
       color: theme.text,
     },
     sortModalItemTextSelected: {
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     yearButtonPressed: {
@@ -2159,7 +2182,6 @@ const getStyles = (theme) =>
     },
     lmxCountText: {
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     machineRowWrapper: {
@@ -2214,11 +2236,9 @@ const getStyles = (theme) =>
       marginHorizontal: 15,
       fontSize: 18,
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     confirmTextMachineName: {
       color: theme.purpleLight,
-      fontFamily: "Nunito-Bold",
     },
     randomMachineNameText: {
       marginTop: 20,
@@ -2231,7 +2251,6 @@ const getStyles = (theme) =>
       marginBottom: 5,
       fontSize: 15,
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     adminIcon: {
       marginLeft: 2,
@@ -2303,7 +2322,6 @@ const getStyles = (theme) =>
     },
     squareButtonText: {
       color: theme.theme == "dark" ? "#ededfc" : theme.text3,
-      fontFamily: "Nunito-SemiBold",
     },
     photoStrip: {
       marginVertical: 8,
@@ -2364,7 +2382,6 @@ const getStyles = (theme) =>
     },
     photoCounter: {
       color: "white",
-      fontFamily: "Nunito-SemiBold",
       fontSize: 15,
       minWidth: 50,
       textAlign: "center",
@@ -2392,7 +2409,6 @@ const getStyles = (theme) =>
     },
     deleteConfirmText: {
       color: "white",
-      fontFamily: "Nunito-Regular",
       fontSize: 14,
     },
     opacity04: {

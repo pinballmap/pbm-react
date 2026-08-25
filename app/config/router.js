@@ -3,7 +3,7 @@ import { DrawerActions, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Platform, Text } from "react-native";
+import { Text } from "react-native";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
@@ -44,8 +44,8 @@ const Stack = createNativeStackNavigator();
 const TabsOptionsStyle = {
   headerShadowVisible: false,
   headerTitleStyle: {
-    fontFamily: "Nunito-Bold",
-    fontWeight: Platform.OS === "android" ? undefined : 700,
+    fontFamily: "Nunito",
+    fontWeight: "700",
     fontSize: 18,
   },
 };
@@ -134,11 +134,14 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
-              maxFontSizeMultiplier={1.4}
+              maxFontSizeMultiplier={1.3}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
+                  fontFamily: "Nunito",
+                  fontWeight: focused ? "700" : "600",
                 },
               ]}
             >
@@ -161,12 +164,14 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
-              maxFontSizeMultiplier={1.4}
+              maxFontSizeMultiplier={1.3}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
-                  marginBottom: 0,
+                  fontFamily: "Nunito",
+                  fontWeight: focused ? "700" : "600",
                 },
               ]}
             >
@@ -189,11 +194,14 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
-              maxFontSizeMultiplier={1.4}
+              maxFontSizeMultiplier={1.3}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
+                  fontFamily: "Nunito",
+                  fontWeight: focused ? "700" : "600",
                 },
               ]}
             >
@@ -216,11 +224,14 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarLabel: ({ focused }) => (
             <Text
-              maxFontSizeMultiplier={1.4}
+              maxFontSizeMultiplier={1.3}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
               style={[
                 {
                   color: focused ? colors.activeTab : colors.inactiveTab,
-                  fontFamily: focused ? "Nunito-Bold" : "Nunito-SemiBold",
+                  fontFamily: "Nunito",
+                  fontWeight: focused ? "700" : "600",
                 },
               ]}
             >
@@ -249,11 +260,14 @@ function BottomTabNavigator() {
         options={{
           tabBarLabel: () => (
             <Text
-              maxFontSizeMultiplier={1.4}
+              maxFontSizeMultiplier={1.3}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
               style={[
                 {
                   color: colors.inactiveTab,
-                  fontFamily: "Nunito-SemiBold",
+                  fontFamily: "Nunito",
+                  fontWeight: "600",
                 },
               ]}
             >
@@ -283,8 +297,8 @@ function MapStack() {
         gestureDirection: "horizontal",
         gestureEnabled: true,
         headerTitleStyle: {
-          fontFamily: "Nunito-Bold",
-          fontWeight: Platform.OS === "android" ? undefined : 700,
+          fontFamily: "Nunito",
+          fontWeight: "700",
           fontSize: 18,
           color: colors.text,
         },
@@ -457,7 +471,11 @@ function DrawerNavigator() {
         drawerPosition: "right",
         drawerType: "front",
         drawerActiveBackgroundColor: colors.background,
-        drawerLabelStyle: { fontFamily: "Nunito-Bold", fontSize: 16 },
+        drawerLabelStyle: {
+          fontFamily: "Nunito",
+          fontWeight: "700",
+          fontSize: 16,
+        },
         drawerStyle: {
           width: "87%",
           borderBottomLeftRadius: 20,

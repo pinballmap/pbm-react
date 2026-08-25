@@ -259,7 +259,7 @@ const AppWrapper = ({
         style={[s.disabledBanner, { opacity: flashOpacity }]}
         pointerEvents="none"
       >
-        <Text style={s.disabledBannerText}>
+        <Text style={[s.disabledBannerText, s.bold]}>
           Your account has been disabled. Please contact us if you think this is
           a mistake.
         </Text>
@@ -270,6 +270,10 @@ const AppWrapper = ({
 };
 
 const s = StyleSheet.create({
+  bold: {
+    fontFamily: "Nunito",
+    fontWeight: "700",
+  },
   disabledBanner: {
     position: "absolute",
     top: 0,
@@ -283,7 +287,6 @@ const s = StyleSheet.create({
   },
   disabledBannerText: {
     color: "#fff",
-    fontFamily: "Nunito-Bold",
     fontSize: 14,
     textAlign: "center",
   },

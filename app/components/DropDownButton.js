@@ -16,7 +16,11 @@ const DropDownButton = ({ title, margin, onPress, rightIcon }) => {
         pressed ? s.pressed : undefined,
       ]}
     >
-      <Text numberOfLines={1} ellipsizeMode="clip" style={s.titleStyle}>
+      <Text
+        numberOfLines={1}
+        ellipsizeMode="clip"
+        style={[s.titleStyle, s.semiBold]}
+      >
         {title}
       </Text>
       {rightIcon ? (
@@ -30,10 +34,13 @@ const DropDownButton = ({ title, margin, onPress, rightIcon }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
     titleStyle: {
       flexShrink: 1,
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
       color: theme.text3,
     },
     buttonStyle: {

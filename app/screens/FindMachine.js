@@ -94,7 +94,8 @@ const getDisplayText = (machine, theme, dimmed = false) => (
   <Text style={{ fontSize: 18 }}>
     <Text
       style={{
-        fontFamily: "Nunito-Bold",
+        fontFamily: "Nunito",
+        fontWeight: "700",
         color: dimmed ? "#9396ad" : theme.text,
       }}
     >
@@ -102,8 +103,9 @@ const getDisplayText = (machine, theme, dimmed = false) => (
     </Text>
     <Text
       style={{
+        fontFamily: "Nunito",
+        fontWeight: "500",
         color: dimmed ? "#9396ad" : theme.text3,
-        fontFamily: "Nunito-Medium",
       }}
     >{` (${machine.manufacturer}, ${machine.year})`}</Text>
   </Text>
@@ -541,9 +543,11 @@ const FindMachine = ({
             keyboardShouldPersistTaps="handled"
           >
             <View style={s.verticalAlign}>
-              <Text style={s.modalTitle}>
-                Add <Text style={s.modalMachineName}>{machine.name}</Text> to{" "}
-                <Text style={s.modalLocationName}>
+              <Text style={[s.modalTitle, s.regular]}>
+                Add{" "}
+                <Text style={[s.modalMachineName, s.bold]}>{machine.name}</Text>{" "}
+                to{" "}
+                <Text style={[s.modalLocationName, s.semiBold]}>
                   {location.location.name}
                 </Text>
               </Text>
@@ -558,7 +562,7 @@ const FindMachine = ({
                 multiline={true}
                 placeholder={"You can also include a machine comment..."}
                 placeholderTextColor={theme.indigo4}
-                style={[{ padding: 5, height: 70 }, s.textInput]}
+                style={[{ padding: 5, height: 70 }, s.textInput, s.regular]}
                 onChangeText={setCondition}
                 textAlignVertical="top"
                 underlineColorAndroid="transparent"
@@ -581,14 +585,16 @@ const FindMachine = ({
                       color={theme.purple}
                       style={s.checkStyle}
                     />
-                    <Text style={[s.checkText, { marginRight: 20 }]}>Yes</Text>
+                    <Text style={[s.checkText, s.bold, { marginRight: 20 }]}>
+                      Yes
+                    </Text>
                     <Checkbox
                       value={icEnabled === false}
                       onValueChange={() => onIcEnabledPressed(false)}
                       color={theme.purple}
                       style={s.checkStyle}
                     />
-                    <Text style={s.checkText}>No</Text>
+                    <Text style={[s.checkText, s.bold]}>No</Text>
                   </View>
                 </View>
               )}
@@ -612,7 +618,9 @@ const FindMachine = ({
           <View style={s.verticalAlign}>
             <Text style={s.modalTitle}>
               {"Add "}
-              <Text style={s.modalMachineName}>{machineList.length}</Text>
+              <Text style={[s.modalMachineName, s.bold]}>
+                {machineList.length}
+              </Text>
               {` machine${machineList.length > 1 ? "s" : ""} to your life list?`}
             </Text>
             <PbmButton
@@ -633,7 +641,9 @@ const FindMachine = ({
         closeModal={() => setSortModalVisible(false)}
       >
         <View style={s.sortModalHeader}>
-          <Text style={s.sortModalHeaderTitle}>Change Sort Order</Text>
+          <Text style={[s.sortModalHeaderTitle, s.extraBold]}>
+            Change Sort Order
+          </Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
@@ -654,6 +664,7 @@ const FindMachine = ({
                 style={({ pressed }) => [
                   s.sortModalItem,
                   isSelected && s.sortModalItemSelected,
+                  isSelected && s.bold,
                   pressed && s.sortModalItemPressed,
                 ]}
               >
@@ -661,6 +672,7 @@ const FindMachine = ({
                   maxFontSizeMultiplier={1.3}
                   style={[
                     s.sortModalItemText,
+                    s.medium,
                     isSelected && s.sortModalItemTextSelected,
                   ]}
                 >
@@ -698,7 +710,7 @@ const FindMachine = ({
             placeholderTextColor={theme.indigo4}
             onChangeText={(q) => handleSearch(q, machinesInView)}
             value={query}
-            style={s.inputStyle}
+            style={[s.inputStyle, s.regular]}
             autoCorrect={false}
           />
         </View>
@@ -767,7 +779,7 @@ const FindMachine = ({
           data={machines}
           ListHeaderComponent={
             isFiltering ? (
-              <View style={{ backgroundColor: theme.base1 }}>
+              <View style={{ paddingTop: 5, backgroundColor: theme.base1 }}>
                 <ButtonGroup
                   maxFontSizeMultiplier={1.3}
                   onPress={toggleViewMachinesInMapArea}
@@ -799,6 +811,26 @@ const FindMachine = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     inputContainer: {
       borderWidth: 1,
       backgroundColor: theme.white,
@@ -817,7 +849,6 @@ const getStyles = (theme) =>
       paddingRight: 40,
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
       paddingVertical: 10,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -830,7 +861,6 @@ const getStyles = (theme) =>
       marginTop: 5,
       marginBottom: 10,
       borderRadius: 10,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       color: theme.text,
     },
@@ -843,7 +873,6 @@ const getStyles = (theme) =>
     multiSelectRow: {
       flexDirection: "row",
       alignItems: "center",
-      paddingBottom: 5,
       paddingHorizontal: 20,
       backgroundColor: theme.base1,
     },
@@ -886,7 +915,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     sortModalXButton: {
       position: "absolute",
@@ -921,11 +949,9 @@ const getStyles = (theme) =>
     },
     sortModalItemText: {
       fontSize: 16,
-      fontFamily: "Nunito-Medium",
       color: theme.text,
     },
     sortModalItemTextSelected: {
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     modalTitle: {
@@ -933,20 +959,16 @@ const getStyles = (theme) =>
       marginHorizontal: 40,
       marginBottom: 15,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
     },
     modalLocationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
     },
     checkText: {
-      fontFamily: "Nunito-Bold",
       fontSize: 16,
       color: theme.text,
     },

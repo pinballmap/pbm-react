@@ -108,7 +108,7 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
         visible={deleteModalVisible}
         closeModal={() => setDeleteModalVisible(false)}
       >
-        <Text style={s.modalTitle}>Delete your comment?</Text>
+        <Text style={[s.modalTitle, s.bold]}>Delete your comment?</Text>
         <PbmButton title={"Delete Comment"} onPress={onDeletePress} />
         <WarningButton
           title={"Cancel"}
@@ -132,13 +132,18 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
               paddingTop: machineNameMargin + 50,
             }}
           >
-            <Text style={s.modalTitle}>Edit your comment</Text>
+            <Text style={[s.modalTitle, s.bold]}>Edit your comment</Text>
             <TextInput
               defaultValue={initialComment}
               multiline={true}
               underlineColorAndroid="transparent"
               onChangeText={(conditionText) => setComment(conditionText)}
-              style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+              style={[
+                { padding: 5, height: 100 },
+                s.textInput,
+                s.regular,
+                s.radius10,
+              ]}
               textAlignVertical="top"
             />
             <PbmButton title={"Save"} onPress={onEditPress} />
@@ -147,10 +152,13 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
         </View>
       </Modal>
       <View style={s.listContainerStyle}>
-        <Text style={s.conditionText}>{`"${initialComment}"`}</Text>
+        <Text
+          style={[s.conditionText, s.regular]}
+        >{`"${initialComment}"`}</Text>
         <View
           style={[
             s.subtitleStyle,
+            s.semiBold,
             s.subtitleMargin,
             {
               flexDirection: "row",
@@ -199,7 +207,9 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
               />
             )}
           </View>
-          <Text style={[s.italic, s.date]}>{formatDate(updated_at)}</Text>
+          <Text style={[s.text3, s.italic, s.date]}>
+            {formatDate(updated_at)}
+          </Text>
           {created_at !== updated_at && (
             <Text style={{ color: theme.text3 }}>{`*`}</Text>
           )}
@@ -241,7 +251,7 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
                   marginTop: 5,
                 }}
               />
-              <Text style={[s.subtitleStyle, s.italic]}>
+              <Text style={[s.subtitleStyle, s.text3, s.italic]}>
                 Operator: {operator.name}
               </Text>
             </View>
@@ -253,6 +263,23 @@ const MachineComment = ({ commentObj, user, location: loc, operators }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     listContainerStyle: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
@@ -266,13 +293,11 @@ const getStyles = (theme) =>
       fontSize: 15,
       marginTop: 5,
       marginHorizontal: 5,
-      fontFamily: "Nunito-Regular",
     },
     subtitleStyle: {
       paddingTop: 5,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
     },
     subtitleMargin: {
       marginTop: 4,
@@ -288,11 +313,9 @@ const getStyles = (theme) =>
       color: theme.text2,
       fontSize: 14,
     },
-    italic: {
-      fontFamily: "Nunito-Italic",
+    text3: {
       color: theme.text3,
       fontSize: 14,
-      fontStyle: "italic",
     },
     editDelete: {
       textDecorationLine: "underline",
@@ -309,7 +332,6 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginBottom: 10,
       marginHorizontal: 30,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     radius10: {
@@ -320,7 +342,6 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     rankIcon: {

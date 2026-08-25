@@ -263,14 +263,14 @@ const MachineDetails = ({
           visible={ictoggleModalVisible}
           closeModal={() => setIctoggleModalVisible(false)}
         >
-          <Text style={s.modalTitle}>
+          <Text style={[s.modalTitle, s.regular]}>
             Is Stern Insider Connected
-            <Text style={{ fontFamily: "Nunito-Bold" }}>
+            <Text style={s.bold}>
               {ic_enabled === true ? ` not enabled ` : ` enabled `}
             </Text>
-            on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+            on <Text style={[s.modalMachineName, s.bold]}>{machineName}</Text>{" "}
             <Text
-              style={s.modalMachineManYear}
+              style={[s.modalMachineManYear, s.medium]}
             >{`(${manufacturer}, ${year})`}</Text>
             {"? If so, toggle below."}
           </Text>
@@ -287,10 +287,11 @@ const MachineDetails = ({
           visible={showRemoveFromLifeListModal}
           closeModal={() => setShowRemoveFromLifeListModal(false)}
         >
-          <Text style={s.modalTitle}>
-            Remove <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+          <Text style={[s.modalTitle, s.regular]}>
+            Remove{" "}
+            <Text style={[s.modalMachineName, s.bold]}>{machineName}</Text>{" "}
             <Text
-              style={s.modalMachineManYear}
+              style={[s.modalMachineManYear, s.medium]}
             >{`(${manufacturer}, ${year})`}</Text>{" "}
             from your life list?
           </Text>
@@ -318,7 +319,7 @@ const MachineDetails = ({
             {copiedNotice && (
               <View style={s.copiedNoticeWrapper}>
                 <View style={s.copiedNoticeContainer}>
-                  <Text style={s.copiedNotice}>Copied</Text>
+                  <Text style={[s.copiedNotice, s.semiBold]}>Copied</Text>
                 </View>
               </View>
             )}
@@ -329,12 +330,16 @@ const MachineDetails = ({
                 paddingTop: modalTopPadding + 50,
               }}
             >
-              <Text style={s.modalTitle}>
-                Comment on <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+              <Text style={[s.modalTitle, s.regular]}>
+                Comment on{" "}
+                <Text style={[s.modalMachineName, s.bold]}>{machineName}</Text>{" "}
                 <Text
-                  style={s.modalMachineManYear}
+                  style={[s.modalMachineManYear, s.medium]}
                 >{`(${manufacturer}, ${year})`}</Text>{" "}
-                at <Text style={s.modalLocationName}>{location.name}</Text>
+                at{" "}
+                <Text style={[s.modalLocationName, s.semiBold]}>
+                  {location.name}
+                </Text>
               </Text>
               <TextInput
                 multiline={true}
@@ -342,7 +347,12 @@ const MachineDetails = ({
                 onChangeText={(conditionText) =>
                   setConditionText(conditionText)
                 }
-                style={[{ padding: 5, height: 100 }, s.textInput, s.radius10]}
+                style={[
+                  { padding: 5, height: 100 },
+                  s.textInput,
+                  s.regular,
+                  s.radius10,
+                ]}
                 placeholder={
                   "(note: if this machine is gone, just remove it. no need to leave a comment saying it's gone)"
                 }
@@ -352,9 +362,7 @@ const MachineDetails = ({
               {(!!location.operator_email_opt_in ||
                 !!location.operator_phone_opt_in) && (
                 <View style={[s.margin4, s.operatorContactContainer]}>
-                  <Text
-                    style={{ fontFamily: "Nunito-Bold", color: theme.purple2 }}
-                  >
+                  <Text style={[s.bold, { color: theme.purple2 }]}>
                     Contact operator directly:{" "}
                   </Text>
                   <View style={s.operatorContactRow}>
@@ -373,7 +381,10 @@ const MachineDetails = ({
                             theme.theme == "dark" ? theme.pink1 : theme.purple
                           }
                         />
-                        <Text style={s.operatorContactText} numberOfLines={1}>
+                        <Text
+                          style={[s.operatorContactText, s.semiBold]}
+                          numberOfLines={1}
+                        >
                           Email
                         </Text>
                       </Pressable>
@@ -393,7 +404,10 @@ const MachineDetails = ({
                             theme.theme == "dark" ? theme.pink1 : theme.purple
                           }
                         />
-                        <Text style={s.operatorContactText} numberOfLines={1}>
+                        <Text
+                          style={[s.operatorContactText, s.semiBold]}
+                          numberOfLines={1}
+                        >
                           Call/Text
                         </Text>
                       </Pressable>
@@ -406,14 +420,14 @@ const MachineDetails = ({
                   {`This operator is signed up to be notified about machine comments.`}
                 </Text>
               )}
-              <Text style={[s.modalSubText, s.margin4]}>
+              <Text style={[s.modalSubText, s.medium, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Everyone:</Text>{" "}
                 {`it's often best to tell technicians about issues on-site rather than leaving them "on the record" here.`}
               </Text>
-              <Text style={[s.modalSubText, s.margin4]}>
+              <Text style={[s.modalSubText, s.medium, s.margin4]}>
                 {`Please be descriptive about machine issues and considerate toward those fixing them.`}
               </Text>
-              <Text style={[s.modalSubText, s.margin4]}>
+              <Text style={[s.modalSubText, s.medium, s.margin4]}>
                 <Text style={[s.bold, s.purple]}>Operators:</Text>{" "}
                 {`if you've fixed an issue, please leave a comment saying so, so that everyone knows how great you are.`}
               </Text>
@@ -443,13 +457,16 @@ const MachineDetails = ({
                 paddingTop: modalTopPadding + 50,
               }}
             >
-              <Text style={s.modalTitle}>
+              <Text style={[s.modalTitle, s.regular]}>
                 Add your high score to{" "}
-                <Text style={s.modalMachineName}>{machineName}</Text>{" "}
+                <Text style={[s.modalMachineName, s.bold]}>{machineName}</Text>{" "}
                 <Text
-                  style={s.modalMachineManYear}
+                  style={[s.modalMachineManYear, s.medium]}
                 >{`(${manufacturer}, ${year})`}</Text>{" "}
-                at <Text style={s.modalLocationName}>{location.name}</Text>
+                at{" "}
+                <Text style={[s.modalLocationName, s.semiBold]}>
+                  {location.name}
+                </Text>
               </Text>
               <TextInput
                 style={[{ textAlign: "center" }, s.textInput, s.radius10]}
@@ -481,23 +498,26 @@ const MachineDetails = ({
           <View
             style={[{ marginTop: machineNameMargin }, s.machineNameContainer]}
           >
-            <Text maxFontSizeMultiplier={1.3} style={s.machineName}>
+            <Text
+              maxFontSizeMultiplier={1.3}
+              style={[s.machineName, s.extraBold]}
+            >
               {machineName}
             </Text>
             {year && manufacturer ? (
               <Text
-                style={[s.machineManYear]}
+                style={[s.machineManYear, s.medium]}
               >{`(${manufacturer}, ${year})`}</Text>
             ) : null}
-            <Text style={s.locationName}>{location.name}</Text>
+            <Text style={[s.locationName, s.semiBold]}>{location.name}</Text>
           </View>
           <View style={s.addedContainer}>
             <Text
-              style={s.addedText}
+              style={[s.addedText, s.italic]}
             >{`Added: ${formatDate(curLmx.created_at)}`}</Text>
             {curLmx.created_at != curLmx.updated_at ? (
               <Text
-                style={s.addedText}
+                style={[s.addedText, s.italic]}
               >{`Last updated: ${formatDate(curLmx.updated_at)}`}</Text>
             ) : (
               ""
@@ -566,9 +586,7 @@ const MachineDetails = ({
                     }}
                   >
                     {`${ic_enabled === null ? "Is " : ""}`}
-                    <Text style={{ fontFamily: "Nunito-Bold" }}>
-                      Insider Connected
-                    </Text>{" "}
+                    <Text style={s.bold}>Insider Connected</Text>{" "}
                     {`${
                       ic_enabled === null
                         ? "enabled?"
@@ -641,7 +659,7 @@ const MachineDetails = ({
           )}
           {!!matchplayUrl && (
             <View style={s.externalLinkContainer}>
-              <Text style={s.externalLink}>
+              <Text style={[s.externalLink, s.regular]}>
                 Find machine tips, rules, & videos on
               </Text>
               {!!matchplayUrl && (
@@ -690,14 +708,16 @@ const MachineDetails = ({
                 name="clipboard-list-outline"
                 style={[s.lifeListIcon]}
               />
-              <Text style={s.sectionTitle}>Your Machine List</Text>
+              <Text style={[s.sectionTitle, s.extraBold]}>
+                Your Machine List
+              </Text>
             </View>
             {loggedIn ? (
               lifeListStatus === null ? (
                 <ActivityIndicator />
               ) : lifeListStatus.in_list ? (
                 <>
-                  <Text style={s.lifeListText}>
+                  <Text style={[s.lifeListText, s.regular]}>
                     {`You've played `}
                     <Text style={s.bold}>{`${machineName}`}</Text>
                     <Text style={s.medium}>
@@ -706,9 +726,9 @@ const MachineDetails = ({
                     </Text>
                     {`. `}
                   </Text>
-                  <Text style={s.lifeListText}>
+                  <Text style={[s.lifeListText, s.regular]}>
                     <Text
-                      style={s.lifeListLink}
+                      style={[s.lifeListLink, s.semiBold]}
                       onPress={() =>
                         navigation.navigate("UserProfilePublic", {
                           userId,
@@ -722,7 +742,7 @@ const MachineDetails = ({
                   </Text>
                   {lifeListStatus.has_scores === false && (
                     <Text
-                      style={s.lifeListRemoveLink}
+                      style={[s.lifeListRemoveLink, s.semiBold]}
                       onPress={() => setShowRemoveFromLifeListModal(true)}
                     >
                       Remove from list?
@@ -731,7 +751,7 @@ const MachineDetails = ({
                 </>
               ) : (
                 <>
-                  <Text style={s.lifeListText}>
+                  <Text style={[s.lifeListText, s.regular]}>
                     {`Have you played `}
                     <Text style={s.bold}>{`${machineName}`}</Text>
                     <Text style={s.medium}>
@@ -740,10 +760,12 @@ const MachineDetails = ({
                     </Text>
                     {`?`}
                   </Text>
-                  <Text style={[s.lifeListText, { marginBottom: 15 }]}>
+                  <Text
+                    style={[s.lifeListText, s.regular, { marginBottom: 15 }]}
+                  >
                     {`You can track every machine you've played and view the list `}
                     <Text
-                      style={s.lifeListLink}
+                      style={[s.lifeListLink, s.semiBold]}
                       onPress={() =>
                         navigation.navigate("UserProfilePublic", {
                           userId,
@@ -771,7 +793,7 @@ const MachineDetails = ({
                 </>
               )
             ) : (
-              <Text style={s.lifeListText}>
+              <Text style={[s.lifeListText, s.regular]}>
                 {`Have you played `}
                 <Text style={s.bold}>{`${machineName}`}</Text>
                 <Text style={s.medium}> {`(${manufacturer}, ${year})`}</Text>
@@ -779,19 +801,23 @@ const MachineDetails = ({
               </Text>
             )}
             {!!lifeListError && (
-              <Text style={s.lifeListError}>{lifeListError}</Text>
+              <Text style={[s.lifeListError, s.semiBold]}>{lifeListError}</Text>
             )}
           </View>
           <View style={s.containerStyle}>
             <View style={s.locationNameContainer}>
-              <Text style={s.sectionTitle}>Machine Comments</Text>
+              <Text style={[s.sectionTitle, s.extraBold]}>
+                Machine Comments
+              </Text>
             </View>
             {mostRecentComments ? (
               mostRecentComments.map((commentObj) => (
                 <MachineComment commentObj={commentObj} key={commentObj.id} />
               ))
             ) : (
-              <Text style={s.noneYet}>No machine comments yet</Text>
+              <Text style={[s.noneYet, s.regular]}>
+                No machine comments yet
+              </Text>
             )}
             <PbmButton
               title={"Add a New Comment"}
@@ -803,14 +829,14 @@ const MachineDetails = ({
             />
             {!!location.operator_id && operatorHasEmail && (
               <View style={[s.operatorEmail, s.operatorHasEmail]}>
-                <Text style={s.operatorComments}>
+                <Text style={[s.operatorComments, s.semiBold]}>
                   This operator receives machine comments!
                 </Text>
               </View>
             )}
             {!!location.operator_id && !operatorHasEmail && (
               <View style={[s.operatorEmail, s.operatorNotEmail]}>
-                <Text style={s.operatorComments}>
+                <Text style={[s.operatorComments, s.semiBold]}>
                   This operator does not receive machine comments
                 </Text>
               </View>
@@ -818,7 +844,7 @@ const MachineDetails = ({
           </View>
           <View style={s.containerStyle}>
             <View style={s.locationNameContainer}>
-              <Text style={s.sectionTitle}>Your Scores</Text>
+              <Text style={[s.sectionTitle, s.extraBold]}>Your Scores</Text>
             </View>
             {(!loggedIn || highScoreFetched) && (
               <View>
@@ -828,18 +854,17 @@ const MachineDetails = ({
                   <Text style={s.medium}> {`(${manufacturer}, ${year})`}</Text>
                 </Text>
                 {userAllTimeHighScore ? (
-                  <Text style={s.userHighScore}>
+                  <Text style={[s.userHighScore, s.extraBold]}>
                     {formatNumWithCommas(userAllTimeHighScore)}
                   </Text>
                 ) : (
                   <>
-                    <Text style={s.noneYet}>none yet</Text>
+                    <Text style={[s.noneYet, s.regular]}>none yet</Text>
                     <Text
                       style={[
                         s.noneYet,
+                        s.italic,
                         {
-                          fontFamily: "Nunito-Italic",
-                          fontStyle: "italic",
                           fontSize: 13,
                         },
                       ]}
@@ -852,7 +877,9 @@ const MachineDetails = ({
             )}
             {scores.length > 0 && (
               <>
-                <Text style={s.copyScores}>Your high scores on this copy</Text>
+                <Text style={[s.copyScores, s.italic]}>
+                  Your high scores on this copy
+                </Text>
                 {scores.map((scoreObj) => (
                   <MachineScore
                     scoreObj={scoreObj}
@@ -899,16 +926,39 @@ const MachineDetails = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     machineName: {
       textAlign: "center",
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 24,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
     machineManYear: {
       textAlign: "center",
       fontSize: 20,
-      fontFamily: "Nunito-Medium",
       color: theme.theme === "dark" ? theme.pink1 : theme.purple,
     },
     locationName: {
@@ -916,7 +966,6 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 20,
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
     },
     machineNameContainer: {
       marginHorizontal: 38,
@@ -933,12 +982,9 @@ const getStyles = (theme) =>
       fontSize: 15,
       lineHeight: 20,
       color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     externalLink: {
       fontSize: 15,
-      fontFamily: "Nunito-Regular",
       color: theme.text3,
       textAlign: "center",
     },
@@ -954,7 +1000,6 @@ const getStyles = (theme) =>
       paddingHorizontal: 15,
       color: theme.text3,
       paddingVertical: 5,
-      fontFamily: "Nunito-Regular",
       fontSize: 15,
     },
     textInput: {
@@ -964,7 +1009,6 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginBottom: 10,
       marginHorizontal: 30,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -986,12 +1030,9 @@ const getStyles = (theme) =>
       fontSize: 24,
       paddingBottom: 15,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
-      fontFamily: "Nunito-ExtraBold",
     },
     copyScores: {
-      fontFamily: "Nunito-Italic",
       color: theme.text3,
-      fontStyle: "italic",
       flex: 1,
       textAlign: "center",
     },
@@ -1000,33 +1041,22 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
     },
     modalLocationName: {
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-SemiBold",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
     },
     modalMachineManYear: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Medium",
     },
     modalSubText: {
       marginHorizontal: 40,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
-    },
-    bold: {
-      fontFamily: "Nunito-Bold",
-    },
-    medium: {
-      fontFamily: "Nunito-Medium",
     },
     purple: {
       color: theme.purple,
@@ -1046,7 +1076,6 @@ const getStyles = (theme) =>
     },
     sectionTitle: {
       fontSize: 20,
-      fontFamily: "Nunito-ExtraBold",
       textAlign: "center",
       marginVertical: 10,
       color: theme.purpleLight,
@@ -1066,7 +1095,6 @@ const getStyles = (theme) =>
     operatorComments: {
       textAlign: "center",
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
     },
     buttonIC: {
       height: 65,
@@ -1129,7 +1157,6 @@ const getStyles = (theme) =>
     },
     operatorContactText: {
       color: theme.theme == "dark" ? "#ededfc" : theme.text3,
-      fontFamily: "Nunito-SemiBold",
       fontSize: 14,
     },
     copiedNoticeWrapper: {
@@ -1152,7 +1179,6 @@ const getStyles = (theme) =>
     copiedNotice: {
       color: "white",
       fontSize: 13,
-      fontFamily: "Nunito-SemiBold",
     },
     lifeListContainer: {
       marginHorizontal: 15,
@@ -1162,20 +1188,17 @@ const getStyles = (theme) =>
     lifeListText: {
       textAlign: "center",
       fontSize: 15,
-      fontFamily: "Nunito-Regular",
       color: theme.text2,
       marginBottom: 10,
       marginHorizontal: 10,
     },
     lifeListLink: {
       color: theme.purpleLight,
-      fontFamily: "Nunito-SemiBold",
       textDecorationLine: "underline",
     },
     lifeListRemoveLink: {
       textAlign: "center",
       fontSize: 15,
-      fontFamily: "Nunito-SemiBold",
       color: theme.red2,
       textDecorationLine: "underline",
       marginBottom: 10,
@@ -1183,7 +1206,6 @@ const getStyles = (theme) =>
     lifeListError: {
       textAlign: "center",
       fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
       color: "#c0392b",
       marginHorizontal: 15,
       marginTop: 6,

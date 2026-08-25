@@ -73,7 +73,7 @@ const AddHighScore = ({ user }) => {
       {savedNotice && (
         <View style={s.toastWrapper}>
           <View style={s.toastContainer}>
-            <Text style={s.toastText}>Score saved!</Text>
+            <Text style={[s.toastText, s.semiBold]}>Score saved!</Text>
           </View>
         </View>
       )}
@@ -81,10 +81,13 @@ const AddHighScore = ({ user }) => {
         visible={confirmModalVisible}
         closeModal={() => setConfirmModalVisible(false)}
       >
-        <Text style={s.modalTitle}>
+        <Text style={[s.modalTitle, s.regular]}>
           Add score of{" "}
-          <Text style={s.modalScore}>{formatInputNumWithCommas(score)}</Text> on{" "}
-          <Text style={s.modalMachineName}>{selectedMachine?.name}</Text>?
+          <Text style={s.bold}>{formatInputNumWithCommas(score)}</Text> on{" "}
+          <Text style={[s.modalMachineName, s.bold]}>
+            {selectedMachine?.name}
+          </Text>
+          ?
         </Text>
         <PbmButton title={"Save Score"} onPress={handleSave} />
         <WarningButton
@@ -106,17 +109,17 @@ const AddHighScore = ({ user }) => {
           />
         ) : (
           <>
-            <Text style={s.description}>
+            <Text style={[s.description, s.regular]}>
               Select a machine and enter your score. The machine will be added
               to your life list.
             </Text>
-            <Text style={s.description}>
+            <Text style={[s.description, s.regular]}>
               Scores entered here will not be associated with a location. If you
               want to add a score to a location-specific machine, lookup that
               location on the map.
             </Text>
             <View style={[s.section, { marginTop: 12 }]}>
-              <Text style={s.sectionLabel}>Machine</Text>
+              <Text style={[s.sectionLabel, s.bold]}>Machine</Text>
               <DropDownButton
                 title={
                   selectedMachine ? selectedMachine.name : "Select Machine"
@@ -129,9 +132,9 @@ const AddHighScore = ({ user }) => {
               />
             </View>
             <View style={s.section}>
-              <Text style={s.sectionLabel}>Score</Text>
+              <Text style={[s.sectionLabel, s.bold]}>Score</Text>
               <TextInput
-                style={[s.textInput, s.radius10]}
+                style={[s.textInput, s.regular, s.radius10]}
                 keyboardType="numeric"
                 underlineColorAndroid="transparent"
                 onChangeText={(val) => setScore(formatInputNumWithCommas(val))}
@@ -167,9 +170,20 @@ const AddHighScore = ({ user }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     description: {
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
       color: theme.text2,
       marginHorizontal: 15,
       marginTop: 10,
@@ -180,7 +194,6 @@ const getStyles = (theme) =>
     },
     sectionLabel: {
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
       marginBottom: 5,
       textAlign: "center",
@@ -192,7 +205,6 @@ const getStyles = (theme) =>
       borderWidth: 1,
       textAlign: "center",
       marginHorizontal: 20,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       padding: 10,
       includeFontPadding: false,
@@ -206,14 +218,9 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
-    },
-    modalScore: {
-      fontFamily: "Nunito-Bold",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
-      fontFamily: "Nunito-Bold",
     },
     toastWrapper: {
       position: "absolute",
@@ -235,7 +242,6 @@ const getStyles = (theme) =>
     toastText: {
       color: "white",
       fontSize: 13,
-      fontFamily: "Nunito-SemiBold",
     },
   });
 

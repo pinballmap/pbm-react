@@ -246,7 +246,7 @@ const UserProfile = ({
               onPress={() => navigation.navigate("Login")}
             />
             <View style={s.usernameContainer}>
-              <Text style={s.username}>Your Great Username</Text>
+              <Text style={[s.username, s.extraBold]}>Your Great Username</Text>
               <View style={s.flagContainer}>
                 <Image
                   source={flagImages["pirate"]}
@@ -254,7 +254,7 @@ const UserProfile = ({
                 />
               </View>
               <View style={s.rankView}>
-                <Text style={s.rankText}>Super Mapper</Text>
+                <Text style={[s.rankText, s.bold]}>Super Mapper</Text>
                 <Image
                   contentFit="fill"
                   source={require("../assets/images/SuperMapper.png")}
@@ -262,48 +262,52 @@ const UserProfile = ({
                 />
               </View>
               <Text
-                style={s.joined}
+                style={[s.joined, s.italic]}
               >{`Joined: ${formatDate(new Date().toISOString())}`}</Text>
             </View>
             <View style={s.statContainer}>
               <View style={s.statItem}>
-                <Text style={s.stat}>Total contributions:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Total contributions:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines added:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Machines added:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines removed:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Machines removed:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machine comments:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Machine comments:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>High scores added:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>High scores added:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines in Life List:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Machines in Life List:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Locations submitted:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Locations submitted:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Locations edited:</Text>
-                <Text style={s.statNum}>{getStatNum(0)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Locations edited:</Text>
+                <Text style={[s.statNum, s.bold]}>{getStatNum(0)}</Text>
               </View>
             </View>
-            <Text style={s.section}>Some recently edited locations</Text>
+            <Text style={[s.section, s.bold]}>
+              Some recently edited locations
+            </Text>
             <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-              <Text style={s.none}>No edits yet</Text>
+              <Text style={[s.none, s.italic]}>No edits yet</Text>
             </View>
-            <Text style={s.section}>Your Machine List and High Scores</Text>
+            <Text style={[s.section, s.bold]}>
+              Your Machine List and High Scores
+            </Text>
             <View
               style={{
                 paddingHorizontal: 20,
@@ -311,12 +315,14 @@ const UserProfile = ({
                 paddingBottom: 6,
               }}
             >
-              <Text style={s.sectionDescription}>
+              <Text style={[s.sectionDescription, s.regular]}>
                 {`You can manage a "life list" of all the pinball machines you've ever played. Any time you add a score, that machine will be added to your list. And you can manually add machines here or when viewing a machine at a location.`}
               </Text>
             </View>
             <View style={{ paddingTop: 8, marginBottom: 30 }}>
-              <Text style={s.none}>No machines or scores to list yet</Text>
+              <Text style={[s.none, s.italic]}>
+                No machines or scores to list yet
+              </Text>
             </View>
           </>
         ) : (
@@ -344,9 +350,9 @@ const UserProfile = ({
                   visible={!!machineToRemove}
                   closeModal={() => setMachineToRemove(null)}
                 >
-                  <Text style={s.modalConfirmText}>
+                  <Text style={[s.modalConfirmText, s.regular]}>
                     {`Remove `}
-                    <Text style={[s.bold, s.modalMachineName]}>
+                    <Text style={[s.bold, s.font16, s.modalMachineName]}>
                       {machineToRemove?.machine_name}
                     </Text>
                     {` from your life list?`}
@@ -367,7 +373,7 @@ const UserProfile = ({
                   loading={deletingAccount}
                 >
                   <View style={s.header}>
-                    <Text style={s.modalTitle}>Account Settings</Text>
+                    <Text style={[s.modalTitle, s.bold]}>Account Settings</Text>
                     <MaterialCommunityIcons
                       name="close-circle"
                       size={35}
@@ -381,11 +387,13 @@ const UserProfile = ({
                     style={{ maxHeight: screenHeight * 0.75 }}
                   >
                     <View style={s.modalSection}>
-                      <Text style={[s.sectionLabel, { marginTop: 10 }]}>
+                      <Text
+                        style={[s.sectionLabel, s.semiBold, { marginTop: 10 }]}
+                      >
                         Update Email
                       </Text>
                       <TextInput
-                        style={s.textInput}
+                        style={[s.textInput, s.regular]}
                         placeholder="New email address"
                         placeholderTextColor={s.placeholderColor}
                         value={newEmail}
@@ -399,10 +407,14 @@ const UserProfile = ({
                         keyboardType="email-address"
                       />
                       {!!emailError && (
-                        <Text style={s.formError}>{emailError}</Text>
+                        <Text style={[s.formError, s.semiBold]}>
+                          {emailError}
+                        </Text>
                       )}
                       {emailSuccess && (
-                        <Text style={s.formSuccess}>Email updated!</Text>
+                        <Text style={[s.formSuccess, s.semiBold]}>
+                          Email updated!
+                        </Text>
                       )}
                       <PbmButton
                         title={"Update Email"}
@@ -412,9 +424,11 @@ const UserProfile = ({
                     </View>
                     <View style={s.divider} />
                     <View style={s.modalSection}>
-                      <Text style={s.sectionLabel}>Update Password</Text>
+                      <Text style={[s.sectionLabel, s.semiBold]}>
+                        Update Password
+                      </Text>
                       <TextInput
-                        style={s.textInput}
+                        style={[s.textInput, s.regular]}
                         placeholder="Current password"
                         placeholderTextColor={s.placeholderColor}
                         value={currentPassword}
@@ -428,7 +442,7 @@ const UserProfile = ({
                         autoCorrect={false}
                       />
                       <TextInput
-                        style={s.textInput}
+                        style={[s.textInput, s.regular]}
                         placeholder="New password"
                         placeholderTextColor={s.placeholderColor}
                         value={newPassword}
@@ -442,7 +456,7 @@ const UserProfile = ({
                         autoCorrect={false}
                       />
                       <TextInput
-                        style={s.textInput}
+                        style={[s.textInput, s.regular]}
                         placeholder="Confirm new password"
                         placeholderTextColor={s.placeholderColor}
                         value={newPasswordConfirmation}
@@ -456,10 +470,14 @@ const UserProfile = ({
                         autoCorrect={false}
                       />
                       {!!passwordError && (
-                        <Text style={s.formError}>{passwordError}</Text>
+                        <Text style={[s.formError, s.semiBold]}>
+                          {passwordError}
+                        </Text>
                       )}
                       {passwordSuccess && (
-                        <Text style={s.formSuccess}>Password updated!</Text>
+                        <Text style={[s.formSuccess, s.semiBold]}>
+                          Password updated!
+                        </Text>
                       )}
                       <PbmButton
                         title={"Update Password"}
@@ -481,12 +499,14 @@ const UserProfile = ({
                         />
                       ) : (
                         <>
-                          <Text style={s.deleteWarning}>
+                          <Text style={[s.deleteWarning, s.medium]}>
                             This will permanently delete your account. This
                             cannot be undone.
                           </Text>
                           {!!deleteError && (
-                            <Text style={s.formError}>{deleteError}</Text>
+                            <Text style={[s.formError, s.semiBold]}>
+                              {deleteError}
+                            </Text>
                           )}
                           <PbmButton
                             title={"Yes, Delete My Account"}
@@ -507,7 +527,7 @@ const UserProfile = ({
               </>
             )}
             <View style={s.usernameContainer}>
-              <Text style={s.username}>{displayUsername}</Text>
+              <Text style={[s.username, s.extraBold]}>{displayUsername}</Text>
               {!!flag && flagImages[flag] && (
                 <View style={s.flagContainer}>
                   <Image
@@ -518,7 +538,7 @@ const UserProfile = ({
               )}
               {!!admin_title && (
                 <View style={s.rankView}>
-                  <Text style={s.rankText}>{admin_title}</Text>
+                  <Text style={[s.rankText, s.bold]}>{admin_title}</Text>
                   <MaterialCommunityIcons
                     name="shield-account"
                     size={20}
@@ -529,7 +549,7 @@ const UserProfile = ({
               )}
               {!!contributor_rank && (
                 <View style={s.rankView}>
-                  <Text style={s.rankText}>{contributor_rank}</Text>
+                  <Text style={[s.rankText, s.bold]}>{contributor_rank}</Text>
                   <Image
                     contentFit="fill"
                     source={contributor_icon}
@@ -539,7 +559,7 @@ const UserProfile = ({
               )}
               {!!operator_name && (
                 <View style={s.rankView}>
-                  <Text style={s.rankText}>{operator_name}</Text>
+                  <Text style={[s.rankText, s.bold]}>{operator_name}</Text>
                   <MaterialCommunityIcons
                     name="wrench"
                     style={s.rankIcon}
@@ -549,7 +569,7 @@ const UserProfile = ({
                 </View>
               )}
               <Text
-                style={s.joined}
+                style={[s.joined, s.italic]}
               >{`Joined: ${formatDate(created_at)}`}</Text>
               {isOwnProfile && (
                 <View style={s.accountSettingsContainer}>
@@ -558,18 +578,18 @@ const UserProfile = ({
                       navigation.navigate("FindFlag", { userId: user.id })
                     }
                   >
-                    <Text style={s.accountSettingsLink}>
+                    <Text style={[s.accountSettingsLink, s.semiBold]}>
                       {flag ? "Change user flag" : "Set user flag"}
                     </Text>
                   </Pressable>
                   <Text
-                    style={s.accountSettingsLink}
+                    style={[s.accountSettingsLink, s.semiBold]}
                     onPress={() => setAccountModalVisible(true)}
                   >
                     Account Settings
                   </Text>
                   <Text
-                    style={s.logoutLink}
+                    style={[s.logoutLink, s.semiBold]}
                     onPress={() => setModalVisible(true)}
                   >
                     Logout
@@ -579,53 +599,57 @@ const UserProfile = ({
             </View>
             <View style={s.statContainer}>
               <View style={s.statItem}>
-                <Text style={s.stat}>Total contributions:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Total contributions:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_total_submissions)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines added:</Text>
-                <Text style={s.statNum}>{getStatNum(num_machines_added)}</Text>
+                <Text style={[s.stat, s.semiBold]}>Machines added:</Text>
+                <Text style={[s.statNum, s.bold]}>
+                  {getStatNum(num_machines_added)}
+                </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines removed:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Machines removed:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_machines_removed)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machine comments:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Machine comments:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_lmx_comments_left)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>High scores added:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>High scores added:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_msx_scores_added)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Machines in Life List:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Machines in Life List:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_life_list_machines)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Locations submitted:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Locations submitted:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_locations_suggested)}
                 </Text>
               </View>
               <View style={s.statItem}>
-                <Text style={s.stat}>Locations edited:</Text>
-                <Text style={s.statNum}>
+                <Text style={[s.stat, s.semiBold]}>Locations edited:</Text>
+                <Text style={[s.statNum, s.bold]}>
                   {getStatNum(num_locations_edited)}
                 </Text>
               </View>
             </View>
-            <Text style={s.section}>Some recently edited locations</Text>
+            <Text style={[s.section, s.bold]}>
+              Some recently edited locations
+            </Text>
             {isOwnProfile && (
               <View
                 style={{
@@ -634,10 +658,10 @@ const UserProfile = ({
                   paddingBottom: 6,
                 }}
               >
-                <Text style={s.sectionDescription}>
+                <Text style={[s.sectionDescription, s.regular]}>
                   {`You can see all of your edits in the `}
                   <Text
-                    style={s.textLink}
+                    style={[s.textLink, s.semiBold]}
                     onPress={() =>
                       navigation.navigate("RecentActivity", {
                         screen: "RecentActivityStack",
@@ -653,7 +677,7 @@ const UserProfile = ({
             )}
             <View style={{ paddingTop: 8, paddingBottom: 15 }}>
               {profile_list_of_edited_locations.length === 0 ? (
-                <Text style={s.none}>No edits yet</Text>
+                <Text style={[s.none, s.italic]}>No edits yet</Text>
               ) : (
                 profile_list_of_edited_locations
                   .slice(0, 50)
@@ -673,6 +697,7 @@ const UserProfile = ({
                           <Text
                             style={[
                               s.locationName,
+                              s.bold,
                               pressed ? s.textPressed : s.textNotPressed,
                             ]}
                           >
@@ -685,7 +710,7 @@ const UserProfile = ({
               )}
             </View>
             <Text
-              style={s.section}
+              style={[s.section, s.bold]}
               onLayout={(e) => {
                 if (
                   route?.params?.scrollToMachineList &&
@@ -711,10 +736,10 @@ const UserProfile = ({
                   paddingBottom: 6,
                 }}
               >
-                <Text style={s.sectionDescription}>
+                <Text style={[s.sectionDescription, s.regular]}>
                   {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
                   <Text
-                    style={s.textLink}
+                    style={[s.textLink, s.semiBold]}
                     onPress={() => navigation.navigate("AddHighScore")}
                   >
                     add a high score
@@ -754,7 +779,7 @@ const UserProfile = ({
                   placeholderTextColor={theme.indigo4}
                   value={lifeListQuery}
                   onChangeText={setLifeListQuery}
-                  style={s.lifeListSearchInput}
+                  style={[s.lifeListSearchInput, s.regular]}
                   autoCorrect={false}
                 />
                 {lifeListQuery.length > 0 && (
@@ -772,9 +797,11 @@ const UserProfile = ({
               style={[{ paddingTop: 8 }, !isOwnProfile && { marginBottom: 30 }]}
             >
               {profile_life_list_stats.length === 0 ? (
-                <Text style={s.none}>No machines or scores to list yet</Text>
+                <Text style={[s.none, s.italic]}>
+                  No machines or scores to list yet
+                </Text>
               ) : filteredLifeList.length === 0 ? (
-                <Text style={s.none}>No matches</Text>
+                <Text style={[s.none, s.italic]}>No matches</Text>
               ) : (
                 filteredLifeList.map((entry, idx) => {
                   const hasScores = !!entry.list;
@@ -799,9 +826,12 @@ const UserProfile = ({
                           justifyContent: "space-between",
                         }}
                       >
-                        <Text style={[s.lifeListMachine, { flex: 1 }]}>
+                        <Text
+                          selectable
+                          style={[s.lifeListMachine, s.extraBold, { flex: 1 }]}
+                        >
                           {entry.machine_name}
-                          <Text style={s.machineYearMan}>
+                          <Text style={[s.machineYearMan, s.semiBold]}>
                             {` ${entry.machine_year_man}`}
                           </Text>
                         </Text>
@@ -820,8 +850,13 @@ const UserProfile = ({
                       </View>
                       {hasScores && (
                         <>
-                          <Text style={[s.score, { marginTop: 8 }]}>
-                            <Text style={s.bold}>Highest score: </Text>
+                          <Text
+                            selectable
+                            style={[s.score, s.regular, { marginTop: 8 }]}
+                          >
+                            <Text style={[s.bold, s.font16]}>
+                              Highest score:{" "}
+                            </Text>
                             {formatNumWithCommas(entry.list[0])}
                           </Text>
                           {entry.list.length > 1 ? (
@@ -830,6 +865,7 @@ const UserProfile = ({
                                 style={[
                                   { paddingLeft: 10, marginBottom: 6 },
                                   s.bold,
+                                  s.font16,
                                   s.marginT10,
                                 ]}
                               >
@@ -838,17 +874,30 @@ const UserProfile = ({
                               {entry.list.map((ll, i) => (
                                 <Text
                                   key={i}
-                                  style={[s.score, { paddingLeft: 16 }]}
+                                  style={[
+                                    s.score,
+                                    s.regular,
+                                    { paddingLeft: 16 },
+                                  ]}
                                 >
                                   {formatNumWithCommas(ll)}
                                 </Text>
                               ))}
-                              <Text style={[s.score, s.marginB10, s.marginT10]}>
-                                <Text style={s.bold}>Average: </Text>
+                              <Text
+                                style={[
+                                  s.score,
+                                  s.regular,
+                                  s.marginB10,
+                                  s.marginT10,
+                                ]}
+                              >
+                                <Text style={[s.bold, s.font16]}>
+                                  Average:{" "}
+                                </Text>
                                 {formatNumWithCommas(entry.average)}
                               </Text>
-                              <Text style={[s.score]}>
-                                <Text style={s.bold}>Count: </Text>
+                              <Text style={[s.score, s.regular]}>
+                                <Text style={[s.bold, s.font16]}>Count: </Text>
                                 {entry.count}
                               </Text>
                             </>
@@ -870,6 +919,31 @@ const UserProfile = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     list: {
       borderRadius: 25,
       paddingVertical: 2,
@@ -890,7 +964,6 @@ const getStyles = (theme) =>
       marginVertical: 6,
     },
     section: {
-      fontFamily: "Nunito-Bold",
       fontSize: 14,
       textAlign: "center",
       paddingHorizontal: 10,
@@ -901,7 +974,6 @@ const getStyles = (theme) =>
     },
     accountSettingsLink: {
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",
@@ -918,7 +990,6 @@ const getStyles = (theme) =>
     },
     logoutLink: {
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
       color: theme.red2,
       textAlign: "center",
       textDecorationLine: "underline",
@@ -929,7 +1000,6 @@ const getStyles = (theme) =>
       marginHorizontal: 10,
       fontSize: 18,
       paddingVertical: 10,
-      fontFamily: "Nunito-Bold",
     },
     usernameContainer: {
       paddingVertical: 10,
@@ -941,7 +1011,6 @@ const getStyles = (theme) =>
     username: {
       fontSize: 22,
       textAlign: "center",
-      fontFamily: "Nunito-ExtraBold",
       lineHeight: 32,
       color: theme.pink1,
     },
@@ -965,6 +1034,7 @@ const getStyles = (theme) =>
     },
     statItem: {
       flexDirection: "row",
+      flexWrap: "wrap",
       alignItems: "center",
       width: "100%",
       justifyContent: "space-between",
@@ -972,12 +1042,10 @@ const getStyles = (theme) =>
     stat: {
       marginTop: 5,
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
       opacity: 0.9,
       color: theme.theme == "dark" ? "#fee7f5" : theme.text,
     },
     statNum: {
-      fontFamily: "Nunito-Bold",
       color: "#17001c",
       backgroundColor: theme.theme == "dark" ? "#fee7f5" : "#FFFFFF",
       fontSize: 16,
@@ -991,16 +1059,12 @@ const getStyles = (theme) =>
       marginBottom: 6,
       fontSize: 16,
       color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     none: {
       textAlign: "center",
       marginVertical: 8,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     pressed: {
       shadowOpacity: 0,
@@ -1019,19 +1083,19 @@ const getStyles = (theme) =>
     rankView: {
       flex: 1,
       flexDirection: "row",
+      flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
+      columnGap: 8,
       marginTop: 8,
     },
     rankText: {
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     rankIcon: {
       width: 20,
       height: 20,
-      marginLeft: 8,
     },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
@@ -1049,7 +1113,6 @@ const getStyles = (theme) =>
     modalTitle: {
       textAlign: "center",
       fontSize: 20,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
       paddingHorizontal: 44,
     },
@@ -1058,7 +1121,6 @@ const getStyles = (theme) =>
     },
     sectionLabel: {
       fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
       color: theme.text3,
       textTransform: "uppercase",
       textAlign: "center",
@@ -1081,14 +1143,12 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingHorizontal: 12,
       paddingVertical: 8,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
     },
     placeholderColor: theme.indigo4,
     formError: {
       color: "#c0392b",
       fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
       textAlign: "center",
       marginHorizontal: 20,
       marginBottom: 8,
@@ -1096,14 +1156,12 @@ const getStyles = (theme) =>
     formSuccess: {
       color: "#27ae60",
       fontSize: 14,
-      fontFamily: "Nunito-SemiBold",
       textAlign: "center",
       marginHorizontal: 20,
       marginBottom: 8,
     },
     deleteWarning: {
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
       color: theme.text3,
       textAlign: "center",
       marginHorizontal: 20,
@@ -1112,12 +1170,10 @@ const getStyles = (theme) =>
     lifeListMachine: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     machineYearMan: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-SemiBold",
     },
     lifeListSearchContainer: {
       flexDirection: "row",
@@ -1138,17 +1194,14 @@ const getStyles = (theme) =>
       height: 40,
       color: theme.text,
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
     },
     sectionDescription: {
       color: theme.text3,
       fontSize: 15,
-      fontFamily: "Nunito-Regular",
       lineHeight: 22,
     },
     textLink: {
       color: theme.purpleLight,
-      fontFamily: "Nunito-SemiBold",
       textDecorationLine: "underline",
     },
     modalConfirmText: {
@@ -1156,23 +1209,19 @@ const getStyles = (theme) =>
       fontSize: 18,
       marginHorizontal: 15,
       color: theme.text,
-      fontFamily: "Nunito-Regular",
     },
     modalMachineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
     },
-    bold: {
+    font16: {
       color: theme.text3,
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
     },
     score: {
       paddingLeft: 10,
       color: theme.text,
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
     },
     marginB10: {
       marginBottom: 10,

@@ -17,7 +17,7 @@ const ReadMore = ({ text, style }) => {
             onPress={() => setShowMore(!showMore)}
           >
             <Text style={[style]}>{text}</Text>
-            <Text style={s.link}>Read less</Text>
+            <Text style={[s.link, s.semiBold]}>Read less</Text>
           </Pressable>
         ) : (
           <Pressable
@@ -26,7 +26,7 @@ const ReadMore = ({ text, style }) => {
           >
             <Text>
               <Text style={[style]}>{`${text.slice(0, 100)}... `}</Text>
-              <Text style={s.link}>Read more</Text>
+              <Text style={[s.link, s.semiBold]}>Read more</Text>
             </Text>
           </Pressable>
         )
@@ -39,6 +39,10 @@ const ReadMore = ({ text, style }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
     container: {
       flexShrink: 1,
     },
@@ -46,7 +50,6 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       textTransform: "uppercase",
       color: theme.blue4,
-      fontFamily: "Nunito-SemiBold",
     },
     pressed: {
       opacity: 0.5,

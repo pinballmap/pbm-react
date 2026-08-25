@@ -182,6 +182,7 @@ const LocationActivity = ({
           <Text
             style={[
               s.date,
+              s.medium,
               isUserLinkable ? s.username : s.usernamePlain,
               { paddingTop: 0 },
             ]}
@@ -231,17 +232,19 @@ const LocationActivity = ({
             />
           )}
         </View>
-        <Text style={[s.date, s.italic, { paddingTop: 0 }]}>{time}</Text>
+        <Text style={[s.date, s.italic, { paddingTop: 0, color: theme.text3 }]}>
+          {time}
+        </Text>
       </View>
     ) : (
-      <Text style={[s.date, s.italic]}>{time}</Text>
+      <Text style={[s.date, s.italic, { color: theme.text3 }]}>{time}</Text>
     );
     switch (submission_type) {
       case "new_lmx": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>
-              <Text style={s.machineName}>{machine_name}</Text> added
+            <Text style={[s.pbmText, s.regular]}>
+              <Text style={[s.machineName, s.bold]}>{machine_name}</Text> added
             </Text>
             {timeAndUser}
           </View>
@@ -250,8 +253,10 @@ const LocationActivity = ({
       case "new_condition": {
         return (
           <View style={s.textContainer}>
-            <Text style={[s.pbmText, s.marginB8]}>{`"${comment}"`}</Text>
-            <Text style={s.machineName}>{machine_name}</Text>
+            <Text
+              style={[s.pbmText, s.marginB8, s.regular]}
+            >{`"${comment}"`}</Text>
+            <Text style={[s.machineName, s.bold]}>{machine_name}</Text>
             {timeAndUser}
           </View>
         );
@@ -259,8 +264,9 @@ const LocationActivity = ({
       case "remove_machine": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>
-              <Text style={s.machineName}>{machine_name}</Text> removed
+            <Text style={[s.pbmText, s.regular]}>
+              <Text style={[s.machineName, s.bold]}>{machine_name}</Text>{" "}
+              removed
             </Text>
             {timeAndUser}
           </View>
@@ -270,17 +276,19 @@ const LocationActivity = ({
         if (!high_score)
           return (
             <View style={s.textContainer}>
-              <Text style={s.pbmText}>{submission}</Text>
-              <Text style={s.date}>{time}</Text>
+              <Text style={[s.pbmText, s.regular]}>{submission}</Text>
+              <Text style={[s.date, s.italic, { color: theme.text3 }]}>
+                {time}
+              </Text>
             </View>
           );
         return (
           <View style={s.textContainer}>
-            <Text style={[s.pbmText, s.marginB8]}>
+            <Text style={[s.pbmText, s.marginB8, s.regular]}>
               High score:{" "}
-              <Text style={s.score}>{formatNumWithCommas(high_score)}</Text>
+              <Text style={s.semiBold}>{formatNumWithCommas(high_score)}</Text>
             </Text>
-            <Text style={s.machineName}>{machine_name}</Text>
+            <Text style={[s.machineName, s.bold]}>{machine_name}</Text>
             {timeAndUser}
           </View>
         );
@@ -288,7 +296,7 @@ const LocationActivity = ({
       case "confirm_location": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>Line-up confirmed</Text>
+            <Text style={[s.pbmText, s.regular]}>Line-up confirmed</Text>
             {timeAndUser}
           </View>
         );
@@ -296,7 +304,7 @@ const LocationActivity = ({
       case "add_location": {
         return (
           <View style={s.textContainer}>
-            <Text style={s.pbmText}>New location added</Text>
+            <Text style={[s.pbmText, s.regular]}>New location added</Text>
             {timeAndUser}
           </View>
         );
@@ -317,7 +325,7 @@ const LocationActivity = ({
       >
         <>
           <View style={s.header}>
-            <Text style={s.title}>Location Activity</Text>
+            <Text style={[s.title, s.extraBold]}>Location Activity</Text>
             <View style={s.headerButtons}>
               <FilterLocationActivity />
               <MaterialCommunityIcons
@@ -331,7 +339,7 @@ const LocationActivity = ({
           <ScrollView ref={scrollViewRef} style={{ height: "80%" }}>
             {selectedLocationActivities.length ? (
               <View style={s.filterView}>
-                <Text style={s.filter}>Clear filters</Text>
+                <Text style={[s.filter, s.bold]}>Clear filters</Text>
                 <MaterialCommunityIcons
                   name="close-circle"
                   size={24}
@@ -343,7 +351,9 @@ const LocationActivity = ({
             {locationActivityLoading ? (
               <ActivityIndicator />
             ) : recentActivity.length === 0 ? (
-              <Text style={s.problem}>No location activity found</Text>
+              <Text style={[s.problem, s.bold]}>
+                No location activity found
+              </Text>
             ) : (
               recentActivity
                 .filter((activity) => {
@@ -376,13 +386,14 @@ const LocationActivity = ({
                   <Text
                     style={[
                       s.pageButtonText,
+                      s.semiBold,
                       page === 1 && s.pageButtonTextInactive,
                     ]}
                   >
                     Prev
                   </Text>
                 </Pressable>
-                <Text style={s.pageIndicator}>
+                <Text style={[s.pageIndicator, s.regular]}>
                   {page} / {pagy.pages}
                 </Text>
                 <Pressable
@@ -393,6 +404,7 @@ const LocationActivity = ({
                   <Text
                     style={[
                       s.pageButtonText,
+                      s.semiBold,
                       !pagy.next && s.pageButtonTextInactive,
                     ]}
                   >
@@ -440,6 +452,31 @@ const LocationActivity = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     header: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
       borderTopLeftRadius: 15,
@@ -462,7 +499,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
       paddingHorizontal: 80,
     },
     xButton: {
@@ -531,34 +567,21 @@ const getStyles = (theme) =>
     pbmText: {
       color: theme.text2,
       fontSize: 15,
-      fontFamily: "Nunito-Regular",
-    },
-    score: {
-      fontFamily: "Nunito-SemiBold",
     },
     date: {
       paddingTop: 8,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      color: theme.text3,
-      fontStyle: "italic",
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,
-      fontFamily: "Nunito-Medium",
       textDecorationLine: "underline",
     },
     usernamePlain: {
       color: theme.text2,
-      fontFamily: "Nunito-Medium",
     },
     machineName: {
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
-      fontFamily: "Nunito-Bold",
     },
     flexi: {
       display: "flex",
@@ -588,7 +611,6 @@ const getStyles = (theme) =>
     problem: {
       textAlign: "center",
       color: theme.text,
-      fontFamily: "Nunito-Bold",
       marginTop: 20,
     },
     textContainer: {
@@ -606,7 +628,6 @@ const getStyles = (theme) =>
       fontSize: 14,
       textAlign: "center",
       color: theme.text,
-      fontFamily: "Nunito-Bold",
       paddingVertical: 8,
     },
     marginB8: {
@@ -650,7 +671,6 @@ const getStyles = (theme) =>
     },
     pageButtonText: {
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
       fontSize: 14,
     },
     pageButtonTextInactive: {
@@ -658,7 +678,6 @@ const getStyles = (theme) =>
     },
     pageIndicator: {
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
       fontSize: 14,
       minWidth: 40,
       textAlign: "center",

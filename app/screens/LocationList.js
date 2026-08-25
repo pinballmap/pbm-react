@@ -131,11 +131,11 @@ const LocationList = ({
         closeModal={() => setShowNoLocationTrackingModal(false)}
       >
         <View>
-          <Text style={s.confirmText}>
+          <Text style={[s.confirmText, s.regular]}>
             Location tracking must be enabled to use this feature.
           </Text>
           <Text
-            style={[s.confirmText, s.link, s.margin10]}
+            style={[s.confirmText, s.regular, s.link, s.margin10]}
             onPress={() => Linking.openSettings()}
           >
             Go to phone settings to enable
@@ -219,13 +219,14 @@ const LocationList = ({
                   <Text
                     style={[
                       s.pageButtonText,
+                      s.semiBold,
                       page === 1 && s.pageButtonTextInactive,
                     ]}
                   >
                     Prev
                   </Text>
                 </Pressable>
-                <Text style={s.pageIndicator}>
+                <Text style={[s.pageIndicator, s.regular]}>
                   {page} / {listPagy.pages}
                 </Text>
                 <Pressable
@@ -236,6 +237,7 @@ const LocationList = ({
                   <Text
                     style={[
                       s.pageButtonText,
+                      s.semiBold,
                       !listPagy.next && s.pageButtonTextInactive,
                     ]}
                   >
@@ -259,11 +261,18 @@ const LocationList = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
       marginHorizontal: 10,
-      fontFamily: "Nunito-Regular",
       paddingHorizontal: 30,
     },
     xButton: {
@@ -289,7 +298,6 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "Nunito-Regular",
     },
     paginationContainer: {
       flexDirection: "row",
@@ -322,7 +330,6 @@ const getStyles = (theme) =>
     },
     pageButtonText: {
       color: theme.text2,
-      fontFamily: "Nunito-SemiBold",
       fontSize: 14,
     },
     pageButtonTextInactive: {
@@ -330,7 +337,6 @@ const getStyles = (theme) =>
     },
     pageIndicator: {
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
       fontSize: 14,
       minWidth: 40,
       textAlign: "center",

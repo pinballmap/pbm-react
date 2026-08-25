@@ -11,7 +11,7 @@ const CheckBoxSetting = ({ title, description, onPress, checked }) => {
   return (
     <View>
       <View style={[s.title, { marginBottom: 4 }]}>
-        <Text style={s.titleText}>{title}</Text>
+        <Text style={[s.titleText, s.bold]}>{title}</Text>
       </View>
       <Checkbox
         value={checked}
@@ -21,27 +21,33 @@ const CheckBoxSetting = ({ title, description, onPress, checked }) => {
         style={s.checkBoxContainer}
         color={theme.purple}
       />
-      <Text style={s.descriptionText}>{description}</Text>
+      <Text style={[s.descriptionText, s.italic]}>{description}</Text>
     </View>
   );
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     title: {
       paddingTop: 10,
     },
     titleText: {
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
     descriptionText: {
       fontSize: 14,
       color: theme.text2,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 15,
       marginRight: 15,

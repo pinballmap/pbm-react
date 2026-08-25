@@ -16,16 +16,19 @@ const WarningButton = ({ title, margin, onPress, leftIcon }) => {
       ]}
     >
       {leftIcon}
-      <Text style={s.titleStyle}>{title}</Text>
+      <Text style={[s.titleStyle, s.bold]}>{title}</Text>
     </Pressable>
   );
 };
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     titleStyle: {
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       textTransform: "capitalize",
       color: "white",
     },

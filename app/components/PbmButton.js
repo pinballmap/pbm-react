@@ -25,7 +25,7 @@ const PbmButton = ({
       ]}
     >
       {leftIcon}
-      <Text style={s.titleStyle}>{title}</Text>
+      <Text style={[s.titleStyle, s.bold]}>{title}</Text>
       {rightIcon}
     </Pressable>
   );
@@ -33,9 +33,12 @@ const PbmButton = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     titleStyle: {
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       color: theme.theme == "dark" ? "white" : theme.text,
     },
     buttonStyle: {

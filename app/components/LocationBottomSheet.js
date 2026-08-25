@@ -149,7 +149,7 @@ const LocationBottomSheet = React.memo(
                 <View style={{ zIndex: 10, flex: 1 }}>
                   <View style={s.locationNameContainer}>
                     <View style={s.nameItem}>
-                      <Text style={s.locationName}>{name}</Text>
+                      <Text style={[s.locationName, s.extraBold]}>{name}</Text>
                     </View>
                     <Pressable
                       style={({ pressed }) => [
@@ -188,7 +188,7 @@ const LocationBottomSheet = React.memo(
                     <View style={{ flexDirection: "row", alignItems: "top" }}>
                       <MaterialIcons name="location-on" style={s.metaIcon} />
                       <Text
-                        style={[s.address]}
+                        style={[s.address, s.regular]}
                         numberOfLines={1}
                         ellipsizeMode={"tail"}
                       >
@@ -202,7 +202,7 @@ const LocationBottomSheet = React.memo(
                         <Text maxFontSizeMultiplier={1.3}>
                           {machine_names_first_no_year.map((name, index) => (
                             <Text key={name}>
-                              <Text style={s.machineName}>
+                              <Text style={[s.machineName, s.bold]}>
                                 {`${name}${
                                   index !==
                                   machine_names_first_no_year.length - 1
@@ -234,10 +234,12 @@ const LocationBottomSheet = React.memo(
                             style={s.icon}
                           />
                           <Text
-                            style={{
-                              color: theme.text2,
-                              fontFamily: "Nunito-Bold",
-                            }}
+                            style={[
+                              s.bold,
+                              {
+                                color: theme.text2,
+                              },
+                            ]}
                           >
                             {getDistanceWithUnit(
                               user.lat,
@@ -261,10 +263,12 @@ const LocationBottomSheet = React.memo(
                             style={s.icon}
                           />
                           <Text
-                            style={{
-                              color: theme.text2,
-                              fontFamily: "Nunito-Bold",
-                            }}
+                            style={[
+                              s.bold,
+                              {
+                                color: theme.text2,
+                              },
+                            ]}
                           >
                             {locationType.name}
                           </Text>
@@ -278,10 +282,12 @@ const LocationBottomSheet = React.memo(
                             style={s.icon}
                           />
                           <Text
-                            style={{
-                              color: theme.text2,
-                              fontFamily: "Nunito-Bold",
-                            }}
+                            style={[
+                              s.bold,
+                              {
+                                color: theme.text2,
+                              },
+                            ]}
                           >
                             {location.all_ages === ALL_AGES_YES
                               ? "All Ages"
@@ -297,10 +303,12 @@ const LocationBottomSheet = React.memo(
                             style={s.icon}
                           />
                           <Text
-                            style={{
-                              color: theme.text2,
-                              fontFamily: "Nunito-Bold",
-                            }}
+                            style={[
+                              s.bold,
+                              {
+                                color: theme.text2,
+                              },
+                            ]}
                           >
                             {payment_type}
                           </Text>
@@ -320,6 +328,23 @@ const LocationBottomSheet = React.memo(
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     container: {
       position: "relative",
       bottom: 0,
@@ -373,7 +398,6 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     locationName: {
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 20,
       lineHeight: 24,
       textAlign: "left",
@@ -408,19 +432,13 @@ const getStyles = (theme) =>
     },
     address: {
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
       fontSize: 14,
       flex: 1,
       marginBottom: 5,
     },
     machineName: {
-      fontFamily: "Nunito-Bold",
       fontSize: 15,
       color: theme.theme == "dark" ? theme.text : theme.purple,
-    },
-    italic: {
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     pressed: {
       opacity: 0.8,

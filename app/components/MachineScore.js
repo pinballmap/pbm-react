@@ -78,7 +78,7 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
         visible={deleteModalVisible}
         closeModal={() => setDeleteModalVisible(false)}
       >
-        <Text style={s.modalTitle}>Delete your score?</Text>
+        <Text style={[s.modalTitle, s.bold]}>Delete your score?</Text>
         <PbmButton title={"Delete Score"} onPress={onDeletePress} />
         <WarningButton
           title={"Cancel"}
@@ -102,9 +102,14 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
               paddingTop: machineNameMargin + 50,
             }}
           >
-            <Text style={s.modalTitle}>Edit your score</Text>
+            <Text style={[s.modalTitle, s.bold]}>Edit your score</Text>
             <TextInput
-              style={[{ textAlign: "center" }, s.textInput, s.radius10]}
+              style={[
+                { textAlign: "center" },
+                s.textInput,
+                s.regular,
+                s.radius10,
+              ]}
               keyboardType="numeric"
               underlineColorAndroid="transparent"
               onChangeText={handleScoreEdit}
@@ -122,15 +127,20 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
         </View>
       </Modal>
       <View style={s.listContainerStyle}>
-        <Text style={s.scoreText}>{formatNumWithCommas(initialScore)}</Text>
+        <Text style={[s.scoreText, s.semiBold]}>
+          {formatNumWithCommas(initialScore)}
+        </Text>
         <View
           style={[
             s.subtitleStyle,
+            s.semiBold,
             s.subtitleMargin,
             { flexDirection: "row", alignItems: "center" },
           ]}
         >
-          <Text style={[s.italic, s.date]}>{formatDate(updated_at)}</Text>
+          <Text style={[s.italic, s.text3, s.date]}>
+            {formatDate(updated_at)}
+          </Text>
           {created_at !== updated_at && (
             <Text style={{ color: theme.text3 }}>{`*`}</Text>
           )}
@@ -158,6 +168,23 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     listContainerStyle: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
@@ -171,23 +198,19 @@ const getStyles = (theme) =>
       fontSize: 18,
       marginTop: 5,
       marginHorizontal: 5,
-      fontFamily: "Nunito-SemiBold",
     },
     subtitleStyle: {
       paddingTop: 5,
       fontSize: 14,
       color: theme.text3,
-      fontFamily: "Nunito-SemiBold",
     },
     subtitleMargin: {
       marginTop: 4,
       marginHorizontal: 0,
       fontSize: 14,
     },
-    italic: {
-      fontFamily: "Nunito-Italic",
+    text3: {
       color: theme.text3,
-      fontStyle: "italic",
     },
     date: {
       marginLeft: 8,
@@ -204,7 +227,6 @@ const getStyles = (theme) =>
       borderWidth: 1,
       marginBottom: 10,
       marginHorizontal: 30,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -218,7 +240,6 @@ const getStyles = (theme) =>
       marginBottom: 10,
       marginHorizontal: 40,
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
     },
   });

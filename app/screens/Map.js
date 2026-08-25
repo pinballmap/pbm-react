@@ -402,12 +402,12 @@ const Map = ({
       </View>
       {isFetchingMarkers ? (
         <View style={[{ top: topMargin + 150 }, s.loading]}>
-          <Text style={s.loadingText}>Loading...</Text>
+          <Text style={[s.loadingText, s.regular]}>Loading...</Text>
         </View>
       ) : null}
       {numLocations === 0 && !isFetchingMarkers && !isFirstLoad && (
         <View style={[{ top: topMargin + 150 }, s.loading]}>
-          <Text style={s.loadingText}>No Results</Text>
+          <Text style={[s.loadingText, s.regular]}>No Results</Text>
         </View>
       )}
       <Mapbox.MapView
@@ -463,7 +463,7 @@ const Map = ({
           name="format-list-bulleted"
           style={s.buttonIcon}
         />
-        <Text style={s.buttonTitle}>List</Text>
+        <Text style={[s.buttonTitle, s.semiBold]}>List</Text>
       </Pressable>
       <Pressable
         style={({ pressed }) => [
@@ -532,7 +532,7 @@ const Map = ({
             ]}
           >
             <Ionicons name="close-circle" style={s.closeIcon} />
-            <Text style={s.filterTitleStyle}>Filter</Text>
+            <Text style={[s.filterTitleStyle, s.semiBold]}>Filter</Text>
           </Pressable>
         </View>
       ) : null}
@@ -541,7 +541,9 @@ const Map = ({
         closeModal={() => setFilterInfoVisible(false)}
       >
         <View style={s.filterSummaryModalHeader}>
-          <Text style={s.filterSummaryModalTitle}>Map Filter Summary</Text>
+          <Text style={[s.filterSummaryModalTitle, s.extraBold]}>
+            Map Filter Summary
+          </Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
@@ -550,14 +552,14 @@ const Map = ({
           />
         </View>
         <View style={s.filterSummaryModalContent}>
-          <Text style={s.filterSummaryText}>
+          <Text style={[s.filterSummaryText, s.regular]}>
             Showing locations with {filterSummary}.
           </Text>
         </View>
       </ConfirmationModal>
       {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
         <View style={s.statsContainer}>
-          <Text style={s.statsText} maxFontSizeMultiplier={1.5}>
+          <Text style={[s.statsText, s.regular]} maxFontSizeMultiplier={1.5}>
             {numLocations.toLocaleString()}{" "}
             {numLocations === 1 ? "location" : "locations"} ·{" "}
             {totalMachines.toLocaleString()}{" "}
@@ -578,7 +580,10 @@ const Map = ({
           >
             {({ pressed }) => (
               <Text
-                style={[pressed ? s.pressedTitleStyle : s.updateTitleStyle]}
+                style={
+                  (s.semiBold,
+                  [pressed ? s.pressedTitleStyle : s.updateTitleStyle])
+                }
               >
                 Refresh this area
               </Text>
@@ -598,6 +603,18 @@ const Map = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     map: {
       flex: 1,
     },
@@ -618,7 +635,6 @@ const getStyles = (theme) =>
     loadingText: {
       color: theme.pink2,
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
     },
     buttonIcon: {
       fontSize: 22,
@@ -638,7 +654,6 @@ const getStyles = (theme) =>
       color: theme.theme === "dark" ? theme.purpleLight : theme.text2,
       fontSize: 18,
       lineHeight: 24,
-      fontFamily: "Nunito-SemiBold",
     },
     filterListPressed: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.pink3,
@@ -678,11 +693,9 @@ const getStyles = (theme) =>
     updateTitleStyle: {
       color: "#440152",
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
     },
     pressedTitleStyle: {
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
     },
     myLocationContainer: {
       position: "absolute",
@@ -716,7 +729,6 @@ const getStyles = (theme) =>
       color: theme.theme == "dark" ? "#ffa7dd" : theme.pink1,
       fontSize: 18,
       lineHeight: 24,
-      fontFamily: "Nunito-SemiBold",
     },
     closeIcon: {
       paddingRight: 5,
@@ -745,7 +757,6 @@ const getStyles = (theme) =>
     },
     statsText: {
       fontSize: 11,
-      fontFamily: "Nunito-Regular",
       color: theme.text,
     },
     filterSummaryModalHeader: {
@@ -760,7 +771,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     filterSummaryModalContent: {
       marginTop: 10,
@@ -768,7 +778,6 @@ const getStyles = (theme) =>
     filterSummaryText: {
       textAlign: "center",
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
       paddingHorizontal: 16,
     },
     xButton: {

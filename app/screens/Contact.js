@@ -57,8 +57,8 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
         visible={confirmationMessage1.length > 0}
         closeModal={acknowledgeConfirmation}
       >
-        <Text style={[s.confirmText, s.bold]}>{confirmationMessage1}</Text>
-        <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
+        <Text style={[s.confirmText, s.font18]}>{confirmationMessage1}</Text>
+        <Text style={[s.confirmText, s.notBold, s.regular, { marginTop: 5 }]}>
           {confirmationMessage2}
         </Text>
       </ConfirmationModal>
@@ -77,7 +77,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
               <Text
                 style={[
                   s.text,
-                  s.boldFont,
+                  s.bold,
                   s.pinkText,
                   { textTransform: "uppercase" },
                 ]}
@@ -89,12 +89,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           ) : (
             <Text style={[s.text]}>
               {`This is a general contact form - `}
-              <Text style={[s.text, s.boldFont]}>{`include details`}</Text>
+              <Text style={[s.text, s.bold]}>{`include details`}</Text>
               {` such as the `}
               <Text
                 style={[
                   s.text,
-                  s.boldFont,
+                  s.bold,
                   s.pinkText,
                   { textTransform: "uppercase" },
                 ]}
@@ -103,28 +103,28 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             </Text>
           )}
           <Text style={[s.text]}>
-            <Text style={[s.text, s.boldFont]}>{`No need`}</Text>
+            <Text style={[s.text, s.bold]}>{`No need`}</Text>
             {` to tell us that a `}
             <Text
-              style={[s.text, s.boldFont, s.pinkText]}
+              style={[s.text, s.bold, s.pinkText]}
             >{`location closed`}</Text>
             {` or `}
             <Text
-              style={[s.text, s.boldFont, s.pinkText]}
+              style={[s.text, s.bold, s.pinkText]}
             >{`all the machines are gone`}</Text>
             {`. Just `}
-            <Text style={[s.boldFont]}>{`remove the machines`}</Text>
+            <Text style={[s.bold]}>{`remove the machines`}</Text>
             {` and we'll auto-delete it within a week.`}
           </Text>
           <Text style={s.text}>
             {`If you want to be `}
-            <Text style={[s.text, s.boldFont]}>{`added as an operator`}</Text>
+            <Text style={[s.text, s.bold]}>{`added as an operator`}</Text>
             {`, please see this `}
             <Text
               onPress={() =>
                 navigation.navigate("FAQ", { section: "operators" })
               }
-              style={s.textLink}
+              style={[s.textLink, s.regular]}
             >{`FAQ section`}</Text>
             {` and then answer the 5 questions.`}
           </Text>
@@ -132,7 +132,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           {!loggedIn ? (
             <View>
               <TextInput
-                style={s.textInput}
+                style={[s.textInput, s.regular]}
                 underlineColorAndroid="transparent"
                 onChangeText={(name) => setName(name)}
                 returnKeyType="done"
@@ -141,7 +141,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
                 autoCorrect={false}
               />
               <TextInput
-                style={s.textInput}
+                style={[s.textInput, s.regular]}
                 underlineColorAndroid="transparent"
                 onChangeText={(email) => setEmail(email)}
                 returnKeyType="done"
@@ -160,7 +160,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
                 : "Your super detailed message that includes the LOCATION NAME..."
             }
             placeholderTextColor={theme.indigo4}
-            style={[{ padding: 5, height: 200 }, s.textInput]}
+            style={[{ padding: 5, height: 200 }, s.textInput, s.regular]}
             onChangeText={(message) => setMessage(message)}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
@@ -174,6 +174,14 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     text: {
       fontSize: 15,
       marginVertical: 5,
@@ -190,13 +198,9 @@ const getStyles = (theme) =>
       paddingHorizontal: 10,
       paddingVertical: 8,
       textAlign: "left",
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       includeFontPadding: false,
       textAlignVertical: "center",
-    },
-    boldFont: {
-      fontFamily: "Nunito-Bold",
     },
     pinkText: {
       color: theme.pink1,
@@ -207,7 +211,6 @@ const getStyles = (theme) =>
       lineHeight: 22,
       marginVertical: 10,
       textAlign: "center",
-      fontFamily: "Nunito-Regular",
     },
     confirmText: {
       textAlign: "center",
@@ -217,13 +220,11 @@ const getStyles = (theme) =>
     },
     notBold: {
       fontSize: 15,
-      fontFamily: "Nunito-Regular",
       color: theme.text3,
     },
-    bold: {
+    font18: {
       fontSize: 18,
       color: theme.purpleLight,
-      fontFamily: "Nunito-Bold",
     },
     xButton: {
       position: "absolute",

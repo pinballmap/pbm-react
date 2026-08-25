@@ -10,7 +10,7 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
   return (
     <View style={s.container}>
       <View>
-        <Text style={s.titleText}>{title}</Text>
+        <Text style={[s.titleText, s.bold]}>{title}</Text>
       </View>
       <View
         style={{
@@ -18,7 +18,9 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
           alignItems: "center",
         }}
       >
-        <Text style={[s.descriptionText, { flex: 1 }]}>{description}</Text>
+        <Text style={[s.descriptionText, s.italic, { flex: 1 }]}>
+          {description}
+        </Text>
         <Switch
           value={value}
           onValueChange={() => {
@@ -40,6 +42,15 @@ const SwitchSetting = ({ title, description, value, onValueChange }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     container: {
       marginVertical: 15,
       marginHorizontal: 10,
@@ -47,15 +58,12 @@ const getStyles = (theme) =>
     titleText: {
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
       color: theme.text,
       marginBottom: 2,
     },
     descriptionText: {
       fontSize: 14,
       color: theme.text2,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       lineHeight: 22,
       marginLeft: 5,
       marginRight: 15,

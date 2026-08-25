@@ -94,7 +94,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         {user.loggedIn ? (
           <Text
             allowFontScaling={false}
-            style={s.nameText}
+            style={[s.nameText, s.extraBold]}
             onPress={() =>
               navigateAndCloseDrawer("Map", { screen: "UserProfile" })
             }
@@ -106,7 +106,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             onPress={() => navigateAndCloseDrawer("Map", { screen: "Signup" })}
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
           >
-            <Text allowFontScaling={false} style={s.nameText}>
+            <Text allowFontScaling={false} style={[s.nameText, s.extraBold]}>
               Sign up!
             </Text>
           </Pressable>
@@ -139,7 +139,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       </View>
       <DrawerItem
         label="Map"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
@@ -159,7 +159,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       <DrawerItem
         label="Submit Location"
         allowFontScaling={false}
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         icon={() => (
           <MaterialIcons
             name="add-location"
@@ -175,7 +175,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       <DrawerItem
         label="Add High Score"
         allowFontScaling={false}
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         icon={() => (
           <MaterialCommunityIcons
             name="numeric"
@@ -190,7 +190,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       <DrawerItem
         label="Nearby Events"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
@@ -204,7 +204,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       <DrawerItem
         label="Contact"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialCommunityIcons
@@ -218,7 +218,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       <DrawerItem
         label="About"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
@@ -232,7 +232,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       <DrawerItem
         label="FAQ"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialCommunityIcons
@@ -246,7 +246,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       <DrawerItem
         label="Settings"
-        labelStyle={s.labelStyle}
+        labelStyle={[s.labelStyle, s.bold]}
         allowFontScaling={false}
         icon={() => (
           <MaterialIcons
@@ -266,7 +266,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             s.container,
           ]}
         >
-          <Text allowFontScaling={false} style={s.text}>
+          <Text allowFontScaling={false} style={[s.text, s.bold]}>
             Logout
           </Text>
           <MaterialCommunityIcons name="exit-run" style={s.icon} />
@@ -279,13 +279,13 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             s.container,
           ]}
         >
-          <Text allowFontScaling={false} style={s.text}>
+          <Text allowFontScaling={false} style={[s.text, s.bold]}>
             Login
           </Text>
           <MaterialCommunityIcons name="login" style={s.icon} />
         </Pressable>
       )}
-      <Text allowFontScaling={false} style={s.versionText}>
+      <Text allowFontScaling={false} style={[s.versionText, s.medium]}>
         v{Application.nativeApplicationVersion}
       </Text>
     </DrawerContentScrollView>
@@ -293,6 +293,18 @@ const DrawerMenu = ({ logout, user, ...props }) => {
 };
 const getStyles = (theme) =>
   StyleSheet.create({
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     container: {
       marginTop: deviceWidth < 325 ? 5 : 8,
       height: 55,
@@ -310,7 +322,6 @@ const getStyles = (theme) =>
     },
     text: {
       color: theme.colors.activeTab,
-      fontFamily: "Nunito-Bold",
       fontSize: 20,
       position: "absolute",
       paddingLeft: 58,
@@ -319,19 +330,16 @@ const getStyles = (theme) =>
     },
     nameText: {
       color: theme.colors.activeTab,
-      fontFamily: "Nunito-ExtraBold",
       fontSize: 22,
       marginLeft: 20,
     },
     labelStyle: {
       color: theme.colors.primary,
-      fontFamily: "Nunito-Bold",
       fontWeight: Platform.OS === "android" ? undefined : 700,
       fontSize: 20,
     },
     versionText: {
       color: theme.text3,
-      fontFamily: "Nunito-Medium",
       fontSize: 13,
       textAlign: "left",
       marginTop: 15,

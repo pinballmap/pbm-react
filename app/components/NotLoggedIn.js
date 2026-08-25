@@ -10,7 +10,7 @@ const NotLoggedIn = ({ onPress, text }) => {
 
   return (
     <ScrollView style={s.container}>
-      <Text style={s.hiya}>{text}</Text>
+      <Text style={[s.hiya, s.italic]}>{text}</Text>
       <PbmButton title={"Log In"} onPress={onPress} />
     </ScrollView>
   );
@@ -18,13 +18,16 @@ const NotLoggedIn = ({ onPress, text }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
     container: {
       flex: 1,
       backgroundColor: theme.base1,
     },
     hiya: {
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       paddingHorizontal: 15,
       paddingBottom: 10,
       paddingTop: 25,

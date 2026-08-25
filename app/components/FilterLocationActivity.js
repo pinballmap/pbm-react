@@ -57,7 +57,9 @@ const FilterLocationActivity = ({
       {showModal && (
         <ConfirmationModal closeModal={() => setShowModal(false)}>
           <View style={s.header}>
-            <Text style={s.filterTitle}>Filter Location Activity</Text>
+            <Text style={[s.filterTitle, s.extraBold]}>
+              Filter Location Activity
+            </Text>
             <MaterialCommunityIcons
               name="close-circle"
               size={35}
@@ -84,6 +86,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find((activity) => activity === "new_lmx")
                     ? s.activeTitleStyle
                     : s.inactiveTitleStyle,
@@ -112,6 +115,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "remove_machine",
                   )
@@ -142,6 +146,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "new_condition",
                   )
@@ -170,6 +175,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find((activity) => activity === "new_msx")
                     ? s.activeTitleStyle
                     : s.inactiveTitleStyle,
@@ -198,6 +204,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "confirm_location",
                   )
@@ -228,6 +235,7 @@ const FilterLocationActivity = ({
               <Text
                 style={[
                   s.titleStyle,
+                  s.bold,
                   pendingActivities.find(
                     (activity) => activity === "add_location",
                   )
@@ -259,6 +267,7 @@ const FilterLocationActivity = ({
                 <Text
                   style={[
                     s.titleStyle,
+                    s.bold,
                     pendingActivities.find(
                       (activity) => activity === "your_activity",
                     )
@@ -280,6 +289,14 @@ const FilterLocationActivity = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
+    },
     container: {
       flexDirection: "row",
       alignItems: "center",
@@ -305,7 +322,6 @@ const getStyles = (theme) =>
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-ExtraBold",
     },
     xButton: {
       position: "absolute",
@@ -326,7 +342,6 @@ const getStyles = (theme) =>
     },
     titleStyle: {
       fontSize: 17,
-      fontFamily: "Nunito-Bold",
     },
     inactiveTitleStyle: {
       color: theme.text3,

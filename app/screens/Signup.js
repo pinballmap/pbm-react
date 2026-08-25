@@ -137,7 +137,7 @@ const Signup = ({ loginLater, navigation }) => {
         visible={modalVisible}
         closeModal={() => setModalVisible(false)}
       >
-        <Text style={s.confirmText}>
+        <Text style={[s.confirmText, s.regular]}>
           {`Please check your email and confirm your account. If you don't see it, check your SPAM folder.`}
         </Text>
       </ConfirmationModal>
@@ -147,7 +147,7 @@ const Signup = ({ loginLater, navigation }) => {
       >
         <View style={s.justify}>
           {errors && (
-            <Text style={s.errorText}>
+            <Text style={[s.errorText, s.bold]}>
               {apiErrorMsg ||
                 usernameError ||
                 emailError ||
@@ -156,7 +156,7 @@ const Signup = ({ loginLater, navigation }) => {
                 "There were errors trying to process your submission"}
             </Text>
           )}
-          <Text style={s.bold}>Sign Up</Text>
+          <Text style={[s.titleText, s.bold]}>Sign Up</Text>
           <View style={s.inputContainer}>
             <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
             <TextInput
@@ -166,7 +166,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={username}
               errorStyle={{ color: "red" }}
               errorMessage={usernameError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -180,7 +180,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={email}
               errorStyle={{ color: "red" }}
               errorMessage={emailError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="email-address"
@@ -195,7 +195,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={password}
               errorStyle={{ color: "red" }}
               errorMessage={passwordError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               secureTextEntry={true}
               autoCapitalize="none"
               autoCorrect={false}
@@ -212,7 +212,7 @@ const Signup = ({ loginLater, navigation }) => {
               value={confirm_password}
               errorStyle={{ color: "red" }}
               errorMessage={confirm_passwordError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               secureTextEntry={true}
               autoCapitalize="none"
               autoCorrect={false}
@@ -230,7 +230,9 @@ const Signup = ({ loginLater, navigation }) => {
                 WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
               }
             >
-              <Text style={s.externalLink}> View our privacy policy</Text>
+              <Text style={[s.externalLink, s.semiBold]}>
+                View our privacy policy
+              </Text>
             </Pressable>
             <MaterialCommunityIcons name="open-in-new" style={s.externalIcon} />
           </View>
@@ -238,7 +240,7 @@ const Signup = ({ loginLater, navigation }) => {
             onPress={() => navigation.navigate("Login")}
             style={[s.buttonMask, s.marginB25]}
           >
-            <Text style={s.textLink}>Already a user? LOG IN!</Text>
+            <Text style={[s.textLink, s.bold]}>Already a user? LOG IN!</Text>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -247,7 +249,7 @@ const Signup = ({ loginLater, navigation }) => {
             }}
             style={s.buttonMask}
           >
-            <Text style={s.textLink}>skip signing up for now</Text>
+            <Text style={[s.textLink, s.bold]}>skip signing up for now</Text>
           </Pressable>
         </View>
       </KeyboardAwareScrollView>
@@ -263,6 +265,18 @@ const Signup = ({ loginLater, navigation }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    semiBold: {
+      fontFamily: "Nunito",
+      fontWeight: "600",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     backgroundImage: {
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height,
@@ -278,13 +292,11 @@ const getStyles = (theme) =>
     },
     errorText: {
       color: "red",
-      fontFamily: "Nunito-Bold",
       textAlign: "center",
       fontSize: 16,
       paddingHorizontal: 10,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
+    titleText: {
       textAlign: "center",
       fontSize: 22,
       color: theme.text,
@@ -311,12 +323,10 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       flex: 1,
-      fontFamily: "Nunito-Regular",
     },
     textLink: {
       fontSize: 16,
       textAlign: "center",
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
       textDecorationLine: "underline",
       textShadowColor: theme.white,
@@ -338,7 +348,6 @@ const getStyles = (theme) =>
       textAlign: "center",
       marginHorizontal: 10,
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
       paddingHorizontal: 30,
     },
     xButton: {
@@ -359,7 +368,6 @@ const getStyles = (theme) =>
     },
     externalLink: {
       fontSize: 16,
-      fontFamily: "Nunito-SemiBold",
       color: theme.purple2,
       textAlign: "center",
       textDecorationLine: "underline",

@@ -103,7 +103,7 @@ const FindCountry = ({ navigation, route }) => {
             onPress={() => handleSearch()}
             onChangeText={handleSearch}
             value={query}
-            style={s.inputStyle}
+            style={[s.inputStyle, s.regular]}
             autoCorrect={false}
           />
         </View>
@@ -134,6 +134,10 @@ const FindCountry = ({ navigation, route }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
     inputContainer: {
       borderWidth: 1,
       backgroundColor: theme.white,
@@ -152,7 +156,6 @@ const getStyles = (theme) =>
       paddingRight: 40,
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
       paddingVertical: 10,
       includeFontPadding: false,
       textAlignVertical: "center",

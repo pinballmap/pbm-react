@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const PbmText = ({ style, children, ...rest }) => {
+const PbmText = ({ style, children, selectable = false, ...rest }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
   return (
-    <Text selectable style={[s.text, style]} {...rest}>
+    <Text selectable={selectable} style={[s.text, style]} {...rest}>
       {children}
     </Text>
   );
@@ -23,7 +23,8 @@ const getStyles = (theme) =>
   StyleSheet.create({
     text: {
       color: theme.text,
-      fontFamily: "Nunito-Regular",
+      fontFamily: "Nunito",
+      fontWeight: "400",
     },
   });
 

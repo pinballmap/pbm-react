@@ -20,11 +20,11 @@ const NoLocationTrackingModal = ({
       closeModal={hideNoLocationTrackingModal}
     >
       <View>
-        <Text style={s.confirmText}>
+        <Text style={[s.confirmText, s.regular]}>
           Location tracking must be enabled to use this feature.
         </Text>
         <Text
-          style={[s.confirmText, s.link, s.margin10]}
+          style={[s.confirmText, s.regular, s.link, s.margin10]}
           onPress={() => Linking.openSettings()}
         >
           Go to phone settings to enable
@@ -36,11 +36,14 @@ const NoLocationTrackingModal = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
       marginHorizontal: 10,
-      fontFamily: "Nunito-Regular",
       paddingHorizontal: 30,
     },
     xButton: {
@@ -66,7 +69,6 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-      fontFamily: "Nunito-Regular",
     },
   });
 

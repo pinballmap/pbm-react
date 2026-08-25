@@ -35,7 +35,7 @@ const AppAlert = ({ motd }) => {
   return (
     <ConfirmationModal visible={visible} closeModal={() => setIsVisible(false)}>
       <View style={s.appAlertHeader}>
-        <Text style={s.appAlertTitle}>Message of the Day!</Text>
+        <Text style={[s.appAlertTitle, s.bold]}>Message of the Day!</Text>
         <MaterialCommunityIcons
           name="close-circle"
           size={35}
@@ -56,11 +56,14 @@ AppAlert.propTypes = {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     appAlertTitle: {
       color: theme.purple2,
       textAlign: "center",
       fontSize: 18,
-      fontFamily: "Nunito-Bold",
     },
     appAlertHeader: {
       backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,

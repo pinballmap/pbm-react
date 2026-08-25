@@ -256,8 +256,8 @@ const Search = ({
       onPress={() => handleRegionSelect(region)}
     >
       <View style={s.listContainerStyle}>
-        <Text style={s.listItemTitle}>{region.full_name}</Text>
-        <Text style={s.cityRegionRow}>Region</Text>
+        <Text style={[s.listItemTitle, s.regular]}>{region.full_name}</Text>
+        <Text style={[s.cityRegionRow, s.italic]}>Region</Text>
       </View>
     </Pressable>
   );
@@ -269,8 +269,10 @@ const Search = ({
       onPress={() => getLocationsByCity(location, idx)}
     >
       <View style={s.listContainerStyle}>
-        <Text style={s.listItemTitle}>{location.label ?? location.value}</Text>
-        <Text style={s.cityRegionRow}>City</Text>
+        <Text style={[s.listItemTitle, s.regular]}>
+          {location.label ?? location.value}
+        </Text>
+        <Text style={[s.cityRegionRow, s.italic]}>City</Text>
       </View>
     </Pressable>
   );
@@ -282,7 +284,7 @@ const Search = ({
       onPress={() => goToLocation(location, idx)}
     >
       <View style={s.listContainerStyle}>
-        <Text style={s.listItemTitle}>{location.label}</Text>
+        <Text style={[s.listItemTitle, s.regular]}>{location.label}</Text>
       </View>
     </Pressable>
   );
@@ -290,7 +292,10 @@ const Search = ({
   const renderRecentSearchHistory = () => (
     <View>
       <View style={s.recentSearchHistory}>
-        <Text style={s.searchHistoryTitle} maxFontSizeMultiplier={1.2}>
+        <Text
+          style={[s.searchHistoryTitle, s.bold]}
+          maxFontSizeMultiplier={1.2}
+        >
           {"Recent Search History"}
         </Text>
         <Text
@@ -315,7 +320,7 @@ const Search = ({
       navigate("FilterMap");
     };
     return (
-      <Text style={s.goToFilterText}>
+      <Text style={[s.goToFilterText, s.italic]}>
         Looking for a particular machine? Use the{" "}
         <Entypo
           name="sound-mix"
@@ -394,7 +399,7 @@ const Search = ({
                         ? ({ nativeEvent }) => geocodeSearch(nativeEvent.text)
                         : () => {}
                     }
-                    style={s.inputStyle}
+                    style={[s.inputStyle, s.regular]}
                     ref={textInputRef}
                     autoCorrect={false}
                   />
@@ -452,8 +457,8 @@ const Search = ({
           <MaterialIcons name="search" size={25} style={s.searchIcon} />
           <Text
             numberOfLines={1}
-            style={s.inputPlaceholder}
-            allowFontScaling={false}
+            style={[s.inputPlaceholder, s.regular]}
+            maxFontSizeMultiplier={1.3}
           >
             {searchBarText ? searchBarText : "City, Region, Venue..."}
           </Text>
@@ -476,6 +481,19 @@ const Search = ({
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     modalContainer: {
       flex: 1,
       marginTop: Platform.OS === "ios" ? 0 : 10,
@@ -528,7 +546,6 @@ const getStyles = (theme) =>
       paddingLeft: 5,
       fontSize: deviceWidth < 321 ? 14 : 18,
       flex: 1,
-      fontFamily: "Nunito-Regular",
     },
     inputStyle: {
       paddingLeft: 5,
@@ -536,7 +553,6 @@ const getStyles = (theme) =>
       flex: 1,
       color: theme.text,
       fontSize: 18,
-      fontFamily: "Nunito-Regular",
       includeFontPadding: false,
       textAlignVertical: "center",
       paddingVertical: 8,
@@ -573,7 +589,6 @@ const getStyles = (theme) =>
       marginBottom: -2,
       marginTop: -2,
       fontSize: 16,
-      fontFamily: "Nunito-Regular",
     },
     recentSearchHistory: {
       display: "flex",
@@ -585,7 +600,6 @@ const getStyles = (theme) =>
     },
     searchHistoryTitle: {
       color: theme.pink1,
-      fontFamily: "Nunito-Bold",
       fontSize: 18,
     },
     clearButton: {
@@ -599,8 +613,6 @@ const getStyles = (theme) =>
     },
     cityRegionRow: {
       fontSize: 16,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       color: theme.pink1,
     },
     pressed: {
@@ -620,8 +632,6 @@ const getStyles = (theme) =>
     },
     goToFilterText: {
       marginHorizontal: 30,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       color: theme.text3,
       textAlign: "center",
     },

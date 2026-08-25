@@ -146,50 +146,52 @@ function EditLocationDetails({ navigation, ...props }) {
               }}
             >
               <View style={s.pageTitle}>
-                <Text style={s.pageTitleText}>Please review your edits</Text>
+                <Text style={[s.pageTitleText, s.italic]}>
+                  Please review your edits
+                </Text>
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Phone</Text>
-                <Text style={s.preview}>{phone}</Text>
+                <Text style={[s.previewTitle, s.bold]}>Phone</Text>
+                <Text style={[s.preview, s.regular]}>{phone}</Text>
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Website</Text>
-                <Text style={s.preview}>{website}</Text>
+                <Text style={[s.previewTitle, s.bold]}>Website</Text>
+                <Text style={[s.preview, s.regular]}>{website}</Text>
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Location Notes</Text>
-                <Text style={s.preview}>{description}</Text>
+                <Text style={[s.previewTitle, s.bold]}>Location Notes</Text>
+                <Text style={[s.preview, s.regular]}>{description}</Text>
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>All Ages</Text>
-                <Text style={s.preview}>
+                <Text style={[s.previewTitle, s.bold]}>All Ages</Text>
+                <Text style={[s.preview, s.regular]}>
                   {ALL_AGES_OPTIONS.find((option) => option.value === allAges)
                     ?.label || "None Selected"}
                 </Text>
                 {allAges === ALL_AGES_NO && (
-                  <Text style={[s.preview, s.noValueNote]}>
+                  <Text style={[s.preview, s.italic, s.noValueNote]}>
                     Note: this selection is used for data management, but will
-                    not be displayed in the location details
+                    not be displayed in the location details.
                   </Text>
                 )}
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Free Play</Text>
-                <Text style={s.preview}>
+                <Text style={[s.previewTitle, s.bold]}>Free Play</Text>
+                <Text style={[s.preview, s.regular]}>
                   {PAYMENT_TYPE_OPTIONS.find(
                     (option) => option.value === paymentType,
                   )?.label || "None Selected"}
                 </Text>
                 {paymentType === PAYMENT_TYPE_NO && (
-                  <Text style={[s.preview, s.noValueNote]}>
+                  <Text style={[s.preview, s.italic, s.noValueNote]}>
                     Note: this selection is used for data management, but will
-                    not be displayed in the location details
+                    not be displayed in the location details.
                   </Text>
                 )}
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Location Type</Text>
-                <Text style={s.preview}>
+                <Text style={[s.previewTitle, s.bold]}>Location Type</Text>
+                <Text style={[s.preview, s.regular]}>
                   {typeof locationTypeId === "number" && locationTypeId > -1
                     ? locationTypes
                         .filter((type) => type.id === locationTypeId)
@@ -198,8 +200,8 @@ function EditLocationDetails({ navigation, ...props }) {
                 </Text>
               </View>
               <View style={s.previewContainer}>
-                <Text style={s.previewTitle}>Operator</Text>
-                <Text style={s.preview}>
+                <Text style={[s.previewTitle, s.bold]}>Operator</Text>
+                <Text style={[s.preview, s.regular]}>
                   {typeof operatorId === "number" && operatorId > -1
                     ? operators
                         .filter((op) => op.id === operatorId)
@@ -222,28 +224,28 @@ function EditLocationDetails({ navigation, ...props }) {
           <ActivityIndicator />
         ) : (
           <ScrollView>
-            <Text style={[s.subText, s.margin8]}>
+            <Text style={[s.subText, s.medium, s.margin8]}>
               Is this location{" "}
-              <Text style={[s.pink, { fontFamily: "Nunito-Bold" }]}>
+              <Text style={[s.pink, s.bold]}>
                 closed or are all the machines gone
               </Text>
               ? Simply remove the machines.
             </Text>
-            <Text style={[s.subText, s.margin8]}>
+            <Text style={[s.subText, s.medium, s.margin8]}>
               {`Does the location have a new name or address?`}
               <Text
                 onPress={() =>
                   navigation.navigate("Contact", { locationName: name })
                 }
-                style={[s.textLink, { fontFamily: "Nunito-Bold" }]}
+                style={[s.textLink, s.bold]}
               >
                 {"Contact us"}
               </Text>
               {` with the details.`}
             </Text>
-            <Text style={s.title}>Phone</Text>
+            <Text style={[s.title, s.bold]}>Phone</Text>
             <TextInput
-              style={[s.textInput, s.radius10]}
+              style={[s.textInput, s.regular, s.radius10]}
               underlineColorAndroid="transparent"
               onChangeText={(phone) => setPhone(phone)}
               value={phone}
@@ -253,9 +255,9 @@ function EditLocationDetails({ navigation, ...props }) {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Text style={s.title}>Website</Text>
+            <Text style={[s.title, s.bold]}>Website</Text>
             <TextInput
-              style={[s.textInput, s.radius10]}
+              style={[s.textInput, s.regular, s.radius10]}
               underlineColorAndroid="transparent"
               onChangeText={(website) => setWebsite(website)}
               value={website}
@@ -265,10 +267,10 @@ function EditLocationDetails({ navigation, ...props }) {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Text style={s.title}>Location Notes</Text>
+            <Text style={[s.title, s.bold]}>Location Notes</Text>
             <TextInput
               multiline={true}
-              style={[{ minHeight: 120 }, s.textInput, s.radius10]}
+              style={[{ minHeight: 120 }, s.textInput, s.regular, s.radius10]}
               onChangeText={(description) => setDescription(description)}
               value={description}
               underlineColorAndroid="transparent"
@@ -278,7 +280,7 @@ function EditLocationDetails({ navigation, ...props }) {
               placeholderTextColor={theme.indigo4}
               textAlignVertical="top"
             />
-            <Text style={s.title}>All Ages?</Text>
+            <Text style={[s.title, s.bold]}>All Ages?</Text>
             <OptionPickerButton
               title="All Ages?"
               description="Leave blank ('None Selected') if you're not sure."
@@ -286,7 +288,7 @@ function EditLocationDetails({ navigation, ...props }) {
               selectedValue={allAges}
               onSelect={setAllAges}
             />
-            <Text style={s.title}>Free Play?</Text>
+            <Text style={[s.title, s.bold]}>Free Play?</Text>
             <OptionPickerButton
               title="Free Play?"
               description="Free Play means a place with or without an entrance fee and then the games are free to play. Leave blank ('None Selected') if you're not sure. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
@@ -294,12 +296,12 @@ function EditLocationDetails({ navigation, ...props }) {
               selectedValue={paymentType}
               onSelect={setPaymentType}
             />
-            <Text style={s.title}>Location Type</Text>
+            <Text style={[s.title, s.bold]}>Location Type</Text>
             <DropDownButton
               title={locationTypeName}
               onPress={() => goToFindLocationType()}
             />
-            <Text style={s.title}>Operator</Text>
+            <Text style={[s.title, s.bold]}>Operator</Text>
             <DropDownButton
               title={operatorName}
               margin={{ marginBottom: 20, marginHorizontal: 20 }}
@@ -319,6 +321,23 @@ function EditLocationDetails({ navigation, ...props }) {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     previewContainer: {
       flexDirection: "row",
       width: "100%",
@@ -329,7 +348,6 @@ const getStyles = (theme) =>
     previewTitle: {
       marginLeft: 25,
       textAlign: "left",
-      fontFamily: "Nunito-Bold",
       fontSize: 16,
       width: 80,
       color: theme.purpleLight,
@@ -339,13 +357,10 @@ const getStyles = (theme) =>
       marginRight: 25,
       textAlign: "left",
       width: deviceWidth - 130,
-      fontFamily: "Nunito-Regular",
     },
     noValueNote: {
       marginLeft: 105,
       fontSize: 13,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       color: theme.text3,
     },
     pageTitle: {
@@ -354,8 +369,6 @@ const getStyles = (theme) =>
     },
     pageTitleText: {
       textAlign: "center",
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       fontSize: 18,
       color: theme.purpleLight,
     },
@@ -364,7 +377,6 @@ const getStyles = (theme) =>
       marginBottom: 5,
       marginTop: 10,
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
     },
     textInput: {
       backgroundColor: theme.white,
@@ -374,7 +386,6 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingHorizontal: 10,
       paddingVertical: 8,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -385,7 +396,6 @@ const getStyles = (theme) =>
     subText: {
       marginHorizontal: 30,
       fontSize: 14,
-      fontFamily: "Nunito-Medium",
     },
     pink: {
       color: theme.pink1,

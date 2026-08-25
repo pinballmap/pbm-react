@@ -50,11 +50,13 @@ const SignupLogin = ({ navigation, loginLater }) => {
         <View style={s.outerBorder}>
           <View style={s.textBg}>
             <Text
-              style={{
-                fontFamily: "Nunito-Regular",
-                fontSize: 18,
-                textAlign: "center",
-              }}
+              style={[
+                s.regular,
+                {
+                  fontSize: 18,
+                  textAlign: "center",
+                },
+              ]}
             >
               <Text>Pinball Map is a user-updated map listing</Text>
               <Text style={s.bold}>
@@ -100,7 +102,7 @@ const SignupLogin = ({ navigation, loginLater }) => {
               pressed ? s.bluePressed : undefined,
             ]}
           >
-            <Text style={s.titleStyle}>Current user? Log in</Text>
+            <Text style={[s.titleStyle, s.bold]}>Current user? Log in</Text>
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("Signup")}
@@ -111,7 +113,7 @@ const SignupLogin = ({ navigation, loginLater }) => {
               pressed ? s.pinkPressed : undefined,
             ]}
           >
-            <Text style={s.titleStyle}>New user? Sign up</Text>
+            <Text style={[s.titleStyle, s.bold]}>New user? Sign up</Text>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -124,7 +126,7 @@ const SignupLogin = ({ navigation, loginLater }) => {
               pressed ? s.whitePressed : undefined,
             ]}
           >
-            <Text style={s.titleStyle}>Or skip signing in</Text>
+            <Text style={[s.titleStyle, s.bold]}>Or skip signing in</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -139,6 +141,14 @@ const SignupLogin = ({ navigation, loginLater }) => {
 
 const getStyles = () =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     mask: {
       flex: 1,
       backgroundColor: "transparent",
@@ -152,9 +162,6 @@ const getStyles = () =>
       right: 0,
       bottom: 0,
       zIndex: -1,
-    },
-    bold: {
-      fontFamily: "Nunito-Bold",
     },
     outerBorder: {
       marginTop: 10,
@@ -198,7 +205,6 @@ const getStyles = () =>
     titleStyle: {
       color: "#fafaff",
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
     },
     justify: {
       flexDirection: "column",

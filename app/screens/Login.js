@@ -88,14 +88,14 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
       >
         <View style={s.justify}>
           {errors && (
-            <Text style={s.errorText}>
+            <Text style={[s.errorText, s.bold]}>
               {apiErrorMsg ||
                 loginError ||
                 passwordError ||
                 "There were errors trying to process your submission"}
             </Text>
           )}
-          <Text style={s.bold}>Log In</Text>
+          <Text style={[s.titleText, s.bold]}>Log In</Text>
           <View style={s.inputContainer}>
             <FontAwesome6 name="face-grin-beam" style={s.iconStyle} />
             <TextInput
@@ -105,7 +105,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
               value={loginInput}
               errorStyle={{ color: "red" }}
               errorMessage={loginError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -119,7 +119,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
               value={password}
               errorStyle={{ color: "red" }}
               errorMessage={passwordError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               secureTextEntry={true}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
@@ -136,19 +136,21 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
             onPress={() => navigation.navigate("Signup")}
             style={[{ marginTop: 15 }, s.buttonMask, s.marginBottom]}
           >
-            <Text style={s.textLink}>Not a user? SIGN UP!</Text>
+            <Text style={[s.textLink, s.bold]}>Not a user? SIGN UP!</Text>
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("PasswordReset")}
             style={[s.buttonMask, s.marginBottom]}
           >
-            <Text style={s.textLink}>I forgot my password</Text>
+            <Text style={[s.textLink, s.bold]}>I forgot my password</Text>
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("ResendConfirmation")}
             style={[s.buttonMask, s.marginBottom]}
           >
-            <Text style={s.textLink}>Resend my confirmation email</Text>
+            <Text style={[s.textLink, s.bold]}>
+              Resend my confirmation email
+            </Text>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -157,7 +159,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
             }}
             style={s.buttonMask}
           >
-            <Text style={s.textLink}>Skip logging in for now</Text>
+            <Text style={[s.textLink, s.bold]}>Skip logging in for now</Text>
           </Pressable>
         </View>
       </KeyboardAwareScrollView>
@@ -173,6 +175,14 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     backgroundImage: {
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height,
@@ -191,13 +201,11 @@ const getStyles = (theme) =>
     },
     errorText: {
       color: "red",
-      fontFamily: "Nunito-Bold",
       textAlign: "center",
       fontSize: 16,
       paddingHorizontal: 10,
     },
-    bold: {
-      fontFamily: "Nunito-Bold",
+    titleText: {
       textAlign: "center",
       fontSize: 22,
       color: theme.text,
@@ -224,12 +232,10 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       flex: 1,
-      fontFamily: "Nunito-Regular",
     },
     textLink: {
       fontSize: 16,
       textAlign: "center",
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
       textShadowColor: theme.white,
       textShadowOffset: { width: -1, height: 1 },

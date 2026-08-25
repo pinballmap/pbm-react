@@ -104,7 +104,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
 
   const getDisplayText = (machine) => (
     <Text style={{ fontSize: 16 }}>
-      <Text style={{ fontFamily: "Nunito-Bold" }}>{machine.name}</Text>
+      <Text style={s.bold}>{machine.name}</Text>
       <Text>{` (${machine.manufacturer}, ${machine.year})`}</Text>
     </Text>
   );
@@ -277,8 +277,8 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     }}
                     style={s.xButton}
                   />
-                  <Text style={s.success}>
-                    <Text style={s.successBanner}>
+                  <Text style={[s.success, s.regular]}>
+                    <Text style={[s.successBanner, s.bold]}>
                       {`Thanks for submitting that location!\n\n`}
                     </Text>
                     {`Review can take 0-7 days. Do not re-submit or remind us (unless it's opening day).`}
@@ -299,7 +299,11 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     locationName?.length === 0 ||
                     street.length === 0 ? (
                       <Text
-                        style={[{ color: theme.purpleLight }, s.pageTitleText]}
+                        style={[
+                          { color: theme.purpleLight },
+                          s.pageTitleText,
+                          s.italic,
+                        ]}
                       >
                         Please fill in required fields
                       </Text>
@@ -310,9 +314,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Location Name</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Location Name</Text>
                     {locationName?.length === 0 ? (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.error, s.italic, s.preview]}>
                         Include a location name
                       </Text>
                     ) : (
@@ -320,9 +324,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Street</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Street</Text>
                     {street?.length === 0 ? (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.error, s.italic, s.preview]}>
                         {`We can't map a place without an address`}
                       </Text>
                     ) : (
@@ -330,35 +334,35 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>City</Text>
+                    <Text style={[s.previewTitle, s.bold]}>City</Text>
                     <Text style={s.preview}>{city}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>State</Text>
+                    <Text style={[s.previewTitle, s.bold]}>State</Text>
                     <Text style={s.preview}>{state}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Zip</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Zip</Text>
                     <Text style={s.preview}>{zip}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Country</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Country</Text>
                     <Text style={s.preview}>{countryName}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Phone</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Phone</Text>
                     <Text style={s.preview}>{phone}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Website</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Website</Text>
                     <Text style={s.preview}>{website}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Location Notes</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Location Notes</Text>
                     <Text style={s.preview}>{description}</Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>All Ages</Text>
+                    <Text style={[s.previewTitle, s.bold]}>All Ages</Text>
                     {allAges ? (
                       <Text style={s.preview}>
                         {
@@ -368,20 +372,20 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                         }
                       </Text>
                     ) : (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.italic, s.preview]}>
                         None selected. Please add if known, and to speed up
                         approval.
                       </Text>
                     )}
                     {allAges === ALL_AGES_NO && (
-                      <Text style={[s.preview, s.noValueNote]}>
+                      <Text style={[s.preview, s.noValueNote, s.italic]}>
                         Note: this selection is used for data management, but
-                        will not be displayed in the location details
+                        will not be displayed in the location details.
                       </Text>
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Free Play</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Free Play</Text>
                     {paymentType ? (
                       <Text style={s.preview}>
                         {
@@ -391,20 +395,20 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                         }
                       </Text>
                     ) : (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.italic, s.preview]}>
                         None selected. Please add if known, and to speed up
                         approval.
                       </Text>
                     )}
                     {paymentType === PAYMENT_TYPE_NO && (
-                      <Text style={[s.preview, s.noValueNote]}>
+                      <Text style={[s.preview, s.noValueNote, s.italic]}>
                         Note: this selection is used for data management, but
-                        will not be displayed in the location details
+                        will not be displayed in the location details.
                       </Text>
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Location Type</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Location Type</Text>
                     {typeof locationType === "number" && locationType > -1 ? (
                       <Text style={s.preview}>
                         {
@@ -413,14 +417,14 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                         }
                       </Text>
                     ) : (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.italic, s.preview]}>
                         None selected. Please add if known, and to speed up
                         approval.
                       </Text>
                     )}
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Operator</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Operator</Text>
                     <Text style={s.preview}>
                       {typeof operator === "number" && operator > -1
                         ? operators
@@ -430,9 +434,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                     </Text>
                   </View>
                   <View style={s.previewContainer}>
-                    <Text style={s.previewTitle}>Machine List</Text>
+                    <Text style={[s.previewTitle, s.bold]}>Machine List</Text>
                     {machineList.length === 0 ? (
-                      <Text style={[s.error, s.preview]}>
+                      <Text style={[s.error, s.italic, s.preview]}>
                         Include at least one machine
                       </Text>
                     ) : (
@@ -484,31 +488,27 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           </Modal>
           <Text style={[{ marginTop: 10 }, s.text]}>
             {`Only submit `}
-            <Text
-              style={[s.text, s.boldFont, s.pinkText]}
-            >{`NEW locations`}</Text>
+            <Text style={[s.text, s.bold, s.pinkText]}>{`NEW locations`}</Text>
             {`.`}
           </Text>
           <Text style={[{ marginTop: 10 }, s.text]}>
-            <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+            <Text style={[s.text, s.bold]}>{`Do not`}</Text>
             {` submit your home (even short-term rentals).`}
           </Text>
           <Text style={[{ marginTop: 10 }, s.text]}>
-            <Text style={[s.text, s.boldFont]}>{`Do not`}</Text>
+            <Text style={[s.text, s.bold]}>{`Do not`}</Text>
             {` submit same location `}
-            <Text
-              style={[s.text, s.boldFont, s.pinkText]}
-            >{`multiple times`}</Text>
+            <Text style={[s.text, s.bold, s.pinkText]}>{`multiple times`}</Text>
             {`. Review takes 0 - 7 days.`}
           </Text>
           <Text style={[{ marginTop: 10 }, s.text]}>
             {`New business that isn't open yet? We don't add until it's open - `}
             <Text
-              style={[s.text, s.boldFont, { textTransform: "uppercase" }]}
+              style={[s.text, s.bold, { textTransform: "uppercase" }]}
             >{`tell us the opening date`}</Text>
             {`.`}
           </Text>
-          <Text style={s.title}>Location Name</Text>
+          <Text style={[s.title, s.bold]}>Location Name</Text>
           <GooglePlacesAutocomplete
             ref={autoCompleteRef}
             predefinedPlaces={[]}
@@ -521,9 +521,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
               placeholderTextColor: theme.indigo4,
               style: [
                 {
-                  fontFamily: "Nunito-Regular",
                   width: deviceWidth - 40,
                 },
+                s.regular,
                 s.textInput,
                 s.radius10,
               ],
@@ -542,14 +542,15 @@ function SuggestLocation({ navigation, route, location, ...props }) {
                 overflow: "hidden",
               },
               description: {
-                fontFamily: "Nunito-Regular",
+                fontFamily: "Nunito",
+                fontWeight: "400",
               },
             }}
             disableScroll
           />
-          <Text style={s.title}>Street</Text>
+          <Text style={[s.title, s.bold]}>Street</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(street) => setStreet(street)}
             returnKeyType="done"
@@ -559,9 +560,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             autoCapitalize="words"
             value={street}
           />
-          <Text style={s.title}>City</Text>
+          <Text style={[s.title, s.bold]}>City</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(city) => setCity(city)}
             returnKeyType="done"
@@ -571,9 +572,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             autoCapitalize="words"
             value={city}
           />
-          <Text style={s.title}>State</Text>
+          <Text style={[s.title, s.bold]}>State</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(state) => setState(state)}
             returnKeyType="done"
@@ -583,9 +584,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             autoCapitalize="characters"
             value={state}
           />
-          <Text style={s.title}>Zip Code</Text>
+          <Text style={[s.title, s.bold]}>Zip Code</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(zip) => setZip(zip)}
             returnKeyType="done"
@@ -594,14 +595,14 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             textContentType="postalCode"
             value={zip}
           />
-          <Text style={s.title}>Country</Text>
+          <Text style={[s.title, s.bold]}>Country</Text>
           <DropDownButton
             title={countryName}
             onPress={() => goToFindCountry()}
           />
-          <Text style={s.title}>Phone</Text>
+          <Text style={[s.title, s.bold]}>Phone</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(phone) => setPhone(phone)}
             returnKeyType="done"
@@ -611,9 +612,9 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             autoCapitalize="none"
             value={phone}
           />
-          <Text style={s.title}>Website</Text>
+          <Text style={[s.title, s.bold]}>Website</Text>
           <TextInput
-            style={[s.textInput, s.radius10]}
+            style={[s.textInput, s.regular, s.radius10]}
             underlineColorAndroid="transparent"
             onChangeText={(website) => setWebsite(website)}
             returnKeyType="done"
@@ -623,10 +624,15 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             autoCapitalize="none"
             value={website}
           />
-          <Text style={s.title}>Location Notes</Text>
+          <Text style={[s.title, s.bold]}>Location Notes</Text>
           <TextInput
             multiline={true}
-            style={[{ padding: 5, minHeight: 120 }, s.textInput, s.radius10]}
+            style={[
+              { padding: 5, minHeight: 120 },
+              s.textInput,
+              s.regular,
+              s.radius10,
+            ]}
             onChangeText={(description) => setDescription(description)}
             underlineColorAndroid="transparent"
             placeholder={
@@ -635,7 +641,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             placeholderTextColor={theme.indigo4}
             textAlignVertical="top"
           />
-          <Text style={s.title}>All Ages?</Text>
+          <Text style={[s.title, s.bold]}>All Ages?</Text>
           <OptionPickerButton
             title="All Ages?"
             description="Leave blank ('None Selected') if you're not sure."
@@ -643,7 +649,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             selectedValue={allAges}
             onSelect={setAllAges}
           />
-          <Text style={s.title}>Free Play?</Text>
+          <Text style={[s.title, s.bold]}>Free Play?</Text>
           <OptionPickerButton
             title="Free Play?"
             description="Free Play means a place with or without an entrance fee and then the games are free to play. Leave blank ('None Selected') if you're not sure. If some times or some games are not free play, Free Play may still be the best choice (location description should contain details)."
@@ -651,17 +657,17 @@ function SuggestLocation({ navigation, route, location, ...props }) {
             selectedValue={paymentType}
             onSelect={setPaymentType}
           />
-          <Text style={s.title}>Location Type</Text>
+          <Text style={[s.title, s.bold]}>Location Type</Text>
           <DropDownButton
             title={locationTypeName}
             onPress={() => goToFindLocationType()}
           />
-          <Text style={s.title}>Operator</Text>
+          <Text style={[s.title, s.bold]}>Operator</Text>
           <DropDownButton
             title={operatorName}
             onPress={() => goToFindOperator()}
           />
-          <Text style={s.title}>Machines</Text>
+          <Text style={[s.title, s.bold]}>Machines</Text>
           <DropDownButton
             title={"Select machines"}
             onPress={() =>
@@ -708,14 +714,24 @@ function SuggestLocation({ navigation, route, location, ...props }) {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    italic: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+      fontStyle: "italic",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     text: {
       fontSize: 15,
       marginVertical: 5,
       marginLeft: 15,
       marginRight: 15,
-    },
-    boldFont: {
-      fontFamily: "Nunito-Bold",
     },
     pinkText: {
       color: theme.pink1,
@@ -725,7 +741,6 @@ const getStyles = (theme) =>
       marginBottom: 5,
       marginTop: 10,
       fontSize: 16,
-      fontFamily: "Nunito-Bold",
       color: theme.text2,
     },
     previewContainer: {
@@ -738,7 +753,6 @@ const getStyles = (theme) =>
     previewTitle: {
       marginLeft: 25,
       textAlign: "left",
-      fontFamily: "Nunito-Bold",
       width: 80,
     },
     preview: {
@@ -750,8 +764,6 @@ const getStyles = (theme) =>
     noValueNote: {
       marginLeft: 105,
       fontSize: 13,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       color: theme.text3,
     },
     previewMachine: {
@@ -764,8 +776,6 @@ const getStyles = (theme) =>
     },
     pageTitleText: {
       textAlign: "center",
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
       fontSize: 18,
       color: theme.pink1,
     },
@@ -777,7 +787,6 @@ const getStyles = (theme) =>
       marginHorizontal: 20,
       paddingHorizontal: 10,
       paddingVertical: 8,
-      fontFamily: "Nunito-Regular",
       fontSize: 16,
       includeFontPadding: false,
       textAlignVertical: "center",
@@ -803,17 +812,13 @@ const getStyles = (theme) =>
       fontSize: 15,
       marginLeft: 40,
       marginRight: 40,
-      fontFamily: "Nunito-Regular",
     },
     successBanner: {
       fontSize: 20,
-      fontFamily: "Nunito-Bold",
       color: theme.purpleLight,
     },
     error: {
       color: theme.red2,
-      fontFamily: "Nunito-Italic",
-      fontStyle: "italic",
     },
     plusButton: {
       color: theme.red2,

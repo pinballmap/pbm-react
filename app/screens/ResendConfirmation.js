@@ -41,8 +41,10 @@ const ResendConfirmation = ({ navigation }) => {
             navigation.navigate("Login");
           }}
         >
-          <Text style={[s.confirmText, s.bold]}>Confirmation info resent</Text>
-          <Text style={[s.confirmText, s.notBold, { marginTop: 5 }]}>
+          <Text style={[s.confirmText, s.bold, s.font18]}>
+            Confirmation info resent
+          </Text>
+          <Text style={[s.confirmText, s.notBold, s.regular, { marginTop: 5 }]}>
             Check your email (and SPAM folder)
           </Text>
         </ConfirmationModal>
@@ -57,7 +59,7 @@ const ResendConfirmation = ({ navigation }) => {
               value={identification}
               errorStyle={{ color: "red" }}
               errorMessage={identificationError}
-              style={s.inputText}
+              style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -76,6 +78,14 @@ const ResendConfirmation = ({ navigation }) => {
 
 const getStyles = (theme) =>
   StyleSheet.create({
+    regular: {
+      fontFamily: "Nunito",
+      fontWeight: "400",
+    },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     margin: {
       marginHorizontal: 25,
     },
@@ -97,7 +107,6 @@ const getStyles = (theme) =>
       color: theme.text,
       fontSize: 18,
       flex: 1,
-      fontFamily: "Nunito-Regular",
     },
     confirmText: {
       textAlign: "center",
@@ -105,15 +114,13 @@ const getStyles = (theme) =>
       marginRight: 15,
       paddingHorizontal: 30,
     },
-    bold: {
+    font18: {
       fontSize: 18,
       color: theme.purple,
-      fontFamily: "Nunito-Bold",
     },
     notBold: {
       fontSize: 15,
       color: theme.text3,
-      fontFamily: "Nunito-Regular",
     },
     xButton: {
       position: "absolute",
