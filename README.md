@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.20
+
+August 28, 2026
+
+- Fix content justification issues on the signup and login screens when system font size is scaled really large.
+
 ### 5.4.19
 
 August 25, 2026
