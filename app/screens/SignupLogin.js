@@ -15,8 +15,6 @@ import { loginLater } from "../actions";
 import { getData } from "../config/request";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 
-let deviceHeight = Dimensions.get("window").height;
-
 const SignupLogin = ({ navigation, loginLater }) => {
   const s = getStyles();
   const [allLocationsCount, setAllLocationsCount] = useState(null);
@@ -36,98 +34,100 @@ const SignupLogin = ({ navigation, loginLater }) => {
   }, []);
 
   return (
-    <View style={[s.mask, s.justify]}>
+    <View style={[s.mask]}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       >
-        <View style={s.logoWrapper}>
-          <Image
-            contentFit="contain"
-            source={require("../assets/images/pinballmapcom_nocom.png")}
-            style={s.logo}
-          />
-        </View>
-        <View style={s.outerBorder}>
-          <View style={s.textBg}>
-            <Text
-              style={[
-                s.regular,
-                {
-                  fontSize: 18,
-                  textAlign: "center",
-                },
+        <View style={s.justify}>
+          <View style={s.logoWrapper}>
+            <Image
+              contentFit="contain"
+              source={require("../assets/images/pinballmapcom_nocom.png")}
+              style={s.logo}
+            />
+          </View>
+          <View style={s.outerBorder}>
+            <View style={s.textBg}>
+              <Text
+                style={[
+                  s.regular,
+                  {
+                    fontSize: 18,
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                <Text>Pinball Map is a user-updated map listing</Text>
+                <Text style={s.bold}>
+                  {" "}
+                  {formatNumWithCommas(allLocationsCount)}{" "}
+                </Text>
+                <Text>locations and</Text>
+                <Text style={s.bold}>
+                  {" "}
+                  {formatNumWithCommas(allMachinesCount)}{" "}
+                </Text>
+                <Text>machines.</Text>
+                {"\n"}
+                {"\n"}
+                <Text
+                  style={{ marginTop: 15, fontSize: 18, textAlign: "center" }}
+                >
+                  On the next screen, enable location services to see pinball
+                  machines near you.
+                </Text>
+                {"\n"}
+                {"\n"}
+                <Text>
+                  You can create an account (optional) and help keep the map up
+                  to date.
+                </Text>
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 15,
+              marginLeft: 15,
+              marginRight: 15,
+            }}
+          >
+            <Pressable
+              onPress={() => navigation.navigate("Login")}
+              style={({ pressed }) => [
+                s.buttonStyle,
+                s.buttonBlue,
+                pressed ? s.bluePressed : undefined,
               ]}
             >
-              <Text>Pinball Map is a user-updated map listing</Text>
-              <Text style={s.bold}>
-                {" "}
-                {formatNumWithCommas(allLocationsCount)}{" "}
-              </Text>
-              <Text>locations and</Text>
-              <Text style={s.bold}>
-                {" "}
-                {formatNumWithCommas(allMachinesCount)}{" "}
-              </Text>
-              <Text>machines.</Text>
-              {"\n"}
-              {"\n"}
-              <Text
-                style={{ marginTop: 15, fontSize: 18, textAlign: "center" }}
-              >
-                On the next screen, enable location services to see pinball
-                machines near you!
-              </Text>
-              {"\n"}
-              {"\n"}
-              <Text>
-                You can create an account (optional) and help keep the map up to
-                date!
-              </Text>
-            </Text>
+              <Text style={[s.titleStyle, s.bold]}>Current user? Log in</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.navigate("Signup")}
+              style={({ pressed }) => [
+                { marginVertical: 20 },
+                s.buttonStyle,
+                s.buttonPink,
+                pressed ? s.pinkPressed : undefined,
+              ]}
+            >
+              <Text style={[s.titleStyle, s.bold]}>New user? Sign up</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                loginLater();
+                navigation.navigate("MapTab");
+              }}
+              style={({ pressed }) => [
+                s.buttonStyle,
+                s.buttonWhite,
+                pressed ? s.whitePressed : undefined,
+              ]}
+            >
+              <Text style={[s.titleStyle, s.bold]}>Or skip signing in</Text>
+            </Pressable>
           </View>
-        </View>
-        <View
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 15,
-            marginLeft: 15,
-            marginRight: 15,
-          }}
-        >
-          <Pressable
-            onPress={() => navigation.navigate("Login")}
-            style={({ pressed }) => [
-              s.buttonStyle,
-              s.buttonBlue,
-              pressed ? s.bluePressed : undefined,
-            ]}
-          >
-            <Text style={[s.titleStyle, s.bold]}>Current user? Log in</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate("Signup")}
-            style={({ pressed }) => [
-              { marginVertical: 20 },
-              s.buttonStyle,
-              s.buttonPink,
-              pressed ? s.pinkPressed : undefined,
-            ]}
-          >
-            <Text style={[s.titleStyle, s.bold]}>New user? Sign up</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              loginLater();
-              navigation.navigate("MapTab");
-            }}
-            style={({ pressed }) => [
-              s.buttonStyle,
-              s.buttonWhite,
-              pressed ? s.whitePressed : undefined,
-            ]}
-          >
-            <Text style={[s.titleStyle, s.bold]}>Or skip signing in</Text>
-          </Pressable>
         </View>
       </ScrollView>
       <ImageBackground
@@ -208,17 +208,15 @@ const getStyles = () =>
     },
     justify: {
       flexDirection: "column",
-      justifyContent: "center",
-      height: deviceHeight,
+      paddingVertical: 40,
     },
     buttonStyle: {
       borderRadius: 25,
-      paddingHorizontal: 10,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      height: 40,
       overflow: "visible",
+      padding: 10,
       shadowColor: "rgb(126, 126, 145)",
       shadowOffset: {
         width: 0,

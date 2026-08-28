@@ -23,8 +23,6 @@ import MaterialCommunityIcons from "@react-native-vector-icons/material-design-i
 import { ConfirmationModal, PbmButton } from "../components";
 import * as WebBrowser from "expo-web-browser";
 
-let deviceHeight = Dimensions.get("window").height;
-
 const Signup = ({ loginLater, navigation }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -224,7 +222,7 @@ const Signup = ({ loginLater, navigation }) => {
             disabled={!username || !email || !password || !confirm_password}
             margin={{ marginHorizontal: 25, marginVertical: 15 }}
           />
-          <View style={[s.externalLinkContainer, s.marginB25]}>
+          <View style={[s.externalLinkContainer, s.marginB20]}>
             <Pressable
               onPress={() =>
                 WebBrowser.openBrowserAsync("https://pinballmap.com/privacy")
@@ -238,7 +236,7 @@ const Signup = ({ loginLater, navigation }) => {
           </View>
           <Pressable
             onPress={() => navigation.navigate("Login")}
-            style={[s.buttonMask, s.marginB25]}
+            style={[s.buttonMask, s.marginB20]}
           >
             <Text style={[s.textLink, s.bold]}>Already a user? LOG IN!</Text>
           </Pressable>
@@ -289,6 +287,7 @@ const getStyles = (theme) =>
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,
+      paddingHorizontal: 20,
     },
     errorText: {
       color: "red",
@@ -311,10 +310,11 @@ const getStyles = (theme) =>
       borderWidth: 1,
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      marginVertical: 15,
-      marginHorizontal: 25,
+      marginVertical: 12,
+      marginHorizontal: 20,
       paddingHorizontal: 10,
-      paddingVertical: 12,
+      paddingVertical: 6,
+      minHeight: 50,
       includeFontPadding: false,
       textAlignVertical: "center",
     },
@@ -341,8 +341,7 @@ const getStyles = (theme) =>
     },
     justify: {
       flexDirection: "column",
-      justifyContent: "center",
-      height: deviceHeight,
+      paddingVertical: 40,
     },
     confirmText: {
       textAlign: "center",
@@ -384,8 +383,8 @@ const getStyles = (theme) =>
       marginLeft: 5,
       color: theme.text2,
     },
-    marginB25: {
-      marginBottom: 25,
+    marginB20: {
+      marginBottom: 20,
     },
   });
 

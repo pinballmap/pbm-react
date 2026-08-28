@@ -25,8 +25,6 @@ import {
 import { getData } from "../config/request";
 import { PbmButton } from "../components";
 
-let deviceHeight = Dimensions.get("window").height;
-
 const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
@@ -195,6 +193,7 @@ const getStyles = (theme) =>
     },
     buttonMask: {
       backgroundColor: theme.buttonMask,
+      paddingHorizontal: 20,
     },
     marginBottom: {
       marginBottom: 20,
@@ -220,10 +219,11 @@ const getStyles = (theme) =>
       borderWidth: 1,
       backgroundColor: theme.white,
       borderColor: theme.theme == "dark" ? theme.base4 : theme.indigo4,
-      marginVertical: 15,
-      marginHorizontal: 25,
+      marginVertical: 12,
+      marginHorizontal: 20,
       paddingHorizontal: 10,
-      paddingVertical: 12,
+      paddingVertical: 6,
+      minHeight: 50,
       includeFontPadding: false,
       textAlignVertical: "center",
     },
@@ -244,8 +244,7 @@ const getStyles = (theme) =>
     },
     justify: {
       flexDirection: "column",
-      justifyContent: "center",
-      height: deviceHeight,
+      paddingVertical: 40,
     },
     iconStyle: {
       fontSize: 24,
