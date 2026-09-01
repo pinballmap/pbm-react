@@ -491,10 +491,22 @@ const UserProfile = ({
                     </View>
                     <View style={s.divider} />
                     <View style={s.modalSection}>
+                      <Text style={[s.sectionLabel, s.semiBold]}>
+                        Delete Account
+                      </Text>
                       {!showDeleteConfirm ? (
                         <WarningButton
                           title={"Delete Account"}
                           onPress={() => setShowDeleteConfirm(true)}
+                          margin={s.blackButton}
+                          leftIcon={
+                            <MaterialCommunityIcons
+                              name="skull"
+                              size={22}
+                              color={theme.red2}
+                              style={{ marginRight: 8 }}
+                            />
+                          }
                         />
                       ) : (
                         <>
@@ -1227,6 +1239,11 @@ const getStyles = (theme) =>
     },
     marginT10: {
       marginTop: 10,
+    },
+    blackButton: {
+      backgroundColor: "#000000",
+      marginHorizontal: 20,
+      marginBottom: 15,
     },
   });
 
