@@ -72,7 +72,7 @@ const getStyles = (theme) =>
       borderTopRightRadius: 15,
       paddingVertical: 8,
       justifyContent: "center",
-      paddingHorizontal: 35,
+      paddingHorizontal: 45,
     },
     appAlert: {
       padding: 10,

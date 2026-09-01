@@ -766,6 +766,7 @@ const getStyles = (theme) =>
       marginTop: -25,
       paddingVertical: 8,
       justifyContent: "center",
+      paddingHorizontal: 45,
     },
     filterSummaryModalTitle: {
       color: theme.purple2,

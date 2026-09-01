@@ -375,7 +375,9 @@ const UserProfile = ({
                   loading={deletingAccount}
                 >
                   <View style={s.header}>
-                    <Text style={[s.modalTitle, s.bold]}>Account Settings</Text>
+                    <Text style={[s.modalTitle, s.extraBold]}>
+                      Account Settings
+                    </Text>
                     <MaterialCommunityIcons
                       name="close-circle"
                       size={35}
@@ -1134,17 +1136,27 @@ const getStyles = (theme) =>
       marginTop: -25,
       paddingVertical: 8,
       justifyContent: "center",
+      paddingHorizontal: 45,
     },
     xButton: {
       position: "absolute",
-      right: 5,
+      right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
     },
     modalTitle: {
       textAlign: "center",
-      fontSize: 20,
-      color: theme.text,
-      paddingHorizontal: 44,
+      fontSize: 18,
+      color: theme.purple2,
     },
     modalSection: {
       paddingHorizontal: 5,
