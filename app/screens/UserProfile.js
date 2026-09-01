@@ -52,6 +52,7 @@ const UserProfile = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [accountModalVisible, setAccountModalVisible] = useState(false);
   const [newEmail, setNewEmail] = useState("");
+  const [emailCurrentPassword, setEmailCurrentPassword] = useState("");
   const [emailError, setEmailError] = useState(null);
   const [emailSuccess, setEmailSuccess] = useState(false);
   const [updatingEmail, setUpdatingEmail] = useState(false);
@@ -103,6 +104,7 @@ const UserProfile = ({
   const closeAccountModal = () => {
     setAccountModalVisible(false);
     setNewEmail("");
+    setEmailCurrentPassword("");
     setEmailError(null);
     setEmailSuccess(false);
     setCurrentPassword("");
@@ -118,11 +120,12 @@ const UserProfile = ({
     setUpdatingEmail(true);
     setEmailError(null);
     setEmailSuccess(false);
-    updateEmail(newEmail)
+    updateEmail(newEmail, emailCurrentPassword)
       .then(() => {
         setUpdatingEmail(false);
         setEmailSuccess(true);
         setNewEmail("");
+        setEmailCurrentPassword("");
       })
       .catch((err) => {
         setUpdatingEmail(false);
@@ -405,6 +408,20 @@ const UserProfile = ({
                         autoCorrect={false}
                         keyboardType="email-address"
                       />
+                      <TextInput
+                        style={[s.textInput, s.regular]}
+                        placeholder="Current password"
+                        placeholderTextColor={s.placeholderColor}
+                        value={emailCurrentPassword}
+                        onChangeText={(value) => {
+                          setEmailCurrentPassword(value);
+                          setEmailError(null);
+                          setEmailSuccess(false);
+                        }}
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
                       {!!emailError && (
                         <Text style={[s.formError, s.semiBold]}>
                           {emailError}
@@ -418,7 +435,9 @@ const UserProfile = ({
                       <PbmButton
                         title={"Update Email"}
                         onPress={handleUpdateEmail}
-                        disabled={updatingEmail || !newEmail}
+                        disabled={
+                          updatingEmail || !newEmail || !emailCurrentPassword
+                        }
                       />
                     </View>
                     <View style={s.divider} />

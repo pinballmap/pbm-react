@@ -123,11 +123,12 @@ export const loginLater = () => {
   };
 };
 
-export const updateEmail = (email) => (dispatch, getState) => {
+export const updateEmail = (email, currentPassword) => (dispatch, getState) => {
   const { id, authentication_token, username } = getState().user;
   return postData(`/users/${id}/update_email.json`, {
     user_token: authentication_token,
     email,
+    current_password: currentPassword,
   }).then(() => {
     dispatch(login({ authentication_token, email, id, username }));
   });
