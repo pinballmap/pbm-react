@@ -28,6 +28,7 @@ import {
   logout,
   removeMachineFromLifeList,
   clearSelectedState,
+  updateEmail,
 } from "../actions";
 import { formatNumWithCommas } from "../utils/utilityFunctions";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
@@ -41,6 +42,7 @@ const UserProfile = ({
   logout,
   removeMachineFromLifeList,
   clearSelectedState,
+  updateEmail,
   navigation,
   route,
 }) => {
@@ -116,10 +118,7 @@ const UserProfile = ({
     setUpdatingEmail(true);
     setEmailError(null);
     setEmailSuccess(false);
-    postData(`/users/${user.id}/update_email.json`, {
-      user_token: user.authentication_token,
-      email: newEmail,
-    })
+    updateEmail(newEmail)
       .then(() => {
         setUpdatingEmail(false);
         setEmailSuccess(true);
@@ -1236,6 +1235,7 @@ UserProfile.propTypes = {
   logout: PropTypes.func,
   removeMachineFromLifeList: PropTypes.func,
   clearSelectedState: PropTypes.func,
+  updateEmail: PropTypes.func,
   navigation: PropTypes.object,
   route: PropTypes.object,
 };
@@ -1246,6 +1246,7 @@ const mapDispatchToProps = (dispatch) => ({
   removeMachineFromLifeList: (machineId) =>
     dispatch(removeMachineFromLifeList(machineId)),
   clearSelectedState: () => dispatch(clearSelectedState()),
+  updateEmail: (email) => dispatch(updateEmail(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

@@ -123,6 +123,16 @@ export const loginLater = () => {
   };
 };
 
+export const updateEmail = (email) => (dispatch, getState) => {
+  const { id, authentication_token, username } = getState().user;
+  return postData(`/users/${id}/update_email.json`, {
+    user_token: authentication_token,
+    email,
+  }).then(() => {
+    dispatch(login({ authentication_token, email, id, username }));
+  });
+};
+
 export const getFavoriteLocations = (id) => (dispatch) => {
   return getData(`/users/${id}/list_fave_locations.json`)
     .then((data) => dispatch(getFavoriteLocationsSuccess(data)))
