@@ -14,6 +14,12 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.21
+
+September 1, 2026
+
+- Fixed a bug where users that update their email can't edit the map without logging out and back in.
+
 ### 5.4.20
 
 August 28, 2026
