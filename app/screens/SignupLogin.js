@@ -94,7 +94,7 @@ const SignupLogin = ({ navigation, loginLater }) => {
             }}
           >
             <Pressable
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.replace("Login")}
               style={({ pressed }) => [
                 s.buttonStyle,
                 s.buttonBlue,
@@ -104,7 +104,7 @@ const SignupLogin = ({ navigation, loginLater }) => {
               <Text style={[s.titleStyle, s.bold]}>Current user? Log in</Text>
             </Pressable>
             <Pressable
-              onPress={() => navigation.navigate("Signup")}
+              onPress={() => navigation.replace("Signup")}
               style={({ pressed }) => [
                 { marginVertical: 20 },
                 s.buttonStyle,

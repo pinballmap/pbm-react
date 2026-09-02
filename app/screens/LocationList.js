@@ -275,22 +275,6 @@ const getStyles = (theme) =>
       marginHorizontal: 10,
       paddingHorizontal: 30,
     },
-    xButton: {
-      position: "absolute",
-      top: -10,
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
     margin10: {
       marginTop: 10,
       marginBottom: 5,

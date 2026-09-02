@@ -133,11 +133,28 @@ const Signup = ({ loginLater, navigation }) => {
     >
       <ConfirmationModal
         visible={modalVisible}
-        closeModal={() => setModalVisible(false)}
+        closeModal={() => {
+          setModalVisible(false);
+          navigation.replace("Login");
+        }}
       >
-        <Text style={[s.confirmText, s.regular]}>
-          {`Please check your email and confirm your account. If you don't see it, check your SPAM folder.`}
-        </Text>
+        <View style={s.modalHeader}>
+          <Text style={[s.modalHeaderTitle, s.extraBold]}>Success</Text>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={35}
+            onPress={() => {
+              setModalVisible(false);
+              navigation.replace("Login");
+            }}
+            style={s.xButton}
+          />
+        </View>
+        <View style={s.modalContent}>
+          <Text style={[s.confirmText, s.regular]}>
+            {`Thank you for signing up. You must now confirm your account. Please check your email, confirm your account, then login. If you don't see the email, check your SPAM folder.`}
+          </Text>
+        </View>
       </ConfirmationModal>
       <KeyboardAwareScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
@@ -235,7 +252,7 @@ const Signup = ({ loginLater, navigation }) => {
             <MaterialCommunityIcons name="open-in-new" style={s.externalIcon} />
           </View>
           <Pressable
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.replace("Login")}
             style={[s.buttonMask, s.marginB20]}
           >
             <Text style={[s.textLink, s.bold]}>Already a user? LOG IN!</Text>
@@ -274,6 +291,10 @@ const getStyles = (theme) =>
     bold: {
       fontFamily: "Nunito",
       fontWeight: "700",
+    },
+    extraBold: {
+      fontFamily: "Nunito",
+      fontWeight: "800",
     },
     backgroundImage: {
       width: Dimensions.get("window").width,
@@ -344,26 +365,7 @@ const getStyles = (theme) =>
       paddingVertical: 40,
     },
     confirmText: {
-      textAlign: "center",
-      marginHorizontal: 10,
       fontSize: 16,
-      paddingHorizontal: 30,
-    },
-    xButton: {
-      position: "absolute",
-      top: -10,
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
     },
     externalLink: {
       fontSize: 16,
@@ -385,6 +387,39 @@ const getStyles = (theme) =>
     },
     marginB20: {
       marginBottom: 20,
+    },
+    modalHeader: {
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      marginTop: -25,
+      paddingVertical: 8,
+      justifyContent: "center",
+      paddingHorizontal: 45,
+    },
+    modalHeaderTitle: {
+      color: theme.purple2,
+      textAlign: "center",
+      fontSize: 18,
+    },
+    xButton: {
+      position: "absolute",
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
+    },
+    modalContent: {
+      padding: 10,
+      paddingBottom: 0,
     },
   });
 
