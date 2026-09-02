@@ -131,7 +131,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
             margin={{ marginHorizontal: 25, marginVertical: 15 }}
           />
           <Pressable
-            onPress={() => navigation.replace("Signup")}
+            onPress={() => navigation.navigate("Signup")}
             style={[{ marginTop: 15 }, s.buttonMask, s.marginBottom]}
           >
             <Text style={[s.textLink, s.bold]}>Not a user? SIGN UP!</Text>

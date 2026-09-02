@@ -252,7 +252,7 @@ const Signup = ({ loginLater, navigation }) => {
             <MaterialCommunityIcons name="open-in-new" style={s.externalIcon} />
           </View>
           <Pressable
-            onPress={() => navigation.replace("Login")}
+            onPress={() => navigation.navigate("Login")}
             style={[s.buttonMask, s.marginB20]}
           >
             <Text style={[s.textLink, s.bold]}>Already a user? LOG IN!</Text>
