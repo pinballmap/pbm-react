@@ -127,6 +127,7 @@ export default {
             "The app accesses your photos so you can upload location images.",
         },
       ],
+      "react-native-map-link",
     ],
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",

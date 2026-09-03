@@ -22,7 +22,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Mapbox from "@rnmapbox/maps";
-import openMap from "react-native-open-maps";
+import { showLocation } from "react-native-map-link";
 import { throttle } from "throttle-debounce";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -1121,10 +1121,15 @@ const LocationDetails = (props) => {
                   pressed ? s.opacity04 : s.opacity1,
                 ]}
                 onPress={() => {
-                  openMap({
-                    end: `${location.name} ${location.city} ${
-                      location.state || ""
-                    } ${location.zip || ""}`,
+                  showLocation({
+                    latitude: Number(location.lat),
+                    longitude: Number(location.lon),
+                    title: location.name,
+                    googleForceLatLon: !location.place_id,
+                    ...(location.place_id && {
+                      googlePlaceId: location.place_id,
+                    }),
+                    directionsMode: "car",
                   });
                 }}
               >
