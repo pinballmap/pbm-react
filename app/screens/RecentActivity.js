@@ -489,8 +489,10 @@ const RecentActivity = ({
           <ActivityIndicator />
         ) : !recentActivity || recentActivity.length === 0 ? (
           <Text style={[s.problem, s.bold]}>
-            {btnIdx === 3 && selectedActivities.length
-              ? "No recent maps found with the applied filters."
+            {btnIdx === 3
+              ? selectedActivities.length || selectedActivityMachines.length
+                ? "No recent maps found with the applied filters."
+                : "No recent map edits found."
               : `No recent map edits within ${maxDistance} ${distanceUnit} of the map's current position.`}
           </Text>
         ) : (
