@@ -70,6 +70,17 @@ const Signup = ({ loginLater, navigation }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const closeModalAndNavigate = () => {
+    setModalVisible(false);
+    const state = navigation.getState();
+    const previousRoute = state.routes[state.index - 1];
+    if (previousRoute?.name === "Login") {
+      navigation.goBack();
+    } else {
+      navigation.replace("Login");
+    }
+  };
+
   const submit = () => {
     // Reset error states upon a submission / resubmission
     setUsernameError(null);
@@ -133,20 +144,14 @@ const Signup = ({ loginLater, navigation }) => {
     >
       <ConfirmationModal
         visible={modalVisible}
-        closeModal={() => {
-          setModalVisible(false);
-          navigation.replace("Login");
-        }}
+        closeModal={closeModalAndNavigate}
       >
         <View style={s.modalHeader}>
           <Text style={[s.modalHeaderTitle, s.extraBold]}>Success</Text>
           <MaterialCommunityIcons
             name="close-circle"
             size={35}
-            onPress={() => {
-              setModalVisible(false);
-              navigation.replace("Login");
-            }}
+            onPress={closeModalAndNavigate}
             style={s.xButton}
           />
         </View>
@@ -252,7 +257,7 @@ const Signup = ({ loginLater, navigation }) => {
             <MaterialCommunityIcons name="open-in-new" style={s.externalIcon} />
           </View>
           <Pressable
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.replace("Login")}
             style={[s.buttonMask, s.marginB20]}
           >
             <Text style={[s.textLink, s.bold]}>Already a user? LOG IN!</Text>

@@ -4,6 +4,7 @@ import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const PasswordReset = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -12,6 +13,17 @@ const PasswordReset = ({ navigation }) => {
   const [identification, setIdentification] = useState("");
   const [identificationError, setIdentificationError] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+
+  const closeModalAndNavigate = () => {
+    setModalVisible(false);
+    const state = navigation.getState();
+    const previousRoute = state.routes[state.index - 1];
+    if (previousRoute?.name === "Login") {
+      navigation.goBack();
+    } else {
+      navigation.replace("Login");
+    }
+  };
 
   const submit = () => {
     setIdentificationError("");
@@ -36,17 +48,24 @@ const PasswordReset = ({ navigation }) => {
       >
         <ConfirmationModal
           visible={modalVisible}
-          closeModal={() => {
-            setModalVisible(false);
-            navigation.navigate("Login");
-          }}
+          closeModal={closeModalAndNavigate}
         >
-          <Text style={[s.confirmText, s.bold, s.font18]}>
-            Password reset was successful.
-          </Text>
-          <Text style={[s.confirmText, s.notBold, s.regular, { marginTop: 5 }]}>
-            Check your email (and SPAM folder)
-          </Text>
+          <View style={s.modalHeader}>
+            <Text style={[s.modalHeaderTitle, s.extraBold]}>
+              Reset Initiated
+            </Text>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={35}
+              onPress={closeModalAndNavigate}
+              style={s.xButton}
+            />
+          </View>
+          <View style={s.modalContent}>
+            <Text style={[s.confirmText, s.regular]}>
+              {`Check your email (and SPAM folder) and follow the instructions to complete your password reset.`}
+            </Text>
+          </View>
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
           <View style={s.inputContainer}>
@@ -82,9 +101,9 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "400",
     },
-    bold: {
+    extraBold: {
       fontFamily: "Nunito",
-      fontWeight: "700",
+      fontWeight: "800",
     },
     margin: {
       marginHorizontal: 25,
@@ -109,18 +128,40 @@ const getStyles = (theme) =>
       flex: 1,
     },
     confirmText: {
+      fontSize: 16,
+    },
+    modalHeader: {
+      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      marginTop: -25,
+      paddingVertical: 8,
+      justifyContent: "center",
+      paddingHorizontal: 45,
+    },
+    modalHeaderTitle: {
+      color: theme.purple2,
       textAlign: "center",
-      marginLeft: 15,
-      marginRight: 15,
-      paddingHorizontal: 30,
-    },
-    font18: {
       fontSize: 18,
-      color: theme.purple,
     },
-    notBold: {
-      fontSize: 15,
-      color: theme.text3,
+    xButton: {
+      position: "absolute",
+      right: 3,
+      color: theme.theme == "dark" ? theme.base4 : theme.base1,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      overflow: "visible",
+    },
+    modalContent: {
+      padding: 10,
+      paddingBottom: 0,
     },
   });
 
