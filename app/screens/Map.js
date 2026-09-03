@@ -647,7 +647,7 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: theme.theme === "dark" ? theme.base2 : theme.pink2,
-      paddingVertical: 5,
+      paddingVertical: 8,
       paddingHorizontal: 15,
     },
     buttonTitle: {

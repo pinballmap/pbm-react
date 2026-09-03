@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.22
+
+September 3, 2026
+
+- The "Route" button will now give you a choice of which installed map app you want to open for directions.
+- Some quality of life updates to the sign up, login, reset password, and resend confirmation screens that no one will notice.
+
 ### 5.4.21
 
 September 1, 2026
