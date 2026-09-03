@@ -578,16 +578,9 @@ const Map = ({
             ]}
             onPress={refreshResults}
           >
-            {({ pressed }) => (
-              <Text
-                style={
-                  (s.semiBold,
-                  [pressed ? s.pressedTitleStyle : s.updateTitleStyle])
-                }
-              >
-                Refresh this area
-              </Text>
-            )}
+            <Text style={[s.semiBold, s.updateTitleStyle]}>
+              Refresh this area
+            </Text>
           </Pressable>
         ) : null}
         {!!selectedLocation && (
@@ -692,9 +685,6 @@ const getStyles = (theme) =>
     },
     updateTitleStyle: {
       color: "#440152",
-      fontSize: 16,
-    },
-    pressedTitleStyle: {
       fontSize: 16,
     },
     myLocationContainer: {
