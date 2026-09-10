@@ -40,6 +40,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
                   onPress(i);
               }}
               style={s.button}
+              cancelable={false}
             >
               <View
                 style={StyleSheet.flatten([

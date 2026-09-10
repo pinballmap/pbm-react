@@ -2,17 +2,20 @@ import React, { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-const WarningButton = ({ title, margin, onPress, leftIcon }) => {
+const WarningButton = ({ title, margin, onPress, leftIcon, disabled }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
 
   return (
     <Pressable
+      disabled={disabled}
       onPress={onPress}
+      cancelable={false}
       style={({ pressed }) => [
         s.buttonStyle,
         margin ? margin : s.margin,
         pressed ? s.pressed : undefined,
+        disabled ? { opacity: 0.5 } : { opacity: 1.0 },
       ]}
     >
       {leftIcon}

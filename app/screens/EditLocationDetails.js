@@ -123,7 +123,7 @@ function EditLocationDetails({ navigation, ...props }) {
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
-          flex: 1,
+          flexGrow: 1,
           backgroundColor: theme.base1,
           paddingBottom: 30,
         }}
@@ -144,6 +144,7 @@ function EditLocationDetails({ navigation, ...props }) {
                 paddingBottom: 30,
                 paddingTop: machineNameMargin,
               }}
+              keyboardShouldPersistTaps="handled"
             >
               <View style={s.pageTitle}>
                 <Text style={[s.pageTitleText, s.italic]}>
@@ -212,10 +213,12 @@ function EditLocationDetails({ navigation, ...props }) {
               <PbmButton
                 title={"Confirm Location Details"}
                 onPress={() => confirmEditLocationDetails()}
+                disabled={updatingLocationDetails}
               />
               <WarningButton
                 title={"Go Back"}
                 onPress={() => setShowEditLocationDetailsModal(false)}
+                disabled={updatingLocationDetails}
               />
             </ScrollView>
           </View>
@@ -223,7 +226,7 @@ function EditLocationDetails({ navigation, ...props }) {
         {updatingLocationDetails ? (
           <ActivityIndicator />
         ) : (
-          <ScrollView>
+          <View>
             <Text style={[s.subText, s.medium, s.margin8]}>
               Is this location{" "}
               <Text style={[s.pink, s.bold]}>
@@ -311,7 +314,7 @@ function EditLocationDetails({ navigation, ...props }) {
               title={"Review Location Details"}
               onPress={() => setShowEditLocationDetailsModal(true)}
             />
-          </ScrollView>
+          </View>
         )}
       </KeyboardAwareScrollView>
       <KeyboardToolbar />

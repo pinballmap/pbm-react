@@ -703,7 +703,7 @@ function SuggestLocation({ navigation, route, location, ...props }) {
           <PbmButton
             title={"Review Submission"}
             onPress={reviewSubmission}
-            margin={{ marginVertical: 30, marginHorizontal: 40 }}
+            margin={{ marginVertical: 30, marginHorizontal: 20 }}
           />
         </KeyboardAwareScrollView>
       )}
@@ -867,7 +867,7 @@ const getStyles = (theme) =>
     },
     buttonMargin: {
       marginVertical: 15,
-      marginHorizontal: 40,
+      marginHorizontal: 20,
     },
     alreadyExistsContainer: {
       marginHorizontal: 20,

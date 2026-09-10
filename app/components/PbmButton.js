@@ -17,6 +17,7 @@ const PbmButton = ({
     <Pressable
       disabled={disabled}
       onPress={onPress}
+      cancelable={false}
       style={({ pressed }) => [
         s.buttonStyle,
         margin ? margin : s.margin,
