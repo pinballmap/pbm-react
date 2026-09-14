@@ -235,7 +235,7 @@ function EditLocationDetails({ navigation, ...props }) {
               ? Simply remove the machines.
             </Text>
             <Text style={[s.subText, s.medium, s.margin8]}>
-              {`Does the location have a new name or address?`}
+              {`Does the location have a new name or address? `}
               <Text
                 onPress={() =>
                   navigation.navigate("Contact", { locationName: name })
@@ -398,7 +398,7 @@ const getStyles = (theme) =>
     },
     subText: {
       marginHorizontal: 30,
-      fontSize: 14,
+      fontSize: 15,
     },
     pink: {
       color: theme.pink1,

@@ -72,7 +72,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
           overScrollMode="always"
         >
           {route.params?.locationName ? (
-            <Text style={[s.text]}>
+            <Text style={[s.text, { marginTop: 8 }]}>
               {`You're contacting us about `}
               <Text
                 style={[
@@ -165,7 +165,12 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             textAlignVertical="top"
             underlineColorAndroid="transparent"
           />
-          <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
+          <PbmButton
+            title={"Submit"}
+            disabled={_disabled()}
+            onPress={submit}
+            margin={{ marginVertical: 20, marginHorizontal: 0 }}
+          />
         </KeyboardAwareScrollView>
       )}
     </View>
