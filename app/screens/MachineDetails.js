@@ -603,8 +603,9 @@ const MachineDetails = ({
                         ? () => setIctoggleModalVisible(true)
                         : () => navigation.navigate("Login")
                     }
-                    style={[
+                    style={({ pressed }) => [
                       s.buttonIC,
+                      pressed ? undefined : s.shadow,
                       ic_enabled === null
                         ? s.nullIC
                         : ic_enabled
@@ -646,12 +647,13 @@ const MachineDetails = ({
                   </Pressable>
                   <Text
                     style={{
+                      marginTop: 5,
                       fontSize: 12,
                       color: theme.text3,
                       textAlign: "center",
                     }}
                   >
-                    (click to toggle)
+                    (press to toggle)
                   </Text>
                 </View>
               </View>
@@ -664,16 +666,10 @@ const MachineDetails = ({
               </Text>
               {!!matchplayUrl && (
                 <Pressable
-                  style={{
-                    marginTop: 5,
-                    height: 40,
-                    flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: theme.indigo4,
-                    borderRadius: 20,
-                    paddingHorizontal: 15,
-                  }}
+                  style={({ pressed }) => [
+                    s.matchplayButton,
+                    pressed ? s.matchplayPressed : s.shadow,
+                  ]}
                   onPress={() => WebBrowser.openBrowserAsync(matchplayUrl)}
                 >
                   <Image
@@ -692,7 +688,7 @@ const MachineDetails = ({
               )}
             </View>
           )}
-          <View style={[s.containerStyle, { marginTop: 20 }]}>
+          <View style={[s.containerStyle]}>
             <View
               style={[
                 s.locationNameContainer,
@@ -994,6 +990,7 @@ const getStyles = (theme) =>
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
+      marginBottom: 20,
     },
     noneYet: {
       textAlign: "center",
@@ -1106,14 +1103,6 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       overflow: "visible",
-      shadowColor: theme.theme == "dark" ? theme.purple : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 2,
-        height: 2,
-      },
-      shadowOpacity: theme.theme == "dark" ? 0.4 : 0.6,
-      shadowRadius: 3.84,
-      elevation: 5,
     },
     nullIC: {
       backgroundColor: "#cfc4c4",
@@ -1214,6 +1203,30 @@ const getStyles = (theme) =>
       fontSize: 24,
       marginRight: 8,
       color: theme.theme === "dark" ? theme.pink1 : theme.pink3,
+    },
+    matchplayButton: {
+      marginTop: 5,
+      height: 40,
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 20,
+      paddingHorizontal: 15,
+      overflow: "visible",
+      backgroundColor: theme.indigo4,
+    },
+    matchplayPressed: {
+      backgroundColor: theme.pink2,
+    },
+    shadow: {
+      shadowColor: theme.theme == "dark" ? theme.purple : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 2,
+        height: 2,
+      },
+      shadowOpacity: theme.theme == "dark" ? 0.4 : 0.6,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
   });
 

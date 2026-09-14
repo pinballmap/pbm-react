@@ -69,8 +69,7 @@ const getStyles = (theme) =>
       shadowOpacity: 0,
       elevation: 0,
       backgroundColor: theme.theme == "dark" ? "#5b5391" : "#cccceb",
-      borderColor: theme.theme == "dark" ? "#5b5391" : "#86869c",
-      borderWidth: 0,
+      borderColor: theme.theme == "dark" ? "#5b5391" : "#cccceb",
     },
   });
 
