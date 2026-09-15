@@ -536,7 +536,6 @@ const MachineDetails = ({
                 s.containerStyle,
                 {
                   padding: 10,
-                  marginBottom: 15,
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-around",
@@ -801,7 +800,21 @@ const MachineDetails = ({
             )}
           </View>
           <View style={s.containerStyle}>
-            <View style={s.locationNameContainer}>
+            <View
+              style={[
+                s.locationNameContainer,
+                {
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="comment-text"
+                style={[s.lifeListIcon, { color: "#6cbffe" }]}
+              />
               <Text style={[s.sectionTitle, s.extraBold]}>
                 Machine Comments
               </Text>
@@ -839,7 +852,21 @@ const MachineDetails = ({
             )}
           </View>
           <View style={s.containerStyle}>
-            <View style={s.locationNameContainer}>
+            <View
+              style={[
+                s.locationNameContainer,
+                {
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="numeric"
+                style={[s.lifeListIcon, { color: "#eeb152" }]}
+              />
               <Text style={[s.sectionTitle, s.extraBold]}>Your Scores</Text>
             </View>
             {(!loggedIn || highScoreFetched) && (
@@ -991,6 +1018,7 @@ const getStyles = (theme) =>
       alignItems: "center",
       justifyContent: "center",
       marginBottom: 20,
+      marginTop: -5,
     },
     noneYet: {
       textAlign: "center",
@@ -1092,6 +1120,7 @@ const getStyles = (theme) =>
     operatorComments: {
       textAlign: "center",
       color: theme.text2,
+      paddingHorizontal: 10,
     },
     buttonIC: {
       height: 65,

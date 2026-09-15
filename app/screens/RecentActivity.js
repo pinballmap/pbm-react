@@ -300,7 +300,12 @@ const RecentActivity = ({
     }
     const timeAndUser = user_name ? (
       <View
-        style={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          flexWrap: "wrap",
+          rowGap: 4,
+        }}
       >
         <View
           style={{
@@ -526,7 +531,7 @@ const RecentActivity = ({
                       pressed ? s.pressed : s.notPressed,
                     ]}
                   >
-                    <View style={{ width: "15%" }}>
+                    <View style={{ width: 40 }}>
                       {activity.submissionTypeIcon}
                     </View>
                     {getSubmission(activity)}
@@ -620,6 +625,7 @@ const getStyles = (theme) =>
     },
     date: {
       fontSize: 14,
+      lineHeight: 20,
       color: theme.text3,
     },
     username: {
@@ -711,7 +717,8 @@ const getStyles = (theme) =>
       opacity: 1.0,
     },
     textContainer: {
-      width: "85%",
+      flex: 1,
+      paddingRight: 5,
     },
     rankIcon: {
       marginLeft: 5,

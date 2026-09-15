@@ -170,6 +170,7 @@ const LocationActivity = ({
           alignItems: "center",
           flexWrap: "wrap",
           paddingTop: 8,
+          rowGap: 5,
         }}
       >
         <View
@@ -366,7 +367,7 @@ const LocationActivity = ({
                 })
                 .map((activity) => (
                   <View key={activity.id} style={[s.list, s.flexi]}>
-                    <View style={{ width: "15%" }}>{activity.icon}</View>
+                    <View style={{ width: 35 }}>{activity.icon}</View>
                     {getText(activity)}
                   </View>
                 ))
@@ -571,6 +572,7 @@ const getStyles = (theme) =>
     date: {
       paddingTop: 8,
       fontSize: 14,
+      lineHeight: 20,
       color: theme.text3,
     },
     username: {
@@ -614,7 +616,8 @@ const getStyles = (theme) =>
       marginTop: 20,
     },
     textContainer: {
-      width: "85%",
+      flex: 1,
+      paddingRight: 5,
     },
     filterView: {
       backgroundColor: theme.base3,

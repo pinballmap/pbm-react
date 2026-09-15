@@ -248,7 +248,7 @@ const FilterMap = ({
                 />
               </>
             )}
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Manufacturer
             </Text>
             <DropDownButton
@@ -269,7 +269,7 @@ const FilterMap = ({
               }
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Machine type
             </Text>
             <ButtonGroup
@@ -279,7 +279,7 @@ const FilterMap = ({
               selectedIndex={machineTypeFilter === "em" ? 1 : 0}
               buttons={["All", "EM"]}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Machine year
             </Text>
             <View style={s.yearRangeContainer}>
@@ -413,7 +413,7 @@ const FilterMap = ({
               selectedIndex={getIdx(numMachines)}
               buttons={["All", "2+", "5+", "10+", "20+"]}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               All Ages?
             </Text>
             <ButtonGroup
@@ -421,7 +421,7 @@ const FilterMap = ({
               selectedIndex={allAgesFilter ? 1 : 0}
               buttons={["All", "All Ages"]}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Free Play?
             </Text>
             <ButtonGroup
@@ -429,7 +429,7 @@ const FilterMap = ({
               selectedIndex={paymentTypeFilter ? 1 : 0}
               buttons={["Any", "Free Play"]}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Location type
             </Text>
             <DropDownButton
@@ -439,7 +439,7 @@ const FilterMap = ({
               onPress={() => goToFindLocationType()}
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Location has at least 1 Stern Insider Connected machine?
             </Text>
             <ButtonGroup
@@ -447,7 +447,7 @@ const FilterMap = ({
               selectedIndex={locationIcFilter ? 1 : 0}
               buttons={["All", "Has IC"]}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Operator
             </Text>
             <DropDownButton
@@ -455,7 +455,7 @@ const FilterMap = ({
               onPress={() => goToFindOperator()}
               margin={s.dropdownMargin}
             />
-            <Text style={[s.filterTitle, s.bold, s.marginTop20, s.paddingRL10]}>
+            <Text style={[s.filterTitle, s.bold, s.marginTop15, s.paddingRL10]}>
               Saved locations or all
             </Text>
             <ButtonGroup
@@ -530,8 +530,8 @@ const getStyles = (theme) =>
     pink: {
       color: theme.pink1,
     },
-    marginTop20: {
-      marginTop: 20,
+    marginTop15: {
+      marginTop: 15,
     },
     paddingRL10: {
       paddingHorizontal: 10,

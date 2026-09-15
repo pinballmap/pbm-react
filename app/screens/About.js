@@ -376,7 +376,7 @@ const About = ({ navigation, appAlert }) => {
                 WebBrowser.openBrowserAsync("https://kineticist.com/")
               }
             >{`Kineticist`}</Text>
-            , and more!
+            , and more.
           </Text>
         </View>
 
@@ -410,7 +410,7 @@ const About = ({ navigation, appAlert }) => {
           </Text>
           <Text style={s.text}>Elijah St Clair</Text>
           <Text style={[s.text, { marginBottom: 10 }]}>
-            And other great folks (noted on Github)!
+            And other great folks (noted on Github).
           </Text>
         </View>
         <View style={s.category}>
@@ -440,11 +440,14 @@ const About = ({ navigation, appAlert }) => {
                 please rate and review it
               </Text>
             )}
-            {`! And tell your friends about it.`}
+            {`. And tell your friends about it.`}
           </Text>
-          <Text style={s.text}>Thanks to our beta testers!</Text>
+          <Text style={s.text}>Thanks to our beta testers.</Text>
           <Text style={s.text}>
-            And thanks to all our Ko-fi and Patreon supporters!
+            {`And thanks to all our Ko-fi and Patreon supporters`}
+            {Platform.OS === "ios"
+              ? ` (we're not allowed to link to those pages in the iOS app).`
+              : `.`}
           </Text>
           {Platform.OS === "android" ? (
             <Pressable
@@ -493,7 +496,7 @@ const getStyles = (theme) =>
     },
     purpleMachine: {
       alignSelf: "center",
-      marginVertical: 5,
+      marginBottom: 10,
       height: 65,
       width: 50,
     },

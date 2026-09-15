@@ -205,7 +205,6 @@ const getStyles = (theme) =>
       color: theme.text3,
     },
     subtitleMargin: {
-      marginTop: 4,
       marginHorizontal: 0,
       fontSize: 14,
     },
@@ -213,7 +212,7 @@ const getStyles = (theme) =>
       color: theme.text3,
     },
     date: {
-      marginLeft: 8,
+      marginLeft: 6,
     },
     editDelete: {
       textDecorationLine: "underline",

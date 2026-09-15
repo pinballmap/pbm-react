@@ -114,7 +114,7 @@ const Stats = ({ navigation }) => {
       <Screen contentContainerStyle={{ paddingBottom: insets.bottom }}>
         <View style={s.child}>
           <Text style={s.text}>
-            {`Started mapping in 2008. Added "user accounts" in 2017, and since 2018/19 improved the stats we tracked.`}
+            {`The map started mapping in 2008. We added "user accounts" in 2017, and since 2018/19 improved the stats we tracked (in other words, some of the stats below are incomplete, but are better than nothing).`}
           </Text>
           <Text style={s.text}>
             Currently listing{" "}
