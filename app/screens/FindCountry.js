@@ -15,12 +15,13 @@ import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { Text } from "../components";
 import countries from "../utils/countries";
+import { invokeCallback } from "../utils/navigationCallbacks";
 
 const FindCountry = ({ navigation, route }) => {
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
-  const { previous_screen } = route.params;
+  const { onGoBackId } = route.params;
 
   const [selectedCountries, setSelectedCountries] = useState(countries);
   const [query, setQuery] = useState("");
@@ -47,11 +48,8 @@ const FindCountry = ({ navigation, route }) => {
   };
 
   const _selectCountry = (countryName, countryCode) => {
-    navigation.navigate({
-      name: previous_screen,
-      params: { countryName, countryCode },
-      merge: true,
-    });
+    invokeCallback(onGoBackId, { countryName, countryCode });
+    navigation.goBack();
   };
 
   const renderRow = ({ item, index }) => (

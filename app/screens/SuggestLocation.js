@@ -48,7 +48,7 @@ import {
 
 let deviceWidth = Dimensions.get("window").width;
 
-function SuggestLocation({ navigation, route, location, ...props }) {
+function SuggestLocation({ navigation, location, ...props }) {
   const dispatch = useDispatch();
   const autoCompleteRef = useRef();
   const [locationName, setLocationName] = useState("");
@@ -74,15 +74,6 @@ function SuggestLocation({ navigation, route, location, ...props }) {
     Platform.OS === "android"
       ? insets.top - (PixelRatio.getFontScale() - 1) * 10 + 6
       : insets.top - (PixelRatio.getFontScale() - 1) * 10 + 1;
-
-  useEffect(() => {
-    if (route.params?.countryCode) {
-      setCountryCode(route.params?.countryCode);
-    }
-    if (route.params?.countryName) {
-      setCountryName(route.params?.countryName);
-    }
-  }, [route.params?.countryCode, route.params?.countryName]);
 
   const confirmSuggestLocationDetails = () => {
     const locationDetails = {
@@ -153,7 +144,10 @@ function SuggestLocation({ navigation, route, location, ...props }) {
   const goToFindCountry = () => {
     navigation.navigate("FindCountry", {
       type: "search",
-      previous_screen: "SuggestLocation",
+      onGoBackId: registerCallback(({ countryName, countryCode }) => {
+        setCountryName(countryName);
+        setCountryCode(countryCode);
+      }),
     });
   };
 
@@ -892,7 +886,6 @@ SuggestLocation.propTypes = {
   navigation: PropTypes.object,
   location: PropTypes.object,
   removeMachineFromList: PropTypes.func,
-  route: PropTypes.object,
 };
 
 const mapStateToProps = ({ location, locations, operators, user }) => ({
