@@ -367,7 +367,7 @@ const LocationActivity = ({
                 })
                 .map((activity) => (
                   <View key={activity.id} style={[s.list, s.flexi]}>
-                    <View style={{ width: 35 }}>{activity.icon}</View>
+                    <View style={{ width: 37 }}>{activity.icon}</View>
                     {getText(activity)}
                   </View>
                 ))
