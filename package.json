@@ -79,5 +79,136 @@
   "lint-staged": {
     "*.js": "eslint --fix",
     "*.{js,css,md}": "prettier --write"
+  },
+  "overrides": {
+    "@expo/config": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@expo/config-plugins": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@expo/inline-modules": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@expo/local-build-cache-provider": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@expo/plist": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@expo/prebuild-config": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/entypo": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/fontawesome5": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/fontawesome6": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/ionicons": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/material-design-icons": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@react-native-vector-icons/material-icons": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@rnmapbox/maps": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@sentry/react-native": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "@xmldom/xmldom": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "babel-preset-expo": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-application": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-asset": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-clipboard": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-constants": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-dev-client": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-dev-launcher": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-dev-menu": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-dev-menu-interface": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-device": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-file-system": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-font": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-image": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-image-loader": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-image-manipulator": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-image-picker": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-location": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-manifests": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-screen-orientation": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-splash-screen": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-status-bar": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-updates": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-updates-interface": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "expo-web-browser": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "plist": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "simple-plist": {
+      "@xmldom/xmldom": "0.9.12"
+    },
+    "xcode": {
+      "@xmldom/xmldom": "0.9.12"
+    }
   }
 }
