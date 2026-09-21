@@ -367,14 +367,12 @@ function SuggestLocation({ navigation, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.italic, s.preview]}>
-                        None selected. Please add if known, and to speed up
-                        approval.
+                        {`None selected. We'll assume this means NO. Please add if known, and to speed up approval.`}
                       </Text>
                     )}
                     {allAges === ALL_AGES_NO && (
                       <Text style={[s.preview, s.noValueNote, s.italic]}>
-                        Note: this selection is used for data management, but
-                        will not be displayed in the location details.
+                        {`Note: this selection is used for data management, but will not be displayed in the location details.`}
                       </Text>
                     )}
                   </View>
@@ -390,14 +388,12 @@ function SuggestLocation({ navigation, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.italic, s.preview]}>
-                        None selected. Please add if known, and to speed up
-                        approval.
+                        {`None selected. We'll assume this means NO. Please add if known, and to speed up approval.`}
                       </Text>
                     )}
                     {paymentType === PAYMENT_TYPE_NO && (
                       <Text style={[s.preview, s.noValueNote, s.italic]}>
-                        Note: this selection is used for data management, but
-                        will not be displayed in the location details.
+                        {`Note: this selection is used for data management, but will not be displayed in the location details.`}
                       </Text>
                     )}
                   </View>
@@ -412,8 +408,7 @@ function SuggestLocation({ navigation, location, ...props }) {
                       </Text>
                     ) : (
                       <Text style={[s.italic, s.preview]}>
-                        None selected. Please add if known, and to speed up
-                        approval.
+                        {`None selected. Please add if known, and to speed up approval.`}
                       </Text>
                     )}
                   </View>
