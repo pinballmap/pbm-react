@@ -620,7 +620,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "edit details" button and then the pencil edit icon. Choose your operator business from the list. Then save.`}</Text>
+          >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "Edit location details" link below the address. Choose your operator business from the list. Then save.`}</Text>
         </View>
         <View style={s.question}>
           <Text
