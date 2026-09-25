@@ -207,7 +207,7 @@ const FilterRecentActivity = ({
               <MaterialCommunityIcons
                 name="numeric"
                 size={32}
-                color="#eeb152"
+                color="#eb9633"
                 style={s.iconStyle}
               />
               <Text

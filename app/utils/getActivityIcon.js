@@ -17,7 +17,7 @@ export default function (type) {
       );
     case "new_msx":
       return (
-        <MaterialCommunityIcons name="numeric" size={28} color="#eeb152" />
+        <MaterialCommunityIcons name="numeric" size={28} color="#eb9633" />
       );
     case "confirm_location":
       return (

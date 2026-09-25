@@ -60,7 +60,7 @@ export const fetchLocationMetadata = (id) => (dispatch) => {
 
 export const fetchLmx = (lmxId, userId) => (dispatch) => {
   return getData(
-    `/location_machine_xrefs/${lmxId}.json?user_id=${userId || 0}`,
+    `/location_machine_xrefs/${lmxId}.json?user_id=${userId || 0}&all_scores=1`,
   ).then((data) =>
     dispatch({ type: FETCHING_LMX_SUCCESS, lmx: data.location_machine }),
   );

@@ -17,18 +17,43 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, WarningButton, PbmButton } from ".";
+import UserBadges from "./UserBadges";
 import { deleteScore, editScore } from "../actions";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { formatDate } from "../utils/dateUtils";
 
-const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
+const MachineScore = ({
+  scoreObj,
+  user,
+  location: loc,
+  rank,
+  showUser = false,
+  canEdit = false,
+  isLast = false,
+  onScoreMutated,
+}) => {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const s = getStyles(theme);
   const [loading, setIsLoading] = useState(false);
   const insets = useSafeAreaInsets();
-  const { score: initialScore, created_at, updated_at, id: scoreId } = scoreObj;
+  const {
+    score: initialScore,
+    created_at,
+    updated_at,
+    id: scoreId,
+    username,
+    user_id: scoreUserId,
+    user_deleted,
+    admin_title,
+    contributor_rank,
+    flag,
+    operator_id: scoreOperatorId,
+  } = scoreObj;
+  const locationOperatorId = loc.location.operator_id;
+  const isOperator =
+    !!scoreOperatorId && scoreOperatorId === locationOperatorId;
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [score, setScore] = useState(initialScore);
@@ -126,40 +151,66 @@ const MachineScore = ({ scoreObj, user, onScoreMutated }) => {
           </KeyboardAwareScrollView>
         </View>
       </Modal>
-      <View style={s.listContainerStyle}>
-        <Text style={[s.scoreText, s.semiBold]}>
-          {formatNumWithCommas(initialScore)}
-        </Text>
-        <View
-          style={[
-            s.subtitleStyle,
-            s.semiBold,
-            s.subtitleMargin,
-            { flexDirection: "row", alignItems: "center" },
-          ]}
-        >
-          <Text style={[s.italic, s.text3, s.date]}>
-            {formatDate(updated_at)}
+      <View
+        style={[
+          s.listContainerStyle,
+          s.row,
+          isLast && { borderBottomWidth: 0 },
+        ]}
+      >
+        {rank != null && (
+          <Text style={[s.rankText, s.bold]} maxFontSizeMultiplier={1.5}>
+            {`#${rank}`}
           </Text>
-          {created_at !== updated_at && (
-            <Text style={{ color: theme.text3 }}>{`*`}</Text>
-          )}
-          {!!user?.id && (
-            <>
-              <Text
-                style={[s.editDelete, { marginHorizontal: 8 }]}
-                onPress={() => setEditModalVisible(true)}
-              >
-                edit
-              </Text>
-              <Text
-                style={s.editDelete}
-                onPress={() => setDeleteModalVisible(true)}
-              >
-                delete
-              </Text>
-            </>
-          )}
+        )}
+        <View style={{ flex: 1 }}>
+          <Text style={[s.scoreText, s.semiBold]}>
+            {formatNumWithCommas(initialScore)}
+          </Text>
+          <View
+            style={[
+              s.subtitleStyle,
+              s.semiBold,
+              s.subtitleMargin,
+              { flexDirection: "row", alignItems: "center", flexWrap: "wrap" },
+            ]}
+          >
+            {showUser && (
+              <View style={s.userBadges}>
+                <UserBadges
+                  username={username}
+                  userId={scoreUserId}
+                  userDeleted={user_deleted}
+                  adminTitle={admin_title}
+                  contributorRank={contributor_rank}
+                  flag={flag}
+                  isOperator={isOperator}
+                />
+              </View>
+            )}
+            <Text style={[s.italic, s.text3, s.date]}>
+              {formatDate(updated_at)}
+            </Text>
+            {created_at !== updated_at && (
+              <Text style={{ color: theme.text3 }}>{`*`}</Text>
+            )}
+            {canEdit && !!user?.id && (
+              <>
+                <Text
+                  style={[s.editDelete, { marginHorizontal: 8 }]}
+                  onPress={() => setEditModalVisible(true)}
+                >
+                  edit
+                </Text>
+                <Text
+                  style={s.editDelete}
+                  onPress={() => setDeleteModalVisible(true)}
+                >
+                  delete
+                </Text>
+              </>
+            )}
+          </View>
         </View>
       </View>
     </>
@@ -188,15 +239,28 @@ const getStyles = (theme) =>
     listContainerStyle: {
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
       marginHorizontal: 15,
-      paddingTop: 5,
-      paddingBottom: 5,
+      paddingVertical: 8,
       borderBottomWidth: 1,
       borderBottomColor: theme.indigo4,
+    },
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    rankText: {
+      color: theme.theme == "dark" ? theme.pink1 : theme.purple,
+      fontSize: 16,
+      minWidth: 36,
+      marginLeft: 5,
+      marginRight: 5,
+    },
+    userBadges: {
+      marginLeft: 6,
+      marginRight: 2,
     },
     scoreText: {
       color: theme.text2,
       fontSize: 18,
-      marginTop: 5,
       marginHorizontal: 5,
     },
     subtitleStyle: {
@@ -243,7 +307,7 @@ const getStyles = (theme) =>
     },
   });
 
-const mapStateToProps = ({ user }) => {
-  return { user };
+const mapStateToProps = ({ user, location }) => {
+  return { user, location };
 };
 export default connect(mapStateToProps)(MachineScore);

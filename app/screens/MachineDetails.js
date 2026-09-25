@@ -246,10 +246,9 @@ const MachineDetails = ({
     curLmx.machine_conditions.length > 0
       ? curLmx.machine_conditions
       : undefined;
-  const scoreArray = curLmx?.machine_score_xrefs || [];
-  const scores = scoreArray
-    .sort((a, b) => (a.score > b.score ? -1 : b.score > a.score ? 1 : 0))
-    .slice(0, 20);
+  // Both lists come back from the API sorted by score, capped at 10
+  const userScores = curLmx.machine_score_xrefs_user || [];
+  const allScores = curLmx.machine_score_xrefs_all || [];
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
@@ -819,13 +818,9 @@ const MachineDetails = ({
                 Machine Comments
               </Text>
             </View>
-            {mostRecentComments ? (
-              mostRecentComments.map((commentObj) => (
-                <MachineComment commentObj={commentObj} key={commentObj.id} />
-              ))
-            ) : (
-              <Text style={[s.noneYet, s.regular]}>
-                No machine comments yet
+            {mostRecentComments && (
+              <Text style={[s.currentConditions, s.italic]}>
+                Machine comments may not reflect current conditions.
               </Text>
             )}
             <PbmButton
@@ -836,17 +831,30 @@ const MachineDetails = ({
                   : () => navigation.navigate("Login")
               }
             />
+            {mostRecentComments ? (
+              mostRecentComments.map((commentObj, index) => (
+                <MachineComment
+                  commentObj={commentObj}
+                  key={commentObj.id}
+                  isLast={index === mostRecentComments.length - 1}
+                />
+              ))
+            ) : (
+              <Text style={[s.noneYet, s.regular]}>
+                No machine comments yet
+              </Text>
+            )}
             {!!location.operator_id && operatorHasEmail && (
               <View style={[s.operatorEmail, s.operatorHasEmail]}>
-                <Text style={[s.operatorComments, s.semiBold]}>
+                <Text style={[s.operatorComments, s.bold]}>
                   This operator receives machine comments!
                 </Text>
               </View>
             )}
             {!!location.operator_id && !operatorHasEmail && (
               <View style={[s.operatorEmail, s.operatorNotEmail]}>
-                <Text style={[s.operatorComments, s.semiBold]}>
-                  This operator does not receive machine comments
+                <Text style={[s.operatorComments, s.bold]}>
+                  This operator does NOT receive machine comments
                 </Text>
               </View>
             )}
@@ -865,9 +873,9 @@ const MachineDetails = ({
             >
               <MaterialCommunityIcons
                 name="numeric"
-                style={[s.lifeListIcon, { color: "#eeb152" }]}
+                style={[s.lifeListIcon, { color: "#eb9633" }]}
               />
-              <Text style={[s.sectionTitle, s.extraBold]}>Your Scores</Text>
+              <Text style={[s.sectionTitle, s.extraBold]}>High Scores</Text>
             </View>
             {(!loggedIn || highScoreFetched) && (
               <View>
@@ -898,31 +906,55 @@ const MachineDetails = ({
                 )}
               </View>
             )}
-            {scores.length > 0 && (
-              <>
-                <Text style={[s.copyScores, s.italic]}>
-                  Your high scores on this copy
-                </Text>
-                {scores.map((scoreObj) => (
-                  <MachineScore
-                    scoreObj={scoreObj}
-                    key={scoreObj.id}
-                    onScoreMutated={() => {
-                      refreshHighScore();
-                      refreshLifeListStatus();
-                    }}
-                  />
-                ))}
-              </>
-            )}
             <PbmButton
-              title={"Add Your Score"}
+              title={"Add a High Score"}
+              margin={{ marginHorizontal: 20, marginTop: 15, marginBottom: 25 }}
               onPress={
                 loggedIn
                   ? () => setShowAddScoreModal(true)
                   : () => navigation.navigate("Login")
               }
             />
+            {userScores.length > 0 && (
+              <View style={s.scoreList}>
+                <Text style={[s.copyScores, s.bold, { color: "#eb9633" }]}>
+                  Your high scores on this copy
+                </Text>
+                {userScores.map((scoreObj, index) => (
+                  <MachineScore
+                    scoreObj={scoreObj}
+                    key={scoreObj.id}
+                    rank={index + 1}
+                    isLast={index === userScores.length - 1}
+                    canEdit
+                    onScoreMutated={() => {
+                      refreshHighScore();
+                      refreshLifeListStatus();
+                    }}
+                  />
+                ))}
+              </View>
+            )}
+            {!curLmx.machine_score_xrefs_all_only_user && (
+              <View style={s.scoreList}>
+                <Text style={[s.copyScores, s.bold, { color: "#dd7a6d" }]}>
+                  {`Everyone's scores on this copy`}
+                </Text>
+                {allScores.length > 0 ? (
+                  allScores.map((scoreObj, index) => (
+                    <MachineScore
+                      scoreObj={scoreObj}
+                      key={scoreObj.id}
+                      rank={index + 1}
+                      isLast={index === allScores.length - 1}
+                      showUser
+                    />
+                  ))
+                ) : (
+                  <Text style={[s.noneYet, s.regular]}>No scores yet</Text>
+                )}
+              </View>
+            )}
           </View>
           <WarningButton
             title={"Remove Machine"}
@@ -1053,13 +1085,16 @@ const getStyles = (theme) =>
     userHighScore: {
       textAlign: "center",
       fontSize: 24,
-      paddingBottom: 15,
       color: theme.theme == "dark" ? theme.pink1 : theme.purple,
     },
     copyScores: {
       color: theme.text3,
       flex: 1,
       textAlign: "center",
+      textTransform: "uppercase",
+    },
+    scoreList: {
+      marginBottom: 15,
     },
     modalTitle: {
       textAlign: "center",
@@ -1110,6 +1145,7 @@ const getStyles = (theme) =>
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
       paddingVertical: 10,
+      marginTop: 10,
     },
     operatorHasEmail: {
       backgroundColor: theme.base4,
@@ -1146,8 +1182,8 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     removeButtonMargins: {
-      marginHorizontal: 40,
-      marginTop: 15,
+      marginHorizontal: 20,
+      marginTop: 0,
       marginBottom: 40,
     },
     operatorContactContainer: {
@@ -1256,6 +1292,12 @@ const getStyles = (theme) =>
       shadowOpacity: theme.theme == "dark" ? 0.4 : 0.6,
       shadowRadius: 3.84,
       elevation: 5,
+    },
+    currentConditions: {
+      textAlign: "center",
+      color: theme.red2,
+      paddingBottom: 0,
+      paddingHorizontal: 10,
     },
   });
 
