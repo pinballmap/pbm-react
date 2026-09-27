@@ -511,13 +511,17 @@ const MachineDetails = ({
             <Text style={[s.locationName, s.semiBold]}>{location.name}</Text>
           </View>
           <View style={s.addedContainer}>
-            <Text
-              style={[s.addedText, s.italic]}
-            >{`Added: ${formatDate(curLmx.created_at)}`}</Text>
+            <Text style={[s.addedText, s.italic]}>
+              <Text style={{ color: theme.timestamp }}>{`Added: `}</Text>
+              {`${formatDate(curLmx.created_at)}`}
+            </Text>
             {curLmx.created_at != curLmx.updated_at ? (
-              <Text
-                style={[s.addedText, s.italic]}
-              >{`Last updated: ${formatDate(curLmx.updated_at)}`}</Text>
+              <Text style={[s.addedText, s.italic]}>
+                <Text
+                  style={{ color: theme.timestamp }}
+                >{`Last updated: `}</Text>
+                {`${formatDate(curLmx.updated_at)}`}
+              </Text>
             ) : (
               ""
             )}
@@ -689,7 +693,7 @@ const MachineDetails = ({
           <View style={[s.containerStyle]}>
             <View
               style={[
-                s.locationNameContainer,
+                s.noVertPadding,
                 {
                   display: "flex",
                   flexDirection: "row",
@@ -801,7 +805,7 @@ const MachineDetails = ({
           <View style={s.containerStyle}>
             <View
               style={[
-                s.locationNameContainer,
+                s.noVertPadding,
                 {
                   display: "flex",
                   flexDirection: "row",
@@ -824,6 +828,7 @@ const MachineDetails = ({
               </Text>
             )}
             <PbmButton
+              margin={{ marginHorizontal: 20, marginTop: 10, marginBottom: 15 }}
               title={"Add a New Comment"}
               onPress={
                 loggedIn
@@ -831,19 +836,21 @@ const MachineDetails = ({
                   : () => navigation.navigate("Login")
               }
             />
-            {mostRecentComments ? (
-              mostRecentComments.map((commentObj, index) => (
-                <MachineComment
-                  commentObj={commentObj}
-                  key={commentObj.id}
-                  isLast={index === mostRecentComments.length - 1}
-                />
-              ))
-            ) : (
-              <Text style={[s.noneYet, s.regular]}>
-                No machine comments yet
-              </Text>
-            )}
+            <View style={{ marginBottom: 10 }}>
+              {mostRecentComments ? (
+                mostRecentComments.map((commentObj, index) => (
+                  <MachineComment
+                    commentObj={commentObj}
+                    key={commentObj.id}
+                    isLast={index === mostRecentComments.length - 1}
+                  />
+                ))
+              ) : (
+                <Text style={[s.noneYet, s.regular]}>
+                  No machine comments yet
+                </Text>
+              )}
+            </View>
             {!!location.operator_id && operatorHasEmail && (
               <View style={[s.operatorEmail, s.operatorHasEmail]}>
                 <Text style={[s.operatorComments, s.bold]}>
@@ -862,7 +869,7 @@ const MachineDetails = ({
           <View style={s.containerStyle}>
             <View
               style={[
-                s.locationNameContainer,
+                s.noVertPadding,
                 {
                   display: "flex",
                   flexDirection: "row",
@@ -1036,7 +1043,7 @@ const getStyles = (theme) =>
       textAlign: "center",
       fontSize: 15,
       lineHeight: 20,
-      color: theme.text3,
+      color: "#9582b5",
     },
     externalLink: {
       fontSize: 15,
@@ -1094,7 +1101,7 @@ const getStyles = (theme) =>
       textTransform: "uppercase",
     },
     scoreList: {
-      marginBottom: 15,
+      marginBottom: 10,
     },
     modalTitle: {
       textAlign: "center",
@@ -1131,7 +1138,7 @@ const getStyles = (theme) =>
       borderWidth: 0,
       backgroundColor: theme.theme == "dark" ? theme.base2 : theme.base3,
     },
-    locationNameContainer: {
+    noVertPadding: {
       paddingVertical: 0,
     },
     sectionTitle: {
@@ -1145,7 +1152,6 @@ const getStyles = (theme) =>
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15,
       paddingVertical: 10,
-      marginTop: 10,
     },
     operatorHasEmail: {
       backgroundColor: theme.base4,
@@ -1296,7 +1302,7 @@ const getStyles = (theme) =>
     currentConditions: {
       textAlign: "center",
       color: theme.red2,
-      paddingBottom: 0,
+      paddingBottom: 5,
       paddingHorizontal: 10,
     },
   });

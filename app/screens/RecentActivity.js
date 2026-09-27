@@ -626,7 +626,7 @@ const getStyles = (theme) =>
     date: {
       fontSize: 14,
       lineHeight: 20,
-      color: theme.text3,
+      color: theme.timestamp,
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,

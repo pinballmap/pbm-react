@@ -22,6 +22,7 @@ export const dark = {
   purpleLight: "#E7D2EE",
   wrench: "#ffd700",
   shield: "#fc8e88",
+  timestamp: "#988cac",
   dark: true,
   colors: {
     primary: "#d9d9e0",
@@ -68,6 +69,7 @@ export const standard = {
   purpleLight: "#66017b",
   wrench: "#c64800",
   shield: "#7a2121",
+  timestamp: "#988cac",
   dark: false,
   colors: {
     primary: "#47475f",

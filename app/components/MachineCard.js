@@ -144,7 +144,7 @@ const getStyles = (theme) =>
     },
     updated: {
       fontSize: 14,
-      color: theme.text3,
+      color: theme.timestamp,
       flex: 1,
     },
     machineListContainer: {
@@ -157,7 +157,7 @@ const getStyles = (theme) =>
     metaIcon: {
       paddingTop: 0,
       fontSize: 18,
-      color: theme.indigo4,
+      color: "#9582b5",
       marginRight: 5,
       opacity: 0.6,
     },

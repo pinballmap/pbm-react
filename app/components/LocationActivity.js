@@ -233,12 +233,14 @@ const LocationActivity = ({
             />
           )}
         </View>
-        <Text style={[s.date, s.italic, { paddingTop: 0, color: theme.text3 }]}>
+        <Text
+          style={[s.date, s.italic, { paddingTop: 0, color: theme.timestamp }]}
+        >
           {time}
         </Text>
       </View>
     ) : (
-      <Text style={[s.date, s.italic, { color: theme.text3 }]}>{time}</Text>
+      <Text style={[s.date, s.italic, { color: theme.timestamp }]}>{time}</Text>
     );
     switch (submission_type) {
       case "new_lmx": {
@@ -278,7 +280,7 @@ const LocationActivity = ({
           return (
             <View style={s.textContainer}>
               <Text style={[s.pbmText, s.regular]}>{submission}</Text>
-              <Text style={[s.date, s.italic, { color: theme.text3 }]}>
+              <Text style={[s.date, s.italic, { color: theme.timestamp }]}>
                 {time}
               </Text>
             </View>
@@ -573,7 +575,6 @@ const getStyles = (theme) =>
       paddingTop: 8,
       fontSize: 14,
       lineHeight: 20,
-      color: theme.text3,
     },
     username: {
       color: theme.theme == "dark" ? theme.purpleLight : theme.pink1,

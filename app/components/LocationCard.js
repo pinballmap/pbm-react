@@ -299,7 +299,7 @@ const getStyles = (theme) =>
       color: theme.text2,
     },
     address: {
-      color: theme.text3,
+      color: theme.timestamp,
       fontSize: 15,
       flex: 1,
     },

@@ -157,12 +157,10 @@ const MachineComment = ({
             contributorRank={contributor_rank}
             flag={flag}
           />
-          <Text style={[s.text3, s.italic, s.date]}>
+          <Text style={[s.timestamp, s.italic, s.date]}>
             {formatDate(updated_at)}
           </Text>
-          {created_at !== updated_at && (
-            <Text style={{ color: theme.text3 }}>{`*`}</Text>
-          )}
+          {created_at !== updated_at && <Text style={s.timestamp}>{`*`}</Text>}
           {user?.id && user.id === commentUserId && (
             <>
               <Text
@@ -254,6 +252,10 @@ const getStyles = (theme) =>
     },
     text3: {
       color: theme.text3,
+      fontSize: 14,
+    },
+    timestamp: {
+      color: theme.timestamp,
       fontSize: 14,
     },
     editDelete: {

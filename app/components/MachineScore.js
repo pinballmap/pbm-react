@@ -188,11 +188,11 @@ const MachineScore = ({
                 />
               </View>
             )}
-            <Text style={[s.italic, s.text3, s.date]}>
+            <Text style={[s.italic, s.timestamp, s.date]}>
               {formatDate(updated_at)}
             </Text>
             {created_at !== updated_at && (
-              <Text style={{ color: theme.text3 }}>{`*`}</Text>
+              <Text style={s.timestamp}>{`*`}</Text>
             )}
             {canEdit && !!user?.id && (
               <>
@@ -272,8 +272,9 @@ const getStyles = (theme) =>
       marginHorizontal: 0,
       fontSize: 14,
     },
-    text3: {
-      color: theme.text3,
+    timestamp: {
+      color: theme.timestamp,
+      fontSize: 14,
     },
     date: {
       marginLeft: 6,

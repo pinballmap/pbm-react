@@ -121,9 +121,6 @@ function BottomTabNavigator() {
           backgroundColor: colors.tabBar,
         },
         tabBarLabelPosition: "below-icon",
-        tabBarIconStyle: {
-          marginBottom: -2,
-        },
       }}
     >
       <Tab.Screen
@@ -142,6 +139,7 @@ function BottomTabNavigator() {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: "Nunito",
                   fontWeight: focused ? "700" : "600",
+                  fontSize: 13,
                 },
               ]}
             >
@@ -172,6 +170,7 @@ function BottomTabNavigator() {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: "Nunito",
                   fontWeight: focused ? "700" : "600",
+                  fontSize: 13,
                 },
               ]}
             >
@@ -202,6 +201,7 @@ function BottomTabNavigator() {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: "Nunito",
                   fontWeight: focused ? "700" : "600",
+                  fontSize: 13,
                 },
               ]}
             >
@@ -232,6 +232,7 @@ function BottomTabNavigator() {
                   color: focused ? colors.activeTab : colors.inactiveTab,
                   fontFamily: "Nunito",
                   fontWeight: focused ? "700" : "600",
+                  fontSize: 13,
                 },
               ]}
             >
@@ -268,6 +269,7 @@ function BottomTabNavigator() {
                   color: colors.inactiveTab,
                   fontFamily: "Nunito",
                   fontWeight: "600",
+                  fontSize: 13,
                 },
               ]}
             >
