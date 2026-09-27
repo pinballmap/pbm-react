@@ -108,7 +108,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
-            {`When you're on the map screen, click the `}
+            {`When you're on the map screen, press the `}
             <Entypo
               name="sound-mix"
               size={16}
@@ -136,7 +136,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`The Location List lists the locations currently loaded on the map. If you pan/zoom the map and then click refresh, it will list different things.`}</Text>
+          >{`The Location List lists the locations currently loaded on the map. If you pan/zoom the map and then press "refresh map area", it will list different things.`}</Text>
         </View>
         <View style={s.question}>
           <Text
@@ -301,7 +301,7 @@ const FAQ = ({ navigation, user, route }) => {
             >
               Matchplay Events website
             </Text>
-            {`. You can upload your high quality photos by logging into Matchplay, looking up the machine, then clicking the "Upload image" button. The photos you upload will not immediately appear in this app.`}
+            {`. You can upload your high quality photos by logging into Matchplay, looking up the machine, then pressing the "Upload image" button. The photos you upload will not immediately appear in this app.`}
           </Text>
           <Text style={s.text}>
             <Text style={s.bold}>
@@ -326,7 +326,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`First, log in. Then lookup the location and click the + (plus) icon. Then select a machine and add it.`}</Text>
+          >{`First, log in. Then lookup the location and press the + (plus) icon. Then select a machine and add it.`}</Text>
         </View>
         <View style={s.question}>
           <Text
@@ -336,7 +336,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`First, log in. Click on the machine name, and then look for the "remove" button or the trash can icon.`}</Text>
+          >{`First, log in. Press on the machine name, and then look for the "remove" button or the trash can icon. Or, instead of pressing the machine name, you can drag it left and press the trash can icon.`}</Text>
         </View>
         <View style={s.question}>
           <Text
@@ -620,7 +620,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, click the "Edit location details" link below the address. Choose your operator business from the list. Then save.`}</Text>
+          >{`If you are in our system as an operator (if you're not, please see the question above), do this: log in with your user account, lookup the location, press the "Edit location details" link below the address. Choose your operator business from the list. Then save.`}</Text>
         </View>
         <View style={s.question}>
           <Text
@@ -763,7 +763,7 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
-            {`Yes. Click the machine and below your comment you'll see "edit" and "delete" buttons.`}
+            {`Yes. On the machine details screen you'll see "edit" and "delete" buttons below your comment.`}
           </Text>
           <Text style={s.text}>{`You can do the same for scores, too.`}</Text>
         </View>
@@ -871,7 +871,7 @@ const FAQ = ({ navigation, user, route }) => {
             >
               which is used to improve their data, and not for ads
             </Text>
-            {`) to be disabled by default, you can check and make sure it's off by clicking the (i) icon on the map.`}
+            {`) to be disabled by default, you can check and make sure it's off by pressing the (i) icon on the map.`}
           </Text>
         </View>
       </Screen>
