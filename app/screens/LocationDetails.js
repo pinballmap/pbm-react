@@ -428,8 +428,15 @@ const LocationDetails = (props) => {
 
     // component unmount
     return () => {
-      if (!!route.params["refreshMap"] && !mapPressedRef.current) {
-        dispatch(updateMap(locationRef.current.lat, locationRef.current.lon));
+      // Location may have failed to load (e.g. deep link to a deleted location)
+      const { lat, lon } = locationRef.current ?? {};
+      if (
+        !!route.params["refreshMap"] &&
+        !mapPressedRef.current &&
+        lat &&
+        lon
+      ) {
+        dispatch(updateMap(lat, lon));
       }
     };
   }, []);

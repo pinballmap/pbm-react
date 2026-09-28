@@ -67,7 +67,11 @@ export const fetchLmx = (lmxId, userId) => (dispatch) => {
 };
 
 export const updateMap = (lat, lon) => async (dispatch) => {
-  const bounds = coordsToBounds({ lat: parseFloat(lat), lon: parseFloat(lon) });
+  const parsedLat = parseFloat(lat);
+  const parsedLon = parseFloat(lon);
+  // NaN bounds leave the Map stuck on its loading spinner
+  if (!Number.isFinite(parsedLat) || !Number.isFinite(parsedLon)) return;
+  const bounds = coordsToBounds({ lat: parsedLat, lon: parsedLon });
   dispatch(triggerUpdateBounds(bounds));
 };
 
