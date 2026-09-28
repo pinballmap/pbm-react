@@ -33,6 +33,7 @@ import ReadMore from "./ReadMore";
 import CustomIcon from "./CustomIcon";
 import Toast, { useToast } from "./Toast";
 import ScrollToTop from "./ScrollToTop";
+import Pagination from "./Pagination";
 
 export {
   LocationCard,
@@ -71,4 +72,5 @@ export {
   Toast,
   useToast,
   ScrollToTop,
+  Pagination,
 };

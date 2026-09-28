@@ -1,13 +1,14 @@
 import React, { useContext, useState, useRef, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { FlatList, Linking, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Linking, StyleSheet, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
   ActivityIndicator,
   ButtonGroup,
   ConfirmationModal,
   LocationCard,
+  Pagination,
   ScrollToTop,
   Text,
 } from "../components";
@@ -17,7 +18,6 @@ import {
   getListLocations,
 } from "../actions/locations_actions";
 import { fetchLifeListMachineIds } from "../actions/user_actions";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -155,6 +155,7 @@ const LocationList = ({
               onPress={updateIndex}
               selectedIndex={filterIdx}
               buttons={["Near", "A-Z", "# Pins", "Date"]}
+              containerStyle={{ marginBottom: 10 }}
             />
           }
           contentContainerStyle={{
@@ -205,51 +206,12 @@ const LocationList = ({
           keyExtractor={(item) => `list-item-${item.id}`}
           ListFooterComponent={
             showPagination ? (
-              <View style={s.paginationContainer}>
-                <Pressable
-                  onPress={() => goToPage(page - 1)}
-                  disabled={page === 1}
-                  style={[s.pageButton, page === 1 && s.pageButtonInactive]}
-                >
-                  <MaterialCommunityIcons
-                    name="chevron-left"
-                    size={22}
-                    color={page === 1 ? theme.text3 : theme.text2}
-                  />
-                  <Text
-                    style={[
-                      s.pageButtonText,
-                      s.semiBold,
-                      page === 1 && s.pageButtonTextInactive,
-                    ]}
-                  >
-                    Prev
-                  </Text>
-                </Pressable>
-                <Text style={[s.pageIndicator, s.regular]}>
-                  {page} / {listPagy.pages}
-                </Text>
-                <Pressable
-                  onPress={() => goToPage(page + 1)}
-                  disabled={!listPagy.next}
-                  style={[s.pageButton, !listPagy.next && s.pageButtonInactive]}
-                >
-                  <Text
-                    style={[
-                      s.pageButtonText,
-                      s.semiBold,
-                      !listPagy.next && s.pageButtonTextInactive,
-                    ]}
-                  >
-                    Next
-                  </Text>
-                  <MaterialCommunityIcons
-                    name="chevron-right"
-                    size={22}
-                    color={!listPagy.next ? theme.text3 : theme.text2}
-                  />
-                </Pressable>
-              </View>
+              <Pagination
+                page={page}
+                pages={listPagy.pages}
+                hasNext={!!listPagy.next}
+                onPageChange={goToPage}
+              />
             ) : null
           }
         />
@@ -265,10 +227,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "400",
     },
-    semiBold: {
-      fontFamily: "Nunito",
-      fontWeight: "600",
-    },
     confirmText: {
       textAlign: "center",
       fontSize: 16,
@@ -282,48 +240,6 @@ const getStyles = (theme) =>
     link: {
       textDecorationLine: "underline",
       color: theme.blue4,
-    },
-    paginationContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingVertical: 16,
-      paddingHorizontal: 20,
-      gap: 12,
-    },
-    pageButton: {
-      flexDirection: "row",
-      alignItems: "center",
-      paddingVertical: 8,
-      paddingHorizontal: 14,
-      borderRadius: 20,
-      backgroundColor: theme.white,
-      borderWidth: 1,
-      borderColor: theme.pink2,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      elevation: 3,
-    },
-    pageButtonInactive: {
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base2,
-      shadowOpacity: 0,
-      elevation: 0,
-    },
-    pageButtonText: {
-      color: theme.text2,
-      fontSize: 14,
-    },
-    pageButtonTextInactive: {
-      color: theme.text3,
-    },
-    pageIndicator: {
-      color: theme.text3,
-      fontSize: 14,
-      minWidth: 40,
-      textAlign: "center",
     },
   });
 

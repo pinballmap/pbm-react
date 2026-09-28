@@ -21,6 +21,7 @@ import {
   ActivityIndicator,
   ButtonGroup,
   FilterRecentActivity,
+  Pagination,
   ScrollToTop,
   Text,
 } from "../components";
@@ -481,7 +482,7 @@ const RecentActivity = ({
       ) : null}
       <ScrollView
         ref={scrollViewRef}
-        style={{ paddingTop: 10 }}
+        contentContainerStyle={{ paddingTop: 10 }}
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
@@ -489,6 +490,7 @@ const RecentActivity = ({
           onPress={updateIdx}
           selectedIndex={btnIdx}
           buttons={buttons}
+          containerStyle={{ marginBottom: 10 }}
         />
         {fetchingRecentActivity ? (
           <ActivityIndicator />
@@ -540,52 +542,13 @@ const RecentActivity = ({
               </Pressable>
             ))
         )}
-        {pagy && pagy.pages > 1 && !fetchingRecentActivity && (
-          <View style={s.paginationContainer}>
-            <Pressable
-              onPress={() => goToPage(page - 1)}
-              disabled={page === 1}
-              style={[s.pageButton, page === 1 && s.pageButtonInactive]}
-            >
-              <MaterialCommunityIcons
-                name="chevron-left"
-                size={22}
-                color={page === 1 ? theme.text3 : theme.text2}
-              />
-              <Text
-                style={[
-                  s.pageButtonText,
-                  s.semiBold,
-                  page === 1 && s.pageButtonTextInactive,
-                ]}
-              >
-                Prev
-              </Text>
-            </Pressable>
-            <Text style={[s.pageIndicator, s.regular]}>
-              {page} / {pagy.pages}
-            </Text>
-            <Pressable
-              onPress={() => goToPage(page + 1)}
-              disabled={!pagy.next}
-              style={[s.pageButton, !pagy.next && s.pageButtonInactive]}
-            >
-              <Text
-                style={[
-                  s.pageButtonText,
-                  s.semiBold,
-                  !pagy.next && s.pageButtonTextInactive,
-                ]}
-              >
-                Next
-              </Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                size={22}
-                color={!pagy.next ? theme.text3 : theme.text2}
-              />
-            </Pressable>
-          </View>
+        {pagy && !fetchingRecentActivity && (
+          <Pagination
+            page={page}
+            pages={pagy.pages}
+            hasNext={!!pagy.next}
+            onPageChange={goToPage}
+          />
         )}
       </ScrollView>
       <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
@@ -726,48 +689,6 @@ const getStyles = (theme) =>
     flagIcon: {
       marginLeft: 5,
       borderRadius: 3,
-    },
-    paginationContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingVertical: 16,
-      paddingHorizontal: 20,
-      gap: 12,
-    },
-    pageButton: {
-      flexDirection: "row",
-      alignItems: "center",
-      paddingVertical: 8,
-      paddingHorizontal: 14,
-      borderRadius: 20,
-      backgroundColor: theme.white,
-      borderWidth: 1,
-      borderColor: theme.pink2,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      elevation: 3,
-    },
-    pageButtonInactive: {
-      borderColor: theme.theme == "dark" ? theme.base3 : theme.base2,
-      shadowOpacity: 0,
-      elevation: 0,
-    },
-    pageButtonText: {
-      color: theme.text2,
-      fontSize: 14,
-    },
-    pageButtonTextInactive: {
-      color: theme.text3,
-    },
-    pageIndicator: {
-      color: theme.text3,
-      fontSize: 14,
-      minWidth: 40,
-      textAlign: "center",
     },
   });
 

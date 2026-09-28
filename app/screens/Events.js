@@ -233,22 +233,24 @@ export const Events = ({ query, user }) => {
         )}
       </ConfirmationModal>
       {gettingEvents ? (
-        <ScrollView style={{ paddingTop: 10 }}>
+        <ScrollView contentContainerStyle={{ paddingTop: 10 }}>
           <ButtonGroup
             onPress={updateIdx}
             selectedIndex={selectedIdx}
             buttons={buttons}
+            containerStyle={{ marginBottom: 10 }}
           />
           <View style={s.background}>
             <ActivityIndicator />
           </View>
         </ScrollView>
       ) : error ? (
-        <ScrollView style={{ paddingTop: 10 }}>
+        <ScrollView contentContainerStyle={{ paddingTop: 10 }}>
           <ButtonGroup
             onPress={updateIdx}
             selectedIndex={selectedIdx}
             buttons={buttons}
+            containerStyle={{ marginBottom: 10 }}
           />
           <Text
             style={[

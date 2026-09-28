@@ -115,6 +115,7 @@ export const Saved = ({
                     onPress={selectFavoriteLocationFilterBy}
                     selectedIndex={selectedFavoriteLocationFilter}
                     buttons={["Near", "A-Z", "Added"]}
+                    containerStyle={{ marginBottom: 10 }}
                   />
                 }
                 contentContainerStyle={{
