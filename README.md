@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.25
+
+September 28, 2026
+
+- Show machine scores from other users in the machine details.
+- Fixed a deep link bug.
+- Various little design tweaks.
+
 ### 5.4.24
 
 September 16, 2026
