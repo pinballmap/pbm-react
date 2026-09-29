@@ -469,23 +469,23 @@ const RecentActivity = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      {selectedActivities.length || selectedActivityMachines.length ? (
-        <View style={s.filterView}>
-          <Text style={[s.filter, s.bold]}>Clear filters</Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={24}
-            onPress={() => clearActivityFilter()}
-            style={s.xButton}
-          />
-        </View>
-      ) : null}
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={{ paddingTop: 10 }}
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
+        {selectedActivities.length || selectedActivityMachines.length ? (
+          <View style={s.filterView}>
+            <Text style={[s.filter, s.bold]}>Clear filters</Text>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={24}
+              onPress={() => clearActivityFilter()}
+              style={s.xButton}
+            />
+          </View>
+        ) : null}
         <ButtonGroup
           onPress={updateIdx}
           selectedIndex={btnIdx}
@@ -611,11 +611,12 @@ const getStyles = (theme) =>
     },
     filterView: {
       backgroundColor: theme.base3,
-      marginTop: 10,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
+      marginTop: -10,
+      marginBottom: 10,
     },
     filter: {
       fontSize: 14,
