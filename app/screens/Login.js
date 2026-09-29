@@ -22,7 +22,7 @@ import {
   login,
   loginLater,
 } from "../actions/user_actions";
-import { getData } from "../config/request";
+import { postData } from "../config/request";
 import { PbmButton } from "../components";
 
 const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
@@ -31,33 +31,14 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
 
   const [errors, setErrors] = useState(false);
   const [loginInput, setLoginInput] = useState(null);
-  const [loginError, setLoginError] = useState(null);
   const [password, setPassword] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
   const [apiErrorMsg, setApiErrorMsg] = useState(null);
 
   const submit = () => {
     setErrors(false);
-    setLoginError(null);
-    setPasswordError(null);
-    getData(
-      `/users/auth_details.json?login=${encodeURIComponent(loginInput)}&password=${encodeURIComponent(password)}`,
-    )
+    postData("/users/auth_details.json", { login: loginInput, password })
       .then((data) => {
-        if (data.errors) {
-          setErrors(true);
-          if (data.errors === "Unknown user") setLoginError("Unknown user");
-          if (data.errors === "Incorrect password")
-            setPasswordError("Incorrect password");
-          if (
-            data.errors ===
-            "User is not yet confirmed. Please follow emailed confirmation instructions."
-          )
-            setApiErrorMsg(
-              "User is not yet confirmed. Please follow emailed confirmation instructions.",
-            );
-        }
-        if (data.user) {
+        if (data?.user) {
           login(data.user);
           getFavoriteLocations(data.user.id);
           navigation.navigate("MapTab");
@@ -88,8 +69,6 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
           {errors && (
             <Text style={[s.errorText, s.bold]}>
               {apiErrorMsg ||
-                loginError ||
-                passwordError ||
                 "There were errors trying to process your submission"}
             </Text>
           )}
@@ -101,8 +80,6 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
               placeholderTextColor={"#9b9ebb"}
               onChangeText={setLoginInput}
               value={loginInput}
-              errorStyle={{ color: "red" }}
-              errorMessage={loginError}
               style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
@@ -115,8 +92,6 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
               placeholderTextColor={"#9b9ebb"}
               onChangeText={setPassword}
               value={password}
-              errorStyle={{ color: "red" }}
-              errorMessage={passwordError}
               style={[s.inputText, s.regular]}
               secureTextEntry={true}
               underlineColorAndroid="transparent"
