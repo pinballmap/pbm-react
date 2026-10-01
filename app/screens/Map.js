@@ -378,6 +378,15 @@ const Map = ({
     if (bounds) dispatch(getMapMarkers(bounds));
   };
 
+  // Clearing filters acts like "Refresh this area" - reload the visible extent
+  // rather than the last-loaded one, which may differ if the user panned
+  const onClearFilters = async () => {
+    dispatch(clearFilters(false));
+    const bounds = await setToCurrentBounds();
+    if (bounds) dispatch(getMapMarkers(bounds));
+    else dispatch(reloadMapMarkers());
+  };
+
   const updateCurrentLocation = () => {
     dispatch(fetchCurrentLocation(false));
     setShowUpdateSearch(false);
@@ -527,7 +536,7 @@ const Map = ({
             />
           </Pressable>
           <Pressable
-            onPress={() => dispatch(clearFilters(true))}
+            onPress={onClearFilters}
             style={({ pressed }) => [
               s.buttonStyle,
               s.shadow,
