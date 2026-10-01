@@ -2,12 +2,20 @@ import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { registerRootComponent } from "expo";
 import React, { useState, useEffect } from "react";
-import { Appearance } from "react-native";
+import { AppState, Appearance } from "react-native";
 import { retrieveItem } from "./app/config/utils";
 import { ThemeContext } from "./app/theme-context";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { Provider } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from "@react-navigation/native";
+import {
+  clearLastScreen,
+  loadRestoreState,
+  saveLastScreen,
+} from "./app/utils/lastScreen";
 import { dark, standard } from "./app/utils/themes";
 import { StatusBar } from "expo-status-bar";
 import store from "./app/store";
@@ -39,6 +47,8 @@ SplashScreen.setOptions({
   fade: true,
 });
 
+const navigationRef = createNavigationContainerRef();
+
 const App = () => {
   const calculateTheme = (themePreference) => {
     switch (themePreference ?? THEME_DEFAULT_VALUE) {
@@ -58,6 +68,26 @@ const App = () => {
   const [selectedTheme, setSelectedTheme] = useState(
     calculateTheme(THEME_DEFAULT_VALUE),
   );
+  const [restoreReady, setRestoreReady] = useState(false);
+  const [initialNavState, setInitialNavState] = useState();
+
+  useEffect(() => {
+    loadRestoreState().then((state) => {
+      setInitialNavState(state);
+      setRestoreReady(true);
+    });
+
+    // The OS only kills us while backgrounded, so snapshot on the way out.
+    // Clear on return so a warm resume never leaves a stale snapshot behind.
+    const appStateListener = AppState.addEventListener("change", (next) => {
+      if (next === "background" && navigationRef.isReady()) {
+        saveLastScreen(navigationRef.getRootState());
+      } else if (next === "active") {
+        clearLastScreen();
+      }
+    });
+    return () => appStateListener.remove();
+  }, []);
 
   useEffect(() => {
     retrieveItem(KEY_THEME).then((theme) => {
@@ -120,12 +150,16 @@ const App = () => {
         <KeyboardProvider>
           <Provider store={store}>
             <AppWrapper>
-              <NavigationContainer
-                navigationInChildEnabled
-                theme={selectedTheme === "dark" ? dark : standard}
-              >
-                <MapNavigator />
-              </NavigationContainer>
+              {restoreReady && (
+                <NavigationContainer
+                  ref={navigationRef}
+                  initialState={initialNavState}
+                  navigationInChildEnabled
+                  theme={selectedTheme === "dark" ? dark : standard}
+                >
+                  <MapNavigator />
+                </NavigationContainer>
+              )}
             </AppWrapper>
           </Provider>
           <StatusBar

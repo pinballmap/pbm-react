@@ -114,12 +114,14 @@ const Map = ({
 
       retrieveItem("auth").then(async (auth) => {
         if (auth) {
-          const initialUrl = (await Linking.getInitialURL()) || "";
+          const initialUrl = await Linking.getInitialURL();
           if (auth.id) {
             dispatch(login(auth));
             dispatch(getFavoriteLocations(auth.id));
           }
-          navigateToScreen(initialUrl);
+          // Without a deep link, stay put: navigating to MapTab here would pop
+          // a stack restored on cold start (see utils/lastScreen)
+          if (initialUrl) navigateToScreen(initialUrl);
         } else {
           navigation.navigate("SignupLogin");
         }

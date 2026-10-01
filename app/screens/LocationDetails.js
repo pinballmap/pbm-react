@@ -143,7 +143,10 @@ const MachineListItem = ({
   }, [machine.id, highlightProgress]);
 
   const openMachineDetails = useCallback(() => {
-    navigation.navigate("MachineDetails", { machineName: machine.name });
+    navigation.navigate("MachineDetails", {
+      machineName: machine.name,
+      lmxId: machine.id,
+    });
     dispatch(setCurrentMachine(machine.id));
   }, [navigation, dispatch, machine.id, machine.name]);
 
@@ -408,9 +411,36 @@ const LocationDetails = (props) => {
         const { location: l } = await dispatch(
           fetchLocation(locationId, loggedIn ? userId : undefined),
         );
+        // No location at all means the request itself failed (offline, server
+        // error) - not that the location is gone. The API reports a missing
+        // location as a 200 with `errors`.
+        if (!l) {
+          Alert.alert(
+            "Couldn't load this location",
+            "Check your connection and try again.",
+            [
+              { text: "Back", onPress: () => navigation.goBack() },
+              { text: "Retry", onPress: onMount },
+            ],
+          );
+          return;
+        }
         if (l.errors) throw new Error("Unable to find location");
         dispatch(setSelectedMapLocation(null));
         Mapbox.setTelemetryEnabled(false);
+        // Cold start restored this screen; reopen the machine the user was on
+        // (if it's still at this location) now that curLmx can be resolved.
+        const { restoreMachine } = route.params;
+        if (restoreMachine) {
+          navigation.setParams({ restoreMachine: undefined });
+          const stillHere = l.location_machine_xrefs?.some(
+            (lmx) => lmx.id === restoreMachine.lmxId,
+          );
+          if (stillHere) {
+            navigation.navigate("MachineDetails", restoreMachine);
+            dispatch(setCurrentMachine(restoreMachine.lmxId));
+          }
+        }
         if (l.lpx_count > 0) {
           dispatch(fetchLocationPictures(locationId))
             .then(setPictures)

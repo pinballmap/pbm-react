@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import ConfirmationModal from "./ConfirmationModal";
 import { ThemeContext } from "../theme-context";
@@ -14,9 +15,12 @@ const AppAlert = ({ motd }) => {
   const s = getStyles(theme);
 
   const [visible, setIsVisible] = useState(false);
+  // Map can be mounted under another screen (deep link, cold-start restore),
+  // so wait until it is actually showing
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (!motd) return;
+    if (!motd || !isFocused) return;
 
     const updateMOTD = async () => {
       // If this is the first time a user is firing up the app, do not initially show MOTD
@@ -30,7 +34,7 @@ const AppAlert = ({ motd }) => {
       }
     };
     updateMOTD();
-  }, [motd]);
+  }, [motd, isFocused]);
 
   return (
     <ConfirmationModal visible={visible} closeModal={() => setIsVisible(false)}>
