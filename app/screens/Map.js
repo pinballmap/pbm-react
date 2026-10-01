@@ -131,6 +131,7 @@ const Map = ({
   useEffect(() => {
     const run = async () => {
       if (!isFirstLoad && shouldTriggerUpdateBounds) {
+        setShowUpdateSearch(false);
         if (!toCurrentLocationRef.current) {
           await sleep(500);
         } else {
