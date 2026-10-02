@@ -371,7 +371,7 @@ function MapStack() {
       <Stack.Screen
         name="SuggestLocation"
         component={SuggestLocation}
-        options={{ title: "Submit Location" }}
+        options={{ title: "Submit New Location" }}
       />
       <Stack.Screen
         name="Events"

@@ -352,7 +352,7 @@ const FAQ = ({ navigation, user, route }) => {
             >
               {"this form"}
             </Text>
-            {` (or go to the menu icon in the lower right of the map screen and choose "Submit Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added.`}
+            {` (or go to the menu icon in the lower right of the map screen and choose "Submit New Location"). Our administrators moderate submissions, so please allow 0 - 7 days or so for it to be approved. The more accurate and thorough your submission, the quicker it will get added.`}
           </Text>
         </View>
         <View style={s.question}>

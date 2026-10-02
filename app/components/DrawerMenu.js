@@ -157,7 +157,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         }
       />
       <DrawerItem
-        label="Submit Location"
+        label="Submit New Location"
         allowFontScaling={false}
         labelStyle={[s.labelStyle, s.bold]}
         icon={() => (

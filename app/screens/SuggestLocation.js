@@ -457,7 +457,7 @@ function SuggestLocation({ navigation, location, ...props }) {
                     </View>
                   )}
                   <PbmButton
-                    title={"Submit Location"}
+                    title={"Submit New Location"}
                     onPress={() => confirmSuggestLocationDetails()}
                     disabled={
                       machineList.length === 0 ||

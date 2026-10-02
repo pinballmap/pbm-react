@@ -92,12 +92,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
               <Text style={[s.text, s.bold]}>{`include details`}</Text>
               {` such as the `}
               <Text
-                style={[
-                  s.text,
-                  s.bold,
-                  s.pinkText,
-                  { textTransform: "uppercase" },
-                ]}
+                style={[s.text, s.bold, s.pinkText]}
               >{`location name`}</Text>
               {`.`}
             </Text>
@@ -127,6 +122,14 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
               style={[s.textLink, s.regular]}
             >{`FAQ section`}</Text>
             {` and then answer the 5 questions.`}
+          </Text>
+          <Text style={s.text}>
+            {`Submitting a new location? `}
+            <Text
+              onPress={() => navigation.navigate("SuggestLocation")}
+              style={[s.textLink, s.bold]}
+            >{`Go here`}</Text>
+            {`.`}
           </Text>
 
           {!loggedIn ? (
