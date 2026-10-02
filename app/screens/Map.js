@@ -9,6 +9,16 @@ import Ionicons from "@react-native-vector-icons/ionicons/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import Mapbox from "@rnmapbox/maps";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
+import Animated, {
+  Easing,
+  FadeOut,
+  Keyframe,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import {
   ActivityIndicator,
   AppAlert,
@@ -56,6 +66,21 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
+// "Refresh this area" fades in with a slight overshoot so new users notice it
+const refreshButtonEntering = new Keyframe({
+  0: { opacity: 0, transform: [{ scale: 0.85 }] },
+  60: {
+    opacity: 1,
+    transform: [{ scale: 1.08 }],
+    easing: Easing.out(Easing.quad),
+  },
+  100: {
+    opacity: 1,
+    transform: [{ scale: 1 }],
+    easing: Easing.inOut(Easing.quad),
+  },
+}).duration(350);
+
 const Map = ({
   isFetchingMarkers,
   query,
@@ -84,6 +109,11 @@ const Map = ({
   const toCurrentLocationRef = useRef(false);
   const themeRef = useRef(theme.theme);
   const mapInitializedRef = useRef(false);
+  const hasNudgedRefreshRef = useRef(false);
+  const refreshNudgeScale = useSharedValue(1);
+  const refreshNudgeStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: refreshNudgeScale.value }],
+  }));
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -161,6 +191,10 @@ const Map = ({
   useEffect(() => {
     registerGetBounds(getBounds);
   }, []);
+
+  useEffect(() => {
+    if (!showUpdateSearch) hasNudgedRefreshRef.current = false;
+  }, [showUpdateSearch]);
 
   // URL filter params replace whatever filter state happens to already be
   // active - a link tap is a fresh intent, not a merge with prior browsing.
@@ -339,6 +373,20 @@ const Map = ({
     }
   };
 
+  // The button appears mid-gesture while attention is on the map, so pulse it
+  // once when panning stops - only once per appearance, to avoid nagging
+  const onMapIdle = () => {
+    if (!showUpdateSearch || hasNudgedRefreshRef.current) return;
+    hasNudgedRefreshRef.current = true;
+    refreshNudgeScale.value = withDelay(
+      150,
+      withSequence(
+        withTiming(1.06, { duration: 150, easing: Easing.out(Easing.quad) }),
+        withTiming(1, { duration: 200, easing: Easing.inOut(Easing.quad) }),
+      ),
+    );
+  };
+
   const onFinishedLoading = async () => {
     if (mapInitializedRef.current) return;
     mapInitializedRef.current = true;
@@ -434,6 +482,7 @@ const Map = ({
         gestureSettings={{ rotateEnabled: false }}
         attributionPosition={{ bottom: 35, left: -4 }}
         onCameraChanged={onCameraChanged}
+        onMapIdle={onMapIdle}
         styleURL={
           theme.theme === "dark"
             ? "mapbox://styles/ryantg/clkj675k4004u01pxggjdcn7w"
@@ -581,19 +630,27 @@ const Map = ({
       )}
       <View style={s.bottomContainer}>
         {showUpdateSearch ? (
-          <Pressable
-            style={({ pressed }) => [
-              s.shadow,
-              s.updateContainerStyle,
-              { marginBottom: selectedLocation ? 8 : 40 },
-              pressed ? s.pressed : s.notPressed,
-            ]}
-            onPress={refreshResults}
+          <Animated.View
+            entering={refreshButtonEntering}
+            exiting={FadeOut.duration(120)}
+            style={s.updateAnimatedWrapper}
           >
-            <Text style={[s.semiBold, s.updateTitleStyle]}>
-              Refresh this area
-            </Text>
-          </Pressable>
+            <Animated.View style={refreshNudgeStyle}>
+              <Pressable
+                style={({ pressed }) => [
+                  s.shadow,
+                  s.updateContainerStyle,
+                  { marginBottom: selectedLocation ? 8 : 40 },
+                  pressed ? s.pressed : s.notPressed,
+                ]}
+                onPress={refreshResults}
+              >
+                <Text style={[s.semiBold, s.updateTitleStyle]}>
+                  Refresh this area
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
         ) : null}
         {!!selectedLocation && (
           <LocationBottomSheet
@@ -684,6 +741,9 @@ const getStyles = (theme) =>
       position: "absolute",
       bottom: 0,
       width: "100%",
+      alignSelf: "center",
+    },
+    updateAnimatedWrapper: {
       alignSelf: "center",
     },
     updateContainerStyle: {
