@@ -3,6 +3,7 @@ import * as Application from "expo-application";
 import store from "../store";
 import { ACCOUNT_DISABLED } from "../actions/types";
 import { todayStr, oneYearFromNowStr } from "../utils/dateUtils";
+import { getDistance } from "../utils/utilityFunctions";
 
 const ACCOUNT_DISABLED_MSG =
   "Your account has been disabled. Please contact us if you think this is a mistake.";
@@ -77,7 +78,41 @@ export const getData = (uri) => {
     .catch((err) => Promise.reject(err));
 };
 
+// IFPA results are cached in memory to avoid refetching when the user toggles
+// radius or returns to the Events screen without moving the map much
+const IFPA_CACHE_TTL_MS = 60 * 60 * 1000;
+const IFPA_SEARCH_CACHE_MAX = 20;
+// Reuse a cached search if the map center is within this fraction of the radius
+const IFPA_CENTER_TOLERANCE = 0.1;
+const KM_PER_MILE = 1.609344;
+
+const ifpaSearchCache = [];
+const ifpaTournamentCache = new Map();
+
+const isFresh = (entry) => Date.now() - entry.fetchedAt < IFPA_CACHE_TTL_MS;
+
+export const getCachedIfpaData = (radius, distanceUnit, lat, lon) => {
+  const date_today = todayStr();
+  const entry = ifpaSearchCache.find((e) => {
+    if (
+      e.radius !== radius ||
+      e.distanceUnit !== distanceUnit ||
+      e.date !== date_today ||
+      !isFresh(e)
+    )
+      return false;
+
+    const miles = getDistance(e.lat, e.lon, lat, lon);
+    const distance = distanceUnit === "k" ? miles * KM_PER_MILE : miles;
+    return distance < radius * IFPA_CENTER_TOLERANCE;
+  });
+  return entry?.data;
+};
+
 export const getIfpaData = (radius, distanceUnit, lat, lon) => {
+  const cached = getCachedIfpaData(radius, distanceUnit, lat, lon);
+  if (cached) return Promise.resolve(cached);
+
   const date_today = todayStr();
   const date_1year = oneYearFromNowStr();
 
@@ -89,10 +124,29 @@ export const getIfpaData = (radius, distanceUnit, lat, lon) => {
 
       throw new Error("IFPA API response was not ok");
     })
+    .then((data) => {
+      ifpaSearchCache.unshift({
+        radius,
+        distanceUnit,
+        lat,
+        lon,
+        date: date_today,
+        data,
+        fetchedAt: Date.now(),
+      });
+      ifpaSearchCache.length = Math.min(
+        ifpaSearchCache.length,
+        IFPA_SEARCH_CACHE_MAX,
+      );
+      return data;
+    })
     .catch((err) => Promise.reject(err));
 };
 
 export const getIfpaTournament = (tournament_id) => {
+  const cached = ifpaTournamentCache.get(tournament_id);
+  if (cached && isFresh(cached)) return Promise.resolve(cached.data);
+
   return fetch(
     `https://api.ifpapinball.com/tournament/${tournament_id}?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}`,
   )
@@ -100,6 +154,10 @@ export const getIfpaTournament = (tournament_id) => {
       if (response.status === 200) return response.json();
 
       throw new Error("IFPA API response was not ok");
+    })
+    .then((data) => {
+      ifpaTournamentCache.set(tournament_id, { data, fetchedAt: Date.now() });
+      return data;
     })
     .catch((err) => Promise.reject(err));
 };

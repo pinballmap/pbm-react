@@ -16,7 +16,11 @@ import {
   HyperlinkText,
   ScrollToTop,
 } from "../components";
-import { getIfpaData, getIfpaTournament } from "../config/request";
+import {
+  getCachedIfpaData,
+  getIfpaData,
+  getIfpaTournament,
+} from "../config/request";
 import * as WebBrowser from "expo-web-browser";
 import { showLocation } from "react-native-map-link";
 import { boundsToCoords } from "../utils/utilityFunctions";
@@ -68,37 +72,50 @@ export const Events = ({ query, user }) => {
   });
   const [tournamentModalOpen, setTournamentModalOpen] = useState(false);
 
+  // Changing radius triggers the fetch via the focus effect below
   const updateIdx = (selectedIdx) => {
     const radiusArray = [50, 150, 250];
-    const radius = radiusArray[selectedIdx];
     setSelectedIdx(selectedIdx);
-    setRadius(radius);
-    fetchEvents(radius);
-  };
-
-  const fetchEvents = async () => {
-    try {
-      const data = await getIfpaData(
-        radius,
-        user.unitPreference ? "k" : "m",
-        mapLat,
-        mapLon,
-      );
-      setError(false);
-      setEvents(data.tournaments ? data.tournaments : []);
-    } catch (e) {
-      setError(true);
-    } finally {
-      setGettingEvents(false);
-    }
+    setRadius(radiusArray[selectedIdx]);
   };
 
   useFocusEffect(
     useCallback(() => {
-      // Clear or reset data BEFORE the screen is rendered
+      const distanceUnitParam = user.unitPreference ? "k" : "m";
+      const showEvents = (data) => {
+        setError(false);
+        setEvents(data.tournaments ? data.tournaments : []);
+        setGettingEvents(false);
+      };
+
+      const cached = getCachedIfpaData(
+        radius,
+        distanceUnitParam,
+        mapLat,
+        mapLon,
+      );
+      if (cached) {
+        showEvents(cached);
+        return;
+      }
+
+      // Ignore responses that arrive after radius/location changed or the screen blurred
+      let cancelled = false;
       setEvents([]);
       setGettingEvents(true);
-      fetchEvents();
+      getIfpaData(radius, distanceUnitParam, mapLat, mapLon)
+        .then((data) => {
+          if (!cancelled) showEvents(data);
+        })
+        .catch(() => {
+          if (cancelled) return;
+          setError(true);
+          setGettingEvents(false);
+        });
+
+      return () => {
+        cancelled = true;
+      };
     }, [radius, mapLat, mapLon, user.unitPreference]),
   );
 
