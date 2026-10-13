@@ -426,12 +426,12 @@ const getStyles = (theme) =>
       color: theme.text,
       marginTop: 20,
       paddingHorizontal: 10,
-      fontSize: 14,
+      fontSize: 15,
     },
     sourceText: {
       textAlign: "center",
       color: theme.text3,
-      fontSize: 12,
+      fontSize: 13,
       marginTop: 0,
       marginBottom: 5,
       paddingHorizontal: 20,
@@ -439,7 +439,7 @@ const getStyles = (theme) =>
     smallLink: {
       textDecorationLine: "underline",
       color: theme.pink1,
-      fontSize: 12,
+      fontSize: 13,
     },
     cardContainer: {
       borderRadius: 15,
@@ -454,11 +454,11 @@ const getStyles = (theme) =>
       textAlign: "center",
     },
     cardTextStyle: {
-      fontSize: 14,
+      fontSize: 15,
       color: theme.text,
     },
     address: {
-      fontSize: 14,
+      fontSize: 15,
       color: theme.text3,
     },
     addressRow: {

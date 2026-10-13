@@ -42,9 +42,11 @@ const getStyles = (theme) =>
     linkText: {
       textDecorationLine: "underline",
       color: theme.blue4,
+      fontSize: 15,
     },
     notLinkText: {
       color: theme.text,
+      fontSize: 15,
     },
   });
 
