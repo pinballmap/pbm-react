@@ -18,6 +18,7 @@ import {
 } from "../components";
 import { getIfpaData, getIfpaTournament } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
+import { showLocation } from "react-native-map-link";
 import { boundsToCoords } from "../utils/utilityFunctions";
 import { useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -183,9 +184,31 @@ export const Events = ({ query, user }) => {
                   <Text style={[s.locationName, s.extraBold, { width: "90%" }]}>
                     {tournament.tournament_name.trim()}
                   </Text>
-                  <Text style={[s.address, s.margin, s.semiBold]}>
-                    {tournament.raw_address}
-                  </Text>
+                  {!!tournament.raw_address?.trim() && (
+                    <Pressable
+                      style={({ pressed }) => [
+                        s.addressRow,
+                        s.margin,
+                        pressed && s.pressed,
+                      ]}
+                      onPress={() =>
+                        showLocation({
+                          address: tournament.raw_address.trim(),
+                          directionsMode: "car",
+                        })
+                      }
+                    >
+                      <MaterialCommunityIcons
+                        name="directions"
+                        size={22}
+                        color={theme.purpleLight}
+                        style={s.directionsIcon}
+                      />
+                      <Text style={[s.address, s.addressLink, s.semiBold]}>
+                        {tournament.raw_address}
+                      </Text>
+                    </Pressable>
+                  )}
                   <Text style={[s.margin, s.cardTextStyle, s.regular]}>
                     {formatDateStr(tournament.event_start_date) ===
                     formatDateStr(tournament.event_end_date) ? (
@@ -330,7 +353,7 @@ export const Events = ({ query, user }) => {
                     setTournamentModalOpen(true);
                   }}
                 >
-                  <Text style={[s.padding, s.locationName]}>
+                  <Text style={[s.padding, s.locationName, s.extraBold]}>
                     {item.tournament_name.trim()}
                   </Text>
                   <Text style={[s.center, s.cardTextStyle, s.regular]}>
@@ -437,6 +460,17 @@ const getStyles = (theme) =>
     address: {
       fontSize: 14,
       color: theme.text3,
+    },
+    addressRow: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+    },
+    addressLink: {
+      flexShrink: 1,
+      textDecorationLine: "underline",
+    },
+    directionsIcon: {
+      marginRight: 6,
     },
     pressed: {
       opacity: 0.8,
