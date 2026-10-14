@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useMemo, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -47,6 +47,21 @@ import {
 } from "../utils/constants";
 
 let deviceWidth = Dimensions.get("window").width;
+
+// Google Places session token: groups autocomplete requests and the following
+// details request into one billed session. Only needs to be unique, not secure.
+const newPlacesSessionToken = () =>
+  Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+
+const PLACES_DETAILS_FIELDS = [
+  "name",
+  "place_id",
+  "website",
+  "address_components",
+  "formatted_address",
+  "formatted_phone_number",
+  "international_phone_number",
+].join(",");
 
 function SuggestLocation({ navigation, location, ...props }) {
   const dispatch = useDispatch();
@@ -101,7 +116,20 @@ function SuggestLocation({ navigation, location, ...props }) {
   );
 
   const { navigate } = navigation;
-  const { loggedIn } = props.user;
+  const { loggedIn, email, authentication_token } = props.user;
+  const [placesSessionToken, setPlacesSessionToken] = useState(
+    newPlacesSessionToken,
+  );
+  // Must be referentially stable: the library rebuilds its debounced request
+  // function whenever `query` changes, which would defeat the debounce
+  const placesQuery = useMemo(
+    () => ({
+      language: "en",
+      sessiontoken: placesSessionToken,
+      api_token: process.env.EXPO_PUBLIC_PBM_API_TOKEN,
+    }),
+    [placesSessionToken],
+  );
   const { locationTypes } = props.locations;
   const { operators } = props.operators;
 
@@ -519,11 +547,24 @@ function SuggestLocation({ navigation, location, ...props }) {
             }}
             onPress={(data, details = null) => {
               setLocation(details);
+              // The details request ends the session; start a fresh one
+              setPlacesSessionToken(newPlacesSessionToken());
             }}
             fetchDetails
-            query={{
-              key: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
-              language: "en",
+            debounce={300}
+            requestUrl={{
+              url: `${global.API_URL}/places`,
+              useOnPlatform: "all",
+              headers: {
+                "X-User-Email": email,
+                "X-User-Token": authentication_token,
+              },
+            }}
+            query={placesQuery}
+            GooglePlacesDetailsQuery={{
+              sessiontoken: placesSessionToken,
+              fields: PLACES_DETAILS_FIELDS,
+              api_token: process.env.EXPO_PUBLIC_PBM_API_TOKEN,
             }}
             styles={{
               row: {
