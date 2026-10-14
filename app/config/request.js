@@ -2,7 +2,7 @@ import * as Location from "expo-location";
 import * as Application from "expo-application";
 import store from "../store";
 import { ACCOUNT_DISABLED } from "../actions/types";
-import { todayStr, oneYearFromNowStr } from "../utils/dateUtils";
+import { todayStr } from "../utils/dateUtils";
 import { getDistance } from "../utils/utilityFunctions";
 
 const ACCOUNT_DISABLED_MSG =
@@ -114,16 +114,10 @@ export const getIfpaData = (radius, distanceUnit, lat, lon) => {
   if (cached) return Promise.resolve(cached);
 
   const date_today = todayStr();
-  const date_1year = oneYearFromNowStr();
 
-  return fetch(
-    `https://api.ifpapinball.com/tournament/search?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}&latitude=${lat}&longitude=${lon}&distance_unit=${distanceUnit}&radius=${radius}&total=50&start_date=${date_today}&end_date=${date_1year}`,
+  return getData(
+    `/ifpa/tournaments.json?lat=${lat}&lon=${lon}&distance_unit=${distanceUnit}&radius=${radius}&start_date=${date_today}`,
   )
-    .then((response) => {
-      if (response.status === 200) return response.json();
-
-      throw new Error("IFPA API response was not ok");
-    })
     .then((data) => {
       ifpaSearchCache.unshift({
         radius,
@@ -147,14 +141,7 @@ export const getIfpaTournament = (tournament_id) => {
   const cached = ifpaTournamentCache.get(tournament_id);
   if (cached && isFresh(cached)) return Promise.resolve(cached.data);
 
-  return fetch(
-    `https://api.ifpapinball.com/tournament/${tournament_id}?api_key=${process.env.EXPO_PUBLIC_IFPA_API_KEY}`,
-  )
-    .then((response) => {
-      if (response.status === 200) return response.json();
-
-      throw new Error("IFPA API response was not ok");
-    })
+  return getData(`/ifpa/tournaments/${tournament_id}.json`)
     .then((data) => {
       ifpaTournamentCache.set(tournament_id, { data, fetchedAt: Date.now() });
       return data;

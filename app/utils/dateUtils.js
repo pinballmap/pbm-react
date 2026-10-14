@@ -28,13 +28,6 @@ export const todayStr = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
 
-// One year from today as YYYY-MM-DD in local time
-export const oneYearFromNowStr = () => {
-  const d = new Date();
-  d.setFullYear(d.getFullYear() + 1);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-};
-
 // Whole years elapsed since a date string
 export const yearsSince = (dateStr) =>
   Math.floor((Date.now() - new Date(dateStr)) / (365.25 * 24 * 60 * 60 * 1000));
