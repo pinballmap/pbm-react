@@ -13,19 +13,15 @@ const handleAccountDisabled = () => {
   throw ACCOUNT_DISABLED_MSG;
 };
 
-const withApiToken = (uri) => {
-  const separator = uri.includes("?") ? "&" : "?";
-  return `${uri}${separator}api_token=${process.env.EXPO_PUBLIC_PBM_API_TOKEN}`;
-};
-
 const apiFetch = (method, uri, body) => {
   const headers = {
     Accept: "application/json, text/plain, */*",
     AppVersion: Application.nativeApplicationVersion,
+    "X-Api-Token": process.env.EXPO_PUBLIC_PBM_API_TOKEN,
   };
   if (body !== undefined) headers["Content-Type"] = "application/json";
 
-  return fetch(global.API_URL + withApiToken(uri), {
+  return fetch(global.API_URL + uri, {
     method,
     headers,
     ...(body !== undefined && { body: JSON.stringify(body) }),
@@ -152,9 +148,10 @@ export const getIfpaTournament = (tournament_id) => {
 export const postFormData = (uri, formData) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", global.API_URL + withApiToken(uri));
+    xhr.open("POST", global.API_URL + uri);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("AppVersion", Application.nativeApplicationVersion);
+    xhr.setRequestHeader("X-Api-Token", process.env.EXPO_PUBLIC_PBM_API_TOKEN);
     xhr.onload = () => {
       try {
         if (xhr.status === 403) handleAccountDisabled();

@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { saveAuth } from "../config/authStorage";
 import {
   FETCHING_LOCATION_TRACKING_ENABLED,
   FETCHING_LOCATION_TRACKING_SUCCESS,
@@ -96,7 +96,7 @@ export default (state = initialState, action) => {
     case LOG_IN: {
       if (!action.credentials) return state;
 
-      AsyncStorage.setItem("auth", JSON.stringify(action.credentials));
+      saveAuth(action.credentials);
 
       return {
         ...state,
@@ -108,7 +108,7 @@ export default (state = initialState, action) => {
       };
     }
     case LOG_OUT: {
-      AsyncStorage.setItem("auth", JSON.stringify({ loggedIn: false }));
+      saveAuth({ loggedIn: false });
 
       return {
         ...state,
@@ -124,7 +124,7 @@ export default (state = initialState, action) => {
       };
     }
     case LOGIN_LATER: {
-      AsyncStorage.setItem("auth", JSON.stringify({ loggedIn: false }));
+      saveAuth({ loggedIn: false });
 
       return {
         ...state,

@@ -35,6 +35,7 @@
     "expo-image-picker": "~57.0.20",
     "expo-location": "~57.0.20",
     "expo-screen-orientation": "~57.0.2",
+    "expo-secure-store": "~57.0.4",
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "57.0.1",
     "expo-updates": "~57.0.24",

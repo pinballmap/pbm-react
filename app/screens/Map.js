@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
-import { retrieveItem } from "../config/utils";
+import { loadAuth } from "../config/authStorage";
 import { sleep } from "../utils";
 import { getData } from "../config/request";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
@@ -142,7 +142,7 @@ const Map = ({
       Linking.addEventListener("url", ({ url }) => navigateToScreen(url));
       Mapbox.setTelemetryEnabled(false);
 
-      retrieveItem("auth").then(async (auth) => {
+      loadAuth().then(async (auth) => {
         if (auth) {
           const initialUrl = await Linking.getInitialURL();
           if (auth.id) {

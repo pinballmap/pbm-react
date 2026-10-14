@@ -126,7 +126,6 @@ function SuggestLocation({ navigation, location, ...props }) {
     () => ({
       language: "en",
       sessiontoken: placesSessionToken,
-      api_token: process.env.EXPO_PUBLIC_PBM_API_TOKEN,
     }),
     [placesSessionToken],
   );
@@ -558,13 +557,13 @@ function SuggestLocation({ navigation, location, ...props }) {
               headers: {
                 "X-User-Email": email,
                 "X-User-Token": authentication_token,
+                "X-Api-Token": process.env.EXPO_PUBLIC_PBM_API_TOKEN,
               },
             }}
             query={placesQuery}
             GooglePlacesDetailsQuery={{
               sessiontoken: placesSessionToken,
               fields: PLACES_DETAILS_FIELDS,
-              api_token: process.env.EXPO_PUBLIC_PBM_API_TOKEN,
             }}
             styles={{
               row: {

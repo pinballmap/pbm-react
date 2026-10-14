@@ -7,7 +7,7 @@ export default {
       enabled: false,
     },
     runtimeVersion: "1.0.0",
-    version: "5.4.26",
+    version: "5.4.27",
     slug: "pbm-app",
     owner: "pinballmap",
     name: IS_DEV ? "Pinball Map (Dev)" : "Pinball Map",
@@ -46,7 +46,7 @@ export default {
         "@rnmapbox/maps",
         {
           RNMapboxMapsVersion: "11.20.3",
-          RNMAPBOX_MAPS_DOWNLOAD_TOKEN: process.env.EXPO_PUBLIC_MAPBOX_DOWNLOAD,
+          RNMAPBOX_MAPS_DOWNLOAD_TOKEN: process.env.MAPBOX_DOWNLOAD,
         },
       ],
       [
@@ -128,6 +128,7 @@ export default {
         },
       ],
       "react-native-map-link",
+      "expo-secure-store",
     ],
     ios: {
       bundleIdentifier: IS_DEV ? "com.pinballmap.dev" : "net.isaacruiz.ppm",
@@ -137,7 +138,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "317",
+      buildNumber: "318",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -146,7 +147,6 @@ export default {
       appStoreUrl:
         "https://itunes.apple.com/us/app/pinball-map/id359275713?mt=8",
       config: {
-        googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
         usesNonExemptEncryption: false,
       },
       entitlements: {
@@ -179,11 +179,6 @@ export default {
     android: {
       package: IS_DEV ? "com.pbm.dev" : "com.pbm",
       userInterfaceStyle: "automatic",
-      config: {
-        googleMaps: {
-          apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_KEY,
-        },
-      },
       permissions: [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -192,7 +187,7 @@ export default {
         "WRITE_EXTERNAL_STORAGE",
         "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 280,
+      versionCode: 281,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
