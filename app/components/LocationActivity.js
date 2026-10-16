@@ -413,7 +413,7 @@ const LocationActivity = ({
             }}
           />
         </Pressable>
-        <Text style={s.quickButtonText}>Activity</Text>
+        <Text style={[s.quickButtonText, s.semiBold]}>Activity</Text>
       </View>
     </>
   );

@@ -33,6 +33,7 @@ import {
   CustomIcon,
   FavoriteLocation,
   LocationActivity,
+  LocationEvents,
   PbmButton,
   ReadMore,
   RemoveMachineModal,
@@ -359,9 +360,10 @@ const LocationDetails = (props) => {
 
   const machinesAtLocation = useMemo(() => {
     if (!location.location_machine_xrefs) return [];
-    return location.location_machine_xrefs.map((machine) => {
+    // Skip machines missing from the cached catalog (e.g. created after it loaded)
+    return location.location_machine_xrefs.flatMap((machine) => {
       const machineDetails = machineCatalogById.get(machine.machine_id);
-      return { ...machineDetails, ...machine };
+      return machineDetails ? [{ ...machineDetails, ...machine }] : [];
     });
   }, [location.location_machine_xrefs, machineCatalogById]);
 
@@ -1542,7 +1544,7 @@ const LocationDetails = (props) => {
                     }}
                   />
                 </Pressable>
-                <Text style={s.quickButtonText}>Add machine</Text>
+                <Text style={[s.quickButtonText, s.semiBold]}>Add machine</Text>
               </View>
               <LocationActivity locationId={location.id} />
               <View style={s.quickButtonSubContainer}>
@@ -1568,7 +1570,9 @@ const LocationDetails = (props) => {
                     }}
                   />
                 </Pressable>
-                <Text style={s.quickButtonText}>Confirm lineup</Text>
+                <Text style={[s.quickButtonText, s.semiBold]}>
+                  Confirm lineup
+                </Text>
               </View>
               <View style={s.quickButtonSubContainer}>
                 <Pressable
@@ -1594,11 +1598,14 @@ const LocationDetails = (props) => {
                     }}
                   />
                 </Pressable>
-                <Text style={s.quickButtonText}>
+                <Text style={[s.quickButtonText, s.semiBold]}>
                   {uploadingPicture ? "Uploading..." : "Add photo"}
                 </Text>
               </View>
             </View>
+            {location.upcoming_events_count > 0 && (
+              <LocationEvents locationId={location.id} />
+            )}
           </View>
           <View style={s.lmxCountRow}>
             <View style={s.lmxCountSpacer} />

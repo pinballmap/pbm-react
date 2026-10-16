@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
   FlatList,
@@ -16,11 +16,7 @@ import {
   HyperlinkText,
   ScrollToTop,
 } from "../components";
-import {
-  getCachedIfpaData,
-  getIfpaData,
-  getIfpaTournament,
-} from "../config/request";
+import { getCachedEvents, getEvent, getEvents } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
 import { showLocation } from "react-native-map-link";
 import { boundsToCoords } from "../utils/utilityFunctions";
@@ -44,6 +40,7 @@ export const Events = ({ query, user }) => {
 
   const theme = useTheme();
   const s = getStyles(theme);
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const handleScroll = (event) => {
@@ -84,16 +81,11 @@ export const Events = ({ query, user }) => {
       const distanceUnitParam = user.unitPreference ? "k" : "m";
       const showEvents = (data) => {
         setError(false);
-        setEvents(data.tournaments ? data.tournaments : []);
+        setEvents(data.events ? data.events : []);
         setGettingEvents(false);
       };
 
-      const cached = getCachedIfpaData(
-        radius,
-        distanceUnitParam,
-        mapLat,
-        mapLon,
-      );
+      const cached = getCachedEvents(radius, distanceUnitParam, mapLat, mapLon);
       if (cached) {
         showEvents(cached);
         return;
@@ -103,7 +95,7 @@ export const Events = ({ query, user }) => {
       let cancelled = false;
       setEvents([]);
       setGettingEvents(true);
-      getIfpaData(radius, distanceUnitParam, mapLat, mapLon)
+      getEvents(radius, distanceUnitParam, mapLat, mapLon)
         .then((data) => {
           if (!cancelled) showEvents(data);
         })
@@ -119,12 +111,12 @@ export const Events = ({ query, user }) => {
     }, [radius, mapLat, mapLon, user.unitPreference]),
   );
 
-  const fetchTournament = async (tournament_id) => {
+  const fetchTournament = async (id) => {
     try {
       setGettingTournament(true);
-      const data = await getIfpaTournament(tournament_id);
+      const data = await getEvent(id);
       setModalError(false);
-      setTournament(data ? data : []);
+      setTournament(data?.event ? data.event : {});
     } catch (e) {
       setModalError(true);
     } finally {
@@ -199,9 +191,28 @@ export const Events = ({ query, user }) => {
               <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
                 <Pressable>
                   <Text style={[s.locationName, s.extraBold, { width: "90%" }]}>
-                    {tournament.tournament_name.trim()}
+                    {tournament.name}
                   </Text>
-                  {!!tournament.raw_address?.trim() && (
+                  {!!tournament.location_id && !!tournament.location_name ? (
+                    <Text
+                      style={[s.margin, s.venueName, s.venueLink, s.bold]}
+                      onPress={() => {
+                        setTournamentModalOpen(false);
+                        navigation.navigate("LocationDetails", {
+                          id: tournament.location_id,
+                        });
+                      }}
+                    >
+                      {tournament.location_name}
+                    </Text>
+                  ) : (
+                    !!tournament.external_location_name && (
+                      <Text style={[s.margin, s.venueName, s.bold]}>
+                        {tournament.external_location_name}
+                      </Text>
+                    )
+                  )}
+                  {!!tournament.address && (
                     <Pressable
                       style={({ pressed }) => [
                         s.addressRow,
@@ -210,7 +221,7 @@ export const Events = ({ query, user }) => {
                       ]}
                       onPress={() =>
                         showLocation({
-                          address: tournament.raw_address.trim(),
+                          address: tournament.address,
                           directionsMode: "car",
                         })
                       }
@@ -222,50 +233,61 @@ export const Events = ({ query, user }) => {
                         style={s.directionsIcon}
                       />
                       <Text style={[s.address, s.addressLink, s.semiBold]}>
-                        {tournament.raw_address}
+                        {tournament.address}
                       </Text>
                     </Pressable>
                   )}
                   <Text style={[s.margin, s.cardTextStyle, s.regular]}>
-                    {formatDateStr(tournament.event_start_date) ===
-                    formatDateStr(tournament.event_end_date) ? (
+                    {!tournament.end_date ||
+                    formatDateStr(tournament.start_date) ===
+                      formatDateStr(tournament.end_date) ? (
                       <Text style={s.bold}>
-                        {formatDateStr(tournament.event_start_date)}
+                        {formatDateStr(tournament.start_date)}
                       </Text>
                     ) : (
                       <Text style={s.bold}>
-                        {formatDateStr(tournament.event_start_date)}
+                        {formatDateStr(tournament.start_date)}
                         {" - "}
-                        {formatDateStr(tournament.event_end_date)}
+                        {formatDateStr(tournament.end_date)}
                       </Text>
                     )}
                   </Text>
-                  <Text
-                    style={[s.margin, s.link, s.regular]}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.tournament_id}`,
-                      )
-                    }
-                  >
-                    IFPA Calendar Website
-                  </Text>
-                  <Text
-                    style={[s.margin, s.link, s.regular]}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(`${tournament.website}`)
-                    }
-                  >
-                    Event Website
-                  </Text>
-                  <Text style={[s.margin, { marginBottom: 10 }]}>
-                    <Text style={s.bold}>Tournament or league?</Text>{" "}
-                    <Text style={s.italic}>{tournament.tournament_type}</Text>
-                  </Text>
-                  <Text style={[s.bold, { marginBottom: 10 }]}>
-                    Event details:
-                  </Text>
-                  <HyperlinkText text={tournament.details.trim()} />
+                  {!!tournament.ifpa_tournament_id && (
+                    <Text
+                      style={[s.margin, s.link, s.regular]}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(
+                          `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.ifpa_tournament_id}`,
+                        )
+                      }
+                    >
+                      IFPA Calendar Website
+                    </Text>
+                  )}
+                  {!!tournament.external_link && (
+                    <Text
+                      style={[s.margin, s.link, s.regular]}
+                      onPress={() =>
+                        WebBrowser.openBrowserAsync(tournament.external_link)
+                      }
+                    >
+                      Event Website
+                    </Text>
+                  )}
+                  {!!tournament.event_type && (
+                    <Text style={[s.margin, { marginVertical: 5 }]}>
+                      <Text style={s.bold}>Tournament or league?</Text>{" "}
+                      <Text style={s.italic}>{tournament.event_type}</Text>
+                    </Text>
+                  )}
+                  {!!tournament.long_desc && (
+                    <>
+                      <Text style={[s.bold, { marginVertical: 5 }]}>
+                        Event details:
+                      </Text>
+                      <HyperlinkText text={tournament.long_desc} />
+                    </>
+                  )}
                 </Pressable>
               </ScrollView>
             )}
@@ -335,7 +357,7 @@ export const Events = ({ query, user }) => {
                   buttons={buttons}
                 />
                 <Text style={[s.sourceText, s.regular]}>
-                  These events are brought to you by the{" "}
+                  {`Events mostly come from the `}
                   <Text
                     style={[s.smallLink, s.regular]}
                     onPress={() =>
@@ -355,9 +377,12 @@ export const Events = ({ query, user }) => {
               >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
             }
             renderItem={({ item }) => {
-              const tournament_id = item.tournament_id;
-              const start_date = formatDateStr(item.event_start_date);
-              const end_date = formatDateStr(item.event_end_date);
+              const start_date = formatDateStr(item.start_date);
+              const end_date = item.end_date
+                ? formatDateStr(item.end_date)
+                : start_date;
+              const venueName =
+                item.location_name ?? item.external_location_name;
               return (
                 <Pressable
                   style={({ pressed }) => [
@@ -366,12 +391,12 @@ export const Events = ({ query, user }) => {
                     pressed ? s.pressed : s.notPressed,
                   ]}
                   onPress={() => {
-                    fetchTournament(tournament_id);
+                    fetchTournament(item.id);
                     setTournamentModalOpen(true);
                   }}
                 >
                   <Text style={[s.padding, s.locationName, s.extraBold]}>
-                    {item.tournament_name.trim()}
+                    {item.name}
                   </Text>
                   <Text style={[s.center, s.cardTextStyle, s.regular]}>
                     {start_date === end_date ? (
@@ -382,15 +407,22 @@ export const Events = ({ query, user }) => {
                       </Text>
                     )}
                   </Text>
-                  {item.raw_address.length > 0 ? (
-                    <Text style={[s.address, s.margin]}>
-                      {item.raw_address}
+                  {!!venueName && (
+                    <Text style={[s.margin, s.venueName, s.bold]}>
+                      {venueName}
+                    </Text>
+                  )}
+                  {item.address ? (
+                    <Text
+                      style={[s.address, venueName ? s.marginSm : s.margin]}
+                    >
+                      {item.address}
                     </Text>
                   ) : null}
                 </Pressable>
               );
             }}
-            keyExtractor={(event) => `${event.tournament_id}`}
+            keyExtractor={(event) => `${event.id}`}
           />
           <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
         </View>
@@ -435,6 +467,9 @@ const getStyles = (theme) =>
     margin: {
       marginTop: 10,
     },
+    marginSm: {
+      marginTop: 4,
+    },
     padding: {
       paddingBottom: 10,
     },
@@ -477,6 +512,13 @@ const getStyles = (theme) =>
     address: {
       fontSize: 15,
       color: theme.text3,
+    },
+    venueName: {
+      fontSize: 16,
+      color: theme.text,
+    },
+    venueLink: {
+      textDecorationLine: "underline",
     },
     addressRow: {
       flexDirection: "row",
