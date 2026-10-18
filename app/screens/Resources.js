@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, useWindowDimensions } from "react-native";
 import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import { Screen, Text } from "../components";
@@ -10,10 +10,9 @@ import {
 } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const Resources = () => {
   const { theme } = useContext(ThemeContext);
+  const { width: deviceWidth } = useWindowDimensions();
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
 

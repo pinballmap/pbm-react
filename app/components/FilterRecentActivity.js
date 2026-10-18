@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import Entypo from "@react-native-vector-icons/entypo/static";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
@@ -17,8 +23,6 @@ import {
 import { ThemeContext } from "../theme-context";
 import PbmButton from "./PbmButton";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const FilterRecentActivity = ({
   setSelectedActivitiesFilter,
   setActivityMachinesFilter,
@@ -29,7 +33,8 @@ const FilterRecentActivity = ({
   user,
 }) => {
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const { loggedIn } = user;
   const navigation = useNavigation();
   const store = useStore();
@@ -394,7 +399,7 @@ const FilterRecentActivity = ({
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     bold: {
       fontFamily: "Nunito",
@@ -433,16 +438,15 @@ const getStyles = (theme) =>
       position: "absolute",
       right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
     titleStyle: {
       fontSize: 17,

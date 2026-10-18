@@ -9,12 +9,12 @@ import {
 import { Image, ImageBackground } from "expo-image";
 import * as Application from "expo-application";
 import {
-  Dimensions,
   Platform,
   Text,
   Pressable,
   StyleSheet,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -24,11 +24,10 @@ import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const DrawerMenu = ({ logout, user, ...props }) => {
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const iconSize = 28;
   const iconColor = "#bec2e6";
   const [modalVisible, setModalVisible] = useState(false);
@@ -291,7 +290,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
     </DrawerContentScrollView>
   );
 };
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     medium: {
       fontFamily: "Nunito",

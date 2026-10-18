@@ -45,7 +45,7 @@ export default {
       [
         "@rnmapbox/maps",
         {
-          RNMapboxMapsVersion: "11.20.3",
+          RNMapboxMapsVersion: "11.23.1",
           RNMAPBOX_MAPS_DOWNLOAD_TOKEN: process.env.MAPBOX_DOWNLOAD,
         },
       ],
@@ -117,7 +117,10 @@ export default {
         {
           locationWhenInUsePermission:
             "Allow access to device location to show nearby places with pinball machines.",
-          isAndroidForegroundServiceEnabled: true,
+          locationAlwaysAndWhenInUsePermission: false,
+          locationAlwaysPermission: false,
+          locationFullAccuracyPermission: false,
+          motionUsagePermission: false,
         },
       ],
       [
@@ -125,6 +128,8 @@ export default {
         {
           photosPermission:
             "The app accesses your photos so you can upload location images.",
+          cameraPermission: false,
+          microphonePermission: false,
         },
       ],
       "react-native-map-link",
@@ -138,7 +143,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "318",
+      buildNumber: "319",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -182,12 +187,9 @@ export default {
       permissions: [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
-        "FOREGROUND_SERVICE",
-        "FOREGROUND_SERVICE_LOCATION",
         "WRITE_EXTERNAL_STORAGE",
-        "com.google.android.providers.gsf.permission.READ_GSERVICES",
       ],
-      versionCode: 281,
+      versionCode: 282,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",

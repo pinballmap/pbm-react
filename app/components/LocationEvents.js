@@ -178,19 +178,33 @@ const LocationEvents = ({ locationId }) => {
                   {` on their site.`}
                 </Text>
               ) : events.length === 0 ? (
-                <Text style={[s.problem, s.bold]}>
-                  No upcoming events at this location
-                </Text>
+                <View>
+                  <Text style={[s.problem, s.bold]}>
+                    No upcoming events at this location
+                  </Text>
+                  <Text
+                    style={[s.sourceText, s.regular, { marginVertical: 10 }]}
+                  >
+                    An event may have recently ended, though.
+                  </Text>
+                </View>
               ) : (
                 events.map(renderEvent)
               )}
             </Pressable>
-            <View>
-              <Text style={[s.sourceText, s.regular, { marginVertical: 10 }]}>
-                Some IFPA events may be missing (due to sloppy data entry from
-                tournament directors)
-              </Text>
-            </View>
+            {events.length > 0 && (
+              <View>
+                <Text
+                  style={[
+                    s.sourceText,
+                    s.regular,
+                    { marginTop: 10, marginBottom: 20 },
+                  ]}
+                >
+                  Showing six months of events. Some IFPA events may be missing
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </>
       </ConfirmationModal>
@@ -256,16 +270,15 @@ const getStyles = (theme) =>
     },
     xButton: {
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
     pillButton: {
       flexDirection: "row",
@@ -366,7 +379,8 @@ const getStyles = (theme) =>
     problem: {
       textAlign: "center",
       color: theme.text,
-      marginTop: 20,
+      marginTop: 10,
+      marginBottom: 5,
       paddingHorizontal: 20,
     },
   });

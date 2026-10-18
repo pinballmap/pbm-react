@@ -28,7 +28,7 @@ import { triggerUpdateBounds } from "./locations_actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
-import * as Location from "expo-location";
+import { Location } from "expo-location/next";
 import {
   KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   KEY_REMEMBER_MACHINE_SORT_PREFERENCE,
@@ -38,8 +38,9 @@ import {
 export const fetchCurrentLocation = (isInitialLoad) => (dispatch, getState) => {
   dispatch({ type: FETCHING_LOCATION_TRACKING_ENABLED });
 
-  return Location.hasServicesEnabledAsync()
-    .then((isLocationServicesEnabled) => {
+  return Promise.resolve()
+    .then(() => {
+      const isLocationServicesEnabled = Location.hasLocationServicesEnabled();
       dispatch({
         type: SET_LOCATION_SERVICES_ENABLED,
         isLocationServicesEnabled,
@@ -81,8 +82,8 @@ export const fetchCurrentLocation = (isInitialLoad) => (dispatch, getState) => {
 export const getLocationTrackingEnabledSuccess = (data) => {
   return {
     type: FETCHING_LOCATION_TRACKING_SUCCESS,
-    lat: data.coords.latitude,
-    lon: data.coords.longitude,
+    lat: data.coordinates.latitude,
+    lon: data.coordinates.longitude,
   };
 };
 

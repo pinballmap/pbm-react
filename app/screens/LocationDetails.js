@@ -9,7 +9,6 @@ import React, {
 import { connect, useDispatch } from "react-redux";
 import {
   Alert,
-  Dimensions,
   Linking,
   Modal,
   Platform,
@@ -89,16 +88,17 @@ import Animated, {
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 import {
-  Gesture,
   GestureDetector,
   GestureHandlerRootView,
-  Swipeable,
+  usePanGesture,
+  usePinchGesture,
+  useSimultaneousGestures,
+  useTapGesture,
 } from "react-native-gesture-handler";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import { FlashList } from "@shopify/flash-list";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
-
-let deviceWidth = Dimensions.get("window").width;
 
 import { formatDateStr, yearsSince } from "../utils/dateUtils";
 
@@ -158,41 +158,35 @@ const MachineListItem = ({
     highlightProgress.value = withTiming(0, { duration: 150 });
   };
 
-  const lifeListIconTapGesture = useMemo(
-    () =>
-      Gesture.Tap()
-        .hitSlop(10)
-        .onEnd((_event, success) => {
-          if (success) {
-            runOnJS(onLifeListIconPress)();
-          }
-        }),
-    [onLifeListIconPress],
-  );
+  const lifeListIconTapGesture = useTapGesture({
+    hitSlop: 10,
+    onDeactivate: (event) => {
+      if (!event.canceled) {
+        runOnJS(onLifeListIconPress)();
+      }
+    },
+  });
 
-  const tapGesture = useMemo(
-    () =>
-      Gesture.Tap()
-        .maxDistance(10)
-        .requireExternalGestureToFail(lifeListIconTapGesture)
-        .onTouchesDown(() => {
-          highlightProgress.value = withTiming(1, { duration: 100 });
-        })
-        .onEnd((_event, success) => {
-          if (success) {
-            runOnJS(openMachineDetails)();
-          }
-        })
-        .onFinalize((_event, success) => {
-          // On a successful tap we're navigating away — fade out slowly so
-          // the highlight doesn't visibly revert before the screen transition
-          // starts, which reads as the app pausing before responding.
-          highlightProgress.value = withTiming(0, {
-            duration: success ? 400 : 150,
-          });
-        }),
-    [openMachineDetails, highlightProgress, lifeListIconTapGesture],
-  );
+  const tapGesture = useTapGesture({
+    maxDistance: 10,
+    requireToFail: lifeListIconTapGesture,
+    onTouchesDown: () => {
+      highlightProgress.value = withTiming(1, { duration: 100 });
+    },
+    onDeactivate: (event) => {
+      if (!event.canceled) {
+        runOnJS(openMachineDetails)();
+      }
+    },
+    onFinalize: (event) => {
+      // On a successful tap we're navigating away — fade out slowly so
+      // the highlight doesn't visibly revert before the screen transition
+      // starts, which reads as the app pausing before responding.
+      highlightProgress.value = withTiming(0, {
+        duration: event.canceled ? 150 : 400,
+      });
+    },
+  });
 
   const animatedWrapperStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
@@ -205,14 +199,14 @@ const MachineListItem = ({
   return (
     <Animated.View style={[s.machineRowWrapper, animatedWrapperStyle]}>
       <View style={s.machineRowClip}>
-        <Swipeable
+        <ReanimatedSwipeable
           ref={(ref) => {
             localSwipeableRef.current = ref;
             swipeableRef(ref);
           }}
           overshootRight={false}
           rightThreshold={40}
-          requireExternalGestureToFail={tapGesture}
+          requireToFail={tapGesture}
           onSwipeableOpenStartDrag={highlightOn}
           onSwipeableCloseStartDrag={highlightOn}
           onSwipeableWillClose={highlightOff}
@@ -243,7 +237,7 @@ const MachineListItem = ({
               />
             </View>
           </GestureDetector>
-        </Swipeable>
+        </ReanimatedSwipeable>
       </View>
     </Animated.View>
   );
@@ -268,7 +262,8 @@ const LocationDetails = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const theme = useTheme();
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const listRef = useRef(null);
   const [locationId, setLocationId] = useState(props.route.params["id"]);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -536,12 +531,12 @@ const LocationDetails = (props) => {
     );
   };
 
-  const pinchGesture = Gesture.Pinch()
-    .onUpdate((e) => {
+  const pinchGesture = usePinchGesture({
+    onUpdate: (e) => {
       pinchScale.value = Math.max(1, savedScale.value * e.scale);
       clampTranslation();
-    })
-    .onEnd(() => {
+    },
+    onDeactivate: () => {
       savedScale.value = pinchScale.value;
       if (pinchScale.value <= 1) {
         translateX.value = withTiming(0, { duration: 150 });
@@ -553,23 +548,25 @@ const LocationDetails = (props) => {
         savedTranslateX.value = translateX.value;
         savedTranslateY.value = translateY.value;
       }
-    });
+    },
+  });
 
-  const panGesture = Gesture.Pan()
-    .onUpdate((e) => {
+  const panGesture = usePanGesture({
+    onUpdate: (e) => {
       if (pinchScale.value <= 1) {
         return;
       }
       translateX.value = savedTranslateX.value + e.translationX;
       translateY.value = savedTranslateY.value + e.translationY;
       clampTranslation();
-    })
-    .onEnd(() => {
+    },
+    onDeactivate: () => {
       savedTranslateX.value = translateX.value;
       savedTranslateY.value = translateY.value;
-    });
+    },
+  });
 
-  const photoGesture = Gesture.Simultaneous(pinchGesture, panGesture);
+  const photoGesture = useSimultaneousGestures(pinchGesture, panGesture);
 
   const pinchAnimatedStyle = useAnimatedStyle(() => ({
     // Size the wrapper to the image's fitted (contain) box so borderRadius
@@ -1958,7 +1955,7 @@ const LocationDetails = (props) => {
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     regular: {
       fontFamily: "Nunito",
@@ -2206,16 +2203,15 @@ const getStyles = (theme) =>
       position: "absolute",
       right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
     sortModalContent: {
       marginTop: 10,

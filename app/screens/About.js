@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  Dimensions,
   Platform,
   Pressable,
   StyleSheet,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
@@ -19,11 +19,10 @@ import {
 } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const About = ({ navigation, appAlert }) => {
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const insets = useSafeAreaInsets();
 
   const [stats, setStats] = useState({
@@ -473,7 +472,7 @@ const About = ({ navigation, appAlert }) => {
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     medium: {
       fontFamily: "Nunito",

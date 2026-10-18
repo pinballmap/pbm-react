@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  Dimensions,
-  ImageBackground,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { loginLater } from "../actions";
 import { getData } from "../config/request";
@@ -130,10 +122,9 @@ const SignupLogin = ({ navigation, loginLater }) => {
           </View>
         </View>
       </ScrollView>
-      <ImageBackground
+      <Image
         source={require("../assets/images/app_logo.jpg")}
-        style={s.backgroundImage}
-        imageStyle={{ opacity: 0.2 }}
+        style={[s.backgroundImage, { opacity: 0.2 }]}
       />
     </View>
   );
@@ -154,8 +145,6 @@ const getStyles = () =>
       backgroundColor: "transparent",
     },
     backgroundImage: {
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").height,
       position: "absolute",
       top: 0,
       left: 0,

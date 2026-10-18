@@ -1,19 +1,12 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  Dimensions,
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
+import { Image } from "expo-image";
 import { ThemeContext } from "../theme-context";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -137,10 +130,9 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
         </View>
       </KeyboardAwareScrollView>
       <KeyboardToolbar />
-      <ImageBackground
+      <Image
         source={require("../assets/images/pbm-fade-tall.png")}
-        style={s.backgroundImage}
-        imageStyle={{ opacity: 0.2 }}
+        style={[s.backgroundImage, { opacity: 0.2 }]}
       />
     </View>
   );
@@ -157,8 +149,6 @@ const getStyles = (theme) =>
       fontWeight: "700",
     },
     backgroundImage: {
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").height,
       position: "absolute",
       top: 0,
       left: 0,

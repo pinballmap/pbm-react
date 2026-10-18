@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import {
-  Dimensions,
   View,
   StyleSheet,
   Pressable,
   Text,
+  useWindowDimensions,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 
-let deviceWidth = Dimensions.get("window").width;
 
 type ButtonComponent = React.ReactElement;
 type ButtonObject = {
@@ -17,7 +16,8 @@ type ButtonObject = {
 
 const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBorderStyle, textStyle, selectedTextStyle, selectedButtonStyle, maxFontSizeMultiplier }) => {
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
 
   return (
     <View
@@ -71,7 +71,7 @@ const ButtonGroup = ({ onPress, buttons, selectedIndex, containerStyle, innerBor
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth: number) =>
   StyleSheet.create({
     semiBold: {
       fontFamily: "Nunito",

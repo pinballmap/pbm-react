@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { Dimensions, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, useWindowDimensions } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { useNavigation, useRoute, useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,13 +19,12 @@ import {
   WarningButton,
 } from "../components";
 
-const deviceWidth = Dimensions.get("window").width;
-
 const AddHighScore = ({ user }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
   const theme = useTheme();
+  const { width: deviceWidth } = useWindowDimensions();
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
 

@@ -103,7 +103,7 @@ const App = () => {
     });
 
     async function lockOrientation() {
-      if (Device.deviceType.TABLET) {
+      if (Device.deviceType === Device.DeviceType.TABLET) {
         await ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.ALL,
         );
@@ -170,10 +170,7 @@ const App = () => {
               )}
             </AppWrapper>
           </Provider>
-          <StatusBar
-            style={selectedTheme === "dark" ? "light" : "dark"}
-            translucent={true}
-          />
+          <StatusBar style={selectedTheme === "dark" ? "light" : "dark"} />
         </KeyboardProvider>
       </ThemeContext.Provider>
     </GestureHandlerRootView>

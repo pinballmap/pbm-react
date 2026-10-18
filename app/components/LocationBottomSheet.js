@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import { Share, StyleSheet, View, Pressable, Text } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import Animated, {
   withSpring,
   runOnJS,
 } from "react-native-reanimated";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { GestureDetector, usePanGesture } from "react-native-gesture-handler";
 import { ThemeContext } from "../theme-context";
 import FavoriteLocation from "./FavoriteLocation";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -73,53 +73,49 @@ const LocationBottomSheet = React.memo(
       setSelectedMapLocation(null);
     };
 
-    const panGesture = useMemo(
-      () =>
-        Gesture.Pan()
-          .activeOffsetY([-10, 10])
-          .failOffsetX([-20, 20])
-          .onUpdate((e) => {
-            if (e.translationY < 0) {
-              translateY.value = Math.max(MAX_DRAG_UP, e.translationY * 0.4);
-            } else {
-              const maxDown = Math.max(0, sheetHeight.value - BACKDROP_HEIGHT);
-              translateY.value = Math.min(e.translationY, maxDown);
-            }
-          })
-          .onEnd((e) => {
-            const draggedUp =
-              e.translationY < DRAG_UP_TO_OPEN || e.velocityY < -FLING_VELOCITY;
-            const draggedDown =
-              e.translationY > DRAG_DOWN_TO_DISMISS ||
-              e.velocityY > FLING_VELOCITY;
+    const panGesture = usePanGesture({
+      activeOffsetY: [-10, 10],
+      failOffsetX: [-20, 20],
+      onUpdate: (e) => {
+        if (e.translationY < 0) {
+          translateY.value = Math.max(MAX_DRAG_UP, e.translationY * 0.4);
+        } else {
+          const maxDown = Math.max(0, sheetHeight.value - BACKDROP_HEIGHT);
+          translateY.value = Math.min(e.translationY, maxDown);
+        }
+      },
+      onDeactivate: (e) => {
+        const draggedUp =
+          e.translationY < DRAG_UP_TO_OPEN || e.velocityY < -FLING_VELOCITY;
+        const draggedDown =
+          e.translationY > DRAG_DOWN_TO_DISMISS || e.velocityY > FLING_VELOCITY;
 
-            if (draggedUp) {
-              translateY.value = withTiming(-30, { duration: 150 });
-              runOnJS(onPress)();
-            } else if (draggedDown) {
-              translateY.value = withSpring(EXIT_DISTANCE, {
-                velocity: e.velocityY,
-                damping: 20,
-                stiffness: 90,
-              });
-              exitOpacity.value = withTiming(
-                0,
-                { duration: EXIT_FADE_DURATION },
-                (finished) => {
-                  if (finished) {
-                    runOnJS(onDismiss)();
-                  }
-                },
-              );
-            } else {
-              translateY.value = withSpring(0, {
-                damping: 18,
-                stiffness: 220,
-              });
-            }
-          }),
-      [translateY, sheetHeight, exitOpacity, onPress, onDismiss],
-    );
+        if (draggedUp) {
+          translateY.value = withTiming(-30, { duration: 150 });
+          runOnJS(onPress)();
+        } else if (draggedDown) {
+          translateY.value = withSpring(EXIT_DISTANCE, {
+            velocity: e.velocityY,
+            damping: 20,
+            stiffness: 90,
+          });
+          exitOpacity.value = withTiming(
+            0,
+            { duration: EXIT_FADE_DURATION },
+            (finished) => {
+              if (finished) {
+                runOnJS(onDismiss)();
+              }
+            },
+          );
+        } else {
+          translateY.value = withSpring(0, {
+            damping: 18,
+            stiffness: 220,
+          });
+        }
+      },
+    });
 
     const animatedSheetStyle = useAnimatedStyle(() => ({
       transform: [{ translateY: translateY.value }],

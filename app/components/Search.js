@@ -11,7 +11,6 @@ import PropTypes from "prop-types";
 import { debounce } from "throttle-debounce";
 import {
   Alert,
-  Dimensions,
   Keyboard,
   Modal,
   Platform,
@@ -21,6 +20,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
@@ -40,8 +40,6 @@ import ActivityIndicator from "./ActivityIndicator";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import PbmButton from "./PbmButton";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const Search = ({
   navigate,
   regions: regionsProp,
@@ -54,7 +52,8 @@ const Search = ({
   onPressFilter,
 }) => {
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
 
   const [q, setQ] = useState("");
   const [foundLocations, setFoundLocations] = useState([]);
@@ -479,7 +478,7 @@ const Search = ({
   );
 };
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     regular: {
       fontFamily: "Nunito",

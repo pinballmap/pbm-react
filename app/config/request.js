@@ -1,4 +1,4 @@
-import * as Location from "expo-location";
+import { Location } from "expo-location/next";
 import * as Application from "expo-application";
 import store from "../store";
 import { ACCOUNT_DISABLED } from "../actions/types";
@@ -193,45 +193,16 @@ export const deleteData = (uri, body) => {
     .catch((err) => Promise.reject(err));
 };
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-const fetchGPSLocation = async () => {
-  let location;
-  let tries = 1;
-  const MAX_NUMBER_OF_TRIES = 3;
-  do {
-    location = await Promise.race([
-      sleep(1500),
-      Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest,
-      }),
-    ]);
-    if (location) return Promise.resolve(location);
-
-    tries++;
-  } while (!location && tries < MAX_NUMBER_OF_TRIES);
-
-  await Location.getLastKnownPositionAsync();
-  location = await Promise.race([
-    sleep(1500),
-    Location.getLastKnownPositionAsync(),
-  ]);
-
-  if (location) return Promise.resolve(location);
-
-  return Promise.reject("Unable to determine your location");
-};
-
 export const getCurrentLocation = async () => {
-  try {
-    const { status: currentStatus } =
-      await Location.getForegroundPermissionsAsync();
-    if (currentStatus !== "granted") {
-      await Location.requestForegroundPermissionsAsync();
-    }
-    const position = await fetchGPSLocation();
-    return position;
-  } catch (e) {
-    return Promise.reject(e);
-  }
+  // Only prompts while the permission is undetermined.
+  await Location.requestForegroundPermissions();
+  // Waits up to `timeout` seconds for a fresh fix, then falls back to the
+  // last known position. On Android it uses Google Play services when
+  // present and the framework LocationManager otherwise (de-Googled phones).
+  const position = await Location.getPosition({
+    maxCachedAge: 60,
+    timeout: 5,
+  });
+  if (!position) throw "Unable to determine your location";
+  return position;
 };

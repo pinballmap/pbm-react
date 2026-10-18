@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import {
-  Dimensions,
   Modal,
   PixelRatio,
   Platform,
@@ -11,6 +10,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import {
   KeyboardAwareScrollView,
@@ -45,8 +45,6 @@ import {
   PAYMENT_TYPE_NO,
   PAYMENT_TYPE_OPTIONS,
 } from "../utils/constants";
-
-let deviceWidth = Dimensions.get("window").width;
 
 // Google Places session token: groups autocomplete requests and the following
 // details request into one billed session. Only needs to be unique, not secure.
@@ -83,7 +81,8 @@ function SuggestLocation({ navigation, location, ...props }) {
   const [countryCode, setCountryCode] = useState("US");
   const [locationAlreadyExists, setLocationAlreadyExists] = useState(false);
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const insets = useSafeAreaInsets();
   const machineNameMargin =
     Platform.OS === "android"
@@ -741,7 +740,7 @@ function SuggestLocation({ navigation, location, ...props }) {
   );
 }
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     regular: {
       fontFamily: "Nunito",
@@ -883,16 +882,15 @@ const getStyles = (theme) =>
       top: 3,
       right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
     buttonMargin: {
       marginVertical: 15,

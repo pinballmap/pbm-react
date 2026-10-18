@@ -480,7 +480,10 @@ const Map = ({
         rotateEnabled={false}
         compassPosition={{ bottom: 35, left: 10 }}
         gestureSettings={{ rotateEnabled: false }}
-        attributionPosition={{ bottom: 35, left: -4 }}
+        attributionPosition={{
+          bottom: 35,
+          left: Platform.OS === "android" ? 5 : -4,
+        }}
         onCameraChanged={onCameraChanged}
         onMapIdle={onMapIdle}
         styleURL={
@@ -847,16 +850,15 @@ const getStyles = (theme) =>
       position: "absolute",
       right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
   });
 

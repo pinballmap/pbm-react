@@ -1,7 +1,6 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import {
-  Dimensions,
   Modal,
   PixelRatio,
   Platform,
@@ -11,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Image } from "expo-image";
@@ -60,8 +60,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { formatDate } from "../utils/dateUtils";
 
-let deviceWidth = Dimensions.get("window").width;
-
 const MachineDetails = ({
   location: locationProp,
   user,
@@ -74,6 +72,7 @@ const MachineDetails = ({
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const theme = useTheme();
+  const { width: deviceWidth } = useWindowDimensions();
   const s = getStyles(theme);
   const [showAddConditionModal, setShowAddConditionModal] = useState(false);
   const [conditionText, setConditionText] = useState("");

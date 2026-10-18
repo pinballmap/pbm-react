@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
-  Dimensions,
   Modal,
   PixelRatio,
   Platform,
@@ -9,6 +8,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 import {
@@ -37,8 +37,6 @@ import {
   PAYMENT_TYPE_NO,
   PAYMENT_TYPE_OPTIONS,
 } from "../utils/constants";
-
-let deviceWidth = Dimensions.get("window").width;
 
 function EditLocationDetails({ navigation, ...props }) {
   const dispatch = useDispatch();
@@ -74,7 +72,8 @@ function EditLocationDetails({ navigation, ...props }) {
   const { operators } = props.operators;
   const { updatingLocationDetails } = props.location.location;
   const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
+  const { width: deviceWidth } = useWindowDimensions();
+  const s = getStyles(theme, deviceWidth);
   const insets = useSafeAreaInsets();
   const machineNameMargin =
     Platform.OS === "android"
@@ -322,7 +321,7 @@ function EditLocationDetails({ navigation, ...props }) {
   );
 }
 
-const getStyles = (theme) =>
+const getStyles = (theme, deviceWidth) =>
   StyleSheet.create({
     regular: {
       fontFamily: "Nunito",

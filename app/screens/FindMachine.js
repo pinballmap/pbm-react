@@ -9,7 +9,6 @@ import React, {
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import {
-  Dimensions,
   FlatList,
   Keyboard,
   Modal,
@@ -18,6 +17,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -53,8 +53,6 @@ import {
   sortMachinesByManufacturer,
   sortMachinesByYear,
 } from "../utils/utilityFunctions";
-
-let deviceWidth = Dimensions.get("window").width;
 
 const FULL_SORT_OPTIONS = [
   { key: "alpha", label: "Alphabetical" },
@@ -198,6 +196,7 @@ const FindMachine = ({
   setMachineFilter,
 }) => {
   const { theme } = useContext(ThemeContext);
+  const { width: deviceWidth } = useWindowDimensions();
   const s = getStyles(theme);
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
@@ -921,16 +920,15 @@ const getStyles = (theme) =>
       position: "absolute",
       right: 3,
       color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
+      textShadowColor:
+        theme.theme == "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(126, 126, 145, 0.5)",
+      textShadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
+      textShadowRadius: 3.84,
     },
     sortModalContent: {
       marginTop: 10,
