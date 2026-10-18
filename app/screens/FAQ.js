@@ -553,6 +553,58 @@ const FAQ = ({ navigation, user, route }) => {
             {`\u2022 The location you submitted is a private residence. Or private in some other way. See the question above this.`}
           </Text>
         </View>
+        <View style={s.question}>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`How do I add non-IFPA events to the event listings on Pinball Map?`}</Text>
+        </View>
+        <View style={s.answer}>
+          <Text style={s.text}>
+            {`For over 15 years, we have maintained both an automated list of IFPA events as well as the ability to manually add individual events. In the early days we spent a lot of time adding leagues and other calendar items. However, the IFPA got more and more popular and people stopped submitting events to us.`}
+          </Text>
+          <Text style={s.text}>
+            {`Anyway, what we've learned is that manually managing events is not sustainable. If you want non-IFPA events listed, then you need to provide a JSON source for us to automatically fetch and parse. We would rather write code that works with your exports than do manually work.`}
+          </Text>
+          <Text style={s.text}>
+            <Text
+              onPress={() => navigation.navigate("Contact")}
+              style={[s.textLink, s.medium]}
+            >
+              {"Contact us"}
+            </Text>
+            {` if you want tips on how to format your data. And take a look at the `}
+            <Text
+              style={[s.textLink, s.medium]}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://github.com/pinballmap/pbm/blob/master/db/structure.sql",
+                )
+              }
+            >
+              {`public.events table in our database`}
+            </Text>
+            {` to see the fields we use.`}
+          </Text>
+        </View>
+        <View style={s.question}>
+          <Text
+            style={[s.font18, s.bold]}
+          >{`Some upcoming IFPA events are not listed in a location's event list.`}</Text>
+        </View>
+        <View style={s.answer}>
+          <Text style={s.text}>
+            {`Every day we pull six months of events from the IFPA calendar. The IFPA does not tag events with Pinball Map location IDs, so we have to do our best to automatically tag the imported events based on address, lat/lon, and tournament name information. It's not a perfect system, and it's made more difficult because the IFPA tournament information can be messy or wrong.`}
+          </Text>
+          <Text style={s.text}>
+            <Text
+              onPress={() => navigation.navigate("Contact")}
+              style={[s.textLink, s.medium]}
+            >
+              {"Contact us"}
+            </Text>
+            {` if you want to see if we can fix something, or give you tips on how you can fix it on the IFPA-end.`}
+          </Text>
+        </View>
         <View
           ref={(r) => {
             sectionRefs.current["operators"] = r;
@@ -586,14 +638,12 @@ const FAQ = ({ navigation, user, route }) => {
         </View>
         <View style={s.answer}>
           <Text style={s.text}>
-            {
-              <Text
-                onPress={() => navigation.navigate("Contact")}
-                style={[s.textLink, s.medium]}
-              >
-                {"Contact us"}
-              </Text>
-            }
+            <Text
+              onPress={() => navigation.navigate("Contact")}
+              style={[s.textLink, s.medium]}
+            >
+              {"Contact us"}
+            </Text>
             {` and we'll add you. In your message, tell us:`}
           </Text>
           <Text
@@ -601,7 +651,7 @@ const FAQ = ({ navigation, user, route }) => {
           >{`\u2022 The name of your operating business.`}</Text>
           <Text
             style={s.text}
-          >{`\u2022 Whether you want to be notified via email when users leave comments on your machines (once a day email digest).`}</Text>
+          >{`\u2022 Whether you want to be notified via email when users leave comments on your machines (once a day email digest containing the previous day's comments).`}</Text>
           <Text
             style={s.text}
           >{`\u2022 If you have a website, give us the link and your business name will appear as a hyperlink.`}</Text>

@@ -201,7 +201,7 @@ const LocationEvents = ({ locationId }) => {
                     { marginTop: 10, marginBottom: 20 },
                   ]}
                 >
-                  Showing six months of events. Some IFPA events may be missing
+                  Showing six months of events. Some IFPA events may be missing.
                 </Text>
               </View>
             )}
