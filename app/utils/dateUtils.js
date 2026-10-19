@@ -14,6 +14,30 @@ export const formatDateStr = (dateStr) => {
   return toMonthDayYear(new Date(y, m - 1, d));
 };
 
+const parseDateStr = (dateStr) => {
+  const [y, m, d] = dateStr.split("-");
+  return new Date(y, m - 1, d);
+};
+
+const toWeekdayDate = (date, withYear = true) =>
+  date.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    ...(withYear && { year: "numeric" }),
+  });
+
+// Format YYYY-MM-DD start/end strings → "Wed, Dec 23, 2026" or
+// "Wed, Dec 23 - Fri, Dec 25, 2026" (start year kept when years differ)
+export const formatEventDateRange = (startStr, endStr) => {
+  const start = parseDateStr(startStr);
+  if (!endStr || endStr === startStr) return toWeekdayDate(start);
+
+  const end = parseDateStr(endStr);
+  const sameYear = start.getFullYear() === end.getFullYear();
+  return `${toWeekdayDate(start, !sameYear)} - ${toWeekdayDate(end)}`;
+};
+
 // Format an ISO datetime string → "January 5, 2024"
 export const formatLongDate = (isoString) =>
   new Date(isoString).toLocaleDateString("en-US", {

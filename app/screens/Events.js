@@ -1,38 +1,28 @@
 import React, { useCallback, useRef, useState } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { connect } from "react-redux";
-import {
-  FlatList,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import Text from "../components/PbmText";
 import {
   ActivityIndicator,
   ButtonGroup,
-  ConfirmationModal,
-  HyperlinkText,
+  EventCard,
+  Pagination,
   ScrollToTop,
 } from "../components";
-import { getCachedEvents, getEvent, getEvents } from "../config/request";
+import { getCachedEvents, getEvents } from "../config/request";
 import * as WebBrowser from "expo-web-browser";
-import { showLocation } from "react-native-map-link";
 import { boundsToCoords } from "../utils/utilityFunctions";
 import { useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
-
-import { formatDateStr } from "../utils/dateUtils";
 
 export const Events = ({ query, user }) => {
   const [gettingEvents, setGettingEvents] = useState(true);
-  const [gettingTournament, setGettingTournament] = useState(true);
   const [events, setEvents] = useState([]);
-  const [tournament, setTournament] = useState([]);
+  const [pagy, setPagy] = useState(null);
+  const [pageState, setPageState] = useState({ searchKey: null, page: 1 });
+  const [expandedIds, setExpandedIds] = useState([]);
   const [error, setError] = useState(false);
-  const [modalError, setModalError] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [radius, setRadius] = useState(50);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -40,7 +30,6 @@ export const Events = ({ query, user }) => {
 
   const theme = useTheme();
   const s = getStyles(theme);
-  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const handleScroll = (event) => {
@@ -67,7 +56,11 @@ export const Events = ({ query, user }) => {
     swLat,
     swLon,
   });
-  const [tournamentModalOpen, setTournamentModalOpen] = useState(false);
+
+  // The page belongs to the search it was chosen for, so a new radius, map
+  // location, or unit starts back at page 1 without an extra fetch
+  const searchKey = `${radius}|${user.unitPreference}|${mapLat}|${mapLon}`;
+  const page = pageState.searchKey === searchKey ? pageState.page : 1;
 
   // Changing radius triggers the fetch via the focus effect below
   const updateIdx = (selectedIdx) => {
@@ -76,26 +69,39 @@ export const Events = ({ query, user }) => {
     setRadius(radiusArray[selectedIdx]);
   };
 
+  // Changing page triggers the fetch via the focus effect below
+  const goToPage = (newPage) => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
+    setPageState({ searchKey, page: newPage });
+  };
+
   useFocusEffect(
     useCallback(() => {
       const distanceUnitParam = user.unitPreference ? "k" : "m";
       const showEvents = (data) => {
         setError(false);
         setEvents(data.events ? data.events : []);
+        setPagy(data.pagy ?? null);
         setGettingEvents(false);
       };
 
-      const cached = getCachedEvents(radius, distanceUnitParam, mapLat, mapLon);
+      const cached = getCachedEvents(
+        radius,
+        distanceUnitParam,
+        mapLat,
+        mapLon,
+        page,
+      );
       if (cached) {
         showEvents(cached);
         return;
       }
 
-      // Ignore responses that arrive after radius/location changed or the screen blurred
+      // Ignore responses that arrive after radius/location/page changed or the screen blurred
       let cancelled = false;
       setEvents([]);
       setGettingEvents(true);
-      getEvents(radius, distanceUnitParam, mapLat, mapLon)
+      getEvents(radius, distanceUnitParam, mapLat, mapLon, page)
         .then((data) => {
           if (!cancelled) showEvents(data);
         })
@@ -108,192 +114,16 @@ export const Events = ({ query, user }) => {
       return () => {
         cancelled = true;
       };
-    }, [radius, mapLat, mapLon, user.unitPreference]),
+    }, [radius, mapLat, mapLon, user.unitPreference, page]),
   );
 
-  const fetchTournament = async (id) => {
-    try {
-      setGettingTournament(true);
-      const data = await getEvent(id);
-      setModalError(false);
-      setTournament(data?.event ? data.event : {});
-    } catch (e) {
-      setModalError(true);
-    } finally {
-      setGettingTournament(false);
-    }
-  };
+  const toggleDetails = (id) =>
+    setExpandedIds((ids) =>
+      ids.includes(id) ? ids.filter((i) => i !== id) : [...ids, id],
+    );
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
-      <ConfirmationModal
-        visible={tournamentModalOpen}
-        wide
-        closeModal={() => setTournamentModalOpen(false)}
-      >
-        {gettingTournament ? (
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              justifyContent: "center",
-            }}
-            style={{ height: "80%", paddingHorizontal: 10 }}
-          >
-            <Pressable>
-              <ActivityIndicator />
-            </Pressable>
-          </ScrollView>
-        ) : (
-          <>
-            <View style={{ width: "100%" }}>
-              <MaterialCommunityIcons
-                name="close-circle"
-                size={35}
-                onPress={() => setTournamentModalOpen(false)}
-                style={s.xButton}
-              />
-            </View>
-            {modalError ? (
-              <ScrollView
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  justifyContent: "center",
-                }}
-                style={{ height: "80%", paddingHorizontal: 10 }}
-              >
-                <Pressable>
-                  <Text
-                    style={[
-                      s.bold,
-                      {
-                        textAlign: "center",
-                        marginTop: 15,
-                        color: theme.text2,
-                      },
-                    ]}
-                  >
-                    {`Something went wrong. In the meantime, you can check the `}
-                    <Text
-                      style={[s.textLink, s.regular]}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(
-                          "https://www.ifpapinball.com/calendar/",
-                        )
-                      }
-                    >
-                      IFPA calendar
-                    </Text>
-                    {` on their site.`}
-                  </Text>
-                </Pressable>
-              </ScrollView>
-            ) : (
-              <ScrollView style={{ height: "80%", paddingHorizontal: 10 }}>
-                <Pressable>
-                  <Text style={[s.locationName, s.extraBold, { width: "90%" }]}>
-                    {tournament.name}
-                  </Text>
-                  {!!tournament.location_id && !!tournament.location_name ? (
-                    <Text
-                      style={[s.margin, s.venueName, s.venueLink, s.bold]}
-                      onPress={() => {
-                        setTournamentModalOpen(false);
-                        navigation.navigate("LocationDetails", {
-                          id: tournament.location_id,
-                        });
-                      }}
-                    >
-                      {tournament.location_name}
-                    </Text>
-                  ) : (
-                    !!tournament.external_location_name && (
-                      <Text style={[s.margin, s.venueName, s.bold]}>
-                        {tournament.external_location_name}
-                      </Text>
-                    )
-                  )}
-                  {!!tournament.address && (
-                    <Pressable
-                      style={({ pressed }) => [
-                        s.addressRow,
-                        s.margin,
-                        pressed && s.pressed,
-                      ]}
-                      onPress={() =>
-                        showLocation({
-                          address: tournament.address,
-                          directionsMode: "car",
-                        })
-                      }
-                    >
-                      <MaterialCommunityIcons
-                        name="directions"
-                        size={22}
-                        color={theme.purpleLight}
-                        style={s.directionsIcon}
-                      />
-                      <Text style={[s.address, s.addressLink, s.semiBold]}>
-                        {tournament.address}
-                      </Text>
-                    </Pressable>
-                  )}
-                  <Text style={[s.margin, s.cardTextStyle, s.regular]}>
-                    {!tournament.end_date ||
-                    formatDateStr(tournament.start_date) ===
-                      formatDateStr(tournament.end_date) ? (
-                      <Text style={s.bold}>
-                        {formatDateStr(tournament.start_date)}
-                      </Text>
-                    ) : (
-                      <Text style={s.bold}>
-                        {formatDateStr(tournament.start_date)}
-                        {" - "}
-                        {formatDateStr(tournament.end_date)}
-                      </Text>
-                    )}
-                  </Text>
-                  {!!tournament.ifpa_tournament_id && (
-                    <Text
-                      style={[s.margin, s.link, s.regular]}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(
-                          `https://www.ifpapinball.com/tournaments/view.php?t=${tournament.ifpa_tournament_id}`,
-                        )
-                      }
-                    >
-                      IFPA Calendar Website
-                    </Text>
-                  )}
-                  {!!tournament.external_link && (
-                    <Text
-                      style={[s.margin, s.link, s.regular]}
-                      onPress={() =>
-                        WebBrowser.openBrowserAsync(tournament.external_link)
-                      }
-                    >
-                      Event Website
-                    </Text>
-                  )}
-                  {!!tournament.event_type && (
-                    <Text style={[s.margin, { marginVertical: 5 }]}>
-                      <Text style={s.bold}>Tournament or league?</Text>{" "}
-                      <Text style={s.italic}>{tournament.event_type}</Text>
-                    </Text>
-                  )}
-                  {!!tournament.long_desc && (
-                    <>
-                      <Text style={[s.bold, { marginVertical: 5 }]}>
-                        Event details:
-                      </Text>
-                      <HyperlinkText text={tournament.long_desc} />
-                    </>
-                  )}
-                </Pressable>
-              </ScrollView>
-            )}
-          </>
-        )}
-      </ConfirmationModal>
       {gettingEvents ? (
         <ScrollView contentContainerStyle={{ paddingTop: 10 }}>
           <ButtonGroup
@@ -376,52 +206,25 @@ export const Events = ({ query, user }) => {
                 style={[s.problem, s.bold]}
               >{`No IFPA-sanctioned events found within ${radius} ${distanceUnit} of current map location.`}</Text>
             }
-            renderItem={({ item }) => {
-              const start_date = formatDateStr(item.start_date);
-              const end_date = item.end_date
-                ? formatDateStr(item.end_date)
-                : start_date;
-              const venueName =
-                item.location_name ?? item.external_location_name;
-              return (
-                <Pressable
-                  style={({ pressed }) => [
-                    {},
-                    s.cardContainer,
-                    pressed ? s.pressed : s.notPressed,
-                  ]}
-                  onPress={() => {
-                    fetchTournament(item.id);
-                    setTournamentModalOpen(true);
-                  }}
-                >
-                  <Text style={[s.padding, s.locationName, s.extraBold]}>
-                    {item.name}
-                  </Text>
-                  <Text style={[s.center, s.cardTextStyle, s.regular]}>
-                    {start_date === end_date ? (
-                      <Text style={s.bold}>{start_date}</Text>
-                    ) : (
-                      <Text style={s.bold}>
-                        {start_date} - {end_date}
-                      </Text>
-                    )}
-                  </Text>
-                  {!!venueName && (
-                    <Text style={[s.margin, s.venueName, s.bold]}>
-                      {venueName}
-                    </Text>
-                  )}
-                  {item.address ? (
-                    <Text
-                      style={[s.address, venueName ? s.marginSm : s.margin]}
-                    >
-                      {item.address}
-                    </Text>
-                  ) : null}
-                </Pressable>
-              );
-            }}
+            renderItem={({ item }) => (
+              <EventCard
+                event={item}
+                expanded={expandedIds.includes(item.id)}
+                onToggleDetails={toggleDetails}
+                showVenue
+              />
+            )}
+            extraData={expandedIds}
+            ListFooterComponent={
+              pagy ? (
+                <Pagination
+                  page={page}
+                  pages={pagy.pages}
+                  hasNext={!!pagy.next}
+                  onPageChange={goToPage}
+                />
+              ) : null
+            }
             keyExtractor={(event) => `${event.id}`}
           />
           <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
@@ -437,41 +240,13 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "400",
     },
-    italic: {
-      fontFamily: "Nunito",
-      fontWeight: "400",
-      fontStyle: "italic",
-    },
-    semiBold: {
-      fontFamily: "Nunito",
-      fontWeight: "600",
-    },
     bold: {
       fontFamily: "Nunito",
       fontWeight: "700",
     },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
-    },
     background: {
       padding: 30,
       backgroundColor: theme.base1,
-    },
-    locationName: {
-      fontSize: 18,
-      lineHeight: 22,
-      textAlign: "left",
-      color: theme.purpleLight,
-    },
-    margin: {
-      marginTop: 10,
-    },
-    marginSm: {
-      marginTop: 4,
-    },
-    padding: {
-      paddingBottom: 10,
     },
     problem: {
       textAlign: "center",
@@ -493,82 +268,9 @@ const getStyles = (theme) =>
       color: theme.pink1,
       fontSize: 13,
     },
-    cardContainer: {
-      borderRadius: 15,
-      marginVertical: 12,
-      marginHorizontal: 20,
-      backgroundColor: theme.white,
-      borderColor: "transparent",
-      borderWidth: 2,
-      padding: 10,
-    },
-    center: {
-      textAlign: "center",
-    },
-    cardTextStyle: {
-      fontSize: 15,
-      color: theme.text,
-    },
-    address: {
-      fontSize: 15,
-      color: theme.text3,
-    },
-    venueName: {
-      fontSize: 16,
-      color: theme.text,
-    },
-    venueLink: {
-      textDecorationLine: "underline",
-    },
-    addressRow: {
-      flexDirection: "row",
-      alignItems: "flex-start",
-    },
-    addressLink: {
-      flexShrink: 1,
-      textDecorationLine: "underline",
-    },
-    directionsIcon: {
-      marginRight: 6,
-    },
-    pressed: {
-      opacity: 0.8,
-    },
-    notPressed: {
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
     textLink: {
       textDecorationLine: "underline",
       color: "#7cc5ff",
-    },
-    xButton: {
-      zIndex: 20,
-      position: "absolute",
-      top: -5,
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
-    link: {
-      textDecorationLine: "underline",
-      color: theme.blue4,
     },
   });
 

@@ -7,10 +7,10 @@ import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import { ThemeContext } from "../theme-context";
 import ActivityIndicator from "./ActivityIndicator";
 import ConfirmationModal from "./ConfirmationModal";
-import HyperlinkText from "./HyperlinkText";
+import EventCard from "./EventCard";
 import Text from "./PbmText";
 import { getData } from "../config/request";
-import { formatDateStr, todayStr } from "../utils/dateUtils";
+import { todayStr } from "../utils/dateUtils";
 
 const LocationEvents = ({ locationId }) => {
   const { theme } = useContext(ThemeContext);
@@ -51,76 +51,6 @@ const LocationEvents = ({ locationId }) => {
     setExpandedIds((ids) =>
       ids.includes(id) ? ids.filter((i) => i !== id) : [...ids, id],
     );
-
-  const renderEvent = (event) => {
-    const start_date = formatDateStr(event.start_date);
-    const end_date = event.end_date
-      ? formatDateStr(event.end_date)
-      : start_date;
-    const expanded = expandedIds.includes(event.id);
-
-    return (
-      <View key={event.id} style={s.card}>
-        <Text style={[s.eventName, s.extraBold]}>{event.name}</Text>
-        {!!event.start_date && (
-          <Text style={[s.margin, s.cardText, s.bold]}>
-            {start_date === end_date
-              ? start_date
-              : `${start_date} - ${end_date}`}
-          </Text>
-        )}
-        {!!event.ifpa_tournament_id && (
-          <Text
-            style={[s.margin, s.link, s.regular]}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                `https://www.ifpapinball.com/tournaments/view.php?t=${event.ifpa_tournament_id}`,
-              )
-            }
-          >
-            IFPA Calendar Website
-          </Text>
-        )}
-        {!!event.external_link && (
-          <Text
-            style={[s.margin, s.link, s.regular]}
-            onPress={() => WebBrowser.openBrowserAsync(event.external_link)}
-          >
-            Event Website
-          </Text>
-        )}
-        {!!event.event_type && (
-          <Text style={[s.margin, s.cardText]}>
-            <Text style={s.bold}>Tournament or league?</Text>{" "}
-            <Text style={s.italic}>{event.event_type}</Text>
-          </Text>
-        )}
-        {!!event.long_desc && (
-          <>
-            <Pressable
-              style={({ pressed }) => [
-                s.detailsButton,
-                pressed && s.detailsButtonPressed,
-              ]}
-              onPress={() => toggleDetails(event.id)}
-            >
-              <Text style={[s.detailsButtonText, s.bold]}>Details</Text>
-              <MaterialCommunityIcons
-                name={expanded ? "chevron-up" : "chevron-down"}
-                size={20}
-                color={theme.theme == "dark" ? theme.purpleLight : theme.purple}
-              />
-            </Pressable>
-            {expanded && (
-              <View style={s.margin}>
-                <HyperlinkText text={event.long_desc} />
-              </View>
-            )}
-          </>
-        )}
-      </View>
-    );
-  };
 
   return (
     <>
@@ -189,22 +119,16 @@ const LocationEvents = ({ locationId }) => {
                   </Text>
                 </View>
               ) : (
-                events.map(renderEvent)
+                events.map((event) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    expanded={expandedIds.includes(event.id)}
+                    onToggleDetails={toggleDetails}
+                  />
+                ))
               )}
             </Pressable>
-            {events.length > 0 && (
-              <View>
-                <Text
-                  style={[
-                    s.sourceText,
-                    s.regular,
-                    { marginTop: 10, marginBottom: 20 },
-                  ]}
-                >
-                  Showing six months of events. Some IFPA events may be missing.
-                </Text>
-              </View>
-            )}
           </ScrollView>
         </>
       </ConfirmationModal>
@@ -231,11 +155,6 @@ const getStyles = (theme) =>
     regular: {
       fontFamily: "Nunito",
       fontWeight: "400",
-    },
-    italic: {
-      fontFamily: "Nunito",
-      fontWeight: "400",
-      fontStyle: "italic",
     },
     bold: {
       fontFamily: "Nunito",
@@ -323,58 +242,6 @@ const getStyles = (theme) =>
       textDecorationLine: "underline",
       color: theme.pink1,
       fontSize: 13,
-    },
-    card: {
-      padding: 10,
-      borderRadius: 15,
-      marginVertical: 8,
-      marginHorizontal: 20,
-      backgroundColor: theme.white,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      overflow: "visible",
-    },
-    eventName: {
-      fontSize: 18,
-      lineHeight: 22,
-      color: theme.purpleLight,
-    },
-    cardText: {
-      fontSize: 15,
-      color: theme.text,
-    },
-    margin: {
-      marginTop: 10,
-    },
-    link: {
-      textDecorationLine: "underline",
-      color: theme.blue4,
-    },
-    detailsButton: {
-      flexDirection: "row",
-      alignItems: "center",
-      alignSelf: "flex-start",
-      marginTop: 10,
-      paddingVertical: 4,
-      paddingLeft: 12,
-      paddingRight: 6,
-      borderRadius: 15,
-      borderWidth: 1,
-      borderColor: theme.pink2,
-    },
-    detailsButtonPressed: {
-      backgroundColor: theme.indigo4,
-    },
-    detailsButtonText: {
-      fontSize: 14,
-      color: theme.theme == "dark" ? theme.purpleLight : theme.purple,
     },
     problem: {
       textAlign: "center",

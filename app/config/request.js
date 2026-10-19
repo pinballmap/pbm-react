@@ -83,16 +83,16 @@ const EVENTS_CENTER_TOLERANCE = 0.1;
 const KM_PER_MILE = 1.609344;
 
 const eventsSearchCache = [];
-const eventCache = new Map();
 
 const isFresh = (entry) => Date.now() - entry.fetchedAt < EVENTS_CACHE_TTL_MS;
 
-export const getCachedEvents = (radius, distanceUnit, lat, lon) => {
+export const getCachedEvents = (radius, distanceUnit, lat, lon, page = 1) => {
   const date_today = todayStr();
   const entry = eventsSearchCache.find((e) => {
     if (
       e.radius !== radius ||
       e.distanceUnit !== distanceUnit ||
+      e.page !== page ||
       e.date !== date_today ||
       !isFresh(e)
     )
@@ -105,14 +105,14 @@ export const getCachedEvents = (radius, distanceUnit, lat, lon) => {
   return entry?.data;
 };
 
-export const getEvents = (radius, distanceUnit, lat, lon) => {
-  const cached = getCachedEvents(radius, distanceUnit, lat, lon);
+export const getEvents = (radius, distanceUnit, lat, lon, page = 1) => {
+  const cached = getCachedEvents(radius, distanceUnit, lat, lon, page);
   if (cached) return Promise.resolve(cached);
 
   const date_today = todayStr();
 
   return getData(
-    `/events.json?lat=${lat}&lon=${lon}&distance_unit=${distanceUnit}&radius=${radius}&start_date=${date_today}`,
+    `/events.json?lat=${lat}&lon=${lon}&distance_unit=${distanceUnit}&radius=${radius}&start_date=${date_today}&page=${page}`,
   )
     .then((data) => {
       eventsSearchCache.unshift({
@@ -120,6 +120,7 @@ export const getEvents = (radius, distanceUnit, lat, lon) => {
         distanceUnit,
         lat,
         lon,
+        page,
         date: date_today,
         data,
         fetchedAt: Date.now(),
@@ -128,18 +129,6 @@ export const getEvents = (radius, distanceUnit, lat, lon) => {
         eventsSearchCache.length,
         EVENTS_SEARCH_CACHE_MAX,
       );
-      return data;
-    })
-    .catch((err) => Promise.reject(err));
-};
-
-export const getEvent = (id) => {
-  const cached = eventCache.get(id);
-  if (cached && isFresh(cached)) return Promise.resolve(cached.data);
-
-  return getData(`/events/${id}.json`)
-    .then((data) => {
-      eventCache.set(id, { data, fetchedAt: Date.now() });
       return data;
     })
     .catch((err) => Promise.reject(err));

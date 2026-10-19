@@ -25,6 +25,7 @@ import AppWrapper from "./AppWrapper";
 import FavoriteLocation from "./FavoriteLocation";
 import LocationActivity from "./LocationActivity";
 import LocationEvents from "./LocationEvents";
+import EventCard from "./EventCard";
 import CustomMapMarkers from "./CustomMapMarkers";
 import LocationBottomSheet from "./LocationBottomSheet";
 import BackglassImage from "./BackglassImage";
@@ -64,6 +65,7 @@ export {
   FavoriteLocation,
   LocationActivity,
   LocationEvents,
+  EventCard,
   CustomMapMarkers,
   LocationBottomSheet,
   BackglassImage,
