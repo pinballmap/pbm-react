@@ -22,14 +22,14 @@ const EventCard = ({ event, expanded, onToggleDetails, showVenue }) => {
     <View style={s.card}>
       <Text style={[s.eventName, s.extraBold]}>{event.name}</Text>
       {!!event.start_date && (
-        <Text style={[s.margin, s.cardText, s.bold]}>
+        <Text style={[s.margin, s.cardText, s.semiBold]}>
           {formatEventDateRange(event.start_date, event.end_date)}
         </Text>
       )}
       {showVenue &&
         (isLinkedLocation ? (
           <Text
-            style={[s.margin, s.venueName, s.venueLink, s.semiBold]}
+            style={[s.margin, s.venueName, s.venueLink, s.bold]}
             onPress={() =>
               navigation.navigate("LocationDetails", {
                 id: event.location_id,
@@ -40,7 +40,7 @@ const EventCard = ({ event, expanded, onToggleDetails, showVenue }) => {
           </Text>
         ) : (
           !!event.external_location_name && (
-            <Text style={[s.margin, s.venueName, s.semiBold]}>
+            <Text style={[s.margin, s.venueName, s.bold]}>
               {event.external_location_name}
             </Text>
           )
@@ -96,7 +96,7 @@ const EventCard = ({ event, expanded, onToggleDetails, showVenue }) => {
       )}
       {!!event.event_type && (
         <Text style={[s.margin, s.cardText]}>
-          <Text style={s.bold}>Tournament or league?</Text>{" "}
+          <Text style={s.semiBold}>Tournament or league?</Text>{" "}
           <Text style={s.italic}>{event.event_type}</Text>
         </Text>
       )}

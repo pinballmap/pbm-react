@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.27
+
+October 22, 2026
+
+- Show upcoming events for that location in the location details screen.
+- Redesign Nearby Events screen: No more modal to see more details; link to location.
+- Android: User location now works on de-googled phones.
+- Many package and security updates.
+
 ### 5.4.26
 
 October 6, 2026

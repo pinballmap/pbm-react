@@ -143,7 +143,7 @@ export default {
         dark: "app/assets/images/ios-icon-dark.png",
         tinted: "app/assets/images/ios-icon-tinted.png",
       },
-      buildNumber: "319",
+      buildNumber: "320",
       supportsTablet: true,
       associatedDomains: [
         "applinks:pinballmap.com",
@@ -189,7 +189,7 @@ export default {
         "ACCESS_FINE_LOCATION",
         "WRITE_EXTERNAL_STORAGE",
       ],
-      versionCode: 282,
+      versionCode: 283,
       adaptiveIcon: {
         backgroundColor: "#ebecff",
         foregroundImage: "app/assets/images/adaptive-foreground.png",
