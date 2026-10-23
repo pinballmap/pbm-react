@@ -80,12 +80,24 @@ export default (state = initialState, action) => {
     case SET_MACHINE_FILTER: {
       if (action.machines) {
         const machines = action.machines;
+        // A single machine defaults to "All Versions" (its machine group) and
+        // no Insider Connected filter ("Doesn't matter"). Keep the user's
+        // existing toggles if the same machine is re-applied (FilterMap
+        // re-dispatches on every return from FindMachine).
+        const sameSingleMachine =
+          machines.length === 1 &&
+          state.machines.length === 1 &&
+          state.machines[0].id === machines[0].id;
         return {
           ...state,
           machines,
           machineIds: machines.map((m) => m.id),
-          machineGroupId: undefined,
-          icFilter: false,
+          machineGroupId: sameSingleMachine
+            ? state.machineGroupId
+            : machines.length === 1
+              ? machines[0].machine_group_id
+              : undefined,
+          icFilter: sameSingleMachine ? state.icFilter : false,
           machineId: "",
           machine: {},
         };
