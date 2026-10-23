@@ -20,6 +20,7 @@ import { dark, standard } from "./app/utils/themes";
 import { StatusBar } from "expo-status-bar";
 import store from "./app/store";
 import { login } from "./app/actions";
+import { loadAuth } from "./app/config/authStorage";
 import * as SplashScreen from "expo-splash-screen";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { AppWrapper } from "./app/components";
@@ -78,7 +79,7 @@ const App = () => {
       // LocationDetails/MachineDetails right away and they read loggedIn on
       // mount - so hydrate auth before the navigator renders.
       if (state) {
-        const auth = await retrieveItem("auth");
+        const auth = await loadAuth();
         if (auth?.id) store.dispatch(login(auth));
       }
       setInitialNavState(state);

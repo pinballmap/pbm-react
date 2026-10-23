@@ -13,7 +13,9 @@ export const saveAuth = async (auth) => {
   try {
     if (authentication_token) {
       await SecureStore.setItemAsync(TOKEN_KEY, authentication_token);
-    } else {
+    } else if (!auth.id) {
+      // Only a logged-out record (logout / login later) clears the token, so
+      // a login dispatched without one can't wipe a valid token
       await SecureStore.deleteItemAsync(TOKEN_KEY);
     }
     await AsyncStorage.setItem(AUTH_KEY, JSON.stringify(rest));
