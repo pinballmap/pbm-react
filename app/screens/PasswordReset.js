@@ -28,14 +28,11 @@ const PasswordReset = ({ navigation }) => {
   const submit = () => {
     setIdentificationError("");
     postData("/users/forgot_password.json", { identification })
-      .then(
-        () => setModalVisible(true),
-        (err) => {
-          throw err;
-        },
-      )
-      .catch((identificationError) =>
-        setIdentificationError(identificationError),
+      .then(() => setModalVisible(true))
+      .catch((err) =>
+        setIdentificationError(
+          typeof err === "string" ? err : "Something went wrong.",
+        ),
       );
   };
 
@@ -68,6 +65,10 @@ const PasswordReset = ({ navigation }) => {
           </View>
         </ConfirmationModal>
         <View style={{ marginTop: 10, paddingBottom: 30 }}>
+          <Text style={[s.instructionText, s.regular]}>
+            Enter your username or email so that we can email you instructions
+            to reset your password.
+          </Text>
           <View style={s.inputContainer}>
             <TextInput
               placeholder="Username or email..."
@@ -76,13 +77,14 @@ const PasswordReset = ({ navigation }) => {
                 setIdentification(identification)
               }
               value={identification}
-              errorStyle={{ color: "red" }}
-              errorMessage={identificationError}
               style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
+          {!!identificationError && (
+            <Text style={[s.errorText, s.bold]}>{identificationError}</Text>
+          )}
           <PbmButton
             title={"Submit"}
             onPress={submit}
@@ -101,12 +103,30 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "400",
     },
+    bold: {
+      fontFamily: "Nunito",
+      fontWeight: "700",
+    },
     extraBold: {
       fontFamily: "Nunito",
       fontWeight: "800",
     },
     margin: {
       marginHorizontal: 25,
+    },
+    instructionText: {
+      color: theme.text,
+      fontSize: 16,
+      marginHorizontal: 25,
+      marginTop: 15,
+    },
+    errorText: {
+      color: "red",
+      textAlign: "center",
+      fontSize: 16,
+      marginHorizontal: 25,
+      marginTop: -10,
+      marginBottom: 15,
     },
     inputContainer: {
       flexDirection: "row",

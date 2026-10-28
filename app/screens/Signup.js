@@ -177,8 +177,6 @@ const Signup = ({ loginLater, navigation }) => {
               placeholderTextColor={"#9b9ebb"}
               onChangeText={(username) => setUsername(username)}
               value={username}
-              errorStyle={{ color: "red" }}
-              errorMessage={usernameError}
               style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
@@ -191,8 +189,6 @@ const Signup = ({ loginLater, navigation }) => {
               placeholderTextColor={"#9b9ebb"}
               onChangeText={(email) => setEmail(email)}
               value={email}
-              errorStyle={{ color: "red" }}
-              errorMessage={emailError}
               style={[s.inputText, s.regular]}
               autoCapitalize="none"
               autoCorrect={false}
@@ -206,8 +202,6 @@ const Signup = ({ loginLater, navigation }) => {
               placeholderTextColor={"#9b9ebb"}
               onChangeText={(password) => setPassword(password)}
               value={password}
-              errorStyle={{ color: "red" }}
-              errorMessage={passwordError}
               style={[s.inputText, s.regular]}
               secureTextEntry={true}
               autoCapitalize="none"
@@ -223,8 +217,6 @@ const Signup = ({ loginLater, navigation }) => {
                 setConfirmPassword(confirm_password)
               }
               value={confirm_password}
-              errorStyle={{ color: "red" }}
-              errorMessage={confirm_passwordError}
               style={[s.inputText, s.regular]}
               secureTextEntry={true}
               autoCapitalize="none"
