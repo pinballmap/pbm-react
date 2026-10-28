@@ -100,6 +100,12 @@ const EventCard = ({ event, expanded, onToggleDetails, showVenue }) => {
           <Text style={s.italic}>{event.event_type}</Text>
         </Text>
       )}
+      {!!event.ranking && (
+        <Text style={[s.margin, s.cardText]}>
+          <Text style={s.semiBold}>Ranking:</Text>{" "}
+          <Text style={s.italic}>{event.ranking}</Text>
+        </Text>
+      )}
       {!!event.long_desc && (
         <>
           <Pressable
