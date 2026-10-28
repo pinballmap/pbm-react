@@ -27,6 +27,14 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
   const [password, setPassword] = useState(null);
   const [apiErrorMsg, setApiErrorMsg] = useState(null);
 
+  const leaveLogin = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate("MapTab");
+    }
+  };
+
   const submit = () => {
     setErrors(false);
     postData("/users/auth_details.json", { login: loginInput, password })
@@ -34,7 +42,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
         if (data?.user) {
           login(data.user);
           getFavoriteLocations(data.user.id);
-          navigation.navigate("MapTab");
+          leaveLogin();
         }
       })
       .catch((err) => {
@@ -121,7 +129,7 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
           <Pressable
             onPress={() => {
               loginLater();
-              navigation.navigate("MapTab");
+              leaveLogin();
             }}
             style={s.buttonMask}
           >

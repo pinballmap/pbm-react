@@ -402,6 +402,13 @@ const LocationDetails = (props) => {
     locationRef.current = props.location.location;
   }, [props.location.location]);
 
+  const prevLoggedInRef = useRef(loggedIn);
+  useEffect(() => {
+    if (prevLoggedInRef.current === loggedIn) return;
+    prevLoggedInRef.current = loggedIn;
+    dispatch(fetchLocation(locationId, loggedIn ? userId : undefined));
+  }, [loggedIn]);
+
   useEffect(() => {
     const onMount = async () => {
       try {
@@ -569,8 +576,6 @@ const LocationDetails = (props) => {
   const photoGesture = useSimultaneousGestures(pinchGesture, panGesture);
 
   const pinchAnimatedStyle = useAnimatedStyle(() => ({
-    // Size the wrapper to the image's fitted (contain) box so borderRadius
-    // rounds the visible image rather than the letterboxed container.
     ...(fittedWidth.value && fittedHeight.value
       ? { width: fittedWidth.value, height: fittedHeight.value }
       : { width: "100%", height: "100%" }),
@@ -588,8 +593,6 @@ const LocationDetails = (props) => {
     translateY.value = withTiming(0, { duration: 200 });
     savedTranslateX.value = 0;
     savedTranslateY.value = 0;
-    // Clear the previous photo's fitted size so the next one doesn't briefly
-    // render inside the old aspect ratio before its onLoad fires.
     naturalImageSize.current = { width: 0, height: 0 };
     fittedWidth.value = 0;
     fittedHeight.value = 0;
