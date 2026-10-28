@@ -526,6 +526,9 @@ const FindMachine = ({
   const opdbImgHeight =
     opdb_resized > 0 ? opdb_img_height_calc : opdb_img_height;
   const opdbImgWidth = opdb_resized > 0 ? deviceWidth - 48 : opdb_img_width;
+  const alreadyAtLocation = !!location.location.location_machine_xrefs?.some(
+    (lmx) => lmx.machine_id === machine.id,
+  );
 
   return (
     <>
@@ -542,14 +545,28 @@ const FindMachine = ({
             keyboardShouldPersistTaps="handled"
           >
             <View style={s.verticalAlign}>
-              <Text style={[s.modalTitle, s.regular]}>
-                Add{" "}
-                <Text style={[s.modalMachineName, s.bold]}>{machine.name}</Text>{" "}
-                to{" "}
-                <Text style={[s.modalLocationName, s.semiBold]}>
-                  {location.location.name}
+              {alreadyAtLocation ? (
+                <Text style={[s.modalTitle, s.regular]}>
+                  <Text style={[s.modalMachineName, s.bold]}>
+                    {machine.name}
+                  </Text>{" "}
+                  is already listed at{" "}
+                  <Text style={[s.modalLocationName, s.semiBold]}>
+                    {location.location.name}
+                  </Text>
                 </Text>
-              </Text>
+              ) : (
+                <Text style={[s.modalTitle, s.regular]}>
+                  Add{" "}
+                  <Text style={[s.modalMachineName, s.bold]}>
+                    {machine.name}
+                  </Text>{" "}
+                  to{" "}
+                  <Text style={[s.modalLocationName, s.semiBold]}>
+                    {location.location.name}
+                  </Text>
+                </Text>
+              )}
               {!!opdb_img && (
                 <BackglassImage
                   width={opdbImgWidth}
@@ -557,51 +574,61 @@ const FindMachine = ({
                   source={opdb_img}
                 />
               )}
-              <TextInput
-                multiline={true}
-                placeholder={"You can also include a machine comment..."}
-                placeholderTextColor={theme.indigo4}
-                style={[{ padding: 5, height: 70 }, s.textInput, s.regular]}
-                onChangeText={setCondition}
-                textAlignVertical="top"
-                underlineColorAndroid="transparent"
-              />
-              {machine.ic_eligible && (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: 10,
-                  }}
-                >
-                  <Text>
-                    Does machine have Stern Insider Connected enabled?
+              {alreadyAtLocation ? (
+                <WarningButton title={"Go Back"} onPress={cancelAddMachine} />
+              ) : (
+                <>
+                  <TextInput
+                    multiline={true}
+                    placeholder={"You can also include a machine comment..."}
+                    placeholderTextColor={theme.indigo4}
+                    style={[{ padding: 5, height: 70 }, s.textInput, s.regular]}
+                    onChangeText={setCondition}
+                    textAlignVertical="top"
+                    underlineColorAndroid="transparent"
+                  />
+                  {machine.ic_eligible && (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <Text>
+                        Does machine have Stern Insider Connected enabled?
+                      </Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Checkbox
+                          value={icEnabled}
+                          onValueChange={() => onIcEnabledPressed(true)}
+                          color={theme.purple}
+                          style={s.checkStyle}
+                        />
+                        <Text
+                          style={[s.checkText, s.bold, { marginRight: 20 }]}
+                        >
+                          Yes
+                        </Text>
+                        <Checkbox
+                          value={icEnabled === false}
+                          onValueChange={() => onIcEnabledPressed(false)}
+                          color={theme.purple}
+                          style={s.checkStyle}
+                        />
+                        <Text style={[s.checkText, s.bold]}>No</Text>
+                      </View>
+                    </View>
+                  )}
+                  <Text style={{ textAlign: "center" }}>
+                    Tip: only add machines that are on the floor.
                   </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Checkbox
-                      value={icEnabled}
-                      onValueChange={() => onIcEnabledPressed(true)}
-                      color={theme.purple}
-                      style={s.checkStyle}
-                    />
-                    <Text style={[s.checkText, s.bold, { marginRight: 20 }]}>
-                      Yes
-                    </Text>
-                    <Checkbox
-                      value={icEnabled === false}
-                      onValueChange={() => onIcEnabledPressed(false)}
-                      color={theme.purple}
-                      style={s.checkStyle}
-                    />
-                    <Text style={[s.checkText, s.bold]}>No</Text>
-                  </View>
-                </View>
+                  <PbmButton title={"Add"} onPress={addMachine} />
+                  <WarningButton title={"Go Back"} onPress={cancelAddMachine} />
+                </>
               )}
-              <Text style={{ textAlign: "center" }}>
-                Tip: only add machines that are on the floor.
-              </Text>
-              <PbmButton title={"Add"} onPress={addMachine} />
-              <WarningButton title={"Go Back"} onPress={cancelAddMachine} />
             </View>
           </KeyboardAwareScrollView>
         </View>
