@@ -103,7 +103,7 @@ const AddHighScore = ({ user }) => {
       >
         {!loggedIn ? (
           <NotLoggedIn
-            text={`You must be logged to add scores.`}
+            text={`You must be logged in to add scores.`}
             onPress={() => navigation.navigate("Login")}
           />
         ) : (

@@ -425,7 +425,9 @@ const RecentActivity = ({
                 {formatNumWithCommas(high_score)}
               </Text>
             </Text>
-            <Text style={[s.machineName, s.marginB8]}>{machine_name}</Text>
+            <Text style={[s.machineName, s.bold, s.marginB8]}>
+              {machine_name}
+            </Text>
             {!!location_name && (
               <Text style={[s.pbmText, s.regular]}>
                 <Text style={[s.locationName, s.semiBold]}>

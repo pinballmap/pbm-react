@@ -14,6 +14,15 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.28
+
+October 30, 2026
+
+- Redirect back to previous screen after login.
+- "Add machine" form alerts if machine already at that location.
+- Show "Ranking" value in events listings.
+- Fixed some bugs.
+
 ### 5.4.27
 
 October 22, 2026
