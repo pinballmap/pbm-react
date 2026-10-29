@@ -120,7 +120,7 @@ const MultiSelectRow = React.memo(
     onLifeListIconPress,
   }) => {
     const { theme } = useContext(ThemeContext);
-    const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2;
+    const backgroundColor = index % 2 === 0 ? theme.base1 : theme.rowAlt;
 
     return (
       <Pressable
@@ -456,7 +456,7 @@ const FindMachine = ({
 
   const renderRow = useCallback(
     ({ item, index }) => {
-      const backgroundColor = index % 2 === 0 ? theme.base1 : theme.base2;
+      const backgroundColor = index % 2 === 0 ? theme.base1 : theme.rowAlt;
       return (
         <Pressable onPress={() => setSelected(item)}>
           {({ pressed }) => (
@@ -900,7 +900,7 @@ const getStyles = (theme) =>
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      backgroundColor: theme.base1,
+      backgroundColor: theme.theme == "dark" ? theme.base1 : theme.base2,
     },
     multiSelectSpacer: {
       flex: 1,
