@@ -69,6 +69,7 @@ const UserProfile = ({
     !!(route?.params?.userId || user.loggedIn),
   );
   const [profileInfo, setProfileInfo] = useState({});
+  const [profileError, setProfileError] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollViewRef = useRef(null);
   const hasScrolledToMachineListRef = useRef(false);
@@ -82,22 +83,37 @@ const UserProfile = ({
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   };
 
-  useEffect(() => {
-    return navigation.addListener("focus", () => {
-      const id = route?.params?.userId ?? user.id;
-      if (id) {
-        getData(`/users/${id}/profile_info.json?life_list=`)
-          .then((data) => {
-            setFetchingUserInfo(false);
-            setProfileInfo(data.profile_info);
-            setLifeListQuery("");
-          })
-          .catch(() => setFetchingUserInfo(false));
-      } else {
+  const profileUserId = route?.params?.userId ?? user.id;
+
+  const fetchProfileInfo = () => {
+    if (!profileUserId) {
+      setFetchingUserInfo(false);
+      return;
+    }
+    getData(`/users/${profileUserId}/profile_info.json?life_list=`)
+      .then((data) => {
+        if (!data?.profile_info) throw new Error("Missing profile_info");
         setFetchingUserInfo(false);
-      }
-    });
-  }, [navigation]);
+        setProfileError(false);
+        setProfileInfo(data.profile_info);
+        setLifeListQuery("");
+      })
+      .catch(() => {
+        setFetchingUserInfo(false);
+        setProfileError(true);
+      });
+  };
+
+  // Re-subscribe when the id changes so the listener never fetches with a
+  // stale id (e.g. screen mounted logged out, then Login goes back to it)
+  useEffect(() => {
+    return navigation.addListener("focus", fetchProfileInfo);
+  }, [navigation, profileUserId]);
+
+  const retryFetchProfileInfo = () => {
+    setFetchingUserInfo(true);
+    fetchProfileInfo();
+  };
 
   const closeAccountModal = () => {
     setAccountModalVisible(false);
@@ -598,9 +614,11 @@ const UserProfile = ({
                   />
                 </View>
               )}
-              <Text
-                style={[s.joined, s.italic]}
-              >{`Joined: ${formatDate(created_at)}`}</Text>
+              {!!created_at && (
+                <Text
+                  style={[s.joined, s.italic]}
+                >{`Joined: ${formatDate(created_at)}`}</Text>
+              )}
               {isOwnProfile && (
                 <View style={s.accountSettingsContainer}>
                   <Pressable
@@ -627,318 +645,349 @@ const UserProfile = ({
                 </View>
               )}
             </View>
-            <View style={s.statContainer}>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Total contributions:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_total_submissions)}
+            {profileError ? (
+              <View style={s.profileErrorContainer}>
+                <Text style={[s.profileErrorText, s.medium]}>
+                  {`Couldn't load this profile. Check your connection and try again.`}
                 </Text>
+                <PbmButton title={"Retry"} onPress={retryFetchProfileInfo} />
               </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Machines added:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_machines_added)}
+            ) : (
+              <>
+                <View style={s.statContainer}>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>
+                      Total contributions:
+                    </Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_total_submissions)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>Machines added:</Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_machines_added)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>Machines removed:</Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_machines_removed)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>Machine comments:</Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_lmx_comments_left)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>High scores added:</Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_msx_scores_added)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>
+                      Machines in Life List:
+                    </Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_life_list_machines)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>
+                      Locations submitted:
+                    </Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_locations_suggested)}
+                    </Text>
+                  </View>
+                  <View style={s.statItem}>
+                    <Text style={[s.stat, s.semiBold]}>Locations edited:</Text>
+                    <Text style={[s.statNum, s.bold]}>
+                      {getStatNum(num_locations_edited)}
+                    </Text>
+                  </View>
+                </View>
+                <Text style={[s.section, s.bold]}>
+                  Some recently edited locations
                 </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Machines removed:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_machines_removed)}
-                </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Machine comments:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_lmx_comments_left)}
-                </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>High scores added:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_msx_scores_added)}
-                </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Machines in Life List:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_life_list_machines)}
-                </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Locations submitted:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_locations_suggested)}
-                </Text>
-              </View>
-              <View style={s.statItem}>
-                <Text style={[s.stat, s.semiBold]}>Locations edited:</Text>
-                <Text style={[s.statNum, s.bold]}>
-                  {getStatNum(num_locations_edited)}
-                </Text>
-              </View>
-            </View>
-            <Text style={[s.section, s.bold]}>
-              Some recently edited locations
-            </Text>
-            {isOwnProfile && (
-              <View
-                style={{
-                  paddingHorizontal: 20,
-                  paddingTop: 10,
-                  paddingBottom: 6,
-                }}
-              >
-                <Text style={[s.sectionDescription, s.regular]}>
-                  {`You can see all of your edits in the `}
-                  <Text
-                    style={[s.textLink, s.semiBold]}
-                    onPress={() =>
-                      navigation.navigate("RecentActivity", {
-                        screen: "RecentActivityStack",
-                        params: { initialGlobal: true, yourActivity: true },
-                      })
-                    }
+                {isOwnProfile && (
+                  <View
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingTop: 10,
+                      paddingBottom: 6,
+                    }}
                   >
-                    filtered Activity Feed
-                  </Text>
-                  {`.`}
-                </Text>
-              </View>
-            )}
-            <View style={{ paddingTop: 8, paddingBottom: 15 }}>
-              {profile_list_of_edited_locations.length === 0 ? (
-                <Text style={[s.none, s.italic]}>No edits yet</Text>
-              ) : (
-                profile_list_of_edited_locations
-                  .slice(0, 50)
-                  .map((location) => (
-                    <Pressable
-                      key={location[0]}
-                      onPress={() =>
-                        navigation.navigate("LocationDetails", {
-                          id: location[0],
-                        })
-                      }
-                    >
-                      {({ pressed }) => (
-                        <View
-                          style={[s.list, pressed ? s.pressed : s.notPressed]}
-                        >
-                          <Text
-                            style={[
-                              s.locationName,
-                              s.bold,
-                              pressed ? s.textPressed : s.textNotPressed,
-                            ]}
-                          >
-                            {location[1]}
-                          </Text>
-                        </View>
-                      )}
-                    </Pressable>
-                  ))
-              )}
-            </View>
-            <Text
-              style={[s.section, s.bold]}
-              onLayout={(e) => {
-                if (
-                  route?.params?.scrollToMachineList &&
-                  !hasScrolledToMachineListRef.current
-                ) {
-                  hasScrolledToMachineListRef.current = true;
-                  const y = e.nativeEvent.layout.y;
-                  requestIdleCallback(() => {
-                    scrollViewRef.current?.scrollTo({ y, animated: true });
-                  });
-                }
-              }}
-            >
-              {isOwnProfile
-                ? "Your Machine List and High Scores"
-                : "Machine List and High Scores"}
-            </Text>
-            {isOwnProfile && (
-              <View
-                style={{
-                  paddingHorizontal: 20,
-                  paddingTop: 10,
-                  paddingBottom: 6,
-                }}
-              >
-                <Text style={[s.sectionDescription, s.regular]}>
-                  {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
-                  <Text
-                    style={[s.textLink, s.semiBold]}
-                    onPress={() => navigation.navigate("AddHighScore")}
-                  >
-                    add a high score
-                  </Text>
-                  {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
-                </Text>
-                <PbmButton
-                  title={"Add to Your List"}
-                  onPress={() => {
-                    clearSelectedState();
-                    navigation.navigate("FindMachine", {
-                      multiSelect: true,
-                      lifeListUserId: user.id,
-                    });
-                  }}
-                  leftIcon={
-                    <MaterialCommunityIcons
-                      name="clipboard-list-outline"
-                      size={20}
-                      color={theme.theme === "dark" ? "#ffffff" : theme.text}
-                      style={{ marginRight: 8 }}
-                    />
-                  }
-                />
-              </View>
-            )}
-            {profile_life_list_stats.length > 0 && (
-              <View style={s.lifeListSearchContainer}>
-                <MaterialCommunityIcons
-                  name="magnify"
-                  size={22}
-                  color={theme.indigo4}
-                  style={{ marginLeft: 10, marginRight: 4 }}
-                />
-                <TextInput
-                  placeholder="Filter your list..."
-                  placeholderTextColor={theme.indigo4}
-                  value={lifeListQuery}
-                  onChangeText={setLifeListQuery}
-                  style={[s.lifeListSearchInput, s.regular]}
-                  autoCorrect={false}
-                />
-                {lifeListQuery.length > 0 && (
-                  <MaterialCommunityIcons
-                    name="close-circle"
-                    size={20}
-                    color={theme.purple}
-                    style={{ marginRight: 10 }}
-                    onPress={() => setLifeListQuery("")}
-                  />
-                )}
-              </View>
-            )}
-            <View
-              style={[{ paddingTop: 8 }, !isOwnProfile && { marginBottom: 30 }]}
-            >
-              {profile_life_list_stats.length === 0 ? (
-                <Text style={[s.none, s.italic]}>
-                  No machines or scores to list yet
-                </Text>
-              ) : filteredLifeList.length === 0 ? (
-                <Text style={[s.none, s.italic]}>No matches</Text>
-              ) : (
-                filteredLifeList.map((entry, idx) => {
-                  const hasScores = !!entry.list;
-                  return (
-                    <View
-                      key={entry.umx_id ?? idx}
-                      style={{
-                        marginHorizontal: 25,
-                        marginBottom: 10,
-                        borderBottomWidth:
-                          idx < filteredLifeList.length - 1
-                            ? StyleSheet.hairlineWidth
-                            : 0,
-                        borderBottomColor: theme.indigo4,
-                        paddingBottom: 10,
-                      }}
-                    >
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
+                    <Text style={[s.sectionDescription, s.regular]}>
+                      {`You can see all of your edits in the `}
+                      <Text
+                        style={[s.textLink, s.semiBold]}
+                        onPress={() =>
+                          navigation.navigate("RecentActivity", {
+                            screen: "RecentActivityStack",
+                            params: { initialGlobal: true, yourActivity: true },
+                          })
+                        }
                       >
-                        <Text
-                          selectable
-                          style={[s.lifeListMachine, s.extraBold, { flex: 1 }]}
+                        filtered Activity Feed
+                      </Text>
+                      {`.`}
+                    </Text>
+                  </View>
+                )}
+                <View style={{ paddingTop: 8, paddingBottom: 15 }}>
+                  {profile_list_of_edited_locations.length === 0 ? (
+                    <Text style={[s.none, s.italic]}>No edits yet</Text>
+                  ) : (
+                    profile_list_of_edited_locations
+                      .slice(0, 50)
+                      .map((location) => (
+                        <Pressable
+                          key={location[0]}
+                          onPress={() =>
+                            navigation.navigate("LocationDetails", {
+                              id: location[0],
+                            })
+                          }
                         >
-                          {entry.machine_name}
-                          <Text style={[s.machineYearMan, s.semiBold]}>
-                            {` ${entry.machine_year_man}`}
-                          </Text>
-                        </Text>
-                        {!hasScores && isOwnProfile && (
-                          <Pressable
-                            onPress={() => setMachineToRemove(entry)}
-                            style={{ paddingLeft: 10 }}
+                          {({ pressed }) => (
+                            <View
+                              style={[
+                                s.list,
+                                pressed ? s.pressed : s.notPressed,
+                              ]}
+                            >
+                              <Text
+                                style={[
+                                  s.locationName,
+                                  s.bold,
+                                  pressed ? s.textPressed : s.textNotPressed,
+                                ]}
+                              >
+                                {location[1]}
+                              </Text>
+                            </View>
+                          )}
+                        </Pressable>
+                      ))
+                  )}
+                </View>
+                <Text
+                  style={[s.section, s.bold]}
+                  onLayout={(e) => {
+                    if (
+                      route?.params?.scrollToMachineList &&
+                      !hasScrolledToMachineListRef.current
+                    ) {
+                      hasScrolledToMachineListRef.current = true;
+                      const y = e.nativeEvent.layout.y;
+                      requestIdleCallback(() => {
+                        scrollViewRef.current?.scrollTo({ y, animated: true });
+                      });
+                    }
+                  }}
+                >
+                  {isOwnProfile
+                    ? "Your Machine List and High Scores"
+                    : "Machine List and High Scores"}
+                </Text>
+                {isOwnProfile && (
+                  <View
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingTop: 10,
+                      paddingBottom: 6,
+                    }}
+                  >
+                    <Text style={[s.sectionDescription, s.regular]}>
+                      {`You can manage a "life list" of all the pinball machines you've ever played. Any time you `}
+                      <Text
+                        style={[s.textLink, s.semiBold]}
+                        onPress={() => navigation.navigate("AddHighScore")}
+                      >
+                        add a high score
+                      </Text>
+                      {`, that machine is added to your list. You can manually add machines below or when viewing a machine at a location.`}
+                    </Text>
+                    <PbmButton
+                      title={"Add to Your List"}
+                      onPress={() => {
+                        clearSelectedState();
+                        navigation.navigate("FindMachine", {
+                          multiSelect: true,
+                          lifeListUserId: user.id,
+                        });
+                      }}
+                      leftIcon={
+                        <MaterialCommunityIcons
+                          name="clipboard-list-outline"
+                          size={20}
+                          color={
+                            theme.theme === "dark" ? "#ffffff" : theme.text
+                          }
+                          style={{ marginRight: 8 }}
+                        />
+                      }
+                    />
+                  </View>
+                )}
+                {profile_life_list_stats.length > 0 && (
+                  <View style={s.lifeListSearchContainer}>
+                    <MaterialCommunityIcons
+                      name="magnify"
+                      size={22}
+                      color={theme.indigo4}
+                      style={{ marginLeft: 10, marginRight: 4 }}
+                    />
+                    <TextInput
+                      placeholder="Filter your list..."
+                      placeholderTextColor={theme.indigo4}
+                      value={lifeListQuery}
+                      onChangeText={setLifeListQuery}
+                      style={[s.lifeListSearchInput, s.regular]}
+                      autoCorrect={false}
+                    />
+                    {lifeListQuery.length > 0 && (
+                      <MaterialCommunityIcons
+                        name="close-circle"
+                        size={20}
+                        color={theme.purple}
+                        style={{ marginRight: 10 }}
+                        onPress={() => setLifeListQuery("")}
+                      />
+                    )}
+                  </View>
+                )}
+                <View
+                  style={[
+                    { paddingTop: 8 },
+                    !isOwnProfile && { marginBottom: 30 },
+                  ]}
+                >
+                  {profile_life_list_stats.length === 0 ? (
+                    <Text style={[s.none, s.italic]}>
+                      No machines or scores to list yet
+                    </Text>
+                  ) : filteredLifeList.length === 0 ? (
+                    <Text style={[s.none, s.italic]}>No matches</Text>
+                  ) : (
+                    filteredLifeList.map((entry, idx) => {
+                      const hasScores = !!entry.list;
+                      return (
+                        <View
+                          key={entry.umx_id ?? idx}
+                          style={{
+                            marginHorizontal: 25,
+                            marginBottom: 10,
+                            borderBottomWidth:
+                              idx < filteredLifeList.length - 1
+                                ? StyleSheet.hairlineWidth
+                                : 0,
+                            borderBottomColor: theme.indigo4,
+                            paddingBottom: 10,
+                          }}
+                        >
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
                           >
-                            <MaterialCommunityIcons
-                              name="trash-can-outline"
-                              size={24}
-                              color={theme.red2}
-                            />
-                          </Pressable>
-                        )}
-                      </View>
-                      {hasScores && (
-                        <>
-                          <Text
-                            selectable
-                            style={[s.score, s.regular, { marginTop: 8 }]}
-                          >
-                            <Text style={[s.bold, s.font16]}>
-                              Highest score:{" "}
+                            <Text
+                              selectable
+                              style={[
+                                s.lifeListMachine,
+                                s.extraBold,
+                                { flex: 1 },
+                              ]}
+                            >
+                              {entry.machine_name}
+                              <Text style={[s.machineYearMan, s.semiBold]}>
+                                {` ${entry.machine_year_man}`}
+                              </Text>
                             </Text>
-                            {formatNumWithCommas(entry.list[0])}
-                          </Text>
-                          {entry.list.length > 1 ? (
+                            {!hasScores && isOwnProfile && (
+                              <Pressable
+                                onPress={() => setMachineToRemove(entry)}
+                                style={{ paddingLeft: 10 }}
+                              >
+                                <MaterialCommunityIcons
+                                  name="trash-can-outline"
+                                  size={24}
+                                  color={theme.red2}
+                                />
+                              </Pressable>
+                            )}
+                          </View>
+                          {hasScores && (
                             <>
                               <Text
-                                style={[
-                                  { paddingLeft: 10, marginBottom: 6 },
-                                  s.bold,
-                                  s.font16,
-                                  s.marginT10,
-                                ]}
-                              >
-                                All scores:
-                              </Text>
-                              {entry.list.map((ll, i) => (
-                                <Text
-                                  key={i}
-                                  style={[
-                                    s.score,
-                                    s.regular,
-                                    { paddingLeft: 16 },
-                                  ]}
-                                >
-                                  {formatNumWithCommas(ll)}
-                                </Text>
-                              ))}
-                              <Text
-                                style={[
-                                  s.score,
-                                  s.regular,
-                                  s.marginB10,
-                                  s.marginT10,
-                                ]}
+                                selectable
+                                style={[s.score, s.regular, { marginTop: 8 }]}
                               >
                                 <Text style={[s.bold, s.font16]}>
-                                  Average:{" "}
+                                  Highest score:{" "}
                                 </Text>
-                                {formatNumWithCommas(entry.average)}
+                                {formatNumWithCommas(entry.list[0])}
                               </Text>
-                              <Text style={[s.score, s.regular]}>
-                                <Text style={[s.bold, s.font16]}>Count: </Text>
-                                {entry.count}
-                              </Text>
+                              {entry.list.length > 1 ? (
+                                <>
+                                  <Text
+                                    style={[
+                                      { paddingLeft: 10, marginBottom: 6 },
+                                      s.bold,
+                                      s.font16,
+                                      s.marginT10,
+                                    ]}
+                                  >
+                                    All scores:
+                                  </Text>
+                                  {entry.list.map((ll, i) => (
+                                    <Text
+                                      key={i}
+                                      style={[
+                                        s.score,
+                                        s.regular,
+                                        { paddingLeft: 16 },
+                                      ]}
+                                    >
+                                      {formatNumWithCommas(ll)}
+                                    </Text>
+                                  ))}
+                                  <Text
+                                    style={[
+                                      s.score,
+                                      s.regular,
+                                      s.marginB10,
+                                      s.marginT10,
+                                    ]}
+                                  >
+                                    <Text style={[s.bold, s.font16]}>
+                                      Average:{" "}
+                                    </Text>
+                                    {formatNumWithCommas(entry.average)}
+                                  </Text>
+                                  <Text style={[s.score, s.regular]}>
+                                    <Text style={[s.bold, s.font16]}>
+                                      Count:{" "}
+                                    </Text>
+                                    {entry.count}
+                                  </Text>
+                                </>
+                              ) : null}
                             </>
-                          ) : null}
-                        </>
-                      )}
-                    </View>
-                  );
-                })
-              )}
-            </View>
+                          )}
+                        </View>
+                      );
+                    })
+                  )}
+                </View>
+              </>
+            )}
           </View>
         )}
       </KeyboardAwareScrollView>
@@ -1088,6 +1137,17 @@ const getStyles = (theme) =>
       marginTop: 8,
       marginBottom: 6,
       fontSize: 16,
+      color: theme.text3,
+    },
+    profileErrorContainer: {
+      marginTop: 20,
+      marginBottom: 30,
+    },
+    profileErrorText: {
+      textAlign: "center",
+      fontSize: 16,
+      marginHorizontal: 20,
+      marginBottom: 10,
       color: theme.text3,
     },
     none: {
