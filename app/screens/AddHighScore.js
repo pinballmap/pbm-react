@@ -109,13 +109,17 @@ const AddHighScore = ({ user }) => {
         ) : (
           <>
             <Text style={[s.description, s.regular]}>
-              Select a machine and enter your score. The machine will be added
-              to your life list.
+              {`Select a machine and enter your score. All your scores can be viewed on `}
+              <Text
+                style={[s.textLink, s.medium]}
+                onPress={() => navigation.navigate("UserProfile")}
+              >
+                {"your profile"}
+              </Text>
+              {`.`}
             </Text>
             <Text style={[s.description, s.regular]}>
-              Scores entered here will not be associated with a location. If you
-              want to add a score to a location-specific machine, lookup that
-              location on the map.
+              {`Scores entered here will not be associated with a location. If you want to add a score to a location-specific machine, lookup that location on the map.`}
             </Text>
             <View style={[s.section, { marginTop: 12 }]}>
               <Text style={[s.sectionLabel, s.bold]}>Machine</Text>
@@ -172,6 +176,10 @@ const getStyles = (theme) =>
     regular: {
       fontFamily: "Nunito",
       fontWeight: "400",
+    },
+    medium: {
+      fontFamily: "Nunito",
+      fontWeight: "500",
     },
     semiBold: {
       fontFamily: "Nunito",
@@ -241,6 +249,10 @@ const getStyles = (theme) =>
     toastText: {
       color: "white",
       fontSize: 13,
+    },
+    textLink: {
+      textDecorationLine: "underline",
+      color: theme.theme == "dark" ? theme.pink3 : theme.pink1,
     },
   });
 
