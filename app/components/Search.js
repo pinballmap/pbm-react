@@ -63,8 +63,11 @@ const Search = ({
   const [showSubmitButton, setShowSubmitButton] = useState(false);
   const [searching, setSearching] = useState(false);
   const [recentSearchHistory, setRecentSearchHistory] = useState([]);
+  const [geocodeError, setGeocodeError] = useState("");
 
   const waitingForRef = useRef("");
+  // Bumped on every query edit and geocode request so late responses are ignored
+  const geocodeRequestRef = useRef(0);
   const textInputRef = useRef(null);
   const regionsPropRef = useRef(regionsProp);
   useEffect(() => {
@@ -111,8 +114,10 @@ const Search = ({
   );
 
   const changeQuery = (newQ) => {
+    geocodeRequestRef.current += 1;
     setQ(newQ);
     setShowSubmitButton(false);
+    setGeocodeError("");
     if (newQ === "") {
       setFoundLocations([]);
       setFoundCities([]);
@@ -122,27 +127,39 @@ const Search = ({
     autocompleteSearchDebounced(newQ);
   };
 
+  // On failure the modal stays open with the query intact so it can be edited
   const geocodeSearch = (searchQuery) => {
-    setSearchBarText(searchQuery);
+    const requestId = ++geocodeRequestRef.current;
+    const isCurrent = () => requestId === geocodeRequestRef.current;
+    setGeocodeError("");
     setSearching(true);
     getData(
-      `/locations/geocode_lat_lon.json?address=${searchQuery};geocode_key=${process.env.EXPO_PUBLIC_GEOCODE_KEY}`,
+      `/locations/geocode_lat_lon.json?address=${encodeURIComponent(searchQuery)}`,
     )
       .then(
         (response) => {
-          const lat = response.geocode_lat_lon[0],
-            lon = response.geocode_lat_lon[1];
-          const bounds = coordsToBounds({ lat, lon });
-          triggerUpdateBounds(bounds);
+          if (!isCurrent()) return;
+          // No match returns "" and auth/other failures return { errors }
+          const [lat, lon] = Array.isArray(response?.geocode_lat_lon)
+            ? response.geocode_lat_lon
+            : [];
+          if (lat == null || lon == null) {
+            setGeocodeError("Area not found.");
+            return;
+          }
+          setSearchBarText(searchQuery);
+          triggerUpdateBounds(coordsToBounds({ lat, lon }));
+          changeQuery("");
+          setSearchModalVisible(false);
         },
         () => {
-          Alert.alert("An error occurred geocoding.");
+          if (!isCurrent()) return;
+          setGeocodeError("Search failed. Please try again.");
         },
       )
-      .then(() => {
-        changeQuery("");
-        setSearchModalVisible(false);
-      });
+      // Skipped once stale: changeQuery (including the success path's
+      // changeQuery("")) and the autocomplete fetch own the spinner then
+      .finally(() => isCurrent() && setSearching(false));
   };
 
   const isDuplicate = (search) =>
@@ -430,6 +447,9 @@ const Search = ({
                 {...keyboardDismissProp}
               >
                 {searching && <ActivityIndicator />}
+                {!!geocodeError && (
+                  <Text style={[s.errorText, s.bold]}>{geocodeError}</Text>
+                )}
                 {q === "" && renderGoToFilter()}
                 {showRecentSearches && renderRecentSearchHistory()}
                 {!!foundRegions &&
@@ -628,6 +648,13 @@ const getStyles = (theme, deviceWidth) =>
       borderWidth: theme.theme == "dark" ? 1 : 0,
       borderColor: theme.theme == "dark" ? theme.base1 : "transparent",
       borderLeftWidth: 0,
+    },
+    errorText: {
+      color: "red",
+      textAlign: "center",
+      fontSize: 16,
+      paddingHorizontal: 10,
+      marginTop: 15,
     },
     goToFilterText: {
       marginHorizontal: 30,
