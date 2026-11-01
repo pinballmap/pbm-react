@@ -104,14 +104,13 @@ const App = () => {
     });
 
     async function lockOrientation() {
-      if (Device.deviceType === Device.DeviceType.TABLET) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.ALL,
-        );
-      } else {
+      if (Device.deviceType === Device.DeviceType.TABLET) return;
+      try {
         await ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.PORTRAIT_UP,
         );
+      } catch (e) {
+        console.warn("Failed to lock screen orientation", e);
       }
     }
 
