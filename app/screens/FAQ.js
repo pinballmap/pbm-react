@@ -136,7 +136,7 @@ const FAQ = ({ navigation, user, route }) => {
         <View style={s.answer}>
           <Text
             style={s.text}
-          >{`The Location List lists the locations currently loaded on the map. If you pan/zoom the map and then press "refresh map area", it will list different things.`}</Text>
+          >{`The Location List lists the locations currently visible on the map. If you pan/zoom the map, it will list different things.`}</Text>
         </View>
         <View style={s.question}>
           <Text

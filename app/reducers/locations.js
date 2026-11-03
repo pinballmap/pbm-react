@@ -20,6 +20,7 @@ export const initialState = {
   locationTypes: [],
   isFetchingMarkers: false,
   mapMarkers: [],
+  markersBounds: null,
   isFetchingList: false,
   listLocations: [],
   listPagy: null,
@@ -52,6 +53,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetchingMarkers: true,
+        markersBounds: action.bounds,
       };
     case FETCHING_MAP_MARKERS_SUCCESS:
       return {
@@ -64,6 +66,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetchingMarkers: false,
         mapMarkers: [],
+        markersBounds: null,
       };
     case FETCHING_LIST_LOCATIONS:
       return {

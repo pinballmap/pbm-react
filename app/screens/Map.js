@@ -9,16 +9,7 @@ import Ionicons from "@react-native-vector-icons/ionicons/static";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import Mapbox from "@rnmapbox/maps";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
-import Animated, {
-  Easing,
-  FadeOut,
-  Keyframe,
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { Easing, FadeOut, Keyframe } from "react-native-reanimated";
 import {
   ActivityIndicator,
   AppAlert,
@@ -38,6 +29,7 @@ import {
   updateBounds,
   getLocationsByRegion,
   getMapMarkers,
+  autoRefreshMapMarkers,
   triggerUpdateBounds,
   setSelectedMapLocation,
   reloadMapMarkers,
@@ -54,7 +46,11 @@ import {
   setAllAgesFilter,
   setPaymentTypeFilter,
 } from "../actions";
-import { getSelectedMapLocation, getFilterSummaryText } from "../selectors";
+import {
+  getSelectedMapLocation,
+  getFilterSummaryText,
+  getVisibleMarkerCounts,
+} from "../selectors";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -66,7 +62,9 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
 
-// "Refresh this area" fades in with a slight overshoot so new users notice it
+const AUTO_REFRESH_DEBOUNCE_MS = 400;
+
+// "Refresh this area" fades in with a slight overshoot so it gets noticed
 const refreshButtonEntering = new Keyframe({
   0: { opacity: 0, transform: [{ scale: 0.85 }] },
   60: {
@@ -109,11 +107,9 @@ const Map = ({
   const toCurrentLocationRef = useRef(false);
   const themeRef = useRef(theme.theme);
   const mapInitializedRef = useRef(false);
-  const hasNudgedRefreshRef = useRef(false);
-  const refreshNudgeScale = useSharedValue(1);
-  const refreshNudgeStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: refreshNudgeScale.value }],
-  }));
+  // Gestures only - programmatic camera moves fetch their own markers
+  const userMovedMapRef = useRef(false);
+  const autoRefreshTimerRef = useRef(null);
   const insets = useSafeAreaInsets();
   const topMargin = insets.top;
 
@@ -124,6 +120,8 @@ const Map = ({
     neLon,
     triggerUpdateBounds: shouldTriggerUpdateBounds,
   } = query;
+  // Query bounds already point at the destination before the camera moves
+  const cameraMovePending = shouldTriggerUpdateBounds;
   const latitude = (swLat + neLat) / 2;
   const longitude = (swLon + neLon) / 2;
   // Derived from the same fragment logic that builds the human-readable
@@ -160,9 +158,20 @@ const Map = ({
     run();
   }, []);
 
+  const cancelPendingAutoRefresh = () => {
+    userMovedMapRef.current = false;
+    if (autoRefreshTimerRef.current) {
+      clearTimeout(autoRefreshTimerRef.current);
+      autoRefreshTimerRef.current = null;
+    }
+  };
+
+  useEffect(() => cancelPendingAutoRefresh, []);
+
   useEffect(() => {
     const run = async () => {
       if (!isFirstLoad && shouldTriggerUpdateBounds) {
+        cancelPendingAutoRefresh();
         setShowUpdateSearch(false);
         if (!toCurrentLocationRef.current) {
           await sleep(500);
@@ -191,10 +200,6 @@ const Map = ({
   useEffect(() => {
     registerGetBounds(getBounds);
   }, []);
-
-  useEffect(() => {
-    if (!showUpdateSearch) hasNudgedRefreshRef.current = false;
-  }, [showUpdateSearch]);
 
   // URL filter params replace whatever filter state happens to already be
   // active - a link tap is a fresh intent, not a merge with prior browsing.
@@ -368,22 +373,31 @@ const Map = ({
 
   const onCameraChanged = async ({ gestures }) => {
     if (gestures?.isGestureActive) {
-      setShowUpdateSearch(true);
       setIsFirstLoad(false);
+      if (autoRefreshTimerRef.current) {
+        clearTimeout(autoRefreshTimerRef.current);
+        autoRefreshTimerRef.current = null;
+      }
+      userMovedMapRef.current = true;
     }
   };
 
-  // The button appears mid-gesture while attention is on the map, so pulse it
-  // once when panning stops - only once per appearance, to avoid nagging
+  const autoRefresh = async () => {
+    autoRefreshTimerRef.current = null;
+    const bounds = await getBounds();
+    if (!bounds || userMovedMapRef.current || autoRefreshTimerRef.current)
+      return;
+    setShowUpdateSearch(false);
+    const fetched = dispatch(autoRefreshMapMarkers(bounds));
+    if (fetched) dispatch(clearSearchBarText());
+  };
+
   const onMapIdle = () => {
-    if (!showUpdateSearch || hasNudgedRefreshRef.current) return;
-    hasNudgedRefreshRef.current = true;
-    refreshNudgeScale.value = withDelay(
-      150,
-      withSequence(
-        withTiming(1.06, { duration: 150, easing: Easing.out(Easing.quad) }),
-        withTiming(1, { duration: 200, easing: Easing.inOut(Easing.quad) }),
-      ),
+    if (!userMovedMapRef.current) return;
+    userMovedMapRef.current = false;
+    autoRefreshTimerRef.current = setTimeout(
+      autoRefresh,
+      AUTO_REFRESH_DEBOUNCE_MS,
     );
   };
 
@@ -436,6 +450,7 @@ const Map = ({
   };
 
   const updateCurrentLocation = () => {
+    cancelPendingAutoRefresh();
     dispatch(fetchCurrentLocation(false));
     setShowUpdateSearch(false);
     toCurrentLocationRef.current = true;
@@ -465,11 +480,14 @@ const Map = ({
           <Text style={[s.loadingText, s.regular]}>Loading...</Text>
         </View>
       ) : null}
-      {numLocations === 0 && !isFetchingMarkers && !isFirstLoad && (
-        <View style={[{ top: topMargin + 150 }, s.loading]}>
-          <Text style={[s.loadingText, s.regular]}>No Results</Text>
-        </View>
-      )}
+      {numLocations === 0 &&
+        !isFetchingMarkers &&
+        !isFirstLoad &&
+        !cameraMovePending && (
+          <View style={[{ top: topMargin + 150 }, s.loading]}>
+            <Text style={[s.loadingText, s.regular]}>No Results</Text>
+          </View>
+        )}
       <Mapbox.MapView
         ref={(c) => (_map.current = c)}
         onDidFinishLoadingMap={onFinishedLoading}
@@ -621,16 +639,19 @@ const Map = ({
           </Text>
         </View>
       </ConfirmationModal>
-      {!isFetchingMarkers && !isFirstLoad && numLocations > 0 && (
-        <View style={s.statsContainer}>
-          <Text style={[s.statsText, s.regular]} maxFontSizeMultiplier={1.5}>
-            {numLocations.toLocaleString()}{" "}
-            {numLocations === 1 ? "location" : "locations"} ·{" "}
-            {totalMachines.toLocaleString()}{" "}
-            {totalMachines === 1 ? "machine" : "machines"}
-          </Text>
-        </View>
-      )}
+      {!isFetchingMarkers &&
+        !isFirstLoad &&
+        !cameraMovePending &&
+        numLocations > 0 && (
+          <View style={s.statsContainer}>
+            <Text style={[s.statsText, s.regular]} maxFontSizeMultiplier={1.5}>
+              {numLocations.toLocaleString()}{" "}
+              {numLocations === 1 ? "location" : "locations"} ·{" "}
+              {totalMachines.toLocaleString()}{" "}
+              {totalMachines === 1 ? "machine" : "machines"}
+            </Text>
+          </View>
+        )}
       <View style={s.bottomContainer}>
         {showUpdateSearch ? (
           <Animated.View
@@ -638,21 +659,19 @@ const Map = ({
             exiting={FadeOut.duration(120)}
             style={s.updateAnimatedWrapper}
           >
-            <Animated.View style={refreshNudgeStyle}>
-              <Pressable
-                style={({ pressed }) => [
-                  s.shadow,
-                  s.updateContainerStyle,
-                  { marginBottom: selectedLocation ? 8 : 40 },
-                  pressed ? s.pressed : s.notPressed,
-                ]}
-                onPress={refreshResults}
-              >
-                <Text style={[s.semiBold, s.updateTitleStyle]}>
-                  Refresh this area
-                </Text>
-              </Pressable>
-            </Animated.View>
+            <Pressable
+              style={({ pressed }) => [
+                s.shadow,
+                s.updateContainerStyle,
+                { marginBottom: selectedLocation ? 8 : 40 },
+                pressed ? s.pressed : s.notPressed,
+              ]}
+              onPress={refreshResults}
+            >
+              <Text style={[s.semiBold, s.updateTitleStyle]}>
+                Refresh this area
+              </Text>
+            </Pressable>
           </Animated.View>
         ) : null}
         {!!selectedLocation && (
@@ -866,11 +885,7 @@ const mapStateToProps = (state) => {
   const { locations, query, regions, user, machines, operators } = state;
   const selectedLocation = getSelectedMapLocation(state);
   const filterSummary = getFilterSummaryText(state);
-  const numLocations = locations.mapMarkers.length;
-  const numMachines = locations.mapMarkers.reduce(
-    (sum, f) => sum + (f.properties?.machine_count ?? 0),
-    0,
-  );
+  const { numLocations, numMachines } = getVisibleMarkerCounts(state);
   const { locationTrackingServicesEnabled, isLocationServicesEnabled } = user;
 
   return {

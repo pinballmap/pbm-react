@@ -123,22 +123,49 @@ const buildFilterQueryString = (query, userId) => {
   return `${machineQueryString}${icQueryString}${manufacturerQueryString}${machineTypeQueryString}${machineYearQueryString}${locationTypeQueryString}${numMachinesQueryString}${locationIcQueryString}${allAgesQueryString}${paymentTypeQueryString}${byOperator}${byUserFaved}${byOpdbId}`;
 };
 
+// Ignore stale responses so a slow request can't overwrite newer markers
+let latestMarkersRequestId = 0;
+
 export const getMapMarkers =
   ({ swLat, swLon, neLat, neLon }) =>
   (dispatch, getState) => {
     const { query, user } = getState();
     const filterParams = buildFilterQueryString(query, user.id);
     const url = `/locations/within_bounding_box.geojson?swlat=${swLat}&swlon=${swLon}&nelat=${neLat}&nelon=${neLon}&${filterParams}no_details=2`;
-    dispatch({ type: FETCHING_MAP_MARKERS });
+    const requestId = ++latestMarkersRequestId;
+    dispatch({
+      type: FETCHING_MAP_MARKERS,
+      bounds: { swLat, swLon, neLat, neLon },
+    });
     return getData(url)
-      .then((data) =>
+      .then((data) => {
+        if (requestId !== latestMarkersRequestId) return;
         dispatch({
           type: FETCHING_MAP_MARKERS_SUCCESS,
           features: data.features ?? [],
-        }),
-      )
-      .catch(() => dispatch({ type: FETCHING_MAP_MARKERS_FAILURE }));
+        });
+      })
+      .catch(() => {
+        if (requestId !== latestMarkersRequestId) return;
+        dispatch({ type: FETCHING_MAP_MARKERS_FAILURE });
+      });
   };
+
+const boundsContain = (outer, inner) =>
+  !!outer &&
+  inner.swLat >= outer.swLat &&
+  inner.swLon >= outer.swLon &&
+  inner.neLat <= outer.neLat &&
+  inner.neLon <= outer.neLon;
+
+// Bounding-box requests aren't capped, so a viewport inside the last
+// requested box already has all its markers
+export const autoRefreshMapMarkers = (bounds) => (dispatch, getState) => {
+  dispatch(updateBounds(bounds));
+  if (boundsContain(getState().locations.markersBounds, bounds)) return false;
+  dispatch(getMapMarkers(bounds));
+  return true;
+};
 
 // Sort order for list requests. Index matches the ButtonGroup in LocationList:
 // 0=Near, 1=A-Z, 2=# Pins, 3=Date

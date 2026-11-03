@@ -75,6 +75,30 @@ const faveLocations = ({ user }) => user.faveLocations;
 export const selectedMapLocation = ({ locations }) =>
   locations.selectedMapLocation;
 
+const visibleBounds = ({ query }) => query;
+
+// mapMarkers can extend past the viewport after zooming in, so count only what's visible
+export const getVisibleMarkerCounts = createSelector(
+  [mapMarkers, visibleBounds],
+  (markers = [], { swLat, swLon, neLat, neLon }) => {
+    // Viewport crossing the antimeridian comes back with sw east of ne
+    const crossesAntimeridian = swLon > neLon;
+    let numLocations = 0;
+    let numMachines = 0;
+    for (const feature of markers) {
+      const [lon, lat] = feature.geometry?.coordinates ?? [];
+      if (lat < swLat || lat > neLat) continue;
+      const inLon = crossesAntimeridian
+        ? lon >= swLon || lon <= neLon
+        : lon >= swLon && lon <= neLon;
+      if (!inLon) continue;
+      numLocations += 1;
+      numMachines += feature.properties?.machine_count ?? 0;
+    }
+    return { numLocations, numMachines };
+  },
+);
+
 export const getMapLocations = createSelector(
   [mapMarkers, faveLocations, selectedMapLocation],
   (markers = [], faveLocations = [], selectedMapLocation) => {
