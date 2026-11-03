@@ -14,6 +14,13 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.4.29
+
+November 5, 2026
+
+- Remove the "refresh" button and automatically refresh results when map moved.
+- Fixed a bug with tablet orientation.
+
 ### 5.4.28
 
 October 30, 2026
