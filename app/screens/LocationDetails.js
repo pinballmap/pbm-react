@@ -91,6 +91,7 @@ import flagImages, { getFlagWidth } from "../utils/flagImages";
 import {
   GestureDetector,
   GestureHandlerRootView,
+  useNativeGesture,
   usePanGesture,
   usePinchGesture,
   useSimultaneousGestures,
@@ -126,6 +127,24 @@ const MAX_FONT_SCALE = 1.6;
 const SCALE_OFFSET = 2;
 const PHOTO_SWIPE_DISTANCE = 80;
 const PHOTO_SWIPE_VELOCITY = 800;
+const SCROLL_TAP_GUARD_MS = 100;
+
+const SCROLL_GESTURE_CONFIG = {
+  disallowInterruption: true,
+  shouldCancelWhenOutside: false,
+  disableReanimated: true,
+};
+
+const GestureScrollView = ({ ref, ...props }) => {
+  const scrollGesture = useNativeGesture(SCROLL_GESTURE_CONFIG);
+  return (
+    <GestureDetector gesture={scrollGesture}>
+      <ScrollView ref={ref} {...props} />
+    </GestureDetector>
+  );
+};
+
+const renderGestureScrollView = (props) => <GestureScrollView {...props} />;
 
 const MachineListItem = ({
   machine,
@@ -137,8 +156,10 @@ const MachineListItem = ({
   onSwipeDeletePress,
   onLifeListIconPress,
   swipeableRef,
+  lastScrollTime,
 }) => {
   const highlightProgress = useSharedValue(0);
+  const touchedWhileScrolling = useSharedValue(false);
   const localSwipeableRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -163,8 +184,12 @@ const MachineListItem = ({
 
   const lifeListIconTapGesture = useTapGesture({
     hitSlop: 10,
+    onTouchesDown: () => {
+      touchedWhileScrolling.value =
+        Date.now() - lastScrollTime.value < SCROLL_TAP_GUARD_MS;
+    },
     onDeactivate: (event) => {
-      if (!event.canceled) {
+      if (!event.canceled && !touchedWhileScrolling.value) {
         runOnJS(onLifeListIconPress)();
       }
     },
@@ -174,10 +199,14 @@ const MachineListItem = ({
     maxDistance: 10,
     requireToFail: lifeListIconTapGesture,
     onTouchesDown: () => {
-      highlightProgress.value = withTiming(1, { duration: 100 });
+      touchedWhileScrolling.value =
+        Date.now() - lastScrollTime.value < SCROLL_TAP_GUARD_MS;
+      if (!touchedWhileScrolling.value) {
+        highlightProgress.value = withTiming(1, { duration: 100 });
+      }
     },
     onDeactivate: (event) => {
-      if (!event.canceled) {
+      if (!event.canceled && !touchedWhileScrolling.value) {
         runOnJS(openMachineDetails)();
       }
     },
@@ -262,6 +291,7 @@ const LocationDetails = (props) => {
   const photoIndexSV = useSharedValue(0);
   const photoCountSV = useSharedValue(0);
   const panMaxPointers = useSharedValue(0);
+  const lastScrollTime = useSharedValue(0);
   const naturalImageSize = useRef({ width: 0, height: 0 });
   const photoIndexRef = useRef(0);
   const picturesRef = useRef(null);
@@ -731,6 +761,7 @@ const LocationDetails = (props) => {
   };
 
   const handleScroll = (event) => {
+    lastScrollTime.value = Date.now();
     const positionY = event.nativeEvent.contentOffset.y;
     setShowScrollToTop(positionY > 150);
   };
@@ -1732,6 +1763,7 @@ const LocationDetails = (props) => {
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
       <FlashList
         ref={listRef}
+        renderScrollComponent={renderGestureScrollView}
         data={sortedMachines}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
@@ -1749,10 +1781,12 @@ const LocationDetails = (props) => {
             swipeableRef={(ref) => {
               swipeableRefs.current[item.id] = ref;
             }}
+            lastScrollTime={lastScrollTime}
           />
         )}
         ListHeaderComponent={header}
         onScroll={handleScroll}
+        scrollEventThrottle={16}
         scrollIndicatorInsets={{ right: 1 }}
         maintainVisibleContentPosition={{ disabled: true }}
         contentContainerStyle={{
@@ -2098,7 +2132,7 @@ const getStyles = (theme, deviceWidth) =>
     locationName: {
       fontSize: deviceWidth < 325 ? 22 : 24,
       lineHeight: deviceWidth < 325 ? 28 : 30,
-      color: theme.theme === "dark" ? theme.pink3 : theme.pink1,
+      color: theme.pink1,
     },
     locationMetaContainer: {
       paddingTop: 0,
