@@ -490,12 +490,10 @@ function SuggestLocation({ navigation, location, ...props }) {
                       locationName.length === 0 ||
                       street.length === 0
                     }
-                    margin={s.buttonMargin}
                   />
                   <WarningButton
                     title={"Go Back"}
                     onPress={() => setShowSuggestLocationModal(false)}
-                    margin={s.buttonMargin}
                   />
                 </ScrollView>
               </View>
@@ -731,7 +729,7 @@ function SuggestLocation({ navigation, location, ...props }) {
           <PbmButton
             title={"Review Submission"}
             onPress={reviewSubmission}
-            margin={{ marginVertical: 30, marginHorizontal: 20 }}
+            margin={{ marginVertical: 30, marginHorizontal: 30 }}
           />
         </KeyboardAwareScrollView>
       )}
@@ -891,10 +889,6 @@ const getStyles = (theme, deviceWidth) =>
         height: 2,
       },
       textShadowRadius: 3.84,
-    },
-    buttonMargin: {
-      marginVertical: 15,
-      marginHorizontal: 20,
     },
     alreadyExistsContainer: {
       marginHorizontal: 20,

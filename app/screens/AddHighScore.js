@@ -162,7 +162,6 @@ const AddHighScore = ({ user }) => {
               title={"Save Score"}
               disabled={!selectedMachine || score.length === 0}
               onPress={() => setConfirmModalVisible(true)}
-              margin={{ marginHorizontal: 20, marginTop: 10 }}
             />
           </>
         )}

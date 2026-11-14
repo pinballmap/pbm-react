@@ -37,7 +37,7 @@ const getStyles = (theme) =>
     },
     buttonStyle: {
       borderRadius: 25,
-      padding: 10,
+      paddingVertical: 10,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
@@ -54,8 +54,10 @@ const getStyles = (theme) =>
       elevation: 5,
     },
     margin: {
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       marginVertical: 15,
+      paddingHorizontal: 30,
+      alignSelf: "center",
     },
     pressed: {
       shadowOpacity: 0,

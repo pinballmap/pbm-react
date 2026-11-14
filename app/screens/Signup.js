@@ -227,7 +227,6 @@ const Signup = ({ loginLater, navigation }) => {
             onPress={submit}
             title="Sign Up"
             disabled={!username || !email || !password || !confirm_password}
-            margin={{ marginHorizontal: 25, marginVertical: 15 }}
           />
           <View style={[s.externalLinkContainer, s.marginB20]}>
             <Pressable

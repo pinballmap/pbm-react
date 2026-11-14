@@ -104,7 +104,6 @@ const Login = ({ login, loginLater, navigation, getFavoriteLocations }) => {
             onPress={submit}
             title="Log In"
             disabled={!loginInput || !password}
-            margin={{ marginHorizontal: 25, marginVertical: 15 }}
           />
           <Pressable
             onPress={() => navigation.replace("Signup")}

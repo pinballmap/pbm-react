@@ -168,12 +168,7 @@ const Contact = ({ submitMessage, clearMessage, navigation, user, route }) => {
             textAlignVertical="top"
             underlineColorAndroid="transparent"
           />
-          <PbmButton
-            title={"Submit"}
-            disabled={_disabled()}
-            onPress={submit}
-            margin={{ marginVertical: 20, marginHorizontal: 0 }}
-          />
+          <PbmButton title={"Submit"} disabled={_disabled()} onPress={submit} />
         </KeyboardAwareScrollView>
       )}
     </View>

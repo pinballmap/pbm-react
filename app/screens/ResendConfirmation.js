@@ -89,7 +89,6 @@ const ResendConfirmation = ({ navigation }) => {
             title={"Submit"}
             onPress={submit}
             disabled={identification.length === 0}
-            margin={s.margin}
           />
         </View>
       </Pressable>
@@ -110,9 +109,6 @@ const getStyles = (theme) =>
     extraBold: {
       fontFamily: "Nunito",
       fontWeight: "800",
-    },
-    margin: {
-      marginHorizontal: 25,
     },
     instructionText: {
       color: theme.text,

@@ -62,7 +62,7 @@ const getStyles = (theme) =>
       elevation: 5,
     },
     margin: {
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       marginVertical: 15,
     },
     pressed: {

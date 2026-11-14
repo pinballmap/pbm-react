@@ -774,7 +774,7 @@ const MachineDetails = ({
                   <PbmButton
                     title={"Add to Your List"}
                     onPress={handleAddToLifeList}
-                    margin={{ marginHorizontal: 20, marginBottom: 15 }}
+                    margin={{ marginHorizontal: 30, marginBottom: 15 }}
                     leftIcon={
                       <MaterialCommunityIcons
                         name="clipboard-list-outline"
@@ -824,7 +824,7 @@ const MachineDetails = ({
               </Text>
             )}
             <PbmButton
-              margin={{ marginHorizontal: 20, marginTop: 10, marginBottom: 15 }}
+              margin={{ marginHorizontal: 30, marginTop: 10, marginBottom: 15 }}
               title={"Add a New Comment"}
               onPress={
                 loggedIn
@@ -911,7 +911,7 @@ const MachineDetails = ({
             )}
             <PbmButton
               title={"Add a High Score"}
-              margin={{ marginHorizontal: 20, marginTop: 15, marginBottom: 25 }}
+              margin={{ marginHorizontal: 30, marginTop: 15, marginBottom: 25 }}
               onPress={
                 loggedIn
                   ? () => setShowAddScoreModal(true)
@@ -1179,7 +1179,7 @@ const getStyles = (theme) =>
       marginRight: 10,
     },
     removeButtonMargins: {
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       marginTop: 0,
       marginBottom: 40,
     },

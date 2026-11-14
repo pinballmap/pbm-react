@@ -1728,12 +1728,20 @@ const LocationDetails = (props) => {
                         title={deletingPicture ? "Deleting…" : "Yes, delete"}
                         onPress={handleDeletePicture}
                         disabled={deletingPicture}
-                        margin={{ marginHorizontal: 6, marginVertical: 0 }}
+                        margin={{
+                          marginHorizontal: 6,
+                          marginVertical: 0,
+                          paddingHorizontal: 30,
+                        }}
                       />
                       <WarningButton
                         title="Cancel"
                         onPress={() => setDeleteConfirmVisible(false)}
-                        margin={{ marginHorizontal: 6, marginVertical: 0 }}
+                        margin={{
+                          marginHorizontal: 6,
+                          marginVertical: 0,
+                          paddingHorizontal: 30,
+                        }}
                       />
                     </View>
                   </View>
@@ -1821,6 +1829,10 @@ const LocationDetails = (props) => {
         <WarningButton
           title={"Close"}
           onPress={() => setRandomMachineModalVisible(false)}
+          margin={{
+            marginVertical: 15,
+            alignSelf: "center",
+          }}
         />
       </ConfirmationModal>
       <ConfirmationModal
@@ -2360,9 +2372,8 @@ const getStyles = (theme, deviceWidth) =>
       flexDirection: "row",
       alignItems: "center",
       gap: 6,
-      paddingVertical: 8,
-      paddingHorizontal: 16,
       borderRadius: 20,
+      paddingHorizontal: 30,
     },
     deleteConfirmContainer: {
       alignItems: "center",

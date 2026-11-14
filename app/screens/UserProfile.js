@@ -1329,7 +1329,7 @@ const getStyles = (theme) =>
     },
     blackButton: {
       backgroundColor: "#000000",
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       marginBottom: 15,
     },
   });
