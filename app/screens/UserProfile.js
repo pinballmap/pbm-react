@@ -734,7 +734,6 @@ const UserProfile = ({
                       >
                         filtered Activity Feed
                       </Text>
-                      {`.`}
                     </Text>
                   </View>
                 )}

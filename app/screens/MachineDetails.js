@@ -721,7 +721,6 @@ const MachineDetails = ({
                       {" "}
                       {`(${manufacturer}, ${year})`}
                     </Text>
-                    {`. `}
                   </Text>
                   <Text style={[s.lifeListText, s.regular]}>
                     <Text
@@ -735,7 +734,6 @@ const MachineDetails = ({
                     >
                       See your list
                     </Text>
-                    {`.`}
                   </Text>
                   {lifeListStatus.has_scores === false && (
                     <Text
@@ -772,7 +770,6 @@ const MachineDetails = ({
                     >
                       in your profile
                     </Text>
-                    {`.`}
                   </Text>
                   <PbmButton
                     title={"Add to Your List"}
