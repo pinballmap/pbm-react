@@ -1,10 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  interpolateColor,
-} from "react-native-reanimated";
-import { GestureDetector } from "react-native-gesture-handler";
+import { Pressable, View, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useTheme } from "@react-navigation/native";
 import { Text } from "./index";
@@ -34,24 +29,16 @@ const Title = ({ machine }) => {
 };
 
 const MachineCard = ({
-  highlightProgress,
+  pressed,
   machine,
   displayInsiderConnectedBadge,
-  lifeListIconTapGesture,
+  onLifeListIconPress,
 }) => {
   const theme = useTheme();
   const s = getStyles(theme);
 
-  const animatedHighlightStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      highlightProgress.value,
-      [0, 1],
-      [theme.white, theme.pink2],
-    ),
-  }));
-
   return (
-    <Animated.View style={[s.machineListContainer, animatedHighlightStyle]}>
+    <View style={[s.machineListContainer, pressed && s.pressed]}>
       <View style={{ flex: 1 }}>
         <Title machine={machine} />
         <View
@@ -86,14 +73,16 @@ const MachineCard = ({
           }}
         >
           {machine.in_life_list && (
-            <GestureDetector gesture={lifeListIconTapGesture}>
-              <View style={s.lifeListIconWrap}>
-                <MaterialCommunityIcons
-                  name="clipboard-list-outline"
-                  style={s.lifeListIcon}
-                />
-              </View>
-            </GestureDetector>
+            <Pressable
+              hitSlop={10}
+              onPress={onLifeListIconPress}
+              style={s.lifeListIconWrap}
+            >
+              <MaterialCommunityIcons
+                name="clipboard-list-outline"
+                style={s.lifeListIcon}
+              />
+            </Pressable>
           )}
           {displayInsiderConnectedBadge && machine.ic_enabled && (
             <Image
@@ -113,7 +102,7 @@ const MachineCard = ({
           )}
         </View>
       )}
-    </Animated.View>
+    </View>
   );
 };
 
@@ -150,9 +139,23 @@ const getStyles = (theme) =>
     machineListContainer: {
       flexDirection: "row",
       borderRadius: 25,
+      marginBottom: 20,
+      marginHorizontal: 20,
       backgroundColor: theme.white,
+      shadowColor:
+        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
       paddingVertical: 10,
       paddingHorizontal: 15,
+    },
+    pressed: {
+      backgroundColor: theme.pink2,
     },
     metaIcon: {
       paddingTop: 0,

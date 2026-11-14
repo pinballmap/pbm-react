@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-  useRef,
-} from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { connect, useDispatch } from "react-redux";
 import {
   ActivityIndicator as RNActivityIndicator,
@@ -36,7 +29,6 @@ import {
   LocationEvents,
   PbmButton,
   ReadMore,
-  RemoveMachineModal,
   ScrollToTop,
   Text,
   Toast,
@@ -84,20 +76,16 @@ import Animated, {
   withRepeat,
   Easing,
   runOnJS,
-  interpolateColor,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 import {
   GestureDetector,
   GestureHandlerRootView,
-  useNativeGesture,
   usePanGesture,
   usePinchGesture,
   useSimultaneousGestures,
-  useTapGesture,
 } from "react-native-gesture-handler";
-import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import { FlashList } from "@shopify/flash-list";
 
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_PUBLIC);
@@ -127,153 +115,6 @@ const MAX_FONT_SCALE = 1.6;
 const SCALE_OFFSET = 2;
 const PHOTO_SWIPE_DISTANCE = 80;
 const PHOTO_SWIPE_VELOCITY = 800;
-const SCROLL_TAP_GUARD_MS = 100;
-
-const SCROLL_GESTURE_CONFIG = {
-  disallowInterruption: true,
-  shouldCancelWhenOutside: false,
-  disableReanimated: true,
-};
-
-const GestureScrollView = ({ ref, ...props }) => {
-  const scrollGesture = useNativeGesture(SCROLL_GESTURE_CONFIG);
-  return (
-    <GestureDetector gesture={scrollGesture}>
-      <ScrollView ref={ref} {...props} />
-    </GestureDetector>
-  );
-};
-
-const renderGestureScrollView = (props) => <GestureScrollView {...props} />;
-
-const MachineListItem = ({
-  machine,
-  s,
-  theme,
-  navigation,
-  dispatch,
-  displayInsiderConnectedBadge,
-  onSwipeDeletePress,
-  onLifeListIconPress,
-  swipeableRef,
-  lastScrollTime,
-}) => {
-  const highlightProgress = useSharedValue(0);
-  const touchedWhileScrolling = useSharedValue(false);
-  const localSwipeableRef = useRef(null);
-
-  useLayoutEffect(() => {
-    highlightProgress.value = 0;
-    localSwipeableRef.current?.close();
-  }, [machine.id, highlightProgress]);
-
-  const openMachineDetails = useCallback(() => {
-    navigation.navigate("MachineDetails", {
-      machineName: machine.name,
-      lmxId: machine.id,
-    });
-    dispatch(setCurrentMachine(machine.id));
-  }, [navigation, dispatch, machine.id, machine.name]);
-
-  const highlightOn = () => {
-    highlightProgress.value = withTiming(1, { duration: 100 });
-  };
-  const highlightOff = () => {
-    highlightProgress.value = withTiming(0, { duration: 150 });
-  };
-
-  const lifeListIconTapGesture = useTapGesture({
-    hitSlop: 10,
-    onTouchesDown: () => {
-      touchedWhileScrolling.value =
-        Date.now() - lastScrollTime.value < SCROLL_TAP_GUARD_MS;
-    },
-    onDeactivate: (event) => {
-      if (!event.canceled && !touchedWhileScrolling.value) {
-        runOnJS(onLifeListIconPress)();
-      }
-    },
-  });
-
-  const tapGesture = useTapGesture({
-    maxDistance: 10,
-    requireToFail: lifeListIconTapGesture,
-    onTouchesDown: () => {
-      touchedWhileScrolling.value =
-        Date.now() - lastScrollTime.value < SCROLL_TAP_GUARD_MS;
-      if (!touchedWhileScrolling.value) {
-        highlightProgress.value = withTiming(1, { duration: 100 });
-      }
-    },
-    onDeactivate: (event) => {
-      if (!event.canceled && !touchedWhileScrolling.value) {
-        runOnJS(openMachineDetails)();
-      }
-    },
-    onFinalize: (event) => {
-      // On a successful tap we're navigating away — fade out slowly so
-      // the highlight doesn't visibly revert before the screen transition
-      // starts, which reads as the app pausing before responding.
-      highlightProgress.value = withTiming(0, {
-        duration: event.canceled ? 150 : 400,
-      });
-    },
-  });
-
-  const animatedWrapperStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      highlightProgress.value,
-      [0, 1],
-      [theme.white, theme.pink2],
-    ),
-  }));
-
-  return (
-    <Animated.View style={[s.machineRowWrapper, animatedWrapperStyle]}>
-      <View style={s.machineRowClip}>
-        <ReanimatedSwipeable
-          ref={(ref) => {
-            localSwipeableRef.current = ref;
-            swipeableRef(ref);
-          }}
-          overshootRight={false}
-          rightThreshold={40}
-          requireToFail={tapGesture}
-          onSwipeableOpenStartDrag={highlightOn}
-          onSwipeableCloseStartDrag={highlightOn}
-          onSwipeableWillClose={highlightOff}
-          renderRightActions={() => (
-            <Pressable
-              style={({ pressed }) => [
-                s.swipeDeleteAction,
-                pressed && s.swipeDeleteActionPressed,
-              ]}
-              onPress={() => onSwipeDeletePress(machine)}
-            >
-              <FontAwesome6
-                name="trash-can"
-                iconStyle="solid"
-                size={22}
-                color="#ffffff"
-              />
-            </Pressable>
-          )}
-        >
-          <GestureDetector gesture={tapGesture}>
-            <View>
-              <MachineCard
-                highlightProgress={highlightProgress}
-                machine={machine}
-                displayInsiderConnectedBadge={displayInsiderConnectedBadge}
-                lifeListIconTapGesture={lifeListIconTapGesture}
-              />
-            </View>
-          </GestureDetector>
-        </ReanimatedSwipeable>
-      </View>
-    </Animated.View>
-  );
-};
 
 const LocationDetails = (props) => {
   const scale = useSharedValue(1);
@@ -291,7 +132,6 @@ const LocationDetails = (props) => {
   const photoIndexSV = useSharedValue(0);
   const photoCountSV = useSharedValue(0);
   const panMaxPointers = useSharedValue(0);
-  const lastScrollTime = useSharedValue(0);
   const naturalImageSize = useRef({ width: 0, height: 0 });
   const photoIndexRef = useRef(0);
   const picturesRef = useRef(null);
@@ -324,7 +164,6 @@ const LocationDetails = (props) => {
   const [randomMachineModalVisible, setRandomMachineModalVisible] =
     useState(false);
   const [randomMachineName, setRandomMachineName] = useState(null);
-  const [showRemoveMachineModal, setShowRemoveMachineModal] = useState(false);
   const getInitialSortOrder = () =>
     props.user.rememberMachineSortPreference && props.user.lastMachineSortOrder
       ? props.user.lastMachineSortOrder
@@ -333,7 +172,6 @@ const LocationDetails = (props) => {
   const [sortModalVisible, setSortModalVisible] = useState(false);
   const mapPressedRef = useRef(false);
   const sortedMachinesRef = useRef([]);
-  const swipeableRefs = useRef({});
   const { fontScale } = useWindowDimensions();
   const clampedScale = Math.min(fontScale, MAX_FONT_SCALE);
   const iconSize =
@@ -728,11 +566,9 @@ const LocationDetails = (props) => {
       setDeletingPicture(false);
       setPhotoTipsModalVisible(false);
       setDeleteConfirmVisible(false);
-      setShowRemoveMachineModal(false);
       setSortOrder(getInitialSortOrder());
       setSortModalVisible(false);
       mapPressedRef.current = false;
-      swipeableRefs.current = {};
       listRef.current?.scrollToTop({ animated: false });
       dispatch(setSelectedMapLocation(null));
       dispatch(
@@ -761,7 +597,6 @@ const LocationDetails = (props) => {
   };
 
   const handleScroll = (event) => {
-    lastScrollTime.value = Date.now();
     const positionY = event.nativeEvent.contentOffset.y;
     setShowScrollToTop(positionY > 150);
   };
@@ -781,14 +616,12 @@ const LocationDetails = (props) => {
     }
   };
 
-  const handleSwipeDeletePress = (machine) => {
-    swipeableRefs.current[machine.id]?.close();
-    if (loggedIn) {
-      dispatch(setCurrentMachine(machine.id));
-      setShowRemoveMachineModal(true);
-    } else {
-      navigation.navigate("Login");
-    }
+  const openMachineDetails = (machine) => {
+    navigation.navigate("MachineDetails", {
+      machineName: machine.name,
+      lmxId: machine.id,
+    });
+    dispatch(setCurrentMachine(machine.id));
   };
 
   const onMapPress = () => {
@@ -1763,30 +1596,24 @@ const LocationDetails = (props) => {
     <View style={{ flex: 1, backgroundColor: theme.base1 }}>
       <FlashList
         ref={listRef}
-        renderScrollComponent={renderGestureScrollView}
         data={sortedMachines}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <MachineListItem
-            machine={item}
-            s={s}
-            theme={theme}
-            navigation={navigation}
-            dispatch={dispatch}
-            displayInsiderConnectedBadge={
-              displayInsiderConnectedBadgePreference
-            }
-            onSwipeDeletePress={handleSwipeDeletePress}
-            onLifeListIconPress={handleLifeListIconPress}
-            swipeableRef={(ref) => {
-              swipeableRefs.current[item.id] = ref;
-            }}
-            lastScrollTime={lastScrollTime}
-          />
+          <Pressable onPress={() => openMachineDetails(item)}>
+            {({ pressed }) => (
+              <MachineCard
+                pressed={pressed}
+                machine={item}
+                displayInsiderConnectedBadge={
+                  displayInsiderConnectedBadgePreference
+                }
+                onLifeListIconPress={handleLifeListIconPress}
+              />
+            )}
+          </Pressable>
         )}
         ListHeaderComponent={header}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
         scrollIndicatorInsets={{ right: 1 }}
         maintainVisibleContentPosition={{ disabled: true }}
         contentContainerStyle={{
@@ -1966,11 +1793,6 @@ const LocationDetails = (props) => {
           onPress={() => setConfirmModalVisible(false)}
         />
       </ConfirmationModal>
-      {showRemoveMachineModal && (
-        <RemoveMachineModal
-          closeModal={() => setShowRemoveMachineModal(false)}
-        />
-      )}
       <ConfirmationModal
         visible={randomMachineModalVisible}
         closeModal={() => setRandomMachineModalVisible(false)}
@@ -2348,34 +2170,6 @@ const getStyles = (theme, deviceWidth) =>
     lmxCountText: {
       fontSize: 16,
       color: theme.text,
-    },
-    machineRowWrapper: {
-      marginHorizontal: 20,
-      marginBottom: 20,
-      borderRadius: 25,
-      backgroundColor: theme.white,
-      shadowColor:
-        theme.theme == "dark" ? "rgb(0, 0, 0)" : "rgb(126, 126, 145)",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
-    machineRowClip: {
-      borderRadius: 25,
-      overflow: "hidden",
-    },
-    swipeDeleteAction: {
-      width: 80,
-      backgroundColor: theme.red2,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    swipeDeleteActionPressed: {
-      backgroundColor: "#a8434a",
     },
     randomMachineIcon: {
       justifyContent: "center",
