@@ -62,6 +62,12 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           title={"Stay Logged In"}
           onPress={() => setModalVisible(false)}
           accessibilityLabel="Stay Logged In"
+          margin={{
+            alignSelf: "stretch",
+            marginHorizontal: 30,
+            marginVertical: 15,
+            paddingHorizontal: 30,
+          }}
         />
       </ConfirmationModal>
       <DrawerItemList {...props} />
