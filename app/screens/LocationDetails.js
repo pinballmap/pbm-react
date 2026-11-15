@@ -840,7 +840,7 @@ const LocationDetails = (props) => {
           style={s.mapHeight}
         >
           <Mapbox.Camera
-            zoomLevel={11}
+            zoomLevel={13}
             centerCoordinate={[Number(location.lon), Number(location.lat)]}
             animationMode="none"
             animationDuration={0}
@@ -1829,10 +1829,6 @@ const LocationDetails = (props) => {
         <WarningButton
           title={"Close"}
           onPress={() => setRandomMachineModalVisible(false)}
-          margin={{
-            marginVertical: 15,
-            alignSelf: "center",
-          }}
         />
       </ConfirmationModal>
       <ConfirmationModal
