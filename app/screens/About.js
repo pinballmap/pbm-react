@@ -208,6 +208,17 @@ const About = ({ navigation, appAlert }) => {
           </Pressable>
           <Text style={s.text}>
             {`Follow us on `}
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://fosstodon.org/@pinballmap")
+              }
+            >
+              <Image
+                source={require("../assets/images/mastodon-logo-purple.svg")}
+                style={[s.socialIcon, { width: 16 * (75 / 79) }]}
+                contentFit="contain"
+              />
+            </Pressable>
             <Text
               style={[s.textLink, s.medium]}
               onPress={() =>
@@ -217,6 +228,19 @@ const About = ({ navigation, appAlert }) => {
               Mastodon
             </Text>
             {` or `}
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://bsky.app/profile/pinballmap.com",
+                )
+              }
+            >
+              <Image
+                source={require("../assets/images/bluesky_media_kit_logo_transparent_1.svg")}
+                style={[s.socialIcon, { width: 16 * (568 / 501) }]}
+                contentFit="contain"
+              />
+            </Pressable>
             <Text
               style={[s.textLink, s.medium]}
               onPress={() =>
@@ -231,6 +255,17 @@ const About = ({ navigation, appAlert }) => {
           </Text>
           <Text style={s.text}>
             {`Join `}
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://discord.gg/zK6xjyYHJf")
+              }
+            >
+              <Image
+                source={require("../assets/images/Discord-Symbol-Blurple.svg")}
+                style={[s.socialIcon, { width: 16 * (126.644 / 96) }]}
+                contentFit="contain"
+              />
+            </Pressable>
             <Text
               style={[s.textLink, s.medium]}
               onPress={() =>
@@ -523,6 +558,11 @@ const getStyles = (theme, deviceWidth) =>
     text: {
       fontSize: 16,
       marginBottom: 10,
+    },
+    socialIcon: {
+      height: 16,
+      marginRight: 4,
+      transform: [{ translateY: 2 }],
     },
     boldHeader: {
       fontSize: 18,

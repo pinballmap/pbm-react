@@ -273,17 +273,23 @@ const DrawerMenu = ({ logout, user, ...props }) => {
         </Pressable>
       )}
       <View style={s.versionRow}>
-        <Text allowFontScaling={false} style={[s.versionText, s.medium]}>
+        <Text style={[s.versionText, s.medium]}>
           v{Application.nativeApplicationVersion}
         </Text>
         {user.updateAvailable && (
-          <Text
-            allowFontScaling={false}
-            style={[s.versionText, s.updateLink, s.medium]}
+          <Pressable
             onPress={() => Linking.openURL(STORE_URL).catch(() => {})}
+            style={s.updateRow}
           >
-            Update Available
-          </Text>
+            <Text style={[s.versionText, s.updateLink, s.medium]}>
+              Update Available
+            </Text>
+            <MaterialCommunityIcons
+              name="star-face"
+              size={18}
+              color="#ff8c00"
+            />
+          </Pressable>
         )}
       </View>
     </DrawerContentScrollView>
@@ -347,6 +353,11 @@ const getStyles = (theme, deviceWidth) =>
     versionText: {
       color: theme.text3,
       fontSize: 13,
+    },
+    updateRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 4,
     },
     updateLink: {
       color: theme.blue4,
