@@ -20,7 +20,10 @@ November 16, 2026
 
 - Swipe left and right on photos to navigate between them.
 - Remove the "swipe left to remove machine" functionality. We tried this for a few months, but it was fragile. Now it's back to removing machines by clicking on it, then removing from the machine details screen.
-- Minor design tweaks.
+- Show in the Menu if an app update is available.
+- If a login is required for an action, show a modal saying this rather than sending user directly to the login screen.
+- Fewer red "cancel/close" buttons - they weren't always the best design practice.
+- Other design tweaks.
 
 ### 5.5.0
 
