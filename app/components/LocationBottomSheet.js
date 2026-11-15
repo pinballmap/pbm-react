@@ -175,7 +175,6 @@ const LocationBottomSheet = React.memo(
                     <View style={s.heartItem}>
                       <FavoriteLocation
                         locationId={id}
-                        navigation={navigation}
                         removeFavorite={(cb) => cb()}
                       />
                     </View>

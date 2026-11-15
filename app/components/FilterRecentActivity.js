@@ -98,18 +98,10 @@ const FilterRecentActivity = ({
   return (
     <View>
       {showModal && (
-        <ConfirmationModal closeModal={() => setShowModal(false)}>
-          <View style={s.header}>
-            <Text style={[s.filterTitle, s.extraBold]}>
-              Filter Recent Activity
-            </Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={35}
-              onPress={() => setShowModal(false)}
-              style={s.xButton}
-            />
-          </View>
+        <ConfirmationModal
+          closeModal={() => setShowModal(false)}
+          title="Filter Recent Activity"
+        >
           <View>
             <Pressable
               style={[
@@ -405,10 +397,6 @@ const getStyles = (theme, deviceWidth) =>
       fontFamily: "Nunito",
       fontWeight: "700",
     },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
-    },
     container: {
       flexDirection: "row",
       alignItems: "center",
@@ -420,33 +408,6 @@ const getStyles = (theme, deviceWidth) =>
     },
     containerSelected: {
       backgroundColor: theme.base3,
-    },
-    header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-    },
-    filterTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
     },
     titleStyle: {
       fontSize: 17,

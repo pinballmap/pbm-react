@@ -3,6 +3,7 @@ import RemoveMachine from "./RemoveMachine";
 import RemoveMachineModal from "./RemoveMachineModal";
 import NotLoggedIn from "./NotLoggedIn";
 import ConfirmationModal from "./ConfirmationModal";
+import LoginRequiredModal from "./LoginRequiredModal";
 import WarningButton from "./WarningButton";
 import PbmButton from "./PbmButton";
 import DropDownButton from "./DropDownButton";
@@ -43,6 +44,7 @@ export {
   RemoveMachineModal,
   NotLoggedIn,
   ConfirmationModal,
+  LoginRequiredModal,
   WarningButton,
   PbmButton,
   DropDownButton,

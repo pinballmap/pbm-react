@@ -4,7 +4,6 @@ import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { ThemeContext } from "../theme-context";
 import { ConfirmationModal, PbmButton, Screen, Text } from "../components";
 import { postData } from "../config/request";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 
 const PasswordReset = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -46,18 +45,8 @@ const PasswordReset = ({ navigation }) => {
         <ConfirmationModal
           visible={modalVisible}
           closeModal={closeModalAndNavigate}
+          title="Reset Initiated"
         >
-          <View style={s.modalHeader}>
-            <Text style={[s.modalHeaderTitle, s.extraBold]}>
-              Reset Initiated
-            </Text>
-            <MaterialCommunityIcons
-              name="close-circle"
-              size={35}
-              onPress={closeModalAndNavigate}
-              style={s.xButton}
-            />
-          </View>
           <View style={s.modalContent}>
             <Text style={[s.confirmText, s.regular]}>
               {`Check your email (and SPAM folder) and follow the instructions to complete your password reset.`}
@@ -106,10 +95,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "700",
     },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
-    },
     instructionText: {
       color: theme.text,
       fontSize: 16,
@@ -146,37 +131,8 @@ const getStyles = (theme) =>
     confirmText: {
       fontSize: 16,
     },
-    modalHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    modalHeaderTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
     modalContent: {
-      padding: 10,
-      paddingBottom: 0,
+      paddingHorizontal: 10,
     },
   });
 

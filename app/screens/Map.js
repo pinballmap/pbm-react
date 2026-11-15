@@ -621,23 +621,11 @@ const Map = ({
       <ConfirmationModal
         visible={filterInfoVisible}
         closeModal={() => setFilterInfoVisible(false)}
+        title="Map Filter Summary"
       >
-        <View style={s.filterSummaryModalHeader}>
-          <Text style={[s.filterSummaryModalTitle, s.extraBold]}>
-            Map Filter Summary
-          </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={() => setFilterInfoVisible(false)}
-            style={s.xButton}
-          />
-        </View>
-        <View style={s.filterSummaryModalContent}>
-          <Text style={[s.filterSummaryText, s.regular]}>
-            Showing locations with {filterSummary}.
-          </Text>
-        </View>
+        <Text style={[s.filterSummaryText, s.regular]}>
+          Showing locations with {filterSummary}.
+        </Text>
       </ConfirmationModal>
       {!isFetchingMarkers &&
         !isFirstLoad &&
@@ -694,10 +682,6 @@ const getStyles = (theme) =>
     semiBold: {
       fontFamily: "Nunito",
       fontWeight: "600",
-    },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
     },
     map: {
       flex: 1,
@@ -843,41 +827,10 @@ const getStyles = (theme) =>
       fontSize: 11,
       color: theme.text,
     },
-    filterSummaryModalHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    filterSummaryModalTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    filterSummaryModalContent: {
-      marginTop: 10,
-    },
     filterSummaryText: {
       textAlign: "center",
       fontSize: 16,
       paddingHorizontal: 16,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
     },
   });
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -21,9 +21,6 @@ import { ThemeContext } from "../theme-context";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { logout } from "../actions";
-import ConfirmationModal from "./ConfirmationModal";
-import PbmButton from "./PbmButton";
-import WarningButton from "./WarningButton";
 
 const STORE_URL =
   Platform.OS === "ios"
@@ -36,7 +33,6 @@ const DrawerMenu = ({ logout, user, ...props }) => {
   const s = getStyles(theme, deviceWidth);
   const iconSize = 28;
   const iconColor = "#bec2e6";
-  const [modalVisible, setModalVisible] = useState(false);
   const { navigation } = props;
 
   const navigateAndCloseDrawer = (...args) => {
@@ -44,32 +40,14 @@ const DrawerMenu = ({ logout, user, ...props }) => {
     navigation.closeDrawer();
   };
 
+  const goToMap = () =>
+    navigateAndCloseDrawer("Map", {
+      screen: "MapStack",
+      params: { screen: "MapTab" },
+    });
+
   return (
     <DrawerContentScrollView {...props}>
-      <ConfirmationModal
-        visible={modalVisible}
-        closeModal={() => setModalVisible(false)}
-      >
-        <PbmButton
-          title={"Log Me Out"}
-          onPress={() => {
-            setModalVisible(false);
-            logout();
-            navigateAndCloseDrawer("Map", { screen: "Login" });
-          }}
-        />
-        <WarningButton
-          title={"Stay Logged In"}
-          onPress={() => setModalVisible(false)}
-          accessibilityLabel="Stay Logged In"
-          margin={{
-            alignSelf: "stretch",
-            marginHorizontal: 30,
-            marginVertical: 15,
-            paddingHorizontal: 30,
-          }}
-        />
-      </ConfirmationModal>
       <DrawerItemList {...props} />
       <View
         style={{
@@ -160,12 +138,7 @@ const DrawerMenu = ({ logout, user, ...props }) => {
             style={s.iconStyle}
           />
         )}
-        onPress={() =>
-          navigateAndCloseDrawer("Map", {
-            screen: "MapStack",
-            params: { screen: "MapTab" },
-          })
-        }
+        onPress={goToMap}
       />
       <DrawerItem
         label="Submit New Location"
@@ -271,7 +244,10 @@ const DrawerMenu = ({ logout, user, ...props }) => {
       />
       {user.loggedIn ? (
         <Pressable
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            logout();
+            goToMap();
+          }}
           style={({ pressed }) => [
             { opacity: pressed ? 0.2 : 1.0 },
             s.container,

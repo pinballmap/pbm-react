@@ -39,6 +39,7 @@ import {
   ActivityIndicator,
   BackglassImage,
   ConfirmationModal,
+  LoginRequiredModal,
   MachineComment,
   MachineScore,
   PbmButton,
@@ -84,6 +85,7 @@ const MachineDetails = ({
   const [lifeListStatus, setLifeListStatus] = useState(null);
   const [lifeListError, setLifeListError] = useState(null);
   const [ictoggleModalVisible, setIctoggleModalVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [showRemoveFromLifeListModal, setShowRemoveFromLifeListModal] =
     useState(false);
   const [copiedNotice, setCopiedNotice] = useState(false);
@@ -97,6 +99,8 @@ const MachineDetails = ({
     lmxMutatedRef.current = lmxMutated;
   }, [lmxMutated]);
   const { id: userId, loggedIn } = user;
+  const requireLogin = (action) => () =>
+    loggedIn ? action() : setLoginModalVisible(true);
   const {
     opdb_id,
     opdb_img,
@@ -257,9 +261,14 @@ const MachineDetails = ({
           paddingBottom: insets.bottom,
         }}
       >
+        <LoginRequiredModal
+          visible={loginModalVisible}
+          closeModal={() => setLoginModalVisible(false)}
+        />
         <ConfirmationModal
           visible={ictoggleModalVisible}
           closeModal={() => setIctoggleModalVisible(false)}
+          title="Insider Connected"
         >
           <Text style={[s.modalTitle, s.regular]}>
             Is Stern Insider Connected
@@ -275,10 +284,6 @@ const MachineDetails = ({
           <PbmButton
             title={ic_enabled === true ? "Toggle Off" : "Toggle On"}
             onPress={onIctogglePress}
-          />
-          <WarningButton
-            title={"Close"}
-            onPress={() => setIctoggleModalVisible(false)}
           />
         </ConfirmationModal>
         <ConfirmationModal
@@ -599,11 +604,7 @@ const MachineDetails = ({
                 </View>
                 <View style={{ width: 160 }}>
                   <Pressable
-                    onPress={
-                      loggedIn
-                        ? () => setIctoggleModalVisible(true)
-                        : () => navigation.navigate("Login")
-                    }
+                    onPress={requireLogin(() => setIctoggleModalVisible(true))}
                     style={({ pressed }) => [
                       s.buttonIC,
                       pressed ? undefined : s.shadow,
@@ -826,11 +827,7 @@ const MachineDetails = ({
             <PbmButton
               margin={{ marginHorizontal: 30, marginTop: 10, marginBottom: 15 }}
               title={"Add a New Comment"}
-              onPress={
-                loggedIn
-                  ? () => setShowAddConditionModal(true)
-                  : () => navigation.navigate("Login")
-              }
+              onPress={requireLogin(() => setShowAddConditionModal(true))}
             />
             <View style={{ marginBottom: 10 }}>
               {mostRecentComments ? (
@@ -912,11 +909,7 @@ const MachineDetails = ({
             <PbmButton
               title={"Add a High Score"}
               margin={{ marginHorizontal: 30, marginTop: 15, marginBottom: 25 }}
-              onPress={
-                loggedIn
-                  ? () => setShowAddScoreModal(true)
-                  : () => navigation.navigate("Login")
-              }
+              onPress={requireLogin(() => setShowAddScoreModal(true))}
             />
             {userScores.length > 0 && (
               <View style={s.scoreList}>
@@ -962,11 +955,7 @@ const MachineDetails = ({
           <WarningButton
             title={"Remove Machine"}
             margin={s.removeButtonMargins}
-            onPress={
-              loggedIn
-                ? () => setShowRemoveMachineModal(true)
-                : () => navigation.navigate("Login")
-            }
+            onPress={requireLogin(() => setShowRemoveMachineModal(true))}
             leftIcon={
               <FontAwesome6
                 size={24}

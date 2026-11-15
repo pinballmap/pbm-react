@@ -162,7 +162,7 @@ const About = ({ navigation, appAlert }) => {
               onPress={() => navigation.navigate("Contact")}
               style={[s.textLink, s.medium]}
             >{`contact us`}</Text>
-            {`, and you also might find wisdom `}
+            {`, and you can learn about how to use the app `}
             <Text
               onPress={() => navigation.navigate("FAQ")}
               style={[s.textLink, s.medium]}
@@ -531,7 +531,7 @@ const getStyles = (theme, deviceWidth) =>
     textLink: {
       textDecorationLine: "underline",
       color: theme.purple2,
-      fontSize: 15,
+      fontSize: 16,
     },
     appAlert: {
       borderWidth: 0,
@@ -546,7 +546,7 @@ const getStyles = (theme, deviceWidth) =>
     pink: {
       color: theme.pink1,
       textDecorationLine: "underline",
-      fontSize: 15,
+      fontSize: 16,
     },
     category: {
       padding: 10,

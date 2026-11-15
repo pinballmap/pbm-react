@@ -27,6 +27,7 @@ import {
   FavoriteLocation,
   LocationActivity,
   LocationEvents,
+  LoginRequiredModal,
   PbmButton,
   ReadMore,
   ScrollToTop,
@@ -149,6 +150,7 @@ const LocationDetails = (props) => {
   const [locationId, setLocationId] = useState(props.route.params["id"]);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const { toastMessage, showToast } = useToast();
   const [pictures, setPictures] = useState(null);
   const [photoModalVisible, setPhotoModalVisible] = useState(false);
@@ -601,20 +603,18 @@ const LocationDetails = (props) => {
     setShowScrollToTop(positionY > 150);
   };
 
-  const handleConfirmPress = (id, loggedIn) => {
-    if (loggedIn) {
-      const { email, username, authentication_token } = props.user;
-      const body = {
-        user_email: email,
-        user_token: authentication_token,
-      };
-      dispatch(confirmLocationIsUpToDate(body, id, username));
-      setConfirmModalVisible(false);
-    } else {
-      setConfirmModalVisible(false);
-      navigation.navigate("Login");
-    }
+  const handleConfirmPress = (id) => {
+    const { email, username, authentication_token } = props.user;
+    const body = {
+      user_email: email,
+      user_token: authentication_token,
+    };
+    dispatch(confirmLocationIsUpToDate(body, id, username));
+    setConfirmModalVisible(false);
   };
+
+  const requireLogin = (action) => () =>
+    loggedIn ? action() : setLoginModalVisible(true);
 
   const openMachineDetails = (machine) => {
     navigation.navigate("MachineDetails", {
@@ -659,10 +659,6 @@ const LocationDetails = (props) => {
   };
 
   const handleUploadPicture = async () => {
-    if (!loggedIn) {
-      navigation.navigate("Login");
-      return;
-    }
     const seen = await AsyncStorage.getItem("photoTipsSeen");
     if (seen) {
       openPhotoPicker();
@@ -870,7 +866,6 @@ const LocationDetails = (props) => {
             <View style={s.heartItem}>
               <FavoriteLocation
                 locationId={location.id}
-                navigation={navigation}
                 removeFavorite={(cb) => cb()}
               />
             </View>
@@ -1249,11 +1244,9 @@ const LocationDetails = (props) => {
                   s.editDetailsIcon,
                   pressed ? s.opacity04 : s.opacity1,
                 ]}
-                onPress={() =>
-                  loggedIn
-                    ? navigation.navigate("EditLocationDetails")
-                    : navigation.navigate("Login")
-                }
+                onPress={requireLogin(() =>
+                  navigation.navigate("EditLocationDetails"),
+                )}
               >
                 <MaterialCommunityIcons
                   name="pencil-outline"
@@ -1444,11 +1437,9 @@ const LocationDetails = (props) => {
                     s.boxShadow,
                     pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
                   ]}
-                  onPress={() =>
-                    loggedIn
-                      ? navigation.navigate("FindMachine", { simpleSort: true })
-                      : navigation.navigate("Login")
-                  }
+                  onPress={requireLogin(() =>
+                    navigation.navigate("FindMachine", { simpleSort: true }),
+                  )}
                 >
                   <MaterialCommunityIcons
                     name={"plus-outline"}
@@ -1474,7 +1465,7 @@ const LocationDetails = (props) => {
                     s.boxShadow,
                     pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
                   ]}
-                  onPress={() => setConfirmModalVisible(true)}
+                  onPress={requireLogin(() => setConfirmModalVisible(true))}
                 >
                   <MaterialCommunityIcons
                     name={"check-outline"}
@@ -1501,7 +1492,7 @@ const LocationDetails = (props) => {
                     s.boxShadow,
                     pressed ? s.quickButtonPressed : s.quickButtonNotPressed,
                   ]}
-                  onPress={handleUploadPicture}
+                  onPress={requireLogin(handleUploadPicture)}
                   disabled={uploadingPicture}
                 >
                   <MaterialCommunityIcons
@@ -1766,24 +1757,25 @@ const LocationDetails = (props) => {
         </GestureHandlerRootView>
       </Modal>
 
+      <LoginRequiredModal
+        visible={loginModalVisible}
+        closeModal={() => setLoginModalVisible(false)}
+      />
       <ConfirmationModal
         visible={photoTipsModalVisible}
         closeModal={() => setPhotoTipsModalVisible(false)}
+        title="Photo Tips"
       >
-        <Text style={[s.confirmText, s.regular]}>Photo Tips</Text>
         <Text style={[s.photoTipsText, s.regular]}>
           Choose a picture that gives a feel for the place. No need to include a
           picture of every single machine.
         </Text>
         <PbmButton title={"Choose a Photo"} onPress={handlePhotoTipsConfirm} />
-        <WarningButton
-          title={"Cancel"}
-          onPress={() => setPhotoTipsModalVisible(false)}
-        />
       </ConfirmationModal>
       <ConfirmationModal
         visible={confirmModalVisible}
         closeModal={() => setConfirmModalVisible(false)}
+        title="Confirm Lineup"
       >
         <Text style={[s.confirmText, s.regular]}>
           Confirm the lineup at{" "}
@@ -1794,16 +1786,13 @@ const LocationDetails = (props) => {
         </Text>
         <PbmButton
           title={"Confirm Lineup"}
-          onPress={() => handleConfirmPress(location.id, loggedIn)}
-        />
-        <WarningButton
-          title={"Cancel"}
-          onPress={() => setConfirmModalVisible(false)}
+          onPress={() => handleConfirmPress(location.id)}
         />
       </ConfirmationModal>
       <ConfirmationModal
         visible={randomMachineModalVisible}
         closeModal={() => setRandomMachineModalVisible(false)}
+        title="Random Machine"
       >
         <Text style={[s.confirmText, s.regular]}>
           Can&apos;t decide which machine to play? Let us help.
@@ -1826,67 +1815,51 @@ const LocationDetails = (props) => {
           title={"Pick a random machine"}
           onPress={pickRandomMachine}
         />
-        <WarningButton
-          title={"Close"}
-          onPress={() => setRandomMachineModalVisible(false)}
-        />
       </ConfirmationModal>
       <ConfirmationModal
         visible={sortModalVisible}
         closeModal={() => setSortModalVisible(false)}
+        title="Change Sort Order"
       >
-        <View style={s.sortModalHeader}>
-          <Text style={[s.sortModalHeaderTitle, s.extraBold]}>
-            Change Sort Order
-          </Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={() => setSortModalVisible(false)}
-            style={s.sortModalXButton}
-          />
-        </View>
-        <View style={s.sortModalContent}>
-          {sortOptions.map((option) => {
-            const isSelected = option.key === sortOrder;
-            return (
-              <Pressable
-                key={option.key}
-                onPress={() => {
-                  setSortOrder(option.key);
-                  setSortModalVisible(false);
-                  if (rememberMachineSortPreference) {
-                    dispatch(setLastMachineSortOrder(option.key));
-                  }
-                }}
-                style={({ pressed }) => [
-                  s.sortModalItem,
-                  isSelected && s.sortModalItemSelected,
-                  pressed && s.yearButtonPressed,
+        {sortOptions.map((option) => {
+          const isSelected = option.key === sortOrder;
+          return (
+            <Pressable
+              key={option.key}
+              onPress={() => {
+                setSortOrder(option.key);
+                setSortModalVisible(false);
+                if (rememberMachineSortPreference) {
+                  dispatch(setLastMachineSortOrder(option.key));
+                }
+              }}
+              style={({ pressed }) => [
+                s.sortModalItem,
+                isSelected && s.sortModalItemSelected,
+                pressed && s.yearButtonPressed,
+              ]}
+            >
+              <Text
+                maxFontSizeMultiplier={1.3}
+                style={[
+                  s.sortModalItemText,
+                  s.medium,
+                  isSelected && s.sortModalItemTextSelected,
+                  isSelected && s.bold,
                 ]}
               >
-                <Text
-                  maxFontSizeMultiplier={1.3}
-                  style={[
-                    s.sortModalItemText,
-                    s.medium,
-                    isSelected && s.sortModalItemTextSelected,
-                    isSelected && s.bold,
-                  ]}
-                >
-                  {option.label}
-                </Text>
-                {isSelected && (
-                  <MaterialCommunityIcons
-                    name="check"
-                    size={18}
-                    color={theme.text2}
-                  />
-                )}
-              </Pressable>
-            );
-          })}
-        </View>
+                {option.label}
+              </Text>
+              {isSelected && (
+                <MaterialCommunityIcons
+                  name="check"
+                  size={18}
+                  color={theme.text2}
+                />
+              )}
+            </Pressable>
+          );
+        })}
       </ConfirmationModal>
       <ScrollToTop visible={showScrollToTop} onPress={scrollToTop} />
       <Toast message={toastMessage} />
@@ -2123,37 +2096,6 @@ const getStyles = (theme, deviceWidth) =>
     },
     sortIcon: {
       padding: 4,
-    },
-    sortModalHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    sortModalHeaderTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    sortModalXButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
-    sortModalContent: {
-      marginTop: 10,
     },
     sortModalItem: {
       height: 48,

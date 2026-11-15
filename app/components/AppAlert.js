@@ -1,19 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
-import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import ConfirmationModal from "./ConfirmationModal";
-import { ThemeContext } from "../theme-context";
 import { retrieveItem } from "../config/utils";
 import Text from "./PbmText";
 
 const AppAlert = ({ motd }) => {
-  const { theme } = useContext(ThemeContext);
-  const s = getStyles(theme);
-
   const [visible, setIsVisible] = useState(false);
   // Map can be mounted under another screen (deep link, cold-start restore),
   // so wait until it is actually showing
@@ -37,16 +32,11 @@ const AppAlert = ({ motd }) => {
   }, [motd, isFocused]);
 
   return (
-    <ConfirmationModal visible={visible} closeModal={() => setIsVisible(false)}>
-      <View style={s.appAlertHeader}>
-        <Text style={[s.appAlertTitle, s.bold]}>Message of the Day!</Text>
-        <MaterialCommunityIcons
-          name="close-circle"
-          size={35}
-          onPress={() => setIsVisible(false)}
-          style={s.xButton}
-        />
-      </View>
+    <ConfirmationModal
+      visible={visible}
+      closeModal={() => setIsVisible(false)}
+      title="Message of the Day!"
+    >
       <View style={s.appAlert}>
         <Text style={{ fontSize: 16 }}>{motd}</Text>
       </View>
@@ -58,45 +48,11 @@ AppAlert.propTypes = {
   motd: PropTypes.string,
 };
 
-const getStyles = (theme) =>
-  StyleSheet.create({
-    bold: {
-      fontFamily: "Nunito",
-      fontWeight: "700",
-    },
-    appAlertTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    appAlertHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      marginTop: -25,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    appAlert: {
-      padding: 10,
-      paddingBottom: 0,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
-  });
+const s = StyleSheet.create({
+  appAlert: {
+    paddingHorizontal: 10,
+  },
+});
 
 const mapStateToProps = ({ regions }) => {
   const { regions: allRegions = [] } = regions ?? {};

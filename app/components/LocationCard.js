@@ -76,7 +76,6 @@ const LocationCard = ({
               <View style={s.heartItem}>
                 <FavoriteLocation
                   locationId={id}
-                  navigation={navigation}
                   removeFavorite={removeFavorite}
                 />
               </View>

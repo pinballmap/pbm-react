@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Pressable, StyleSheet } from "react-native";
 import { addFavoriteLocation, removeFavoriteLocation } from "../actions";
 import LottieView from "lottie-react-native";
+import LoginRequiredModal from "./LoginRequiredModal";
 
 const FaveLocation = ({ onPress, style }) => {
   const removeAnimation = useRef(null);
@@ -23,24 +24,31 @@ const FaveLocation = ({ onPress, style }) => {
   );
 };
 
-const Location = ({ onPress, style, navigation, loggedIn }) => {
+const Location = ({ onPress, style, loggedIn }) => {
   const addAnimation = useRef(null);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const onAddPress = () => {
     if (loggedIn) {
       return addAnimation?.current.play();
     }
-    navigation.navigate("Login");
+    setLoginModalVisible(true);
   };
   return (
-    <Pressable style={style} onPress={onAddPress}>
-      <LottieView
-        ref={addAnimation}
-        onAnimationFinish={onPress}
-        style={s.icon}
-        loop={false}
-        source={require("../assets/Heart-Pop-Dark.json")}
+    <>
+      <LoginRequiredModal
+        visible={loginModalVisible}
+        closeModal={() => setLoginModalVisible(false)}
       />
-    </Pressable>
+      <Pressable style={style} onPress={onAddPress}>
+        <LottieView
+          ref={addAnimation}
+          onAnimationFinish={onPress}
+          style={s.icon}
+          loop={false}
+          source={require("../assets/Heart-Pop-Dark.json")}
+        />
+      </Pressable>
+    </>
   );
 };
 
@@ -52,7 +60,6 @@ const FavoriteLocationHeart = ({
   removeFavoriteLocation,
   style,
   removeFavorite,
-  navigation,
 }) => {
   if (loggedIn && isUserFave) {
     return (
@@ -68,7 +75,6 @@ const FavoriteLocationHeart = ({
       onPress={() => addFavoriteLocation(locationId)}
       style={style}
       loggedIn={loggedIn}
-      navigation={navigation}
     />
   );
 };
@@ -81,7 +87,6 @@ FavoriteLocationHeart.propTypes = {
   removeFavoriteLocation: PropTypes.func,
   style: PropTypes.object,
   removeFavorite: PropTypes.func,
-  navigation: PropTypes.object,
 };
 
 const s = StyleSheet.create({

@@ -4,25 +4,27 @@ import { connect } from "react-redux";
 import { View } from "react-native";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6/static";
 import RemoveMachineModal from "./RemoveMachineModal";
-import { useNavigation } from "@react-navigation/native";
+import LoginRequiredModal from "./LoginRequiredModal";
 
 const RemoveMachine = ({ user }) => {
   const [showModal, setShowModal] = useState(false);
-  const navigation = useNavigation();
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
   return (
     <View>
       {showModal && (
         <RemoveMachineModal closeModal={() => setShowModal(false)} />
       )}
+      <LoginRequiredModal
+        visible={loginModalVisible}
+        closeModal={() => setLoginModalVisible(false)}
+      />
       <FontAwesome6
         name="trash-can"
         size={30}
         color={"#e4606a"}
-        onPress={
-          user.loggedIn
-            ? () => setShowModal(true)
-            : () => navigation.navigate("Login")
+        onPress={() =>
+          user.loggedIn ? setShowModal(true) : setLoginModalVisible(true)
         }
       />
     </View>

@@ -15,12 +15,7 @@ import { ThemeContext } from "../theme-context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@react-native-vector-icons/material-icons/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
-import {
-  ConfirmationModal,
-  PbmButton,
-  Text,
-  WarningButton,
-} from "../components";
+import { ConfirmationModal, PbmButton, Text } from "../components";
 import { flagGroups } from "../utils/flags";
 import flagImages, { getFlagWidth } from "../utils/flagImages";
 import { postData } from "../config/request";
@@ -133,6 +128,7 @@ const FindFlag = ({ navigation, route, user }) => {
         visible={!!pendingFlag}
         closeModal={() => setPendingFlag(null)}
         loading={saving}
+        title="User Flag"
       >
         {pendingFlag && (
           <>
@@ -151,10 +147,6 @@ const FindFlag = ({ navigation, route, user }) => {
             <PbmButton
               title={pendingFlag.code ? "Select this flag" : "No flag"}
               onPress={confirmFlag}
-            />
-            <WarningButton
-              title="Cancel"
-              onPress={() => setPendingFlag(null)}
             />
           </>
         )}

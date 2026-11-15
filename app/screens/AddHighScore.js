@@ -16,7 +16,6 @@ import {
   NotLoggedIn,
   PbmButton,
   Text,
-  WarningButton,
 } from "../components";
 
 const AddHighScore = ({ user }) => {
@@ -79,6 +78,7 @@ const AddHighScore = ({ user }) => {
       <ConfirmationModal
         visible={confirmModalVisible}
         closeModal={() => setConfirmModalVisible(false)}
+        title="Add High Score"
       >
         <Text style={[s.modalTitle, s.regular]}>
           Add score of{" "}
@@ -89,10 +89,6 @@ const AddHighScore = ({ user }) => {
           ?
         </Text>
         <PbmButton title={"Save Score"} onPress={handleSave} />
-        <WarningButton
-          title={"Cancel"}
-          onPress={() => setConfirmModalVisible(false)}
-        />
       </ConfirmationModal>
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"

@@ -47,7 +47,6 @@ const UserProfile = ({
   const { height: screenHeight } = useWindowDimensions();
   const s = getStyles(theme);
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [accountModalVisible, setAccountModalVisible] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [emailCurrentPassword, setEmailCurrentPassword] = useState("");
@@ -346,30 +345,6 @@ const UserProfile = ({
             {isOwnProfile && (
               <>
                 <ConfirmationModal
-                  visible={modalVisible}
-                  closeModal={() => setModalVisible(false)}
-                >
-                  <PbmButton
-                    title={"Log Me Out"}
-                    onPress={() => {
-                      setModalVisible(false);
-                      logout();
-                      navigation.navigate("Login");
-                    }}
-                  />
-                  <WarningButton
-                    title={"Stay Logged In"}
-                    onPress={() => setModalVisible(false)}
-                    accessibilityLabel="Stay Logged In"
-                    margin={{
-                      alignSelf: "stretch",
-                      marginHorizontal: 30,
-                      marginVertical: 15,
-                      paddingHorizontal: 30,
-                    }}
-                  />
-                </ConfirmationModal>
-                <ConfirmationModal
                   visible={!!machineToRemove}
                   closeModal={() => setMachineToRemove(null)}
                 >
@@ -394,27 +369,15 @@ const UserProfile = ({
                   closeModal={closeAccountModal}
                   wide
                   loading={deletingAccount}
+                  title="Account Settings"
                 >
-                  <View style={s.header}>
-                    <Text style={[s.modalTitle, s.extraBold]}>
-                      Account Settings
-                    </Text>
-                    <MaterialCommunityIcons
-                      name="close-circle"
-                      size={35}
-                      onPress={closeAccountModal}
-                      style={s.xButton}
-                    />
-                  </View>
                   <ScrollView
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                     style={{ maxHeight: screenHeight * 0.75 }}
                   >
                     <View style={s.modalSection}>
-                      <Text
-                        style={[s.sectionLabel, s.semiBold, { marginTop: 10 }]}
-                      >
+                      <Text style={[s.sectionLabel, s.semiBold]}>
                         Update Email
                       </Text>
                       <TextInput
@@ -645,7 +608,10 @@ const UserProfile = ({
                   </Text>
                   <Text
                     style={[s.logoutLink, s.semiBold]}
-                    onPress={() => setModalVisible(true)}
+                    onPress={() => {
+                      logout();
+                      navigation.navigate("MapTab");
+                    }}
                   >
                     Logout
                   </Text>
@@ -1192,34 +1158,6 @@ const getStyles = (theme) =>
     rankIcon: {
       width: 20,
       height: 20,
-    },
-    header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
-    modalTitle: {
-      textAlign: "center",
-      fontSize: 18,
-      color: theme.purple2,
     },
     modalSection: {
       paddingHorizontal: 5,

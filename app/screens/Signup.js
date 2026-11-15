@@ -138,16 +138,8 @@ const Signup = ({ loginLater, navigation }) => {
       <ConfirmationModal
         visible={modalVisible}
         closeModal={closeModalAndNavigate}
+        title="Success"
       >
-        <View style={s.modalHeader}>
-          <Text style={[s.modalHeaderTitle, s.extraBold]}>Success</Text>
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={closeModalAndNavigate}
-            style={s.xButton}
-          />
-        </View>
         <View style={s.modalContent}>
           <Text style={[s.confirmText, s.regular]}>
             {`Thank you for signing up. You must now confirm your account. Please check your email, confirm your account, then login. If you don't see the email, check your SPAM folder.`}
@@ -280,10 +272,6 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "700",
     },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
-    },
     backgroundImage: {
       position: "absolute",
       top: 0,
@@ -374,37 +362,8 @@ const getStyles = (theme) =>
     marginB20: {
       marginBottom: 20,
     },
-    modalHeader: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    modalHeaderTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
     modalContent: {
-      padding: 10,
-      paddingBottom: 0,
+      paddingHorizontal: 10,
     },
   });
 

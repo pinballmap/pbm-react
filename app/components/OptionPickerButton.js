@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { ThemeContext } from "../theme-context";
 import ConfirmationModal from "./ConfirmationModal";
@@ -37,57 +37,50 @@ const OptionPickerButton = ({
         onPress={() => setVisible(true)}
         margin={margin}
       />
-      <ConfirmationModal visible={visible} closeModal={() => setVisible(false)}>
-        <View style={s.header}>
-          {!!title && <Text style={[s.headerTitle, s.extraBold]}>{title}</Text>}
-          <MaterialCommunityIcons
-            name="close-circle"
-            size={35}
-            onPress={() => setVisible(false)}
-            style={s.xButton}
-          />
-        </View>
+      <ConfirmationModal
+        visible={visible}
+        closeModal={() => setVisible(false)}
+        title={title}
+      >
         {!!description && (
           <Text style={[s.description, s.regular]}>{description}</Text>
         )}
-        <View style={s.optionsList}>
-          {items.map((item) => {
-            const isSelected = item.value === selectedValue;
-            return (
-              <Pressable
-                key={item.label}
-                onPress={() => {
-                  onSelect(item.value);
-                  setVisible(false);
-                }}
-                style={({ pressed }) => [
-                  s.item,
-                  isSelected && s.itemSelected,
-                  pressed && s.itemPressed,
+        {items.map((item) => {
+          const isSelected = item.value === selectedValue;
+          return (
+            <Pressable
+              key={item.label}
+              onPress={() => {
+                onSelect(item.value);
+                setVisible(false);
+              }}
+              style={({ pressed }) => [
+                s.item,
+                isSelected && s.itemSelected,
+                pressed && s.itemPressed,
+              ]}
+            >
+              <Text
+                maxFontSizeMultiplier={1.3}
+                style={[
+                  s.itemText,
+                  s.medium,
+                  isSelected && s.itemTextSelected,
+                  isSelected && s.bold,
                 ]}
               >
-                <Text
-                  maxFontSizeMultiplier={1.3}
-                  style={[
-                    s.itemText,
-                    s.medium,
-                    isSelected && s.itemTextSelected,
-                    isSelected && s.bold,
-                  ]}
-                >
-                  {item.label}
-                </Text>
-                {isSelected && (
-                  <MaterialCommunityIcons
-                    name="check"
-                    size={18}
-                    color={theme.text2}
-                  />
-                )}
-              </Pressable>
-            );
-          })}
-        </View>
+                {item.label}
+              </Text>
+              {isSelected && (
+                <MaterialCommunityIcons
+                  name="check"
+                  size={18}
+                  color={theme.text2}
+                />
+              )}
+            </Pressable>
+          );
+        })}
       </ConfirmationModal>
     </>
   );
@@ -107,47 +100,12 @@ const getStyles = (theme) =>
       fontFamily: "Nunito",
       fontWeight: "700",
     },
-    extraBold: {
-      fontFamily: "Nunito",
-      fontWeight: "800",
-    },
-    header: {
-      backgroundColor: theme.theme == "dark" ? theme.white : theme.base4,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      marginTop: -25,
-      paddingVertical: 8,
-      justifyContent: "center",
-      paddingHorizontal: 45,
-    },
-    headerTitle: {
-      color: theme.purple2,
-      textAlign: "center",
-      fontSize: 18,
-    },
-    xButton: {
-      position: "absolute",
-      right: 3,
-      color: theme.theme == "dark" ? theme.base4 : theme.base1,
-      textShadowColor:
-        theme.theme == "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(126, 126, 145, 0.5)",
-      textShadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      textShadowRadius: 3.84,
-    },
     description: {
       textAlign: "center",
       marginHorizontal: 15,
-      marginTop: 10,
+      marginBottom: 10,
       fontSize: 14,
       color: theme.text3,
-    },
-    optionsList: {
-      marginTop: 10,
     },
     item: {
       height: 48,
