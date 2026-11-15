@@ -88,6 +88,20 @@ const About = ({ navigation, appAlert }) => {
             {appAlert}
           </Text>
         </View>
+        <View style={s.body}>
+          <Text style={s.text}>
+            {`This app gets updated a lot. Find out what's new on `}
+            <Text
+              style={[s.textLink, s.medium]}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://github.com/pinballmap/pbm-react",
+                )
+              }
+            >{`the app's github page`}</Text>
+            {`.`}
+          </Text>
+        </View>
         <View style={s.category}>
           <Text style={[s.categoryText, s.bold]}>What About It</Text>
         </View>
@@ -112,7 +126,7 @@ const About = ({ navigation, appAlert }) => {
             .
           </Text>
           <Text style={s.text}>
-            {`The site is not monetized and `}
+            {`Pinball Map is not monetized and `}
             <Text
               style={[s.textLink, s.medium]}
               onPress={() =>
@@ -120,11 +134,18 @@ const About = ({ navigation, appAlert }) => {
                   "https://github.com/pinballmap/pbm-react",
                 )
               }
-            >{`the code`}</Text>
-            {` is open source. The data is maintained by over 100 administrators and thousands of active users.`}
+            >{`the app`}</Text>
+            {` and `}
+            <Text
+              style={[s.textLink, s.medium]}
+              onPress={() =>
+                WebBrowser.openBrowserAsync("https://github.com/pinballmap/pbm")
+              }
+            >{`website code`}</Text>
+            {` are open source and developed by volunteers. The data is maintained by over 100 administrators and thousands of active users.`}
           </Text>
           <Text style={s.text}>
-            {`To help maintain it (on the app or the website, `}
+            {`To help maintain it (on this app or the website, `}
             <Text
               style={[s.textLink, s.medium]}
               onPress={() =>
