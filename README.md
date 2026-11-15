@@ -14,6 +14,14 @@ If you want to contribute to the development of the Pinball Map React Native app
 
 Release dates are approximate, given that review times vary between the App Store and Play Store.
 
+### 5.5.1
+
+November 16, 2026
+
+- Swipe left and right on photos to navigate between them.
+- Remove the "swipe left to remove machine" functionality. We tried this for a few months, but it was fragile. Now it's back to removing machines by clicking on it, then removing from the machine details screen.
+- Minor design tweaks.
+
 ### 5.5.0
 
 November 4, 2026
