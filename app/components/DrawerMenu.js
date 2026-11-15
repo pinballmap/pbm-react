@@ -9,6 +9,7 @@ import {
 import { Image, ImageBackground } from "expo-image";
 import * as Application from "expo-application";
 import {
+  Linking,
   Platform,
   Text,
   Pressable,
@@ -23,6 +24,11 @@ import { logout } from "../actions";
 import ConfirmationModal from "./ConfirmationModal";
 import PbmButton from "./PbmButton";
 import WarningButton from "./WarningButton";
+
+const STORE_URL =
+  Platform.OS === "ios"
+    ? "itms-apps://itunes.apple.com/us/app/pinball-map/id359275713?mt=8"
+    : "market://details?id=com.pbm";
 
 const DrawerMenu = ({ logout, user, ...props }) => {
   const { theme } = useContext(ThemeContext);
@@ -284,9 +290,20 @@ const DrawerMenu = ({ logout, user, ...props }) => {
           <MaterialCommunityIcons name="login" style={s.icon} />
         </Pressable>
       )}
-      <Text allowFontScaling={false} style={[s.versionText, s.medium]}>
-        v{Application.nativeApplicationVersion}
-      </Text>
+      <View style={s.versionRow}>
+        <Text allowFontScaling={false} style={[s.versionText, s.medium]}>
+          v{Application.nativeApplicationVersion}
+        </Text>
+        {user.updateAvailable && (
+          <Text
+            allowFontScaling={false}
+            style={[s.versionText, s.updateLink, s.medium]}
+            onPress={() => Linking.openURL(STORE_URL).catch(() => {})}
+          >
+            Update Available
+          </Text>
+        )}
+      </View>
     </DrawerContentScrollView>
   );
 };
@@ -337,13 +354,21 @@ const getStyles = (theme, deviceWidth) =>
       fontWeight: Platform.OS === "android" ? undefined : 700,
       fontSize: 20,
     },
-    versionText: {
-      color: theme.text3,
-      fontSize: 13,
-      textAlign: "left",
+    versionRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 12,
       marginTop: 15,
       marginLeft: 20,
       marginBottom: 20,
+    },
+    versionText: {
+      color: theme.text3,
+      fontSize: 13,
+    },
+    updateLink: {
+      color: theme.blue4,
+      textDecorationLine: "underline",
     },
   });
 

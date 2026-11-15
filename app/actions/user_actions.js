@@ -22,6 +22,7 @@ import {
   SET_LAST_MACHINE_SORT_ORDER,
   FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
   MACHINE_LIFE_LIST_STATUS_UPDATED,
+  SET_UPDATE_AVAILABLE,
 } from "./types";
 import { getCurrentLocation, getData, postData } from "../config/request";
 import { triggerUpdateBounds } from "./locations_actions";
@@ -29,6 +30,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { coordsToBounds } from "../utils/utilityFunctions";
 import { retrieveItem } from "../config/utils";
 import { Location } from "expo-location/next";
+import * as Application from "expo-application";
+import { Platform } from "react-native";
 import {
   KEY_DISPLAY_INSIDER_CONNECTED_BADGE_PREFERENCE,
   KEY_REMEMBER_MACHINE_SORT_PREFERENCE,
@@ -359,3 +362,29 @@ export const removeMachineFromLifeList =
       },
     );
   };
+
+const isOlderVersion = (current, latest) => {
+  const a = current.split(".").map(Number);
+  const b = latest.split(".").map(Number);
+  for (let i = 0; i < Math.max(a.length, b.length); i++) {
+    const diff = (a[i] || 0) - (b[i] || 0);
+    if (diff !== 0) return diff < 0;
+  }
+  return false;
+};
+
+export const checkAppVersion = () => (dispatch) => {
+  const currentVersion = Application.nativeApplicationVersion;
+  if (!currentVersion) return Promise.resolve();
+
+  return getData("/app_versions.json")
+    .then((data) => {
+      const latest = data?.[Platform.OS]?.latest;
+      if (!latest) return;
+      dispatch({
+        type: SET_UPDATE_AVAILABLE,
+        updateAvailable: isOlderVersion(currentVersion, latest),
+      });
+    })
+    .catch(() => {});
+};

@@ -23,6 +23,7 @@ import {
   SET_LAST_MACHINE_SORT_ORDER,
   ACCOUNT_DISABLED,
   FETCHING_LIFE_LIST_MACHINE_IDS_SUCCESS,
+  SET_UPDATE_AVAILABLE,
 } from "../actions/types";
 
 export const initialState = {
@@ -50,6 +51,7 @@ export const initialState = {
   showNoLocationTrackingModal: false,
   isLocationServicesEnabled: true,
   accountDisabled: false,
+  updateAvailable: false,
 };
 
 export default (state = initialState, action) => {
@@ -210,6 +212,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         lifeListMachineIds: action.lifeListMachineIds,
+      };
+    case SET_UPDATE_AVAILABLE:
+      return {
+        ...state,
+        updateAvailable: action.updateAvailable,
       };
     default:
       return state;

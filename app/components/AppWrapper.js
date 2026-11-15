@@ -19,6 +19,7 @@ import {
   setSelectedLocationActivitiesFilter,
   setActivityMachinesFilter,
   setActivityBtnIdx,
+  checkAppVersion,
 } from "../actions";
 import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "../components";
@@ -125,6 +126,7 @@ const AppWrapper = ({
   loadMachinesFromCache,
   loadLocationTypesFromCache,
   loadOperatorsFromCache,
+  checkAppVersion,
 }) => {
   const [loading, setIsLoading] = useState(true);
   const flashOpacity = useRef(new Animated.Value(0)).current;
@@ -165,6 +167,7 @@ const AppWrapper = ({
   };
 
   const refreshData = useCallback(async () => {
+    checkAppVersion();
     try {
       await checkAndRefreshCachedData(loaders);
     } catch (e) {
@@ -303,6 +306,7 @@ AppWrapper.propTypes = {
   loadMachinesFromCache: PropTypes.func,
   loadLocationTypesFromCache: PropTypes.func,
   loadOperatorsFromCache: PropTypes.func,
+  checkAppVersion: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -331,6 +335,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getLocationTypeSuccess({ location_types })),
   loadOperatorsFromCache: (operators) =>
     dispatch(getOperatorsSuccess({ operators })),
+  checkAppVersion: () => dispatch(checkAppVersion()),
 });
 
 const mapStateToProps = ({ user }) => ({
